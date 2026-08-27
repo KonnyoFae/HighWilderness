@@ -1,0 +1,150 @@
+{
+  "current_hull_integrity_fraction": 1.0,
+  "derived_ship_snapshot_sha256": "817cdfb97a5099b2432e78d774dfcbdfc6797f3f27c702e78675efa9a874a897",
+  "fixture_level": "contract_fixture",
+  "id": "gtw.sortie.fixture.stage_f.conventional_crewed.instance",
+  "kind": "ShipInstanceSnapshot",
+  "module_states": [
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "ammunition_magazine",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "cargo_hold",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "cic",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "crew_quarters_base",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "crew_quarters_upper",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "damage_control",
+      "operating_mode": "standby"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "fire_control",
+      "operating_mode": "standby"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "generator",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "lift_tank",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "main_engine_port",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "main_engine_starboard",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "remote_core",
+      "operating_mode": "standby"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "sensor_upper_starboard",
+      "operating_mode": "standby"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_port_aft",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_port_fore",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_starboard_aft",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_starboard_fore",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "weapon_upper_port",
+      "operating_mode": "standby"
+    }
+  ],
+  "name": "阶段F常规有人战舰出航·完好实例",
+  "operational_state": {
+    "bulk_cargo": [
+      {
+        "id": "cargo.fixture.stage_f_materials",
+        "mass_kg": 25000.0,
+        "storage_instance_id": "cargo_hold"
+      }
+    ],
+    "crew": [
+      {
+        "count": 2,
+        "crew_type": "officer"
+      },
+      {
+        "count": 10,
+        "crew_type": "ordinary"
+      },
+      {
+        "count": 4,
+        "crew_type": "technical_officer"
+      },
+      {
+        "count": 2,
+        "crew_type": "veteran_damage_control"
+      }
+    ],
+    "fuel_units": 800.0,
+    "height_layer": "upper"
+  },
+  "outfit_plan": {
+    "id": "gtw.outfit.fixture.stage_f.conventional_crewed",
+    "version": 1
+  },
+  "power_policy": {
+    "allocation_mode": "strict_categories",
+    "category_order": [
+      "damage_control",
+      "weapons_and_active_defense",
+      "fire_control",
+      "sensors"
+    ],
+    "disabled_categories": []
+  },
+  "schema": "gaotian.ship/v1alpha1",
+  "sortie_configuration": {
+    "id": "gtw.sortie.fixture.stage_f.conventional_crewed",
+    "version": 1
+  },
+  "sortie_configuration_sha256": "498add9eaae7c6764121ba26566fe0eb13f4ca73c5b78302485c5d8088e5462f",
+  "version": 1
+}

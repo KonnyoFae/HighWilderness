@@ -1,0 +1,80 @@
+{
+  "catalog_type": "structure",
+  "id": "gtw.catalog.material.structure",
+  "kind": "MaterialCatalog",
+  "materials": [
+    {
+      "cost_coefficient": 1.0,
+      "density_kg_m3": 7850.0,
+      "durability_coefficient": 1.0,
+      "id": "gtw.material.structure.armor_steel",
+      "name": "装甲钢",
+      "strength_coefficient": 1.0,
+      "version": 1,
+      "work_difficulty": 1.0
+    },
+    {
+      "cost_coefficient": 4.0,
+      "density_kg_m3": 2660.0,
+      "durability_coefficient": 0.65,
+      "id": "gtw.material.structure.aluminum_alloy",
+      "name": "铝合金",
+      "strength_coefficient": 0.5,
+      "version": 1,
+      "work_difficulty": 1.25
+    },
+    {
+      "cost_coefficient": 12.0,
+      "density_kg_m3": 4430.0,
+      "durability_coefficient": 1.35,
+      "id": "gtw.material.structure.titanium_alloy",
+      "name": "钛合金",
+      "strength_coefficient": 1.7,
+      "version": 1,
+      "work_difficulty": 2.5
+    },
+    {
+      "cost_coefficient": 8.0,
+      "density_kg_m3": 14500.0,
+      "durability_coefficient": 0.85,
+      "id": "gtw.material.structure.carbide_composite",
+      "name": "碳化物复合装甲",
+      "strength_coefficient": 2.5,
+      "version": 1,
+      "work_difficulty": 3.5
+    },
+    {
+      "cost_coefficient": 6.0,
+      "density_kg_m3": 3500.0,
+      "durability_coefficient": 1.1,
+      "id": "gtw.material.structure.mixed_copper_alloy",
+      "name": "混铜合金",
+      "strength_coefficient": 0.9,
+      "version": 1,
+      "work_difficulty": 2.0
+    },
+    {
+      "cost_coefficient": 18.0,
+      "density_kg_m3": 4000.0,
+      "durability_coefficient": 1.7,
+      "id": "gtw.material.structure.frost_silver_alloy",
+      "name": "霜银合金",
+      "strength_coefficient": 2.1,
+      "version": 1,
+      "work_difficulty": 3.0
+    },
+    {
+      "cost_coefficient": 15.0,
+      "density_kg_m3": 7400.0,
+      "durability_coefficient": 2.5,
+      "id": "gtw.material.structure.spirit_metal_fabric",
+      "name": "灵化金属纤维织物",
+      "strength_coefficient": 3.0,
+      "version": 1,
+      "work_difficulty": 3.5
+    }
+  ],
+  "name": "第一版结构材质目录",
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

@@ -1,0 +1,174 @@
+{
+  "fixture_level": "contract_fixture",
+  "hull_blueprint": {
+    "id": "gtw.hull.fixture.stage_f.minimum_legal",
+    "version": 1
+  },
+  "hull_coating": {
+    "id": "gtw.coating.hull.ordinary",
+    "version": 1
+  },
+  "id": "gtw.outfit.fixture.stage_f.minimum_legal",
+  "kind": "OutfitPlan",
+  "modules": [
+    {
+      "id": "cic",
+      "placement": {
+        "anchor_half_cell": [
+          0,
+          0
+        ],
+        "deck_id": "deck.0",
+        "kind": "grid",
+        "rotation_deg": 0
+      },
+      "prototype": {
+        "id": "gtw.module.fixture.cic",
+        "version": 1
+      }
+    },
+    {
+      "id": "crew_quarters",
+      "placement": {
+        "anchor_half_cell": [
+          -2,
+          0
+        ],
+        "deck_id": "deck.0",
+        "kind": "grid",
+        "rotation_deg": 0
+      },
+      "prototype": {
+        "id": "gtw.module.fixture.crew_quarters",
+        "version": 1
+      }
+    },
+    {
+      "id": "damage_control",
+      "placement": {
+        "anchor_half_cell": [
+          2,
+          0
+        ],
+        "deck_id": "deck.0",
+        "kind": "grid",
+        "rotation_deg": 0
+      },
+      "prototype": {
+        "id": "gtw.module.fixture.damage_control",
+        "version": 1
+      }
+    },
+    {
+      "id": "generator",
+      "placement": {
+        "anchor_half_cell": [
+          -2,
+          4
+        ],
+        "deck_id": "deck.0",
+        "kind": "grid",
+        "rotation_deg": 0
+      },
+      "prototype": {
+        "id": "gtw.module.fixture.generator",
+        "version": 1
+      }
+    },
+    {
+      "id": "lift_tank",
+      "placement": {
+        "anchor_half_cell": [
+          0,
+          4
+        ],
+        "deck_id": "deck.0",
+        "kind": "grid",
+        "rotation_deg": 0
+      },
+      "prototype": {
+        "id": "gtw.module.fixture.lift_fuel_tank",
+        "version": 1
+      }
+    },
+    {
+      "id": "main_engine",
+      "placement": {
+        "anchor_half_cell": [
+          0,
+          -8
+        ],
+        "deck_id": "deck.0",
+        "kind": "grid",
+        "rotation_deg": 0
+      },
+      "prototype": {
+        "id": "gtw.module.fixture.main_engine",
+        "version": 1
+      }
+    },
+    {
+      "id": "thruster_port_aft",
+      "placement": {
+        "deck_id": "deck.0",
+        "edge_index": 3,
+        "kind": "side",
+        "region_id": "deck.0.region.0",
+        "rotation_deg": 180,
+        "start_slot_index": 12
+      },
+      "prototype": {
+        "id": "gtw.module.fixture.maneuver_thruster",
+        "version": 1
+      }
+    },
+    {
+      "id": "thruster_port_fore",
+      "placement": {
+        "deck_id": "deck.0",
+        "edge_index": 3,
+        "kind": "side",
+        "region_id": "deck.0.region.0",
+        "rotation_deg": 180,
+        "start_slot_index": 3
+      },
+      "prototype": {
+        "id": "gtw.module.fixture.maneuver_thruster",
+        "version": 1
+      }
+    },
+    {
+      "id": "thruster_starboard_aft",
+      "placement": {
+        "deck_id": "deck.0",
+        "edge_index": 1,
+        "kind": "side",
+        "region_id": "deck.0.region.0",
+        "rotation_deg": 180,
+        "start_slot_index": 3
+      },
+      "prototype": {
+        "id": "gtw.module.fixture.maneuver_thruster",
+        "version": 1
+      }
+    },
+    {
+      "id": "thruster_starboard_fore",
+      "placement": {
+        "deck_id": "deck.0",
+        "edge_index": 1,
+        "kind": "side",
+        "region_id": "deck.0.region.0",
+        "rotation_deg": 180,
+        "start_slot_index": 12
+      },
+      "prototype": {
+        "id": "gtw.module.fixture.maneuver_thruster",
+        "version": 1
+      }
+    }
+  ],
+  "name": "阶段F最小合法舰舾装",
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

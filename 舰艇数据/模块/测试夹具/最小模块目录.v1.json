@@ -1,0 +1,692 @@
+{
+  "fixture_level": "contract_fixture",
+  "id": "gtw.module_catalog.fixture.minimum",
+  "kind": "ModulePrototypeCatalog",
+  "modules": [
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "cargo.inventory"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "bulk_cargo_capacity_kg": 100000.0,
+        "kind": "cargo_hold"
+      },
+      "category": "cargo_hold",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "cargo.inventory",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.cargo_hold",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 2000.0,
+      "name": "契约夹具货仓",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "cic.basic_control"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "partial",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "fixed_to_cic_origin": true,
+        "kind": "cic"
+      },
+      "category": "cic",
+      "counts_toward_departure_minimum": true,
+      "crew": [
+        {
+          "crew_type": "officer",
+          "minimum_operating": 1,
+          "standard": 2
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "cic.basic_control",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.cic",
+      "installation": {
+        "allowed_rotations_deg": [
+          0
+        ],
+        "deck_rule": "base_only",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [
+          "cic_internal"
+        ],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1000.0,
+      "name": "契约夹具CIC",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "capacities": [
+          {
+            "capacity": 2,
+            "crew_type": "officer"
+          },
+          {
+            "capacity": 10,
+            "crew_type": "ordinary"
+          },
+          {
+            "capacity": 2,
+            "crew_type": "technical_officer"
+          },
+          {
+            "capacity": 2,
+            "crew_type": "veteran_damage_control"
+          }
+        ],
+        "kind": "crew_quarters"
+      },
+      "category": "crew_quarters",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "crew_quarters.habitation",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.crew_quarters",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1000.0,
+      "name": "契约夹具人员舱",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [
+        "ship.damage_control_required"
+      ],
+      "automation": {
+        "automated_functions": [],
+        "engineering_microclusters_required": null,
+        "level": "manual",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "damage_control",
+        "simultaneous_incidents": 1,
+        "team_capacity": 1
+      },
+      "category": "damage_control",
+      "counts_toward_departure_minimum": true,
+      "crew": [
+        {
+          "crew_type": "veteran_damage_control",
+          "minimum_operating": 1,
+          "standard": 2
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "damage_control.firefighting",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "standby",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.damage_control",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1000.0,
+      "name": "契约夹具损管设备",
+      "power": {
+        "active_load_kw": 50.0,
+        "consumer_category": "damage_control",
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "generator.regulation"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "partial",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "generator"
+      },
+      "category": "generator",
+      "counts_toward_departure_minimum": true,
+      "crew": [
+        {
+          "crew_type": "technical_officer",
+          "minimum_operating": 1,
+          "standard": 2
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "generator.regulation",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.generator",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1000.0,
+      "name": "契约夹具发电设备",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 1000.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "fuel_capacity_units": 1000.0,
+        "kind": "lift_fuel_tank",
+        "lift_force_n": 30000000.0
+      },
+      "category": "lift_fuel_tank",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "lift_tank.lift",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.lift_fuel_tank",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1000.0,
+      "name": "契约夹具灵烷贮槽",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "engine.throttle"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "partial",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "fuel_units_per_s": 1.0,
+        "kind": "main_engine",
+        "local_thrust_axis": "+Y",
+        "response_time_s": 1.0,
+        "thrust_n": 100000.0
+      },
+      "category": "main_engine",
+      "counts_toward_departure_minimum": true,
+      "crew": [
+        {
+          "crew_type": "ordinary",
+          "minimum_operating": 1,
+          "standard": 2
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "engine.throttle",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.75
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.main_engine",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [
+          [
+            0,
+            -4
+          ],
+          [
+            0,
+            -2
+          ]
+        ],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1000.0,
+      "name": "契约夹具主发动机",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "thruster.throttle"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "partial",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "fuel_units_per_s": 0.1,
+        "kind": "maneuver_thruster",
+        "local_thrust_axis": "+Y",
+        "response_time_s": 0.2,
+        "thrust_n": 10000.0
+      },
+      "category": "maneuver_thruster",
+      "counts_toward_departure_minimum": true,
+      "crew": [
+        {
+          "crew_type": "ordinary",
+          "minimum_operating": 1,
+          "standard": 1
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "thruster.throttle",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.75
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.maneuver_thruster",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [
+          [
+            0,
+            -2
+          ]
+        ],
+        "host_slot": null,
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "side_mount_length_steps": 1,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1000.0,
+      "name": "契约夹具转向发动机",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [
+        "ship.remote_control_selected"
+      ],
+      "automation": {
+        "automated_functions": [],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "remote_core"
+      },
+      "category": "remote_core",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "remote_core.command_link",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "standby",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.remote_core",
+      "installation": {
+        "allowed_rotations_deg": [
+          0
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": "cic_internal",
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 100.0,
+      "name": "契约夹具遥控核心舱",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    }
+  ],
+  "name": "最小模块契约测试目录",
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

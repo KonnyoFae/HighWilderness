@@ -1,0 +1,27 @@
+{
+  "coatings": [
+    {
+      "balance_status": "baseline_locked",
+      "default_for_new_build": true,
+      "id": "gtw.coating.hull.ordinary",
+      "name": "普通涂料",
+      "rcs_multiplier": 1.0,
+      "runtime_usable": true,
+      "version": 1
+    },
+    {
+      "balance_status": "awaiting_joint_calibration",
+      "default_for_new_build": false,
+      "id": "gtw.coating.hull.stealth",
+      "name": "隐身涂料",
+      "rcs_multiplier": null,
+      "runtime_usable": false,
+      "version": 1
+    }
+  ],
+  "id": "gtw.catalog.hull_coating",
+  "kind": "HullCoatingCatalog",
+  "name": "第一版船体涂料目录",
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

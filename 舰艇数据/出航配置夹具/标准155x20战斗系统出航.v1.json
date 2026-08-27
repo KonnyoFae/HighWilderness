@@ -1,0 +1,41 @@
+{
+  "active_remote_core_instance_id": null,
+  "bulk_cargo": [
+    {
+      "id": "cargo.fixture.materials",
+      "mass_kg": 50000.0,
+      "storage_instance_id": "cargo_hold"
+    }
+  ],
+  "control_mode": "crewed",
+  "crew": [
+    {
+      "count": 2,
+      "crew_type": "officer"
+    },
+    {
+      "count": 4,
+      "crew_type": "ordinary"
+    },
+    {
+      "count": 2,
+      "crew_type": "technical_officer"
+    },
+    {
+      "count": 2,
+      "crew_type": "veteran_damage_control"
+    }
+  ],
+  "fixture_level": "contract_fixture",
+  "fuel_units": 800.0,
+  "height_layer": "upper",
+  "id": "gtw.sortie.fixture.standard_155x20_combat_system",
+  "kind": "SortieConfiguration",
+  "name": "标准155×20米战斗系统出航契约夹具",
+  "outfit_plan": {
+    "id": "gtw.outfit.fixture.standard_155x20_combat_system",
+    "version": 1
+  },
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

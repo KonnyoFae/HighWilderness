@@ -1,0 +1,196 @@
+{
+  "balance_status": "prototype_unbalanced",
+  "fixture_level": "contract_fixture",
+  "fixtures": {
+    "conventional_crewed": {
+      "hull_blueprint": {
+        "id": "gtw.hull.fixture.stage_f.conventional_crewed",
+        "source_sha256": "2c6344986c45af918826f6f2db052a3f11fa7a9b99c728a197c72e5bcaee8e3a",
+        "version": 1
+      },
+      "outfit_plan": {
+        "id": "gtw.outfit.fixture.stage_f.conventional_crewed",
+        "source_sha256": "cb8862db2ea80727bfc85a53a0520a1f4c1e2730a49dce87531c86c829765570",
+        "version": 1
+      },
+      "ship_instance_snapshot": {
+        "id": "gtw.sortie.fixture.stage_f.conventional_crewed.instance",
+        "source_sha256": "9b68396cbd315c0b001d8e7dad0a773f8c5dacf7e705b752abdba7079215b696",
+        "version": 1
+      },
+      "sortie_configuration": {
+        "id": "gtw.sortie.fixture.stage_f.conventional_crewed",
+        "source_sha256": "498add9eaae7c6764121ba26566fe0eb13f4ca73c5b78302485c5d8088e5462f",
+        "version": 1
+      }
+    },
+    "minimum_legal": {
+      "hull_blueprint": {
+        "id": "gtw.hull.fixture.stage_f.minimum_legal",
+        "source_sha256": "f927aff50202728585fb922dcb4f0c0700d0ca78cb04787c8c4ffee2a68d1276",
+        "version": 1
+      },
+      "outfit_plan": {
+        "id": "gtw.outfit.fixture.stage_f.minimum_legal",
+        "source_sha256": "440be69e67713ba2395fcf0855c5246ef0d47446273dae33f3dcde414fe0085e",
+        "version": 1
+      },
+      "ship_instance_snapshot": {
+        "id": "gtw.sortie.fixture.stage_f.minimum_legal.instance",
+        "source_sha256": "2013386d9ef2e4b7c0628efd948d1d2d9bbceabadc669b2e88479718c43772c8",
+        "version": 1
+      },
+      "sortie_configuration": {
+        "id": "gtw.sortie.fixture.stage_f.minimum_legal",
+        "source_sha256": "5bc97c7d67e909095e5388d9c8cb9edad820285bcb81a19687860b18be2fb911",
+        "version": 1
+      }
+    },
+    "unmanned_flagship": {
+      "hull_blueprint": {
+        "id": "gtw.hull.fixture.stage_f.unmanned_flagship",
+        "source_sha256": "50fa56932193040c9cbb7296b0caa96240f84c29d997d540e7b96f20efce7254",
+        "version": 1
+      },
+      "outfit_plan": {
+        "id": "gtw.outfit.fixture.stage_f.unmanned_flagship",
+        "source_sha256": "84dd234ad868d35834bb2b87c6fe2c82a01509333520be3ad8e5791f448377e9",
+        "version": 1
+      },
+      "ship_instance_snapshot": {
+        "id": "gtw.sortie.fixture.stage_f.unmanned_flagship.instance",
+        "source_sha256": "69a798e21c348994c0ddabcc6439e0cf51772e9b96d2de51c389211d011b30b3",
+        "version": 1
+      },
+      "sortie_configuration": {
+        "id": "gtw.sortie.fixture.stage_f.unmanned_flagship",
+        "source_sha256": "d186a9f89ed8d5a0f0653d866177d079034d6799b326fbf69154e32a205bc25e",
+        "version": 1
+      }
+    }
+  },
+  "integration": {
+    "acceptance_probes": {
+      "cargo_mass_delta_kg": 25000.0,
+      "deck_geometry_changes_hull_inertia": true,
+      "engine_position_changes_design_inertia": true,
+      "module_mass_changes_design_mass_and_inertia": true,
+      "structure_material_changes_mass_and_safe_g": true
+    },
+    "interface": "gaotian.stage-f-three-canonical-ships/v1",
+    "ships": {
+      "conventional_crewed": {
+        "design_inertia_kg_m2": 3311140750.0,
+        "design_mass_kg": 2226780.0,
+        "hull_source_sha256": "2c6344986c45af918826f6f2db052a3f11fa7a9b99c728a197c72e5bcaee8e3a",
+        "instance_source_sha256": "9b68396cbd315c0b001d8e7dad0a773f8c5dacf7e705b752abdba7079215b696",
+        "lift_margin_n": 7917581.6630000025,
+        "runtime_inertia_kg_m2": 3314265750.0,
+        "runtime_mass_kg": 2251780.0,
+        "safe_longitudinal_g": 9.798589629225622,
+        "snapshot_source_sha256": "817cdfb97a5099b2432e78d774dfcbdfc6797f3f27c702e78675efa9a874a897"
+      },
+      "minimum_legal": {
+        "design_inertia_kg_m2": 523029166.6666667,
+        "design_mass_kg": 952000.0,
+        "hull_source_sha256": "f927aff50202728585fb922dcb4f0c0700d0ca78cb04787c8c4ffee2a68d1276",
+        "instance_source_sha256": "2013386d9ef2e4b7c0628efd948d1d2d9bbceabadc669b2e88479718c43772c8",
+        "lift_margin_n": 20664069.200000003,
+        "runtime_inertia_kg_m2": 523029166.6666667,
+        "runtime_mass_kg": 952000.0,
+        "safe_longitudinal_g": 13.250000000000002,
+        "snapshot_source_sha256": "b22cbfc84703bc8f988e5d6db1c64d530d7837198d827523adf23e44eee5d061"
+      },
+      "unmanned_flagship": {
+        "design_inertia_kg_m2": 1015586041.6666666,
+        "design_mass_kg": 1196200.0,
+        "hull_source_sha256": "50fa56932193040c9cbb7296b0caa96240f84c29d997d540e7b96f20efce7254",
+        "instance_source_sha256": "69a798e21c348994c0ddabcc6439e0cf51772e9b96d2de51c389211d011b30b3",
+        "lift_margin_n": 18269285.270000003,
+        "runtime_inertia_kg_m2": 1015586041.6666666,
+        "runtime_mass_kg": 1196200.0,
+        "safe_longitudinal_g": 10.600000000000001,
+        "snapshot_source_sha256": "0dc5c3cda33efb3460737bc2f38003c481bfba47e529687002f88d5e717e2d70"
+      }
+    },
+    "status": "PASS",
+    "test_details": {
+      "conventional_crewed": {
+        "combat_power_order": [
+          "damage_control",
+          "weapons_and_active_defense",
+          "fire_control",
+          "sensors"
+        ],
+        "turning": {
+          "clockwise": {
+            "net_force_body_n": [
+              0.0,
+              0.0
+            ],
+            "torque_capacity_n_m": 450000.0
+          },
+          "counterclockwise": {
+            "net_force_body_n": [
+              0.0,
+              0.0
+            ],
+            "torque_capacity_n_m": 550000.0
+          }
+        },
+        "weapon_half_durability_outputs": {
+          "weapon.aim": 0.5,
+          "weapon.fire": 1.0,
+          "weapon.reload": 0.5
+        }
+      },
+      "minimum_legal": {
+        "clockwise": {
+          "net_force_body_n": [
+            0.0,
+            0.0
+          ],
+          "torque_capacity_n_m": 450000.0
+        },
+        "counterclockwise": {
+          "net_force_body_n": [
+            0.0,
+            0.0
+          ],
+          "torque_capacity_n_m": 450000.0
+        }
+      },
+      "unmanned_flagship": {
+        "crew_g": 17.078561145479135,
+        "hull_integrity_damage_per_step": 0.0006169596029232305,
+        "manual_damage_control_output_without_crew": 0.0,
+        "overg_command_scale": 1.0,
+        "structure_ratio": 1.6084207111480824,
+        "turning": {
+          "clockwise": {
+            "net_force_body_n": [
+              0.0,
+              0.0
+            ],
+            "torque_capacity_n_m": 550000.0
+          },
+          "counterclockwise": {
+            "net_force_body_n": [
+              0.0,
+              0.0
+            ],
+            "torque_capacity_n_m": 550000.0
+          }
+        }
+      }
+    }
+  },
+  "report": "gaotian.stage-f-three-canonical-ships-regression/v1",
+  "schema": "gaotian.ship/v1alpha1",
+  "status": "PASS",
+  "unmanned_module_catalog": {
+    "id": "gtw.module_catalog.fixture.stage_f_unmanned",
+    "source_sha256": "15825e048d2275b6d20c9b040ec01e437758f1160d9367bc0495b10bdca627bf",
+    "version": 1
+  }
+}

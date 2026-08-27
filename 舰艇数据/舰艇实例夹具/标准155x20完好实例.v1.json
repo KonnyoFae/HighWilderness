@@ -1,0 +1,110 @@
+{
+  "current_hull_integrity_fraction": 1.0,
+  "derived_ship_snapshot_sha256": "e247bdb379b4a66f629f3334588a43b41060495dce4161ea1c1820e70fb849bf",
+  "fixture_level": "contract_fixture",
+  "id": "gtw.sortie.fixture.standard_155x20_loaded.instance",
+  "kind": "ShipInstanceSnapshot",
+  "module_states": [
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "cargo_hold",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "cic",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "crew_quarters",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "damage_control",
+      "operating_mode": "standby"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "generator",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "lift_tank",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "main_engine",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "remote_core",
+      "operating_mode": "standby"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_left",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_right",
+      "operating_mode": "active"
+    }
+  ],
+  "name": "标准155×20米载货出航契约夹具·完好实例",
+  "operational_state": {
+    "bulk_cargo": [
+      {
+        "id": "cargo.fixture.materials",
+        "mass_kg": 50000.0,
+        "storage_instance_id": "cargo_hold"
+      }
+    ],
+    "crew": [
+      {
+        "count": 2,
+        "crew_type": "officer"
+      },
+      {
+        "count": 4,
+        "crew_type": "ordinary"
+      },
+      {
+        "count": 2,
+        "crew_type": "technical_officer"
+      },
+      {
+        "count": 2,
+        "crew_type": "veteran_damage_control"
+      }
+    ],
+    "fuel_units": 800.0,
+    "height_layer": "upper"
+  },
+  "outfit_plan": {
+    "id": "gtw.outfit.fixture.standard_155x20_minimum",
+    "version": 1
+  },
+  "power_policy": {
+    "allocation_mode": "strict_categories",
+    "category_order": [
+      "damage_control",
+      "weapons_and_active_defense",
+      "fire_control",
+      "sensors"
+    ],
+    "disabled_categories": []
+  },
+  "schema": "gaotian.ship/v1alpha1",
+  "sortie_configuration": {
+    "id": "gtw.sortie.fixture.standard_155x20_loaded",
+    "version": 1
+  },
+  "sortie_configuration_sha256": "6d39b8204da1f84f90d500b3f40e3971aaf51141d70d4933141f76320c4cdc55",
+  "version": 1
+}

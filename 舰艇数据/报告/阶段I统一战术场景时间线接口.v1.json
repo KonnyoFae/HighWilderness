@@ -1,0 +1,45 @@
+{
+  "actual_motion_impact": {
+    "armor": {
+      "available_penetration_mm": 167.02618030364812,
+      "damage_formula_points": 0.0,
+      "durability_after": 0.0,
+      "durability_before": 0.0,
+      "impact_angle_deg": 0.0,
+      "outcome": "penetrated",
+      "required_penetration_mm": 0.0,
+      "residual_energy_ratio": 1.0,
+      "ricochet_probability": 0.0
+    },
+    "damaged_module_instance_ids": [
+      "main_engine_port"
+    ],
+    "deck_id": "deck.0",
+    "deck_level": 0,
+    "edge_index": 1,
+    "hull_integrity_after": 0.98,
+    "hull_integrity_before": 1.0,
+    "impact_world_xy": [
+      -4.9,
+      121.70891540543735
+    ],
+    "projectile_id": "projectile.fixture.scene.actual_motion",
+    "region_id": "deck.0.region.0",
+    "relative_speed_mps": 1020.9328124100637,
+    "tactical_time_s": 0.13164893252816318,
+    "target_ship_id": "ship.fixture.scene.target"
+  },
+  "fixed_step_s": 0.016666666666666666,
+  "fixture_notice": "沿用阶段I技术替身舰、射速、弹种和损伤换算；本报告只冻结编排语义。",
+  "interface": "gaotian.tactical-scene-timeline/v1alpha1",
+  "policy": "gaotian.tactical-scene/boundary-lifecycle-fire-motion-impact/v2",
+  "projectile_substep_s": 0.005,
+  "verified_boundaries": [
+    "各舰机动、武器时钟和弹丸世界共享唯一场景步号与战术时刻",
+    "当前边界开火先生成弹丸，本步末边界开火完成结算后出生且年龄为零",
+    "弹丸命中使用目标本步实际首末机动状态插值，不再使用场景外位姿夹具",
+    "OverG、燃料和弹丸战损合并回实例，下一固定步由既有运行时编译器重算能力",
+    "武器事件必须精确落在固定步边界，缺失或多余的发射指令均拒绝整步提交",
+    "完整场景状态可保存重载并继续得到相同结果"
+  ]
+}

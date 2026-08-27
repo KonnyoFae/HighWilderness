@@ -1,0 +1,86 @@
+{
+  "balance_status": "prototype_unbalanced",
+  "compiler_interface": "gaotian.hull-compiler/v1alpha1",
+  "fixture_level": "canonical_blueprint_fixture",
+  "hull_fixtures": [
+    {
+      "id": "gtw.hull.fixture.standard_155x20",
+      "source_sha256": "50f5080401413994303fa12c7563e2c00e975054ed78b63ad13daf37fc2aa1a5",
+      "version": 1
+    },
+    {
+      "id": "gtw.hull.fixture.standard_155x20_two_deck_split_upper",
+      "source_sha256": "fa720bd5d6b842001b16bd1fa063fe04b37bc82427d4a6d97c27500ffc879522",
+      "version": 1
+    }
+  ],
+  "report": "gaotian.hull-compiler.stage-c-regression/v1",
+  "schema": "gaotian.ship/v1alpha1",
+  "status": "PASS",
+  "tests": {
+    "aerodynamic_cache": {
+      "multi_fixture": {
+        "forward_projected_area_m2": 150.0,
+        "forward_wave_area_change_m2": 12.679211469534051,
+        "lateral_projected_area_m2": 975.0,
+        "wet_surface_area_m2": 7820.365892531749
+      },
+      "runtime_formula_fixture": {
+        "drag_force_n": 2873878.655833903,
+        "equivalent_drag_area_m2": 49.721084010967175
+      },
+      "single_fixture": {
+        "forward_projected_area_m2": 100.0,
+        "forward_wave_area_change_m2": 6.227598566308244,
+        "lateral_projected_area_m2": 775.0,
+        "wet_surface_area_m2": 6920.365892531749
+      },
+      "status": "PASS"
+    },
+    "contract_and_hull": {
+      "fixture": "gtw.hull.fixture.standard_155x20@1",
+      "geometry": {
+        "area_m2": 2650.0,
+        "beam_m": 20.0,
+        "length_m": 155.0
+      },
+      "hull_inertia_kg_m2": 3279173958.3333335,
+      "hull_mass_kg": 2080250.0,
+      "installation_space": {
+        "exposed_top_cell_count": 75,
+        "internal_cell_count": 75,
+        "side_mount_slot_count": 64
+      },
+      "multi_deck_fixture": {
+        "deck_count": 2,
+        "fixture": "gtw.hull.fixture.standard_155x20_two_deck_split_upper@1",
+        "hull_mass_kg": 2207930.0,
+        "total_deck_area_m2": 3050.0
+      },
+      "safe_lateral_g": 59.00000000000001,
+      "safe_longitudinal_g": 8.000000000000002,
+      "safe_yaw_acceleration_rad_s2": 6.493638035135837,
+      "safe_yaw_rate_rad_s": 0.9902853124226373,
+      "source_sha256": "50f5080401413994303fa12c7563e2c00e975054ed78b63ad13daf37fc2aa1a5",
+      "status": "PASS"
+    },
+    "hull_rcs_cache": {
+      "coatings": {
+        "default": "普通涂料",
+        "default_multiplier": 1.0,
+        "stealth_runtime_usable": false,
+        "stealth_status": "awaiting_joint_calibration"
+      },
+      "multi_fixture": {
+        "forward_rcs_m2": 946.1806448231015,
+        "lateral_rcs_m2": 27607.281624421434
+      },
+      "single_fixture": {
+        "forward_rcs_m2": 135.78248142565337,
+        "lateral_rcs_m2": 21922.22801803958,
+        "mean_rcs_m2": 8917.401684953955
+      },
+      "status": "PASS"
+    }
+  }
+}

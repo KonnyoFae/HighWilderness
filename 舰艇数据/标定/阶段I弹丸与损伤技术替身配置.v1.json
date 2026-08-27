@@ -1,0 +1,76 @@
+{
+  "fixture_level": "contract_fixture",
+  "id": "gtw.projectile_profile.fixture.stage_i5",
+  "kind": "ProjectileProfileCatalog",
+  "name": "阶段I5弹丸与损伤技术替身配置",
+  "profiles": [
+    {
+      "ballistic": {
+        "caliber_mm": 76.0,
+        "form_factor": 0.95,
+        "mass_kg": 6.3,
+        "muzzle_velocity_mps": 905.0
+      },
+      "damage": {
+        "armor_damage_to_local_durability_proxy": 0.01,
+        "hull_integrity_damage_fraction": 0.02,
+        "internal_effect_radius_m": 5.0,
+        "internal_effect_range_m": 40.0,
+        "internal_module_damage_points": 40.0,
+        "surface_effect_radius_m": 5.0,
+        "surface_module_damage_points": 25.0
+      },
+      "maximum_lifetime_s": 30.0,
+      "munition_id": "gtw.munition.fixture.76mm.standard",
+      "name": "契约夹具76毫米半穿高爆弹",
+      "penetration": {
+        "aftereffect": "internal_blast",
+        "can_ricochet": true,
+        "impact_armor_damage_at_reference_speed": 20.0,
+        "normalization_deg": 5.0,
+        "obliquity_exponent": 1.1,
+        "reference_penetration_mm": 140.0,
+        "reference_speed_mps": 900.0,
+        "ricochet_full_deg": 75.0,
+        "ricochet_start_deg": 65.0,
+        "surface_effect_armor_damage": 10.0,
+        "velocity_exponent": 1.4
+      }
+    },
+    {
+      "ballistic": {
+        "caliber_mm": 76.0,
+        "form_factor": 1.0,
+        "mass_kg": 6.0,
+        "muzzle_velocity_mps": 900.0
+      },
+      "damage": {
+        "armor_damage_to_local_durability_proxy": 0.01,
+        "hull_integrity_damage_fraction": 0.005,
+        "internal_effect_radius_m": 0.0,
+        "internal_effect_range_m": 10.0,
+        "internal_module_damage_points": 10.0,
+        "surface_effect_radius_m": 7.5,
+        "surface_module_damage_points": 40.0
+      },
+      "maximum_lifetime_s": 30.0,
+      "munition_id": "gtw.munition.fixture.76mm.special",
+      "name": "契约夹具76毫米高爆弹",
+      "penetration": {
+        "aftereffect": "surface_blast",
+        "can_ricochet": false,
+        "impact_armor_damage_at_reference_speed": 5.0,
+        "normalization_deg": 0.0,
+        "obliquity_exponent": 1.2,
+        "reference_penetration_mm": 35.0,
+        "reference_speed_mps": 900.0,
+        "ricochet_full_deg": 90.0,
+        "ricochet_start_deg": 90.0,
+        "surface_effect_armor_damage": 40.0,
+        "velocity_exponent": 1.2
+      }
+    }
+  ],
+  "schema": "gaotian.projectile-profile/v1alpha1",
+  "version": 1
+}

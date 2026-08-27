@@ -1,0 +1,375 @@
+{
+  "$defs": {
+    "fixtureLevel": {
+      "enum": [
+        "contract_fixture",
+        "prototype_unbalanced",
+        "balance_reference"
+      ],
+      "type": "string"
+    },
+    "materialStock": {
+      "additionalProperties": false,
+      "properties": {
+        "material": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "units": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "material",
+        "units"
+      ],
+      "type": "object"
+    },
+    "moduleStock": {
+      "additionalProperties": false,
+      "properties": {
+        "prototype": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "units": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "prototype",
+        "units"
+      ],
+      "type": "object"
+    },
+    "munitionStock": {
+      "additionalProperties": false,
+      "properties": {
+        "munition_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "units": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "munition_id",
+        "units"
+      ],
+      "type": "object"
+    },
+    "optionalSha256": {
+      "oneOf": [
+        {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "resourceId": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "resourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "version": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "type": "object"
+    },
+    "shipyardFacilityProfile": {
+      "additionalProperties": false,
+      "properties": {
+        "capabilities": {
+          "items": {
+            "$ref": "#/$defs/workKind"
+          },
+          "uniqueItems": true,
+          "type": "array"
+        },
+        "fixture_level": {
+          "$ref": "#/$defs/fixtureLevel"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "ShipyardFacilityProfile"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "schema": {
+          "const": "gaotian.ship-logistics/v1alpha1"
+        },
+        "version": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "work_units_per_strategic_second": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "schema",
+        "kind",
+        "id",
+        "version",
+        "name",
+        "fixture_level",
+        "capabilities",
+        "work_units_per_strategic_second"
+      ],
+      "type": "object"
+    },
+    "shipyardInventoryState": {
+      "additionalProperties": false,
+      "properties": {
+        "fixture_level": {
+          "$ref": "#/$defs/fixtureLevel"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "ShipyardInventoryState"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "schema": {
+          "const": "gaotian.ship-logistics/v1alpha1"
+        },
+        "stock": {
+          "$ref": "#/$defs/stockBundle"
+        },
+        "version": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema",
+        "kind",
+        "id",
+        "version",
+        "name",
+        "fixture_level",
+        "stock"
+      ],
+      "type": "object"
+    },
+    "shipyardWorkOrder": {
+      "additionalProperties": false,
+      "properties": {
+        "confirmed_world_time_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "facility": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "fixture_level": {
+          "$ref": "#/$defs/fixtureLevel"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "ShipyardWorkOrder"
+        },
+        "last_progress_world_time_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "quote": {
+          "$ref": "#/$defs/workQuote"
+        },
+        "remaining_work_units": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "schema": {
+          "const": "gaotian.ship-logistics/v1alpha1"
+        },
+        "status": {
+          "enum": [
+            "queued",
+            "in_progress",
+            "completed_unsettled",
+            "artifact_applied_unsettled",
+            "settled"
+          ],
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema",
+        "kind",
+        "id",
+        "version",
+        "name",
+        "fixture_level",
+        "facility",
+        "quote",
+        "status",
+        "confirmed_world_time_s",
+        "last_progress_world_time_s",
+        "remaining_work_units"
+      ],
+      "type": "object"
+    },
+    "stockBundle": {
+      "additionalProperties": false,
+      "properties": {
+        "fuel_units": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "maintenance_material_units": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "materials": {
+          "items": {
+            "$ref": "#/$defs/materialStock"
+          },
+          "type": "array"
+        },
+        "modules": {
+          "items": {
+            "$ref": "#/$defs/moduleStock"
+          },
+          "type": "array"
+        },
+        "munitions": {
+          "items": {
+            "$ref": "#/$defs/munitionStock"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "materials",
+        "maintenance_material_units",
+        "modules",
+        "munitions",
+        "fuel_units"
+      ],
+      "type": "object"
+    },
+    "workKind": {
+      "enum": [
+        "ship_construction",
+        "ship_damaged_module_dismantle",
+        "ship_destroyed_residue_clearance",
+        "ship_refit",
+        "ship_repair",
+        "ship_rearm",
+        "ship_resupply"
+      ],
+      "type": "string"
+    },
+    "workQuote": {
+      "additionalProperties": false,
+      "properties": {
+        "completion_artifact_kind": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "diagnostics": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "expected_outputs": {
+          "$ref": "#/$defs/stockBundle"
+        },
+        "fixture_level": {
+          "$ref": "#/$defs/fixtureLevel"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "$ref": "#/$defs/workKind"
+        },
+        "requirements": {
+          "$ref": "#/$defs/stockBundle"
+        },
+        "source_design_sha256": {
+          "$ref": "#/$defs/optionalSha256"
+        },
+        "source_instance_sha256": {
+          "$ref": "#/$defs/optionalSha256"
+        },
+        "target_design_sha256": {
+          "$ref": "#/$defs/optionalSha256"
+        },
+        "target_state_sha256": {
+          "$ref": "#/$defs/optionalSha256"
+        },
+        "work_units": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "fixture_level",
+        "requirements",
+        "expected_outputs",
+        "work_units",
+        "completion_artifact_kind",
+        "source_design_sha256",
+        "source_instance_sha256",
+        "target_design_sha256",
+        "target_state_sha256",
+        "diagnostics"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "gaotian.ship-logistics/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/shipyardFacilityProfile"
+    },
+    {
+      "$ref": "#/$defs/shipyardInventoryState"
+    },
+    {
+      "$ref": "#/$defs/shipyardWorkOrder"
+    }
+  ],
+  "title": "《高天荒野》舰艇船坞后勤数据契约 v1alpha1"
+}

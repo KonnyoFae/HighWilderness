@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.tactical-engagement-boundary/v1alpha1",
+  "title": "高天荒野战术交战边界配置",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "fixture_level",
+    "id",
+    "kind",
+    "layer_distances_m",
+    "name",
+    "schema",
+    "version"
+  ],
+  "properties": {
+    "fixture_level": {
+      "enum": ["contract_fixture", "prototype_unbalanced", "balance_reference"]
+    },
+    "id": {"type": "string", "pattern": "^[a-z0-9._-]+$"},
+    "kind": {"const": "TacticalEngagementBoundaryProfile"},
+    "layer_distances_m": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["cloud", "rain", "upper"],
+      "properties": {
+        "cloud": {"type": "number", "exclusiveMinimum": 0},
+        "rain": {"type": "number", "exclusiveMinimum": 0},
+        "upper": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "name": {"type": "string", "minLength": 1},
+    "schema": {"const": "gaotian.tactical-engagement-boundary/v1alpha1"},
+    "version": {"type": "integer", "minimum": 1}
+  }
+}

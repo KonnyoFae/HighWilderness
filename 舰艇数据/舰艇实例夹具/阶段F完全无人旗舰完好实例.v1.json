@@ -1,0 +1,107 @@
+{
+  "current_hull_integrity_fraction": 1.0,
+  "derived_ship_snapshot_sha256": "0dc5c3cda33efb3460737bc2f38003c481bfba47e529687002f88d5e717e2d70",
+  "fixture_level": "contract_fixture",
+  "id": "gtw.sortie.fixture.stage_f.unmanned_flagship.instance",
+  "kind": "ShipInstanceSnapshot",
+  "module_states": [
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "ammunition_magazine",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 120.0,
+      "instance_id": "cic",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "damage_control",
+      "operating_mode": "standby"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "fire_control",
+      "operating_mode": "standby"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "generator",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "lift_tank",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 120.0,
+      "instance_id": "main_engine",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "remote_core",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "sensor",
+      "operating_mode": "standby"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_port_aft",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_port_fore",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_starboard_aft",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_starboard_fore",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "weapon",
+      "operating_mode": "standby"
+    }
+  ],
+  "name": "阶段F完全无人旗舰出航·完好实例",
+  "operational_state": {
+    "bulk_cargo": [],
+    "crew": [],
+    "fuel_units": 800.0,
+    "height_layer": "upper"
+  },
+  "outfit_plan": {
+    "id": "gtw.outfit.fixture.stage_f.unmanned_flagship",
+    "version": 1
+  },
+  "power_policy": {
+    "allocation_mode": "strict_categories",
+    "category_order": [
+      "damage_control",
+      "weapons_and_active_defense",
+      "fire_control",
+      "sensors"
+    ],
+    "disabled_categories": []
+  },
+  "schema": "gaotian.ship/v1alpha1",
+  "sortie_configuration": {
+    "id": "gtw.sortie.fixture.stage_f.unmanned_flagship",
+    "version": 1
+  },
+  "sortie_configuration_sha256": "d186a9f89ed8d5a0f0653d866177d079034d6799b326fbf69154e32a205bc25e",
+  "version": 1
+}

@@ -1,0 +1,228 @@
+{
+  "decks": [
+    {
+      "id": "deck.0",
+      "is_base": true,
+      "level": 0,
+      "regions": [
+        {
+          "edge_armor": [
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            }
+          ],
+          "id": "deck.0.region.0",
+          "vertices_m": [
+            [
+              -10.0,
+              -45.0
+            ],
+            [
+              -5.0,
+              -75.0
+            ],
+            [
+              5.0,
+              -75.0
+            ],
+            [
+              10.0,
+              -45.0
+            ],
+            [
+              10.0,
+              50.0
+            ],
+            [
+              0.0,
+              80.0
+            ],
+            [
+              -10.0,
+              50.0
+            ]
+          ]
+        }
+      ],
+      "structure_material": {
+        "id": "gtw.material.structure.armor_steel",
+        "version": 1
+      }
+    },
+    {
+      "id": "deck.1",
+      "is_base": false,
+      "level": 1,
+      "regions": [
+        {
+          "edge_armor": [
+            {
+              "material": {
+                "id": "gtw.material.base_armor.aluminum_alloy",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.aluminum_alloy",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.aluminum_alloy",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.aluminum_alloy",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            }
+          ],
+          "id": "deck.1.region.port",
+          "vertices_m": [
+            [
+              -7.5,
+              -20.0
+            ],
+            [
+              -2.5,
+              -20.0
+            ],
+            [
+              -2.5,
+              20.0
+            ],
+            [
+              -7.5,
+              20.0
+            ]
+          ]
+        },
+        {
+          "edge_armor": [
+            {
+              "material": {
+                "id": "gtw.material.base_armor.aluminum_alloy",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.aluminum_alloy",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.aluminum_alloy",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.aluminum_alloy",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            }
+          ],
+          "id": "deck.1.region.starboard",
+          "vertices_m": [
+            [
+              2.5,
+              -20.0
+            ],
+            [
+              7.5,
+              -20.0
+            ],
+            [
+              7.5,
+              20.0
+            ],
+            [
+              2.5,
+              20.0
+            ]
+          ]
+        }
+      ],
+      "structure_material": {
+        "id": "gtw.material.structure.aluminum_alloy",
+        "version": 1
+      }
+    }
+  ],
+  "fixture_level": "canonical_blueprint_fixture",
+  "grid": {
+    "cell_size_m": 5.0,
+    "cic_origin_cell": [
+      0,
+      0
+    ],
+    "deck_height_m": 5.0,
+    "forward_axis": "+Y",
+    "symmetry_axis": "Y"
+  },
+  "id": "gtw.hull.fixture.stage_f.conventional_crewed",
+  "kind": "HullBlueprint",
+  "name": "阶段F常规有人战舰船壳",
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

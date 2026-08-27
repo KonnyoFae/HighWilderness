@@ -1,0 +1,253 @@
+{
+  "fixture_notice": "弹量仅用于验证状态闭环，不是教程舰或76毫米火炮的正式平衡值。",
+  "interface": "gaotian.ammunition-actions/v1alpha1",
+  "layout_sources": {
+    "outfit_plan": {
+      "id": "gtw.outfit.fixture.stage_f.conventional_crewed",
+      "version": 1
+    },
+    "outfit_snapshot_sha256": "817cdfb97a5099b2432e78d774dfcbdfc6797f3f27c702e78675efa9a874a897",
+    "ship_role": "stage_f_conventional_crewed_technical_surrogate"
+  },
+  "positive_chain": {
+    "actions": [
+      {
+        "action": {
+          "fire_control_instance_id": "fire_control",
+          "id": "action.fixture.fire",
+          "kind": "fire",
+          "munition_id": "gtw.munition.fixture.76mm.standard",
+          "rounds": 1,
+          "weapon_instance_id": "weapon_upper_port"
+        },
+        "active_automatic_events": [
+          "ship.fire_control_required",
+          "ship.weapon_fire_requested"
+        ],
+        "function_efficiencies": {
+          "fire_control.solution": 1.0,
+          "weapon.aim": 1.0,
+          "weapon.fire": 1.0
+        },
+        "interface": "gaotian.ammunition-actions/v1alpha1",
+        "magazine_withdrawals": [],
+        "policies": {
+          "ammunition_pool": "gaotian.ammunition-pool/physical-magazines-ship-shared-feed/v1",
+          "ready_round_accounting": "gaotian.ready-round/one-inventory-unit-per-round/v1"
+        },
+        "resulting_ammunition_state": {
+          "magazines": [
+            {
+              "instance_id": "ammunition_magazine",
+              "inventory": [
+                {
+                  "munition_id": "gtw.munition.fixture.76mm.special",
+                  "units": 2
+                },
+                {
+                  "munition_id": "gtw.munition.fixture.76mm.standard",
+                  "units": 4
+                }
+              ]
+            }
+          ],
+          "weapons": [
+            {
+              "instance_id": "weapon_upper_port",
+              "munition_id": null,
+              "ready_rounds": 0
+            }
+          ]
+        },
+        "resulting_instance_sha256": "cbc6af17423a3da4d6979cf0ba3b5edaf1d5d1f5a188761665a364d45c96152d",
+        "source_instance_sha256": "a1ab041c1b9f5d03c08313e055530f49ff39ab06a1b91088ab84b890e78b644b"
+      },
+      {
+        "action": {
+          "fire_control_instance_id": null,
+          "id": "action.fixture.reload_special",
+          "kind": "reload",
+          "munition_id": "gtw.munition.fixture.76mm.special",
+          "rounds": 1,
+          "weapon_instance_id": "weapon_upper_port"
+        },
+        "active_automatic_events": [
+          "ship.weapon_fire_requested"
+        ],
+        "function_efficiencies": {
+          "ammunition_magazine.ammunition.feed": 1.0,
+          "ammunition_magazine.ammunition.inventory": 1.0,
+          "weapon.reload": 1.0
+        },
+        "interface": "gaotian.ammunition-actions/v1alpha1",
+        "magazine_withdrawals": [
+          {
+            "magazine_instance_id": "ammunition_magazine",
+            "munition_id": "gtw.munition.fixture.76mm.special",
+            "units": 1
+          }
+        ],
+        "policies": {
+          "ammunition_pool": "gaotian.ammunition-pool/physical-magazines-ship-shared-feed/v1",
+          "ready_round_accounting": "gaotian.ready-round/one-inventory-unit-per-round/v1"
+        },
+        "resulting_ammunition_state": {
+          "magazines": [
+            {
+              "instance_id": "ammunition_magazine",
+              "inventory": [
+                {
+                  "munition_id": "gtw.munition.fixture.76mm.special",
+                  "units": 1
+                },
+                {
+                  "munition_id": "gtw.munition.fixture.76mm.standard",
+                  "units": 4
+                }
+              ]
+            }
+          ],
+          "weapons": [
+            {
+              "instance_id": "weapon_upper_port",
+              "munition_id": "gtw.munition.fixture.76mm.special",
+              "ready_rounds": 1
+            }
+          ]
+        },
+        "resulting_instance_sha256": "b4b26bd47b1b9e41b3a7936df4ddefea077aae0b54bb9508eec6ccb0f010bc52",
+        "source_instance_sha256": "cbc6af17423a3da4d6979cf0ba3b5edaf1d5d1f5a188761665a364d45c96152d"
+      },
+      {
+        "action": {
+          "fire_control_instance_id": "fire_control",
+          "id": "action.fixture.fire",
+          "kind": "fire",
+          "munition_id": "gtw.munition.fixture.76mm.special",
+          "rounds": 1,
+          "weapon_instance_id": "weapon_upper_port"
+        },
+        "active_automatic_events": [
+          "ship.fire_control_required",
+          "ship.weapon_fire_requested"
+        ],
+        "function_efficiencies": {
+          "fire_control.solution": 1.0,
+          "weapon.aim": 1.0,
+          "weapon.fire": 1.0
+        },
+        "interface": "gaotian.ammunition-actions/v1alpha1",
+        "magazine_withdrawals": [],
+        "policies": {
+          "ammunition_pool": "gaotian.ammunition-pool/physical-magazines-ship-shared-feed/v1",
+          "ready_round_accounting": "gaotian.ready-round/one-inventory-unit-per-round/v1"
+        },
+        "resulting_ammunition_state": {
+          "magazines": [
+            {
+              "instance_id": "ammunition_magazine",
+              "inventory": [
+                {
+                  "munition_id": "gtw.munition.fixture.76mm.special",
+                  "units": 1
+                },
+                {
+                  "munition_id": "gtw.munition.fixture.76mm.standard",
+                  "units": 4
+                }
+              ]
+            }
+          ],
+          "weapons": [
+            {
+              "instance_id": "weapon_upper_port",
+              "munition_id": null,
+              "ready_rounds": 0
+            }
+          ]
+        },
+        "resulting_instance_sha256": "56db975f806fdd12508f1f59cc68aac0b46d24bc4ebe67b36d6c2c1cec6901da",
+        "source_instance_sha256": "b4b26bd47b1b9e41b3a7936df4ddefea077aae0b54bb9508eec6ccb0f010bc52"
+      },
+      {
+        "action": {
+          "fire_control_instance_id": null,
+          "id": "action.fixture.reload_standard",
+          "kind": "reload",
+          "munition_id": "gtw.munition.fixture.76mm.standard",
+          "rounds": 1,
+          "weapon_instance_id": "weapon_upper_port"
+        },
+        "active_automatic_events": [
+          "ship.weapon_fire_requested"
+        ],
+        "function_efficiencies": {
+          "ammunition_magazine.ammunition.feed": 1.0,
+          "ammunition_magazine.ammunition.inventory": 1.0,
+          "weapon.reload": 1.0
+        },
+        "interface": "gaotian.ammunition-actions/v1alpha1",
+        "magazine_withdrawals": [
+          {
+            "magazine_instance_id": "ammunition_magazine",
+            "munition_id": "gtw.munition.fixture.76mm.standard",
+            "units": 1
+          }
+        ],
+        "policies": {
+          "ammunition_pool": "gaotian.ammunition-pool/physical-magazines-ship-shared-feed/v1",
+          "ready_round_accounting": "gaotian.ready-round/one-inventory-unit-per-round/v1"
+        },
+        "resulting_ammunition_state": {
+          "magazines": [
+            {
+              "instance_id": "ammunition_magazine",
+              "inventory": [
+                {
+                  "munition_id": "gtw.munition.fixture.76mm.special",
+                  "units": 1
+                },
+                {
+                  "munition_id": "gtw.munition.fixture.76mm.standard",
+                  "units": 3
+                }
+              ]
+            }
+          ],
+          "weapons": [
+            {
+              "instance_id": "weapon_upper_port",
+              "munition_id": "gtw.munition.fixture.76mm.standard",
+              "ready_rounds": 1
+            }
+          ]
+        },
+        "resulting_instance_sha256": "f3596bdd7c2a7f07132c7ef041ae74bc5ea24c48be85c7bc61d1697a02b8d772",
+        "source_instance_sha256": "56db975f806fdd12508f1f59cc68aac0b46d24bc4ebe67b36d6c2c1cec6901da"
+      }
+    ],
+    "final_inventory": {
+      "gtw.munition.fixture.76mm.special": 1,
+      "gtw.munition.fixture.76mm.standard": 3
+    },
+    "final_ready": {
+      "munition_id": "gtw.munition.fixture.76mm.standard",
+      "rounds": 1
+    },
+    "save_reload_roundtrip": true
+  },
+  "status": "PASS",
+  "tested_failures": [
+    "missing_ammunition_state",
+    "missing_fire_control",
+    "target_out_of_range",
+    "target_distance_nonfinite",
+    "wrong_ready_munition",
+    "destroyed_fire_control",
+    "destroyed_magazine",
+    "weapon_power_category_disabled",
+    "fire_control_power_category_disabled",
+    "reload_crew_missing",
+    "magazine_capacity_exceeded"
+  ]
+}

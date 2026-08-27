@@ -1,0 +1,45 @@
+{
+  "fixture_notice": "材料单位、维护材料等效量、设施吞吐与作业时长只验证合同关系，不是正式价格、产能或教程舰工时。",
+  "interface": "gaotian.shipyard-logistics/v1alpha1",
+  "orders": {
+    "construction": {
+      "material_sku_count": 2,
+      "module_units": 18,
+      "new_instance_matches_legacy_initialization_plus_design_state": true,
+      "work_units": 2258700.0
+    },
+    "rearm": {
+      "munition_units": 1,
+      "state_applied": true
+    },
+    "refit": {
+      "added_module_units": 1,
+      "current_design_transition_applied": true,
+      "returned_module_units": 1
+    },
+    "repair": {
+      "destroyed_residue_preserved": true,
+      "maintenance_material_units": 442586,
+      "repairable_damage_restored": true
+    },
+    "resupply": {
+      "fuel_units": 300.0,
+      "state_applied": true
+    }
+  },
+  "policies": {
+    "confirmation_reserves_inventory": true,
+    "refit_outputs_wait_for_current_design_transition": true,
+    "special_event_same_world_time_no_progress": true,
+    "strategic_time_only_progress": true
+  },
+  "status": "PASS",
+  "tested_failures": [
+    "inventory_insufficient",
+    "facility_capability_missing",
+    "world_time_reversed",
+    "source_instance_changed_during_order",
+    "refit_settlement_before_design_transition",
+    "refit_destroyed_residue_requires_clearance"
+  ]
+}

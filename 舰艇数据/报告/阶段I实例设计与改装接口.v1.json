@@ -1,0 +1,32 @@
+{
+  "fixture_notice": "拆卸成功/失败、废金属种类与7单位产量均为外部注入的合同夹具，不是正式概率或回收公式。",
+  "interface": "gaotian.ship-instance-design-state/v1alpha1",
+  "persistence": {
+    "construction_hull_embedded": true,
+    "current_outfit_embedded": true,
+    "deleted_blueprint_reconstruction_verified": true,
+    "historical_sortie_and_construction_sources_unchanged": true,
+    "round_trip_verified": true
+  },
+  "refit": {
+    "artifact_before_inventory_settlement_required": true,
+    "continuous_refit_revision": 3,
+    "original_module_returned": true,
+    "runtime_compiles_against_current_design": true
+  },
+  "residue_and_dismantle": {
+    "destroyed_residue_cleared": true,
+    "externally_resolved_scrap_units": 7,
+    "failed_dismantle_preserves_ship": true,
+    "successful_dismantle_returns_module": true
+  },
+  "status": "PASS",
+  "tested_failures": [
+    "design_order_settlement_before_artifact_application",
+    "dismantle_outcome_changed_after_confirmation",
+    "live_module_sent_to_residue_clearance",
+    "destroyed_module_sent_to_dismantle",
+    "damaged_module_implicitly_removed_by_refit",
+    "loaded_weapon_removed_before_unloading"
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "catalog": {
+    "reference": {
+      "id": "gtw.projectile_profile.fixture.stage_i5",
+      "version": 1
+    },
+    "source_sha256": "b3bd4f0fe251f3173ea2252456f484c1d14d04965bf8c6de438216f91f109d63"
+  },
+  "fixture_notice": "弹种与损伤换算仍是契约技术替身，不是正式内容平衡值。",
+  "interface": "gaotian.tactical-projectile-world/v1alpha1",
+  "penetration_case": {
+    "armor": {
+      "available_penetration_mm": 162.23827601452513,
+      "damage_formula_points": 24.688499272132603,
+      "durability_after": 4.753115007278674,
+      "durability_before": 5.0,
+      "impact_angle_deg": 0.0,
+      "outcome": "penetrated",
+      "required_penetration_mm": 100.0,
+      "residual_energy_ratio": 0.2544353638939122,
+      "ricochet_probability": 0.0
+    },
+    "damaged_module_instance_ids": [
+      "main_engine_port"
+    ],
+    "deck_id": "deck.0",
+    "deck_level": 0,
+    "edge_index": 1,
+    "hull_integrity_after": 0.9949112927221218,
+    "hull_integrity_before": 1.0,
+    "impact_world_xy": [
+      -4.9,
+      125.0
+    ],
+    "projectile_id": "projectile.fixture.stage_i5.penetration",
+    "region_id": "deck.0.region.0",
+    "relative_speed_mps": 999.9421085849773,
+    "tactical_time_s": 0.13466778538056945,
+    "target_ship_id": "ship.fixture.target_100mm"
+  },
+  "policies": {
+    "damage": "gaotian.projectile/profile-adapted-ship-damage/v1",
+    "hit": "gaotian.projectile/explicit-deck-segment-edge/v1",
+    "integration": "gaotian.projectile/fixed-time-step-frozen-cd/v1"
+  },
+  "source_fire_event_sha256": "91bea0cef68e28028b84a4c0b21aacf6af341b03325cf2e29c272a97db636f57",
+  "stopped_surface_case": {
+    "armor": {
+      "available_penetration_mm": 139.62220922141307,
+      "damage_formula_points": 21.953766668382187,
+      "durability_after": 20.68046233331618,
+      "durability_before": 20.900000000000002,
+      "impact_angle_deg": 0.0,
+      "outcome": "stopped",
+      "required_penetration_mm": 148.5,
+      "residual_energy_ratio": 0.0,
+      "ricochet_probability": 0.0
+    },
+    "damaged_module_instance_ids": [
+      "thruster_port_aft"
+    ],
+    "deck_id": "deck.0",
+    "deck_level": 0,
+    "edge_index": 6,
+    "hull_integrity_after": 1.0,
+    "hull_integrity_before": 1.0,
+    "impact_world_xy": [
+      -10.0,
+      -27.5
+    ],
+    "projectile_id": "projectile.fixture.stage_i5.surface",
+    "region_id": "deck.0.region.0",
+    "relative_speed_mps": 898.2645769013702,
+    "tactical_time_s": 0.21627623514381844,
+    "target_ship_id": "ship.fixture.target_110mm_carbide"
+  },
+  "verified_boundaries": [
+    "I4成功单发开火事件才能生成弹丸",
+    "发射原点取真实武器模块中心并继承舰体速度",
+    "命中甲板层由上层显式注入，本层不发明散布或甲板概率",
+    "未击穿不降低有效厚度，但递减局部装甲耐久并可损伤外部模块",
+    "击穿后仅检索所选甲板层的真实内部占格并回写模块/船壳状态"
+  ]
+}

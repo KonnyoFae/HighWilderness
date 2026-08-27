@@ -1,0 +1,105 @@
+{
+  "$id": "gaotian.projectile-profile/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "fixture_level": {
+      "enum": ["contract_fixture", "prototype_unbalanced", "balance_reference"]
+    },
+    "id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "kind": {
+      "const": "ProjectileProfileCatalog"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "profiles": {
+      "items": {
+        "$ref": "#/$defs/profile"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gaotian.projectile-profile/v1alpha1"
+    },
+    "version": {
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": ["schema", "kind", "id", "version", "name", "fixture_level", "profiles"],
+  "type": "object",
+  "$defs": {
+    "nonNegative": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "positive": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "profile": {
+      "additionalProperties": false,
+      "properties": {
+        "ballistic": {
+          "additionalProperties": false,
+          "properties": {
+            "caliber_mm": {"$ref": "#/$defs/positive"},
+            "form_factor": {"$ref": "#/$defs/positive"},
+            "mass_kg": {"$ref": "#/$defs/positive"},
+            "muzzle_velocity_mps": {"$ref": "#/$defs/positive"}
+          },
+          "required": ["caliber_mm", "mass_kg", "muzzle_velocity_mps", "form_factor"],
+          "type": "object"
+        },
+        "damage": {
+          "additionalProperties": false,
+          "properties": {
+            "armor_damage_to_local_durability_proxy": {"$ref": "#/$defs/nonNegative"},
+            "hull_integrity_damage_fraction": {"maximum": 1, "minimum": 0, "type": "number"},
+            "internal_effect_radius_m": {"$ref": "#/$defs/nonNegative"},
+            "internal_effect_range_m": {"$ref": "#/$defs/nonNegative"},
+            "internal_module_damage_points": {"$ref": "#/$defs/nonNegative"},
+            "surface_effect_radius_m": {"$ref": "#/$defs/nonNegative"},
+            "surface_module_damage_points": {"$ref": "#/$defs/nonNegative"}
+          },
+          "required": ["armor_damage_to_local_durability_proxy", "surface_module_damage_points", "internal_module_damage_points", "hull_integrity_damage_fraction", "surface_effect_radius_m", "internal_effect_range_m", "internal_effect_radius_m"],
+          "type": "object"
+        },
+        "maximum_lifetime_s": {"$ref": "#/$defs/positive"},
+        "munition_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "type": "string"
+        },
+        "name": {"minLength": 1, "type": "string"},
+        "penetration": {
+          "additionalProperties": false,
+          "properties": {
+            "aftereffect": {
+              "enum": ["internal_blast", "surface_blast", "kinetic_ray", "fire"]
+            },
+            "can_ricochet": {"type": "boolean"},
+            "impact_armor_damage_at_reference_speed": {"$ref": "#/$defs/nonNegative"},
+            "normalization_deg": {"$ref": "#/$defs/nonNegative"},
+            "obliquity_exponent": {"$ref": "#/$defs/positive"},
+            "reference_penetration_mm": {"$ref": "#/$defs/nonNegative"},
+            "reference_speed_mps": {"$ref": "#/$defs/positive"},
+            "ricochet_full_deg": {"$ref": "#/$defs/nonNegative"},
+            "ricochet_start_deg": {"$ref": "#/$defs/nonNegative"},
+            "surface_effect_armor_damage": {"$ref": "#/$defs/nonNegative"},
+            "velocity_exponent": {"$ref": "#/$defs/positive"}
+          },
+          "required": ["reference_penetration_mm", "reference_speed_mps", "velocity_exponent", "obliquity_exponent", "normalization_deg", "ricochet_start_deg", "ricochet_full_deg", "impact_armor_damage_at_reference_speed", "surface_effect_armor_damage", "can_ricochet", "aftereffect"],
+          "type": "object"
+        }
+      },
+      "required": ["munition_id", "name", "ballistic", "penetration", "damage", "maximum_lifetime_s"],
+      "type": "object"
+    }
+  }
+}

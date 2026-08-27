@@ -1,0 +1,11 @@
+{
+  "fixture_level": "prototype_unbalanced",
+  "heading_full_wheel_error_deg": 30.0,
+  "id": "gtw.tactical_command_tuning.prototype.stage_i9",
+  "kind": "TacticalCommandTuningProfile",
+  "name": "阶段I9舰队指挥技术替身配置",
+  "schema": "gaotian.tactical-command-tuning/v1alpha1",
+  "velocity_error_full_command_mps": 50.0,
+  "version": 1,
+  "waypoint_tolerance_m": 25.0
+}

@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.tactical-scene-timeline/v1alpha1",
+  "title": "高天荒野统一战术场景活动状态",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "fixed_step_index",
+    "fixed_step_s",
+    "engagement_state",
+    "interface",
+    "policy",
+    "projectile_world",
+    "ships",
+    "tactical_time_s"
+  ],
+  "properties": {
+    "fixed_step_index": {"type": "integer", "minimum": 0},
+    "fixed_step_s": {"type": "number", "exclusiveMinimum": 0},
+    "engagement_state": {"type": ["object", "null"]},
+    "interface": {"const": "gaotian.tactical-scene-timeline/v1alpha1"},
+    "policy": {"const": "gaotian.tactical-scene/boundary-lifecycle-fire-motion-impact/v2"},
+    "projectile_world": {"type": "object"},
+    "ships": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "combat_state",
+          "derived_snapshot_sha256",
+          "fleet_id",
+          "lifecycle_state",
+          "motion_state",
+          "ship_id",
+          "side_id",
+          "sortie_configuration_sha256"
+        ],
+        "properties": {
+          "combat_state": {"type": "object"},
+          "derived_snapshot_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "fleet_id": {"type": "string", "pattern": "^[a-z0-9._-]+$"},
+          "lifecycle_state": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "command_status",
+              "exit_reason",
+              "exit_tactical_time_s",
+              "failure_causes",
+              "last_transition_step_index",
+              "physical_status"
+            ],
+            "properties": {
+              "command_status": {"enum": ["scene_command", "local_only", "uncommanded"]},
+              "exit_reason": {"enum": ["distance_disengaged", "fell_below_scene", "scripted_transfer", null]},
+              "exit_tactical_time_s": {"type": ["number", "null"], "minimum": 0},
+              "failure_causes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+              "last_transition_step_index": {"type": "integer", "minimum": 0},
+              "physical_status": {"enum": ["operational", "falling", "exited"]}
+            }
+          },
+          "motion_state": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "fixed_step_index",
+              "fuel_units",
+              "heading_rad",
+              "height_layer",
+              "hull_integrity_fraction",
+              "layer_transition",
+              "position_world_m",
+              "velocity_world_mps",
+              "yaw_rate_radps"
+            ],
+            "properties": {
+              "fixed_step_index": {"type": "integer", "minimum": 0},
+              "fuel_units": {"type": "number", "minimum": 0},
+              "heading_rad": {"type": "number"},
+              "height_layer": {"enum": ["upper", "cloud", "rain"]},
+              "hull_integrity_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+              "layer_transition": {"type": ["object", "null"]},
+              "position_world_m": {"$ref": "#/$defs/vector2"},
+              "velocity_world_mps": {"$ref": "#/$defs/vector2"},
+              "yaw_rate_radps": {"type": "number"}
+            }
+          },
+          "ship_id": {"type": "string", "pattern": "^[a-z0-9._-]+$"},
+          "side_id": {"type": "string", "pattern": "^[a-z0-9._-]+$"},
+          "sortie_configuration_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+        }
+      }
+    },
+    "tactical_time_s": {"type": "number", "minimum": 0}
+  },
+  "$defs": {
+    "vector2": {
+      "type": "array",
+      "prefixItems": [{"type": "number"}, {"type": "number"}],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    }
+  }
+}

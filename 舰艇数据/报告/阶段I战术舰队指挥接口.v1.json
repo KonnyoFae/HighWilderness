@@ -1,0 +1,22 @@
+{
+  "fixture_notice": "25m航点容差、30度满舵误差与50m/s速度误差只用于验证命令仲裁，不是正式自动驾驶调参。",
+  "interface": "gaotian.tactical-fleet-command/v1alpha1",
+  "policy": "gaotian.tactical-fleet-command/one-direct-ship-and-rts-orders/v1",
+  "status": "PASS",
+  "tuning_profile": {
+    "reference": {
+      "id": "gtw.tactical_command_tuning.prototype.stage_i9",
+      "version": 1
+    },
+    "source_sha256": "67d455f96ab06dc7955e202b6376f4ffdc1edc3adb963ba75a5272efbe381da7"
+  },
+  "verified_boundaries": [
+    "主旗舰/分旗舰/普通舰角色持久化并精确覆盖玩家阵营舰艇",
+    "常规战斗只冻结一艘旗舰为直控对象且玩家舰不得从NPC控制旁路获得第二控制通道",
+    "移动、多段航路、目标高度、航速、舰艏、巡逻和攻击意图使用统一可持久化命令合同",
+    "普通舰命令确定性转换为底层TacticalControlInput且自动命令不启用OverG",
+    "分旗舰直控失效后不允许切换并令幸存舰进入搜救撤离，额外损失留给战略层结算",
+    "最终动员允许普通舰接受命令但明确禁止任何玩家直控输入",
+    "指挥状态绑定场景与技术配置内容指纹并通过保存重载"
+  ]
+}

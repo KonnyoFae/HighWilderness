@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.tactical-command-tuning/v1alpha1",
+  "title": "高天荒野舰艇战术指挥技术配置契约 v1alpha1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "schema": {"const": "gaotian.tactical-command-tuning/v1alpha1"},
+    "kind": {"const": "TacticalCommandTuningProfile"},
+    "id": {"type": "string"},
+    "version": {"type": "integer", "minimum": 1},
+    "name": {"type": "string", "minLength": 1},
+    "fixture_level": {"enum": ["contract_fixture", "prototype_unbalanced", "balance_reference"]},
+    "waypoint_tolerance_m": {"type": "number", "exclusiveMinimum": 0},
+    "heading_full_wheel_error_deg": {"type": "number", "exclusiveMinimum": 0},
+    "velocity_error_full_command_mps": {"type": "number", "exclusiveMinimum": 0}
+  },
+  "required": [
+    "schema",
+    "kind",
+    "id",
+    "version",
+    "name",
+    "fixture_level",
+    "waypoint_tolerance_m",
+    "heading_full_wheel_error_deg",
+    "velocity_error_full_command_mps"
+  ]
+}

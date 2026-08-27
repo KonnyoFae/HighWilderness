@@ -1,0 +1,18 @@
+{
+  "active_remote_core_instance_id": "remote_core",
+  "bulk_cargo": [],
+  "control_mode": "remote_core",
+  "crew": [],
+  "fixture_level": "contract_fixture",
+  "fuel_units": 800.0,
+  "height_layer": "upper",
+  "id": "gtw.sortie.fixture.stage_f.unmanned_flagship",
+  "kind": "SortieConfiguration",
+  "name": "阶段F完全无人旗舰出航",
+  "outfit_plan": {
+    "id": "gtw.outfit.fixture.stage_f.unmanned_flagship",
+    "version": 1
+  },
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

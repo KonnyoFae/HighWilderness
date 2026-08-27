@@ -1,0 +1,35 @@
+{
+  "active_remote_core_instance_id": null,
+  "bulk_cargo": [],
+  "control_mode": "crewed",
+  "crew": [
+    {
+      "count": 2,
+      "crew_type": "officer"
+    },
+    {
+      "count": 6,
+      "crew_type": "ordinary"
+    },
+    {
+      "count": 2,
+      "crew_type": "technical_officer"
+    },
+    {
+      "count": 2,
+      "crew_type": "veteran_damage_control"
+    }
+  ],
+  "fixture_level": "contract_fixture",
+  "fuel_units": 500.0,
+  "height_layer": "upper",
+  "id": "gtw.sortie.fixture.stage_f.minimum_legal",
+  "kind": "SortieConfiguration",
+  "name": "阶段F最小合法舰出航",
+  "outfit_plan": {
+    "id": "gtw.outfit.fixture.stage_f.minimum_legal",
+    "version": 1
+  },
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

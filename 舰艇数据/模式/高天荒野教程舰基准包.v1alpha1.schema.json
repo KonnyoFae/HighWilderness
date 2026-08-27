@@ -1,0 +1,249 @@
+{
+  "$defs": {
+    "calibrationItem": {
+      "additionalProperties": false,
+      "properties": {
+        "acceptance_checks": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "blocker": {
+          "oneOf": [
+            {
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "critical": {
+          "type": "boolean"
+        },
+        "depends_on": {
+          "items": {
+            "$ref": "#/$defs/resourceId"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "domain": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "source_paths": {
+          "items": {
+            "$ref": "#/$defs/workspacePath"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "status": {
+          "enum": [
+            "frozen_formula",
+            "prototype_unbalanced",
+            "blocked_missing_contract",
+            "pending_user_decision",
+            "calibrated"
+          ]
+        }
+      },
+      "required": [
+        "acceptance_checks",
+        "blocker",
+        "critical",
+        "depends_on",
+        "domain",
+        "id",
+        "source_paths",
+        "status"
+      ],
+      "type": "object"
+    },
+    "candidate": {
+      "additionalProperties": false,
+      "properties": {
+        "approval_status": {
+          "enum": [
+            "not_user_approved",
+            "user_approved"
+          ]
+        },
+        "coating_catalog": {
+          "$ref": "#/$defs/exactResourcePath"
+        },
+        "hull_blueprint": {
+          "$ref": "#/$defs/exactResourcePath"
+        },
+        "material_catalogs": {
+          "items": {
+            "$ref": "#/$defs/exactResourcePath"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "merged_module_catalog": {
+          "$ref": "#/$defs/mergeIdentity"
+        },
+        "module_catalogs": {
+          "items": {
+            "$ref": "#/$defs/exactResourcePath"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "outfit_plan": {
+          "$ref": "#/$defs/exactResourcePath"
+        },
+        "role": {
+          "enum": [
+            "technical_surrogate",
+            "tutorial_candidate",
+            "approved_tutorial_baseline"
+          ]
+        },
+        "ship_instance_snapshot": {
+          "$ref": "#/$defs/exactResourcePath"
+        },
+        "sortie_configuration": {
+          "$ref": "#/$defs/exactResourcePath"
+        }
+      },
+      "required": [
+        "approval_status",
+        "coating_catalog",
+        "hull_blueprint",
+        "material_catalogs",
+        "merged_module_catalog",
+        "module_catalogs",
+        "outfit_plan",
+        "role",
+        "ship_instance_snapshot",
+        "sortie_configuration"
+      ],
+      "type": "object"
+    },
+    "exactResourcePath": {
+      "additionalProperties": false,
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/workspacePath"
+        },
+        "reference": {
+          "$ref": "#/$defs/resourceReference"
+        }
+      },
+      "required": [
+        "path",
+        "reference"
+      ],
+      "type": "object"
+    },
+    "mergeIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "fixture_level": {
+          "enum": [
+            "contract_fixture",
+            "prototype_unbalanced",
+            "balance_reference"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "version": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "fixture_level",
+        "id",
+        "name",
+        "version"
+      ],
+      "type": "object"
+    },
+    "resourceId": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "resourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "version": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "type": "object"
+    },
+    "workspacePath": {
+      "minLength": 1,
+      "type": "string"
+    }
+  },
+  "$id": "gaotian.ship-calibration/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "calibration_items": {
+      "items": {
+        "$ref": "#/$defs/calibrationItem"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "candidate": {
+      "$ref": "#/$defs/candidate"
+    },
+    "id": {
+      "$ref": "#/$defs/resourceId"
+    },
+    "kind": {
+      "const": "TutorialShipBaselinePackage"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gaotian.ship-calibration/v1alpha1"
+    },
+    "version": {
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "calibration_items",
+    "candidate",
+    "id",
+    "kind",
+    "name",
+    "schema",
+    "version"
+  ],
+  "title": "高天荒野教程舰基准包 v1alpha1",
+  "type": "object"
+}

@@ -1,0 +1,33 @@
+{
+  "continuous_fire": {
+    "fire_times_s": [
+      0.0,
+      1.0,
+      2.0
+    ],
+    "magazine_rounds_consumed_by_reload": 2,
+    "queue_completed": true
+  },
+  "fixture_notice": "60rpm 与0.25秒逐发装填只用于验证战术时间、冷却和队列合同，不是正式火炮射速或装填时间。",
+  "interface": "gaotian.weapon-action-timeline/v1alpha1",
+  "persistence": {
+    "active_queue_round_trip": true,
+    "cooldown_round_trip": true,
+    "profile_catalog_hash_bound": true
+  },
+  "status": "PASS",
+  "tested_failures": [
+    "timeline_initialized_without_ammunition_state",
+    "tactical_time_reversed",
+    "sequence_cancelled_without_ammunition_change",
+    "reload_interrupted_by_weapon_destruction",
+    "refit_attempted_with_active_weapon_sequence",
+    "volley_attempted_during_cooldown",
+    "volley_has_only_one_weapon",
+    "timing_profile_catalog_hash_changed"
+  ],
+  "volley": {
+    "same_tactical_time": true,
+    "weapon_count": 2
+  }
+}

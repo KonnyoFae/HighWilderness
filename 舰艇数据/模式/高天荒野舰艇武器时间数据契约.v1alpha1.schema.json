@@ -1,0 +1,85 @@
+{
+  "$id": "gaotian.weapon-timing/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "fixture_level": {
+      "enum": [
+        "contract_fixture",
+        "prototype_unbalanced",
+        "balance_reference"
+      ],
+      "type": "string"
+    },
+    "id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "kind": {
+      "const": "WeaponTimingProfileCatalog"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "profiles": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "cyclic_rate_rpm": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          },
+          "prototype": {
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "pattern": "^[a-z0-9][a-z0-9._-]*$",
+                "type": "string"
+              },
+              "version": {
+                "minimum": 1,
+                "type": "integer"
+              }
+            },
+            "required": [
+              "id",
+              "version"
+            ],
+            "type": "object"
+          },
+          "reload_seconds_per_round": {
+            "exclusiveMinimum": 0,
+            "type": "number"
+          }
+        },
+        "required": [
+          "prototype",
+          "cyclic_rate_rpm",
+          "reload_seconds_per_round"
+        ],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gaotian.weapon-timing/v1alpha1"
+    },
+    "version": {
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "kind",
+    "id",
+    "version",
+    "name",
+    "fixture_level",
+    "profiles"
+  ],
+  "title": "《高天荒野》舰艇武器时间数据契约 v1alpha1",
+  "type": "object"
+}

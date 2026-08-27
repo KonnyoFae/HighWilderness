@@ -1,0 +1,2028 @@
+{
+  "$id": "https://gaotianwilderness.invalid/schema/ship/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/materialCatalog"
+    },
+    {
+      "$ref": "#/$defs/hullBlueprint"
+    },
+    {
+      "$ref": "#/$defs/hullCoatingCatalog"
+    },
+    {
+      "$ref": "#/$defs/modulePrototypeCatalog"
+    },
+    {
+      "$ref": "#/$defs/outfitPlan"
+    },
+    {
+      "$ref": "#/$defs/sortieConfiguration"
+    },
+    {
+      "$ref": "#/$defs/shipInstanceSnapshot"
+    }
+  ],
+  "title": "高天荒野舰艇数据契约 v1alpha1",
+  "$defs": {
+    "baseArmorMaterial": {
+      "additionalProperties": false,
+      "properties": {
+        "cost_coefficient": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "density_kg_m3": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "local_durability_coefficient": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "protection_coefficient": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "shell_strength_coefficient": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        },
+        "work_difficulty": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "name",
+        "density_kg_m3",
+        "protection_coefficient",
+        "local_durability_coefficient",
+        "shell_strength_coefficient",
+        "cost_coefficient",
+        "work_difficulty"
+      ],
+      "type": "object"
+    },
+    "deck": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "is_base": {
+          "type": "boolean"
+        },
+        "level": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "regions": {
+          "items": {
+            "$ref": "#/$defs/region"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "structure_material": {
+          "$ref": "#/$defs/resourceReference"
+        }
+      },
+      "required": [
+        "id",
+        "level",
+        "is_base",
+        "structure_material",
+        "regions"
+      ],
+      "type": "object"
+    },
+    "edgeArmor": {
+      "additionalProperties": false,
+      "properties": {
+        "material": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "thickness_m": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "material",
+        "thickness_m"
+      ],
+      "type": "object"
+    },
+    "grid": {
+      "additionalProperties": false,
+      "properties": {
+        "cell_size_m": {
+          "const": 5.0
+        },
+        "cic_origin_cell": {
+          "const": [
+            0,
+            0
+          ]
+        },
+        "deck_height_m": {
+          "const": 5.0
+        },
+        "forward_axis": {
+          "const": "+Y"
+        },
+        "symmetry_axis": {
+          "const": "Y"
+        }
+      },
+      "required": [
+        "cell_size_m",
+        "deck_height_m",
+        "forward_axis",
+        "symmetry_axis",
+        "cic_origin_cell"
+      ],
+      "type": "object"
+    },
+    "hullBlueprint": {
+      "additionalProperties": false,
+      "properties": {
+        "decks": {
+          "items": {
+            "$ref": "#/$defs/deck"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "fixture_level": {
+          "enum": [
+            "canonical_blueprint_fixture",
+            "balance_reference"
+          ],
+          "type": "string"
+        },
+        "grid": {
+          "$ref": "#/$defs/grid"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "HullBlueprint"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "schema": {
+          "const": "gaotian.ship/v1alpha1"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      },
+      "required": [
+        "schema",
+        "kind",
+        "id",
+        "version",
+        "name",
+        "fixture_level",
+        "grid",
+        "decks"
+      ],
+      "type": "object"
+    },
+    "hullCoating": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "runtime_usable": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "rcs_multiplier": {
+                "exclusiveMinimum": 0,
+                "type": "number"
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "rcs_multiplier": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "balance_status": {
+          "enum": [
+            "baseline_locked",
+            "awaiting_joint_calibration"
+          ],
+          "type": "string"
+        },
+        "default_for_new_build": {
+          "type": "boolean"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "rcs_multiplier": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "runtime_usable": {
+          "type": "boolean"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "name",
+        "balance_status",
+        "rcs_multiplier",
+        "runtime_usable",
+        "default_for_new_build"
+      ],
+      "type": "object"
+    },
+    "hullCoatingCatalog": {
+      "additionalProperties": false,
+      "properties": {
+        "coatings": {
+          "items": {
+            "$ref": "#/$defs/hullCoating"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "HullCoatingCatalog"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "schema": {
+          "const": "gaotian.ship/v1alpha1"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      },
+      "required": [
+        "schema",
+        "kind",
+        "id",
+        "version",
+        "name",
+        "coatings"
+      ],
+      "type": "object"
+    },
+    "materialCatalog": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "catalog_type": {
+                "const": "structure"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "materials": {
+                "items": {
+                  "$ref": "#/$defs/structureMaterial"
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "catalog_type": {
+                "const": "base_armor"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "materials": {
+                "items": {
+                  "$ref": "#/$defs/baseArmorMaterial"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "properties": {
+        "catalog_type": {
+          "enum": [
+            "structure",
+            "base_armor"
+          ],
+          "type": "string"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "MaterialCatalog"
+        },
+        "materials": {
+          "minItems": 1,
+          "type": "array"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "schema": {
+          "const": "gaotian.ship/v1alpha1"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      },
+      "required": [
+        "schema",
+        "kind",
+        "id",
+        "version",
+        "name",
+        "catalog_type",
+        "materials"
+      ],
+      "type": "object"
+    },
+    "halfCellPoint": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "integer"
+        }
+      ],
+      "type": "array"
+    },
+    "moduleAutomation": {
+      "additionalProperties": false,
+      "properties": {
+        "automated_functions": {
+          "items": {
+            "$ref": "#/$defs/resourceId"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "engineering_microclusters_required": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1
+        },
+        "level": {
+          "enum": [
+            "manual",
+            "partial",
+            "full"
+          ],
+          "type": "string"
+        },
+        "unmanned_variant": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/resourceReference"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "level",
+        "automated_functions",
+        "unmanned_variant",
+        "engineering_microclusters_required"
+      ],
+      "type": "object"
+    },
+    "moduleCapability": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "fixed_to_cic_origin": {
+              "const": true
+            },
+            "kind": {
+              "const": "cic"
+            }
+          },
+          "required": [
+            "kind",
+            "fixed_to_cic_origin"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "fuel_capacity_units": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "kind": {
+              "const": "lift_fuel_tank"
+            },
+            "lift_force_n": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "kind",
+            "lift_force_n",
+            "fuel_capacity_units"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "fuel_units_per_s": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "kind": {
+              "enum": [
+                "main_engine",
+                "maneuver_thruster"
+              ]
+            },
+            "local_thrust_axis": {
+              "const": "+Y"
+            },
+            "response_time_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "thrust_n": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "kind",
+            "thrust_n",
+            "fuel_units_per_s",
+            "response_time_s",
+            "local_thrust_axis"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "generator"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "damage_control"
+            },
+            "simultaneous_incidents": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "team_capacity": {
+              "minimum": 1,
+              "type": "integer"
+            }
+          },
+          "required": [
+            "kind",
+            "team_capacity",
+            "simultaneous_incidents"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "capacities": {
+              "items": {
+                "$ref": "#/$defs/moduleCrewCapacity"
+              },
+              "minItems": 1,
+              "type": "array"
+            },
+            "kind": {
+              "const": "crew_quarters"
+            }
+          },
+          "required": [
+            "kind",
+            "capacities"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "bulk_cargo_capacity_kg": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "kind": {
+              "const": "cargo_hold"
+            }
+          },
+          "required": [
+            "kind",
+            "bulk_cargo_capacity_kg"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "remote_core"
+            }
+          },
+          "required": [
+            "kind"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "compatible_munition_ids": {
+              "items": {
+                "$ref": "#/$defs/resourceId"
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "engagement_domains": {
+              "items": {
+                "enum": [
+                  "aircraft",
+                  "fixed_installation",
+                  "missile",
+                  "ship"
+                ]
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "fire_control_requirement": {
+              "enum": [
+                "none",
+                "solution",
+                "continuous_guidance"
+              ]
+            },
+            "kind": {
+              "const": "weapon"
+            },
+            "maximum_range_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "minimum_range_m": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "ready_round_capacity": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "weapon_class": {
+              "enum": [
+                "active_defense",
+                "gun",
+                "missile_launcher"
+              ]
+            }
+          },
+          "required": [
+            "kind",
+            "weapon_class",
+            "engagement_domains",
+            "compatible_munition_ids",
+            "ready_round_capacity",
+            "minimum_range_m",
+            "maximum_range_m",
+            "fire_control_requirement"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "capacity_units": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "compatible_munition_ids": {
+              "items": {
+                "$ref": "#/$defs/resourceId"
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": true
+            },
+            "inventory_scope": {
+              "const": "ship_shared"
+            },
+            "kind": {
+              "const": "ammunition_magazine"
+            }
+          },
+          "required": [
+            "kind",
+            "capacity_units",
+            "compatible_munition_ids",
+            "inventory_scope"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "fire_control"
+            },
+            "maximum_lock_range_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "simultaneous_channels": {
+              "minimum": 1,
+              "type": "integer"
+            },
+            "supported_requirements": {
+              "items": {
+                "enum": [
+                  "solution",
+                  "continuous_guidance"
+                ]
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "kind",
+            "supported_requirements",
+            "simultaneous_channels",
+            "maximum_lock_range_m"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "sensor"
+            },
+            "maximum_instrumented_range_m": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "sensor_channel": {
+              "enum": [
+                "infrared",
+                "optical",
+                "radar"
+              ]
+            },
+            "supported_modes": {
+              "items": {
+                "enum": [
+                  "active_search",
+                  "fire_control_lock",
+                  "passive_search",
+                  "track"
+                ]
+              },
+              "minItems": 1,
+              "type": "array",
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "kind",
+            "sensor_channel",
+            "supported_modes",
+            "maximum_instrumented_range_m"
+          ],
+          "type": "object"
+        }
+      ]
+    },
+    "moduleCrewCapacity": {
+      "additionalProperties": false,
+      "properties": {
+        "capacity": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "crew_type": {
+          "$ref": "#/$defs/moduleCrewType"
+        }
+      },
+      "required": [
+        "crew_type",
+        "capacity"
+      ],
+      "type": "object"
+    },
+    "moduleCrewRequirement": {
+      "additionalProperties": false,
+      "properties": {
+        "crew_type": {
+          "$ref": "#/$defs/moduleCrewType"
+        },
+        "minimum_operating": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "standard": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "crew_type",
+        "minimum_operating",
+        "standard"
+      ],
+      "type": "object"
+    },
+    "moduleCrewType": {
+      "enum": [
+        "officer",
+        "technical_officer",
+        "pilot",
+        "veteran_damage_control",
+        "ordinary"
+      ],
+      "type": "string"
+    },
+    "moduleInstallation": {
+      "additionalProperties": false,
+      "properties": {
+        "allowed_rotations_deg": {
+          "items": {
+            "enum": [
+              0,
+              90,
+              180,
+              270
+            ],
+            "type": "integer"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "deck_rule": {
+          "enum": [
+            "any",
+            "base_only",
+            "local_exposed_top"
+          ],
+          "type": "string"
+        },
+        "exhaust_clearance_half_cells": {
+          "items": {
+            "$ref": "#/$defs/halfCellPoint"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "host_slot": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/resourceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "internal_deck_span": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "internal_footprint_half_cells": {
+          "items": {
+            "$ref": "#/$defs/halfCellPoint"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "provided_slots": {
+          "items": {
+            "$ref": "#/$defs/resourceId"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "side_clearance_half_cells": {
+          "items": {
+            "$ref": "#/$defs/halfCellPoint"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "side_external_footprint_half_cells": {
+          "items": {
+            "$ref": "#/$defs/halfCellPoint"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "side_mount_length_steps": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "top_clearance_half_cells": {
+          "items": {
+            "$ref": "#/$defs/halfCellPoint"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "top_deck_offset": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "top_footprint_half_cells": {
+          "items": {
+            "$ref": "#/$defs/halfCellPoint"
+          },
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "internal_footprint_half_cells",
+        "internal_deck_span",
+        "top_footprint_half_cells",
+        "top_deck_offset",
+        "top_clearance_half_cells",
+        "side_mount_length_steps",
+        "side_external_footprint_half_cells",
+        "side_clearance_half_cells",
+        "exhaust_clearance_half_cells",
+        "host_slot",
+        "provided_slots",
+        "allowed_rotations_deg",
+        "deck_rule"
+      ],
+      "type": "object"
+    },
+    "damageResponsePoint": {
+      "additionalProperties": false,
+      "properties": {
+        "durability_fraction": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "output_fraction": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "durability_fraction",
+        "output_fraction"
+      ],
+      "type": "object"
+    },
+    "moduleFunctionDamageResponse": {
+      "additionalProperties": false,
+      "properties": {
+        "function_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "model": {
+          "enum": [
+            "binary_until_destroyed",
+            "piecewise_linear",
+            "stepwise"
+          ],
+          "type": "string"
+        },
+        "points": {
+          "items": {
+            "$ref": "#/$defs/damageResponsePoint"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "function_id",
+        "model",
+        "points"
+      ],
+      "type": "object"
+    },
+    "modulePower": {
+      "additionalProperties": false,
+      "properties": {
+        "active_load_kw": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "generation_kw": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "consumer_category": {
+          "enum": [
+            "damage_control",
+            "weapons_and_active_defense",
+            "fire_control",
+            "sensors",
+            null
+          ]
+        },
+        "standby_load_kw": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "generation_kw",
+        "standby_load_kw",
+        "active_load_kw",
+        "consumer_category"
+      ],
+      "type": "object"
+    },
+    "modulePrototype": {
+      "additionalProperties": false,
+      "properties": {
+        "automatic_activation_events": {
+          "items": {
+            "$ref": "#/$defs/resourceId"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "automation": {
+          "$ref": "#/$defs/moduleAutomation"
+        },
+        "balance_status": {
+          "$ref": "#/$defs/moduleFixtureLevel"
+        },
+        "base_external_rcs_m2": {
+          "minimum": 0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "capability": {
+          "$ref": "#/$defs/moduleCapability"
+        },
+        "category": {
+          "enum": [
+            "ammunition_magazine",
+            "cic",
+            "lift_fuel_tank",
+            "main_engine",
+            "maneuver_thruster",
+            "generator",
+            "damage_control",
+            "crew_quarters",
+            "remote_core",
+            "cargo_hold",
+            "fire_control",
+            "sensor",
+            "weapon"
+          ],
+          "type": "string"
+        },
+        "counts_toward_departure_minimum": {
+          "type": "boolean"
+        },
+        "crew": {
+          "items": {
+            "$ref": "#/$defs/moduleCrewRequirement"
+          },
+          "type": "array"
+        },
+        "damage_responses": {
+          "items": {
+            "$ref": "#/$defs/moduleFunctionDamageResponse"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "default_operating_mode": {
+          "enum": [
+            "off",
+            "standby",
+            "active"
+          ],
+          "type": "string"
+        },
+        "durability_points": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "installation": {
+          "$ref": "#/$defs/moduleInstallation"
+        },
+        "mass_kg": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "power": {
+          "$ref": "#/$defs/modulePower"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "name",
+        "category",
+        "balance_status",
+        "installation",
+        "mass_kg",
+        "durability_points",
+        "base_external_rcs_m2",
+        "power",
+        "crew",
+        "damage_responses",
+        "counts_toward_departure_minimum",
+        "default_operating_mode",
+        "automatic_activation_events",
+        "automation",
+        "capability"
+      ],
+      "type": "object"
+    },
+    "moduleFixtureLevel": {
+      "enum": [
+        "contract_fixture",
+        "prototype_unbalanced",
+        "balance_reference"
+      ],
+      "type": "string"
+    },
+    "modulePrototypeCatalog": {
+      "additionalProperties": false,
+      "properties": {
+        "fixture_level": {
+          "$ref": "#/$defs/moduleFixtureLevel"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "ModulePrototypeCatalog"
+        },
+        "modules": {
+          "items": {
+            "$ref": "#/$defs/modulePrototype"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "schema": {
+          "const": "gaotian.ship/v1alpha1"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      },
+      "required": [
+        "schema",
+        "kind",
+        "id",
+        "version",
+        "name",
+        "fixture_level",
+        "modules"
+      ],
+      "type": "object"
+    },
+    "pointMeters": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "type": "array"
+    },
+    "outfitGridPlacement": {
+      "additionalProperties": false,
+      "properties": {
+        "anchor_half_cell": {
+          "$ref": "#/$defs/halfCellPoint"
+        },
+        "deck_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "grid"
+        },
+        "rotation_deg": {
+          "$ref": "#/$defs/rightAngleDegrees"
+        }
+      },
+      "required": [
+        "kind",
+        "deck_id",
+        "anchor_half_cell",
+        "rotation_deg"
+      ],
+      "type": "object"
+    },
+    "outfitHostedPlacement": {
+      "additionalProperties": false,
+      "properties": {
+        "host_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "hosted"
+        }
+      },
+      "required": [
+        "kind",
+        "host_instance_id"
+      ],
+      "type": "object"
+    },
+    "outfitModuleInstance": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "placement": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/outfitGridPlacement"
+            },
+            {
+              "$ref": "#/$defs/outfitSidePlacement"
+            },
+            {
+              "$ref": "#/$defs/outfitHostedPlacement"
+            }
+          ]
+        },
+        "prototype": {
+          "$ref": "#/$defs/resourceReference"
+        }
+      },
+      "required": [
+        "id",
+        "prototype",
+        "placement"
+      ],
+      "type": "object"
+    },
+    "outfitPlan": {
+      "additionalProperties": false,
+      "properties": {
+        "fixture_level": {
+          "$ref": "#/$defs/moduleFixtureLevel"
+        },
+        "hull_blueprint": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "hull_coating": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "OutfitPlan"
+        },
+        "modules": {
+          "items": {
+            "$ref": "#/$defs/outfitModuleInstance"
+          },
+          "type": "array"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "schema": {
+          "const": "gaotian.ship/v1alpha1"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      },
+      "required": [
+        "schema",
+        "kind",
+        "id",
+        "version",
+        "name",
+        "fixture_level",
+        "hull_blueprint",
+        "hull_coating",
+        "modules"
+      ],
+      "type": "object"
+    },
+    "outfitSidePlacement": {
+      "additionalProperties": false,
+      "properties": {
+        "deck_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "edge_index": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "kind": {
+          "const": "side"
+        },
+        "region_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "rotation_deg": {
+          "$ref": "#/$defs/rightAngleDegrees"
+        },
+        "start_slot_index": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "kind",
+        "deck_id",
+        "region_id",
+        "edge_index",
+        "start_slot_index",
+        "rotation_deg"
+      ],
+      "type": "object"
+    },
+    "region": {
+      "additionalProperties": false,
+      "properties": {
+        "edge_armor": {
+          "items": {
+            "$ref": "#/$defs/edgeArmor"
+          },
+          "minItems": 3,
+          "type": "array"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "vertices_m": {
+          "items": {
+            "$ref": "#/$defs/pointMeters"
+          },
+          "minItems": 3,
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "vertices_m",
+        "edge_armor"
+      ],
+      "type": "object"
+    },
+    "resourceId": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "resourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "type": "object"
+    },
+    "runtimeModuleState": {
+      "additionalProperties": false,
+      "properties": {
+        "current_durability_points": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "instance_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "operating_mode": {
+          "enum": [
+            "off",
+            "standby",
+            "active"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "instance_id",
+        "current_durability_points",
+        "operating_mode"
+      ],
+      "type": "object"
+    },
+    "runtimePowerPolicy": {
+      "additionalProperties": false,
+      "properties": {
+        "allocation_mode": {
+          "enum": [
+            "strict_categories",
+            "safe_nearest_to_cic"
+          ],
+          "type": "string"
+        },
+        "disabled_categories": {
+          "items": {
+            "enum": [
+              "damage_control",
+              "weapons_and_active_defense",
+              "fire_control",
+              "sensors"
+            ],
+            "type": "string"
+          },
+          "uniqueItems": true,
+          "type": "array"
+        },
+        "category_order": {
+          "items": {
+            "enum": [
+              "damage_control",
+              "weapons_and_active_defense",
+              "fire_control",
+              "sensors"
+            ],
+            "type": "string"
+          },
+          "maxItems": 4,
+          "minItems": 4,
+          "uniqueItems": true,
+          "type": "array"
+        }
+      },
+      "required": [
+        "allocation_mode",
+        "category_order",
+        "disabled_categories"
+      ],
+      "type": "object"
+    },
+    "ammunitionInventoryEntry": {
+      "additionalProperties": false,
+      "properties": {
+        "munition_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "units": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "munition_id",
+        "units"
+      ],
+      "type": "object"
+    },
+    "magazineAmmunitionState": {
+      "additionalProperties": false,
+      "properties": {
+        "instance_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "inventory": {
+          "items": {
+            "$ref": "#/$defs/ammunitionInventoryEntry"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "instance_id",
+        "inventory"
+      ],
+      "type": "object"
+    },
+    "shipAmmunitionState": {
+      "additionalProperties": false,
+      "properties": {
+        "magazines": {
+          "items": {
+            "$ref": "#/$defs/magazineAmmunitionState"
+          },
+          "type": "array"
+        },
+        "weapons": {
+          "items": {
+            "$ref": "#/$defs/weaponReadyAmmunitionState"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "magazines",
+        "weapons"
+      ],
+      "type": "object"
+    },
+    "weaponReadyAmmunitionState": {
+      "additionalProperties": false,
+      "properties": {
+        "instance_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "munition_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/resourceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ready_rounds": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "instance_id",
+        "munition_id",
+        "ready_rounds"
+      ],
+      "type": "object"
+    },
+    "weaponFireSequenceState": {
+      "additionalProperties": false,
+      "properties": {
+        "fire_control_instance_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/resourceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/resourceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "munition_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "next_event_time_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "phase": {
+          "enum": [
+            "awaiting_fire",
+            "reloading"
+          ],
+          "type": "string"
+        },
+        "remaining_rounds": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "target_distance_m": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "target_domain": {
+          "enum": [
+            "aircraft",
+            "fixed_installation",
+            "missile",
+            "ship"
+          ],
+          "type": "string"
+        },
+        "weapon_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        }
+      },
+      "required": [
+        "id",
+        "group_id",
+        "weapon_instance_id",
+        "munition_id",
+        "remaining_rounds",
+        "target_domain",
+        "target_distance_m",
+        "fire_control_instance_id",
+        "phase",
+        "next_event_time_s"
+      ],
+      "type": "object"
+    },
+    "weaponTimelineClock": {
+      "additionalProperties": false,
+      "properties": {
+        "instance_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "next_fire_time_s": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "instance_id",
+        "next_fire_time_s"
+      ],
+      "type": "object"
+    },
+    "weaponTimelineState": {
+      "additionalProperties": false,
+      "properties": {
+        "clocks": {
+          "items": {
+            "$ref": "#/$defs/weaponTimelineClock"
+          },
+          "type": "array"
+        },
+        "sequences": {
+          "items": {
+            "$ref": "#/$defs/weaponFireSequenceState"
+          },
+          "type": "array"
+        },
+        "tactical_time_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "timing_profile_catalog": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "timing_profile_catalog_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "timing_profile_catalog",
+        "timing_profile_catalog_sha256",
+        "tactical_time_s",
+        "clocks",
+        "sequences"
+      ],
+      "type": "object"
+    },
+    "shipInstanceSnapshot": {
+      "additionalProperties": false,
+      "properties": {
+        "ammunition_state": {
+          "$ref": "#/$defs/shipAmmunitionState"
+        },
+        "current_hull_integrity_fraction": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "derived_ship_snapshot_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "design_state": {
+          "$ref": "#/$defs/shipDesignState"
+        },
+        "fixture_level": {
+          "$ref": "#/$defs/moduleFixtureLevel"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "ShipInstanceSnapshot"
+        },
+        "module_states": {
+          "items": {
+            "$ref": "#/$defs/runtimeModuleState"
+          },
+          "type": "array"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "operational_state": {
+          "$ref": "#/$defs/shipOperationalState"
+        },
+        "outfit_plan": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "power_policy": {
+          "$ref": "#/$defs/runtimePowerPolicy"
+        },
+        "schema": {
+          "const": "gaotian.ship/v1alpha1"
+        },
+        "sortie_configuration": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "sortie_configuration_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        },
+        "weapon_timeline_state": {
+          "$ref": "#/$defs/weaponTimelineState"
+        }
+      },
+      "required": [
+        "schema",
+        "kind",
+        "id",
+        "version",
+        "name",
+        "fixture_level",
+        "outfit_plan",
+        "derived_ship_snapshot_sha256",
+        "current_hull_integrity_fraction",
+        "sortie_configuration",
+        "sortie_configuration_sha256",
+        "module_states",
+        "operational_state",
+        "power_policy"
+      ],
+      "type": "object"
+    },
+    "shipDesignState": {
+      "additionalProperties": false,
+      "properties": {
+        "construction_hull_blueprint": {
+          "$ref": "#/$defs/hullBlueprint"
+        },
+        "construction_hull_blueprint_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "current_derived_ship_snapshot_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "current_outfit_plan": {
+          "$ref": "#/$defs/outfitPlan"
+        },
+        "current_outfit_plan_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "revision": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "construction_hull_blueprint",
+        "construction_hull_blueprint_sha256",
+        "current_outfit_plan",
+        "current_outfit_plan_sha256",
+        "current_derived_ship_snapshot_sha256",
+        "revision"
+      ],
+      "type": "object"
+    },
+    "shipOperationalState": {
+      "additionalProperties": false,
+      "properties": {
+        "bulk_cargo": {
+          "items": {
+            "$ref": "#/$defs/sortieBulkCargo"
+          },
+          "type": "array"
+        },
+        "crew": {
+          "items": {
+            "$ref": "#/$defs/sortieCrew"
+          },
+          "type": "array"
+        },
+        "fuel_units": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "height_layer": {
+          "enum": [
+            "upper",
+            "cloud",
+            "rain"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "height_layer",
+        "fuel_units",
+        "crew",
+        "bulk_cargo"
+      ],
+      "type": "object"
+    },
+    "sortieBulkCargo": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "mass_kg": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "storage_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        }
+      },
+      "required": [
+        "id",
+        "storage_instance_id",
+        "mass_kg"
+      ],
+      "type": "object"
+    },
+    "sortieCrew": {
+      "additionalProperties": false,
+      "properties": {
+        "count": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "crew_type": {
+          "$ref": "#/$defs/moduleCrewType"
+        }
+      },
+      "required": [
+        "crew_type",
+        "count"
+      ],
+      "type": "object"
+    },
+    "sortieConfiguration": {
+      "additionalProperties": false,
+      "properties": {
+        "active_remote_core_instance_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/resourceId"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ammunition_loadout": {
+          "$ref": "#/$defs/shipAmmunitionState"
+        },
+        "bulk_cargo": {
+          "items": {
+            "$ref": "#/$defs/sortieBulkCargo"
+          },
+          "type": "array"
+        },
+        "control_mode": {
+          "enum": [
+            "crewed",
+            "remote_core"
+          ],
+          "type": "string"
+        },
+        "crew": {
+          "items": {
+            "$ref": "#/$defs/sortieCrew"
+          },
+          "type": "array"
+        },
+        "fixture_level": {
+          "$ref": "#/$defs/moduleFixtureLevel"
+        },
+        "fuel_units": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "height_layer": {
+          "enum": [
+            "upper",
+            "cloud",
+            "rain"
+          ],
+          "type": "string"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "SortieConfiguration"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "outfit_plan": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "schema": {
+          "const": "gaotian.ship/v1alpha1"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      },
+      "required": [
+        "schema",
+        "kind",
+        "id",
+        "version",
+        "name",
+        "fixture_level",
+        "outfit_plan",
+        "height_layer",
+        "control_mode",
+        "active_remote_core_instance_id",
+        "fuel_units",
+        "crew",
+        "bulk_cargo"
+      ],
+      "type": "object"
+    },
+    "rightAngleDegrees": {
+      "enum": [
+        0,
+        90,
+        180,
+        270
+      ],
+      "type": "integer"
+    },
+    "structureMaterial": {
+      "additionalProperties": false,
+      "properties": {
+        "cost_coefficient": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "density_kg_m3": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "durability_coefficient": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "strength_coefficient": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        },
+        "work_difficulty": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "name",
+        "density_kg_m3",
+        "strength_coefficient",
+        "durability_coefficient",
+        "cost_coefficient",
+        "work_difficulty"
+      ],
+      "type": "object"
+    },
+    "version": {
+      "minimum": 1,
+      "type": "integer"
+    }
+  }
+}

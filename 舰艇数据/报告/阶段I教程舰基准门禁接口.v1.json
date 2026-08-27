@@ -1,0 +1,156 @@
+{
+  "balance_status": "technical_surrogate_not_formal_balance",
+  "bootstrap": {
+    "calibration_dependency_contract": {
+      "blocked_dependency_cycle": true,
+      "error_code": "tutorial.calibration_dependency_cycle"
+    },
+    "determinism": {
+      "deterministic": true,
+      "package_source_sha256": "eb5ee1903961ab44725cd3eb49c3028fe6836c6c99cbb197f80e698246a841ab"
+    },
+    "exact_source_reference_gate": {
+      "blocked_reference_drift": true,
+      "error_code": "tutorial.source_reference_mismatch"
+    },
+    "formalization_gate": {
+      "blocked_premature_promotion": true,
+      "error_code": "tutorial.formal_gate_failed"
+    },
+    "no_balance_value_duplication": {
+      "forbidden_duplicate_value_fields": [],
+      "source_only_calibration_manifest": true
+    },
+    "technical_surrogate": {
+      "calibration_items": [
+        {
+          "critical": true,
+          "domain": "hull.formula_foundation",
+          "id": "tutorial.formula_foundation",
+          "status": "frozen_formula"
+        },
+        {
+          "critical": true,
+          "domain": "tutorial.ship_definition",
+          "id": "tutorial.ship_definition",
+          "status": "pending_user_decision"
+        },
+        {
+          "critical": true,
+          "domain": "propulsion.lift_power",
+          "id": "tutorial.propulsion_lift_power",
+          "status": "prototype_unbalanced"
+        },
+        {
+          "critical": true,
+          "domain": "control.handling_transition",
+          "id": "tutorial.handling_transition",
+          "status": "prototype_unbalanced"
+        },
+        {
+          "critical": true,
+          "domain": "environment.aerodynamics",
+          "id": "tutorial.environment_aerodynamics",
+          "status": "prototype_unbalanced"
+        },
+        {
+          "critical": true,
+          "domain": "combat.armor_ballistics",
+          "id": "tutorial.armor_ballistics",
+          "status": "prototype_unbalanced"
+        },
+        {
+          "critical": true,
+          "domain": "signature.rcs_sensor",
+          "id": "tutorial.rcs_sensor",
+          "status": "prototype_unbalanced"
+        },
+        {
+          "critical": true,
+          "domain": "operations.power_crew_automation",
+          "id": "tutorial.power_crew_automation",
+          "status": "prototype_unbalanced"
+        },
+        {
+          "critical": true,
+          "domain": "combat.ammunition_fire_control",
+          "id": "tutorial.ammunition_fire_control",
+          "status": "prototype_unbalanced"
+        },
+        {
+          "critical": true,
+          "domain": "economy.construction_maintenance",
+          "id": "tutorial.construction_maintenance",
+          "status": "prototype_unbalanced"
+        }
+      ],
+      "candidate": {
+        "approval_status": "not_user_approved",
+        "role": "technical_surrogate",
+        "warning": "technical_surrogate_is_not_formal_balance"
+      },
+      "formal_readiness": {
+        "blockers": [
+          "candidate.role_not_approved_tutorial_baseline",
+          "candidate.not_user_approved",
+          "calibration.tutorial.ship_definition",
+          "calibration.tutorial.propulsion_lift_power",
+          "calibration.tutorial.handling_transition",
+          "calibration.tutorial.environment_aerodynamics",
+          "calibration.tutorial.armor_ballistics",
+          "calibration.tutorial.rcs_sensor",
+          "calibration.tutorial.power_crew_automation",
+          "calibration.tutorial.ammunition_fire_control",
+          "calibration.tutorial.construction_maintenance"
+        ],
+        "ready": false,
+        "ready_item_ids": [
+          "tutorial.formula_foundation"
+        ],
+        "unready_item_ids": [
+          "tutorial.ship_definition",
+          "tutorial.propulsion_lift_power",
+          "tutorial.handling_transition",
+          "tutorial.environment_aerodynamics",
+          "tutorial.armor_ballistics",
+          "tutorial.rcs_sensor",
+          "tutorial.power_crew_automation",
+          "tutorial.ammunition_fire_control",
+          "tutorial.construction_maintenance"
+        ]
+      },
+      "interface": "gaotian.tutorial-baseline-compiler/v1alpha1",
+      "package": {
+        "id": "gtw.calibration.tutorial_ship.stage_i.bootstrap",
+        "source_sha256": "eb5ee1903961ab44725cd3eb49c3028fe6836c6c99cbb197f80e698246a841ab",
+        "version": 1
+      },
+      "source_fingerprints": {
+        "coating_catalog": "2b8bb38311a02406a491b685aad160f9b051049ab9b35e25f95f3c1c66de7fa5",
+        "hull_blueprint": "2c6344986c45af918826f6f2db052a3f11fa7a9b99c728a197c72e5bcaee8e3a",
+        "material_catalog:gtw.catalog.material.base_armor": "96f3a1203c2625904a3d58eb021ea47be3e053a296e1dc95a3e4bf49ab2dc23f",
+        "material_catalog:gtw.catalog.material.structure": "50479a36837ac4bb25dcc4afd19ecc67ec828f2a3554a026b17eaad3a12edcd7",
+        "merged_module_catalog": "bbe4c1c300c90d4ff7061f068c87d9b0a60558f1154ed06f536c68a8f7d06fcf",
+        "module_catalog:gtw.module_catalog.fixture.combat_system": "1740797702b3de4a7e3c5919a3f59f9d12cfb92f69e338666e1a05639e018ab1",
+        "module_catalog:gtw.module_catalog.fixture.minimum": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a",
+        "outfit_plan": "cb8862db2ea80727bfc85a53a0520a1f4c1e2730a49dce87531c86c829765570",
+        "ship_instance_snapshot": "9b68396cbd315c0b001d8e7dad0a773f8c5dacf7e705b752abdba7079215b696",
+        "sortie_configuration": "498add9eaae7c6764121ba26566fe0eb13f4ca73c5b78302485c5d8088e5462f"
+      },
+      "surrogate_summary": {
+        "deck_count": 2,
+        "module_count": 18,
+        "runtime_interface": "gaotian.runtime-ship-parameters/v1alpha1"
+      },
+      "technical_checks": {
+        "compiled_chain": true,
+        "editor_hull_preview": true,
+        "editor_outfit_preview": true,
+        "saved_instance_matches_initialization": true
+      }
+    }
+  },
+  "report": "gaotian.stage-i-tutorial-baseline-gate-regression/v1",
+  "schema": "gaotian.ship-calibration/v1alpha1",
+  "status": "PASS"
+}

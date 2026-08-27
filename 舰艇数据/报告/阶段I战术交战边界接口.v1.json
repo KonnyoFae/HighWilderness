@@ -1,0 +1,25 @@
+{
+  "boundary_profile": {
+    "layer_distances_m": {
+      "cloud": 25000.0,
+      "rain": 25000.0,
+      "upper": 50000.0
+    },
+    "reference": {
+      "id": "gtw.tactical_engagement_boundary.prototype.stage_i8",
+      "version": 1
+    },
+    "source_sha256": "32e57ba8b1f50f4d4ff0f96f6eb4694e4923433e3efca7486736a24b2f72dbd8"
+  },
+  "fixture_notice": "50/25km来自用户当前边界设定，但配置仍标记prototype_unbalanced，可在原则不变时换版调整。",
+  "interface": "gaotian.tactical-scene-timeline/v1alpha1",
+  "policy": "gaotian.tactical-engagement/responding-ship-layer-pairwise-distance/v1",
+  "verified_boundaries": [
+    "舰艇持久化阵营与舰队归属并以绑定内容校验",
+    "上层50000m、云层/雨层25000m边界点计入交战，超过后才脱离",
+    "每一敌对舰对都使用被动应战舰当前层级，不使用主动方或全场统一层级",
+    "多舰战只要任意一组敌对舰仍在边界内就继续，全部超距才disengaged",
+    "一方无可战舰为resolved，与双方仍存续但距离脱离严格区分",
+    "边界配置引用与内容指纹锁定，场景保存重载保持确定性"
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "fixture_level": "contract_fixture",
+  "id": "gtw.weapon_timing.fixture.stage_i4",
+  "kind": "WeaponTimingProfileCatalog",
+  "name": "阶段I4武器时间技术替身配置",
+  "profiles": [
+    {
+      "cyclic_rate_rpm": 60.0,
+      "prototype": {
+        "id": "gtw.module.fixture.weapon",
+        "version": 1
+      },
+      "reload_seconds_per_round": 0.25
+    }
+  ],
+  "schema": "gaotian.weapon-timing/v1alpha1",
+  "version": 1
+}

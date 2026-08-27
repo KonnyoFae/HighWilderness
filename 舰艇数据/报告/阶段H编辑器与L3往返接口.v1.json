@@ -1,0 +1,71 @@
+{
+  "balance_status": "prototype_unbalanced",
+  "editor": {
+    "editor_interface": "gaotian.ship-editor-domain/v1alpha1",
+    "hull_mandatory_symmetry": {
+      "mirrored_area_m2": 2950.0,
+      "mirrored_source_sha256": "c2aeba09bef44f30ff52e7ae8d6082e24d87f4093e8d0643be3b3864400902d3",
+      "one_sided_edit_error": "hull.symmetry_geometry"
+    },
+    "l3_round_trip": {
+      "conventional_crewed": {
+        "deck_count": 2,
+        "hull_source_sha256": "2c6344986c45af918826f6f2db052a3f11fa7a9b99c728a197c72e5bcaee8e3a",
+        "module_count": 18,
+        "outfit_source_sha256": "cb8862db2ea80727bfc85a53a0520a1f4c1e2730a49dce87531c86c829765570",
+        "warning_codes": [
+          "outfit.external_rcs_unresolved"
+        ],
+        "weapon_arc_preview_count": 1
+      },
+      "minimum_legal": {
+        "deck_count": 1,
+        "hull_source_sha256": "f927aff50202728585fb922dcb4f0c0700d0ca78cb04787c8c4ffee2a68d1276",
+        "module_count": 10,
+        "outfit_source_sha256": "440be69e67713ba2395fcf0855c5246ef0d47446273dae33f3dcde414fe0085e",
+        "warning_codes": [
+          "outfit.external_rcs_unresolved"
+        ],
+        "weapon_arc_preview_count": 0
+      },
+      "unmanned_flagship": {
+        "deck_count": 1,
+        "hull_source_sha256": "50fa56932193040c9cbb7296b0caa96240f84c29d997d540e7b96f20efce7254",
+        "module_count": 14,
+        "outfit_source_sha256": "84dd234ad868d35834bb2b87c6fe2c82a01509333520be3ad8e5791f448377e9",
+        "warning_codes": [
+          "outfit.external_rcs_unresolved"
+        ],
+        "weapon_arc_preview_count": 1
+      }
+    },
+    "outfit_operations": {
+      "aggregate_diagnostic_codes": [
+        "outfit.rotation_invalid",
+        "outfit.rotation_invalid",
+        "resource.reference_missing"
+      ],
+      "asymmetric_module_count": 11,
+      "atomic_pair_edit": true,
+      "invalid_save_error": "outfit.cic_origin",
+      "mirrored_pair_module_count": 12,
+      "mirrored_side_pair_valid": true,
+      "symmetry_assist_is_optional": true
+    },
+    "version_derivation": {
+      "derived_hull_reference": {
+        "id": "gtw.hull.fixture.stage_f.conventional_crewed",
+        "version": 2
+      },
+      "derived_outfit_reference": {
+        "id": "gtw.outfit.fixture.stage_f.conventional_crewed",
+        "version": 2
+      },
+      "originals_unchanged": true
+    }
+  },
+  "fixture_level": "contract_fixture",
+  "report": "gaotian.stage-h-editor-l3-round-trip-regression/v1",
+  "schema": "gaotian.ship/v1alpha1",
+  "status": "PASS"
+}

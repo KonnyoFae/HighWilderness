@@ -1,0 +1,292 @@
+{
+  "calibration_items": [
+    {
+      "acceptance_checks": [
+        "五米网格、固定层高、CIC 原点和轴对称约定保持不变",
+        "结构、气动、RCS、甲弹与机动公式继续通过既有回归"
+      ],
+      "blocker": null,
+      "critical": true,
+      "depends_on": [],
+      "domain": "hull.formula_foundation",
+      "id": "tutorial.formula_foundation",
+      "source_paths": [
+        "高天荒野舰艇设计与数值框架.md",
+        "高天荒野舰艇船壳结构计算调研.md",
+        "高天荒野舰艇气动阻力计算调研.md",
+        "高天荒野舰艇雷达反射截面积计算调研.md",
+        "高天荒野舰艇甲弹对抗公式调研.md",
+        "高天荒野舰艇机动性能计算调研.md"
+      ],
+      "status": "frozen_formula"
+    },
+    {
+      "acceptance_checks": [
+        "由用户确认教程舰的船壳尺度、甲板外形、基础装甲和舰种定位",
+        "由用户确认教程结束时抢修后保留的模块种类与布局",
+        "教程舰仍能通过编辑器 L3 往返和完整运行时编译"
+      ],
+      "blocker": "现有设定只说明座舰坠毁后被核心舱小艇抢修，尚未确定正式船型、尺度、武备和布局；阶段 F 常规有人舰只能作为技术替身。",
+      "critical": true,
+      "depends_on": [
+        "tutorial.formula_foundation"
+      ],
+      "domain": "tutorial.ship_definition",
+      "id": "tutorial.ship_definition",
+      "source_paths": [
+        "高天荒野游戏规划归档.md",
+        "舰艇数据/船壳蓝图夹具/阶段F常规有人战舰船壳.v1.json",
+        "舰艇数据/舾装方案夹具/阶段F常规有人战舰舾装.v1.json"
+      ],
+      "status": "pending_user_decision"
+    },
+    {
+      "acceptance_checks": [
+        "教程舰在标准装载下具有正升力余量",
+        "前进、制动、横移和回转能力符合教程操作节奏",
+        "发电能力与教程默认设备负载形成可解释余量"
+      ],
+      "blocker": "当前主发动机、转向发动机、灵烷贮槽和发电机均为 prototype_unbalanced 测试模块，必须与正式教程舰共同标定。",
+      "critical": true,
+      "depends_on": [
+        "tutorial.ship_definition"
+      ],
+      "domain": "propulsion.lift_power",
+      "id": "tutorial.propulsion_lift_power",
+      "source_paths": [
+        "舰艇数据/模块/测试夹具/最小模块目录.v1.json",
+        "高天荒野舰艇机动性能计算调研.md"
+      ],
+      "status": "prototype_unbalanced"
+    },
+    {
+      "acceptance_checks": [
+        "舵盘目标角速度、回中和制动响应可在教程中清晰学习",
+        "有人舰普通机动不越过结构限制或十二 G 乘员锁",
+        "相邻高度层切换时长与教程战斗节奏一致"
+      ],
+      "blocker": "K_turn、目标角速度、控制响应和当前三十秒换层时间尚未与正式教程舰联合验证。",
+      "critical": true,
+      "depends_on": [
+        "tutorial.propulsion_lift_power"
+      ],
+      "domain": "control.handling_transition",
+      "id": "tutorial.handling_transition",
+      "source_paths": [
+        "高天荒野舰艇转动惯性与转向力矩计算调研.md",
+        "高天荒野舰艇机动性能计算调研.md",
+        "高天荒野舰艇战术机动求解器.py"
+      ],
+      "status": "prototype_unbalanced"
+    },
+    {
+      "acceptance_checks": [
+        "上层、云层和雨层的阻力差异能够在教程航行中感知",
+        "亚音速、跨音速与超音速阻力响应不产生突变",
+        "教程舰各方向最大速度与舰体朝向阻力一致"
+      ],
+      "blocker": "三层介质参数、形状阻力系数与跨音速曲线仍为原型值。",
+      "critical": true,
+      "depends_on": [
+        "tutorial.ship_definition",
+        "tutorial.propulsion_lift_power"
+      ],
+      "domain": "environment.aerodynamics",
+      "id": "tutorial.environment_aerodynamics",
+      "source_paths": [
+        "高天荒野舰艇气动阻力计算调研.md",
+        "高天荒野舰艇战术机动求解器.py"
+      ],
+      "status": "prototype_unbalanced"
+    },
+    {
+      "acceptance_checks": [
+        "教程舰基础装甲能展示未击穿、跳弹和击穿三种结果",
+        "五类首轮弹种能在教程目标上展示明确差异",
+        "局部装甲耐久、船壳耐久和内部模块损伤保持分层"
+      ],
+      "blocker": "正式装甲厚度、炮弹穿深、局部承弹次数与教程交战距离尚未共同标定。",
+      "critical": true,
+      "depends_on": [
+        "tutorial.ship_definition"
+      ],
+      "domain": "combat.armor_ballistics",
+      "id": "tutorial.armor_ballistics",
+      "source_paths": [
+        "高天荒野舰艇基础装甲材质表.md",
+        "高天荒野舰艇甲弹对抗公式调研.md",
+        "高天荒野舰艇首轮火炮口径与弹道锚点.md"
+      ],
+      "status": "prototype_unbalanced"
+    },
+    {
+      "acceptance_checks": [
+        "普通涂料教程舰的方向 RCS 与船壳几何一致",
+        "雷达发现距离能够支持战略侦察教程",
+        "外露武器、传感器和发动机不会被船体涂料错误隐藏"
+      ],
+      "blocker": "涂料倍率、外部模块 RCS 与教程雷达性能尚未联合标定，部分外部模块仍只有已知下界。",
+      "critical": true,
+      "depends_on": [
+        "tutorial.ship_definition"
+      ],
+      "domain": "signature.rcs_sensor",
+      "id": "tutorial.rcs_sensor",
+      "source_paths": [
+        "高天荒野舰艇雷达反射截面积计算调研.md",
+        "高天荒野舰艇船体涂料表.md",
+        "舰艇数据/涂料/船体涂料.v1.json"
+      ],
+      "status": "prototype_unbalanced"
+    },
+    {
+      "acceptance_checks": [
+        "最低与标准船员在教程舰上有明确差异",
+        "P0 至 P3 供电与整类跳闸能够在教程事件中演示",
+        "核心舱小艇接入后只替代已经无人化的实体设备工作"
+      ],
+      "blocker": "当前功率、人员与自动化参数只验证了规则，还没有按教程舰工作量和教程节奏标定。",
+      "critical": true,
+      "depends_on": [
+        "tutorial.ship_definition"
+      ],
+      "domain": "operations.power_crew_automation",
+      "id": "tutorial.power_crew_automation",
+      "source_paths": [
+        "高天荒野舰艇模块原型契约.md",
+        "舰艇数据/模块/测试夹具/最小模块目录.v1.json",
+        "舰艇数据/模块/测试夹具/战斗系统模块目录.v1.json"
+      ],
+      "status": "prototype_unbalanced"
+    },
+    {
+      "acceptance_checks": [
+        "弹药库当前库存、武器待发弹和重新装填均进入实例状态",
+        "开火能够消耗正确弹药并遵守火控与人员条件",
+        "保存与重载不会恢复已经消耗的弹药"
+      ],
+      "blocker": "当前合同已实现弹药库库存、武器待发弹、开火与装填的实例闭环，但正式弹量、弹药库容量、射速与装填时间、连续射击队列及补给经济换算尚未联合标定。",
+      "critical": true,
+      "depends_on": [
+        "tutorial.armor_ballistics",
+        "tutorial.power_crew_automation"
+      ],
+      "domain": "combat.ammunition_fire_control",
+      "id": "tutorial.ammunition_fire_control",
+      "source_paths": [
+        "高天荒野舰艇设计与数值框架.md",
+        "高天荒野舰艇建造与派生性能剩余实施计划.md",
+        "高天荒野舰艇弹药与武器动作结算器.py",
+        "高天荒野舰艇阶段I弹药与武器动作测试.py",
+        "舰艇数据/报告/阶段I弹药与武器动作接口.v1.json"
+      ],
+      "status": "prototype_unbalanced"
+    },
+    {
+      "acceptance_checks": [
+        "船壳、模块、弹药、燃料和维修都能追溯到库存资源",
+        "建造、改装、维修与重新武装工时进入战略时间",
+        "教程结束时的抢修状态和开局补给不会凭空生成资源"
+      ],
+      "blocker": "当前合同已实现船壳材料、库存模块、维修材料、弹药、燃料的预留及战略工时订单；正式材料单位、设施产能、模块内部物料、涂装、安装耗材、工资、价格、残骸清理收益与改装后当前设计快照迁移仍未标定或完成。",
+      "critical": true,
+      "depends_on": [
+        "tutorial.ship_definition",
+        "tutorial.ammunition_fire_control"
+      ],
+      "domain": "economy.construction_maintenance",
+      "id": "tutorial.construction_maintenance",
+      "source_paths": [
+        "高天荒野游戏规划归档.md",
+        "高天荒野舰艇设计与数值框架.md",
+        "高天荒野舰艇船坞后勤与战略工时.py",
+        "高天荒野舰艇阶段I船坞后勤与战略工时测试.py",
+        "舰艇数据/模式/高天荒野舰艇后勤数据契约.v1alpha1.schema.json",
+        "舰艇数据/报告/阶段I船坞后勤与战略工时接口.v1.json"
+      ],
+      "status": "prototype_unbalanced"
+    }
+  ],
+  "candidate": {
+    "approval_status": "not_user_approved",
+    "coating_catalog": {
+      "path": "舰艇数据/涂料/船体涂料.v1.json",
+      "reference": {
+        "id": "gtw.catalog.hull_coating",
+        "version": 1
+      }
+    },
+    "hull_blueprint": {
+      "path": "舰艇数据/船壳蓝图夹具/阶段F常规有人战舰船壳.v1.json",
+      "reference": {
+        "id": "gtw.hull.fixture.stage_f.conventional_crewed",
+        "version": 1
+      }
+    },
+    "material_catalogs": [
+      {
+        "path": "舰艇数据/材料/结构材质.v1.json",
+        "reference": {
+          "id": "gtw.catalog.material.structure",
+          "version": 1
+        }
+      },
+      {
+        "path": "舰艇数据/材料/基础装甲材质.v1.json",
+        "reference": {
+          "id": "gtw.catalog.material.base_armor",
+          "version": 1
+        }
+      }
+    ],
+    "merged_module_catalog": {
+      "fixture_level": "contract_fixture",
+      "id": "gtw.module_catalog.fixture.stage_f_conventional_crewed_combined",
+      "name": "阶段F·conventional_crewed·组合模块目录",
+      "version": 1
+    },
+    "module_catalogs": [
+      {
+        "path": "舰艇数据/模块/测试夹具/最小模块目录.v1.json",
+        "reference": {
+          "id": "gtw.module_catalog.fixture.minimum",
+          "version": 1
+        }
+      },
+      {
+        "path": "舰艇数据/模块/测试夹具/战斗系统模块目录.v1.json",
+        "reference": {
+          "id": "gtw.module_catalog.fixture.combat_system",
+          "version": 1
+        }
+      }
+    ],
+    "outfit_plan": {
+      "path": "舰艇数据/舾装方案夹具/阶段F常规有人战舰舾装.v1.json",
+      "reference": {
+        "id": "gtw.outfit.fixture.stage_f.conventional_crewed",
+        "version": 1
+      }
+    },
+    "role": "technical_surrogate",
+    "ship_instance_snapshot": {
+      "path": "舰艇数据/舰艇实例夹具/阶段F常规有人战舰完好实例.v1.json",
+      "reference": {
+        "id": "gtw.sortie.fixture.stage_f.conventional_crewed.instance",
+        "version": 1
+      }
+    },
+    "sortie_configuration": {
+      "path": "舰艇数据/出航配置夹具/阶段F常规有人战舰出航.v1.json",
+      "reference": {
+        "id": "gtw.sortie.fixture.stage_f.conventional_crewed",
+        "version": 1
+      }
+    }
+  },
+  "id": "gtw.calibration.tutorial_ship.stage_i.bootstrap",
+  "kind": "TutorialShipBaselinePackage",
+  "name": "阶段I教程舰技术替身与联合标定清单",
+  "schema": "gaotian.ship-calibration/v1alpha1",
+  "version": 1
+}

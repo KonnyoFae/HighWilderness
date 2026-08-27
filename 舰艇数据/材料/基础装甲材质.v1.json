@@ -1,0 +1,109 @@
+{
+  "catalog_type": "base_armor",
+  "id": "gtw.catalog.material.base_armor",
+  "kind": "MaterialCatalog",
+  "materials": [
+    {
+      "cost_coefficient": 1.0,
+      "density_kg_m3": 7850.0,
+      "id": "gtw.material.base_armor.armor_steel",
+      "local_durability_coefficient": 1.0,
+      "name": "装甲钢",
+      "protection_coefficient": 1.0,
+      "shell_strength_coefficient": 1.0,
+      "version": 1,
+      "work_difficulty": 1.0
+    },
+    {
+      "cost_coefficient": 4.0,
+      "density_kg_m3": 2660.0,
+      "id": "gtw.material.base_armor.aluminum_alloy",
+      "local_durability_coefficient": 0.7,
+      "name": "铝合金",
+      "protection_coefficient": 0.38,
+      "shell_strength_coefficient": 0.5,
+      "version": 1,
+      "work_difficulty": 1.25
+    },
+    {
+      "cost_coefficient": 12.0,
+      "density_kg_m3": 4430.0,
+      "id": "gtw.material.base_armor.titanium_alloy",
+      "local_durability_coefficient": 1.1,
+      "name": "钛合金",
+      "protection_coefficient": 0.85,
+      "shell_strength_coefficient": 1.7,
+      "version": 1,
+      "work_difficulty": 2.5
+    },
+    {
+      "cost_coefficient": 8.0,
+      "density_kg_m3": 14500.0,
+      "id": "gtw.material.base_armor.carbide_composite",
+      "local_durability_coefficient": 0.55,
+      "name": "碳化物复合装甲",
+      "protection_coefficient": 2.4,
+      "shell_strength_coefficient": 2.5,
+      "version": 1,
+      "work_difficulty": 3.5
+    },
+    {
+      "cost_coefficient": 6.0,
+      "density_kg_m3": 3500.0,
+      "id": "gtw.material.base_armor.mixed_copper_alloy",
+      "local_durability_coefficient": 1.1,
+      "name": "混铜合金",
+      "protection_coefficient": 0.75,
+      "shell_strength_coefficient": 0.9,
+      "version": 1,
+      "work_difficulty": 2.0
+    },
+    {
+      "cost_coefficient": 18.0,
+      "density_kg_m3": 4000.0,
+      "id": "gtw.material.base_armor.frost_silver_alloy",
+      "local_durability_coefficient": 1.6,
+      "name": "霜银合金",
+      "protection_coefficient": 1.7,
+      "shell_strength_coefficient": 2.1,
+      "version": 1,
+      "work_difficulty": 3.0
+    },
+    {
+      "cost_coefficient": 15.0,
+      "density_kg_m3": 7400.0,
+      "id": "gtw.material.base_armor.spirit_metal_fabric",
+      "local_durability_coefficient": 2.5,
+      "name": "灵化金属纤维织物",
+      "protection_coefficient": 1.3,
+      "shell_strength_coefficient": 3.0,
+      "version": 1,
+      "work_difficulty": 3.5
+    },
+    {
+      "cost_coefficient": 8.0,
+      "density_kg_m3": 3600.0,
+      "id": "gtw.material.base_armor.lightweight_carbide_composite",
+      "local_durability_coefficient": 0.4,
+      "name": "轻质碳化物复合装甲",
+      "protection_coefficient": 1.35,
+      "shell_strength_coefficient": 0.45,
+      "version": 1,
+      "work_difficulty": 4.0
+    },
+    {
+      "cost_coefficient": 16.0,
+      "density_kg_m3": 6800.0,
+      "id": "gtw.material.base_armor.laminated_ablative",
+      "local_durability_coefficient": 0.2,
+      "name": "积层烧蚀装甲",
+      "protection_coefficient": 3.0,
+      "shell_strength_coefficient": 0.2,
+      "version": 1,
+      "work_difficulty": 5.0
+    }
+  ],
+  "name": "第一版逐边基础装甲材质目录",
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

@@ -1,0 +1,32 @@
+{
+  "balance_status": "prototype_unbalanced",
+  "compiler_interface": "gaotian.sortie-compiler/v1alpha1",
+  "deferred_capabilities": [
+    "safe_power_mode_upgrade_entitlement"
+  ],
+  "downstream_runtime_interface": "gaotian.runtime-ship-parameters/v1alpha1",
+  "fixture_level": "contract_fixture",
+  "fixtures": {
+    "sortie_configuration": {
+      "id": "gtw.sortie.fixture.standard_155x20_loaded",
+      "source_sha256": "6d39b8204da1f84f90d500b3f40e3971aaf51141d70d4933141f76320c4cdc55",
+      "version": 1
+    }
+  },
+  "report": "gaotian.sortie-compiler.stage-e-load-regression/v1",
+  "schema": "gaotian.ship/v1alpha1",
+  "status": "PASS",
+  "tests": {
+    "sortie_configuration": {
+      "cargo_inertia_kg_m2": 6250000.0,
+      "cargo_mass_kg": 50000.0,
+      "compiler_interface": "gaotian.sortie-compiler/v1alpha1",
+      "current_inertia_kg_m2": 3291303541.666667,
+      "current_lift_margin_n": 9010336.6725,
+      "current_mass_kg": 2140350.0,
+      "fixture": "gtw.sortie.fixture.standard_155x20_loaded@1",
+      "source_sha256": "6d39b8204da1f84f90d500b3f40e3971aaf51141d70d4933141f76320c4cdc55",
+      "status": "PASS"
+    }
+  }
+}

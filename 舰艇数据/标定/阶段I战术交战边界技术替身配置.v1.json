@@ -1,0 +1,13 @@
+{
+  "fixture_level": "prototype_unbalanced",
+  "id": "gtw.tactical_engagement_boundary.prototype.stage_i8",
+  "kind": "TacticalEngagementBoundaryProfile",
+  "layer_distances_m": {
+    "cloud": 25000.0,
+    "rain": 25000.0,
+    "upper": 50000.0
+  },
+  "name": "阶段I8战术交战边界技术替身配置",
+  "schema": "gaotian.tactical-engagement-boundary/v1alpha1",
+  "version": 1
+}

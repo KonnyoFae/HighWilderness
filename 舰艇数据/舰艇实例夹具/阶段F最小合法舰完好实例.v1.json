@@ -1,0 +1,104 @@
+{
+  "current_hull_integrity_fraction": 1.0,
+  "derived_ship_snapshot_sha256": "b22cbfc84703bc8f988e5d6db1c64d530d7837198d827523adf23e44eee5d061",
+  "fixture_level": "contract_fixture",
+  "id": "gtw.sortie.fixture.stage_f.minimum_legal.instance",
+  "kind": "ShipInstanceSnapshot",
+  "module_states": [
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "cic",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "crew_quarters",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "damage_control",
+      "operating_mode": "standby"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "generator",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "lift_tank",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "main_engine",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_port_aft",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_port_fore",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_starboard_aft",
+      "operating_mode": "active"
+    },
+    {
+      "current_durability_points": 100.0,
+      "instance_id": "thruster_starboard_fore",
+      "operating_mode": "active"
+    }
+  ],
+  "name": "阶段F最小合法舰出航·完好实例",
+  "operational_state": {
+    "bulk_cargo": [],
+    "crew": [
+      {
+        "count": 2,
+        "crew_type": "officer"
+      },
+      {
+        "count": 6,
+        "crew_type": "ordinary"
+      },
+      {
+        "count": 2,
+        "crew_type": "technical_officer"
+      },
+      {
+        "count": 2,
+        "crew_type": "veteran_damage_control"
+      }
+    ],
+    "fuel_units": 500.0,
+    "height_layer": "upper"
+  },
+  "outfit_plan": {
+    "id": "gtw.outfit.fixture.stage_f.minimum_legal",
+    "version": 1
+  },
+  "power_policy": {
+    "allocation_mode": "strict_categories",
+    "category_order": [
+      "damage_control",
+      "weapons_and_active_defense",
+      "fire_control",
+      "sensors"
+    ],
+    "disabled_categories": []
+  },
+  "schema": "gaotian.ship/v1alpha1",
+  "sortie_configuration": {
+    "id": "gtw.sortie.fixture.stage_f.minimum_legal",
+    "version": 1
+  },
+  "sortie_configuration_sha256": "5bc97c7d67e909095e5388d9c8cb9edad820285bcb81a19687860b18be2fb911",
+  "version": 1
+}

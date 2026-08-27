@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.tactical-fleet-command/v1alpha1",
+  "title": "高天荒野舰艇战术舰队指挥状态契约 v1alpha1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {"const": "gaotian.tactical-fleet-command/v1alpha1"},
+    "policy": {"const": "gaotian.tactical-fleet-command/one-direct-ship-and-rts-orders/v1"},
+    "player_side_id": {"type": "string"},
+    "mode": {"enum": ["normal", "final_mobilization"]},
+    "phase": {"enum": ["active", "command_defeat_withdrawal"]},
+    "direct_control_ship_id": {"type": ["string", "null"]},
+    "tuning_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string"},
+        "version": {"type": "integer", "minimum": 1}
+      },
+      "required": ["id", "version"]
+    },
+    "tuning_profile_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "assignments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/roleAssignment"}
+    },
+    "orders": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/shipOrder"}
+    },
+    "source_scene_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "last_scene_step_index": {"type": "integer", "minimum": 0},
+    "direct_control_loss_reason": {"type": ["string", "null"]},
+    "direct_control_loss_step_index": {"type": ["integer", "null"], "minimum": 0},
+    "withdrawal_extra_loss_pending": {"type": "boolean"}
+  },
+  "required": [
+    "interface",
+    "policy",
+    "player_side_id",
+    "mode",
+    "phase",
+    "direct_control_ship_id",
+    "tuning_profile",
+    "tuning_profile_sha256",
+    "assignments",
+    "orders",
+    "source_scene_sha256",
+    "last_scene_step_index",
+    "direct_control_loss_reason",
+    "direct_control_loss_step_index",
+    "withdrawal_extra_loss_pending"
+  ],
+  "$defs": {
+    "vector2": {
+      "type": "array",
+      "prefixItems": [{"type": "number"}, {"type": "number"}],
+      "items": false,
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "roleAssignment": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ship_id": {"type": "string"},
+        "role": {"enum": ["main_flagship", "branch_flagship", "ordinary_ship"]},
+        "formation_anchor_ship_id": {"type": ["string", "null"]},
+        "formation_offset_body_m": {"$ref": "#/$defs/vector2"}
+      },
+      "required": ["ship_id", "role", "formation_anchor_ship_id", "formation_offset_body_m"]
+    },
+    "shipOrder": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {"type": "string"},
+        "ship_id": {"type": "string"},
+        "kind": {
+          "enum": [
+            "move_route",
+            "air_patrol",
+            "anti_ship_patrol",
+            "free_fire_area",
+            "attack_target",
+            "hold",
+            "rescue_and_withdraw"
+          ]
+        },
+        "issued_step_index": {"type": "integer", "minimum": 0},
+        "status": {"enum": ["active", "completed", "failed", "cancelled"]},
+        "waypoints_world_m": {"type": "array", "items": {"$ref": "#/$defs/vector2"}},
+        "waypoint_index": {"type": "integer", "minimum": 0},
+        "target_layer": {"enum": ["upper", "cloud", "rain", null]},
+        "target_heading_rad": {"type": ["number", "null"]},
+        "target_speed_mps": {"type": "number", "minimum": 0},
+        "target_ship_id": {"type": ["string", "null"]},
+        "ammunition_id": {"type": ["string", "null"]},
+        "engagement_distance_m": {"type": ["number", "null"], "minimum": 0},
+        "target_priority_categories": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"enum": ["aircraft", "fixed_installation", "missile", "ship"]}
+        },
+        "failure_reason": {"type": ["string", "null"]}
+      },
+      "required": [
+        "id",
+        "ship_id",
+        "kind",
+        "issued_step_index",
+        "status",
+        "waypoints_world_m",
+        "waypoint_index",
+        "target_layer",
+        "target_heading_rad",
+        "target_speed_mps",
+        "target_ship_id",
+        "ammunition_id",
+        "engagement_distance_m",
+        "target_priority_categories",
+        "failure_reason"
+      ]
+    }
+  }
+}

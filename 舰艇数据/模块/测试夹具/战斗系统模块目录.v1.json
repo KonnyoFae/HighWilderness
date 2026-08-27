@@ -1,0 +1,416 @@
+{
+  "fixture_level": "contract_fixture",
+  "id": "gtw.module_catalog.fixture.combat_system",
+  "kind": "ModulePrototypeCatalog",
+  "modules": [
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "ammunition.feed",
+          "ammunition.inventory"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "capacity_units": 100,
+        "compatible_munition_ids": [
+          "gtw.munition.fixture.76mm.special",
+          "gtw.munition.fixture.76mm.standard"
+        ],
+        "inventory_scope": "ship_shared",
+        "kind": "ammunition_magazine"
+      },
+      "category": "ammunition_magazine",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "ammunition.feed",
+          "model": "binary_until_destroyed",
+          "points": []
+        },
+        {
+          "function_id": "ammunition.inventory",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.ammunition_magazine",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1500.0,
+      "name": "契约夹具弹药库",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [
+        "ship.fire_control_required"
+      ],
+      "automation": {
+        "automated_functions": [
+          "fire_control.solution"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "partial",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "fire_control",
+        "maximum_lock_range_m": 50000.0,
+        "simultaneous_channels": 2,
+        "supported_requirements": [
+          "continuous_guidance",
+          "solution"
+        ]
+      },
+      "category": "fire_control",
+      "counts_toward_departure_minimum": false,
+      "crew": [
+        {
+          "crew_type": "technical_officer",
+          "minimum_operating": 0,
+          "standard": 1
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "fire_control.guidance",
+          "model": "binary_until_destroyed",
+          "points": []
+        },
+        {
+          "function_id": "fire_control.solution",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.6
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "standby",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.fire_control",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 750.0,
+      "name": "契约夹具火控系统",
+      "power": {
+        "active_load_kw": 120.0,
+        "consumer_category": "fire_control",
+        "generation_kw": 0.0,
+        "standby_load_kw": 10.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [
+        "ship.sensor_scan_required"
+      ],
+      "automation": {
+        "automated_functions": [
+          "sensor.search"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "partial",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "sensor",
+        "maximum_instrumented_range_m": 100000.0,
+        "sensor_channel": "radar",
+        "supported_modes": [
+          "active_search",
+          "fire_control_lock",
+          "track"
+        ]
+      },
+      "category": "sensor",
+      "counts_toward_departure_minimum": false,
+      "crew": [
+        {
+          "crew_type": "technical_officer",
+          "minimum_operating": 0,
+          "standard": 1
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "sensor.search",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.4
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        },
+        {
+          "function_id": "sensor.track",
+          "model": "stepwise",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "standby",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.sensor",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "local_exposed_top",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "mass_kg": 500.0,
+      "name": "契约夹具搜索雷达",
+      "power": {
+        "active_load_kw": 180.0,
+        "consumer_category": "sensors",
+        "generation_kw": 0.0,
+        "standby_load_kw": 15.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [
+        "ship.weapon_fire_requested"
+      ],
+      "automation": {
+        "automated_functions": [
+          "weapon.aim",
+          "weapon.fire"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "partial",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "compatible_munition_ids": [
+          "gtw.munition.fixture.76mm.special",
+          "gtw.munition.fixture.76mm.standard"
+        ],
+        "engagement_domains": [
+          "aircraft",
+          "missile",
+          "ship"
+        ],
+        "fire_control_requirement": "solution",
+        "kind": "weapon",
+        "maximum_range_m": 20000.0,
+        "minimum_range_m": 0.0,
+        "ready_round_capacity": 1,
+        "weapon_class": "gun"
+      },
+      "category": "weapon",
+      "counts_toward_departure_minimum": false,
+      "crew": [
+        {
+          "crew_type": "ordinary",
+          "minimum_operating": 0,
+          "standard": 2
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "weapon.aim",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        },
+        {
+          "function_id": "weapon.fire",
+          "model": "binary_until_destroyed",
+          "points": []
+        },
+        {
+          "function_id": "weapon.reload",
+          "model": "stepwise",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "standby",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.weapon",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "local_exposed_top",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "mass_kg": 2000.0,
+      "name": "契约夹具自动炮塔",
+      "power": {
+        "active_load_kw": 200.0,
+        "consumer_category": "weapons_and_active_defense",
+        "generation_kw": 0.0,
+        "standby_load_kw": 5.0
+      },
+      "version": 1
+    }
+  ],
+  "name": "战斗系统模块契约测试目录",
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

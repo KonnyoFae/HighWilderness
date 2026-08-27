@@ -1,0 +1,45 @@
+{
+  "cic_impact": {
+    "armor": {
+      "available_penetration_mm": 138.38760834746256,
+      "damage_formula_points": 0.0,
+      "durability_after": 0.0,
+      "durability_before": 0.0,
+      "impact_angle_deg": 0.0,
+      "outcome": "penetrated",
+      "required_penetration_mm": 0.0,
+      "residual_energy_ratio": 1.0,
+      "ricochet_probability": 0.0
+    },
+    "damaged_module_instance_ids": [
+      "cic",
+      "crew_quarters_base"
+    ],
+    "deck_id": "deck.0",
+    "deck_level": 0,
+    "edge_index": 6,
+    "hull_integrity_after": 0.98,
+    "hull_integrity_before": 1.0,
+    "impact_world_xy": [
+      -10.0,
+      0.0
+    ],
+    "projectile_id": "projectile.fixture.lifecycle.cic_hit",
+    "region_id": "deck.0.region.0",
+    "relative_speed_mps": 892.5839187348332,
+    "tactical_time_s": 0.21696394653645873,
+    "target_ship_id": "ship.fixture.lifecycle.target"
+  },
+  "fixture_notice": "本阶段只冻结失能、指挥权与退出合同，不设定坠落耗时、救生率或撤离距离。",
+  "interface": "gaotian.tactical-scene-timeline/v1alpha1",
+  "policy": "gaotian.tactical-scene/boundary-lifecycle-fire-motion-impact/v2",
+  "verified_boundaries": [
+    "CIC关闭或暂时不可用只撤销指挥权，CIC耐久归零才触发物理坠落",
+    "船壳完整度归零、CIC摧毁和升力不足分别独立触发不可逆坠落",
+    "完全无人舰失去遥控核心后无人员接管但不会凭空物理坠毁",
+    "命中引发的坠落在步末武器事件前生效并取消活动武器序列",
+    "坠落舰拒绝操纵输入；水平运动只保留惯性与既有气动，不伪造垂直坠落时长",
+    "离场由固定步边界显式确认，目标离场后相关弹丸以target_left_scene终止",
+    "生命周期随统一场景保存重载并保持确定性"
+  ]
+}

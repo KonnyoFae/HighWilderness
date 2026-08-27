@@ -1,0 +1,132 @@
+{
+  "balance_status": "prototype_unbalanced",
+  "compiler_interface": "gaotian.outfit-compiler/v1alpha1",
+  "derived_snapshot_interface": "gaotian.derived-ship-snapshot/v1alpha1",
+  "fixture_level": "contract_fixture",
+  "fixtures": {
+    "module_catalog": {
+      "id": "gtw.module_catalog.fixture.minimum",
+      "source_sha256": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a",
+      "version": 1
+    },
+    "outfit_plan": {
+      "id": "gtw.outfit.fixture.standard_155x20_minimum",
+      "source_sha256": "e00c1721b5c0b3d39158ce0abe3d260245656c6a398d6099bb6facd0d21e0713",
+      "version": 1
+    }
+  },
+  "report": "gaotian.outfit-compiler.stage-d-regression/v1",
+  "schema": "gaotian.ship/v1alpha1",
+  "status": "PASS",
+  "tests": {
+    "actuator_aggregation": {
+      "actuator_policy": "gaotian.actuator-aggregation/physical-residuals-v1",
+      "fixture_snapshot_sha256": "e247bdb379b4a66f629f3334588a43b41060495dce4161ea1c1820e70fb849bf",
+      "forward_residual_torque_n_m": -500.0,
+      "forward_total_used_thrust_n": 250.0,
+      "status": "PASS",
+      "turning_residual_force_body_n": [
+        50.0,
+        0.0
+      ]
+    },
+    "module_contract": {
+      "catalog": "gtw.module_catalog.fixture.minimum@1",
+      "categories": [
+        "cargo_hold",
+        "cic",
+        "crew_quarters",
+        "damage_control",
+        "generator",
+        "lift_fuel_tank",
+        "main_engine",
+        "maneuver_thruster",
+        "remote_core"
+      ],
+      "fixture_level": "contract_fixture",
+      "minimum_crew_totals_for_one_each": {
+        "officer": 1,
+        "ordinary": 2,
+        "technical_officer": 1,
+        "veteran_damage_control": 1
+      },
+      "module_count": 9,
+      "source_sha256": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a",
+      "standard_crew_totals_for_one_each": {
+        "officer": 2,
+        "ordinary": 3,
+        "technical_officer": 2,
+        "veteran_damage_control": 2
+      },
+      "status": "PASS"
+    },
+    "outfit_compiler": {
+      "actuator_policy": "gaotian.actuator-aggregation/physical-residuals-v1",
+      "actuators": [
+        {
+          "application_point_m": [
+            0.0,
+            -60.0
+          ],
+          "category": "main_engine",
+          "direction_body": [
+            0.0,
+            1.0
+          ],
+          "fuel_units_per_s": 1.0,
+          "instance_id": "main_engine",
+          "response_time_s": 1.0,
+          "thrust_n": 100000.0,
+          "torque_about_cic_n_m": 0.0
+        },
+        {
+          "application_point_m": [
+            -10.0,
+            -27.5
+          ],
+          "category": "maneuver_thruster",
+          "direction_body": [
+            1.0,
+            0.0
+          ],
+          "fuel_units_per_s": 0.1,
+          "instance_id": "thruster_left",
+          "response_time_s": 0.2,
+          "thrust_n": 10000.0,
+          "torque_about_cic_n_m": 275000.0
+        },
+        {
+          "application_point_m": [
+            10.0,
+            27.5
+          ],
+          "category": "maneuver_thruster",
+          "direction_body": [
+            -1.0,
+            0.0
+          ],
+          "fuel_units_per_s": 0.1,
+          "instance_id": "thruster_right",
+          "response_time_s": 0.2,
+          "thrust_n": 10000.0,
+          "torque_about_cic_n_m": 275000.0
+        }
+      ],
+      "compiler_interface": "gaotian.outfit-compiler/v1alpha1",
+      "design_inertia_kg_m2": 3285053541.666667,
+      "design_mass_kg": 2090350.0,
+      "fixture": "gtw.outfit.fixture.standard_155x20_minimum@1",
+      "instance_count": 10,
+      "lift_margin_n": 9500669.1725,
+      "module_inertia_kg_m2": 5879583.333333333,
+      "snapshot_interface": "gaotian.derived-ship-snapshot/v1alpha1",
+      "snapshot_sha256": "e247bdb379b4a66f629f3334588a43b41060495dce4161ea1c1820e70fb849bf",
+      "source_sha256": "e00c1721b5c0b3d39158ce0abe3d260245656c6a398d6099bb6facd0d21e0713",
+      "status": "PASS",
+      "warnings": [
+        "outfit.external_rcs_unresolved",
+        "outfit.no_clockwise_turning_torque"
+      ]
+    }
+  }
+}

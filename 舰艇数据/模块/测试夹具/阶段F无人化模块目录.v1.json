@@ -1,0 +1,719 @@
+{
+  "fixture_level": "contract_fixture",
+  "id": "gtw.module_catalog.fixture.stage_f_unmanned",
+  "kind": "ModulePrototypeCatalog",
+  "modules": [
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "cic.basic_control"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "fixed_to_cic_origin": true,
+        "kind": "cic"
+      },
+      "category": "cic",
+      "counts_toward_departure_minimum": true,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "cic.basic_control",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 120.0,
+      "id": "gtw.module.fixture.unmanned.cic",
+      "installation": {
+        "allowed_rotations_deg": [
+          0
+        ],
+        "deck_rule": "base_only",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [
+          "cic_internal"
+        ],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1200.0,
+      "name": "阶段F无人化CIC",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [
+        "ship.damage_control_required"
+      ],
+      "automation": {
+        "automated_functions": [
+          "damage_control.firefighting"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "damage_control",
+        "simultaneous_incidents": 1,
+        "team_capacity": 1
+      },
+      "category": "damage_control",
+      "counts_toward_departure_minimum": true,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "damage_control.firefighting",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "standby",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.unmanned.damage_control",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1200.0,
+      "name": "阶段F无人化损管设备",
+      "power": {
+        "active_load_kw": 80.0,
+        "consumer_category": "damage_control",
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [
+        "ship.fire_control_required"
+      ],
+      "automation": {
+        "automated_functions": [
+          "fire_control.guidance",
+          "fire_control.solution"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "fire_control",
+        "maximum_lock_range_m": 50000.0,
+        "simultaneous_channels": 2,
+        "supported_requirements": [
+          "continuous_guidance",
+          "solution"
+        ]
+      },
+      "category": "fire_control",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "fire_control.guidance",
+          "model": "binary_until_destroyed",
+          "points": []
+        },
+        {
+          "function_id": "fire_control.solution",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.6
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "standby",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.unmanned.fire_control",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 800.0,
+      "name": "阶段F无人化火控系统",
+      "power": {
+        "active_load_kw": 120.0,
+        "consumer_category": "fire_control",
+        "generation_kw": 0.0,
+        "standby_load_kw": 10.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "generator.regulation"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "generator"
+      },
+      "category": "generator",
+      "counts_toward_departure_minimum": true,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "generator.regulation",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.unmanned.generator",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1200.0,
+      "name": "阶段F无人化发电设备",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 1000.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "engine.throttle"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "fuel_units_per_s": 10.0,
+        "kind": "main_engine",
+        "local_thrust_axis": "+Y",
+        "response_time_s": 0.5,
+        "thrust_n": 200000000.0
+      },
+      "category": "main_engine",
+      "counts_toward_departure_minimum": true,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "engine.throttle",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.75
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 120.0,
+      "id": "gtw.module.fixture.unmanned.main_engine",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [
+          [
+            0,
+            -4
+          ],
+          [
+            0,
+            -2
+          ]
+        ],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 5000.0,
+      "name": "阶段F无人化高推力主机",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "thruster.throttle"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "fuel_units_per_s": 0.1,
+        "kind": "maneuver_thruster",
+        "local_thrust_axis": "+Y",
+        "response_time_s": 0.2,
+        "thrust_n": 10000.0
+      },
+      "category": "maneuver_thruster",
+      "counts_toward_departure_minimum": true,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "thruster.throttle",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.75
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.unmanned.maneuver_thruster",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [
+          [
+            0,
+            -2
+          ]
+        ],
+        "host_slot": null,
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "side_mount_length_steps": 1,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1000.0,
+      "name": "阶段F无人化转向发动机",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [
+        "ship.sensor_scan_required"
+      ],
+      "automation": {
+        "automated_functions": [
+          "sensor.search",
+          "sensor.track"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "sensor",
+        "maximum_instrumented_range_m": 100000.0,
+        "sensor_channel": "radar",
+        "supported_modes": [
+          "active_search",
+          "fire_control_lock",
+          "track"
+        ]
+      },
+      "category": "sensor",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "sensor.search",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.4
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        },
+        {
+          "function_id": "sensor.track",
+          "model": "stepwise",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "standby",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.unmanned.sensor",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "local_exposed_top",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "mass_kg": 500.0,
+      "name": "阶段F无人化搜索雷达",
+      "power": {
+        "active_load_kw": 180.0,
+        "consumer_category": "sensors",
+        "generation_kw": 0.0,
+        "standby_load_kw": 15.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [
+        "ship.weapon_fire_requested"
+      ],
+      "automation": {
+        "automated_functions": [
+          "weapon.aim",
+          "weapon.fire",
+          "weapon.reload"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "contract_fixture",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "compatible_munition_ids": [
+          "gtw.munition.fixture.76mm.special",
+          "gtw.munition.fixture.76mm.standard"
+        ],
+        "engagement_domains": [
+          "aircraft",
+          "missile",
+          "ship"
+        ],
+        "fire_control_requirement": "solution",
+        "kind": "weapon",
+        "maximum_range_m": 20000.0,
+        "minimum_range_m": 0.0,
+        "ready_round_capacity": 1,
+        "weapon_class": "gun"
+      },
+      "category": "weapon",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "weapon.aim",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        },
+        {
+          "function_id": "weapon.fire",
+          "model": "binary_until_destroyed",
+          "points": []
+        },
+        {
+          "function_id": "weapon.reload",
+          "model": "stepwise",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "standby",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.unmanned.weapon",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "local_exposed_top",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "mass_kg": 2200.0,
+      "name": "阶段F无人化自动炮塔",
+      "power": {
+        "active_load_kw": 220.0,
+        "consumer_category": "weapons_and_active_defense",
+        "generation_kw": 0.0,
+        "standby_load_kw": 5.0
+      },
+      "version": 1
+    }
+  ],
+  "name": "阶段F无人化模块契约目录",
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

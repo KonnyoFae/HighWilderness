@@ -1,0 +1,85 @@
+{
+  "balance_status": "prototype_unbalanced",
+  "combat_system_contract": "gaotian.combat-system-modules/v1alpha1",
+  "compiler_interface": "gaotian.runtime-ship-parameters/v1alpha1",
+  "damage_response_policy": "gaotian.module-damage-response/per-function-curves/v1",
+  "deferred_capabilities": [
+    "safe_power_mode_upgrade_entitlement"
+  ],
+  "environment_profile": "gtw.tactical-environment.prototype.v1",
+  "fixed_step_policy": "gaotian.tactical-dynamics/semi-implicit-euler-60hz/v1",
+  "fixture_level": "contract_fixture",
+  "fixtures": {
+    "ship_instance_snapshot": {
+      "id": "gtw.sortie.fixture.standard_155x20_loaded.instance",
+      "source_sha256": "da8e4a018c8b093c2715add7f1e1a5dec2f748e707a6dd2f8ac7cc0b9b6c2bc2",
+      "version": 1
+    },
+    "sortie_configuration": {
+      "id": "gtw.sortie.fixture.standard_155x20_loaded",
+      "source_sha256": "6d39b8204da1f84f90d500b3f40e3971aaf51141d70d4933141f76320c4cdc55",
+      "version": 1
+    }
+  },
+  "power_policy": "gaotian.power-allocation/categories-and-nearest/v1",
+  "report": "gaotian.runtime-ship-parameters.stage-e-regression/v1",
+  "schema": "gaotian.ship/v1alpha1",
+  "status": "PASS",
+  "tactical_dynamics_interface": "gaotian.tactical-dynamics/runtime-adapter/v1alpha1",
+  "tests": {
+    "combat_system_contract": {
+      "active_combat_load_kw": 500.0,
+      "combat_catalog": "gtw.module_catalog.fixture.combat_system@1",
+      "combat_catalog_sha256": "1740797702b3de4a7e3c5919a3f59f9d12cfb92f69e338666e1a05639e018ab1",
+      "combat_contract": "gaotian.combat-system-modules/v1alpha1",
+      "combined_catalog_sha256": "7ccf53be9ed52b4d6dd55c62eac893866b57405af0e3a2789392438272bac9e7",
+      "compiled_combat_instance_count": 4,
+      "outfit": "gtw.outfit.fixture.standard_155x20_combat_system@1",
+      "outfit_source_sha256": "be28476e20cdef1ffc09cc8c508ec3a1bc94c9527217ecc073aa69a79e0d10f1",
+      "status": "PASS",
+      "weapon_reload_efficiency": 0.3333333333333333
+    },
+    "runtime_parameters": {
+      "actuator_counterclockwise_torque_n_m": 550000.0,
+      "compiler_interface": "gaotian.runtime-ship-parameters/v1alpha1",
+      "damage_response_policy": "gaotian.module-damage-response/per-function-curves/v1",
+      "instance_fixture": "gtw.sortie.fixture.standard_155x20_loaded.instance@1",
+      "instance_source_sha256": "da8e4a018c8b093c2715add7f1e1a5dec2f748e707a6dd2f8ac7cc0b9b6c2bc2",
+      "power_policy": "gaotian.power-allocation/categories-and-nearest/v1",
+      "runtime_lift_margin_n": 9010336.6725,
+      "safe_mode_powered_instances": [
+        "cargo_hold",
+        "damage_control",
+        "thruster_left"
+      ],
+      "status": "PASS",
+      "strict_mode_powered_instances": [
+        "cargo_hold",
+        "cic",
+        "damage_control"
+      ]
+    },
+    "sortie_configuration": {
+      "cargo_inertia_kg_m2": 6250000.0,
+      "cargo_mass_kg": 50000.0,
+      "compiler_interface": "gaotian.sortie-compiler/v1alpha1",
+      "current_inertia_kg_m2": 3291303541.666667,
+      "current_lift_margin_n": 9010336.6725,
+      "current_mass_kg": 2140350.0,
+      "fixture": "gtw.sortie.fixture.standard_155x20_loaded@1",
+      "source_sha256": "6d39b8204da1f84f90d500b3f40e3971aaf51141d70d4933141f76320c4cdc55",
+      "status": "PASS"
+    },
+    "tactical_dynamics": {
+      "cloud_drag_force_n_at_340_mps": 3591393.309105492,
+      "fixed_step_policy": "gaotian.tactical-dynamics/semi-implicit-euler-60hz/v1",
+      "front_known_rcs_m2": 135.78248142565337,
+      "interface": "gaotian.tactical-dynamics/runtime-adapter/v1alpha1",
+      "runtime_parameters_sha256": "fb1b88436ee76b09ea0b090cf916cce935702196cc7281a5589aa11e86d21b24",
+      "side_known_rcs_m2": 21922.22801803958,
+      "status": "PASS",
+      "unmanned_overg_hull_damage": 0.04092519983696594,
+      "upper_drag_force_n_at_340_mps": 2783889.8565507485
+    }
+  }
+}
