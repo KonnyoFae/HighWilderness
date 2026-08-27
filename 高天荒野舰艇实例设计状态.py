@@ -22,6 +22,7 @@ from 高天荒野舰艇数据契约 import (
     canonical_sha256,
 )
 from 高天荒野舰艇无界面舾装编译器 import DerivedShipSnapshot
+from 高天荒野舰艇人员伤亡 import validate_crew_casualty_capacity
 
 
 SHIP_DESIGN_STATE_INTERFACE_ID = "gaotian.ship-instance-design-state/v1alpha1"
@@ -316,6 +317,10 @@ def transition_current_design(
         target_snapshot,
         embedded,
         unchanged_ids,
+    )
+    validate_crew_casualty_capacity(
+        embedded,
+        dict(target_snapshot.outfit.crew_capacity),
     )
     compile_ship_operational_state(target_snapshot, embedded.operational_state)
     old_state = embedded.design_state

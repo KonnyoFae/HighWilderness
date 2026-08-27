@@ -1,0 +1,150 @@
+{
+  "deterministic_medical_repeat_equal": true,
+  "evacuation_events": [
+    {
+      "crew_type": "officer",
+      "evacuated_fit_for_duty_count": 2,
+      "evacuated_wounded_count": 0,
+      "newly_dead_fit_for_duty_count": 0,
+      "newly_dead_wounded_count": 0,
+      "operation_id": "evacuation.fixture.stage_i11c.direct",
+      "rescue_manifest_id": "rescue-manifest.fixture.stage_i11c.direct",
+      "ship_id": "ship.fixture.stage_i11c.medical",
+      "tactical_time_s": 0.2
+    },
+    {
+      "crew_type": "ordinary",
+      "evacuated_fit_for_duty_count": 7,
+      "evacuated_wounded_count": 1,
+      "newly_dead_fit_for_duty_count": 1,
+      "newly_dead_wounded_count": 0,
+      "operation_id": "evacuation.fixture.stage_i11c.direct",
+      "rescue_manifest_id": "rescue-manifest.fixture.stage_i11c.direct",
+      "ship_id": "ship.fixture.stage_i11c.medical",
+      "tactical_time_s": 0.2
+    },
+    {
+      "crew_type": "technical_officer",
+      "evacuated_fit_for_duty_count": 4,
+      "evacuated_wounded_count": 0,
+      "newly_dead_fit_for_duty_count": 0,
+      "newly_dead_wounded_count": 0,
+      "operation_id": "evacuation.fixture.stage_i11c.direct",
+      "rescue_manifest_id": "rescue-manifest.fixture.stage_i11c.direct",
+      "ship_id": "ship.fixture.stage_i11c.medical",
+      "tactical_time_s": 0.2
+    },
+    {
+      "crew_type": "veteran_damage_control",
+      "evacuated_fit_for_duty_count": 2,
+      "evacuated_wounded_count": 0,
+      "newly_dead_fit_for_duty_count": 0,
+      "newly_dead_wounded_count": 0,
+      "operation_id": "evacuation.fixture.stage_i11c.direct",
+      "rescue_manifest_id": "rescue-manifest.fixture.stage_i11c.direct",
+      "ship_id": "ship.fixture.stage_i11c.medical",
+      "tactical_time_s": 0.2
+    }
+  ],
+  "interface": "gaotian.ship-crew-recovery/v1alpha1",
+  "medical_events": [
+    {
+      "crew_type": "ordinary",
+      "dead_after": 1,
+      "dead_before": 0,
+      "died_from_wounds_count": 1,
+      "fit_for_duty_after": 8,
+      "fit_for_duty_before": 7,
+      "operation_id": "medical.fixture.stage_i11c.primary",
+      "recovered_count": 1,
+      "ship_id": "ship.fixture.stage_i11c.medical",
+      "strategic_time_s": 100.0,
+      "wounded_after": 1,
+      "wounded_before": 3
+    }
+  ],
+  "policy": "gaotian.crew-recovery/explicit-outcomes-conserved-atomic/v1",
+  "rescue_event": {
+    "disposition": "recovered_to_ship",
+    "manifest_id": "rescue-manifest.fixture.stage_i11c.direct",
+    "operation_id": "rescue.fixture.stage_i11c.recovered",
+    "strategic_time_s": 300.0,
+    "survivor_count": 16,
+    "target_ship_id": "ship.fixture.stage_i11c.transfer-target"
+  },
+  "scene_evacuation_events": [
+    {
+      "crew_type": "officer",
+      "evacuated_fit_for_duty_count": 2,
+      "evacuated_wounded_count": 0,
+      "newly_dead_fit_for_duty_count": 0,
+      "newly_dead_wounded_count": 0,
+      "operation_id": "evacuation.fixture.stage_i11c.scene",
+      "rescue_manifest_id": "rescue-manifest.fixture.stage_i11c.scene",
+      "ship_id": "ship.fixture.scene.target",
+      "tactical_time_s": 0.016666666666666666
+    },
+    {
+      "crew_type": "ordinary",
+      "evacuated_fit_for_duty_count": 9,
+      "evacuated_wounded_count": 0,
+      "newly_dead_fit_for_duty_count": 1,
+      "newly_dead_wounded_count": 0,
+      "operation_id": "evacuation.fixture.stage_i11c.scene",
+      "rescue_manifest_id": "rescue-manifest.fixture.stage_i11c.scene",
+      "ship_id": "ship.fixture.scene.target",
+      "tactical_time_s": 0.016666666666666666
+    },
+    {
+      "crew_type": "technical_officer",
+      "evacuated_fit_for_duty_count": 4,
+      "evacuated_wounded_count": 0,
+      "newly_dead_fit_for_duty_count": 0,
+      "newly_dead_wounded_count": 0,
+      "operation_id": "evacuation.fixture.stage_i11c.scene",
+      "rescue_manifest_id": "rescue-manifest.fixture.stage_i11c.scene",
+      "ship_id": "ship.fixture.scene.target",
+      "tactical_time_s": 0.016666666666666666
+    },
+    {
+      "crew_type": "veteran_damage_control",
+      "evacuated_fit_for_duty_count": 2,
+      "evacuated_wounded_count": 0,
+      "newly_dead_fit_for_duty_count": 0,
+      "newly_dead_wounded_count": 0,
+      "operation_id": "evacuation.fixture.stage_i11c.scene",
+      "rescue_manifest_id": "rescue-manifest.fixture.stage_i11c.scene",
+      "ship_id": "ship.fixture.scene.target",
+      "tactical_time_s": 0.016666666666666666
+    }
+  ],
+  "status": "PASS",
+  "tested_error_codes": [
+    "crew_casualty.capacity_exceeded",
+    "crew_recovery.insufficient_wounded",
+    "crew_recovery.manifest_already_resolved",
+    "crew_recovery.ship_not_falling",
+    "crew_recovery.strategic_time_reversed"
+  ],
+  "tested_paths": [
+    "explicit_medical_resolution",
+    "atomic_ship_to_ship_transfer",
+    "falling_ship_evacuation_boundary",
+    "persistent_rescue_manifest",
+    "whole_manifest_recovered_to_ship",
+    "whole_manifest_lost",
+    "no_automatic_evacuation",
+    "scene_evacuation_output"
+  ],
+  "transfer_events": [
+    {
+      "crew_type": "ordinary",
+      "fit_for_duty_count": 1,
+      "operation_id": "transfer.fixture.stage_i11c.primary",
+      "source_ship_id": "ship.fixture.stage_i11c.medical",
+      "strategic_time_s": 200.0,
+      "target_ship_id": "ship.fixture.stage_i11c.transfer-target",
+      "wounded_count": 1
+    }
+  ]
+}

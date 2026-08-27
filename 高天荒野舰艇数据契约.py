@@ -2213,6 +2213,8 @@ class FireIncidentStateInput:
     created_time_s: float
     intensity_units: float
     remaining_fuel_units: float
+    propagated_from_fire_incident_id: str | None = None
+    source_secondary_explosion_id: str | None = None
 
     @classmethod
     def parse(cls, value: Any, path: str) -> "FireIncidentStateInput":
@@ -2227,6 +2229,10 @@ class FireIncidentStateInput:
                 "created_time_s",
                 "intensity_units",
                 "remaining_fuel_units",
+            ),
+            (
+                "propagated_from_fire_incident_id",
+                "source_secondary_explosion_id",
             ),
         )
         intensity = _number(
@@ -2243,8 +2249,37 @@ class FireIncidentStateInput:
                 path,
                 "活动火灾的强度与剩余燃料都必须为正数",
             )
+        propagated_from = (
+            None
+            if "propagated_from_fire_incident_id" not in obj
+            else _resource_id(
+                obj["propagated_from_fire_incident_id"],
+                f"{path}.propagated_from_fire_incident_id",
+            )
+        )
+        source_explosion = (
+            None
+            if "source_secondary_explosion_id" not in obj
+            else _resource_id(
+                obj["source_secondary_explosion_id"],
+                f"{path}.source_secondary_explosion_id",
+            )
+        )
+        if propagated_from is not None and source_explosion is not None:
+            raise ContractError(
+                "continuous_damage.fire_secondary_source_conflict",
+                path,
+                "传播来源火灾与二次爆炸来源只能记录一种",
+            )
+        incident_id = _resource_id(obj["id"], f"{path}.id")
+        if propagated_from == incident_id:
+            raise ContractError(
+                "continuous_damage.fire_self_parent",
+                f"{path}.propagated_from_fire_incident_id",
+                "火灾不能由自身传播产生",
+            )
         return cls(
-            _resource_id(obj["id"], f"{path}.id"),
+            incident_id,
             _resource_id(
                 obj["source_projectile_id"],
                 f"{path}.source_projectile_id",
@@ -2256,10 +2291,12 @@ class FireIncidentStateInput:
             _number(obj["created_time_s"], f"{path}.created_time_s", 0.0),
             intensity,
             fuel,
+            propagated_from,
+            source_explosion,
         )
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        result: dict[str, Any] = {
             "created_time_s": self.created_time_s,
             "id": self.id,
             "intensity_units": self.intensity_units,
@@ -2267,6 +2304,15 @@ class FireIncidentStateInput:
             "source_projectile_id": self.source_projectile_id,
             "target_module_instance_id": self.target_module_instance_id,
         }
+        if self.propagated_from_fire_incident_id is not None:
+            result["propagated_from_fire_incident_id"] = (
+                self.propagated_from_fire_incident_id
+            )
+        if self.source_secondary_explosion_id is not None:
+            result["source_secondary_explosion_id"] = (
+                self.source_secondary_explosion_id
+            )
+        return result
 
 
 @dataclass(frozen=True)
@@ -2418,6 +2464,129 @@ class ShipContinuousDamageStateInput:
             "profile_sha256": self.profile_sha256,
             "tactical_time_s": self.tactical_time_s,
         }
+
+
+@dataclass(frozen=True)
+class CrewCasualtyStatusInput:
+    """单一人员类别在舰上的当前战斗状态账本。"""
+
+    crew_type: str
+    fit_for_duty_count: int
+    wounded_count: int
+    dead_count: int
+
+    @classmethod
+    def parse(cls, value: Any, path: str) -> "CrewCasualtyStatusInput":
+        obj = _object(value, path)
+        _keys(
+            obj,
+            path,
+            (
+                "crew_type",
+                "fit_for_duty_count",
+                "wounded_count",
+                "dead_count",
+            ),
+        )
+        crew_type = _string(obj["crew_type"], f"{path}.crew_type")
+        if crew_type not in CREW_TYPES:
+            raise ContractError(
+                "crew_casualty.crew_type",
+                f"{path}.crew_type",
+                crew_type,
+            )
+        result = cls(
+            crew_type,
+            _integer(
+                obj["fit_for_duty_count"],
+                f"{path}.fit_for_duty_count",
+                0,
+            ),
+            _integer(obj["wounded_count"], f"{path}.wounded_count", 0),
+            _integer(obj["dead_count"], f"{path}.dead_count", 0),
+        )
+        if result.total_count <= 0:
+            raise ContractError(
+                "crew_casualty.empty_status",
+                path,
+                "人员伤亡账本不得保留全零类别",
+            )
+        return result
+
+    @property
+    def total_count(self) -> int:
+        return self.fit_for_duty_count + self.wounded_count + self.dead_count
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "crew_type": self.crew_type,
+            "dead_count": self.dead_count,
+            "fit_for_duty_count": self.fit_for_duty_count,
+            "wounded_count": self.wounded_count,
+        }
+
+
+@dataclass(frozen=True)
+class ShipCrewCasualtyStateInput:
+    """舰艇可执勤、负伤与死亡人员的可持久化战斗账本。"""
+
+    tactical_time_s: float
+    crew_statuses: tuple[CrewCasualtyStatusInput, ...]
+    last_strategic_operation_time_s: float | None = None
+
+    @classmethod
+    def parse(cls, value: Any, path: str) -> "ShipCrewCasualtyStateInput":
+        obj = _object(value, path)
+        _keys(
+            obj,
+            path,
+            ("tactical_time_s", "crew_statuses"),
+            ("last_strategic_operation_time_s",),
+        )
+        statuses = tuple(
+            sorted(
+                (
+                    CrewCasualtyStatusInput.parse(
+                        item,
+                        f"{path}.crew_statuses[{index}]",
+                    )
+                    for index, item in enumerate(
+                        _array(obj["crew_statuses"], f"{path}.crew_statuses")
+                    )
+                ),
+                key=lambda item: item.crew_type,
+            )
+        )
+        if len({item.crew_type for item in statuses}) != len(statuses):
+            raise ContractError(
+                "crew_casualty.crew_type_duplicate",
+                f"{path}.crew_statuses",
+                "人员伤亡账本中的人员类别不得重复",
+            )
+        return cls(
+            _number(obj["tactical_time_s"], f"{path}.tactical_time_s", 0.0),
+            statuses,
+            (
+                None
+                if "last_strategic_operation_time_s" not in obj
+                else _number(
+                    obj["last_strategic_operation_time_s"],
+                    f"{path}.last_strategic_operation_time_s",
+                    0.0,
+                )
+            ),
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        result: dict[str, Any] = {
+            "crew_statuses": [item.to_dict() for item in self.crew_statuses],
+            "tactical_time_s": self.tactical_time_s,
+        }
+        if self.last_strategic_operation_time_s is not None:
+            result["last_strategic_operation_time_s"] = (
+                self.last_strategic_operation_time_s
+            )
+        return result
 
 
 @dataclass(frozen=True)
@@ -2850,6 +3019,7 @@ class ShipInstanceSnapshotInput:
     design_state: ShipDesignStateInput | None = None
     weapon_timeline_state: WeaponTimelineStateInput | None = None
     continuous_damage_state: ShipContinuousDamageStateInput | None = None
+    crew_casualty_state: ShipCrewCasualtyStateInput | None = None
 
     @classmethod
     def parse(cls, resource: Any, path: str = "$") -> "ShipInstanceSnapshotInput":
@@ -2878,6 +3048,7 @@ class ShipInstanceSnapshotInput:
                 "design_state",
                 "weapon_timeline_state",
                 "continuous_damage_state",
+                "crew_casualty_state",
             ),
         )
         if obj["schema"] != SCHEMA_ID:
@@ -2923,6 +3094,32 @@ class ShipInstanceSnapshotInput:
                 f"{path}.current_hull_integrity_fraction",
                 "当前船壳完整度必须位于 0～1",
             )
+        operational_state = ShipOperationalStateInput.parse(
+            obj["operational_state"], f"{path}.operational_state"
+        )
+        crew_casualty_state = (
+            None
+            if "crew_casualty_state" not in obj
+            else ShipCrewCasualtyStateInput.parse(
+                obj["crew_casualty_state"],
+                f"{path}.crew_casualty_state",
+            )
+        )
+        if crew_casualty_state is not None:
+            operational_crew = {
+                item.crew_type: item.count for item in operational_state.crew
+            }
+            fit_for_duty = {
+                item.crew_type: item.fit_for_duty_count
+                for item in crew_casualty_state.crew_statuses
+                if item.fit_for_duty_count > 0
+            }
+            if operational_crew != fit_for_duty:
+                raise ContractError(
+                    "crew_casualty.fit_mismatch",
+                    f"{path}.crew_casualty_state.crew_statuses",
+                    "可执勤人数必须与 operational_state.crew 完全一致",
+                )
         return cls(
             _resource_id(obj["id"], f"{path}.id"),
             _integer(obj["version"], f"{path}.version", 1),
@@ -2942,9 +3139,7 @@ class ShipInstanceSnapshotInput:
                 f"{path}.sortie_configuration_sha256",
             ),
             states,
-            ShipOperationalStateInput.parse(
-                obj["operational_state"], f"{path}.operational_state"
-            ),
+            operational_state,
             RuntimePowerPolicyInput.parse(obj["power_policy"], f"{path}.power_policy"),
             (
                 None
@@ -2976,6 +3171,7 @@ class ShipInstanceSnapshotInput:
                     f"{path}.continuous_damage_state",
                 )
             ),
+            crew_casualty_state,
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -3005,6 +3201,8 @@ class ShipInstanceSnapshotInput:
             result["continuous_damage_state"] = (
                 self.continuous_damage_state.to_dict()
             )
+        if self.crew_casualty_state is not None:
+            result["crew_casualty_state"] = self.crew_casualty_state.to_dict()
         return result
 
 

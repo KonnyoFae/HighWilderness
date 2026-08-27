@@ -335,6 +335,33 @@ def validate_continuous_damage_state(
             "火灾事件 id 不得重复",
         )
     for fire in state.fire_incidents:
+        for field_name, source_id in (
+            (
+                "propagated_from_fire_incident_id",
+                fire.propagated_from_fire_incident_id,
+            ),
+            ("source_secondary_explosion_id", fire.source_secondary_explosion_id),
+        ):
+            if source_id is not None:
+                _resource_id(
+                    source_id,
+                    f"$.continuous_damage_state.fire_incidents.{field_name}",
+                )
+        if (
+            fire.propagated_from_fire_incident_id is not None
+            and fire.source_secondary_explosion_id is not None
+        ):
+            raise ContractError(
+                "continuous_damage.fire_secondary_source_conflict",
+                "$.continuous_damage_state.fire_incidents",
+                fire.id,
+            )
+        if fire.propagated_from_fire_incident_id == fire.id:
+            raise ContractError(
+                "continuous_damage.fire_self_parent",
+                "$.continuous_damage_state.fire_incidents",
+                fire.id,
+            )
         if (
             not isfinite(fire.created_time_s)
             or fire.created_time_s < 0.0

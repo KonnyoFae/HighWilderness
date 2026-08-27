@@ -33,6 +33,10 @@ from 高天荒野舰艇实例设计状态 import (
     embed_initial_design_state,
     validate_instance_current_design,
 )
+from 高天荒野舰艇人员伤亡 import (
+    persons_aboard_count,
+    validate_crew_casualty_capacity,
+)
 
 
 RUNTIME_SHIP_PARAMETERS_INTERFACE_ID = "gaotian.runtime-ship-parameters/v1alpha1"
@@ -668,6 +672,10 @@ def compile_runtime_ship_parameters(
     """从设计、出航配置和当前实例状态生成唯一战术运行参数。"""
 
     _validate_sources(snapshot, sortie, instance)
+    validate_crew_casualty_capacity(
+        instance,
+        dict(snapshot.outfit.crew_capacity),
+    )
     if instance.ammunition_state is not None:
         validate_ship_ammunition_state(
             snapshot,
@@ -836,7 +844,7 @@ def compile_runtime_ship_parameters(
         lift_force,
         lift_margin,
         lift_sufficient,
-        operational.crew_safety_lock_enabled,
+        persons_aboard_count(instance) > 0,
         tuple(sorted(fulfillment.items())),
         tuple(runtime_modules),
         power,

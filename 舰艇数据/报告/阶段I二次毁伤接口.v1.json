@@ -1,0 +1,96 @@
+{
+  "adjacency_m": 5.0,
+  "cookoff_events": [
+    {
+      "consumed_ammunition": [
+        {
+          "munition_id": "gtw.munition.fixture.76mm.standard",
+          "units": 1
+        }
+      ],
+      "event_kind": "ammunition_cookoff",
+      "explosion_id": "explosion.fixture.stage_i11d.primary",
+      "hull_damage_fraction": 0.010000000000000009,
+      "magazine_instance_id": "ammunition_magazine",
+      "module_damage": [
+        {
+          "applied_damage_points": 2.0,
+          "module_instance_id": "generator",
+          "requested_damage_points": 2.0
+        }
+      ],
+      "outcome_id": "cookoff.fixture.stage_i11d.primary",
+      "ship_id": "ship.fixture.stage_i11d.direct",
+      "source_fire_incident_id": "fire.fixture.stage_i11d.magazine",
+      "started_fire_incident_ids": [
+        "fire.fixture.stage_i11d.secondary"
+      ],
+      "tactical_time_s": 1.0
+    }
+  ],
+  "deterministic_repeat_equal": true,
+  "interface": "gaotian.ship-secondary-damage/v1alpha1",
+  "policy": "gaotian.secondary-damage/explicit-fire-source-inventory-conserved-boundary/v1",
+  "propagation_events": [
+    {
+      "event_kind": "fire_propagated",
+      "fire_incident_id": "fire.fixture.stage_i11d.generator",
+      "initial_fuel_units": 4.0,
+      "initial_intensity_units": 0.5,
+      "outcome_id": "propagation.fixture.stage_i11d.primary",
+      "ship_id": "ship.fixture.stage_i11d.direct",
+      "source_fire_incident_id": "fire.fixture.stage_i11d.lift",
+      "source_module_instance_id": "lift_tank",
+      "tactical_time_s": 1.0,
+      "target_module_instance_id": "generator"
+    }
+  ],
+  "scene_cookoff_events": [
+    {
+      "consumed_ammunition": [
+        {
+          "munition_id": "gtw.munition.fixture.76mm.standard",
+          "units": 1
+        }
+      ],
+      "event_kind": "ammunition_cookoff",
+      "explosion_id": "explosion.fixture.stage_i11d.scene",
+      "hull_damage_fraction": 0.0010000000000000009,
+      "magazine_instance_id": "ammunition_magazine",
+      "module_damage": [
+        {
+          "applied_damage_points": 2.0,
+          "module_instance_id": "damage_control",
+          "requested_damage_points": 2.0
+        }
+      ],
+      "outcome_id": "cookoff.fixture.stage_i11d.scene",
+      "ship_id": "ship.fixture.scene.target",
+      "source_fire_incident_id": "fire.fixture.stage_i11d.scene-magazine",
+      "started_fire_incident_ids": [
+        "fire.fixture.stage_i11d.scene-secondary"
+      ],
+      "tactical_time_s": 0.016666666666666666
+    }
+  ],
+  "status": "PASS",
+  "tested_error_codes": [
+    "crew_casualty.source_module_unmatched",
+    "secondary_damage.cookoff_source_mismatch",
+    "secondary_damage.fire_source_unmatched",
+    "secondary_damage.insufficient_ammunition",
+    "secondary_damage.propagation_not_adjacent",
+    "secondary_damage.secondary_fire_without_damage_target"
+  ],
+  "tested_paths": [
+    "explicit_adjacent_fire_propagation",
+    "no_birth_step_damage",
+    "physical_magazine_inventory_consumption",
+    "explicit_secondary_module_and_hull_damage",
+    "secondary_fire_lineage",
+    "secondary_explosion_crew_casualty",
+    "no_automatic_propagation_or_cookoff",
+    "scene_fire_propagation",
+    "scene_save_shape"
+  ]
+}

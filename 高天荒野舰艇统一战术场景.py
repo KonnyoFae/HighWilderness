@@ -44,6 +44,37 @@ from 高天荒野舰艇持续毁伤 import (
     register_fire_ignition,
     validate_instance_continuous_damage,
 )
+from 高天荒野舰艇人员伤亡 import (
+    CrewCasualtyEvent,
+    CrewCasualtyOutcome,
+    apply_crew_casualty_outcomes,
+    validate_instance_crew_casualty_state,
+)
+from 高天荒野舰艇人员医疗转移与救生 import (
+    CrewEvacuationEvent,
+    CrewEvacuationOutcome,
+    CrewRescueManifest,
+    apply_crew_evacuation_outcome,
+)
+from 高天荒野舰艇二次毁伤 import (
+    AmmunitionCookoffEvent,
+    AmmunitionCookoffOutcome,
+    FirePropagationEvent,
+    FirePropagationOutcome,
+    apply_secondary_damage_outcomes,
+)
+from 高天荒野舰艇战术观测与火控 import (
+    FireControlSupportEvent,
+    GeneratedGuidanceFactEvent,
+    RadarEmissionEvent,
+    SensorObservationEvent,
+    TacticalObservationResolution,
+    TacticalObservationShipContext,
+    TacticalObservationStepInput,
+    generate_guidance_runtime_inputs,
+    resolve_tactical_observation_step,
+    validate_weapon_fire_control_support,
+)
 from 高天荒野舰艇战术机动求解器 import (
     LayerTransitionState,
     TacticalControlInput,
@@ -667,6 +698,15 @@ class TacticalSceneStepResolution:
     ship_results: tuple[TacticalSceneShipStepResult, ...]
     guidance_events: tuple[MissileGuidanceEvent, ...] = ()
     continuous_damage_events: tuple[ContinuousDamageEvent, ...] = ()
+    crew_casualty_events: tuple[CrewCasualtyEvent, ...] = ()
+    crew_evacuation_events: tuple[CrewEvacuationEvent, ...] = ()
+    crew_rescue_manifests: tuple[CrewRescueManifest, ...] = ()
+    fire_propagation_events: tuple[FirePropagationEvent, ...] = ()
+    ammunition_cookoff_events: tuple[AmmunitionCookoffEvent, ...] = ()
+    sensor_observation_events: tuple[SensorObservationEvent, ...] = ()
+    radar_emission_events: tuple[RadarEmissionEvent, ...] = ()
+    fire_control_support_events: tuple[FireControlSupportEvent, ...] = ()
+    generated_guidance_fact_events: tuple[GeneratedGuidanceFactEvent, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         result = {
@@ -689,6 +729,42 @@ class TacticalSceneStepResolution:
         if self.continuous_damage_events:
             result["continuous_damage_events"] = [
                 item.to_dict() for item in self.continuous_damage_events
+            ]
+        if self.crew_casualty_events:
+            result["crew_casualty_events"] = [
+                item.to_dict() for item in self.crew_casualty_events
+            ]
+        if self.crew_evacuation_events:
+            result["crew_evacuation_events"] = [
+                item.to_dict() for item in self.crew_evacuation_events
+            ]
+        if self.crew_rescue_manifests:
+            result["crew_rescue_manifests"] = [
+                item.to_dict() for item in self.crew_rescue_manifests
+            ]
+        if self.fire_propagation_events:
+            result["fire_propagation_events"] = [
+                item.to_dict() for item in self.fire_propagation_events
+            ]
+        if self.ammunition_cookoff_events:
+            result["ammunition_cookoff_events"] = [
+                item.to_dict() for item in self.ammunition_cookoff_events
+            ]
+        if self.sensor_observation_events:
+            result["sensor_observation_events"] = [
+                item.to_dict() for item in self.sensor_observation_events
+            ]
+        if self.radar_emission_events:
+            result["radar_emission_events"] = [
+                item.to_dict() for item in self.radar_emission_events
+            ]
+        if self.fire_control_support_events:
+            result["fire_control_support_events"] = [
+                item.to_dict() for item in self.fire_control_support_events
+            ]
+        if self.generated_guidance_fact_events:
+            result["generated_guidance_fact_events"] = [
+                item.to_dict() for item in self.generated_guidance_fact_events
             ]
         return result
 
@@ -886,11 +962,13 @@ def _suspend_weapon_timeline(
 def _runtime_automatic_events(
     binding: TacticalSceneShipBinding,
     instance: ShipInstanceSnapshotInput,
+    extra_events: Iterable[str] = (),
 ) -> tuple[str, ...]:
     return tuple(
         sorted(
             set(binding.active_automatic_events)
             | set(continuous_damage_automatic_events(instance))
+            | set(extra_events)
         )
     )
 
@@ -945,6 +1023,7 @@ def _validate_internal_state(state: TacticalSceneState) -> None:
         timeline = instance.weapon_timeline_state
         lifecycle = ship.lifecycle_state
         continuous_damage = instance.continuous_damage_state
+        crew_casualty = instance.crew_casualty_state
         if motion.fixed_step_index != state.fixed_step_index:
             raise ContractError("tactical_scene.motion_clock_mismatch", f"$.ships.{ship.ship_id}.motion_state.fixed_step_index", "舰艇机动步号与场景不同步")
         if timeline is None or abs(timeline.tactical_time_s - state.tactical_time_s) > EPS:
@@ -955,6 +1034,13 @@ def _validate_internal_state(state: TacticalSceneState) -> None:
                     raise ContractError("tactical_scene.continuous_damage_clock_ahead", f"$.ships.{ship.ship_id}.combat_state.instance.continuous_damage_state", "离场舰持续毁伤时钟不得超前场景")
             elif abs(continuous_damage.tactical_time_s - state.tactical_time_s) > EPS:
                 raise ContractError("tactical_scene.continuous_damage_clock_mismatch", f"$.ships.{ship.ship_id}.combat_state.instance.continuous_damage_state", "活动舰持续毁伤时钟必须与场景同步")
+        validate_instance_crew_casualty_state(instance)
+        if crew_casualty is not None:
+            if lifecycle.physical_status == "exited":
+                if crew_casualty.tactical_time_s > state.tactical_time_s + EPS:
+                    raise ContractError("tactical_scene.crew_casualty_clock_ahead", f"$.ships.{ship.ship_id}.combat_state.instance.crew_casualty_state", "离场舰人员账本时钟不得超前场景")
+            elif abs(crew_casualty.tactical_time_s - state.tactical_time_s) > EPS:
+                raise ContractError("tactical_scene.crew_casualty_clock_mismatch", f"$.ships.{ship.ship_id}.combat_state.instance.crew_casualty_state", "活动舰人员账本时钟必须与场景同步")
         if abs(motion.hull_integrity_fraction - instance.current_hull_integrity_fraction) > EPS:
             raise ContractError("tactical_scene.hull_state_mismatch", f"$.ships.{ship.ship_id}", "机动与战损状态的船壳完整度不同步")
         if abs(motion.fuel_units - instance.operational_state.fuel_units) > EPS:
@@ -1046,6 +1132,10 @@ def initialize_tactical_scene(
             validate_instance_continuous_damage(binding.snapshot, combat.instance, continuous_damage_profile)
             if abs(continuous_damage.tactical_time_s) > EPS:
                 raise ContractError("tactical_scene.continuous_damage_clock_mismatch", f"$.initial_combat_states.{ship_id}", "初始持续毁伤时钟必须位于零时刻")
+        validate_instance_crew_casualty_state(combat.instance)
+        crew_casualty = combat.instance.crew_casualty_state
+        if crew_casualty is not None and abs(crew_casualty.tactical_time_s) > EPS:
+            raise ContractError("tactical_scene.crew_casualty_clock_mismatch", f"$.initial_combat_states.{ship_id}", "初始人员账本时钟必须位于零时刻")
         runtime = compile_runtime_ship_parameters(binding.snapshot, binding.sortie, combat.instance, active_automatic_events=_runtime_automatic_events(binding, combat.instance))
         model = build_tactical_ship_model(runtime, binding.snapshot)
         if fixed_step_s is None:
@@ -1164,9 +1254,14 @@ def advance_tactical_scene_step(
     *,
     guidance_catalog: MissileGuidanceProfileCatalog | None = None,
     guidance_inputs: Iterable[MissileGuidanceRuntimeInput] = (),
+    observation_step_input: TacticalObservationStepInput | None = None,
     continuous_damage_profile: ContinuousDamageProfile | None = None,
     fire_ignition_outcomes: Iterable[FireIgnitionOutcome] = (),
     damage_control_directives: Iterable[DamageControlDirective] = (),
+    fire_propagation_outcomes: Iterable[FirePropagationOutcome] = (),
+    ammunition_cookoff_outcomes: Iterable[AmmunitionCookoffOutcome] = (),
+    crew_casualty_outcomes: Iterable[CrewCasualtyOutcome] = (),
+    crew_evacuation_outcomes: Iterable[CrewEvacuationOutcome] = (),
     controls: dict[str, TacticalControlInput] | None = None,
     launch_directives: Iterable[TacticalSceneLaunchDirective] = (),
     exit_directives: Iterable[TacticalSceneExitDirective] = (),
@@ -1189,6 +1284,33 @@ def advance_tactical_scene_step(
     binding_by_id = _binding_map(bindings)
     _validate_bindings(state, binding_by_id)
     ship_map = {item.ship_id: item for item in state.ships}
+    manual_guidance_inputs = tuple(guidance_inputs)
+    if observation_step_input is not None:
+        observation_step_input.validate("$.observation_step_input")
+        if manual_guidance_inputs:
+            raise ContractError(
+                "tactical_observation.manual_guidance_mixed",
+                "$.guidance_inputs",
+                "自动观测模式不得同时接收调用方手填的制导布尔事实",
+            )
+        observation_events_by_ship = observation_step_input.automatic_events_by_ship()
+        unknown_observation_ships = sorted(set(observation_events_by_ship) - set(ship_map))
+        if unknown_observation_ships:
+            raise ContractError(
+                "tactical_observation.ship_missing",
+                "$.observation_step_input",
+                str(unknown_observation_ships),
+            )
+    else:
+        observation_events_by_ship = {}
+    source_fire_incidents_by_ship = {
+        ship_id: (
+            ()
+            if ship.combat_state.instance.continuous_damage_state is None
+            else ship.combat_state.instance.continuous_damage_state.fire_incidents
+        )
+        for ship_id, ship in ship_map.items()
+    }
     ignition_items = tuple(fire_ignition_outcomes)
     for index, item in enumerate(ignition_items):
         item.validate(f"$.fire_ignition_outcomes[{index}]")
@@ -1203,7 +1325,42 @@ def advance_tactical_scene_step(
             raise ContractError("continuous_damage.directive_ship_missing", f"$.damage_control_directives[{index}].ship_id", item.ship_id)
     if len({item.slot for item in damage_directive_items}) != len(damage_directive_items):
         raise ContractError("continuous_damage.directive_slot_duplicate", "$.damage_control_directives", "同一固定步不得重复修改同一损管队槽位")
-    requires_continuous_damage = bool(ignition_items or damage_directive_items) or any(
+    propagation_items = tuple(fire_propagation_outcomes)
+    for index, item in enumerate(propagation_items):
+        item.validate(f"$.fire_propagation_outcomes[{index}]")
+        if item.target_ship_id not in ship_map:
+            raise ContractError("secondary_damage.ship_missing", f"$.fire_propagation_outcomes[{index}].target_ship_id", item.target_ship_id)
+    cookoff_items = tuple(ammunition_cookoff_outcomes)
+    for index, item in enumerate(cookoff_items):
+        item.validate(f"$.ammunition_cookoff_outcomes[{index}]")
+        if item.target_ship_id not in ship_map:
+            raise ContractError("secondary_damage.ship_missing", f"$.ammunition_cookoff_outcomes[{index}].target_ship_id", item.target_ship_id)
+    casualty_items = tuple(crew_casualty_outcomes)
+    for index, item in enumerate(casualty_items):
+        item.validate(f"$.crew_casualty_outcomes[{index}]")
+        if item.target_ship_id not in ship_map:
+            raise ContractError("crew_casualty.ship_missing", f"$.crew_casualty_outcomes[{index}].target_ship_id", item.target_ship_id)
+    if len({item.outcome_id for item in casualty_items}) != len(casualty_items):
+        raise ContractError("crew_casualty.outcome_duplicate", "$.crew_casualty_outcomes", "同一固定步的伤亡结果 id 不得重复")
+    if len({item.source_key for item in casualty_items}) != len(casualty_items):
+        raise ContractError("crew_casualty.source_duplicate", "$.crew_casualty_outcomes", "同一来源事件不得重复结算伤亡")
+    evacuation_items = tuple(crew_evacuation_outcomes)
+    for index, item in enumerate(evacuation_items):
+        item.validate(f"$.crew_evacuation_outcomes[{index}]")
+        if item.ship_id not in ship_map:
+            raise ContractError("crew_recovery.ship_missing", f"$.crew_evacuation_outcomes[{index}].ship_id", item.ship_id)
+    if len({item.operation_id for item in evacuation_items}) != len(evacuation_items):
+        raise ContractError("crew_recovery.evacuation_operation_duplicate", "$.crew_evacuation_outcomes", "同一固定步的弃舰操作 id 不得重复")
+    if len({item.rescue_manifest_id for item in evacuation_items}) != len(evacuation_items):
+        raise ContractError("crew_recovery.manifest_duplicate", "$.crew_evacuation_outcomes", "同一固定步的待救援清单 id 不得重复")
+    if len({item.ship_id for item in evacuation_items}) != len(evacuation_items):
+        raise ContractError("crew_recovery.evacuation_ship_duplicate", "$.crew_evacuation_outcomes", "同一舰艇在同一固定步只能弃舰一次")
+    requires_continuous_damage = bool(
+        ignition_items
+        or damage_directive_items
+        or propagation_items
+        or cookoff_items
+    ) or any(
         item.combat_state.instance.continuous_damage_state is not None
         for item in ship_map.values()
     )
@@ -1252,6 +1409,43 @@ def advance_tactical_scene_step(
     lifecycle_expired: list[ProjectileExpiredEvent] = []
     engagement_events: list[TacticalEngagementEvent] = []
     continuous_damage_events: list[ContinuousDamageEvent] = []
+    fire_propagation_events: list[FirePropagationEvent] = []
+    ammunition_cookoff_events: list[AmmunitionCookoffEvent] = []
+    crew_casualty_events: list[CrewCasualtyEvent] = []
+    crew_evacuation_events: list[CrewEvacuationEvent] = []
+    crew_rescue_manifests: list[CrewRescueManifest] = []
+    observation_resolution = TacticalObservationResolution((), (), (), ())
+    generated_guidance_fact_events: tuple[GeneratedGuidanceFactEvent, ...] = ()
+    effective_guidance_inputs = manual_guidance_inputs
+
+    def observation_contexts(
+        motions: dict[str, TacticalMotionState],
+    ) -> tuple[TacticalObservationShipContext, ...]:
+        contexts: list[TacticalObservationShipContext] = []
+        for ship_id in sorted(ship_map):
+            ship = ship_map[ship_id]
+            binding = binding_by_id[ship_id]
+            runtime = compile_runtime_ship_parameters(
+                binding.snapshot,
+                binding.sortie,
+                ship.combat_state.instance,
+                active_automatic_events=_runtime_automatic_events(
+                    binding,
+                    ship.combat_state.instance,
+                    observation_events_by_ship.get(ship_id, ()),
+                ),
+            )
+            motion = motions[ship_id]
+            contexts.append(
+                TacticalObservationShipContext(
+                    ship_id,
+                    binding.snapshot,
+                    runtime,
+                    (motion.position_world_m.x, motion.position_world_m.y),
+                    ship.lifecycle_state.physical_status,
+                )
+            )
+        return tuple(contexts)
 
     def apply_exit_boundary(boundary_time_s: float, boundary_step: int) -> None:
         nonlocal world, ship_map
@@ -1318,6 +1512,7 @@ def advance_tactical_scene_step(
                 active_automatic_events=_runtime_automatic_events(
                     binding,
                     ship.combat_state.instance,
+                    observation_events_by_ship.get(ship_id, ()),
                 ),
             )
             lifecycle = derive_tactical_ship_lifecycle(
@@ -1383,6 +1578,36 @@ def advance_tactical_scene_step(
                     raise ContractError("tactical_scene.launch_directive_missing", f"$.ships.{ship_id}.weapon_events.{event.sequence_id}", "成功开火事件必须具有唯一弹丸发射指令")
                 if ship_map[directive.target_ship_id].lifecycle_state.physical_status == "exited":
                     raise ContractError("tactical_scene.launch_target_exited", "$.launch_directives.target_ship_id", "不能向已经离开场景的舰艇生成弹丸")
+                if observation_step_input is not None:
+                    weapon = next(
+                        (
+                            item
+                            for item in binding.snapshot.outfit.instances
+                            if item.id == event.weapon_instance_id
+                        ),
+                        None,
+                    )
+                    if weapon is None or weapon.prototype.category != "weapon":
+                        raise ContractError(
+                            "tactical_observation.weapon_missing",
+                            f"$.ships.{ship_id}.weapon_events.{event.sequence_id}",
+                            event.weapon_instance_id,
+                        )
+                    assert event.action_resolution is not None
+                    requirement = str(
+                        weapon.prototype.capability.to_dict()[
+                            "fire_control_requirement"
+                        ]
+                    )
+                    validate_weapon_fire_control_support(
+                        observation_resolution,
+                        source_ship_id=ship_id,
+                        target_ship_id=directive.target_ship_id,
+                        fire_control_instance_id=(
+                            event.action_resolution.fire_control_instance_id
+                        ),
+                        requirement=requirement,
+                    )
                 spawn = spawn_projectile_from_weapon_event(
                     binding.snapshot,
                     event,
@@ -1428,6 +1653,13 @@ def advance_tactical_scene_step(
 
     refresh_lifecycle_boundary(state.tactical_time_s, state.fixed_step_index)
     apply_exit_boundary(state.tactical_time_s, state.fixed_step_index)
+    start_motions = {ship_id: item.motion_state for ship_id, item in ship_map.items()}
+    if observation_step_input is not None:
+        observation_resolution = resolve_tactical_observation_step(
+            observation_contexts(start_motions),
+            observation_step_input,
+            tactical_time_s=state.tactical_time_s,
+        )
     for ship_id in control_map:
         lifecycle = ship_map[ship_id].lifecycle_state
         if lifecycle.command_status == "uncommanded" or lifecycle.physical_status != "operational":
@@ -1436,8 +1668,18 @@ def advance_tactical_scene_step(
                 f"$.controls.{ship_id}",
                 "失控、坠落或离场舰不能接受本步操纵输入",
             )
-    start_motions = {ship_id: item.motion_state for ship_id, item in ship_map.items()}
     resolve_boundary(state.tactical_time_s, state.fixed_step_index, start_motions)
+    if observation_step_input is not None:
+        guidance_fact_resolution = generate_guidance_runtime_inputs(
+            world.projectiles,
+            observation_contexts(start_motions),
+            guidance_catalog,
+            observation_resolution,
+            observation_step_input.seeker_observation_outcomes,
+            tactical_time_s=state.tactical_time_s,
+        )
+        effective_guidance_inputs = guidance_fact_resolution.runtime_inputs
+        generated_guidance_fact_events = guidance_fact_resolution.events
 
     models = {}
     runtimes_at_step_start: dict[str, RuntimeShipParameters] = {}
@@ -1446,7 +1688,16 @@ def advance_tactical_scene_step(
     for ship_id in sorted(ship_map):
         ship = ship_map[ship_id]
         binding = binding_by_id[ship_id]
-        runtime = compile_runtime_ship_parameters(binding.snapshot, binding.sortie, ship.combat_state.instance, active_automatic_events=_runtime_automatic_events(binding, ship.combat_state.instance))
+        runtime = compile_runtime_ship_parameters(
+            binding.snapshot,
+            binding.sortie,
+            ship.combat_state.instance,
+            active_automatic_events=_runtime_automatic_events(
+                binding,
+                ship.combat_state.instance,
+                observation_events_by_ship.get(ship_id, ()),
+            ),
+        )
         runtimes_at_step_start[ship_id] = runtime
         if ship.lifecycle_state.physical_status == "exited":
             next_motions[ship_id] = replace(
@@ -1509,7 +1760,7 @@ def advance_tactical_scene_step(
         fixed_step_s=PROJECTILE_SUBSTEP_S,
         ricochet_rolls=ricochet_rolls,
         guidance_catalog=guidance_catalog,
-        guidance_inputs=guidance_inputs,
+        guidance_inputs=effective_guidance_inputs,
     )
     world = projectile_resolution.resulting_world
     for target in projectile_resolution.resulting_targets:
@@ -1585,7 +1836,141 @@ def advance_tactical_scene_step(
                 ),
             )
 
+        propagations_by_ship: dict[str, list[FirePropagationOutcome]] = {}
+        for item in propagation_items:
+            propagations_by_ship.setdefault(item.target_ship_id, []).append(item)
+        cookoffs_by_ship: dict[str, list[AmmunitionCookoffOutcome]] = {}
+        for item in cookoff_items:
+            cookoffs_by_ship.setdefault(item.target_ship_id, []).append(item)
+        for ship_id in sorted(set(propagations_by_ship) | set(cookoffs_by_ship)):
+            ship = ship_map[ship_id]
+            resolution = apply_secondary_damage_outcomes(
+                binding_by_id[ship_id].snapshot,
+                ship.combat_state.instance,
+                continuous_damage_profile,
+                ship_id=ship_id,
+                target_tactical_time_s=end_time_s,
+                source_fire_incidents=source_fire_incidents_by_ship[ship_id],
+                source_fire_events=continuous_damage_events,
+                fire_propagation_outcomes=propagations_by_ship.get(ship_id, ()),
+                ammunition_cookoff_outcomes=cookoffs_by_ship.get(ship_id, ()),
+            )
+            fire_propagation_events.extend(resolution.fire_propagation_events)
+            ammunition_cookoff_events.extend(resolution.ammunition_cookoff_events)
+            ship_map[ship_id] = replace(
+                ship,
+                combat_state=replace(
+                    ship.combat_state,
+                    instance=resolution.resulting_instance,
+                ),
+            )
+
+    impact_by_projectile = {
+        item.projectile_id: item for item in projectile_resolution.impact_events
+    }
+    fire_damage_events = tuple(
+        item
+        for item in continuous_damage_events
+        if item.event_kind == "fire_damage_applied"
+    )
+    casualties_by_ship: dict[str, list[CrewCasualtyOutcome]] = {}
+    for index, outcome in enumerate(casualty_items):
+        path = f"$.crew_casualty_outcomes[{index}]"
+        if outcome.source_kind == "projectile_impact":
+            source = impact_by_projectile.get(outcome.source_id)
+            if source is None or abs(source.tactical_time_s - outcome.source_tactical_time_s) > EPS:
+                raise ContractError("crew_casualty.impact_source_unmatched", path, outcome.source_id)
+            if source.target_ship_id != outcome.target_ship_id:
+                raise ContractError("crew_casualty.source_ship_mismatch", f"{path}.target_ship_id", source.target_ship_id)
+            if (
+                outcome.target_module_instance_id is not None
+                and outcome.target_module_instance_id not in source.damaged_module_instance_ids
+            ):
+                raise ContractError("crew_casualty.source_module_unmatched", f"{path}.target_module_instance_id", outcome.target_module_instance_id)
+        elif outcome.source_kind == "fire_damage":
+            source = next(
+                (
+                    item
+                    for item in fire_damage_events
+                    if item.fire_incident_id == outcome.source_id
+                    and abs(
+                        item.tactical_time_s - outcome.source_tactical_time_s
+                    )
+                    <= EPS
+                ),
+                None,
+            )
+            if source is None:
+                raise ContractError("crew_casualty.fire_source_unmatched", path, outcome.source_id)
+            if source.ship_id != outcome.target_ship_id:
+                raise ContractError("crew_casualty.source_ship_mismatch", f"{path}.target_ship_id", source.ship_id)
+            if (
+                outcome.target_module_instance_id is not None
+                and outcome.target_module_instance_id != source.target_module_instance_id
+            ):
+                raise ContractError("crew_casualty.source_module_unmatched", f"{path}.target_module_instance_id", outcome.target_module_instance_id)
+        else:
+            source = next(
+                (
+                    item
+                    for item in ammunition_cookoff_events
+                    if item.explosion_id == outcome.source_id
+                    and abs(item.tactical_time_s - outcome.source_tactical_time_s)
+                    <= EPS
+                ),
+                None,
+            )
+            if source is None:
+                raise ContractError("crew_casualty.secondary_explosion_source_unmatched", path, outcome.source_id)
+            if source.ship_id != outcome.target_ship_id:
+                raise ContractError("crew_casualty.source_ship_mismatch", f"{path}.target_ship_id", source.ship_id)
+            if (
+                outcome.target_module_instance_id is not None
+                and outcome.target_module_instance_id
+                not in source.damaged_module_instance_ids
+            ):
+                raise ContractError("crew_casualty.source_module_unmatched", f"{path}.target_module_instance_id", outcome.target_module_instance_id)
+        casualties_by_ship.setdefault(outcome.target_ship_id, []).append(outcome)
+
+    for ship_id in sorted(ship_map):
+        ship = ship_map[ship_id]
+        if ship.lifecycle_state.physical_status == "exited":
+            continue
+        resolution = apply_crew_casualty_outcomes(
+            ship.combat_state.instance,
+            casualties_by_ship.get(ship_id, ()),
+            ship_id=ship_id,
+            target_tactical_time_s=end_time_s,
+        )
+        crew_casualty_events.extend(resolution.events)
+        ship_map[ship_id] = replace(
+            ship,
+            combat_state=replace(
+                ship.combat_state,
+                instance=resolution.resulting_instance,
+            ),
+        )
+
     refresh_lifecycle_boundary(end_time_s, state.fixed_step_index + 1)
+    for outcome in sorted(evacuation_items, key=lambda item: item.ship_id):
+        ship = ship_map[outcome.ship_id]
+        evacuation = apply_crew_evacuation_outcome(
+            ship.combat_state.instance,
+            outcome,
+            ship_id=outcome.ship_id,
+            physical_status=ship.lifecycle_state.physical_status,
+            target_tactical_time_s=end_time_s,
+        )
+        crew_evacuation_events.extend(evacuation.events)
+        if evacuation.rescue_manifest is not None:
+            crew_rescue_manifests.append(evacuation.rescue_manifest)
+        ship_map[outcome.ship_id] = replace(
+            ship,
+            combat_state=replace(
+                ship.combat_state,
+                instance=evacuation.resulting_instance,
+            ),
+        )
     apply_exit_boundary(end_time_s, state.fixed_step_index + 1)
     resolve_boundary(end_time_s, state.fixed_step_index + 1, next_motions)
     unused = sorted(set(directive_map) - used_directives)
@@ -1603,7 +1988,16 @@ def advance_tactical_scene_step(
             fuel_units=ship.combat_state.instance.operational_state.fuel_units,
         )
         ship = replace(ship, motion_state=motion)
-        runtime = compile_runtime_ship_parameters(binding.snapshot, binding.sortie, ship.combat_state.instance, active_automatic_events=_runtime_automatic_events(binding, ship.combat_state.instance))
+        runtime = compile_runtime_ship_parameters(
+            binding.snapshot,
+            binding.sortie,
+            ship.combat_state.instance,
+            active_automatic_events=_runtime_automatic_events(
+                binding,
+                ship.combat_state.instance,
+                observation_events_by_ship.get(ship_id, ()),
+            ),
+        )
         build_tactical_ship_model(runtime, binding.snapshot)
         ship_results.append(TacticalSceneShipStepResult(ship_id, diagnostics[ship_id], runtime))
         final_ships.append(ship)
@@ -1670,4 +2064,51 @@ def advance_tactical_scene_step(
                 ),
             )
         ),
+        tuple(
+            sorted(
+                crew_casualty_events,
+                key=lambda item: (
+                    item.tactical_time_s,
+                    item.ship_id,
+                    item.outcome_id,
+                    item.crew_type,
+                ),
+            )
+        ),
+        tuple(
+            sorted(
+                crew_evacuation_events,
+                key=lambda item: (
+                    item.tactical_time_s,
+                    item.ship_id,
+                    item.operation_id,
+                    item.crew_type,
+                ),
+            )
+        ),
+        tuple(sorted(crew_rescue_manifests, key=lambda item: item.manifest_id)),
+        tuple(
+            sorted(
+                fire_propagation_events,
+                key=lambda item: (
+                    item.tactical_time_s,
+                    item.ship_id,
+                    item.outcome_id,
+                ),
+            )
+        ),
+        tuple(
+            sorted(
+                ammunition_cookoff_events,
+                key=lambda item: (
+                    item.tactical_time_s,
+                    item.ship_id,
+                    item.outcome_id,
+                ),
+            )
+        ),
+        observation_resolution.observation_events,
+        observation_resolution.radar_emission_events,
+        observation_resolution.fire_control_support_events,
+        generated_guidance_fact_events,
     )

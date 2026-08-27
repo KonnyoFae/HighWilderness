@@ -1,0 +1,215 @@
+{
+  "$id": "gaotian.ship-secondary-damage/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "anyOf": [
+    {
+      "properties": {
+        "fire_propagation_outcomes": {
+          "minItems": 1
+        }
+      }
+    },
+    {
+      "properties": {
+        "ammunition_cookoff_outcomes": {
+          "minItems": 1
+        }
+      }
+    }
+  ],
+  "properties": {
+    "ammunition_cookoff_outcomes": {
+      "items": {
+        "$ref": "#/$defs/ammunitionCookoffOutcome"
+      },
+      "type": "array"
+    },
+    "fire_propagation_outcomes": {
+      "items": {
+        "$ref": "#/$defs/firePropagationOutcome"
+      },
+      "type": "array"
+    },
+    "interface": {
+      "const": "gaotian.ship-secondary-damage/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.secondary-damage/explicit-fire-source-inventory-conserved-boundary/v1"
+    }
+  },
+  "required": [
+    "interface",
+    "policy",
+    "fire_propagation_outcomes",
+    "ammunition_cookoff_outcomes"
+  ],
+  "type": "object",
+  "$defs": {
+    "ammunitionCookoffConsumption": {
+      "additionalProperties": false,
+      "properties": {
+        "munition_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "units": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": ["munition_id", "units"],
+      "type": "object"
+    },
+    "ammunitionCookoffOutcome": {
+      "additionalProperties": false,
+      "properties": {
+        "consumed_ammunition": {
+          "items": {
+            "$ref": "#/$defs/ammunitionCookoffConsumption"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "explosion_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "hull_damage_fraction": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "magazine_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "module_damage": {
+          "items": {
+            "$ref": "#/$defs/secondaryExplosionModuleDamage"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "outcome_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "secondary_fires": {
+          "items": {
+            "$ref": "#/$defs/secondaryFireIgnitionOutcome"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "source_fire_incident_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "tactical_time_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "target_ship_id": {
+          "$ref": "#/$defs/resourceId"
+        }
+      },
+      "required": [
+        "outcome_id",
+        "explosion_id",
+        "source_fire_incident_id",
+        "tactical_time_s",
+        "target_ship_id",
+        "magazine_instance_id",
+        "consumed_ammunition",
+        "module_damage",
+        "hull_damage_fraction",
+        "secondary_fires"
+      ],
+      "type": "object"
+    },
+    "firePropagationOutcome": {
+      "additionalProperties": false,
+      "properties": {
+        "incident_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "initial_fuel_units": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "initial_intensity_units": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "outcome_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "source_fire_incident_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "tactical_time_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "target_module_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "target_ship_id": {
+          "$ref": "#/$defs/resourceId"
+        }
+      },
+      "required": [
+        "outcome_id",
+        "source_fire_incident_id",
+        "incident_id",
+        "tactical_time_s",
+        "target_ship_id",
+        "target_module_instance_id",
+        "initial_intensity_units",
+        "initial_fuel_units"
+      ],
+      "type": "object"
+    },
+    "resourceId": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "secondaryExplosionModuleDamage": {
+      "additionalProperties": false,
+      "properties": {
+        "damage_points": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "module_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        }
+      },
+      "required": ["module_instance_id", "damage_points"],
+      "type": "object"
+    },
+    "secondaryFireIgnitionOutcome": {
+      "additionalProperties": false,
+      "properties": {
+        "incident_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "initial_fuel_units": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "initial_intensity_units": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "target_module_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        }
+      },
+      "required": [
+        "incident_id",
+        "target_module_instance_id",
+        "initial_intensity_units",
+        "initial_fuel_units"
+      ],
+      "type": "object"
+    }
+  }
+}

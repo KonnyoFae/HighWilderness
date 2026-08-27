@@ -26,6 +26,13 @@ from 高天荒野舰艇持续毁伤 import (
     DamageControlDirective,
     FireIgnitionOutcome,
 )
+from 高天荒野舰艇人员伤亡 import CrewCasualtyOutcome
+from 高天荒野舰艇人员医疗转移与救生 import CrewEvacuationOutcome
+from 高天荒野舰艇二次毁伤 import (
+    AmmunitionCookoffOutcome,
+    FirePropagationOutcome,
+)
+from 高天荒野舰艇战术观测与火控 import TacticalObservationStepInput
 from 高天荒野舰艇战术弹丸世界 import ProjectileProfileCatalog
 from 高天荒野舰艇战术机动求解器 import (
     TacticalControlInput,
@@ -1186,9 +1193,14 @@ def advance_commanded_tactical_scene_step(
     *,
     guidance_catalog: MissileGuidanceProfileCatalog | None = None,
     guidance_inputs: Iterable[MissileGuidanceRuntimeInput] = (),
+    observation_step_input: TacticalObservationStepInput | None = None,
     continuous_damage_profile: ContinuousDamageProfile | None = None,
     fire_ignition_outcomes: Iterable[FireIgnitionOutcome] = (),
     damage_control_directives: Iterable[DamageControlDirective] = (),
+    fire_propagation_outcomes: Iterable[FirePropagationOutcome] = (),
+    ammunition_cookoff_outcomes: Iterable[AmmunitionCookoffOutcome] = (),
+    crew_casualty_outcomes: Iterable[CrewCasualtyOutcome] = (),
+    crew_evacuation_outcomes: Iterable[CrewEvacuationOutcome] = (),
     direct_control: TacticalDirectControlFrame | None = None,
     npc_controls: dict[str, TacticalControlInput] | None = None,
     launch_directives: Iterable[TacticalSceneLaunchDirective] = (),
@@ -1314,9 +1326,14 @@ def advance_commanded_tactical_scene_step(
         material_registry,
         guidance_catalog=guidance_catalog,
         guidance_inputs=guidance_inputs,
+        observation_step_input=observation_step_input,
         continuous_damage_profile=continuous_damage_profile,
         fire_ignition_outcomes=fire_ignition_outcomes,
         damage_control_directives=damage_control_directives,
+        fire_propagation_outcomes=fire_propagation_outcomes,
+        ammunition_cookoff_outcomes=ammunition_cookoff_outcomes,
+        crew_casualty_outcomes=crew_casualty_outcomes,
+        crew_evacuation_outcomes=crew_evacuation_outcomes,
         controls=controls,
         launch_directives=launch_directives,
         exit_directives=exit_directive_tuple,

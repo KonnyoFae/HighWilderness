@@ -1,0 +1,178 @@
+{
+  "$id": "gaotian.tactical-observation/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "fire_control_assignments": {
+      "items": {
+        "$ref": "#/$defs/fireControlAssignment"
+      },
+      "type": "array"
+    },
+    "interface": {
+      "const": "gaotian.tactical-observation/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.tactical-observation/explicit-adjudication-runtime-capability-step-boundary/v1"
+    },
+    "seeker_observation_outcomes": {
+      "items": {
+        "$ref": "#/$defs/projectileSeekerObservationOutcome"
+      },
+      "type": "array"
+    },
+    "sensor_observation_outcomes": {
+      "items": {
+        "$ref": "#/$defs/sensorObservationOutcome"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "interface",
+    "policy",
+    "sensor_observation_outcomes",
+    "fire_control_assignments",
+    "seeker_observation_outcomes"
+  ],
+  "type": "object",
+  "$defs": {
+    "fireControlAssignment": {
+      "additionalProperties": false,
+      "properties": {
+        "assignment_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "fire_control_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "requirements": {
+          "items": {
+            "enum": ["solution", "continuous_guidance"]
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "sensor_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "source_ship_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "tactical_time_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "target_ship_id": {
+          "$ref": "#/$defs/resourceId"
+        }
+      },
+      "required": [
+        "assignment_id",
+        "tactical_time_s",
+        "source_ship_id",
+        "target_ship_id",
+        "sensor_instance_id",
+        "fire_control_instance_id",
+        "requirements"
+      ],
+      "type": "object"
+    },
+    "observationReason": {
+      "enum": [
+        "observed",
+        "not_observed",
+        "electronic_interference",
+        "environment",
+        "occluded"
+      ]
+    },
+    "projectileSeekerObservationOutcome": {
+      "additionalProperties": false,
+      "properties": {
+        "contact_available": {
+          "type": "boolean"
+        },
+        "outcome_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "projectile_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "resolution_reason": {
+          "$ref": "#/$defs/observationReason"
+        },
+        "tactical_time_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "target_ship_id": {
+          "$ref": "#/$defs/resourceId"
+        }
+      },
+      "required": [
+        "outcome_id",
+        "tactical_time_s",
+        "projectile_id",
+        "target_ship_id",
+        "contact_available",
+        "resolution_reason"
+      ],
+      "type": "object"
+    },
+    "resourceId": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "sensorMode": {
+      "enum": [
+        "active_search",
+        "fire_control_lock",
+        "passive_search",
+        "track"
+      ]
+    },
+    "sensorObservationOutcome": {
+      "additionalProperties": false,
+      "properties": {
+        "contact_available": {
+          "type": "boolean"
+        },
+        "observer_ship_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "outcome_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "resolution_reason": {
+          "$ref": "#/$defs/observationReason"
+        },
+        "sensor_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "sensor_mode": {
+          "$ref": "#/$defs/sensorMode"
+        },
+        "tactical_time_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "target_ship_id": {
+          "$ref": "#/$defs/resourceId"
+        }
+      },
+      "required": [
+        "outcome_id",
+        "tactical_time_s",
+        "observer_ship_id",
+        "target_ship_id",
+        "sensor_instance_id",
+        "sensor_mode",
+        "contact_available",
+        "resolution_reason"
+      ],
+      "type": "object"
+    }
+  }
+}

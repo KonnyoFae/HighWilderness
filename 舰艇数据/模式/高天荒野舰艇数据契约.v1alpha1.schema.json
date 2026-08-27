@@ -1705,6 +1705,12 @@
           "exclusiveMinimum": 0,
           "type": "number"
         },
+        "propagated_from_fire_incident_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "source_secondary_explosion_id": {
+          "$ref": "#/$defs/resourceId"
+        },
         "source_projectile_id": {
           "$ref": "#/$defs/resourceId"
         },
@@ -1779,6 +1785,57 @@
       ],
       "type": "object"
     },
+    "crewCasualtyStatus": {
+      "additionalProperties": false,
+      "properties": {
+        "crew_type": {
+          "$ref": "#/$defs/moduleCrewType"
+        },
+        "dead_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "fit_for_duty_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "wounded_count": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "crew_type",
+        "fit_for_duty_count",
+        "wounded_count",
+        "dead_count"
+      ],
+      "type": "object"
+    },
+    "shipCrewCasualtyState": {
+      "additionalProperties": false,
+      "properties": {
+        "crew_statuses": {
+          "items": {
+            "$ref": "#/$defs/crewCasualtyStatus"
+          },
+          "type": "array"
+        },
+        "last_strategic_operation_time_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "tactical_time_s": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "tactical_time_s",
+        "crew_statuses"
+      ],
+      "type": "object"
+    },
     "shipInstanceSnapshot": {
       "additionalProperties": false,
       "properties": {
@@ -1792,6 +1849,9 @@
         },
         "continuous_damage_state": {
           "$ref": "#/$defs/shipContinuousDamageState"
+        },
+        "crew_casualty_state": {
+          "$ref": "#/$defs/shipCrewCasualtyState"
         },
         "derived_ship_snapshot_sha256": {
           "pattern": "^[0-9a-f]{64}$",

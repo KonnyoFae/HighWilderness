@@ -1,0 +1,103 @@
+{
+  "deterministic_repeat_equal": true,
+  "direct_events": [
+    {
+      "crew_type": "ordinary",
+      "dead_after": 1,
+      "dead_before": 0,
+      "fit_for_duty_after": 9,
+      "fit_for_duty_before": 10,
+      "newly_dead_count": 1,
+      "newly_wounded_count": 0,
+      "outcome_id": "casualty.fixture.stage_i11b.direct",
+      "ship_id": "ship.fixture.stage_i11b.direct",
+      "source_id": "projectile.fixture.stage_i11b.direct",
+      "source_kind": "projectile_impact",
+      "tactical_time_s": 0.1,
+      "target_module_instance_id": "damage_control",
+      "wounded_after": 0,
+      "wounded_before": 0
+    },
+    {
+      "crew_type": "veteran_damage_control",
+      "dead_after": 0,
+      "dead_before": 0,
+      "fit_for_duty_after": 1,
+      "fit_for_duty_before": 2,
+      "newly_dead_count": 0,
+      "newly_wounded_count": 1,
+      "outcome_id": "casualty.fixture.stage_i11b.direct",
+      "ship_id": "ship.fixture.stage_i11b.direct",
+      "source_id": "projectile.fixture.stage_i11b.direct",
+      "source_kind": "projectile_impact",
+      "tactical_time_s": 0.1,
+      "target_module_instance_id": "damage_control",
+      "wounded_after": 1,
+      "wounded_before": 0
+    }
+  ],
+  "fire_events": [
+    {
+      "crew_type": "veteran_damage_control",
+      "dead_after": 0,
+      "dead_before": 0,
+      "fit_for_duty_after": 1,
+      "fit_for_duty_before": 2,
+      "newly_dead_count": 0,
+      "newly_wounded_count": 1,
+      "outcome_id": "casualty.fixture.stage_i11b.fire",
+      "ship_id": "ship.fixture.scene.target",
+      "source_id": "fire.fixture.stage_i11b.scene",
+      "source_kind": "fire_damage",
+      "tactical_time_s": 0.15,
+      "target_module_instance_id": "main_engine_port",
+      "wounded_after": 1,
+      "wounded_before": 0
+    }
+  ],
+  "interface": "gaotian.ship-crew-casualties/v1alpha1",
+  "legacy_instance_shape_preserved": true,
+  "policy": "gaotian.crew-casualties/explicit-source-facts-step-boundary/v1",
+  "scene_events": [
+    {
+      "crew_type": "officer",
+      "dead_after": 0,
+      "dead_before": 0,
+      "fit_for_duty_after": 0,
+      "fit_for_duty_before": 2,
+      "newly_dead_count": 0,
+      "newly_wounded_count": 2,
+      "outcome_id": "casualty.fixture.stage_i11b.scene_impact",
+      "ship_id": "ship.fixture.scene.target",
+      "source_id": "projectile.fixture.scene.actual_motion",
+      "source_kind": "projectile_impact",
+      "tactical_time_s": 0.13164893252816318,
+      "target_module_instance_id": "main_engine_port",
+      "wounded_after": 2,
+      "wounded_before": 0
+    }
+  ],
+  "status": "PASS",
+  "tested_error_codes": [
+    "crew_casualty.fire_source_unmatched",
+    "crew_casualty.capacity_exceeded",
+    "crew_casualty.fit_mismatch",
+    "crew_casualty.impact_source_unmatched",
+    "crew_casualty.insufficient_fit_crew",
+    "crew_casualty.source_before_state",
+    "crew_casualty.source_duplicate",
+    "crew_casualty.source_module_unmatched",
+    "crew_casualty.time_reversed"
+  ],
+  "tested_paths": [
+    "explicit_projectile_casualty",
+    "explicit_fire_casualty",
+    "persistent_fit_wounded_dead_ledger",
+    "runtime_staffing_reduction",
+    "wounded_people_keep_safety_lock",
+    "automated_cic_survives_officer_casualties",
+    "uncrewed_ship_rejects_casualty",
+    "refit_preserves_ledger",
+    "scene_save_reload"
+  ]
+}

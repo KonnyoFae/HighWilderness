@@ -1,0 +1,140 @@
+{
+  "deterministic_repeat_equal": true,
+  "direct_resolution": {
+    "fire_control_support_events": [
+      {
+        "assignment_id": "assignment.fixture.i12a.continuous",
+        "distance_m": 1000.0,
+        "fire_control_instance_id": "fire_control",
+        "function_efficiencies": {
+          "fire_control.guidance": 1.0,
+          "fire_control.solution": 1.0
+        },
+        "requirements": [
+          "continuous_guidance",
+          "solution"
+        ],
+        "sensor_instance_id": "sensor_upper_starboard",
+        "source_observation_outcome_id": "observation.fixture.i12a.lock",
+        "source_ship_id": "ship.fixture.i12a.source",
+        "tactical_time_s": 0.0,
+        "target_ship_id": "ship.fixture.i12a.target"
+      }
+    ],
+    "radar_emission_events": [
+      {
+        "emitter_ship_id": "ship.fixture.i12a.source",
+        "sensor_instance_id": "sensor_upper_starboard",
+        "sensor_mode": "fire_control_lock",
+        "source_observation_outcome_id": "observation.fixture.i12a.lock",
+        "tactical_time_s": 0.0
+      },
+      {
+        "emitter_ship_id": "ship.fixture.i12a.target",
+        "sensor_instance_id": "sensor_upper_starboard",
+        "sensor_mode": "active_search",
+        "source_observation_outcome_id": "observation.fixture.i12a.target_emission",
+        "tactical_time_s": 0.0
+      }
+    ],
+    "sensor_observation_events": [
+      {
+        "contact_available": true,
+        "distance_m": 1000.0,
+        "function_efficiency": 1.0,
+        "observer_ship_id": "ship.fixture.i12a.source",
+        "outcome_id": "observation.fixture.i12a.lock",
+        "resolution_reason": "observed",
+        "sensor_instance_id": "sensor_upper_starboard",
+        "sensor_mode": "fire_control_lock",
+        "tactical_time_s": 0.0,
+        "target_ship_id": "ship.fixture.i12a.target"
+      },
+      {
+        "contact_available": false,
+        "distance_m": 1000.0,
+        "function_efficiency": 1.0,
+        "observer_ship_id": "ship.fixture.i12a.target",
+        "outcome_id": "observation.fixture.i12a.target_emission",
+        "resolution_reason": "electronic_interference",
+        "sensor_instance_id": "sensor_upper_starboard",
+        "sensor_mode": "active_search",
+        "tactical_time_s": 0.0,
+        "target_ship_id": "ship.fixture.i12a.source"
+      }
+    ]
+  },
+  "generated_guidance_facts": [
+    {
+      "continuous_illumination_available": false,
+      "illumination_assignment_ids": [],
+      "projectile_id": "projectile.fixture.i12a.active_radar",
+      "radar_emission_source_ids": [
+        "observation.fixture.i12a.target_emission"
+      ],
+      "seeker_kind": "active_radar",
+      "tactical_time_s": 0.0,
+      "target_radar_emitting": true,
+      "target_track_available": true,
+      "track_source_ids": [
+        "observation.fixture.i12a.active_seeker"
+      ]
+    },
+    {
+      "continuous_illumination_available": false,
+      "illumination_assignment_ids": [],
+      "projectile_id": "projectile.fixture.i12a.anti_radiation",
+      "radar_emission_source_ids": [
+        "observation.fixture.i12a.target_emission"
+      ],
+      "seeker_kind": "anti_radiation",
+      "tactical_time_s": 0.0,
+      "target_radar_emitting": true,
+      "target_track_available": false,
+      "track_source_ids": []
+    },
+    {
+      "continuous_illumination_available": false,
+      "illumination_assignment_ids": [],
+      "projectile_id": "projectile.fixture.i12a.electro_optical",
+      "radar_emission_source_ids": [
+        "observation.fixture.i12a.target_emission"
+      ],
+      "seeker_kind": "electro_optical",
+      "tactical_time_s": 0.0,
+      "target_radar_emitting": false,
+      "target_track_available": false,
+      "track_source_ids": [
+        "observation.fixture.i12a.optical_jammed"
+      ]
+    },
+    {
+      "continuous_illumination_available": true,
+      "illumination_assignment_ids": [
+        "assignment.fixture.i12a.continuous"
+      ],
+      "projectile_id": "projectile.fixture.i12a.passive_radar",
+      "radar_emission_source_ids": [
+        "observation.fixture.i12a.target_emission"
+      ],
+      "seeker_kind": "passive_radar",
+      "tactical_time_s": 0.0,
+      "target_radar_emitting": true,
+      "target_track_available": true,
+      "track_source_ids": [
+        "assignment.fixture.i12a.continuous"
+      ]
+    }
+  ],
+  "interface": "gaotian.tactical-observation/v1alpha1",
+  "policy": "gaotian.tactical-observation/explicit-adjudication-runtime-capability-step-boundary/v1",
+  "scene_result_sha256": "68aee07e11785ce66e414ddba49b4d63bf6e451f47ca335574c9b914650f969e",
+  "status": "PASS",
+  "tested_error_codes": [
+    "tactical_observation.sensor_unavailable",
+    "tactical_observation.sensor_out_of_range",
+    "tactical_observation.fire_control_channels_exceeded",
+    "tactical_observation.weapon_fire_control_support_missing",
+    "tactical_observation.manual_guidance_mixed"
+  ]
+}

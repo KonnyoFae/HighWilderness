@@ -1,0 +1,146 @@
+{
+  "$id": "gaotian.ship-crew-recovery/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "properties": {
+        "status": {
+          "const": "awaiting_recovery"
+        }
+      },
+      "not": {
+        "anyOf": [
+          {
+            "required": ["resolution_operation_id"]
+          },
+          {
+            "required": ["resolution_strategic_time_s"]
+          },
+          {
+            "required": ["destination_ship_id"]
+          }
+        ]
+      },
+      "required": ["status"]
+    },
+    {
+      "properties": {
+        "status": {
+          "const": "recovered"
+        }
+      },
+      "required": [
+        "status",
+        "resolution_operation_id",
+        "resolution_strategic_time_s",
+        "destination_ship_id"
+      ]
+    },
+    {
+      "properties": {
+        "status": {
+          "const": "lost"
+        }
+      },
+      "not": {
+        "required": ["destination_ship_id"]
+      },
+      "required": [
+        "status",
+        "resolution_operation_id",
+        "resolution_strategic_time_s"
+      ]
+    }
+  ],
+  "properties": {
+    "destination_ship_id": {
+      "$ref": "#/$defs/resourceId"
+    },
+    "interface": {
+      "const": "gaotian.ship-crew-recovery/v1alpha1"
+    },
+    "manifest_id": {
+      "$ref": "#/$defs/resourceId"
+    },
+    "policy": {
+      "const": "gaotian.crew-recovery/explicit-outcomes-conserved-atomic/v1"
+    },
+    "resolution_operation_id": {
+      "$ref": "#/$defs/resourceId"
+    },
+    "resolution_strategic_time_s": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "source_operation_id": {
+      "$ref": "#/$defs/resourceId"
+    },
+    "source_ship_id": {
+      "$ref": "#/$defs/resourceId"
+    },
+    "source_tactical_time_s": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "status": {
+      "enum": ["awaiting_recovery", "recovered", "lost"]
+    },
+    "survivors": {
+      "items": {
+        "$ref": "#/$defs/rescueCount"
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "interface",
+    "manifest_id",
+    "policy",
+    "source_operation_id",
+    "source_ship_id",
+    "source_tactical_time_s",
+    "status",
+    "survivors"
+  ],
+  "type": "object",
+  "$defs": {
+    "crewType": {
+      "enum": [
+        "officer",
+        "technical_officer",
+        "pilot",
+        "veteran_damage_control",
+        "ordinary"
+      ]
+    },
+    "rescueCount": {
+      "additionalProperties": false,
+      "properties": {
+        "crew_type": {
+          "$ref": "#/$defs/crewType"
+        },
+        "fit_for_duty_count": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "wounded_count": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "crew_type",
+        "fit_for_duty_count",
+        "wounded_count"
+      ],
+      "type": "object"
+    },
+    "resourceId": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    }
+  }
+}
