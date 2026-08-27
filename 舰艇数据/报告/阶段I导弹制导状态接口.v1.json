@@ -1,0 +1,52 @@
+{
+  "catalog": {
+    "reference": {
+      "id": "gtw.missile_guidance.fixture.stage_i10",
+      "version": 1
+    },
+    "sha256": "5035e238db6b00746dc8e6226ec21fdd033f54f7de7b9756bc1e9c3ea9959c53"
+  },
+  "guided_projectile_state": {
+    "intended_target_ship_id": "ship.fixture.target",
+    "last_known_target_position_xy": null,
+    "launch_time_s": 0.0,
+    "munition_id": "gtw.munition.fixture.76mm.standard",
+    "phase": "inertial",
+    "profile_catalog": {
+      "id": "gtw.missile_guidance.fixture.stage_i10",
+      "version": 1
+    },
+    "profile_catalog_sha256": "5035e238db6b00746dc8e6226ec21fdd033f54f7de7b9756bc1e9c3ea9959c53",
+    "projectile_id": "projectile.fixture.stage_i10.guided",
+    "seeker_kind": "active_radar",
+    "self_destruct_deadline_s": null,
+    "source_ship_id": "ship.fixture.shooter",
+    "target_lost_time_s": null,
+    "tracked_target_ship_id": null,
+    "updated_time_s": 0.0
+  },
+  "interface": "gaotian.missile-guidance-state/v1alpha1",
+  "legacy_unguided_shape_preserved": true,
+  "policy": "gaotian.missile-guidance/profile-bound-persistent-state/v1",
+  "profile_schema": "gaotian.missile-guidance/v1alpha1",
+  "scene_spawn_guidance_persisted": true,
+  "source_world_sha256": "08ccd9c5d4591cb95970982dae911021d6255f1eb0563d84f561d44c756c1754",
+  "status": "PASS",
+  "supported_seeker_kinds": [
+    "active_radar",
+    "anti_radiation",
+    "electro_optical",
+    "passive_radar"
+  ],
+  "tested_error_codes": [
+    "missile_guidance.anti_radiation_loss",
+    "missile_guidance.duplicate_munition",
+    "missile_guidance.electro_optical_layer",
+    "missile_guidance.independent_support",
+    "missile_guidance.passive_support",
+    "missile_guidance.phase_state",
+    "missile_guidance.profile_catalog_mismatch",
+    "missile_guidance.unused_memory",
+    "projectile_world.guidance_binding_mismatch"
+  ]
+}

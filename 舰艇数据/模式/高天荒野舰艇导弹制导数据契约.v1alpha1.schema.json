@@ -1,0 +1,97 @@
+{
+  "$id": "gaotian.missile-guidance/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "fixture_level": {
+      "enum": ["contract_fixture", "prototype_unbalanced", "balance_reference"]
+    },
+    "id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "kind": {
+      "const": "MissileGuidanceProfileCatalog"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "profiles": {
+      "items": {
+        "$ref": "#/$defs/profile"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "schema": {
+      "const": "gaotian.missile-guidance/v1alpha1"
+    },
+    "version": {
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": ["schema", "kind", "id", "version", "name", "fixture_level", "profiles"],
+  "type": "object",
+  "$defs": {
+    "nonNegative": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "positive": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "profile": {
+      "additionalProperties": false,
+      "properties": {
+        "activation_distance_m": {
+          "oneOf": [
+            {"$ref": "#/$defs/nonNegative"},
+            {"type": "null"}
+          ]
+        },
+        "allowed_height_layers": {
+          "items": {
+            "enum": ["upper", "cloud", "rain"]
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "launch_support": {
+          "enum": ["continuous_illumination", "optional_fire_control"]
+        },
+        "maximum_lateral_acceleration_mps2": {
+          "$ref": "#/$defs/positive"
+        },
+        "munition_id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "seeker_kind": {
+          "enum": ["passive_radar", "active_radar", "anti_radiation", "electro_optical"]
+        },
+        "seeker_search_range_m": {
+          "$ref": "#/$defs/positive"
+        },
+        "self_destruct_delay_s": {
+          "$ref": "#/$defs/positive"
+        },
+        "target_loss_behavior": {
+          "enum": ["self_destruct", "last_known_position_then_self_destruct"]
+        },
+        "target_memory_s": {
+          "$ref": "#/$defs/nonNegative"
+        }
+      },
+      "required": ["munition_id", "name", "seeker_kind", "launch_support", "activation_distance_m", "seeker_search_range_m", "allowed_height_layers", "target_loss_behavior", "target_memory_s", "self_destruct_delay_s", "maximum_lateral_acceleration_mps2"],
+      "type": "object"
+    }
+  }
+}

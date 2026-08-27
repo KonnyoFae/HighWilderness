@@ -1,0 +1,63 @@
+{
+  "$id": "gaotian.continuous-damage/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "fixture_level": {
+      "enum": ["contract_fixture", "prototype_unbalanced", "balance_reference"]
+    },
+    "fuel_units_burned_per_intensity_s": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "hull_integrity_fraction_per_intensity_s": {
+      "maximum": 1,
+      "minimum": 0,
+      "type": "number"
+    },
+    "id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "kind": {
+      "const": "ContinuousDamageProfile"
+    },
+    "module_damage_points_per_intensity_s": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "natural_intensity_decay_units_per_s": {
+      "minimum": 0,
+      "type": "number"
+    },
+    "schema": {
+      "const": "gaotian.continuous-damage/v1alpha1"
+    },
+    "suppression_units_per_team_efficiency_s": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "version": {
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "kind",
+    "id",
+    "version",
+    "name",
+    "fixture_level",
+    "module_damage_points_per_intensity_s",
+    "hull_integrity_fraction_per_intensity_s",
+    "fuel_units_burned_per_intensity_s",
+    "natural_intensity_decay_units_per_s",
+    "suppression_units_per_team_efficiency_s"
+  ],
+  "type": "object"
+}

@@ -17,6 +17,15 @@ from 高天荒野舰艇数据契约 import (
 )
 from 高天荒野舰艇运行时参数编译器 import compile_runtime_ship_parameters
 from 高天荒野舰艇武器时间与射击队列 import WeaponTimingProfileCatalog
+from 高天荒野舰艇导弹制导 import (
+    MissileGuidanceProfileCatalog,
+    MissileGuidanceRuntimeInput,
+)
+from 高天荒野舰艇持续毁伤 import (
+    ContinuousDamageProfile,
+    DamageControlDirective,
+    FireIgnitionOutcome,
+)
 from 高天荒野舰艇战术弹丸世界 import ProjectileProfileCatalog
 from 高天荒野舰艇战术机动求解器 import (
     TacticalControlInput,
@@ -1175,6 +1184,11 @@ def advance_commanded_tactical_scene_step(
     material_registry: MaterialRegistry,
     tuning: TacticalCommandTuningProfile,
     *,
+    guidance_catalog: MissileGuidanceProfileCatalog | None = None,
+    guidance_inputs: Iterable[MissileGuidanceRuntimeInput] = (),
+    continuous_damage_profile: ContinuousDamageProfile | None = None,
+    fire_ignition_outcomes: Iterable[FireIgnitionOutcome] = (),
+    damage_control_directives: Iterable[DamageControlDirective] = (),
     direct_control: TacticalDirectControlFrame | None = None,
     npc_controls: dict[str, TacticalControlInput] | None = None,
     launch_directives: Iterable[TacticalSceneLaunchDirective] = (),
@@ -1298,6 +1312,11 @@ def advance_commanded_tactical_scene_step(
         timing_catalog,
         projectile_catalog,
         material_registry,
+        guidance_catalog=guidance_catalog,
+        guidance_inputs=guidance_inputs,
+        continuous_damage_profile=continuous_damage_profile,
+        fire_ignition_outcomes=fire_ignition_outcomes,
+        damage_control_directives=damage_control_directives,
         controls=controls,
         launch_directives=launch_directives,
         exit_directives=exit_directive_tuple,

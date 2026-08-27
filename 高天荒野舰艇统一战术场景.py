@@ -8,6 +8,7 @@ from math import hypot, isfinite
 from pathlib import Path
 from typing import Any, Iterable
 
+from 高天荒野舰艇炮弹与甲弹公式 import Aftereffect
 from 高天荒野舰艇出航配置编译器 import CompiledSortieState
 from 高天荒野舰艇数据契约 import (
     ContractError,
@@ -26,6 +27,22 @@ from 高天荒野舰艇武器时间与射击队列 import (
     WeaponTimelineEvent,
     WeaponTimingProfileCatalog,
     advance_weapon_timeline,
+)
+from 高天荒野舰艇导弹制导 import (
+    MissileGuidanceEvent,
+    MissileGuidanceProfileCatalog,
+    MissileGuidanceRuntimeInput,
+)
+from 高天荒野舰艇持续毁伤 import (
+    ContinuousDamageEvent,
+    ContinuousDamageProfile,
+    DamageControlDirective,
+    FireIgnitionOutcome,
+    advance_continuous_damage,
+    apply_damage_control_directives,
+    continuous_damage_automatic_events,
+    register_fire_ignition,
+    validate_instance_continuous_damage,
 )
 from 高天荒野舰艇战术机动求解器 import (
     LayerTransitionState,
@@ -648,9 +665,11 @@ class TacticalSceneStepResolution:
     lifecycle_events: tuple[TacticalShipLifecycleEvent, ...]
     engagement_events: tuple[TacticalEngagementEvent, ...]
     ship_results: tuple[TacticalSceneShipStepResult, ...]
+    guidance_events: tuple[MissileGuidanceEvent, ...] = ()
+    continuous_damage_events: tuple[ContinuousDamageEvent, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        result = {
             "engagement_events": [item.to_dict() for item in self.engagement_events],
             "expired_events": [item.to_dict() for item in self.expired_events],
             "impact_events": [item.to_dict() for item in self.impact_events],
@@ -663,6 +682,15 @@ class TacticalSceneStepResolution:
             "spawned_projectiles": [item.to_dict() for item in self.spawned_projectiles],
             "weapon_events": [item.to_dict() for item in self.weapon_events],
         }
+        if self.guidance_events:
+            result["guidance_events"] = [
+                item.to_dict() for item in self.guidance_events
+            ]
+        if self.continuous_damage_events:
+            result["continuous_damage_events"] = [
+                item.to_dict() for item in self.continuous_damage_events
+            ]
+        return result
 
 
 def _pose(time_s: float, motion: TacticalMotionState) -> ShipPose2D:
@@ -855,6 +883,18 @@ def _suspend_weapon_timeline(
     )
 
 
+def _runtime_automatic_events(
+    binding: TacticalSceneShipBinding,
+    instance: ShipInstanceSnapshotInput,
+) -> tuple[str, ...]:
+    return tuple(
+        sorted(
+            set(binding.active_automatic_events)
+            | set(continuous_damage_automatic_events(instance))
+        )
+    )
+
+
 def _lifecycle_event(
     ship_id: str,
     tactical_time_s: float,
@@ -904,10 +944,17 @@ def _validate_internal_state(state: TacticalSceneState) -> None:
         instance = ship.combat_state.instance
         timeline = instance.weapon_timeline_state
         lifecycle = ship.lifecycle_state
+        continuous_damage = instance.continuous_damage_state
         if motion.fixed_step_index != state.fixed_step_index:
             raise ContractError("tactical_scene.motion_clock_mismatch", f"$.ships.{ship.ship_id}.motion_state.fixed_step_index", "舰艇机动步号与场景不同步")
         if timeline is None or abs(timeline.tactical_time_s - state.tactical_time_s) > EPS:
             raise ContractError("tactical_scene.weapon_clock_mismatch", f"$.ships.{ship.ship_id}.combat_state.instance.weapon_timeline_state", "舰艇武器时钟与场景不同步")
+        if continuous_damage is not None:
+            if lifecycle.physical_status == "exited":
+                if continuous_damage.tactical_time_s > state.tactical_time_s + EPS:
+                    raise ContractError("tactical_scene.continuous_damage_clock_ahead", f"$.ships.{ship.ship_id}.combat_state.instance.continuous_damage_state", "离场舰持续毁伤时钟不得超前场景")
+            elif abs(continuous_damage.tactical_time_s - state.tactical_time_s) > EPS:
+                raise ContractError("tactical_scene.continuous_damage_clock_mismatch", f"$.ships.{ship.ship_id}.combat_state.instance.continuous_damage_state", "活动舰持续毁伤时钟必须与场景同步")
         if abs(motion.hull_integrity_fraction - instance.current_hull_integrity_fraction) > EPS:
             raise ContractError("tactical_scene.hull_state_mismatch", f"$.ships.{ship.ship_id}", "机动与战损状态的船壳完整度不同步")
         if abs(motion.fuel_units - instance.operational_state.fuel_units) > EPS:
@@ -972,6 +1019,7 @@ def initialize_tactical_scene(
     initial_combat_states: dict[str, ShipCombatState] | None = None,
     engagement_definition: TacticalEngagementDefinition | None = None,
     engagement_boundary_profile: TacticalEngagementBoundaryProfile | None = None,
+    continuous_damage_profile: ContinuousDamageProfile | None = None,
 ) -> TacticalSceneState:
     binding_by_id = _binding_map(bindings)
     if not binding_by_id:
@@ -991,7 +1039,14 @@ def initialize_tactical_scene(
             raise ContractError("tactical_scene.weapon_clock_mismatch", f"$.initial_combat_states.{ship_id}", "初始武器时钟必须已在零时刻初始化")
         if timeline.timing_profile_catalog != timing_catalog.reference or timeline.timing_profile_catalog_sha256 != timing_catalog.source_sha256:
             raise ContractError("tactical_scene.timing_catalog_mismatch", f"$.initial_combat_states.{ship_id}", "武器时钟绑定了其他时间配置")
-        runtime = compile_runtime_ship_parameters(binding.snapshot, binding.sortie, combat.instance, active_automatic_events=binding.active_automatic_events)
+        continuous_damage = combat.instance.continuous_damage_state
+        if continuous_damage is not None:
+            if continuous_damage_profile is None:
+                raise ContractError("continuous_damage.profile_required", f"$.initial_combat_states.{ship_id}", "带持续毁伤状态的舰艇必须提供精确配置")
+            validate_instance_continuous_damage(binding.snapshot, combat.instance, continuous_damage_profile)
+            if abs(continuous_damage.tactical_time_s) > EPS:
+                raise ContractError("tactical_scene.continuous_damage_clock_mismatch", f"$.initial_combat_states.{ship_id}", "初始持续毁伤时钟必须位于零时刻")
+        runtime = compile_runtime_ship_parameters(binding.snapshot, binding.sortie, combat.instance, active_automatic_events=_runtime_automatic_events(binding, combat.instance))
         model = build_tactical_ship_model(runtime, binding.snapshot)
         if fixed_step_s is None:
             fixed_step_s = model.tuning.fixed_step_s
@@ -1107,6 +1162,11 @@ def advance_tactical_scene_step(
     projectile_catalog: ProjectileProfileCatalog,
     material_registry: MaterialRegistry,
     *,
+    guidance_catalog: MissileGuidanceProfileCatalog | None = None,
+    guidance_inputs: Iterable[MissileGuidanceRuntimeInput] = (),
+    continuous_damage_profile: ContinuousDamageProfile | None = None,
+    fire_ignition_outcomes: Iterable[FireIgnitionOutcome] = (),
+    damage_control_directives: Iterable[DamageControlDirective] = (),
     controls: dict[str, TacticalControlInput] | None = None,
     launch_directives: Iterable[TacticalSceneLaunchDirective] = (),
     exit_directives: Iterable[TacticalSceneExitDirective] = (),
@@ -1129,6 +1189,33 @@ def advance_tactical_scene_step(
     binding_by_id = _binding_map(bindings)
     _validate_bindings(state, binding_by_id)
     ship_map = {item.ship_id: item for item in state.ships}
+    ignition_items = tuple(fire_ignition_outcomes)
+    for index, item in enumerate(ignition_items):
+        item.validate(f"$.fire_ignition_outcomes[{index}]")
+        if item.target_ship_id not in ship_map:
+            raise ContractError("continuous_damage.ignition_ship_missing", f"$.fire_ignition_outcomes[{index}].target_ship_id", item.target_ship_id)
+    if len({item.incident_id for item in ignition_items}) != len(ignition_items):
+        raise ContractError("continuous_damage.ignition_incident_duplicate", "$.fire_ignition_outcomes", "同一固定步的火灾事件 id 不得重复")
+    damage_directive_items = tuple(damage_control_directives)
+    for index, item in enumerate(damage_directive_items):
+        item.validate(f"$.damage_control_directives[{index}]")
+        if item.ship_id not in ship_map:
+            raise ContractError("continuous_damage.directive_ship_missing", f"$.damage_control_directives[{index}].ship_id", item.ship_id)
+    if len({item.slot for item in damage_directive_items}) != len(damage_directive_items):
+        raise ContractError("continuous_damage.directive_slot_duplicate", "$.damage_control_directives", "同一固定步不得重复修改同一损管队槽位")
+    requires_continuous_damage = bool(ignition_items or damage_directive_items) or any(
+        item.combat_state.instance.continuous_damage_state is not None
+        for item in ship_map.values()
+    )
+    if requires_continuous_damage and continuous_damage_profile is None:
+        raise ContractError("continuous_damage.profile_required", "$.continuous_damage_profile", "持续毁伤状态、点燃结果或损管指令需要精确配置")
+    if continuous_damage_profile is not None:
+        for ship_id, ship in ship_map.items():
+            validate_instance_continuous_damage(
+                binding_by_id[ship_id].snapshot,
+                ship.combat_state.instance,
+                continuous_damage_profile,
+            )
     control_map = {} if controls is None else controls
     if set(control_map) - set(ship_map):
         raise ContractError("tactical_scene.control_unknown_ship", "$.controls", "控制输入引用了未绑定舰艇")
@@ -1164,6 +1251,7 @@ def advance_tactical_scene_step(
     lifecycle_events: list[TacticalShipLifecycleEvent] = []
     lifecycle_expired: list[ProjectileExpiredEvent] = []
     engagement_events: list[TacticalEngagementEvent] = []
+    continuous_damage_events: list[ContinuousDamageEvent] = []
 
     def apply_exit_boundary(boundary_time_s: float, boundary_step: int) -> None:
         nonlocal world, ship_map
@@ -1227,7 +1315,10 @@ def advance_tactical_scene_step(
                 binding.snapshot,
                 binding.sortie,
                 ship.combat_state.instance,
-                active_automatic_events=binding.active_automatic_events,
+                active_automatic_events=_runtime_automatic_events(
+                    binding,
+                    ship.combat_state.instance,
+                ),
             )
             lifecycle = derive_tactical_ship_lifecycle(
                 runtime,
@@ -1305,11 +1396,35 @@ def advance_tactical_scene_step(
                         directive.selected_target_deck_level,
                         directive.launch_direction_local_xy,
                     ),
+                    guidance_catalog=guidance_catalog,
                 )
                 world = spawn.resulting_world
                 spawned.append(spawn.projectile)
                 used_directives.add(key)
             _validate_pending_event_grid(ship.combat_state.instance, state.fixed_step_s, ship_id)
+
+    if continuous_damage_profile is not None:
+        directives_by_ship: dict[str, list[DamageControlDirective]] = {}
+        for directive in damage_directive_items:
+            directives_by_ship.setdefault(directive.ship_id, []).append(directive)
+        for ship_id in sorted(ship_map):
+            resolution = apply_damage_control_directives(
+                binding_by_id[ship_id].snapshot,
+                ship_map[ship_id].combat_state.instance,
+                continuous_damage_profile,
+                ship_id=ship_id,
+                tactical_time_s=state.tactical_time_s,
+                directives=directives_by_ship.get(ship_id, ()),
+            )
+            continuous_damage_events.extend(resolution.events)
+            ship = ship_map[ship_id]
+            ship_map[ship_id] = replace(
+                ship,
+                combat_state=replace(
+                    ship.combat_state,
+                    instance=resolution.resulting_instance,
+                ),
+            )
 
     refresh_lifecycle_boundary(state.tactical_time_s, state.fixed_step_index)
     apply_exit_boundary(state.tactical_time_s, state.fixed_step_index)
@@ -1325,12 +1440,14 @@ def advance_tactical_scene_step(
     resolve_boundary(state.tactical_time_s, state.fixed_step_index, start_motions)
 
     models = {}
+    runtimes_at_step_start: dict[str, RuntimeShipParameters] = {}
     next_motions: dict[str, TacticalMotionState] = {}
     diagnostics: dict[str, TacticalStepDiagnostics | None] = {}
     for ship_id in sorted(ship_map):
         ship = ship_map[ship_id]
         binding = binding_by_id[ship_id]
-        runtime = compile_runtime_ship_parameters(binding.snapshot, binding.sortie, ship.combat_state.instance, active_automatic_events=binding.active_automatic_events)
+        runtime = compile_runtime_ship_parameters(binding.snapshot, binding.sortie, ship.combat_state.instance, active_automatic_events=_runtime_automatic_events(binding, ship.combat_state.instance))
+        runtimes_at_step_start[ship_id] = runtime
         if ship.lifecycle_state.physical_status == "exited":
             next_motions[ship_id] = replace(
                 ship.motion_state,
@@ -1375,8 +1492,12 @@ def advance_tactical_scene_step(
                 _pose(end_time_s, next_motions[ship_id]),
                 layer.density_kg_m3,
                 layer.sound_speed_mps,
+                start_motions[ship_id].height_layer,
             )
         )
+    projectile_munition_by_id = {
+        item.id: item.munition_id for item in world.projectiles
+    }
     projectile_resolution = advance_projectile_world(
         world,
         projectile_catalog,
@@ -1387,6 +1508,8 @@ def advance_tactical_scene_step(
         sound_speed_mps=340.0,
         fixed_step_s=PROJECTILE_SUBSTEP_S,
         ricochet_rolls=ricochet_rolls,
+        guidance_catalog=guidance_catalog,
+        guidance_inputs=guidance_inputs,
     )
     world = projectile_resolution.resulting_world
     for target in projectile_resolution.resulting_targets:
@@ -1399,6 +1522,68 @@ def advance_tactical_scene_step(
         )
         next_motions[target.ship_id] = motion
         ship_map[target.ship_id] = replace(ship, combat_state=target.combat_state, motion_state=motion)
+
+    if continuous_damage_profile is not None:
+        for ship_id in sorted(ship_map):
+            ship = ship_map[ship_id]
+            if ship.lifecycle_state.physical_status == "exited":
+                continue
+            resolution = advance_continuous_damage(
+                binding_by_id[ship_id].snapshot,
+                ship.combat_state.instance,
+                runtimes_at_step_start[ship_id],
+                continuous_damage_profile,
+                ship_id=ship_id,
+                target_tactical_time_s=end_time_s,
+            )
+            continuous_damage_events.extend(resolution.events)
+            motion = replace(
+                next_motions[ship_id],
+                hull_integrity_fraction=resolution.resulting_instance.current_hull_integrity_fraction,
+                fuel_units=resolution.resulting_instance.operational_state.fuel_units,
+            )
+            next_motions[ship_id] = motion
+            ship_map[ship_id] = replace(
+                ship,
+                combat_state=replace(
+                    ship.combat_state,
+                    instance=resolution.resulting_instance,
+                ),
+                motion_state=motion,
+            )
+
+        impact_by_projectile = {
+            item.projectile_id: item for item in projectile_resolution.impact_events
+        }
+        for outcome in sorted(ignition_items, key=lambda item: item.incident_id):
+            impact = impact_by_projectile.get(outcome.projectile_id)
+            if impact is None:
+                raise ContractError("continuous_damage.ignition_impact_unmatched", "$.fire_ignition_outcomes", outcome.projectile_id)
+            if impact.target_ship_id != outcome.target_ship_id:
+                raise ContractError("continuous_damage.ignition_ship_mismatch", "$.fire_ignition_outcomes.target_ship_id", impact.target_ship_id)
+            if outcome.target_module_instance_id not in impact.damaged_module_instance_ids:
+                raise ContractError("continuous_damage.ignition_module_unmatched", "$.fire_ignition_outcomes.target_module_instance_id", outcome.target_module_instance_id)
+            munition_id = projectile_munition_by_id[outcome.projectile_id]
+            if projectile_catalog.profile(munition_id).penetration.aftereffect != Aftereffect.FIRE:
+                raise ContractError("continuous_damage.ignition_aftereffect", "$.fire_ignition_outcomes.projectile_id", "只有 fire 后效弹丸的实际命中可接受点燃结果")
+            ship = ship_map[outcome.target_ship_id]
+            resolution = register_fire_ignition(
+                binding_by_id[outcome.target_ship_id].snapshot,
+                ship.combat_state.instance,
+                continuous_damage_profile,
+                outcome,
+                ship_id=outcome.target_ship_id,
+                created_time_s=impact.tactical_time_s,
+                state_tactical_time_s=end_time_s,
+            )
+            continuous_damage_events.extend(resolution.events)
+            ship_map[outcome.target_ship_id] = replace(
+                ship,
+                combat_state=replace(
+                    ship.combat_state,
+                    instance=resolution.resulting_instance,
+                ),
+            )
 
     refresh_lifecycle_boundary(end_time_s, state.fixed_step_index + 1)
     apply_exit_boundary(end_time_s, state.fixed_step_index + 1)
@@ -1418,7 +1603,7 @@ def advance_tactical_scene_step(
             fuel_units=ship.combat_state.instance.operational_state.fuel_units,
         )
         ship = replace(ship, motion_state=motion)
-        runtime = compile_runtime_ship_parameters(binding.snapshot, binding.sortie, ship.combat_state.instance, active_automatic_events=binding.active_automatic_events)
+        runtime = compile_runtime_ship_parameters(binding.snapshot, binding.sortie, ship.combat_state.instance, active_automatic_events=_runtime_automatic_events(binding, ship.combat_state.instance))
         build_tactical_ship_model(runtime, binding.snapshot)
         ship_results.append(TacticalSceneShipStepResult(ship_id, diagnostics[ship_id], runtime))
         final_ships.append(ship)
@@ -1473,4 +1658,16 @@ def advance_tactical_scene_step(
         ),
         tuple(engagement_events),
         tuple(ship_results),
+        projectile_resolution.guidance_events,
+        tuple(
+            sorted(
+                continuous_damage_events,
+                key=lambda item: (
+                    item.tactical_time_s,
+                    item.ship_id,
+                    item.fire_incident_id,
+                    item.event_kind,
+                ),
+            )
+        ),
     )

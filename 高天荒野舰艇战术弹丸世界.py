@@ -25,7 +25,6 @@ from 高天荒野舰艇数据契约 import (
     MaterialRegistry,
     RESOURCE_ID_PATTERN,
     ResourceReference,
-    RuntimeModuleStateInput,
     ShipInstanceSnapshotInput,
     canonical_sha256,
 )
@@ -34,6 +33,15 @@ from 高天荒野舰艇无界面舾装编译器 import (
     DerivedShipSnapshot,
 )
 from 高天荒野舰艇武器时间与射击队列 import WeaponTimelineEvent
+from 高天荒野舰艇战损原子操作 import apply_module_damage_to_instance
+from 高天荒野舰艇导弹制导 import (
+    MissileGuidanceEvent,
+    MissileGuidanceProfileCatalog,
+    MissileGuidanceRuntimeInput,
+    MissileGuidanceState,
+    advance_missile_guidance_step,
+    initialize_missile_guidance_state,
+)
 
 
 PROJECTILE_WORLD_INTERFACE_ID = "gaotian.tactical-projectile-world/v1alpha1"
@@ -366,29 +374,57 @@ class ProjectileState:
     position_xy: tuple[float, float]
     velocity_xy: tuple[float, float]
     distance_travelled_m: float
+    guidance_state: MissileGuidanceState | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {"age_s": self.age_s, "created_time_s": self.created_time_s, "distance_travelled_m": self.distance_travelled_m, "id": self.id, "munition_id": self.munition_id, "position_xy": list(self.position_xy), "selected_target_deck_level": self.selected_target_deck_level, "source_ship_id": self.source_ship_id, "source_weapon_instance_id": self.source_weapon_instance_id, "target_ship_id": self.target_ship_id, "velocity_xy": list(self.velocity_xy)}
+        result = {"age_s": self.age_s, "created_time_s": self.created_time_s, "distance_travelled_m": self.distance_travelled_m, "id": self.id, "munition_id": self.munition_id, "position_xy": list(self.position_xy), "selected_target_deck_level": self.selected_target_deck_level, "source_ship_id": self.source_ship_id, "source_weapon_instance_id": self.source_weapon_instance_id, "target_ship_id": self.target_ship_id, "velocity_xy": list(self.velocity_xy)}
+        if self.guidance_state is not None:
+            result["guidance_state"] = self.guidance_state.to_dict()
+        return result
 
     @classmethod
     def parse(cls, value: Any, path: str) -> "ProjectileState":
-        obj = _exact_object(
-            value,
-            {"id", "source_ship_id", "source_weapon_instance_id", "munition_id", "target_ship_id", "selected_target_deck_level", "created_time_s", "age_s", "position_xy", "velocity_xy", "distance_travelled_m"},
-            path,
+        required = {"id", "source_ship_id", "source_weapon_instance_id", "munition_id", "target_ship_id", "selected_target_deck_level", "created_time_s", "age_s", "position_xy", "velocity_xy", "distance_travelled_m"}
+        if not isinstance(value, dict) or set(value) not in (required, required | {"guidance_state"}):
+            raise ContractError(
+                "object.keys",
+                path,
+                f"必须恰含 {sorted(required)}，并可选 guidance_state",
+            )
+        obj = value
+        projectile_id = _resource_id(obj["id"], f"{path}.id")
+        munition_id = _resource_id(obj["munition_id"], f"{path}.munition_id")
+        source_ship_id = _resource_id(obj["source_ship_id"], f"{path}.source_ship_id")
+        target_ship_id = _resource_id(obj["target_ship_id"], f"{path}.target_ship_id")
+        guidance = (
+            None
+            if "guidance_state" not in obj
+            else MissileGuidanceState.parse(obj["guidance_state"], f"{path}.guidance_state")
         )
+        if guidance is not None and (
+            guidance.projectile_id != projectile_id
+            or guidance.munition_id != munition_id
+            or guidance.source_ship_id != source_ship_id
+            or guidance.intended_target_ship_id != target_ship_id
+        ):
+            raise ContractError(
+                "projectile_world.guidance_binding_mismatch",
+                f"{path}.guidance_state",
+                "制导状态必须与所属弹丸、弹药、发射舰和预定目标精确一致",
+            )
         return cls(
-            _resource_id(obj["id"], f"{path}.id"),
-            _resource_id(obj["source_ship_id"], f"{path}.source_ship_id"),
+            projectile_id,
+            source_ship_id,
             _resource_id(obj["source_weapon_instance_id"], f"{path}.source_weapon_instance_id"),
-            _resource_id(obj["munition_id"], f"{path}.munition_id"),
-            _resource_id(obj["target_ship_id"], f"{path}.target_ship_id"),
+            munition_id,
+            target_ship_id,
             _integer(obj["selected_target_deck_level"], f"{path}.selected_target_deck_level", 0),
             _number(obj["created_time_s"], f"{path}.created_time_s", 0.0),
             _number(obj["age_s"], f"{path}.age_s", 0.0),
             _vector2(obj["position_xy"], f"{path}.position_xy"),
             _vector2(obj["velocity_xy"], f"{path}.velocity_xy"),
             _number(obj["distance_travelled_m"], f"{path}.distance_travelled_m", 0.0),
+            guidance,
         )
 
 
@@ -468,6 +504,8 @@ def spawn_projectile_from_weapon_event(
     catalog: ProjectileProfileCatalog,
     source_pose: ShipPose2D,
     request: ProjectileSpawnRequest,
+    *,
+    guidance_catalog: MissileGuidanceProfileCatalog | None = None,
 ) -> ProjectileSpawnResolution:
     _validate_catalog(world, catalog)
     if event.status != "resolved" or event.action_kind != "fire" or event.action_resolution is None:
@@ -503,10 +541,22 @@ def spawn_projectile_from_weapon_event(
         surface_velocity[0] + muzzle_world[0] * profile.ballistic.muzzle_velocity_mps,
         surface_velocity[1] + muzzle_world[1] * profile.ballistic.muzzle_velocity_mps,
     )
+    guidance = (
+        None
+        if guidance_catalog is None
+        else initialize_missile_guidance_state(
+            guidance_catalog,
+            projectile_id=request.projectile_id,
+            munition_id=action.munition_id,
+            source_ship_id=request.source_ship_id,
+            intended_target_ship_id=request.target_ship_id,
+            launch_time_s=world.tactical_time_s,
+        )
+    )
     projectile = ProjectileState(
         request.projectile_id, request.source_ship_id, event.weapon_instance_id,
         action.munition_id, request.target_ship_id, request.selected_target_deck_level,
-        world.tactical_time_s, 0.0, origin, velocity, 0.0,
+        world.tactical_time_s, 0.0, origin, velocity, 0.0, guidance,
     )
     resulting = replace(world, projectiles=tuple(sorted(world.projectiles + (projectile,), key=lambda item: item.id)))
     return ProjectileSpawnResolution(canonical_sha256(world), resulting, projectile)
@@ -521,6 +571,7 @@ class TacticalProjectileTarget:
     pose_end: ShipPose2D | None = None
     density_kg_m3: float | None = None
     sound_speed_mps: float | None = None
+    height_layer: str | None = None
 
     def pose_at(self, time_s: float) -> ShipPose2D:
         """返回目标在指定时刻的位姿。
@@ -632,9 +683,10 @@ class ProjectileWorldAdvanceResolution:
     resulting_targets: tuple[TacticalProjectileTarget, ...]
     impact_events: tuple[ProjectileImpactEvent, ...]
     expired_events: tuple[ProjectileExpiredEvent, ...]
+    guidance_events: tuple[MissileGuidanceEvent, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        result = {
             "expired_events": [item.to_dict() for item in self.expired_events],
             "impact_events": [item.to_dict() for item in self.impact_events],
             "interface": PROJECTILE_WORLD_INTERFACE_ID,
@@ -643,6 +695,11 @@ class ProjectileWorldAdvanceResolution:
             "resulting_world": self.resulting_world.to_dict(),
             "source_world_sha256": self.source_world_sha256,
         }
+        if self.guidance_events:
+            result["guidance_events"] = [
+                item.to_dict() for item in self.guidance_events
+            ]
+        return result
 
 
 @dataclass(frozen=True)
@@ -818,23 +875,6 @@ def _internal_modules(
     return tuple(item[1] for item in crossed if hypot(item[2][0] - center[0], item[2][1] - center[1]) <= radius + EPS)
 
 
-def _apply_module_damage(instance: ShipInstanceSnapshotInput, modules: Iterable[CompiledModuleInstance], damage_points: float) -> tuple[ShipInstanceSnapshotInput, tuple[str, ...]]:
-    ids = {item.id for item in modules}
-    if damage_points <= 0.0 or not ids:
-        return instance, ()
-    damaged: list[str] = []
-    states: list[RuntimeModuleStateInput] = []
-    for state in instance.module_states:
-        if state.instance_id in ids and state.current_durability_points > 0.0:
-            after = max(0.0, state.current_durability_points - damage_points)
-            states.append(replace(state, current_durability_points=after))
-            if after < state.current_durability_points - EPS:
-                damaged.append(state.instance_id)
-        else:
-            states.append(state)
-    return replace(instance, module_states=tuple(states)), tuple(sorted(damaged))
-
-
 def _resolve_hit(
     projectile: ProjectileState,
     hit: _GeometryHit,
@@ -870,11 +910,11 @@ def _resolve_hit(
     if armor_result.outcome == ImpactOutcome.PENETRATED:
         direction = relative_local[0] / relative_speed, relative_local[1] / relative_speed
         modules = _internal_modules(target, hit, direction, profile)
-        instance, damaged_ids = _apply_module_damage(instance, modules, profile.damage.internal_module_damage_points * armor_result.residual_energy_ratio)
+        instance, damaged_ids = apply_module_damage_to_instance(instance, (item.id for item in modules), profile.damage.internal_module_damage_points * armor_result.residual_energy_ratio)
         instance = replace(instance, current_hull_integrity_fraction=max(0.0, before_hull - profile.damage.hull_integrity_damage_fraction * armor_result.residual_energy_ratio))
     else:
         modules = _surface_modules(target, hit, profile.damage.surface_effect_radius_m)
-        instance, damaged_ids = _apply_module_damage(instance, modules, profile.damage.surface_module_damage_points)
+        instance, damaged_ids = apply_module_damage_to_instance(instance, (item.id for item in modules), profile.damage.surface_module_damage_points)
     after_hull = instance.current_hull_integrity_fraction
     resulting_target = replace(target, combat_state=ShipCombatState(instance, tuple(sorted(armor_map.values(), key=lambda item: item.key))))
     event = ProjectileImpactEvent(projectile.id, event_time, target.ship_id, hit.deck_id, hit.deck_level, hit.region_id, hit.edge_index, hit.impact_world_xy, relative_speed, armor_result, armor_runtime.current_durability_proxy, armor_after, damaged_ids, before_hull, after_hull)
@@ -892,6 +932,8 @@ def advance_projectile_world(
     sound_speed_mps: float,
     fixed_step_s: float = 0.01,
     ricochet_rolls: dict[str, float] | None = None,
+    guidance_catalog: MissileGuidanceProfileCatalog | None = None,
+    guidance_inputs: Iterable[MissileGuidanceRuntimeInput] = (),
 ) -> ProjectileWorldAdvanceResolution:
     _validate_catalog(world, catalog)
     if target_tactical_time_s + EPS < world.tactical_time_s:
@@ -903,8 +945,42 @@ def advance_projectile_world(
     if len(target_map) != len(target_items):
         raise ContractError("projectile_world.target_duplicate", "$.targets", "目标舰 id 不得重复")
     projectiles = {item.id: item for item in world.projectiles}
+    guidance_items = tuple(guidance_inputs)
+    guidance_input_map = {item.projectile_id: item for item in guidance_items}
+    if len(guidance_input_map) != len(guidance_items):
+        raise ContractError(
+            "missile_guidance.runtime_input_duplicate",
+            "$.guidance_inputs",
+            "同一弹丸在一个固定步内只能有一份制导事实",
+        )
+    for index, item in enumerate(guidance_items):
+        item.validate(f"$.guidance_inputs[{index}]")
+    guided_ids = {
+        item.id for item in projectiles.values() if item.guidance_state is not None
+    }
+    if guided_ids and guidance_catalog is None:
+        raise ContractError(
+            "missile_guidance.catalog_required",
+            "$.guidance_catalog",
+            "推进制导弹丸必须提供其绑定的精确制导配置目录",
+        )
+    missing_guidance_inputs = sorted(guided_ids - set(guidance_input_map))
+    if missing_guidance_inputs:
+        raise ContractError(
+            "missile_guidance.runtime_input_missing",
+            "$.guidance_inputs",
+            str(missing_guidance_inputs),
+        )
+    unmatched_guidance_inputs = sorted(set(guidance_input_map) - guided_ids)
+    if unmatched_guidance_inputs:
+        raise ContractError(
+            "missile_guidance.runtime_input_unmatched",
+            "$.guidance_inputs",
+            str(unmatched_guidance_inputs),
+        )
     impacts: list[ProjectileImpactEvent] = []
     expired: list[ProjectileExpiredEvent] = []
+    guidance_events: list[MissileGuidanceEvent] = []
     current_time = world.tactical_time_s
     rolls = {} if ricochet_rolls is None else ricochet_rolls
     while current_time + EPS < target_tactical_time_s and projectiles:
@@ -921,6 +997,42 @@ def advance_projectile_world(
             target = target_map.get(projectile.target_ship_id)
             if target is None:
                 raise ContractError("projectile_world.target_missing", "$.targets", projectile.target_ship_id)
+            integrated_projectile = projectile
+            if projectile.guidance_state is not None:
+                assert guidance_catalog is not None
+                if target.height_layer is None:
+                    raise ContractError(
+                        "missile_guidance.target_height_layer_missing",
+                        "$.targets",
+                        target.ship_id,
+                    )
+                target_pose = target.pose_at(current_time)
+                guidance = advance_missile_guidance_step(
+                    projectile.guidance_state,
+                    guidance_catalog,
+                    guidance_input_map[projectile.id],
+                    position_xy=projectile.position_xy,
+                    velocity_xy=projectile.velocity_xy,
+                    target_position_xy=target_pose.position_xy,
+                    target_height_layer=target.height_layer,
+                    tactical_time_s=current_time,
+                    duration_s=actual_duration,
+                )
+                guidance_events.extend(guidance.events)
+                if guidance.self_destruct:
+                    expired.append(
+                        ProjectileExpiredEvent(
+                            projectile.id,
+                            current_time,
+                            "guidance_self_destruct",
+                        )
+                    )
+                    continue
+                integrated_projectile = replace(
+                    projectile,
+                    guidance_state=guidance.resulting_state,
+                    velocity_xy=guidance.resulting_velocity_xy,
+                )
             target_density = (
                 density_kg_m3
                 if target.density_kg_m3 is None
@@ -931,9 +1043,9 @@ def advance_projectile_world(
                 if target.sound_speed_mps is None
                 else target.sound_speed_mps
             )
-            step = integrate_ballistic_step(projectile.position_xy, projectile.velocity_xy, profile.ballistic, density_kg_m3=target_density, sound_speed_mps=target_sound_speed, duration_s=actual_duration)
-            updated = replace(projectile, age_s=projectile.age_s + actual_duration, position_xy=step.position_xy, velocity_xy=step.velocity_xy, distance_travelled_m=projectile.distance_travelled_m + step.distance_m)
-            hit = _geometry_hit(projectile, step.position_xy, step.velocity_xy, current_time, actual_duration, target)
+            step = integrate_ballistic_step(integrated_projectile.position_xy, integrated_projectile.velocity_xy, profile.ballistic, density_kg_m3=target_density, sound_speed_mps=target_sound_speed, duration_s=actual_duration)
+            updated = replace(integrated_projectile, age_s=projectile.age_s + actual_duration, position_xy=step.position_xy, velocity_xy=step.velocity_xy, distance_travelled_m=projectile.distance_travelled_m + step.distance_m)
+            hit = _geometry_hit(integrated_projectile, step.position_xy, step.velocity_xy, current_time, actual_duration, target)
             if hit is not None:
                 hit_candidates.append((current_time + actual_duration * hit.fraction, projectile.id, hit, step.velocity_xy, step.distance_m))
             elif remaining_life <= duration + EPS:
@@ -949,4 +1061,4 @@ def advance_projectile_world(
         projectiles = updates
         current_time += duration
     resulting_world = replace(world, tactical_time_s=target_tactical_time_s, projectiles=tuple(sorted(projectiles.values(), key=lambda item: item.id)))
-    return ProjectileWorldAdvanceResolution(canonical_sha256(world), resulting_world, tuple(sorted(target_map.values(), key=lambda item: item.ship_id)), tuple(impacts), tuple(sorted(expired, key=lambda item: (item.tactical_time_s, item.projectile_id))))
+    return ProjectileWorldAdvanceResolution(canonical_sha256(world), resulting_world, tuple(sorted(target_map.values(), key=lambda item: item.ship_id)), tuple(impacts), tuple(sorted(expired, key=lambda item: (item.tactical_time_s, item.projectile_id))), tuple(sorted(guidance_events, key=lambda item: (item.tactical_time_s, item.projectile_id, item.reason))))

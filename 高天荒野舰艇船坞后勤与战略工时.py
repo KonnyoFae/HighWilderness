@@ -1028,6 +1028,13 @@ def quote_ship_repair(
 ) -> ShipyardWorkQuote:
     if current_design_sha256(instance) != snapshot.source_sha256:
         raise ContractError("logistics.instance_design_mismatch", "$.source_instance", "实例与设计快照不匹配")
+    continuous_damage = instance.continuous_damage_state
+    if continuous_damage is not None and continuous_damage.fire_incidents:
+        raise ContractError(
+            "logistics.active_fire",
+            "$.source_instance.continuous_damage_state.fire_incidents",
+            "存在活动火灾时不能创建船坞维修报价",
+        )
     modules = {item.id: item for item in snapshot.outfit.instances}
     missing_mass_equivalent = snapshot.hull.hull_mass_kg * (
         1.0 - instance.current_hull_integrity_fraction

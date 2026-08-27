@@ -2206,6 +2206,221 @@ class WeaponTimelineStateInput:
 
 
 @dataclass(frozen=True)
+class FireIncidentStateInput:
+    id: str
+    source_projectile_id: str
+    target_module_instance_id: str
+    created_time_s: float
+    intensity_units: float
+    remaining_fuel_units: float
+
+    @classmethod
+    def parse(cls, value: Any, path: str) -> "FireIncidentStateInput":
+        obj = _object(value, path)
+        _keys(
+            obj,
+            path,
+            (
+                "id",
+                "source_projectile_id",
+                "target_module_instance_id",
+                "created_time_s",
+                "intensity_units",
+                "remaining_fuel_units",
+            ),
+        )
+        intensity = _number(
+            obj["intensity_units"], f"{path}.intensity_units", 0.0
+        )
+        fuel = _number(
+            obj["remaining_fuel_units"],
+            f"{path}.remaining_fuel_units",
+            0.0,
+        )
+        if intensity <= 0.0 or fuel <= 0.0:
+            raise ContractError(
+                "continuous_damage.fire_nonpositive",
+                path,
+                "活动火灾的强度与剩余燃料都必须为正数",
+            )
+        return cls(
+            _resource_id(obj["id"], f"{path}.id"),
+            _resource_id(
+                obj["source_projectile_id"],
+                f"{path}.source_projectile_id",
+            ),
+            _resource_id(
+                obj["target_module_instance_id"],
+                f"{path}.target_module_instance_id",
+            ),
+            _number(obj["created_time_s"], f"{path}.created_time_s", 0.0),
+            intensity,
+            fuel,
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "created_time_s": self.created_time_s,
+            "id": self.id,
+            "intensity_units": self.intensity_units,
+            "remaining_fuel_units": self.remaining_fuel_units,
+            "source_projectile_id": self.source_projectile_id,
+            "target_module_instance_id": self.target_module_instance_id,
+        }
+
+
+@dataclass(frozen=True)
+class DamageControlAssignmentInput:
+    damage_control_module_instance_id: str
+    team_index: int
+    fire_incident_id: str
+
+    @property
+    def slot(self) -> tuple[str, int]:
+        return self.damage_control_module_instance_id, self.team_index
+
+    @classmethod
+    def parse(cls, value: Any, path: str) -> "DamageControlAssignmentInput":
+        obj = _object(value, path)
+        _keys(
+            obj,
+            path,
+            (
+                "damage_control_module_instance_id",
+                "team_index",
+                "fire_incident_id",
+            ),
+        )
+        return cls(
+            _resource_id(
+                obj["damage_control_module_instance_id"],
+                f"{path}.damage_control_module_instance_id",
+            ),
+            _integer(obj["team_index"], f"{path}.team_index", 0),
+            _resource_id(
+                obj["fire_incident_id"],
+                f"{path}.fire_incident_id",
+            ),
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "damage_control_module_instance_id": self.damage_control_module_instance_id,
+            "fire_incident_id": self.fire_incident_id,
+            "team_index": self.team_index,
+        }
+
+
+@dataclass(frozen=True)
+class ShipContinuousDamageStateInput:
+    profile: ResourceReference
+    profile_sha256: str
+    tactical_time_s: float
+    fire_incidents: tuple[FireIncidentStateInput, ...]
+    damage_control_assignments: tuple[DamageControlAssignmentInput, ...]
+
+    @classmethod
+    def parse(
+        cls, value: Any, path: str
+    ) -> "ShipContinuousDamageStateInput":
+        obj = _object(value, path)
+        _keys(
+            obj,
+            path,
+            (
+                "profile",
+                "profile_sha256",
+                "tactical_time_s",
+                "fire_incidents",
+                "damage_control_assignments",
+            ),
+        )
+        tactical_time = _number(
+            obj["tactical_time_s"], f"{path}.tactical_time_s", 0.0
+        )
+        fires = tuple(
+            sorted(
+                (
+                    FireIncidentStateInput.parse(
+                        item, f"{path}.fire_incidents[{index}]"
+                    )
+                    for index, item in enumerate(
+                        _array(obj["fire_incidents"], f"{path}.fire_incidents")
+                    )
+                ),
+                key=lambda item: item.id,
+            )
+        )
+        assignments = tuple(
+            sorted(
+                (
+                    DamageControlAssignmentInput.parse(
+                        item,
+                        f"{path}.damage_control_assignments[{index}]",
+                    )
+                    for index, item in enumerate(
+                        _array(
+                            obj["damage_control_assignments"],
+                            f"{path}.damage_control_assignments",
+                        )
+                    )
+                ),
+                key=lambda item: item.slot,
+            )
+        )
+        fire_ids = {item.id for item in fires}
+        if len(fire_ids) != len(fires):
+            raise ContractError(
+                "continuous_damage.fire_duplicate",
+                f"{path}.fire_incidents",
+                "火灾事件 id 不得重复",
+            )
+        if any(item.created_time_s > tactical_time + 1.0e-8 for item in fires):
+            raise ContractError(
+                "continuous_damage.fire_from_future",
+                f"{path}.fire_incidents",
+                "火灾创建时刻不得晚于持续毁伤状态时钟",
+            )
+        if len({item.slot for item in assignments}) != len(assignments):
+            raise ContractError(
+                "continuous_damage.assignment_slot_duplicate",
+                f"{path}.damage_control_assignments",
+                "同一损管模块队伍槽位不得重复分配",
+            )
+        unknown = sorted(
+            {
+                item.fire_incident_id
+                for item in assignments
+                if item.fire_incident_id not in fire_ids
+            }
+        )
+        if unknown:
+            raise ContractError(
+                "continuous_damage.assignment_fire_missing",
+                f"{path}.damage_control_assignments",
+                str(unknown),
+            )
+        return cls(
+            ResourceReference.parse(obj["profile"], f"{path}.profile"),
+            _sha256_hex(obj["profile_sha256"], f"{path}.profile_sha256"),
+            tactical_time,
+            fires,
+            assignments,
+        )
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "damage_control_assignments": [
+                item.to_dict() for item in self.damage_control_assignments
+            ],
+            "fire_incidents": [item.to_dict() for item in self.fire_incidents],
+            "profile": self.profile.to_dict(),
+            "profile_sha256": self.profile_sha256,
+            "tactical_time_s": self.tactical_time_s,
+        }
+
+
+@dataclass(frozen=True)
 class SortieConfigurationInput:
     id: str
     version: int
@@ -2634,6 +2849,7 @@ class ShipInstanceSnapshotInput:
     ammunition_state: ShipAmmunitionStateInput | None = None
     design_state: ShipDesignStateInput | None = None
     weapon_timeline_state: WeaponTimelineStateInput | None = None
+    continuous_damage_state: ShipContinuousDamageStateInput | None = None
 
     @classmethod
     def parse(cls, resource: Any, path: str = "$") -> "ShipInstanceSnapshotInput":
@@ -2657,7 +2873,12 @@ class ShipInstanceSnapshotInput:
                 "operational_state",
                 "power_policy",
             ),
-            ("ammunition_state", "design_state", "weapon_timeline_state"),
+            (
+                "ammunition_state",
+                "design_state",
+                "weapon_timeline_state",
+                "continuous_damage_state",
+            ),
         )
         if obj["schema"] != SCHEMA_ID:
             raise ContractError("schema.unsupported", f"{path}.schema", str(obj["schema"]))
@@ -2747,6 +2968,14 @@ class ShipInstanceSnapshotInput:
                     f"{path}.weapon_timeline_state",
                 )
             ),
+            (
+                None
+                if "continuous_damage_state" not in obj
+                else ShipContinuousDamageStateInput.parse(
+                    obj["continuous_damage_state"],
+                    f"{path}.continuous_damage_state",
+                )
+            ),
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -2772,6 +3001,10 @@ class ShipInstanceSnapshotInput:
             result["design_state"] = self.design_state.to_dict()
         if self.weapon_timeline_state is not None:
             result["weapon_timeline_state"] = self.weapon_timeline_state.to_dict()
+        if self.continuous_damage_state is not None:
+            result["continuous_damage_state"] = (
+                self.continuous_damage_state.to_dict()
+            )
         return result
 
 

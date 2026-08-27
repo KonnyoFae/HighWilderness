@@ -1687,6 +1687,98 @@
       ],
       "type": "object"
     },
+    "fireIncidentState": {
+      "additionalProperties": false,
+      "properties": {
+        "created_time_s": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "intensity_units": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "remaining_fuel_units": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "source_projectile_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "target_module_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        }
+      },
+      "required": [
+        "id",
+        "source_projectile_id",
+        "target_module_instance_id",
+        "created_time_s",
+        "intensity_units",
+        "remaining_fuel_units"
+      ],
+      "type": "object"
+    },
+    "damageControlAssignment": {
+      "additionalProperties": false,
+      "properties": {
+        "damage_control_module_instance_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "fire_incident_id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "team_index": {
+          "minimum": 0,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "damage_control_module_instance_id",
+        "team_index",
+        "fire_incident_id"
+      ],
+      "type": "object"
+    },
+    "shipContinuousDamageState": {
+      "additionalProperties": false,
+      "properties": {
+        "damage_control_assignments": {
+          "items": {
+            "$ref": "#/$defs/damageControlAssignment"
+          },
+          "type": "array"
+        },
+        "fire_incidents": {
+          "items": {
+            "$ref": "#/$defs/fireIncidentState"
+          },
+          "type": "array"
+        },
+        "profile": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "profile_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        },
+        "tactical_time_s": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "profile",
+        "profile_sha256",
+        "tactical_time_s",
+        "fire_incidents",
+        "damage_control_assignments"
+      ],
+      "type": "object"
+    },
     "shipInstanceSnapshot": {
       "additionalProperties": false,
       "properties": {
@@ -1697,6 +1789,9 @@
           "maximum": 1,
           "minimum": 0,
           "type": "number"
+        },
+        "continuous_damage_state": {
+          "$ref": "#/$defs/shipContinuousDamageState"
         },
         "derived_ship_snapshot_sha256": {
           "pattern": "^[0-9a-f]{64}$",

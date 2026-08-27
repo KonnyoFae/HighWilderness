@@ -272,6 +272,13 @@ def transition_current_design(
     """在固定建造船壳上原子迁移模块、弹药状态与当前舾装快照。"""
 
     validate_instance_current_design(source_snapshot, source_instance)
+    continuous_damage = source_instance.continuous_damage_state
+    if continuous_damage is not None and continuous_damage.fire_incidents:
+        raise ContractError(
+            "refit.active_fire",
+            "$.continuous_damage_state.fire_incidents",
+            "存在活动火灾时不能开始改装迁移",
+        )
     if source_snapshot.hull.source_sha256 != target_snapshot.hull.source_sha256:
         raise ContractError(
             "refit.hull_snapshot_mismatch",

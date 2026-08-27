@@ -1,0 +1,116 @@
+{
+  "catalog": {
+    "reference": {
+      "id": "gtw.continuous_damage.fixture.stage_i11",
+      "version": 1
+    },
+    "sha256": "b5a70251299f88ef8cc910933d041bc0728644f12cd860533eb2de58c0adb4b2"
+  },
+  "deterministic_repeat_equal": true,
+  "direct_fire_events": [
+    {
+      "event_kind": "fire_damage_applied",
+      "fire_incident_id": "fire.fixture.stage_i11.engine",
+      "fuel_after": 9.5,
+      "fuel_before": 10.0,
+      "hull_damage_fraction": 0.0010000000000000009,
+      "intensity_after": 0.95,
+      "intensity_before": 1.0,
+      "module_damage_points": 4.0,
+      "ship_id": "ship.fixture.target",
+      "tactical_time_s": 1.0,
+      "target_module_instance_id": "main_engine_port"
+    }
+  ],
+  "extinguish_events": [
+    {
+      "event_kind": "fire_damage_applied",
+      "fire_incident_id": "fire.fixture.stage_i11.engine",
+      "fuel_after": 9.5,
+      "fuel_before": 10.0,
+      "hull_damage_fraction": 0.0010000000000000009,
+      "intensity_after": 0.0,
+      "intensity_before": 1.0,
+      "module_damage_points": 4.0,
+      "ship_id": "ship.fixture.target",
+      "tactical_time_s": 1.0,
+      "target_module_instance_id": "main_engine_port"
+    },
+    {
+      "event_kind": "fire_suppressed",
+      "fire_incident_id": "fire.fixture.stage_i11.engine",
+      "intensity_after": 0.0,
+      "intensity_before": 0.95,
+      "ship_id": "ship.fixture.target",
+      "tactical_time_s": 1.0,
+      "target_module_instance_id": "main_engine_port"
+    },
+    {
+      "event_kind": "fire_extinguished",
+      "fire_incident_id": "fire.fixture.stage_i11.engine",
+      "fuel_after": 9.5,
+      "fuel_before": 10.0,
+      "intensity_after": 0.0,
+      "intensity_before": 1.0,
+      "ship_id": "ship.fixture.target",
+      "tactical_time_s": 1.0,
+      "target_module_instance_id": "main_engine_port"
+    }
+  ],
+  "interface": "gaotian.ship-continuous-damage/v1alpha1",
+  "legacy_instance_shape_preserved": true,
+  "policy": "gaotian.continuous-damage/explicit-ignition-boundary-firefighting/v1",
+  "scene_events": [
+    {
+      "damage_control_module_instance_id": "damage_control",
+      "event_kind": "damage_control_assignment_set",
+      "fire_incident_id": "fire.fixture.stage_i11.scene",
+      "ship_id": "ship.fixture.scene.target",
+      "tactical_time_s": 0.13333333333333333,
+      "team_index": 0
+    },
+    {
+      "event_kind": "fire_damage_applied",
+      "fire_incident_id": "fire.fixture.stage_i11.scene",
+      "fuel_after": 9.991666666666667,
+      "fuel_before": 10.0,
+      "hull_damage_fraction": 1.666666666666483e-05,
+      "intensity_after": 0.9658333333333333,
+      "intensity_before": 1.0,
+      "module_damage_points": 0.06666666666666998,
+      "ship_id": "ship.fixture.scene.target",
+      "tactical_time_s": 0.15,
+      "target_module_instance_id": "main_engine_port"
+    },
+    {
+      "event_kind": "fire_suppressed",
+      "fire_incident_id": "fire.fixture.stage_i11.scene",
+      "intensity_after": 0.9658333333333333,
+      "intensity_before": 0.9991666666666666,
+      "ship_id": "ship.fixture.scene.target",
+      "tactical_time_s": 0.15,
+      "target_module_instance_id": "main_engine_port"
+    }
+  ],
+  "schema": "gaotian.continuous-damage/v1alpha1",
+  "status": "PASS",
+  "tested_error_codes": [
+    "continuous_damage.hull_rate",
+    "continuous_damage.ignition_aftereffect",
+    "continuous_damage.profile_mismatch",
+    "continuous_damage.state_required",
+    "continuous_damage.team_index",
+    "continuous_damage.time_reversed",
+    "logistics.active_fire",
+    "refit.active_fire"
+  ],
+  "tested_paths": [
+    "explicit_fire_ignition",
+    "persistent_module_and_hull_damage",
+    "automatic_damage_control_activation",
+    "assignment_and_suppression",
+    "disabled_damage_control_zero_suppression",
+    "impact_birth_step_no_tick",
+    "scene_save_reload"
+  ]
+}

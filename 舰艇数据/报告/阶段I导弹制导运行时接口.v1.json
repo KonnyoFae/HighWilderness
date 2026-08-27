@@ -1,0 +1,62 @@
+{
+  "catalog": {
+    "reference": {
+      "id": "gtw.missile_guidance.fixture.stage_i10",
+      "version": 1
+    },
+    "sha256": "5035e238db6b00746dc8e6226ec21fdd033f54f7de7b9756bc1e9c3ea9959c53"
+  },
+  "deterministic_repeat_equal": true,
+  "interface": "gaotian.missile-guidance-runtime/v1alpha1",
+  "policy": "gaotian.missile-guidance/fixed-step-limited-lateral-acceleration-pursuit/v1",
+  "scene_guidance_events": [
+    {
+      "previous_phase": "inertial",
+      "projectile_id": "projectile.fixture.scene.actual_motion",
+      "reason": "seeker_activated",
+      "resulting_phase": "searching",
+      "tactical_time_s": 0.0
+    },
+    {
+      "previous_phase": "searching",
+      "projectile_id": "projectile.fixture.scene.actual_motion",
+      "reason": "target_acquired",
+      "resulting_phase": "tracking",
+      "tactical_time_s": 0.0
+    }
+  ],
+  "self_destruct_events": {
+    "expired": [
+      {
+        "projectile_id": "projectile.fixture.scene.actual_motion",
+        "reason": "guidance_self_destruct",
+        "tactical_time_s": 0.026666666666666665
+      }
+    ],
+    "guidance": [
+      {
+        "previous_phase": "lost",
+        "projectile_id": "projectile.fixture.scene.actual_motion",
+        "reason": "self_destruct_deadline_reached",
+        "resulting_phase": "lost",
+        "tactical_time_s": 0.026666666666666665
+      }
+    ]
+  },
+  "status": "PASS",
+  "tested_error_codes": [
+    "missile_guidance.memory_after_self_destruct",
+    "missile_guidance.catalog_required",
+    "missile_guidance.runtime_input_binding",
+    "missile_guidance.runtime_input_missing"
+  ],
+  "tested_runtime_paths": [
+    "active_radar_activation_tracking_memory_reacquisition_lost_self_destruct",
+    "passive_radar_continuous_illumination",
+    "active_radar_search_range_gate",
+    "anti_radiation_emitter_loss_memory",
+    "electro_optical_height_layer_gate",
+    "projectile_world_fixed_substep_steering_and_expiration",
+    "unified_tactical_scene_event_propagation"
+  ]
+}

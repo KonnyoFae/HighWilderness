@@ -1,0 +1,13 @@
+{
+  "fixture_level": "prototype_unbalanced",
+  "fuel_units_burned_per_intensity_s": 0.5,
+  "hull_integrity_fraction_per_intensity_s": 0.001,
+  "id": "gtw.continuous_damage.fixture.stage_i11",
+  "kind": "ContinuousDamageProfile",
+  "module_damage_points_per_intensity_s": 4.0,
+  "name": "阶段I11·持久火灾与损管技术替身配置",
+  "natural_intensity_decay_units_per_s": 0.05,
+  "schema": "gaotian.continuous-damage/v1alpha1",
+  "suppression_units_per_team_efficiency_s": 2.0,
+  "version": 1
+}
