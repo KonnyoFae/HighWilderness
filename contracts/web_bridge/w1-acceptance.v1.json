@@ -1,0 +1,130 @@
+{
+  "interface": "gaotian.web-bridge-w1-acceptance/v1",
+  "bridge_interface": "gaotian.web-bridge/v1alpha1",
+  "status": "specified_not_executed",
+  "required_capabilities": [
+    "system.hello",
+    "system.ping",
+    "system.shutdown"
+  ],
+  "limits": {
+    "startup_to_ready_ms": 10000,
+    "request_timeout_ms": 10000,
+    "idle_ping_interval_ms": 5000,
+    "idle_ping_timeout_ms": 3000,
+    "shutdown_timeout_ms": 3000,
+    "max_in_flight_requests": 32,
+    "max_frame_bytes": 8388608,
+    "max_queued_request_bytes": 16777216
+  },
+  "cases": [
+    {
+      "id": "W1-A01",
+      "scenario": "normal_start",
+      "expected": "真实 Tauri 窗口启动指定 sidecar；hello 成功后才 READY；回显实例 ID、版本和能力。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A02",
+      "scenario": "unicode_and_fragmentation",
+      "expected": "中文模块可导入，中文和转义换行可往返；任意字节分片与多帧同批到达均正确。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A03",
+      "scenario": "version_mismatch",
+      "expected": "无共同版本或缺少必需能力时在启动超时内失败，绝不 READY。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A04",
+      "scenario": "spawn_failure",
+      "expected": "不存在的受控可执行文件或早退返回结构化 host 错误，界面不永久等待。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A05",
+      "scenario": "startup_timeout",
+      "expected": "后端不握手时终止当前实例，显示可恢复错误，无自动重启循环。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A06",
+      "scenario": "request_timeout_and_late_response",
+      "expected": "挂起请求超时仅结算一次；写入管道后的结果标为 outcome_unknown，终止代次且禁止自动重放。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A07",
+      "scenario": "duplicate_request",
+      "expected": "req.N 不递增视为协议违规，后端不得第二次执行，宿主不得二次结算 Promise。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A08",
+      "scenario": "crash_and_old_epoch",
+      "expected": "杀死 sidecar 后全部在途请求有限时间内失败；显式重启生成新实例 ID，旧消息不能应用。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A09",
+      "scenario": "malformed_protocol",
+      "expected": "运行 negative-cases；坏 UTF-8、重复键、超长行、NaN、截断 EOF 都受控失败。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A10",
+      "scenario": "stdout_stderr_separation",
+      "expected": "导入和日志只进入 stderr；stdout 仅协议。日志突发不得阻塞协议或无限增长。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A11",
+      "scenario": "event_channel",
+      "expected": "宿主为当前窗口注册一个 Channel，READY 事件恰好一次；销毁窗口后解除订阅。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A12",
+      "scenario": "ping",
+      "expected": "system.ping 回显 nonce；仅空闲时心跳超时触发故障，普通请求由自身 deadline 监管。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A13",
+      "scenario": "graceful_shutdown",
+      "expected": "shutdown 响应后退出，EOF/窗口关闭也回收子进程；无残留孤儿进程。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A14",
+      "scenario": "shutdown_deadline",
+      "expected": "后端忽略关闭时，宿主仅终止自己拥有的进程；不按名称批量杀 Python。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A15",
+      "scenario": "capability_allowlist",
+      "expected": "仅执行三项 system 能力；editor/resource/save/tactical/strategy 方法返回 method_not_supported。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A16",
+      "scenario": "bounded_queues",
+      "expected": "超过 32 个在途请求在写入前拒绝为 busy；压力不能令控制队列或日志无限增长。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A17",
+      "scenario": "domain_error_adapter",
+      "expected": "用受控测试替身透传 ContractError 的 code/path/message；不是新增产品领域能力。",
+      "status": "pending_runtime"
+    },
+    {
+      "id": "W1-A18",
+      "scenario": "existing_regression",
+      "expected": "Python 总入口全部通过；TypeScript 类型/单测与 Rust 单测通过，真实窗口握手单独记录。",
+      "status": "pending_runtime"
+    }
+  ]
+}

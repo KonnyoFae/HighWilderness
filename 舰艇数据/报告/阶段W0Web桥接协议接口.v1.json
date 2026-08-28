@@ -1,0 +1,213 @@
+{
+  "bridge_interface": "gaotian.web-bridge/v1alpha1",
+  "checks": [
+    "schema_fields_and_constants_match",
+    "canonical_wire_round_trip",
+    "hello_negotiation",
+    "domain_error_preserved",
+    "unicode_every_byte_split",
+    "multiple_frames_per_chunk",
+    "crlf_accepted",
+    "frame_byte_limit",
+    "truncated_eof_and_poisoned_decoder",
+    "json_portability_and_depth",
+    "w1_and_t0_not_marked_executed"
+  ],
+  "fixture_hashes": {
+    "envelope.v1alpha1.schema.json": "a325052f67becbfc65eee544758e9e39257738291c00aa9b2448b5aa07aabde6",
+    "examples.v1alpha1.json": "c8f458cf85f54d0c1e9d0b0c7e9a9e1894b2b24aaa2839e26331d67808a3d682",
+    "negative-cases.v1.json": "6db44ecd1c486606d878fa40b104b400cb5251d37c2193092e53b39a5333ddbc",
+    "t0-benchmark-plan.v1.json": "6754fad7fd8ace9242f765e6ca5c7bb546df4fbf9f6901a60c51538d0d773f1c",
+    "w1-acceptance.v1.json": "26b099cdf99d6f851f63e37a29a7f2806f3c34f418b62e652b77c0717b31576d"
+  },
+  "interface": "gaotian.stage-w0-web-bridge-regression/v1",
+  "max_frame_bytes": 8388608,
+  "portable_negative_cases": [
+    {
+      "code": "bridge.unsupported_interface",
+      "id": "unknown_interface"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "unknown_kind"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "unknown_field"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "missing_instance"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "missing_request_id"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "non_monotone_id_format"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "zero_request_id"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "unknown_namespace"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "params_not_object"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "boolean_revision"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "negative_revision"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "missing_expected_revision"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "global_revision"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "system_editor_scope"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "both_result_error"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "failure_with_result"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "boolean_ok"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "error_unknown_field"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "unknown_error_source"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "error_retryable_not_bool"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "success_missing_revision"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "zero_event_sequence"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "boolean_event_sequence"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "event_wrong_scope"
+    },
+    {
+      "code": "bridge.unsupported_interface",
+      "id": "hello_no_common_version"
+    },
+    {
+      "code": "bridge.capability_missing",
+      "id": "hello_missing_capability"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "hello_duplicate_capability"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "hello_capabilities_wrong_type"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "duplicate_keys"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "nested_duplicate_keys"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "bom"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "blank_line"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "trailing_garbage"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "multiple_json_lines"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "double_cr"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "not_object"
+    },
+    {
+      "code": "bridge.truncated_frame",
+      "id": "truncated_line"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "nan"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "infinity"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "float_overflow"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "unsafe_integer"
+    },
+    {
+      "code": "bridge.invalid_json",
+      "id": "invalid_utf8"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "request_id_newline"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "method_newline"
+    },
+    {
+      "code": "bridge.invalid_message",
+      "id": "session_id_newline"
+    }
+  ],
+  "portable_negative_count": 45,
+  "positive_example_count": 18,
+  "scope": "protocol_reference_only",
+  "status": "PASS",
+  "t0_performance_measured": false,
+  "w1_runtime_verified": false
+}

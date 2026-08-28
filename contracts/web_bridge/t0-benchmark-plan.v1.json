@@ -1,0 +1,165 @@
+{
+  "interface": "gaotian.tactical-performance-plan/v1",
+  "status": "specified_not_measured",
+  "fixture_level": "contract_fixture",
+  "dependencies": [
+    "W1"
+  ],
+  "fixed_step_hz": 60,
+  "warmup_steps": 600,
+  "measured_steps": 3600,
+  "repetitions": 3,
+  "snapshot_rates_hz": [
+    20,
+    30
+  ],
+  "modes": [
+    "headless_baseline",
+    "full_authoritative_json",
+    "experimental_render_full",
+    "experimental_render_delta"
+  ],
+  "profiles": [
+    {
+      "id": "functional_6",
+      "ships": 6,
+      "composition": {
+        "minimum_legal": 2,
+        "conventional_crewed": 2,
+        "unmanned_flagship": 2
+      },
+      "ordinary_projectiles_target": 120,
+      "guided_projectiles_target": 12,
+      "weapon_events_per_second_target": 24
+    },
+    {
+      "id": "target_20",
+      "ships": 20,
+      "composition": {
+        "minimum_legal": 6,
+        "conventional_crewed": 10,
+        "unmanned_flagship": 4
+      },
+      "ordinary_projectiles_target": 600,
+      "guided_projectiles_target": 60,
+      "weapon_events_per_second_target": 120
+    },
+    {
+      "id": "stress_30",
+      "ships": 30,
+      "composition": {
+        "minimum_legal": 10,
+        "conventional_crewed": 14,
+        "unmanned_flagship": 6
+      },
+      "ordinary_projectiles_target": 1500,
+      "guided_projectiles_target": 150,
+      "weapon_events_per_second_target": 300
+    }
+  ],
+  "load_stages": [
+    "motion_only",
+    "ordinary_projectiles",
+    "guided_projectiles",
+    "scripted_damage_and_recompile"
+  ],
+  "measurements": [
+    {
+      "id": "fixed_step",
+      "unit": "ms",
+      "scope": "inclusive"
+    },
+    {
+      "id": "projectile_world",
+      "unit": "ms",
+      "scope": "nested_component"
+    },
+    {
+      "id": "runtime_recompile",
+      "unit": "ms",
+      "scope": "nested_component"
+    },
+    {
+      "id": "serialization",
+      "unit": "ms",
+      "scope": "exclusive_stage"
+    },
+    {
+      "id": "host_webview_round_trip",
+      "unit": "ms",
+      "scope": "single_host_monotonic_clock"
+    },
+    {
+      "id": "frame_bytes",
+      "unit": "bytes",
+      "scope": "wire"
+    },
+    {
+      "id": "queue_depth",
+      "unit": "count",
+      "scope": "host_and_sidecar"
+    },
+    {
+      "id": "resident_memory",
+      "unit": "bytes",
+      "scope": "process"
+    },
+    {
+      "id": "real_time_factor",
+      "unit": "ratio",
+      "scope": "simulated_time_divided_by_wall_time_including_drain"
+    }
+  ],
+  "required_metadata": [
+    "commit",
+    "dirty_diff_sha256",
+    "os",
+    "cpu",
+    "ram_bytes",
+    "python",
+    "rust",
+    "node",
+    "webview2",
+    "power_mode",
+    "profile",
+    "fixture_resource_hashes",
+    "input_stream_sha256",
+    "command",
+    "actual_entity_counts",
+    "frame_bytes_max",
+    "coalesced_frame_count",
+    "rejected_request_count"
+  ],
+  "aggregation": {
+    "per_run": [
+      "sample_count",
+      "mean",
+      "p95_nearest_rank",
+      "maximum"
+    ],
+    "percentile": "sorted_samples[ceil(0.95*n)-1]",
+    "across_runs": "report_each_run_and_worst_run_no_pooled_percentiles"
+  },
+  "gates": [
+    {
+      "id": "T0-G01",
+      "criterion": "同输入下各传输模式、各快照频率的最终权威状态与事件 hash 与无界面基线相同。"
+    },
+    {
+      "id": "T0-G02",
+      "criterion": "target_20 的三次重复均达到实时因子 >= 1.0；否则必须列出热点和可复核优化切片，不能声称性能通过。"
+    },
+    {
+      "id": "T0-G03",
+      "criterion": "stress_30 降低表现频率可接受，但不得丢权威步、输入、战斗事件；内存与队列保持有界。"
+    },
+    {
+      "id": "T0-G04",
+      "criterion": "记录各档实际活动实体分布；未达到目标负载属于未覆盖，不得冒充该档通过。"
+    },
+    {
+      "id": "T0-G05",
+      "criterion": "T0 必须形成 T1 数据密度建议；只比较实验投影，不提前冻结 T1 业务字段。"
+    }
+  ]
+}

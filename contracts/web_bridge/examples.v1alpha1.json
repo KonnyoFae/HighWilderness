@@ -1,0 +1,269 @@
+{
+  "interface": "gaotian.web-bridge-examples/v1",
+  "bridge_interface": "gaotian.web-bridge/v1alpha1",
+  "fixture_level": "contract_fixture",
+  "runtime_implemented": false,
+  "messages": {
+    "hello_request": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": null,
+      "kind": "request",
+      "request_id": "req.1",
+      "method": "system.hello",
+      "params": {
+        "client_name": "high-wilderness-desktop",
+        "client_version": "0.1.0-dev",
+        "supported_interfaces": [
+          "gaotian.web-bridge/v1alpha1"
+        ],
+        "required_capabilities": [
+          "system.hello",
+          "system.ping",
+          "system.shutdown"
+        ]
+      },
+      "expected_revision": null
+    },
+    "hello_response": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": null,
+      "kind": "response",
+      "request_id": "req.1",
+      "revision": null,
+      "ok": true,
+      "result": {
+        "selected_interface": "gaotian.web-bridge/v1alpha1",
+        "capabilities": [
+          "system.hello",
+          "system.ping",
+          "system.shutdown"
+        ],
+        "ship_schema": "gaotian.ship/v1alpha1",
+        "max_frame_bytes": 8388608
+      },
+      "error": null
+    },
+    "ping_request": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": null,
+      "kind": "request",
+      "request_id": "req.2",
+      "method": "system.ping",
+      "params": {
+        "nonce": "ping.fixture.1"
+      },
+      "expected_revision": null
+    },
+    "ping_response": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": null,
+      "kind": "response",
+      "request_id": "req.2",
+      "revision": null,
+      "ok": true,
+      "result": {
+        "nonce": "ping.fixture.1"
+      },
+      "error": null
+    },
+    "shutdown_request": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": null,
+      "kind": "request",
+      "request_id": "req.3",
+      "method": "system.shutdown",
+      "params": {
+        "reason": "user_exit"
+      },
+      "expected_revision": null
+    },
+    "shutdown_response": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": null,
+      "kind": "response",
+      "request_id": "req.3",
+      "revision": null,
+      "ok": true,
+      "result": {
+        "accepted": true
+      },
+      "error": null
+    },
+    "editor_preview_request": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": "editor.fixture.hull.1",
+      "kind": "request",
+      "request_id": "req.4",
+      "method": "editor.preview",
+      "params": {},
+      "expected_revision": 7
+    },
+    "editor_rename_request": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": "editor.fixture.hull.1",
+      "kind": "request",
+      "request_id": "req.5",
+      "method": "editor.command",
+      "params": {
+        "command": "hull.rename",
+        "arguments": {
+          "name": "测试舰\n改型"
+        }
+      },
+      "expected_revision": 7
+    },
+    "editor_rename_response": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": "editor.fixture.hull.1",
+      "kind": "response",
+      "request_id": "req.5",
+      "revision": 8,
+      "ok": true,
+      "result": {
+        "applied": true,
+        "dirty": true
+      },
+      "error": null
+    },
+    "revision_conflict_response": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": "editor.fixture.hull.1",
+      "kind": "response",
+      "request_id": "req.5",
+      "revision": 8,
+      "ok": false,
+      "result": null,
+      "error": {
+        "code": "bridge.revision_conflict",
+        "path": "$.expected_revision",
+        "message": "请求修订号 7 与当前修订号 8 不一致",
+        "source": "bridge",
+        "retryable": false,
+        "details": {
+          "expected_revision": 7,
+          "current_revision": 8
+        }
+      }
+    },
+    "domain_error_response": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": "editor.fixture.hull.1",
+      "kind": "response",
+      "request_id": "req.4",
+      "revision": 7,
+      "ok": false,
+      "result": null,
+      "error": {
+        "code": "hull.symmetry_geometry",
+        "path": "$.decks[0].regions",
+        "message": "船壳几何必须保持镜像对称",
+        "source": "domain",
+        "retryable": false,
+        "details": {}
+      }
+    },
+    "resource_list_request": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": null,
+      "kind": "request",
+      "request_id": "req.6",
+      "method": "resource.list",
+      "params": {
+        "kind": "HullBlueprint"
+      },
+      "expected_revision": null
+    },
+    "save_resource_request": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": "editor.fixture.hull.1",
+      "kind": "request",
+      "request_id": "req.7",
+      "method": "save.resource",
+      "params": {
+        "destination_handle": "file.fixture.1",
+        "expected_content_sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "expected_revision": 8
+    },
+    "editor_changed_event": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": "editor.fixture.hull.1",
+      "kind": "event",
+      "revision": 8,
+      "sequence": 1,
+      "event": "editor.changed",
+      "payload": {
+        "dirty": true
+      }
+    },
+    "ready_event": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": null,
+      "kind": "event",
+      "revision": null,
+      "sequence": 2,
+      "event": "system.ready",
+      "payload": {
+        "selected_interface": "gaotian.web-bridge/v1alpha1"
+      }
+    },
+    "tactical_placeholder_event": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": null,
+      "kind": "event",
+      "revision": null,
+      "sequence": 3,
+      "event": "tactical.snapshot",
+      "payload": {
+        "interface": "gaotian.tactical-render-placeholder/v0",
+        "scene_id": "scene.fixture.w0",
+        "step_index": 60,
+        "fixture_only": true
+      }
+    },
+    "strategy_reserved_request": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": null,
+      "kind": "request",
+      "request_id": "req.8",
+      "method": "strategy.inspect",
+      "params": {},
+      "expected_revision": null
+    },
+    "unsupported_strategy_response": {
+      "interface": "gaotian.web-bridge/v1alpha1",
+      "backend_instance_id": "backend.fixture.w0.1",
+      "session_id": null,
+      "kind": "response",
+      "request_id": "req.8",
+      "revision": null,
+      "ok": false,
+      "result": null,
+      "error": {
+        "code": "bridge.method_not_supported",
+        "path": "$.method",
+        "message": "strategy.* 仅保留命名空间",
+        "source": "bridge",
+        "retryable": false,
+        "details": {}
+      }
+    }
+  }
+}
