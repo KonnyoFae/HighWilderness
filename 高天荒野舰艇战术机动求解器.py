@@ -777,6 +777,16 @@ def _choose_command_scale(
     drag_world_n: Vec2,
     dt: float,
 ) -> tuple[float, LoadMetrics]:
+    requested_metrics = _load_metrics(
+        model,
+        state,
+        actuation,
+        drag_world_n,
+        1.0,
+        dt,
+    )
+    if _command_allowed(model, requested_metrics, controls):
+        return 1.0, requested_metrics
     samples = [
         (
             index / 64.0,
@@ -789,8 +799,9 @@ def _choose_command_scale(
                 dt,
             ),
         )
-        for index in range(65)
+        for index in range(64)
     ]
+    samples.append((1.0, requested_metrics))
     allowed = [
         item for item in samples if _command_allowed(model, item[1], controls)
     ]

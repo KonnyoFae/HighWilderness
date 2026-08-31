@@ -131,6 +131,7 @@ FUNCTION_PROBES = (
     FunctionProbe("build_tactical_ship_static_model", "motion", "高天荒野舰艇战术机动求解器.py", "build_tactical_ship_static_model"),
     FunctionProbe("bind_tactical_ship_model", "motion", "高天荒野舰艇战术机动求解器.py", "bind_tactical_ship_model"),
     FunctionProbe("integrate_tactical_step", "motion", "高天荒野舰艇战术机动求解器.py", "integrate_tactical_step"),
+    FunctionProbe("load_metrics", "motion", "高天荒野舰艇战术机动求解器.py", "_load_metrics"),
     FunctionProbe("spawn_projectile_from_weapon_event", "projectile", "高天荒野舰艇战术弹丸世界.py", "spawn_projectile_from_weapon_event"),
     FunctionProbe("spawn_projectiles_from_weapon_events", "projectile", "高天荒野舰艇战术弹丸世界.py", "spawn_projectiles_from_weapon_events"),
     FunctionProbe("compile_projectile_target_geometry", "projectile", "高天荒野舰艇战术弹丸世界.py", "compile_projectile_target_geometry"),

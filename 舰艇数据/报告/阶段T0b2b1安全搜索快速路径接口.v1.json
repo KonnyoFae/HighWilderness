@@ -1,0 +1,106 @@
+{
+  "acceptance": {
+    "authority_golden": "12_of_12_PASS",
+    "authority_repeatability": "6_of_6_cases_3_of_3_repetitions_PASS",
+    "fallback_no_safe_sample_load_metrics_calls": 65,
+    "fallback_partially_safe_load_metrics_calls": 115,
+    "fast_path_all_safe_load_metrics_calls": 1,
+    "python_regression": "57_of_57_PASS",
+    "rust_regression": "15_of_15_PASS",
+    "target_20_motion_load_metrics_calls": "20_le_20_PASS",
+    "typescript_regression": "4_of_4_PASS"
+  },
+  "short_authority_hashes": {
+    "functional_6.guided_projectiles": {
+      "event": "c23a885bb0b6f5c51c1e59b42157f2f45f21332b376f84179e252457925c3ff7",
+      "state": "a9e5d8df1f491cc42876dd085fd28891d12f053036daa95823b223b0a79cc2c6"
+    },
+    "functional_6.motion_only": {
+      "event": "a064dbbab4f4ba4d52354396b7c3a56d716e32e54760408ff32e101799481720",
+      "state": "23922d27e8d25203462a8a92995b885d4805d7a5352745347d17b942ece934ae"
+    },
+    "stress_30.guided_projectiles": {
+      "event": "765029f8e12ab869e75c914167bf9387dbf94298c55a027f8e5ab1f22ec9ee77",
+      "state": "0c130b71364966f09daf46b10e07392f60317edc2fe08fd3c802dac9c7c8fa92"
+    },
+    "stress_30.motion_only": {
+      "event": "a064dbbab4f4ba4d52354396b7c3a56d716e32e54760408ff32e101799481720",
+      "state": "a069d5ae33971a9d9c72bed8b579684a14001931d952b93ff28d957dcaa98ca3"
+    },
+    "target_20.guided_projectiles": {
+      "event": "a74e3d5da835d1e0ec54c4260b385d5ca87e74ae30a5218f0516c829f68d281b",
+      "state": "4d00fd44bed616bd5c5a228390bb14921a68119b4ed7be3964a9134142f57f98"
+    },
+    "target_20.motion_only": {
+      "event": "a064dbbab4f4ba4d52354396b7c3a56d716e32e54760408ff32e101799481720",
+      "state": "4c9b715d19e9e8414142a77d83406626ce2019d432005143997ee67bbade18a9"
+    }
+  },
+  "baseline_commit": "27b3d9da9ee50808ca9c5cfe1496a2439f3c7283",
+  "comparison": {
+    "environment_equal_excluding_command_commit_and_dirty_hash": true,
+    "target_20_guided": {
+      "fixed_step_maximum_ms": {
+        "after": 58.5154,
+        "before": 74.3283,
+        "reduction_percent": 21.2744
+      },
+      "fixed_step_p95_ms": {
+        "after": 52.6663,
+        "before": 67.5758,
+        "reduction_percent": 22.0634
+      },
+      "minimum_real_time_factor": {
+        "after": 0.34418530083017146,
+        "before": 0.279388,
+        "increase_percent": 23.1926
+      }
+    },
+    "target_20_motion": {
+      "fixed_step_maximum_ms": {
+        "after": 27.7318,
+        "before": 35.8759,
+        "reduction_percent": 22.7008
+      },
+      "fixed_step_p95_ms": {
+        "after": 27.349,
+        "before": 35.5546,
+        "reduction_percent": 23.0789
+      },
+      "load_metrics_calls": {
+        "after": 20,
+        "before": 1300,
+        "reduction_percent": 98.4615
+      },
+      "minimum_real_time_factor": {
+        "after": 0.7996872902820081,
+        "before": 0.54366,
+        "increase_percent": 47.0933
+      }
+    }
+  },
+  "implementation_hashes": {
+    "benchmarks/t0/diagnostics.py": "ef5848f75b23cf82e24aae26072e5742a69670fa120532c34e830cc2c6e8c884",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "高天荒野舰艇战术机动求解器.py": "03c62cf450e7ec58783fd98ba7190ad28a86d1caaec9f3f044a398f28a6b2986"
+  },
+  "interface": "gaotian.stage-t0b2b1-safety-search-fast-path/v1",
+  "load_metrics_calls_per_profiled_step": {
+    "functional_6.guided_projectiles": 6,
+    "functional_6.motion_only": 6,
+    "stress_30.guided_projectiles": 30,
+    "stress_30.motion_only": 30,
+    "target_20.guided_projectiles": 20,
+    "target_20.motion_only": 20
+  },
+  "local_short_diagnostic": {
+    "artifact_sha256": "83a4026026f822003b8e6118c35331b78651fdc9bd4fb3c0549e92387882bde6",
+    "environment_metadata_sha256": "797714c54fc668f04a273bd27cf268e7b7c773eb409671633ba0ce7882efb19d",
+    "policy": "diagnostic_only_not_official_t0",
+    "runs": 18
+  },
+  "next_slice": "T0b.2b2_runtime_stable_core",
+  "official_performance_runs_executed": 0,
+  "status": "PASS",
+  "t0_performance_measured": false
+}
