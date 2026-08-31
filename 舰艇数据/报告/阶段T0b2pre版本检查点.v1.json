@@ -1,0 +1,52 @@
+{
+  "acceptance": {
+    "authority_rules_changed": false,
+    "baseline_matches_origin_main": true,
+    "golden_results_changed": false,
+    "python_regression": "56_of_56_PASS",
+    "rust_regression": "15_of_15_PASS",
+    "typescript_regression": "4_of_4_PASS",
+    "working_tree_implementation_changes_at_audit": 0
+  },
+  "baseline": {
+    "commit": "290d04483b3688f377e5cdb437a9aa7df21d4abb",
+    "commit_subject": "Refactor application features and improve user experience",
+    "commit_time": "2026-08-31T15:25:52+08:00",
+    "origin_main": "290d04483b3688f377e5cdb437a9aa7df21d4abb",
+    "tree": "22c223a3f92ec3fc3d18b86b9c7eab677f97f3a6"
+  },
+  "deviations": [
+    {
+      "action": "accept_pushed_history_and_restore_one_slice_one_report_one_commit_from_t0b2pre_forward",
+      "description": "T0a through T0b.1f were aggregated into one already-pushed commit instead of being committed per planned sub-slice.",
+      "history_rewrite_allowed": false,
+      "id": "aggregated_prior_slices"
+    }
+  ],
+  "interface": "gaotian.stage-t0b2pre-version-checkpoint/v1",
+  "next_slice": "T0b.2a_remaining_rfc_freeze",
+  "official_performance_runs_executed": 0,
+  "scope": {
+    "included_prior_slices": [
+      "T0a",
+      "T0b",
+      "T0b.1a",
+      "T0b.1b",
+      "T0b.1c",
+      "T0b.1d",
+      "T0b.1e",
+      "T0b.1f"
+    ],
+    "planning_files": [
+      "高天荒野Web客户端编辑器与战术验证实施计划.md",
+      "高天荒野T0b2推进响应与权威性能优化规划.md"
+    ]
+  },
+  "status": "PASS",
+  "toolchain_notes": {
+    "dependency_changes": false,
+    "npm": "global wrapper points to a missing npm-cli.js; used project-local vitest via node",
+    "rust": "cargo is installed but absent from PATH; used its explicit installed path",
+    "rust_warning": "F: filesystem does not support incremental-cache hard links; cargo copied files instead"
+  }
+}
