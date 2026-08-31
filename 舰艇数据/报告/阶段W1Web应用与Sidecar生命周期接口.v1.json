@@ -1,0 +1,159 @@
+{
+  "acceptance_case_count": 18,
+  "acceptance_fixture": "contracts/web_bridge/w1-acceptance.v1.json",
+  "acceptance_fixture_sha256": "76c64b9846fbc7209fb8f6e78d3b35f0405f6eb30c56b5acbe4d038d920816c2",
+  "bridge_interface": "gaotian.web-bridge/v1alpha1",
+  "cases": [
+    {
+      "evidence": ["real_tauri_window", "rust.real_sidecar_start_ping_and_stop"],
+      "id": "W1-A01",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["python.bytewise_unicode_handshake_and_multiple_frames", "rust.examples_round_trip_and_split_at_every_byte"],
+      "id": "W1-A02",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["python.interface_and_capability_negotiation_failure"],
+      "id": "W1-A03",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["rust.spawn_failure_is_structured_and_bounded"],
+      "id": "W1-A04",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["rust.startup_timeout_and_shutdown_deadline_are_bounded"],
+      "id": "W1-A05",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["rust.request_timeout_marks_unknown_outcome_and_fails_instance"],
+      "id": "W1-A06",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["python.duplicate_request_fatal"],
+      "id": "W1-A07",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["rust.crash_and_wrong_epoch_fail_only_the_owned_instance", "typescript.old_epoch_filter", "real_tauri_explicit_restart"],
+      "id": "W1-A08",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["rust.portable_negative_corpus_matches_expected_codes", "rust.malformed_output_fails_closed"],
+      "id": "W1-A09",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["rust.stderr_flood_is_truncated_without_blocking_protocol"],
+      "id": "W1-A10",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["rust.ready_event_exactly_once", "typescript.one_channel_per_epoch", "real_tauri_channel_events"],
+      "id": "W1-A11",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["rust.idle_heartbeat_timeout_fails_the_instance", "real_tauri_ping_and_heartbeat"],
+      "id": "W1-A12",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["python.ping_and_shutdown", "rust.real_sidecar_start_ping_and_stop", "real_tauri_window_close_no_sidecar"],
+      "id": "W1-A13",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["rust.shutdown_uses_one_deadline_and_forces_only_owned_child"],
+      "id": "W1-A14",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["python.unsupported_capability"],
+      "id": "W1-A15",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["rust.in_flight_limit_rejects_the_thirty_third_request_before_write", "rust.queued_byte_limit_rejects_before_writing_and_leaves_no_pending_request", "typescript.bounded_event_and_log_model"],
+      "id": "W1-A16",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["rust.domain_error_adapter_preserves_code_path_and_message"],
+      "id": "W1-A17",
+      "status": "PASS"
+    },
+    {
+      "evidence": ["python_full_regression_48_of_48", "typescript_4_of_4", "rust_15_of_15", "vite_production_build"],
+      "id": "W1-A18",
+      "status": "PASS"
+    }
+  ],
+  "dependency_hashes": {
+    "apps/desktop/package-lock.json": "b6eb8287c5c0f6a230513536599ae8da786060adb234a710b53755336cfc9312",
+    "apps/desktop/src-tauri/Cargo.lock": "ca57ccb9bbec3397377090bac94a8ef9dc14364f4a8104b9dd16da643c89bb9d"
+  },
+  "implementation_hashes": {
+    "apps/desktop/src-tauri/src/bridge/host.rs": "b829f83b484fdbf6f102db8626ab406073da4ae1e24f5be000a1c09ce83c900b",
+    "apps/desktop/src/bridge/transport.ts": "9ad1398bd9c28f31a3b0d6c659bf13803bd8a2994ac105ef883bb8152119132",
+    "backend/high_wilderness_sidecar/server.py": "20f35761a62803c3731d58f0954f980ae70a6bfc8c2755cba580ae13cd2da10e"
+  },
+  "interface": "gaotian.stage-w1-web-sidecar-regression/v1",
+  "limits_verified": {
+    "idle_ping_interval_ms": 5000,
+    "idle_ping_timeout_ms": 3000,
+    "max_frame_bytes": 8388608,
+    "max_in_flight_requests": 32,
+    "max_queued_request_bytes": 16777216,
+    "request_timeout_ms": 10000,
+    "shutdown_timeout_ms": 3000,
+    "startup_to_ready_ms": 10000
+  },
+  "real_window": {
+    "automatic_start_state": "READY",
+    "capabilities_displayed": ["system.hello", "system.ping", "system.shutdown"],
+    "explicit_restart_changed_instance_id": true,
+    "manual_ping_echoed": true,
+    "sidecar_interface_displayed": "gaotian.python-sidecar/v1alpha1",
+    "stop_state": "STOPPED",
+    "window_close_left_matching_python_sidecars": 0
+  },
+  "regressions": {
+    "python": {
+      "passed": 48,
+      "total": 48
+    },
+    "rust": {
+      "passed": 15,
+      "total": 15
+    },
+    "typescript": {
+      "passed": 4,
+      "test_files": 2,
+      "total": 4
+    },
+    "vite_production_build": "PASS"
+  },
+  "scope": "w1_application_shell_and_sidecar_lifecycle_only",
+  "sidecar_interface": "gaotian.python-sidecar/v1alpha1",
+  "status": "PASS",
+  "t0_performance_measured": false,
+  "toolchain": {
+    "cargo": "1.97.1",
+    "node": "24.15.0",
+    "npm": "11.12.1",
+    "python": "3.14.7",
+    "rustc": "1.97.1",
+    "tauri_rust": "2.11.5",
+    "typescript": "7.0.2",
+    "vite": "8.2.2"
+  },
+  "verified_at": "2026-08-31",
+  "w1_runtime_verified": true
+}

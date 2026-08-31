@@ -262,3 +262,13 @@ git diff --check
 下一切片是 W1：环境预检与局部路径适配 → 最小 React/Tauri 工程及锁文件 → ASCII Python 入口 → Rust 进程监管与 Channel → 三个 system 方法 → 故障注入和真实窗口验收。W1 通过后先进入 T0 性能风险验证，再进入 W2 编辑会话。
 
 未实现边界：真实应用和启动脚本、编辑器 UI、EditorSession、业务命令调度、权威资源保存、战术表现协议和测试场景、发行打包、正式教程舰。W0 不扩大这些范围。
+
+## 9. W1 实现附录（2026-08-31）
+
+W1 已按本 ADR 的协议和安全边界完成，18/18 运行时用例及真实窗口复核通过。实现报告为《阶段W1Web应用与Sidecar生命周期接口.v1.json》；W0 报告中的 `w1_runtime_verified = false` 保留为 W0 当时事实，不回写历史报告。
+
+实现阶段对进程 API 作了一项受控调整：Rust 宿主使用标准库 `std::process::Command` 持有 `Child`、原始 stdin/stdout/stderr 字节管道和确切 PID，而未引入 `tauri-plugin-shell`。该选择仍只启动宿主配置的受控程序，不暴露前端 shell 权限，并更直接满足字节分帧、单进程回收和“不得按名称批量杀 Python”的验收要求。X2 改用 Tauri `externalBin` 打包 sidecar 时重新复核启动适配层；协议、监管状态机和前端命令接口不因此改变。
+
+W1 锁定的开发入口为 `tools/Invoke-HighWildernessWeb.ps1`。脚本只修改自身及子进程环境，使 Tauri CLI 可发现 Rust 工具链，不修改系统级 PATH、npm 或 Rust 配置。真实窗口验证了自动握手、协商信息、空闲心跳、Ping、显式重启的新实例 ID、优雅停止和窗口关闭后的 sidecar 回收。
+
+下一切片为 T0。尚未实现：编辑会话和资源保存、编辑器领域命令路由、PixiJS 共用画布、战术表现协议、发行 sidecar 打包和正式教程舰。

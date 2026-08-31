@@ -26,3 +26,14 @@ Thumbs.db
 *.tmp
 *.bak
 *.swp
+
+# Web/Tauri build outputs and local dependencies
+apps/desktop/node_modules/
+apps/desktop/dist/
+apps/desktop/src-tauri/target/
+apps/desktop/src-tauri/gen/schemas/
+apps/desktop/.vite/
+apps/desktop/*.tsbuildinfo
+
+# Local W1 diagnostic output
+artifacts/w1-local/
