@@ -1,0 +1,95 @@
+{
+  "authority_golden": "12_of_12_PASS",
+  "baseline": {
+    "commit": "bcc37d7",
+    "slice": "T0b.2b3c_complete"
+  },
+  "cumulative_p0_evidence": {
+    "target_20_motion_minimum_realtime_factor": {
+      "T0b.1f": 0.54366,
+      "T0b.2b1": 0.799687,
+      "T0b.2b2": 0.985127,
+      "T0b.2b3a": 1.52998,
+      "T0b.2b3b": 1.627203,
+      "T0b.2b3c": 1.6890978866007242
+    },
+    "target_20_motion_realtime_factor_multiple_vs_T0b1f": 3.106901163596226,
+    "target_20_motion_worst_p95_reduction_percent_vs_T0b1f": 69.75693721768772
+  },
+  "current_profile_calls": {
+    "target_20.guided_projectiles": {
+      "advance_missile_guidance_step": 296,
+      "advance_projectile_world": 1,
+      "advance_weapon_timeline": 14,
+      "bind_tactical_ship_model": 20,
+      "canonical_sha256": 51,
+      "derive_tactical_ship_lifecycle": 20,
+      "integrate_tactical_step": 20,
+      "load_metrics": 20,
+      "projectile_geometry_hit": 2696,
+      "runtime_cache_resolve": 102,
+      "spawn_projectiles_from_weapon_events": 1
+    },
+    "target_20.motion_only": {
+      "advance_missile_guidance_step": 0,
+      "advance_projectile_world": 1,
+      "advance_weapon_timeline": 0,
+      "bind_tactical_ship_model": 20,
+      "canonical_sha256": 22,
+      "derive_tactical_ship_lifecycle": 20,
+      "integrate_tactical_step": 20,
+      "load_metrics": 20,
+      "projectile_geometry_hit": 0,
+      "runtime_cache_resolve": 60,
+      "spawn_projectiles_from_weapon_events": 0
+    }
+  },
+  "guided_hotspot_evidence": {
+    "dataclass_replace_calls": 3922,
+    "guided_step_profile_wall_ms": 68.6487,
+    "missile_guidance_calls": 296,
+    "projectile_geometry_hit_calls": 2696,
+    "projectile_world_cumulative_ms": 48.3976,
+    "projectile_world_cumulative_share_percent": 70.500388208371
+  },
+  "guided_short_diagnostic": {
+    "authority_event_sha256": "a74e3d5da835d1e0ec54c4260b385d5ca87e74ae30a5218f0516c829f68d281b",
+    "authority_repeatable": true,
+    "authority_state_sha256": "4d00fd44bed616bd5c5a228390bb14921a68119b4ed7be3964a9134142f57f98",
+    "measurement_scope": "target_20.guided_projectiles_10_warmup_plus_60_measured_steps_three_repetitions",
+    "real_time_factor_minimum": 0.4095705329401401,
+    "real_time_factors": [
+      0.5270430811866121,
+      0.41448026599353965,
+      0.4095705329401401
+    ],
+    "resident_memory_maximum_bytes": 44220416,
+    "worst_fixed_step_maximum_ms": 51.6384,
+    "worst_fixed_step_p95_ms": 44.1455
+  },
+  "implementation_hashes": {
+    "高天荒野T0b2b3d画像与Scratch决策测试.py": "41bef254f3121cafd83af144d0f8f9db79de069b7b4d373d8fe7369a978ce35e",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "ca9e07338ae70b02c8d77672122c805683dff9e8146116e7936e4b52cec5d113",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "a6c38b5f3b7448ca87af490265e1603d639525b998cc8c068f886c14742d902a"
+  },
+  "interface": "gaotian.stage-t0b2b3d-profile-and-scratch-decision/v1",
+  "next_slice": "T0b.2c1_pure_propulsion_safety_governor",
+  "official_performance_runs_executed": 0,
+  "planning_adjustments": {
+    "P0_equivalent_optimization": "closed",
+    "projectile_batching_priority": "first_performance_slice_after_T0b.2d4_new_authority_baseline",
+    "propulsion_dependency_order": "c1_then_c2_then_d1_then_d2_then_d3_then_d4",
+    "scene_event_driven_and_multirate": "remain_deferred_to_T0b.2e2"
+  },
+  "regression": {
+    "python": "62_of_62_PASS",
+    "rust": "15_of_15_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "scratch_decision": {
+    "projectile_step_local_scratch": "deferred_to_T0b.2e1",
+    "scene_step_local_scratch": "cancelled_no_clear_measurable_benefit"
+  },
+  "status": "PASS",
+  "t0_performance_measured": false
+}
