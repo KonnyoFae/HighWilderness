@@ -1,0 +1,80 @@
+{
+  "acceptance": {
+    "authority_golden_verification": "12_of_12_PASS",
+    "batch_duplicate_rejected": "PASS",
+    "batch_matches_sequential_spawn": "PASS",
+    "entity_counter_matches_full_scan": "3_of_3_PASS",
+    "event_and_projectile_ordering": "PASS",
+    "geometry_revision_invalidation": "PASS",
+    "steady_step_geometry_recompiles": "0_in_6_of_6_PASS",
+    "target_20_guided_60hz_budget": "NOT_COVERED_WITH_REMAINING_HOTSPOT_EVIDENCE"
+  },
+  "implementation_hashes": {
+    "benchmarks/t0/diagnostics.py": "73aee4d5708bcdfee2039f21869487860f9515f52fc4238990fec5d2aad31c3f",
+    "benchmarks/t0/headless.py": "fb1b00b20b07325df1abe50fcb693f6a6ed75d9183c6b2c3547ceb1c04099653",
+    "benchmarks/t0/scenario.py": "5335f7b2f144e83e07238c23be52833218471a40b8a54d2fcfde0161f46ea032",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "高天荒野T0事件与弹丸热路径测试.py": "9a0bd0c9ad9582bc78a4c654a7379f20080698a8b56ec7dfa1b86f2d34d6fb6d",
+    "高天荒野舰艇战术弹丸世界.py": "cb76920d69234c415279613c9ad3f4c6f2f605970e36a5ce4a6bf95fa83d71d1",
+    "高天荒野舰艇武器时间与射击队列.py": "894b15afd667c191d941297b7a7ded3d1dbecd47b3b56f489eb8d32b423504aa",
+    "高天荒野舰艇统一战术场景.py": "c0db111723668eb340b5840b3d106f89736b2c3f4b72d748a367e04db30edb7b"
+  },
+  "interface": "gaotian.stage-t0b1d-event-projectile-hot-path/v1",
+  "local_diagnostic_fixed_step_ms": {
+    "functional_6.guided_projectiles": 18.2149,
+    "functional_6.motion_only": 9.8077,
+    "stress_30.guided_projectiles": 129.3615,
+    "stress_30.motion_only": 46.6224,
+    "target_20.guided_projectiles": 68.5421,
+    "target_20.motion_only": 30.4317
+  },
+  "local_timing_artifact_policy": "diagnostic_only_not_official_t0",
+  "next_slice": "T0b1e_measurement_boundary_and_production_gate",
+  "official_performance_runs_executed": 0,
+  "probe_results": {
+    "functional_6.guided_projectiles": {
+      "batch_spawn_calls": 1,
+      "geometry_hit_calls": 544,
+      "single_spawn_calls": 0,
+      "timeline_calls": 12
+    },
+    "functional_6.motion_only": {
+      "batch_spawn_calls": 0,
+      "geometry_hit_calls": 0,
+      "single_spawn_calls": 0,
+      "timeline_calls": 12
+    },
+    "stress_30.guided_projectiles": {
+      "batch_spawn_calls": 1,
+      "geometry_hit_calls": 6680,
+      "single_spawn_calls": 0,
+      "timeline_calls": 60
+    },
+    "stress_30.motion_only": {
+      "batch_spawn_calls": 0,
+      "geometry_hit_calls": 0,
+      "single_spawn_calls": 0,
+      "timeline_calls": 60
+    },
+    "target_20.guided_projectiles": {
+      "batch_spawn_calls": 1,
+      "geometry_hit_calls": 2696,
+      "single_spawn_calls": 0,
+      "timeline_calls": 40
+    },
+    "target_20.motion_only": {
+      "batch_spawn_calls": 0,
+      "geometry_hit_calls": 0,
+      "single_spawn_calls": 0,
+      "timeline_calls": 40
+    }
+  },
+  "remaining_hotspot_evidence": [
+    "projectile_substep_integration_and_geometry_broad_phase",
+    "runtime_cache_validation_hashing",
+    "tactical_motion_integration"
+  ],
+  "scope": "due_event_index_boundary_projectile_batch_target_geometry_and_incremental_entity_counts_only",
+  "status": "PASS",
+  "t0_performance_measured": false
+}

@@ -2,11 +2,11 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from math import atan2, ceil, cos, degrees, floor, hypot, isfinite, radians, sin
 from typing import Any, Callable
 
-from 高天荒野舰艇数据契约 import DeckInput, Point
+from 高天荒野舰艇数据契约 import DeckInput, Point, canonical_sha256
 
 
 EPS = 1.0e-9
@@ -219,6 +219,14 @@ class AerodynamicGeometryCache:
     deck_height_m: float
     wet_surface_area_m2: float
     directions: tuple[AerodynamicDirectionSample, ...]
+    _source_sha256: str = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "_source_sha256", canonical_sha256(self))
+
+    @property
+    def source_sha256(self) -> str:
+        return self._source_sha256
 
     def to_dict(self) -> dict[str, Any]:
         return {

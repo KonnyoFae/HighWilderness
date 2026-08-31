@@ -1,0 +1,242 @@
+{
+  "cases": {
+    "functional_6.guided_projectiles": {
+      "authority_event_sha256": "aa1ad8c5337b5c07d482fe2429aeb5351e10617a8b9e666ed84d846a8a650849",
+      "authority_state_sha256": "3a3f183ef66eb21da37f6330ba3b5b3b3a550460b5d4c1cb3edd6f3e46fc3e6c",
+      "event_counts": {
+        "spawned_projectiles": 4,
+        "weapon_events": 4
+      },
+      "initial_scene_sha256": "71ebacb179fbaaa09ccf5af0570ba0dbdb5c38726cb732a87497cc0d3f7a10c9",
+      "input_stream_sha256": "d78e659208cbcdbeeca93dffbc4ce6b7a6dbb223b83d40a04aefed0fe9071dfa",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 6,
+        "ammunition_units": 400,
+        "guided_projectiles": 16,
+        "ordinary_projectiles": 120,
+        "projectiles": 136,
+        "weapon_sequences": 4
+      }
+    },
+    "functional_6.motion_only": {
+      "authority_event_sha256": "96cf998c3264e599656d238bd80d0081a4d2e2438954859af0a2ed51e3ae504a",
+      "authority_state_sha256": "8ff18c8fa7c044bb92d927d34434a80dd4c02e87f45815c9ead6416f037996b1",
+      "event_counts": {},
+      "initial_scene_sha256": "69c4c1d79952501d86475f71becad8285df25114f304bb434a8205c9aaacf708",
+      "input_stream_sha256": "42782c295d774471ef9a68d5c7791ef1f92b27da3423b77b3d94bb365148e536",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 6,
+        "ammunition_units": 404,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 0,
+        "projectiles": 0,
+        "weapon_sequences": 0
+      }
+    },
+    "functional_6.ordinary_projectiles": {
+      "authority_event_sha256": "3331a6599f4465f2708ef3342624394061b0f6f87e296bea497d9f9b0ba6b5a9",
+      "authority_state_sha256": "46f426a47a8bb69e44cdbd35a5e9daf2a0828144fe39db89012589853205be38",
+      "event_counts": {
+        "spawned_projectiles": 4,
+        "weapon_events": 4
+      },
+      "initial_scene_sha256": "df7b06bbfad95b5f917436a61222bb1643f96ec2d671545c64033192f08e75de",
+      "input_stream_sha256": "f5a1e2e61d5376de0a618bfec0a980bc1bc2cd060ec3cbe438d0e684f1e5c70b",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 6,
+        "ammunition_units": 400,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 124,
+        "projectiles": 124,
+        "weapon_sequences": 4
+      }
+    },
+    "functional_6.scripted_damage_and_recompile": {
+      "authority_event_sha256": "f064b6995b1b0bfd1e012b9398112e793d590496865a7e575c91f777e1753e4d",
+      "authority_state_sha256": "74073c3d384fe5d3ae7e50663135edb0eab36ef6c2a34d2b017ac943e6b8dfa9",
+      "event_counts": {
+        "continuous_damage_events": 6,
+        "spawned_projectiles": 4,
+        "weapon_events": 4
+      },
+      "initial_scene_sha256": "f8d36945b39a2a6a87a06bd47c05b0604edeb2bb29f1aa2bdbc2f0d00f4000ec",
+      "input_stream_sha256": "fe5e40894575e2e93e491410007f1385446bcb574e2099fc805ee75de7c848fe",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 6,
+        "ammunition_units": 400,
+        "guided_projectiles": 16,
+        "ordinary_projectiles": 120,
+        "projectiles": 136,
+        "weapon_sequences": 4
+      }
+    },
+    "stress_30.guided_projectiles": {
+      "authority_event_sha256": "9bdfcc13eaab3b4251c3541503768309c3d703847760c1c0836a19697b8f7926",
+      "authority_state_sha256": "36b740cb02cf516baf55eedc27874a935418305f126806dcaecedb2cd0095b99",
+      "event_counts": {
+        "spawned_projectiles": 20,
+        "weapon_events": 20
+      },
+      "initial_scene_sha256": "1b106fbe36b8709c86118a88f1c1ff909adb6693fd2aa2f28c7e3420a61a5010",
+      "input_stream_sha256": "b386f7f30c160563d20972feb3026155e21565e5256cf2d66be8d75cfc8543dd",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 30,
+        "ammunition_units": 2000,
+        "guided_projectiles": 170,
+        "ordinary_projectiles": 1500,
+        "projectiles": 1670,
+        "weapon_sequences": 20
+      }
+    },
+    "stress_30.motion_only": {
+      "authority_event_sha256": "96cf998c3264e599656d238bd80d0081a4d2e2438954859af0a2ed51e3ae504a",
+      "authority_state_sha256": "de1a6b7e10216785c47cd2e85482e1f52e8252f59be753f4764dbda1067ac060",
+      "event_counts": {},
+      "initial_scene_sha256": "df26a513ba5013271c06fc33b0eb9dd3866cea7f4b2ec10364b21147ab7dc998",
+      "input_stream_sha256": "8d64d5b1ddcafecd56c0fec9a4f7f5e9677fcf250d802b91cdba8dfd7207c272",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 30,
+        "ammunition_units": 2020,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 0,
+        "projectiles": 0,
+        "weapon_sequences": 0
+      }
+    },
+    "stress_30.ordinary_projectiles": {
+      "authority_event_sha256": "1d0c19efd64731e762a73a1ae535d13ae281610aa5aa6675545550253ab12977",
+      "authority_state_sha256": "1b8e85f160e934e480b639f1f87a77b6901b3ec8ae25540ffd06a4395ff3df22",
+      "event_counts": {
+        "spawned_projectiles": 20,
+        "weapon_events": 20
+      },
+      "initial_scene_sha256": "65a6b13baa08b0883ad35d2397f6c72f16be095adf248714a188425c577d8f6b",
+      "input_stream_sha256": "a07dda95c481bad9e11670e7de31742b7b7dfc68207dbed2c7974adc7cfc2fbd",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 30,
+        "ammunition_units": 2000,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 1520,
+        "projectiles": 1520,
+        "weapon_sequences": 20
+      }
+    },
+    "stress_30.scripted_damage_and_recompile": {
+      "authority_event_sha256": "ac789c09fdaa82615bfb932be6f042af900db46f369e3a043f10fe644196dec8",
+      "authority_state_sha256": "30030fdff73fc5339e7f9313b25aea05ac300477d4b2d053494ef301368007ba",
+      "event_counts": {
+        "continuous_damage_events": 30,
+        "spawned_projectiles": 20,
+        "weapon_events": 20
+      },
+      "initial_scene_sha256": "e0dc8aea10da978d1db38c1a399e104e63e873945abf303a02bb32fc5641d295",
+      "input_stream_sha256": "7d85aed685d213168a4a3ade303133fe9d9d9d4e17b6171af48c82ea2b74a56b",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 30,
+        "ammunition_units": 2000,
+        "guided_projectiles": 170,
+        "ordinary_projectiles": 1500,
+        "projectiles": 1670,
+        "weapon_sequences": 20
+      }
+    },
+    "target_20.guided_projectiles": {
+      "authority_event_sha256": "11475050d631e6d91125855aa63ebfd6957fb154a440820e770168551da4f9c4",
+      "authority_state_sha256": "867c401acbaddc372cc58af350504109b626e2e21a437c87870d9eb4be48c491",
+      "event_counts": {
+        "spawned_projectiles": 14,
+        "weapon_events": 14
+      },
+      "initial_scene_sha256": "2d4f1997dd8d6329d3ad3c9cb80a6773ccaaf52fb55b0320829b205ba2888cf4",
+      "input_stream_sha256": "2cf99b75c04fa5cd310bfb87902bdd286af6841f117f2c13e64f19c2fa8baa72",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 20,
+        "ammunition_units": 1400,
+        "guided_projectiles": 74,
+        "ordinary_projectiles": 600,
+        "projectiles": 674,
+        "weapon_sequences": 14
+      }
+    },
+    "target_20.motion_only": {
+      "authority_event_sha256": "96cf998c3264e599656d238bd80d0081a4d2e2438954859af0a2ed51e3ae504a",
+      "authority_state_sha256": "4b1086a41e95d5720e4fc533791856c14e2163217d5c69e59a9aef9a47798dae",
+      "event_counts": {},
+      "initial_scene_sha256": "b0d1d8fc5bf24a0ce9113e1c510013aa9b9782bae4a0b0feaf592957cd3ff4df",
+      "input_stream_sha256": "62ea1d11889bb6d6d86889a1624a5605e62b7b4f0fac40dab111aa6212217b6f",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 20,
+        "ammunition_units": 1414,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 0,
+        "projectiles": 0,
+        "weapon_sequences": 0
+      }
+    },
+    "target_20.ordinary_projectiles": {
+      "authority_event_sha256": "bb8b441f2c114b3a391644fbb738d73a769d98ad373156f0c6ac963568c330f9",
+      "authority_state_sha256": "6b290ef954c7ba461545f996dafdddd3aac2aa81c2d0b59481d8adb0cd28699d",
+      "event_counts": {
+        "spawned_projectiles": 14,
+        "weapon_events": 14
+      },
+      "initial_scene_sha256": "e120b60071e02cb43a97e4c11e34b6ee4eaf212f6dcd70027aca8de6656674f8",
+      "input_stream_sha256": "55c319a0598a3e7b00ae2f76d3d7e1643c769277d6ab8e300c5856094a22b9e4",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 20,
+        "ammunition_units": 1400,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 614,
+        "projectiles": 614,
+        "weapon_sequences": 14
+      }
+    },
+    "target_20.scripted_damage_and_recompile": {
+      "authority_event_sha256": "4515f2e3ff0077645e30128a2af0d080238bc733d2140fac3fc5c9086230924f",
+      "authority_state_sha256": "c084fcc778f2d5c6c162774118c1156a8a91ce8743711b8c179e836ada756695",
+      "event_counts": {
+        "continuous_damage_events": 20,
+        "spawned_projectiles": 14,
+        "weapon_events": 14
+      },
+      "initial_scene_sha256": "fce5f11e841dde12b9b0777526455ab710692718ff3d7dcbfecf365203d91f40",
+      "input_stream_sha256": "4193f0f0f978c41ad255a33d03a06dd3818367680640d396dee5c00a3191f9c1",
+      "resource_hash_count": 24,
+      "resource_manifest_sha256": "7c2b24b6e4314c8aff01a0e4e123aaa01e7e351945a835619a811f4f5019e3ff",
+      "resulting_entity_counts": {
+        "active_ships": 20,
+        "ammunition_units": 1400,
+        "guided_projectiles": 74,
+        "ordinary_projectiles": 600,
+        "projectiles": 674,
+        "weapon_sequences": 14
+      }
+    }
+  },
+  "interface": "gaotian.t0-authority-step-golden/v1",
+  "plan_sha256": "6754fad7fd8ace9242f765e6ca5c7bb546df4fbf9f6901a60c51538d0d773f1c",
+  "repetition": 1,
+  "step_count": 1
+}

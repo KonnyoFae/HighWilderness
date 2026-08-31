@@ -1,0 +1,60 @@
+{
+  "acceptance": {
+    "authority_golden_verification": "12_of_12_PASS",
+    "diagnostic_plan_negative_inputs": "3_of_3_PASS",
+    "observer_authority_equivalence": "PASS",
+    "observer_default_disabled": "PASS",
+    "phase_probe_coverage": "7_of_7_PASS"
+  },
+  "current_probe_total_calls": {
+    "advance_projectile_world": 1,
+    "advance_weapon_timeline": 12,
+    "bind_tactical_ship_model": 12,
+    "build_tactical_ship_model": 0,
+    "build_tactical_ship_static_model": 0,
+    "compile_projectile_target_geometry": 0,
+    "compile_runtime_ship_parameters": 0,
+    "derive_tactical_ship_lifecycle": 12,
+    "design_snapshot_source_sha256": 72,
+    "integrate_tactical_step": 6,
+    "refresh_lifecycle_boundary": 2,
+    "runtime_cache_resolve": 24,
+    "validate_bindings": 1,
+    "validate_instance_current_design": 12,
+    "validate_internal_state": 2
+  },
+  "diagnostic_case_count": 6,
+  "diagnostic_plan_sha256": "dce0f27394edf0d2bc56cfb0d7da4a0bd73be263ade11bf6db18b42af8aaf3dd",
+  "fixed_step_budget_ms": 16.666666666666668,
+  "golden_case_count": 12,
+  "golden_sha256": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+  "implementation_hashes": {
+    "benchmarks/t0/__main__.py": "5addc060c883cacdf25a9319a78715bd4b8da5eb0ed8d9e33ec8672da5a57073",
+    "benchmarks/t0/diagnostics.py": "73aee4d5708bcdfee2039f21869487860f9515f52fc4238990fec5d2aad31c3f",
+    "benchmarks/t0/headless.py": "302833c0872df4cb4d8f805abe9b442bd3084917f8d76d4ec39c88accf3ece6d",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "contracts/web_bridge/t0-hot-path-diagnostic.v1.json": "dce0f27394edf0d2bc56cfb0d7da4a0bd73be263ade11bf6db18b42af8aaf3dd",
+    "tools/Invoke-HighWildernessT0.ps1": "2f229f7abee280dcfbcd94b83e2417c8f2172f97b5d0fcf3c41bc3dd083430dd"
+  },
+  "interface": "gaotian.stage-t0b1a-authoritative-hot-path-baseline-regression/v1",
+  "local_timing_artifact_policy": "ignored_not_persisted_in_regression_report",
+  "next_slice": "T0b1b_static_fingerprint_and_validation_boundary",
+  "observer_default_enabled": false,
+  "official_performance_runs_executed": 0,
+  "pre_t0b1b_baseline_probe_total_calls": {
+    "advance_projectile_world": 1,
+    "advance_weapon_timeline": 12,
+    "build_tactical_ship_model": 12,
+    "compile_runtime_ship_parameters": 24,
+    "derive_tactical_ship_lifecycle": 12,
+    "design_snapshot_source_sha256": 120,
+    "integrate_tactical_step": 6,
+    "refresh_lifecycle_boundary": 2,
+    "validate_bindings": 1,
+    "validate_instance_current_design": 60,
+    "validate_internal_state": 2
+  },
+  "scope": "t0b1a_diagnostic_protocol_call_counts_and_authority_golden_only",
+  "status": "PASS",
+  "t0_performance_measured": false
+}

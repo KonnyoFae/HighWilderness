@@ -1,0 +1,41 @@
+{
+  "cases": [
+    {
+      "load_stage": "motion_only",
+      "profile": "functional_6"
+    },
+    {
+      "load_stage": "guided_projectiles",
+      "profile": "functional_6"
+    },
+    {
+      "load_stage": "motion_only",
+      "profile": "target_20"
+    },
+    {
+      "load_stage": "guided_projectiles",
+      "profile": "target_20"
+    },
+    {
+      "load_stage": "motion_only",
+      "profile": "stress_30"
+    },
+    {
+      "load_stage": "guided_projectiles",
+      "profile": "stress_30"
+    }
+  ],
+  "fixed_step_budget_ms": 16.666666666666668,
+  "interface": "gaotian.t0-hot-path-diagnostic-plan/v1",
+  "measurement_policy": {
+    "do_not_compare_as_official_t0": true,
+    "profile_cumulative_times_overlap": true,
+    "profiled_and_unprofiled_start_from_same_state": true
+  },
+  "official_performance": false,
+  "profiled_steps": 1,
+  "repetition": 1,
+  "status": "diagnostic_only",
+  "top_hotspot_count": 25,
+  "unprofiled_steps": 1
+}

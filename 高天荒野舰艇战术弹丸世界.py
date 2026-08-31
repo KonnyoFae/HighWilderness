@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 import json
 from math import cos, hypot, isfinite, sin
 from pathlib import Path
@@ -245,6 +245,10 @@ class ProjectileProfileCatalog:
     name: str
     fixture_level: str
     profiles: tuple[MunitionProjectileProfile, ...]
+    _source_sha256: str = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "_source_sha256", canonical_sha256(self))
 
     @property
     def reference(self) -> ResourceReference:
@@ -252,7 +256,7 @@ class ProjectileProfileCatalog:
 
     @property
     def source_sha256(self) -> str:
-        return canonical_sha256(self)
+        return self._source_sha256
 
     def profile(self, munition_id: str) -> MunitionProjectileProfile:
         try:
@@ -477,6 +481,21 @@ class ProjectileSpawnResolution:
     projectile: ProjectileState
 
 
+@dataclass(frozen=True)
+class ProjectileSpawnInput:
+    snapshot: DerivedShipSnapshot
+    event: WeaponTimelineEvent
+    source_pose: ShipPose2D
+    request: ProjectileSpawnRequest
+
+
+@dataclass(frozen=True)
+class ProjectileBatchSpawnResolution:
+    source_world_sha256: str
+    resulting_world: ProjectileWorldState
+    projectiles: tuple[ProjectileState, ...]
+
+
 def _rotate(vector: tuple[float, float], angle: float) -> tuple[float, float]:
     c, s = cos(angle), sin(angle)
     return c * vector[0] - s * vector[1], s * vector[0] + c * vector[1]
@@ -497,7 +516,7 @@ def _validate_catalog(world: ProjectileWorldState, catalog: ProjectileProfileCat
         raise ContractError("projectile_world.profile_catalog_mismatch", "$.profile_catalog", "弹丸世界已绑定其他性能目录或内容哈希")
 
 
-def spawn_projectile_from_weapon_event(
+def _build_projectile_from_weapon_event(
     snapshot: DerivedShipSnapshot,
     event: WeaponTimelineEvent,
     world: ProjectileWorldState,
@@ -506,8 +525,7 @@ def spawn_projectile_from_weapon_event(
     request: ProjectileSpawnRequest,
     *,
     guidance_catalog: MissileGuidanceProfileCatalog | None = None,
-) -> ProjectileSpawnResolution:
-    _validate_catalog(world, catalog)
+) -> ProjectileState:
     if event.status != "resolved" or event.action_kind != "fire" or event.action_resolution is None:
         raise ContractError("projectile_world.fire_event_unresolved", "$.event", "只能由成功的单发开火事件生成弹丸")
     action = event.action_resolution
@@ -515,8 +533,6 @@ def spawn_projectile_from_weapon_event(
         raise ContractError("projectile_world.atomic_fire_required", "$.event.action_resolution.rounds", "I4 事件必须是单发原子开火")
     if abs(event.tactical_time_s - world.tactical_time_s) > EPS:
         raise ContractError("projectile_world.spawn_time_mismatch", "$.event.tactical_time_s", "开火事件时刻必须等于弹丸世界当前时刻")
-    if any(item.id == request.projectile_id for item in world.projectiles):
-        raise ContractError("projectile_world.projectile_duplicate", "$.projectile_id", request.projectile_id)
     _resource_id(request.projectile_id, "$.projectile_id")
     modules = {item.id: item for item in snapshot.outfit.instances}
     weapon = modules.get(event.weapon_instance_id)
@@ -558,8 +574,149 @@ def spawn_projectile_from_weapon_event(
         action.munition_id, request.target_ship_id, request.selected_target_deck_level,
         world.tactical_time_s, 0.0, origin, velocity, 0.0, guidance,
     )
-    resulting = replace(world, projectiles=tuple(sorted(world.projectiles + (projectile,), key=lambda item: item.id)))
-    return ProjectileSpawnResolution(canonical_sha256(world), resulting, projectile)
+    return projectile
+
+
+def spawn_projectiles_from_weapon_events(
+    world: ProjectileWorldState,
+    catalog: ProjectileProfileCatalog,
+    inputs: Iterable[ProjectileSpawnInput],
+    *,
+    guidance_catalog: MissileGuidanceProfileCatalog | None = None,
+) -> ProjectileBatchSpawnResolution:
+    """在同一战术边界批量生成弹丸，并只合并、排序和哈希一次世界。"""
+
+    _validate_catalog(world, catalog)
+    input_items = tuple(inputs)
+    existing_ids = {item.id for item in world.projectiles}
+    batch_ids: set[str] = set()
+    projectiles: list[ProjectileState] = []
+    for item in input_items:
+        projectile_id = item.request.projectile_id
+        if projectile_id in existing_ids or projectile_id in batch_ids:
+            raise ContractError(
+                "projectile_world.projectile_duplicate",
+                "$.projectile_id",
+                projectile_id,
+            )
+        projectile = _build_projectile_from_weapon_event(
+            item.snapshot,
+            item.event,
+            world,
+            catalog,
+            item.source_pose,
+            item.request,
+            guidance_catalog=guidance_catalog,
+        )
+        batch_ids.add(projectile_id)
+        projectiles.append(projectile)
+    resulting = replace(
+        world,
+        projectiles=tuple(
+            sorted(
+                world.projectiles + tuple(projectiles),
+                key=lambda item: item.id,
+            )
+        ),
+    )
+    return ProjectileBatchSpawnResolution(
+        canonical_sha256(world),
+        resulting,
+        tuple(projectiles),
+    )
+
+
+def spawn_projectile_from_weapon_event(
+    snapshot: DerivedShipSnapshot,
+    event: WeaponTimelineEvent,
+    world: ProjectileWorldState,
+    catalog: ProjectileProfileCatalog,
+    source_pose: ShipPose2D,
+    request: ProjectileSpawnRequest,
+    *,
+    guidance_catalog: MissileGuidanceProfileCatalog | None = None,
+) -> ProjectileSpawnResolution:
+    batch = spawn_projectiles_from_weapon_events(
+        world,
+        catalog,
+        (ProjectileSpawnInput(snapshot, event, source_pose, request),),
+        guidance_catalog=guidance_catalog,
+    )
+    return ProjectileSpawnResolution(
+        batch.source_world_sha256,
+        batch.resulting_world,
+        batch.projectiles[0],
+    )
+
+
+@dataclass(frozen=True)
+class ProjectileTargetEdgeGeometry:
+    region_id: str
+    edge_index: int
+    edge_start_local: tuple[float, float]
+    edge_end_local: tuple[float, float]
+
+
+@dataclass(frozen=True)
+class ProjectileTargetDeckGeometry:
+    deck_id: str
+    deck_level: int
+    bounds_min_local: tuple[float, float]
+    bounds_max_local: tuple[float, float]
+    bounding_radius_m: float
+    edges: tuple[ProjectileTargetEdgeGeometry, ...]
+
+
+@dataclass(frozen=True)
+class ProjectileTargetGeometry:
+    snapshot_sha256: str
+    decks: tuple[ProjectileTargetDeckGeometry, ...]
+
+    def deck(self, level: int) -> ProjectileTargetDeckGeometry | None:
+        return next((item for item in self.decks if item.deck_level == level), None)
+
+
+def compile_projectile_target_geometry(
+    snapshot: DerivedShipSnapshot,
+) -> ProjectileTargetGeometry:
+    decks = []
+    for deck in snapshot.hull.normalized_blueprint.decks:
+        edges = []
+        vertices_all = [
+            vertex
+            for region in deck.regions
+            for vertex in region.vertices_m
+        ]
+        for region in deck.regions:
+            vertices = region.vertices_m
+            edges.extend(
+                ProjectileTargetEdgeGeometry(
+                    region.id,
+                    edge_index,
+                    edge_start,
+                    edge_end,
+                )
+                for edge_index, (edge_start, edge_end) in enumerate(
+                    zip(vertices, vertices[1:] + (vertices[0],))
+                )
+            )
+        decks.append(
+            ProjectileTargetDeckGeometry(
+                deck.id,
+                deck.level,
+                (
+                    min(vertex[0] for vertex in vertices_all),
+                    min(vertex[1] for vertex in vertices_all),
+                ),
+                (
+                    max(vertex[0] for vertex in vertices_all),
+                    max(vertex[1] for vertex in vertices_all),
+                ),
+                max(hypot(*vertex) for vertex in vertices_all),
+                tuple(edges),
+            )
+        )
+    return ProjectileTargetGeometry(snapshot.source_sha256, tuple(decks))
 
 
 @dataclass(frozen=True)
@@ -572,6 +729,7 @@ class TacticalProjectileTarget:
     density_kg_m3: float | None = None
     sound_speed_mps: float | None = None
     height_layer: str | None = None
+    geometry: ProjectileTargetGeometry | None = None
 
     def pose_at(self, time_s: float) -> ShipPose2D:
         """返回目标在指定时刻的位姿。
@@ -746,32 +904,91 @@ def _geometry_hit(
     step_start_s: float,
     step_duration_s: float,
     target: TacticalProjectileTarget,
+    pose_start: ShipPose2D | None = None,
+    pose_end: ShipPose2D | None = None,
 ) -> _GeometryHit | None:
     if target.ship_id != projectile.target_ship_id:
         return None
-    deck = next((item for item in target.snapshot.hull.normalized_blueprint.decks if item.level == projectile.selected_target_deck_level), None)
+    geometry = target.geometry
+    if geometry is None:
+        geometry = compile_projectile_target_geometry(target.snapshot)
+    elif geometry.snapshot_sha256 != target.snapshot.source_sha256:
+        raise ContractError(
+            "projectile_world.target_geometry_mismatch",
+            "$.targets.geometry",
+            target.ship_id,
+        )
+    deck = geometry.deck(projectile.selected_target_deck_level)
     if deck is None:
         raise ContractError("projectile_world.target_deck_missing", "$.selected_target_deck_level", f"{target.ship_id}:{projectile.selected_target_deck_level}")
-    pose_start = target.pose_at(step_start_s)
-    pose_end = target.pose_at(step_start_s + step_duration_s)
+    if pose_start is None:
+        pose_start = target.pose_at(step_start_s)
+    if pose_end is None:
+        pose_end = target.pose_at(step_start_s + step_duration_s)
+    radius = deck.bounding_radius_m
+    if (
+        _segment_aabb_entry_fraction(
+            projectile.position_xy,
+            position_after,
+            (
+                min(pose_start.position_xy[0], pose_end.position_xy[0]) - radius,
+                min(pose_start.position_xy[1], pose_end.position_xy[1]) - radius,
+            ),
+            (
+                max(pose_start.position_xy[0], pose_end.position_xy[0]) + radius,
+                max(pose_start.position_xy[1], pose_end.position_xy[1]) + radius,
+            ),
+        )
+        is None
+    ):
+        return None
     local_start = _to_local(projectile.position_xy, pose_start)
     local_end = _to_local(position_after, pose_end)
-    candidates: list[tuple[float, Any, int, tuple[float, float], tuple[float, float]]] = []
-    for region in deck.regions:
-        vertices = region.vertices_m
-        for edge_index, (edge_start, edge_end) in enumerate(zip(vertices, vertices[1:] + (vertices[0],))):
-            fraction = _segment_intersection_fraction(local_start, local_end, edge_start, edge_end)
-            if fraction is not None:
-                candidates.append((fraction, region, edge_index, edge_start, edge_end))
+    if (
+        _segment_aabb_entry_fraction(
+            local_start,
+            local_end,
+            deck.bounds_min_local,
+            deck.bounds_max_local,
+        )
+        is None
+    ):
+        return None
+    candidates: list[tuple[float, ProjectileTargetEdgeGeometry]] = []
+    for edge in deck.edges:
+        fraction = _segment_intersection_fraction(
+            local_start,
+            local_end,
+            edge.edge_start_local,
+            edge.edge_end_local,
+        )
+        if fraction is not None:
+            candidates.append((fraction, edge))
     if not candidates:
         return None
-    fraction, region, edge_index, edge_start, edge_end = min(candidates, key=lambda item: (item[0], item[1].id, item[2]))
+    fraction, edge = min(
+        candidates,
+        key=lambda item: (item[0], item[1].region_id, item[1].edge_index),
+    )
     event_time = step_start_s + step_duration_s * fraction
     pose = target.pose_at(event_time)
     impact_local = (local_start[0] + (local_end[0] - local_start[0]) * fraction, local_start[1] + (local_end[1] - local_start[1]) * fraction)
     impact_world = _to_world(impact_local, pose)
     impact_velocity = (projectile.velocity_xy[0] + (velocity_after[0] - projectile.velocity_xy[0]) * fraction, projectile.velocity_xy[1] + (velocity_after[1] - projectile.velocity_xy[1]) * fraction)
-    return _GeometryHit(fraction, target.ship_id, deck.id, deck.level, region.id, edge_index, edge_start, edge_end, impact_local, impact_world, impact_velocity, pose)
+    return _GeometryHit(
+        fraction,
+        target.ship_id,
+        deck.deck_id,
+        deck.deck_level,
+        edge.region_id,
+        edge.edge_index,
+        edge.edge_start_local,
+        edge.edge_end_local,
+        impact_local,
+        impact_world,
+        impact_velocity,
+        pose,
+    )
 
 
 def _point_to_segment_distance(point: tuple[float, float], start: tuple[float, float], end: tuple[float, float]) -> float:
@@ -940,7 +1157,15 @@ def advance_projectile_world(
         raise ContractError("projectile_world.time_reversed", "$.target_tactical_time_s", "弹丸世界时间不得倒退")
     if fixed_step_s <= 0.0 or not isfinite(fixed_step_s):
         raise ContractError("projectile_world.fixed_step", "$.fixed_step_s", str(fixed_step_s))
-    target_items = tuple(targets)
+    target_items = tuple(
+        item
+        if item.geometry is not None
+        else replace(
+            item,
+            geometry=compile_projectile_target_geometry(item.snapshot),
+        )
+        for item in targets
+    )
     target_map = {item.ship_id: item for item in target_items}
     if len(target_map) != len(target_items):
         raise ContractError("projectile_world.target_duplicate", "$.targets", "目标舰 id 不得重复")
@@ -985,6 +1210,17 @@ def advance_projectile_world(
     rolls = {} if ricochet_rolls is None else ricochet_rolls
     while current_time + EPS < target_tactical_time_s and projectiles:
         duration = min(fixed_step_s, target_tactical_time_s - current_time)
+        active_target_ids = {
+            item.target_ship_id for item in projectiles.values()
+        }
+        target_pose_cache = {
+            ship_id: (
+                target_map[ship_id].pose_at(current_time),
+                target_map[ship_id].pose_at(current_time + duration),
+            )
+            for ship_id in active_target_ids
+            if ship_id in target_map
+        }
         updates: dict[str, ProjectileState] = {}
         hit_candidates: list[tuple[float, str, _GeometryHit, tuple[float, float], float]] = []
         for projectile in sorted(projectiles.values(), key=lambda item: item.id):
@@ -1006,7 +1242,7 @@ def advance_projectile_world(
                         "$.targets",
                         target.ship_id,
                     )
-                target_pose = target.pose_at(current_time)
+                target_pose = target_pose_cache[target.ship_id][0]
                 guidance = advance_missile_guidance_step(
                     projectile.guidance_state,
                     guidance_catalog,
@@ -1045,7 +1281,19 @@ def advance_projectile_world(
             )
             step = integrate_ballistic_step(integrated_projectile.position_xy, integrated_projectile.velocity_xy, profile.ballistic, density_kg_m3=target_density, sound_speed_mps=target_sound_speed, duration_s=actual_duration)
             updated = replace(integrated_projectile, age_s=projectile.age_s + actual_duration, position_xy=step.position_xy, velocity_xy=step.velocity_xy, distance_travelled_m=projectile.distance_travelled_m + step.distance_m)
-            hit = _geometry_hit(integrated_projectile, step.position_xy, step.velocity_xy, current_time, actual_duration, target)
+            pose_start, pose_end = target_pose_cache[target.ship_id]
+            if actual_duration + EPS < duration:
+                pose_end = target.pose_at(current_time + actual_duration)
+            hit = _geometry_hit(
+                integrated_projectile,
+                step.position_xy,
+                step.velocity_xy,
+                current_time,
+                actual_duration,
+                target,
+                pose_start,
+                pose_end,
+            )
             if hit is not None:
                 hit_candidates.append((current_time + actual_duration * hit.fraction, projectile.id, hit, step.velocity_xy, step.distance_m))
             elif remaining_life <= duration + EPS:

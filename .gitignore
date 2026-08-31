@@ -37,3 +37,6 @@ apps/desktop/*.tsbuildinfo
 
 # Local W1 diagnostic output
 artifacts/w1-local/
+
+# Local T0 benchmark samples and resumable checkpoints
+artifacts/t0-local/

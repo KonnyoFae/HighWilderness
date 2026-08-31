@@ -1,0 +1,97 @@
+{
+  "acceptance": {
+    "fixture_capacity_audit": "PASS",
+    "input_hash_determinism": "PASS",
+    "machine_metadata_collection": "PASS",
+    "matrix_expansion": "252_of_252",
+    "nearest_rank_p95": "PASS",
+    "strict_plan_rejection": "PASS"
+  },
+  "fixture_audit": {
+    "profile_capacity": {
+      "functional_6": {
+        "current_saved_ammunition_units": 0,
+        "damageable_module_count": 84,
+        "fire_control_guidance_channels": 8,
+        "guided_compatible_weapon_count": 4,
+        "installed_magazine_capacity_units": 400,
+        "installed_weapon_count": 4,
+        "legal_weapon_action_events_60s_capacity_with_full_benchmark_loadout": 240,
+        "legal_weapon_fires_60s_capacity_with_full_benchmark_loadout": 120,
+        "maximum_sustained_weapon_action_events_per_second": 4.0,
+        "maximum_sustained_weapon_fires_per_second": 2.0,
+        "timing_profiled_weapon_count": 2
+      },
+      "stress_30": {
+        "current_saved_ammunition_units": 0,
+        "damageable_module_count": 436,
+        "fire_control_guidance_channels": 40,
+        "guided_compatible_weapon_count": 20,
+        "installed_magazine_capacity_units": 2000,
+        "installed_weapon_count": 20,
+        "legal_weapon_action_events_60s_capacity_with_full_benchmark_loadout": 1680,
+        "legal_weapon_fires_60s_capacity_with_full_benchmark_loadout": 840,
+        "maximum_sustained_weapon_action_events_per_second": 28.0,
+        "maximum_sustained_weapon_fires_per_second": 14.0,
+        "timing_profiled_weapon_count": 14
+      },
+      "target_20": {
+        "current_saved_ammunition_units": 0,
+        "damageable_module_count": 296,
+        "fire_control_guidance_channels": 28,
+        "guided_compatible_weapon_count": 14,
+        "installed_magazine_capacity_units": 1400,
+        "installed_weapon_count": 14,
+        "legal_weapon_action_events_60s_capacity_with_full_benchmark_loadout": 1200,
+        "legal_weapon_fires_60s_capacity_with_full_benchmark_loadout": 600,
+        "maximum_sustained_weapon_action_events_per_second": 20.0,
+        "maximum_sustained_weapon_fires_per_second": 10.0,
+        "timing_profiled_weapon_count": 10
+      }
+    },
+    "resource_hash_count": 23,
+    "status": "NOT_COVERED"
+  },
+  "implementation_hashes": {
+    "benchmarks/t0/__main__.py": "5addc060c883cacdf25a9319a78715bd4b8da5eb0ed8d9e33ec8672da5a57073",
+    "benchmarks/t0/contracts.py": "265a4355d301833066cbf16f24cec7e7a5697764da1bf74e1db02d61f8878022",
+    "benchmarks/t0/fixture_audit.py": "ed035c7ad4596bce69b1e1ea66d4fc0e5ef225eb8e808d7c92842d085f9ecb98",
+    "benchmarks/t0/matrix.py": "aad381eccdb79aef63733db928e34596ada6780887b0e8b1ccd1d340e366f7ff",
+    "benchmarks/t0/metadata.py": "82d48595bafea9c73abd3affb86b72d77ab09a04d9eb5475307ac8780f5ef047",
+    "benchmarks/t0/metrics.py": "4cac4682478a68c5037a28639a59930b3dcf7b4d89d050c11ea04d383c2d1ba5",
+    "tools/Invoke-HighWildernessT0.ps1": "2f229f7abee280dcfbcd94b83e2417c8f2172f97b5d0fcf3c41bc3dd083430dd"
+  },
+  "interface": "gaotian.stage-t0a-benchmark-framework-regression/v1",
+  "matrix": {
+    "comparison_group_count": 36,
+    "input_group_count": 12,
+    "mode_rate_variant_count": 7,
+    "official_run_count": 252,
+    "profiles": 3,
+    "repetitions": 3,
+    "stages": 4,
+    "unique_input_stream_count": 12
+  },
+  "next_slice": "T0b_deterministic_scene_generator_and_headless_baseline",
+  "official_performance_runs_executed": 0,
+  "plan_sha256": "6754fad7fd8ace9242f765e6ca5c7bb546df4fbf9f6901a60c51538d0d773f1c",
+  "reference_environment_fields_verified": [
+    "command",
+    "commit",
+    "cpu",
+    "dirty",
+    "dirty_diff_sha256",
+    "node",
+    "os",
+    "power_mode",
+    "python",
+    "ram_bytes",
+    "rust",
+    "webview2"
+  ],
+  "result_schema_sha256": "daa0998ce6e24bafb3b6a084496a4d0f035f1e3efba19f926f7361bf9e4eaa17",
+  "scope": "t0a_contract_matrix_statistics_metadata_and_fixture_capacity_audit_only",
+  "status": "PASS",
+  "t0_gate_status": "NOT_COVERED",
+  "t0_performance_measured": false
+}

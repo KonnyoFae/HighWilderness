@@ -13,7 +13,7 @@ from 高天荒野舰艇气动缓存 import (
     calculate_drag,
     velocity_body_to_beta_deg,
 )
-from 高天荒野舰艇数据契约 import ContractError, ShipInstanceSnapshotInput, canonical_sha256
+from 高天荒野舰艇数据契约 import ContractError, ShipInstanceSnapshotInput
 from 高天荒野舰艇无界面舾装编译器 import (
     ActuatorAggregation,
     DerivedShipSnapshot,
@@ -316,6 +316,21 @@ class TacticalControlInput:
 
 
 @dataclass(frozen=True)
+class TacticalShipStaticModel:
+    derived_snapshot_sha256: str
+    structure_points_body_m: tuple[Vec2, ...]
+    environment: TacticalEnvironmentProfile
+    tuning: TacticalDynamicsTuning
+    aerodynamic_cache: Any
+    aerodynamic_cache_sha256: str
+    hull_rcs_cache: Any
+    hull_rcs_cache_sha256: str
+    coating_rcs_multiplier: float
+    known_external_rcs_m2: float
+    unresolved_external_rcs_instances: tuple[str, ...]
+
+
+@dataclass(frozen=True)
 class TacticalShipModel:
     runtime: RuntimeShipParameters
     derived_snapshot_sha256: str
@@ -350,33 +365,12 @@ class TacticalShipModel:
         }
 
 
-def build_tactical_ship_model(
-    runtime: RuntimeShipParameters,
+def build_tactical_ship_static_model(
     snapshot: DerivedShipSnapshot,
     *,
     environment: TacticalEnvironmentProfile = PROTOTYPE_TACTICAL_ENVIRONMENT,
     tuning: TacticalDynamicsTuning = PROTOTYPE_TACTICAL_DYNAMICS_TUNING,
-) -> TacticalShipModel:
-    if runtime.derived_snapshot_sha256 != snapshot.source_sha256:
-        raise ContractError(
-            "tactical.derived_snapshot_mismatch",
-            "$.derived_snapshot_sha256",
-            "运行时参数与设计态派生快照不匹配",
-        )
-    if runtime.aerodynamic_cache_sha256 != canonical_sha256(
-        snapshot.hull.aerodynamic_cache
-    ):
-        raise ContractError(
-            "tactical.aerodynamic_cache_mismatch",
-            "$.aerodynamic_cache",
-            "运行时引用的气动缓存已经变化",
-        )
-    if runtime.hull_rcs_cache_sha256 != canonical_sha256(snapshot.hull.hull_rcs_cache):
-        raise ContractError(
-            "tactical.rcs_cache_mismatch",
-            "$.hull_rcs_cache",
-            "运行时引用的 RCS 缓存已经变化",
-        )
+) -> TacticalShipStaticModel:
     points = tuple(
         sorted(
             {
@@ -390,19 +384,76 @@ def build_tactical_ship_model(
     )
     if not points:
         raise ContractError("tactical.structure_points_missing", "$", "船壳没有结构代表点")
+    return TacticalShipStaticModel(
+        snapshot.source_sha256,
+        points,
+        environment,
+        tuning,
+        snapshot.hull.aerodynamic_cache,
+        snapshot.hull.aerodynamic_cache.source_sha256,
+        snapshot.hull.hull_rcs_cache,
+        snapshot.hull.hull_rcs_cache.source_sha256,
+        snapshot.outfit.coating_rcs_multiplier,
+        snapshot.outfit.known_external_rcs_m2,
+        snapshot.outfit.unresolved_external_rcs_instances,
+    )
+
+
+def bind_tactical_ship_model(
+    runtime: RuntimeShipParameters,
+    static: TacticalShipStaticModel,
+) -> TacticalShipModel:
+    if runtime.derived_snapshot_sha256 != static.derived_snapshot_sha256:
+        raise ContractError(
+            "tactical.derived_snapshot_mismatch",
+            "$.derived_snapshot_sha256",
+            "运行时参数与设计态派生快照不匹配",
+        )
+    if (
+        runtime.aerodynamic_cache_sha256
+        != static.aerodynamic_cache_sha256
+    ):
+        raise ContractError(
+            "tactical.aerodynamic_cache_mismatch",
+            "$.aerodynamic_cache",
+            "运行时引用的气动缓存已经变化",
+        )
+    if runtime.hull_rcs_cache_sha256 != static.hull_rcs_cache_sha256:
+        raise ContractError(
+            "tactical.rcs_cache_mismatch",
+            "$.hull_rcs_cache",
+            "运行时引用的 RCS 缓存已经变化",
+        )
     return TacticalShipModel(
         runtime=runtime,
-        derived_snapshot_sha256=snapshot.source_sha256,
-        runtime_parameters_sha256=canonical_sha256(runtime),
-        structure_points_body_m=points,
+        derived_snapshot_sha256=static.derived_snapshot_sha256,
+        runtime_parameters_sha256=runtime.source_sha256,
+        structure_points_body_m=static.structure_points_body_m,
         actuator_aggregation=runtime.actuator_aggregation,
-        environment=environment,
-        tuning=tuning,
-        aerodynamic_cache=snapshot.hull.aerodynamic_cache,
-        hull_rcs_cache=snapshot.hull.hull_rcs_cache,
-        coating_rcs_multiplier=snapshot.outfit.coating_rcs_multiplier,
-        known_external_rcs_m2=snapshot.outfit.known_external_rcs_m2,
-        unresolved_external_rcs_instances=snapshot.outfit.unresolved_external_rcs_instances,
+        environment=static.environment,
+        tuning=static.tuning,
+        aerodynamic_cache=static.aerodynamic_cache,
+        hull_rcs_cache=static.hull_rcs_cache,
+        coating_rcs_multiplier=static.coating_rcs_multiplier,
+        known_external_rcs_m2=static.known_external_rcs_m2,
+        unresolved_external_rcs_instances=static.unresolved_external_rcs_instances,
+    )
+
+
+def build_tactical_ship_model(
+    runtime: RuntimeShipParameters,
+    snapshot: DerivedShipSnapshot,
+    *,
+    environment: TacticalEnvironmentProfile = PROTOTYPE_TACTICAL_ENVIRONMENT,
+    tuning: TacticalDynamicsTuning = PROTOTYPE_TACTICAL_DYNAMICS_TUNING,
+) -> TacticalShipModel:
+    return bind_tactical_ship_model(
+        runtime,
+        build_tactical_ship_static_model(
+            snapshot,
+            environment=environment,
+            tuning=tuning,
+        ),
     )
 
 

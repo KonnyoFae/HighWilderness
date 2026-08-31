@@ -1,0 +1,48 @@
+{
+  "acceptance": {
+    "deep_static_immutability": "3_of_3_PASS",
+    "fixed_step_design_fingerprint_recomputes": "0_in_6_of_6_PASS",
+    "local_same_protocol_speedup_at_least_4x": "6_of_6_PASS",
+    "stale_and_unvalidated_binding_negatives": "3_of_3_PASS",
+    "strict_fast_authority_equivalence": "12_of_12_PASS"
+  },
+  "catalog_fingerprint_checks": 48,
+  "design_fingerprint_recompute_calls": {
+    "functional_6.guided_projectiles": 0,
+    "functional_6.motion_only": 0,
+    "stress_30.guided_projectiles": 0,
+    "stress_30.motion_only": 0,
+    "target_20.guided_projectiles": 0,
+    "target_20.motion_only": 0
+  },
+  "fixture_snapshot_sha256": {
+    "conventional_crewed": "817cdfb97a5099b2432e78d774dfcbdfc6797f3f27c702e78675efa9a874a897",
+    "minimum_legal": "b22cbfc84703bc8f988e5d6db1c64d530d7837198d827523adf23e44eee5d061",
+    "unmanned_flagship": "0dc5c3cda33efb3460737bc2f38003c481bfba47e529687002f88d5e717e2d70"
+  },
+  "golden_sha256": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+  "implementation_hashes": {
+    "benchmarks/t0/diagnostics.py": "73aee4d5708bcdfee2039f21869487860f9515f52fc4238990fec5d2aad31c3f",
+    "benchmarks/t0/scenario.py": "94a8c442a74da209ad9756d4ea28b57351de4ca5afe8af8eda3f4ce58e1964c6",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "高天荒野T0静态指纹与验证边界测试.py": "ad824ee40ae5f9ebf9298fd4d6c52d0c1a36426a43815e7247d067dbb270c06a",
+    "高天荒野舰艇RCS缓存.py": "3a7dee87f6e6a22b7041b01352275c687654aff8d8b8a808c7e11ce24f7bd745",
+    "高天荒野舰艇导弹制导.py": "cf4bcebb0f86830d096d7a02e50bcb3ca997116fdb8245f71f4798ba423f2964",
+    "高天荒野舰艇战术弹丸世界.py": "cb76920d69234c415279613c9ad3f4c6f2f605970e36a5ce4a6bf95fa83d71d1",
+    "高天荒野舰艇战术机动求解器.py": "6cab653659e34e0f336de0e600a18e828906b61fbef5d211ae096db77256c603",
+    "高天荒野舰艇持续毁伤.py": "71a1a4ea2d172e10d2359788254b8539a094a7a235df23cdf37432b2a57c6d2c",
+    "高天荒野舰艇数据契约.py": "e0923d7b38dc8803a105ae633e57fa5d7afa8b63205299639186499cdab6d8ea",
+    "高天荒野舰艇无界面舾装编译器.py": "9058b1dae342db4602e4a19bc25c29b66080a087c3f4d87e675c982e6939aa68",
+    "高天荒野舰艇武器时间与射击队列.py": "894b15afd667c191d941297b7a7ded3d1dbecd47b3b56f489eb8d32b423504aa",
+    "高天荒野舰艇气动缓存.py": "089634e966b3467f91907c7eecf1e989c5c5f002644da2355e3181f0ae3655e3",
+    "高天荒野舰艇统一战术场景.py": "c0db111723668eb340b5840b3d106f89736b2c3f4b72d748a367e04db30edb7b",
+    "高天荒野舰艇运行时参数编译器.py": "7e000c7d6e2aeaba5d876363445e517a0e3bd821ad33d84661cf381b0d751aaf"
+  },
+  "interface": "gaotian.stage-t0b1b-static-fingerprint-validation-boundary/v1",
+  "local_timing_artifact_policy": "ignored_not_persisted_in_regression_report",
+  "next_slice": "T0b1c_static_model_and_dynamic_runtime_reuse",
+  "official_performance_runs_executed": 0,
+  "scope": "static_fingerprints_deep_freeze_and_binding_validation_boundary_only",
+  "status": "PASS",
+  "t0_performance_measured": false
+}

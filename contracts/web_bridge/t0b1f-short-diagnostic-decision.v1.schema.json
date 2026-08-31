@@ -1,0 +1,224 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://highwilderness.local/contracts/t0b1f-short-diagnostic-decision.v1.schema.json",
+  "title": "High Wilderness T0b.1f short diagnostic decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "benchmark_plan_sha256",
+    "cases",
+    "decision",
+    "diagnostic_plan_sha256",
+    "environment_metadata",
+    "environment_metadata_sha256",
+    "interface",
+    "official_performance_runs_executed",
+    "protocol",
+    "short_diagnostic_runs_executed",
+    "status",
+    "t0_performance_measured"
+  ],
+  "properties": {
+    "benchmark_plan_sha256": { "$ref": "#/$defs/sha256" },
+    "cases": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": { "$ref": "#/$defs/case" }
+    },
+    "decision": { "$ref": "#/$defs/decision" },
+    "diagnostic_plan_sha256": { "$ref": "#/$defs/sha256" },
+    "environment_metadata": { "type": "object" },
+    "environment_metadata_sha256": { "$ref": "#/$defs/sha256" },
+    "interface": { "const": "gaotian.t0b1f-short-diagnostic-decision/v1" },
+    "official_performance_runs_executed": { "const": 0 },
+    "protocol": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fixed_step_budget_ms",
+        "measured_steps",
+        "measurement_scope",
+        "memory_growth_absolute_allowance_bytes",
+        "memory_growth_relative_allowance",
+        "repetitions",
+        "warmup_steps"
+      ],
+      "properties": {
+        "fixed_step_budget_ms": { "type": "number", "exclusiveMinimum": 0 },
+        "measured_steps": { "const": 60 },
+        "measurement_scope": { "const": "diagnostic_only_not_official_t0" },
+        "memory_growth_absolute_allowance_bytes": { "const": 67108864 },
+        "memory_growth_relative_allowance": { "const": 0.25 },
+        "repetitions": { "const": 3 },
+        "warmup_steps": { "const": 10 }
+      }
+    },
+    "short_diagnostic_runs_executed": { "const": 18 },
+    "status": { "enum": ["PASS", "FAIL"] },
+    "t0_performance_measured": { "const": false }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maximum", "mean", "p95_nearest_rank", "sample_count"],
+      "properties": {
+        "maximum": { "type": ["number", "null"] },
+        "mean": { "type": ["number", "null"] },
+        "p95_nearest_rank": { "type": ["number", "null"] },
+        "sample_count": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "repetition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority_event_sha256",
+        "authority_state_sha256",
+        "fixed_step",
+        "initial_scene_sha256",
+        "input_stream_sha256",
+        "load_coverage",
+        "observer_drain",
+        "real_time_factor",
+        "repetition",
+        "resident_memory",
+        "wall_time"
+      ],
+      "properties": {
+        "authority_event_sha256": { "$ref": "#/$defs/sha256" },
+        "authority_state_sha256": { "$ref": "#/$defs/sha256" },
+        "fixed_step": { "$ref": "#/$defs/metric" },
+        "initial_scene_sha256": { "$ref": "#/$defs/sha256" },
+        "input_stream_sha256": { "$ref": "#/$defs/sha256" },
+        "load_coverage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["reasons", "status"],
+          "properties": {
+            "reasons": { "type": "array", "items": { "type": "string" } },
+            "status": { "enum": ["PASS", "NOT_COVERED"] }
+          }
+        },
+        "observer_drain": { "$ref": "#/$defs/metric" },
+        "real_time_factor": { "type": "number", "exclusiveMinimum": 0 },
+        "repetition": { "type": "integer", "minimum": 1, "maximum": 3 },
+        "resident_memory": { "$ref": "#/$defs/metric" },
+        "wall_time": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "authoritative_advance_wall_s",
+            "measured_wall_s",
+            "observer_drain_wall_s"
+          ],
+          "properties": {
+            "authoritative_advance_wall_s": { "type": "number", "minimum": 0 },
+            "measured_wall_s": { "type": "number", "exclusiveMinimum": 0 },
+            "observer_drain_wall_s": { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority_event_sha256",
+        "authority_repeatable",
+        "authority_state_sha256",
+        "case",
+        "current_probe_total_calls",
+        "historical_call_comparison",
+        "hotspot_evidence",
+        "initial_scene_sha256",
+        "input_stream_sha256",
+        "load_stage",
+        "profile",
+        "repetitions",
+        "resource_bounded_within_short_gate",
+        "top_hotspots",
+        "worst_across_repetitions"
+      ],
+      "properties": {
+        "authority_event_sha256": { "$ref": "#/$defs/sha256" },
+        "authority_repeatable": { "type": "boolean" },
+        "authority_state_sha256": { "$ref": "#/$defs/sha256" },
+        "case": { "type": "string" },
+        "current_probe_total_calls": {
+          "type": "object",
+          "additionalProperties": { "type": "integer", "minimum": 0 }
+        },
+        "historical_call_comparison": { "type": "object" },
+        "hotspot_evidence": { "type": "array", "items": { "type": "string" } },
+        "initial_scene_sha256": { "$ref": "#/$defs/sha256" },
+        "input_stream_sha256": { "$ref": "#/$defs/sha256" },
+        "load_stage": { "enum": ["motion_only", "guided_projectiles"] },
+        "profile": { "enum": ["functional_6", "target_20", "stress_30"] },
+        "repetitions": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "$ref": "#/$defs/repetition" }
+        },
+        "resource_bounded_within_short_gate": { "type": "boolean" },
+        "top_hotspots": { "type": "array", "items": { "type": "object" } },
+        "worst_across_repetitions": { "type": "object" }
+      }
+    },
+    "decision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "authority_repeatable",
+        "next_slice",
+        "reason",
+        "resources_bounded_within_short_gate",
+        "selected_branch",
+        "status",
+        "target_guided_all_realtime",
+        "target_guided_realtime_factors",
+        "target_motion_all_realtime",
+        "target_motion_hotspot_supported",
+        "target_motion_realtime_factors"
+      ],
+      "properties": {
+        "authority_repeatable": { "type": "boolean" },
+        "next_slice": { "type": "string" },
+        "reason": { "type": "string" },
+        "resources_bounded_within_short_gate": { "type": "boolean" },
+        "selected_branch": {
+          "enum": [
+            "authority_mismatch_stop",
+            "branch_1_resume_t0c",
+            "branch_2_review_projectile_rust_hot_core",
+            "branch_3_author_multirate_authority_rfc",
+            "branch_4_continue_t0b1_boundedness",
+            "insufficient_hotspot_evidence_stop"
+          ]
+        },
+        "status": { "enum": ["PASS", "FAIL"] },
+        "target_guided_all_realtime": { "type": "boolean" },
+        "target_guided_realtime_factors": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "type": "number", "exclusiveMinimum": 0 }
+        },
+        "target_motion_all_realtime": { "type": "boolean" },
+        "target_motion_hotspot_supported": { "type": "boolean" },
+        "target_motion_realtime_factors": {
+          "type": "array",
+          "minItems": 3,
+          "maxItems": 3,
+          "items": { "type": "number", "exclusiveMinimum": 0 }
+        }
+      }
+    }
+  }
+}

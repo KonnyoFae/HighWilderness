@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 import json
 from math import isfinite
 from pathlib import Path
@@ -83,6 +83,10 @@ class ContinuousDamageProfile:
     fuel_units_burned_per_intensity_s: float
     natural_intensity_decay_units_per_s: float
     suppression_units_per_team_efficiency_s: float
+    _source_sha256: str = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "_source_sha256", canonical_sha256(self))
 
     @property
     def reference(self) -> ResourceReference:
@@ -90,7 +94,7 @@ class ContinuousDamageProfile:
 
     @property
     def source_sha256(self) -> str:
-        return canonical_sha256(self)
+        return self._source_sha256
 
     @classmethod
     def parse(cls, value: Any, path: str = "$") -> "ContinuousDamageProfile":

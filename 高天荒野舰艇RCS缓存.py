@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from math import cos, floor, hypot, isfinite, log10, pi, radians, sin
 from typing import Any
 
@@ -11,6 +11,7 @@ from 高天荒野舰艇数据契约 import (
     DeckInput,
     HullCoatingDefinition,
     Point,
+    canonical_sha256,
 )
 
 
@@ -242,6 +243,14 @@ class HullRCSCache:
     mean_rcs_m2: float
     maximum_rcs_m2: float
     maximum_angle_deg: int
+    _source_sha256: str = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "_source_sha256", canonical_sha256(self))
+
+    @property
+    def source_sha256(self) -> str:
+        return self._source_sha256
 
     def to_dict(self) -> dict[str, Any]:
         return {

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 import json
 from math import hypot, isfinite
 from pathlib import Path
@@ -18,10 +18,19 @@ from 高天荒野舰艇数据契约 import (
     ShipInstanceSnapshotInput,
     canonical_sha256,
 )
-from 高天荒野舰艇无界面舾装编译器 import DerivedShipSnapshot
+from 高天荒野舰艇无界面舾装编译器 import (
+    DerivedShipSnapshot,
+    verify_derived_ship_snapshot_fingerprint,
+)
 from 高天荒野舰艇运行时参数编译器 import (
+    RUNTIME_CACHE_VALIDATION_STRICT,
+    RUNTIME_CACHE_VALIDATION_TRUSTED,
     RuntimeShipParameters,
-    compile_runtime_ship_parameters,
+    RuntimeShipParametersCache,
+)
+from 高天荒野舰艇弹药与武器动作结算器 import (
+    FIRE_CONTROL_WAKE_EVENT,
+    WEAPON_ACTION_WAKE_EVENT,
 )
 from 高天荒野舰艇武器时间与射击队列 import (
     WeaponTimelineEvent,
@@ -79,27 +88,40 @@ from 高天荒野舰艇战术机动求解器 import (
     LayerTransitionState,
     TacticalControlInput,
     TacticalMotionState,
+    TacticalShipModel,
+    TacticalShipStaticModel,
     TacticalStepDiagnostics,
     Vec2,
-    build_tactical_ship_model,
+    bind_tactical_ship_model,
+    build_tactical_ship_static_model,
     commit_tactical_state_to_instance,
     initialize_tactical_motion_state,
     integrate_tactical_step,
 )
 from 高天荒野舰艇战术弹丸世界 import (
+    ProjectileSpawnInput,
     ProjectileExpiredEvent,
     ProjectileImpactEvent,
     ProjectileProfileCatalog,
     ProjectileSpawnRequest,
     ProjectileState,
+    ProjectileTargetGeometry,
     ProjectileWorldState,
     ShipCombatState,
     ShipPose2D,
     TacticalProjectileTarget,
     advance_projectile_world,
+    compile_projectile_target_geometry,
     initialize_projectile_world,
     initialize_ship_combat_state,
-    spawn_projectile_from_weapon_event,
+    spawn_projectiles_from_weapon_events,
+)
+
+
+BINDING_VALIDATION_STRICT = "strict"
+BINDING_VALIDATION_TRUSTED = "trusted_prevalidated"
+BINDING_VALIDATION_MODES = frozenset(
+    {BINDING_VALIDATION_STRICT, BINDING_VALIDATION_TRUSTED}
 )
 
 
@@ -323,6 +345,46 @@ class TacticalSceneShipBinding:
     active_automatic_events: tuple[str, ...] = ()
     side_id: str = "side.neutral"
     fleet_id: str = "fleet.neutral"
+    _validated_snapshot_sha256: str | None = field(
+        init=False,
+        default=None,
+        repr=False,
+        compare=False,
+    )
+    _runtime_cache: RuntimeShipParametersCache = field(
+        init=False,
+        default_factory=RuntimeShipParametersCache,
+        repr=False,
+        compare=False,
+    )
+    _static_tactical_model: TacticalShipStaticModel | None = field(
+        init=False,
+        default=None,
+        repr=False,
+        compare=False,
+    )
+    _projectile_target_geometry: ProjectileTargetGeometry | None = field(
+        init=False,
+        default=None,
+        repr=False,
+        compare=False,
+    )
+
+    @property
+    def validated_snapshot_sha256(self) -> str | None:
+        return self._validated_snapshot_sha256
+
+    @property
+    def runtime_cache(self) -> RuntimeShipParametersCache:
+        return self._runtime_cache
+
+    @property
+    def static_tactical_model(self) -> TacticalShipStaticModel | None:
+        return self._static_tactical_model
+
+    @property
+    def projectile_target_geometry(self) -> ProjectileTargetGeometry | None:
+        return self._projectile_target_geometry
 
 
 @dataclass(frozen=True)
@@ -973,6 +1035,79 @@ def _runtime_automatic_events(
     )
 
 
+def _resolve_binding_runtime(
+    binding: TacticalSceneShipBinding,
+    instance: ShipInstanceSnapshotInput,
+    extra_events: Iterable[str] = (),
+    *,
+    validation_mode: str = RUNTIME_CACHE_VALIDATION_TRUSTED,
+) -> RuntimeShipParameters:
+    events = _runtime_automatic_events(binding, instance, extra_events)
+    return binding.runtime_cache.resolve(
+        binding.snapshot,
+        binding.sortie,
+        instance,
+        active_automatic_events=events,
+        validation_mode=validation_mode,
+    ).runtime
+
+
+def _binding_static_model(
+    binding: TacticalSceneShipBinding,
+) -> TacticalShipStaticModel:
+    static = binding.static_tactical_model
+    if (
+        static is None
+        or static.derived_snapshot_sha256 != binding.snapshot.source_sha256
+    ):
+        static = build_tactical_ship_static_model(binding.snapshot)
+        object.__setattr__(binding, "_static_tactical_model", static)
+    return static
+
+
+def _binding_projectile_target_geometry(
+    binding: TacticalSceneShipBinding,
+) -> ProjectileTargetGeometry:
+    geometry = binding.projectile_target_geometry
+    if (
+        geometry is None
+        or geometry.snapshot_sha256 != binding.snapshot.source_sha256
+    ):
+        geometry = compile_projectile_target_geometry(binding.snapshot)
+        object.__setattr__(binding, "_projectile_target_geometry", geometry)
+    return geometry
+
+
+def _binding_tactical_model(
+    binding: TacticalSceneShipBinding,
+    runtime: RuntimeShipParameters,
+) -> TacticalShipModel:
+    return bind_tactical_ship_model(runtime, _binding_static_model(binding))
+
+
+def _prewarm_binding_runtime_variants(
+    binding: TacticalSceneShipBinding,
+    instance: ShipInstanceSnapshotInput,
+    *,
+    validation_mode: str = RUNTIME_CACHE_VALIDATION_STRICT,
+) -> None:
+    timeline = instance.weapon_timeline_state
+    if timeline is None or not timeline.sequences:
+        return
+    _resolve_binding_runtime(
+        binding,
+        instance,
+        (WEAPON_ACTION_WAKE_EVENT,),
+        validation_mode=validation_mode,
+    )
+    _resolve_binding_runtime(
+        binding,
+        instance,
+        (WEAPON_ACTION_WAKE_EVENT, FIRE_CONTROL_WAKE_EVENT),
+        validation_mode=validation_mode,
+    )
+
+
 def _lifecycle_event(
     ship_id: str,
     tactical_time_s: float,
@@ -1074,12 +1209,57 @@ def _binding_map(bindings: Iterable[TacticalSceneShipBinding]) -> dict[str, Tact
     return result
 
 
-def _validate_bindings(state: TacticalSceneState, bindings: dict[str, TacticalSceneShipBinding]) -> None:
+def _validate_binding_snapshot_fingerprints(
+    bindings: dict[str, TacticalSceneShipBinding],
+) -> None:
+    """对进入权威场景的每个静态快照实例只做一次完整校验。"""
+
+    verified: dict[int, str] = {}
+    for ship_id, binding in bindings.items():
+        identity = id(binding.snapshot)
+        if identity not in verified:
+            verify_derived_ship_snapshot_fingerprint(
+                binding.snapshot,
+                path=f"$.bindings.{ship_id}.snapshot",
+            )
+            verified[identity] = binding.snapshot.source_sha256
+        object.__setattr__(
+            binding,
+            "_validated_snapshot_sha256",
+            verified[identity],
+        )
+
+
+def _validate_bindings(
+    state: TacticalSceneState,
+    bindings: dict[str, TacticalSceneShipBinding],
+    validation_mode: str,
+) -> None:
+    if validation_mode not in BINDING_VALIDATION_MODES:
+        raise ContractError(
+            "tactical_scene.binding_validation_mode",
+            "$.binding_validation_mode",
+            validation_mode,
+        )
+    if validation_mode == BINDING_VALIDATION_STRICT:
+        _validate_binding_snapshot_fingerprints(bindings)
     ships = {item.ship_id: item for item in state.ships}
     if set(ships) != set(bindings):
         raise ContractError("tactical_scene.binding_set_mismatch", "$.bindings", "绑定舰艇集合必须与场景精确一致")
     for ship_id, binding in bindings.items():
         ship = ships[ship_id]
+        if binding.validated_snapshot_sha256 is None:
+            raise ContractError(
+                "tactical_scene.binding_not_validated",
+                f"$.bindings.{ship_id}.snapshot",
+                "快速路径只能使用已经严格校验的场景绑定",
+            )
+        if binding.validated_snapshot_sha256 != binding.snapshot.source_sha256:
+            raise ContractError(
+                "tactical_scene.binding_token_stale",
+                f"$.bindings.{ship_id}.snapshot",
+                "场景绑定的已验证快照 token 已失效",
+            )
         if ship.side_id != binding.side_id or ship.fleet_id != binding.fleet_id:
             raise ContractError("tactical_scene.affiliation_mismatch", f"$.bindings.{ship_id}", "舰艇阵营或舰队归属已经变化")
         if ship.derived_snapshot_sha256 != binding.snapshot.source_sha256:
@@ -1110,6 +1290,7 @@ def initialize_tactical_scene(
     binding_by_id = _binding_map(bindings)
     if not binding_by_id:
         raise ContractError("tactical_scene.ships", "$.bindings", "场景必须至少包含一艘舰艇")
+    _validate_binding_snapshot_fingerprints(binding_by_id)
     supplied_motion = {} if initial_motion_states is None else initial_motion_states
     supplied_combat = {} if initial_combat_states is None else initial_combat_states
     if set(supplied_motion) - set(binding_by_id) or set(supplied_combat) - set(binding_by_id):
@@ -1117,6 +1298,7 @@ def initialize_tactical_scene(
     ships: list[TacticalSceneShipState] = []
     fixed_step_s: float | None = None
     for ship_id, binding in sorted(binding_by_id.items()):
+        binding.runtime_cache.clear()
         combat = supplied_combat.get(ship_id)
         if combat is None:
             raise ContractError("tactical_scene.combat_state_required", f"$.initial_combat_states.{ship_id}", "统一场景必须显式提供已初始化武器时钟的战损状态")
@@ -1136,8 +1318,17 @@ def initialize_tactical_scene(
         crew_casualty = combat.instance.crew_casualty_state
         if crew_casualty is not None and abs(crew_casualty.tactical_time_s) > EPS:
             raise ContractError("tactical_scene.crew_casualty_clock_mismatch", f"$.initial_combat_states.{ship_id}", "初始人员账本时钟必须位于零时刻")
-        runtime = compile_runtime_ship_parameters(binding.snapshot, binding.sortie, combat.instance, active_automatic_events=_runtime_automatic_events(binding, combat.instance))
-        model = build_tactical_ship_model(runtime, binding.snapshot)
+        runtime = _resolve_binding_runtime(
+            binding,
+            combat.instance,
+            validation_mode=RUNTIME_CACHE_VALIDATION_STRICT,
+        )
+        _prewarm_binding_runtime_variants(
+            binding,
+            combat.instance,
+            validation_mode=RUNTIME_CACHE_VALIDATION_STRICT,
+        )
+        model = _binding_tactical_model(binding, runtime)
         if fixed_step_s is None:
             fixed_step_s = model.tuning.fixed_step_s
         elif abs(fixed_step_s - model.tuning.fixed_step_s) > EPS:
@@ -1267,6 +1458,7 @@ def advance_tactical_scene_step(
     exit_directives: Iterable[TacticalSceneExitDirective] = (),
     engagement_boundary_profile: TacticalEngagementBoundaryProfile | None = None,
     ricochet_rolls: dict[str, float] | None = None,
+    binding_validation_mode: str = BINDING_VALIDATION_STRICT,
 ) -> TacticalSceneStepResolution:
     _validate_internal_state(state)
     if state.engagement_state is not None:
@@ -1282,7 +1474,12 @@ def advance_tactical_scene_step(
     elif engagement_boundary_profile is not None:
         raise ContractError("tactical_engagement.profile_unexpected", "$.engagement_boundary_profile", "沙盒场景没有自动交战边界")
     binding_by_id = _binding_map(bindings)
-    _validate_bindings(state, binding_by_id)
+    _validate_bindings(state, binding_by_id, binding_validation_mode)
+    runtime_validation_mode = (
+        RUNTIME_CACHE_VALIDATION_STRICT
+        if binding_validation_mode == BINDING_VALIDATION_STRICT
+        else RUNTIME_CACHE_VALIDATION_TRUSTED
+    )
     ship_map = {item.ship_id: item for item in state.ships}
     manual_guidance_inputs = tuple(guidance_inputs)
     if observation_step_input is not None:
@@ -1425,15 +1622,11 @@ def advance_tactical_scene_step(
         for ship_id in sorted(ship_map):
             ship = ship_map[ship_id]
             binding = binding_by_id[ship_id]
-            runtime = compile_runtime_ship_parameters(
-                binding.snapshot,
-                binding.sortie,
+            runtime = _resolve_binding_runtime(
+                binding,
                 ship.combat_state.instance,
-                active_automatic_events=_runtime_automatic_events(
-                    binding,
-                    ship.combat_state.instance,
-                    observation_events_by_ship.get(ship_id, ()),
-                ),
+                observation_events_by_ship.get(ship_id, ()),
+                validation_mode=runtime_validation_mode,
             )
             motion = motions[ship_id]
             contexts.append(
@@ -1505,15 +1698,11 @@ def advance_tactical_scene_step(
             if ship.lifecycle_state.physical_status == "exited":
                 continue
             binding = binding_by_id[ship_id]
-            runtime = compile_runtime_ship_parameters(
-                binding.snapshot,
-                binding.sortie,
+            runtime = _resolve_binding_runtime(
+                binding,
                 ship.combat_state.instance,
-                active_automatic_events=_runtime_automatic_events(
-                    binding,
-                    ship.combat_state.instance,
-                    observation_events_by_ship.get(ship_id, ()),
-                ),
+                observation_events_by_ship.get(ship_id, ()),
+                validation_mode=runtime_validation_mode,
             )
             lifecycle = derive_tactical_ship_lifecycle(
                 runtime,
@@ -1544,6 +1733,7 @@ def advance_tactical_scene_step(
 
     def resolve_boundary(boundary_time_s: float, boundary_step: int, motions: dict[str, TacticalMotionState]) -> None:
         nonlocal world, ship_map
+        spawn_inputs: list[ProjectileSpawnInput] = []
         for ship_id in sorted(ship_map):
             ship = ship_map[ship_id]
             binding = binding_by_id[ship_id]
@@ -1563,6 +1753,8 @@ def advance_tactical_scene_step(
                 ship.combat_state.instance,
                 timing_catalog,
                 target_tactical_time_s=boundary_time_s,
+                runtime_cache=binding.runtime_cache,
+                runtime_validation_mode=runtime_validation_mode,
             )
             ship = replace(ship, combat_state=replace(ship.combat_state, instance=resolution.resulting_instance))
             ship_map[ship_id] = ship
@@ -1608,25 +1800,31 @@ def advance_tactical_scene_step(
                         ),
                         requirement=requirement,
                     )
-                spawn = spawn_projectile_from_weapon_event(
-                    binding.snapshot,
-                    event,
-                    world,
-                    projectile_catalog,
-                    _pose(boundary_time_s, motions[ship_id]),
-                    ProjectileSpawnRequest(
-                        directive.projectile_id,
-                        ship_id,
-                        directive.target_ship_id,
-                        directive.selected_target_deck_level,
-                        directive.launch_direction_local_xy,
-                    ),
-                    guidance_catalog=guidance_catalog,
+                spawn_inputs.append(
+                    ProjectileSpawnInput(
+                        binding.snapshot,
+                        event,
+                        _pose(boundary_time_s, motions[ship_id]),
+                        ProjectileSpawnRequest(
+                            directive.projectile_id,
+                            ship_id,
+                            directive.target_ship_id,
+                            directive.selected_target_deck_level,
+                            directive.launch_direction_local_xy,
+                        ),
+                    )
                 )
-                world = spawn.resulting_world
-                spawned.append(spawn.projectile)
                 used_directives.add(key)
             _validate_pending_event_grid(ship.combat_state.instance, state.fixed_step_s, ship_id)
+        if spawn_inputs:
+            spawn = spawn_projectiles_from_weapon_events(
+                world,
+                projectile_catalog,
+                spawn_inputs,
+                guidance_catalog=guidance_catalog,
+            )
+            world = spawn.resulting_world
+            spawned.extend(spawn.projectiles)
 
     if continuous_damage_profile is not None:
         directives_by_ship: dict[str, list[DamageControlDirective]] = {}
@@ -1688,15 +1886,11 @@ def advance_tactical_scene_step(
     for ship_id in sorted(ship_map):
         ship = ship_map[ship_id]
         binding = binding_by_id[ship_id]
-        runtime = compile_runtime_ship_parameters(
-            binding.snapshot,
-            binding.sortie,
+        runtime = _resolve_binding_runtime(
+            binding,
             ship.combat_state.instance,
-            active_automatic_events=_runtime_automatic_events(
-                binding,
-                ship.combat_state.instance,
-                observation_events_by_ship.get(ship_id, ()),
-            ),
+            observation_events_by_ship.get(ship_id, ()),
+            validation_mode=runtime_validation_mode,
         )
         runtimes_at_step_start[ship_id] = runtime
         if ship.lifecycle_state.physical_status == "exited":
@@ -1706,7 +1900,7 @@ def advance_tactical_scene_step(
             )
             diagnostics[ship_id] = None
             continue
-        model = build_tactical_ship_model(runtime, binding.snapshot)
+        model = _binding_tactical_model(binding, runtime)
         if abs(model.tuning.fixed_step_s - state.fixed_step_s) > EPS:
             raise ContractError("tactical_scene.fixed_step_mismatch", "$.fixed_step_s", "场景固定步与舰艇动力学配置不一致")
         models[ship_id] = model
@@ -1744,6 +1938,7 @@ def advance_tactical_scene_step(
                 layer.density_kg_m3,
                 layer.sound_speed_mps,
                 start_motions[ship_id].height_layer,
+                _binding_projectile_target_geometry(binding_by_id[ship_id]),
             )
         )
     projectile_munition_by_id = {
@@ -1988,17 +2183,13 @@ def advance_tactical_scene_step(
             fuel_units=ship.combat_state.instance.operational_state.fuel_units,
         )
         ship = replace(ship, motion_state=motion)
-        runtime = compile_runtime_ship_parameters(
-            binding.snapshot,
-            binding.sortie,
+        runtime = _resolve_binding_runtime(
+            binding,
             ship.combat_state.instance,
-            active_automatic_events=_runtime_automatic_events(
-                binding,
-                ship.combat_state.instance,
-                observation_events_by_ship.get(ship_id, ()),
-            ),
+            observation_events_by_ship.get(ship_id, ()),
+            validation_mode=runtime_validation_mode,
         )
-        build_tactical_ship_model(runtime, binding.snapshot)
+        _binding_tactical_model(binding, runtime)
         ship_results.append(TacticalSceneShipStepResult(ship_id, diagnostics[ship_id], runtime))
         final_ships.append(ship)
     engagement = state.engagement_state

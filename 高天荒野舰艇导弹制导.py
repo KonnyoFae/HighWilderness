@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 import json
 from math import atan2, cos, hypot, isfinite, sin
 from pathlib import Path
@@ -262,6 +262,10 @@ class MissileGuidanceProfileCatalog:
     name: str
     fixture_level: str
     profiles: tuple[MissileGuidanceProfile, ...]
+    _source_sha256: str = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "_source_sha256", canonical_sha256(self))
 
     @property
     def reference(self) -> ResourceReference:
@@ -269,7 +273,7 @@ class MissileGuidanceProfileCatalog:
 
     @property
     def source_sha256(self) -> str:
-        return canonical_sha256(self)
+        return self._source_sha256
 
     def profile_or_none(self, munition_id: str) -> MissileGuidanceProfile | None:
         return next(

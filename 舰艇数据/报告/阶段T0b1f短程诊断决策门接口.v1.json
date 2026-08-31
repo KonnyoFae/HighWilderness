@@ -1,0 +1,153 @@
+{
+  "acceptance": {
+    "authority_hash_repeatability": "6_of_6_cases_3_of_3_repetitions_PASS",
+    "end_boundary_guidance_inputs": "PASS",
+    "environment_metadata_collection": "1_for_18_runs_PASS",
+    "historical_runtime_and_static_call_reduction": "6_of_6_cases_reduced_to_zero_PASS",
+    "python_regression": "56_of_56_PASS",
+    "result_contract": "strict_parser_and_schema_shape_PASS",
+    "rust_regression": "15_of_15_PASS",
+    "short_run_resource_boundedness": "6_of_6_PASS",
+    "typescript_regression": "4_of_4_PASS",
+    "unique_decision_branch": "branch_3_author_multirate_authority_rfc",
+    "warmup_measurement_repetitions": "10_plus_60_times_3_PASS"
+  },
+  "authority_hashes": {
+    "functional_6.guided_projectiles": {
+      "event": "c23a885bb0b6f5c51c1e59b42157f2f45f21332b376f84179e252457925c3ff7",
+      "state": "a9e5d8df1f491cc42876dd085fd28891d12f053036daa95823b223b0a79cc2c6"
+    },
+    "functional_6.motion_only": {
+      "event": "a064dbbab4f4ba4d52354396b7c3a56d716e32e54760408ff32e101799481720",
+      "state": "23922d27e8d25203462a8a92995b885d4805d7a5352745347d17b942ece934ae"
+    },
+    "stress_30.guided_projectiles": {
+      "event": "765029f8e12ab869e75c914167bf9387dbf94298c55a027f8e5ab1f22ec9ee77",
+      "state": "0c130b71364966f09daf46b10e07392f60317edc2fe08fd3c802dac9c7c8fa92"
+    },
+    "stress_30.motion_only": {
+      "event": "a064dbbab4f4ba4d52354396b7c3a56d716e32e54760408ff32e101799481720",
+      "state": "a069d5ae33971a9d9c72bed8b579684a14001931d952b93ff28d957dcaa98ca3"
+    },
+    "target_20.guided_projectiles": {
+      "event": "a74e3d5da835d1e0ec54c4260b385d5ca87e74ae30a5218f0516c829f68d281b",
+      "state": "4d00fd44bed616bd5c5a228390bb14921a68119b4ed7be3964a9134142f57f98"
+    },
+    "target_20.motion_only": {
+      "event": "a064dbbab4f4ba4d52354396b7c3a56d716e32e54760408ff32e101799481720",
+      "state": "4c9b715d19e9e8414142a77d83406626ce2019d432005143997ee67bbade18a9"
+    }
+  },
+  "call_comparison": {
+    "after": {
+      "build_tactical_ship_static_model": "0_in_6_of_6_cases",
+      "compile_runtime_ship_parameters": "0_in_6_of_6_cases"
+    },
+    "before_ranges": {
+      "build_tactical_ship_static_model": "12_to_60_calls_per_profiled_step",
+      "compile_runtime_ship_parameters": "24_to_160_calls_per_profiled_step"
+    }
+  },
+  "decision": {
+    "next_slice": "T0b2_multirate_authority_rfc",
+    "reason": "target_20 运动三次短跑仍未达到实时因子 1.0，热点证据集中于 Python 权威场景调度、runtime 解析、战术机动积分和 dataclass 对象替换；按计划 17.5 选择分支 3。",
+    "selected_branch": "branch_3_author_multirate_authority_rfc",
+    "target_guided_all_realtime": false,
+    "target_guided_realtime_factors": [
+      0.29854,
+      0.279388,
+      0.280402
+    ],
+    "target_motion_all_realtime": false,
+    "target_motion_realtime_factors": [
+      0.556494,
+      0.54366,
+      0.55184
+    ]
+  },
+  "environment_metadata_sha256": "7efe453cb0f483bd429fbbc43254e8563f2bf744aa23530e9ba53693b1355f19",
+  "implementation_hashes": {
+    "benchmarks/t0/__main__.py": "5addc060c883cacdf25a9319a78715bd4b8da5eb0ed8d9e33ec8672da5a57073",
+    "benchmarks/t0/decision.py": "371e47755a4f2df25422d755a84233506f9209d4c36e6b2ac5c4409a113b8f69",
+    "benchmarks/t0/diagnostics.py": "73aee4d5708bcdfee2039f21869487860f9515f52fc4238990fec5d2aad31c3f",
+    "benchmarks/t0/headless.py": "302833c0872df4cb4d8f805abe9b442bd3084917f8d76d4ec39c88accf3ece6d",
+    "benchmarks/t0/scenario.py": "94a8c442a74da209ad9756d4ea28b57351de4ca5afe8af8eda3f4ce58e1964c6",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "contracts/web_bridge/t0b1f-short-diagnostic-decision.v1.schema.json": "1db7fb6fa3805b84c371e4b7e81e05fdfeadd7590c2072184be050b87d82b17d",
+    "tools/Invoke-HighWildernessT0.ps1": "2f229f7abee280dcfbcd94b83e2417c8f2172f97b5d0fcf3c41bc3dd083430dd",
+    "高天荒野T0短程诊断决策门测试.py": "53d27fc0cd7540a42e43ca4400cf68f3f67c5ceb6d0cf86520bc2dd74f5a70de"
+  },
+  "interface": "gaotian.stage-t0b1f-short-diagnostic-decision/v1",
+  "local_diagnostic": {
+    "artifact_sha256": "97f3b0079a74d1edefee29bee4699e16948a186be580de1ce8ced671a2b2d45b",
+    "cases": {
+      "functional_6.guided_projectiles": {
+        "fixed_step_maximum_ms": 18.6203,
+        "fixed_step_p95_ms": 16.8753,
+        "observer_drain_p95_ms": 0.0803,
+        "real_time_factor_minimum": 1.108751,
+        "resident_memory_maximum_bytes": 42930176
+      },
+      "functional_6.motion_only": {
+        "fixed_step_maximum_ms": 8.9507,
+        "fixed_step_p95_ms": 8.1495,
+        "observer_drain_p95_ms": 0.0365,
+        "real_time_factor_minimum": 2.295218,
+        "resident_memory_maximum_bytes": 41807872
+      },
+      "stress_30.guided_projectiles": {
+        "fixed_step_maximum_ms": 133.3841,
+        "fixed_step_p95_ms": 125.2148,
+        "observer_drain_p95_ms": 0.6038,
+        "real_time_factor_minimum": 0.146035,
+        "resident_memory_maximum_bytes": 49016832
+      },
+      "stress_30.motion_only": {
+        "fixed_step_maximum_ms": 52.9766,
+        "fixed_step_p95_ms": 50.1403,
+        "observer_drain_p95_ms": 0.0663,
+        "real_time_factor_minimum": 0.376195,
+        "resident_memory_maximum_bytes": 47366144
+      },
+      "target_20.guided_projectiles": {
+        "fixed_step_maximum_ms": 74.3283,
+        "fixed_step_p95_ms": 67.5758,
+        "observer_drain_p95_ms": 0.2422,
+        "real_time_factor_minimum": 0.279388,
+        "resident_memory_maximum_bytes": 46678016
+      },
+      "target_20.motion_only": {
+        "fixed_step_maximum_ms": 35.8759,
+        "fixed_step_p95_ms": 35.5546,
+        "observer_drain_p95_ms": 0.062,
+        "real_time_factor_minimum": 0.54366,
+        "resident_memory_maximum_bytes": 44019712
+      }
+    },
+    "policy": "ignored_diagnostic_only_not_official_t0"
+  },
+  "official_performance_runs_executed": 0,
+  "protocol": {
+    "cases": 6,
+    "measured_steps": 60,
+    "repetitions": 3,
+    "shared_environment_metadata": true,
+    "short_diagnostic_runs_executed": 18,
+    "warmup_steps": 10
+  },
+  "resource_boundedness": {
+    "fixed_step_maximums_finite": "6_of_6_PASS",
+    "headless_queue_scope": "not_applicable_no_transport_queue",
+    "memory_growth_allowance_bytes": 67108864,
+    "memory_growth_maximum_observed_bytes": 1433600,
+    "resident_memory_within_physical_ram": "6_of_6_PASS"
+  },
+  "regression": {
+    "python": "56_of_56_PASS",
+    "rust": "15_of_15_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "scope": "t0b1f_short_diagnostic_decision_only",
+  "status": "PASS",
+  "t0_performance_measured": false
+}

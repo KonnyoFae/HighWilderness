@@ -24,7 +24,9 @@ from 高天荒野舰艇无界面舾装编译器 import (
     DerivedShipSnapshot,
 )
 from 高天荒野舰艇运行时参数编译器 import (
+    RUNTIME_CACHE_VALIDATION_STRICT,
     RuntimeShipParameters,
+    RuntimeShipParametersCache,
     compile_runtime_ship_parameters,
 )
 
@@ -319,6 +321,9 @@ def resolve_weapon_fire(
     sortie: CompiledSortieState,
     instance: ShipInstanceSnapshotInput,
     request: WeaponFireRequest,
+    *,
+    runtime_cache: RuntimeShipParametersCache | None = None,
+    runtime_validation_mode: str = RUNTIME_CACHE_VALIDATION_STRICT,
 ) -> WeaponActionResolution:
     """以当前待发弹完成一次原子开火；不在此层计算弹道和命中。"""
 
@@ -337,11 +342,21 @@ def resolve_weapon_fire(
     if capability["fire_control_requirement"] != "none":
         events.append(FIRE_CONTROL_WAKE_EVENT)
     normalized_events = tuple(sorted(events))
-    runtime = compile_runtime_ship_parameters(
-        snapshot,
-        sortie,
-        instance,
-        active_automatic_events=normalized_events,
+    runtime = (
+        compile_runtime_ship_parameters(
+            snapshot,
+            sortie,
+            instance,
+            active_automatic_events=normalized_events,
+        )
+        if runtime_cache is None
+        else runtime_cache.resolve(
+            snapshot,
+            sortie,
+            instance,
+            active_automatic_events=normalized_events,
+            validation_mode=runtime_validation_mode,
+        ).runtime
     )
     _require_ship_control(runtime)
     weapon_runtime = runtime.module(request.weapon_instance_id)
@@ -400,6 +415,9 @@ def resolve_weapon_reload(
     sortie: CompiledSortieState,
     instance: ShipInstanceSnapshotInput,
     request: WeaponReloadRequest,
+    *,
+    runtime_cache: RuntimeShipParametersCache | None = None,
+    runtime_validation_mode: str = RUNTIME_CACHE_VALIDATION_STRICT,
 ) -> WeaponActionResolution:
     """从全舰可用弹药库确定性取弹，原子填入武器待发位置。"""
 
@@ -409,11 +427,21 @@ def resolve_weapon_reload(
         snapshot, request.weapon_instance_id, "weapon", "$.weapon_instance_id"
     )
     capability = _require_weapon_compatibility(weapon, request.munition_id)
-    runtime = compile_runtime_ship_parameters(
-        snapshot,
-        sortie,
-        instance,
-        active_automatic_events=(WEAPON_ACTION_WAKE_EVENT,),
+    runtime = (
+        compile_runtime_ship_parameters(
+            snapshot,
+            sortie,
+            instance,
+            active_automatic_events=(WEAPON_ACTION_WAKE_EVENT,),
+        )
+        if runtime_cache is None
+        else runtime_cache.resolve(
+            snapshot,
+            sortie,
+            instance,
+            active_automatic_events=(WEAPON_ACTION_WAKE_EVENT,),
+            validation_mode=runtime_validation_mode,
+        ).runtime
     )
     _require_ship_control(runtime)
     reload_efficiency = runtime.module(request.weapon_instance_id).function_efficiency(

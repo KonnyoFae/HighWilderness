@@ -1,0 +1,83 @@
+{
+  "acceptance": {
+    "authority_golden_verification": "12_of_12_PASS",
+    "dirty_domain_invalidation": "8_of_8_PASS",
+    "local_target_20_motion_p95_not_above_50_ms": "PASS",
+    "passthrough_ammunition_timeline_refresh": "PASS",
+    "runtime_compile_reduction_at_least_75_percent": "6_of_6_PASS",
+    "steady_step_static_model_rebuilds": "0_in_6_of_6_PASS",
+    "strict_cache_hit_validation": "PASS"
+  },
+  "dirty_domain_matrix": {
+    "cargo_change": "cargo",
+    "crew_change": "crew",
+    "fuel_availability_boundary": "fuel",
+    "height_transition": "height_layer",
+    "hull_damage": "hull",
+    "module_damage": "modules",
+    "power_policy_change": "power",
+    "resource_revision": "design_sources"
+  },
+  "golden_sha256": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+  "implementation_hashes": {
+    "benchmarks/t0/diagnostics.py": "73aee4d5708bcdfee2039f21869487860f9515f52fc4238990fec5d2aad31c3f",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "高天荒野T0运行时与静态模型复用测试.py": "65468491b1dcb5a991b8c8e7ddbd873953c0d06a0da1c399abf689ab52f4a49e",
+    "高天荒野舰艇弹药与武器动作结算器.py": "ef678cfd18320d1116bfcc59c7a4ff92e6299436437627c75181287acfd8d1c4",
+    "高天荒野舰艇战术机动求解器.py": "6cab653659e34e0f336de0e600a18e828906b61fbef5d211ae096db77256c603",
+    "高天荒野舰艇武器时间与射击队列.py": "894b15afd667c191d941297b7a7ded3d1dbecd47b3b56f489eb8d32b423504aa",
+    "高天荒野舰艇统一战术场景.py": "c0db111723668eb340b5840b3d106f89736b2c3f4b72d748a367e04db30edb7b",
+    "高天荒野舰艇运行时参数编译器.py": "7e000c7d6e2aeaba5d876363445e517a0e3bd821ad33d84661cf381b0d751aaf"
+  },
+  "interface": "gaotian.stage-t0b1c-runtime-static-model-reuse/v1",
+  "local_timing_artifact_policy": "ignored_not_persisted_in_regression_report",
+  "next_slice": "T0b1d_event_and_projectile_hot_path",
+  "official_performance_runs_executed": 0,
+  "probe_results": {
+    "functional_6.guided_projectiles": {
+      "baseline_runtime_compile_calls": 32,
+      "baseline_static_model_builds": 12,
+      "runtime_cache_resolve_calls": 32,
+      "runtime_compile_calls": 0,
+      "static_model_builds": 0
+    },
+    "functional_6.motion_only": {
+      "baseline_runtime_compile_calls": 24,
+      "baseline_static_model_builds": 12,
+      "runtime_cache_resolve_calls": 24,
+      "runtime_compile_calls": 0,
+      "static_model_builds": 0
+    },
+    "stress_30.guided_projectiles": {
+      "baseline_runtime_compile_calls": 160,
+      "baseline_static_model_builds": 60,
+      "runtime_cache_resolve_calls": 160,
+      "runtime_compile_calls": 0,
+      "static_model_builds": 0
+    },
+    "stress_30.motion_only": {
+      "baseline_runtime_compile_calls": 120,
+      "baseline_static_model_builds": 60,
+      "runtime_cache_resolve_calls": 120,
+      "runtime_compile_calls": 0,
+      "static_model_builds": 0
+    },
+    "target_20.guided_projectiles": {
+      "baseline_runtime_compile_calls": 108,
+      "baseline_static_model_builds": 40,
+      "runtime_cache_resolve_calls": 108,
+      "runtime_compile_calls": 0,
+      "static_model_builds": 0
+    },
+    "target_20.motion_only": {
+      "baseline_runtime_compile_calls": 80,
+      "baseline_static_model_builds": 40,
+      "runtime_cache_resolve_calls": 80,
+      "runtime_compile_calls": 0,
+      "static_model_builds": 0
+    }
+  },
+  "scope": "explicit_runtime_revision_dirty_domains_and_static_model_reuse_only",
+  "status": "PASS",
+  "t0_performance_measured": false
+}

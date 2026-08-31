@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
+import heapq
 import json
 from math import isfinite
 from pathlib import Path
@@ -26,6 +27,10 @@ from 高天荒野舰艇实例设计状态 import validate_instance_current_desig
 from 高天荒野舰艇无界面舾装编译器 import (
     CompiledModuleInstance,
     DerivedShipSnapshot,
+)
+from 高天荒野舰艇运行时参数编译器 import (
+    RUNTIME_CACHE_VALIDATION_STRICT,
+    RuntimeShipParametersCache,
 )
 from 高天荒野舰艇弹药与武器动作结算器 import (
     WeaponActionResolution,
@@ -105,6 +110,10 @@ class WeaponTimingProfileCatalog:
     name: str
     fixture_level: str
     profiles: tuple[WeaponTimingProfile, ...]
+    _source_sha256: str = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "_source_sha256", canonical_sha256(self))
 
     @property
     def reference(self) -> ResourceReference:
@@ -112,7 +121,7 @@ class WeaponTimingProfileCatalog:
 
     @property
     def source_sha256(self) -> str:
-        return canonical_sha256(self)
+        return self._source_sha256
 
     def profile(self, prototype: ResourceReference) -> WeaponTimingProfile:
         try:
@@ -431,12 +440,17 @@ def _preflight_reload(
     weapon_instance_id: str,
     munition_id: str,
     action_id: str,
+    *,
+    runtime_cache: RuntimeShipParametersCache | None = None,
+    runtime_validation_mode: str = RUNTIME_CACHE_VALIDATION_STRICT,
 ) -> WeaponActionResolution:
     return resolve_weapon_reload(
         snapshot,
         sortie,
         instance,
         WeaponReloadRequest(action_id, weapon_instance_id, munition_id, 1),
+        runtime_cache=runtime_cache,
+        runtime_validation_mode=runtime_validation_mode,
     )
 
 
@@ -445,11 +459,21 @@ def _preflight_fire_request(
     sortie: CompiledSortieState,
     instance: ShipInstanceSnapshotInput,
     request: WeaponFireRequest,
+    *,
+    runtime_cache: RuntimeShipParametersCache | None = None,
+    runtime_validation_mode: str = RUNTIME_CACHE_VALIDATION_STRICT,
 ) -> WeaponActionResolution | None:
     ready = _ready_state(instance, request.weapon_instance_id)
     probe = replace(request, rounds=1)
     if ready.munition_id == request.munition_id and ready.ready_rounds > 0:
-        resolve_weapon_fire(snapshot, sortie, instance, probe)
+        resolve_weapon_fire(
+            snapshot,
+            sortie,
+            instance,
+            probe,
+            runtime_cache=runtime_cache,
+            runtime_validation_mode=runtime_validation_mode,
+        )
         return None
     if ready.ready_rounds > 0:
         raise ContractError(
@@ -464,12 +488,16 @@ def _preflight_fire_request(
         request.weapon_instance_id,
         request.munition_id,
         f"{request.id}.preflight_reload",
+        runtime_cache=runtime_cache,
+        runtime_validation_mode=runtime_validation_mode,
     )
     resolve_weapon_fire(
         snapshot,
         sortie,
         reload_resolution.resulting_instance,
         probe,
+        runtime_cache=runtime_cache,
+        runtime_validation_mode=runtime_validation_mode,
     )
     return reload_resolution
 
@@ -735,6 +763,8 @@ def advance_weapon_timeline(
     catalog: WeaponTimingProfileCatalog,
     *,
     target_tactical_time_s: float,
+    runtime_cache: RuntimeShipParametersCache | None = None,
+    runtime_validation_mode: str = RUNTIME_CACHE_VALIDATION_STRICT,
 ) -> WeaponTimelineAdvanceResolution:
     source_sha = canonical_sha256(instance)
     state = _require_timeline(snapshot, instance, catalog)
@@ -751,32 +781,27 @@ def advance_weapon_timeline(
         )
     target_time = float(target_tactical_time_s)
     working = instance
+    current = state
+    sequence_map = {item.id: item for item in current.sequences}
+    clock_map = {item.instance_id: item for item in current.clocks}
+    due_index = [
+        (item.next_event_time_s, item.id) for item in current.sequences
+    ]
+    heapq.heapify(due_index)
     events: list[WeaponTimelineEvent] = []
     event_counter = 0
-    while True:
-        current = _require_timeline(snapshot, working, catalog)
-        due = sorted(
-            (
-                item
-                for item in current.sequences
-                if item.next_event_time_s <= target_time + EPS
-            ),
-            key=lambda item: (item.next_event_time_s, item.id),
-        )
-        if not due:
-            break
+    while due_index and due_index[0][0] <= target_time + EPS:
         if event_counter >= MAX_EVENTS_PER_ADVANCE:
             raise ContractError(
                 "weapon_timeline.event_limit",
                 "$.target_tactical_time_s",
                 "单次推进事件过多，必须拆分战术时间步",
             )
-        sequence = due[0]
+        _, sequence_id = heapq.heappop(due_index)
+        sequence = sequence_map[sequence_id]
         event_time = sequence.next_event_time_s
         current = replace(current, tactical_time_s=event_time)
         working = _replace_timeline(working, current)
-        sequence_map = {item.id: item for item in current.sequences}
-        clock_map = {item.instance_id: item for item in current.clocks}
         weapon = _weapon_modules(snapshot)[sequence.weapon_instance_id]
         profile = catalog.profile(weapon.prototype.reference)
         if sequence.phase == "reloading":
@@ -792,6 +817,8 @@ def advance_weapon_timeline(
                         sequence.munition_id,
                         1,
                     ),
+                    runtime_cache=runtime_cache,
+                    runtime_validation_mode=runtime_validation_mode,
                 )
             except ContractError as error:
                 events.append(_event_failure(sequence, event_time, action_kind, error))
@@ -822,7 +849,12 @@ def advance_weapon_timeline(
             )
             try:
                 resolution = resolve_weapon_fire(
-                    snapshot, sortie, working, request
+                    snapshot,
+                    sortie,
+                    working,
+                    request,
+                    runtime_cache=runtime_cache,
+                    runtime_validation_mode=runtime_validation_mode,
                 )
             except ContractError as error:
                 events.append(_event_failure(sequence, event_time, action_kind, error))
@@ -860,6 +892,8 @@ def advance_weapon_timeline(
                                 sequence.weapon_instance_id,
                                 sequence.munition_id,
                                 f"{sequence.id}.schedule_reload.{event_counter}",
+                                runtime_cache=runtime_cache,
+                                runtime_validation_mode=runtime_validation_mode,
                             )
                         except ContractError as error:
                             events.append(
@@ -885,10 +919,16 @@ def advance_weapon_timeline(
             clocks=tuple(sorted(clock_map.values(), key=lambda item: item.instance_id)),
             sequences=tuple(sorted(sequence_map.values(), key=lambda item: item.id)),
         )
+        current = updated_timeline
         working = _replace_timeline(working, updated_timeline)
+        updated_sequence = sequence_map.get(sequence.id)
+        if updated_sequence is not None:
+            heapq.heappush(
+                due_index,
+                (updated_sequence.next_event_time_s, updated_sequence.id),
+            )
         event_counter += 1
 
-    final_state = _require_timeline(snapshot, working, catalog)
-    final_state = replace(final_state, tactical_time_s=target_time)
+    final_state = replace(current, tactical_time_s=target_time)
     working = _replace_timeline(working, final_state)
     return WeaponTimelineAdvanceResolution(source_sha, working, tuple(events))

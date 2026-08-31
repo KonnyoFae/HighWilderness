@@ -1,0 +1,171 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.tactical-performance-result/v1",
+  "title": "《高天荒野》T0 战术性能结果",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "environment_metadata",
+    "fixture_audit",
+    "gates",
+    "generated_at",
+    "interface",
+    "matrix",
+    "non_goals",
+    "plan_sha256",
+    "runs",
+    "status",
+    "t0_performance_measured",
+    "t1_density_recommendation"
+  ],
+  "properties": {
+    "environment_metadata": {"$ref": "#/$defs/environmentMetadata"},
+    "fixture_audit": {"type": "object"},
+    "gates": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/statusRecord"}
+    },
+    "generated_at": {"type": "string", "format": "date-time"},
+    "interface": {"const": "gaotian.tactical-performance-result/v1"},
+    "matrix": {
+      "type": "object",
+      "required": ["comparison_group_count", "input_group_count", "mode_rate_variant_count", "official_run_count", "profiles", "repetitions", "runs", "stages", "unique_input_stream_count"],
+      "properties": {
+        "comparison_group_count": {"type": "integer", "minimum": 1},
+        "input_group_count": {"type": "integer", "minimum": 1},
+        "mode_rate_variant_count": {"type": "integer", "minimum": 1},
+        "official_run_count": {"type": "integer", "minimum": 1},
+        "profiles": {"type": "integer", "minimum": 1},
+        "repetitions": {"type": "integer", "minimum": 1},
+        "runs": {"type": "array", "items": {"$ref": "#/$defs/runSpec"}},
+        "stages": {"type": "integer", "minimum": 1},
+        "unique_input_stream_count": {"type": "integer", "minimum": 1}
+      },
+      "additionalProperties": false
+    },
+    "non_goals": {"type": "array", "items": {"type": "string"}},
+    "plan_sha256": {"$ref": "#/$defs/sha256"},
+    "runs": {"type": "array", "items": {"$ref": "#/$defs/runResult"}},
+    "status": {"$ref": "#/$defs/status"},
+    "t0_performance_measured": {"type": "boolean"},
+    "t1_density_recommendation": {"type": ["object", "null"]}
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "status": {"enum": ["PASS", "FAIL", "NOT_COVERED"]},
+    "statusRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "reason", "status"],
+      "properties": {
+        "id": {"type": "string"},
+        "reason": {"type": ["string", "null"]},
+        "status": {"$ref": "#/$defs/status"}
+      }
+    },
+    "environmentMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["command", "commit", "cpu", "dirty", "dirty_diff_sha256", "node", "os", "power_mode", "python", "ram_bytes", "rust", "webview2"],
+      "properties": {
+        "command": {"type": "string"},
+        "commit": {"type": "string"},
+        "cpu": {"type": "string"},
+        "dirty": {"type": ["boolean", "null"]},
+        "dirty_diff_sha256": {"type": "string"},
+        "node": {"type": "string"},
+        "os": {"type": "string"},
+        "power_mode": {"type": "string"},
+        "python": {"type": "string"},
+        "ram_bytes": {"type": ["integer", "null"], "minimum": 0},
+        "rust": {"type": "string"},
+        "webview2": {"type": "string"}
+      }
+    },
+    "runSpec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input_seed", "input_stream_sha256", "load_stage", "mode", "profile", "repetition", "run_id", "snapshot_rate_hz"],
+      "properties": {
+        "input_seed": {"type": "integer", "minimum": 0},
+        "input_stream_sha256": {"$ref": "#/$defs/sha256"},
+        "load_stage": {"type": "string"},
+        "mode": {"type": "string"},
+        "profile": {"type": "string"},
+        "repetition": {"type": "integer", "minimum": 1},
+        "run_id": {"type": "string"},
+        "snapshot_rate_hz": {"type": ["integer", "null"], "minimum": 1}
+      }
+    },
+    "metricSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maximum", "mean", "p95_nearest_rank", "sample_count"],
+      "properties": {
+        "maximum": {"type": ["number", "null"]},
+        "mean": {"type": ["number", "null"]},
+        "p95_nearest_rank": {"type": ["number", "null"]},
+        "sample_count": {"type": "integer", "minimum": 0}
+      }
+    },
+    "runMetadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actual_entity_counts", "coalesced_frame_count", "command", "commit", "cpu", "dirty_diff_sha256", "fixture_resource_hashes", "frame_bytes_max", "input_stream_sha256", "measurement_policy", "node", "os", "power_mode", "profile", "python", "ram_bytes", "real_time_factor_scope", "rejected_request_count", "resident_memory_sample_count", "resident_memory_sample_interval_steps", "rust", "webview2"],
+      "properties": {
+        "actual_entity_counts": {"type": "object"},
+        "coalesced_frame_count": {"type": ["integer", "null"], "minimum": 0},
+        "command": {"type": "string"},
+        "commit": {"type": "string"},
+        "cpu": {"type": "string"},
+        "dirty_diff_sha256": {"type": "string"},
+        "fixture_resource_hashes": {"type": "object", "additionalProperties": {"$ref": "#/$defs/sha256"}},
+        "frame_bytes_max": {"type": ["integer", "null"], "minimum": 0},
+        "input_stream_sha256": {"$ref": "#/$defs/sha256"},
+        "measurement_policy": {"const": "gaotian.t0-headless-measurement-boundary/v1"},
+        "node": {"type": "string"},
+        "os": {"type": "string"},
+        "power_mode": {"type": "string"},
+        "profile": {"type": "string"},
+        "python": {"type": "string"},
+        "ram_bytes": {"type": ["integer", "null"], "minimum": 0},
+        "real_time_factor_scope": {"const": "simulated_time_divided_by_wall_time_including_observer_drain"},
+        "rejected_request_count": {"type": ["integer", "null"], "minimum": 0},
+        "resident_memory_sample_count": {"type": "integer", "minimum": 0},
+        "resident_memory_sample_interval_steps": {"type": "integer", "minimum": 1},
+        "rust": {"type": "string"},
+        "webview2": {"type": "string"}
+      }
+    },
+    "runResult": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority_event_sha256", "authority_state_sha256", "metadata", "metrics", "reason", "run_spec", "status"],
+      "properties": {
+        "authority_event_sha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "authority_state_sha256": {"anyOf": [{"$ref": "#/$defs/sha256"}, {"type": "null"}]},
+        "metadata": {"$ref": "#/$defs/runMetadata"},
+        "metrics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["fixed_step", "frame_bytes", "host_webview_round_trip", "observer_drain", "projectile_world", "queue_depth", "real_time_factor", "resident_memory", "runtime_recompile", "serialization"],
+          "properties": {
+            "fixed_step": {"anyOf": [{"$ref": "#/$defs/metricSummary"}, {"type": "null"}]},
+            "frame_bytes": {"anyOf": [{"$ref": "#/$defs/metricSummary"}, {"type": "null"}]},
+            "host_webview_round_trip": {"anyOf": [{"$ref": "#/$defs/metricSummary"}, {"type": "null"}]},
+            "observer_drain": {"anyOf": [{"$ref": "#/$defs/metricSummary"}, {"type": "null"}]},
+            "projectile_world": {"anyOf": [{"$ref": "#/$defs/metricSummary"}, {"type": "null"}]},
+            "queue_depth": {"anyOf": [{"$ref": "#/$defs/metricSummary"}, {"type": "null"}]},
+            "real_time_factor": {"anyOf": [{"$ref": "#/$defs/metricSummary"}, {"type": "null"}]},
+            "resident_memory": {"anyOf": [{"$ref": "#/$defs/metricSummary"}, {"type": "null"}]},
+            "runtime_recompile": {"anyOf": [{"$ref": "#/$defs/metricSummary"}, {"type": "null"}]},
+            "serialization": {"anyOf": [{"$ref": "#/$defs/metricSummary"}, {"type": "null"}]}
+          }
+        },
+        "reason": {"type": ["string", "null"]},
+        "run_spec": {"$ref": "#/$defs/runSpec"},
+        "status": {"$ref": "#/$defs/status"}
+      }
+    }
+  }
+}

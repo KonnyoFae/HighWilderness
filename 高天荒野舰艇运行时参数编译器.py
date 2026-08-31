@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field, replace
 from math import hypot
+from threading import RLock
 from typing import Any
 
 from 高天荒野舰艇出航配置编译器 import (
@@ -40,6 +41,11 @@ from 高天荒野舰艇人员伤亡 import (
 
 
 RUNTIME_SHIP_PARAMETERS_INTERFACE_ID = "gaotian.runtime-ship-parameters/v1alpha1"
+RUNTIME_CACHE_VALIDATION_STRICT = "strict"
+RUNTIME_CACHE_VALIDATION_TRUSTED = "trusted_prevalidated"
+RUNTIME_CACHE_VALIDATION_MODES = frozenset(
+    {RUNTIME_CACHE_VALIDATION_STRICT, RUNTIME_CACHE_VALIDATION_TRUSTED}
+)
 POWER_ALLOCATION_POLICY_ID = "gaotian.power-allocation/categories-and-nearest/v1"
 DAMAGE_RESPONSE_POLICY_ID = "gaotian.module-damage-response/per-function-curves/v1"
 CREW_ALLOCATION_POLICY_ID = (
@@ -217,6 +223,14 @@ class RuntimeShipParameters:
     safe_lateral_mps2: float
     safe_yaw_acceleration_rad_s2: float
     safe_yaw_rate_rad_s: float
+    _source_sha256: str = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "_source_sha256", canonical_sha256(self))
+
+    @property
+    def source_sha256(self) -> str:
+        return self._source_sha256
 
     def module(self, instance_id: str) -> RuntimeModuleResult:
         return next(item for item in self.modules if item.instance_id == instance_id)
@@ -278,6 +292,153 @@ class RuntimeShipParameters:
             },
             "terminal_failures": list(self.terminal_failures),
         }
+
+
+@dataclass(frozen=True)
+class RuntimeStateRevision:
+    """只包含会改变 RuntimeShipParameters 派生值的权威域。"""
+
+    design_sources: tuple[Any, ...]
+    hull_integrity_fraction: float
+    module_states: tuple[RuntimeModuleStateInput, ...]
+    height_layer: str
+    fuel_available: bool
+    crew: tuple[Any, ...]
+    bulk_cargo: tuple[Any, ...]
+    power_policy: RuntimePowerPolicyInput
+
+    def changed_domains(self, other: "RuntimeStateRevision") -> tuple[str, ...]:
+        fields = (
+            ("design_sources", self.design_sources, other.design_sources),
+            ("hull", self.hull_integrity_fraction, other.hull_integrity_fraction),
+            ("modules", self.module_states, other.module_states),
+            ("height_layer", self.height_layer, other.height_layer),
+            ("fuel", self.fuel_available, other.fuel_available),
+            ("crew", self.crew, other.crew),
+            ("cargo", self.bulk_cargo, other.bulk_cargo),
+            ("power", self.power_policy, other.power_policy),
+        )
+        return tuple(name for name, before, after in fields if before != after)
+
+
+@dataclass(frozen=True)
+class RuntimeCacheResolution:
+    runtime: RuntimeShipParameters
+    cache_hit: bool
+    invalidated_domains: tuple[str, ...]
+
+
+class RuntimeShipParametersCache:
+    """单舰有界 runtime 缓存；不以对象地址作为权威键。"""
+
+    def __init__(self, *, maximum_event_variants: int = 8):
+        if maximum_event_variants < 1:
+            raise ValueError("runtime 缓存至少容纳一种自动事件变体")
+        self.maximum_event_variants = maximum_event_variants
+        self._lock = RLock()
+        self._revision: RuntimeStateRevision | None = None
+        self._entries: dict[tuple[str, ...], RuntimeShipParameters] = {}
+        self.hit_count = 0
+        self.miss_count = 0
+        self.invalidation_count = 0
+        self.last_invalidated_domains: tuple[str, ...] = ()
+
+    @property
+    def entry_count(self) -> int:
+        with self._lock:
+            return len(self._entries)
+
+    @property
+    def revision(self) -> RuntimeStateRevision | None:
+        with self._lock:
+            return self._revision
+
+    def clear(self) -> None:
+        with self._lock:
+            self._revision = None
+            self._entries.clear()
+            self.hit_count = 0
+            self.miss_count = 0
+            self.invalidation_count = 0
+            self.last_invalidated_domains = ()
+
+    def stats(self) -> dict[str, Any]:
+        with self._lock:
+            return {
+                "entry_count": len(self._entries),
+                "hit_count": self.hit_count,
+                "invalidation_count": self.invalidation_count,
+                "last_invalidated_domains": list(self.last_invalidated_domains),
+                "maximum_event_variants": self.maximum_event_variants,
+                "miss_count": self.miss_count,
+            }
+
+    def resolve(
+        self,
+        snapshot: DerivedShipSnapshot,
+        sortie: CompiledSortieState,
+        instance: ShipInstanceSnapshotInput,
+        *,
+        active_automatic_events: tuple[str, ...] = (),
+        validation_mode: str = RUNTIME_CACHE_VALIDATION_STRICT,
+    ) -> RuntimeCacheResolution:
+        with self._lock:
+            return self._resolve_locked(
+                snapshot,
+                sortie,
+                instance,
+                active_automatic_events=active_automatic_events,
+                validation_mode=validation_mode,
+            )
+
+    def _resolve_locked(
+        self,
+        snapshot: DerivedShipSnapshot,
+        sortie: CompiledSortieState,
+        instance: ShipInstanceSnapshotInput,
+        *,
+        active_automatic_events: tuple[str, ...] = (),
+        validation_mode: str = RUNTIME_CACHE_VALIDATION_STRICT,
+    ) -> RuntimeCacheResolution:
+        if validation_mode not in RUNTIME_CACHE_VALIDATION_MODES:
+            raise ContractError(
+                "runtime.cache_validation_mode",
+                "$.runtime_cache.validation_mode",
+                validation_mode,
+            )
+        revision = runtime_state_revision(snapshot, sortie, instance)
+        invalidated: tuple[str, ...] = ()
+        if self._revision is not None and self._revision != revision:
+            invalidated = self._revision.changed_domains(revision)
+            self._entries.clear()
+            self.invalidation_count += 1
+        self._revision = revision
+        self.last_invalidated_domains = invalidated
+        events = tuple(sorted(set(active_automatic_events)))
+        cached = self._entries.get(events)
+        if cached is not None:
+            if validation_mode == RUNTIME_CACHE_VALIDATION_STRICT:
+                _validate_runtime_cache_hit(snapshot, sortie, instance)
+            refreshed = replace(
+                cached,
+                instance_snapshot=instance,
+                instance_snapshot_sha256=canonical_sha256(instance),
+            )
+            self._entries[events] = refreshed
+            self.hit_count += 1
+            return RuntimeCacheResolution(refreshed, True, invalidated)
+        runtime = compile_runtime_ship_parameters(
+            snapshot,
+            sortie,
+            instance,
+            active_automatic_events=events,
+        )
+        if len(self._entries) >= self.maximum_event_variants:
+            oldest = next(iter(self._entries))
+            del self._entries[oldest]
+        self._entries[events] = runtime
+        self.miss_count += 1
+        return RuntimeCacheResolution(runtime, False, invalidated)
 
 
 def initialize_ship_instance_snapshot(
@@ -383,6 +544,68 @@ def _validate_and_index_states(
                 f"当前耐久 {state.current_durability_points} 超过原型上限 {maximum}",
             )
     return modules, states
+
+
+def runtime_state_revision(
+    snapshot: DerivedShipSnapshot,
+    sortie: CompiledSortieState,
+    instance: ShipInstanceSnapshotInput,
+) -> RuntimeStateRevision:
+    """建立可序列化值语义的 runtime 依赖版本，不使用对象地址。"""
+
+    design_state = instance.design_state
+    design_token = (
+        None
+        if design_state is None
+        else (
+            design_state.construction_hull_blueprint_sha256,
+            design_state.current_outfit_plan_sha256,
+            design_state.current_derived_ship_snapshot_sha256,
+            design_state.revision,
+        )
+    )
+    operational = instance.operational_state
+    return RuntimeStateRevision(
+        (
+            snapshot.source_sha256,
+            sortie.source_sha256,
+            instance.outfit_plan,
+            instance.derived_ship_snapshot_sha256,
+            instance.sortie_configuration,
+            instance.sortie_configuration_sha256,
+            design_token,
+        ),
+        instance.current_hull_integrity_fraction,
+        instance.module_states,
+        operational.height_layer,
+        operational.fuel_units > EPS,
+        operational.crew,
+        operational.bulk_cargo,
+        instance.power_policy,
+    )
+
+
+def _validate_runtime_cache_hit(
+    snapshot: DerivedShipSnapshot,
+    sortie: CompiledSortieState,
+    instance: ShipInstanceSnapshotInput,
+) -> None:
+    """严格边界仍校验所有输入，但不重建派生 runtime。"""
+
+    _validate_sources(snapshot, sortie, instance)
+    validate_crew_casualty_capacity(
+        instance,
+        dict(snapshot.outfit.crew_capacity),
+    )
+    if instance.ammunition_state is not None:
+        validate_ship_ammunition_state(
+            snapshot,
+            instance.ammunition_state,
+            namespace="instance",
+            path_prefix="$.ammunition_state",
+        )
+    compile_ship_operational_state(snapshot, instance.operational_state)
+    _validate_and_index_states(snapshot, instance)
 
 
 def _host_availability(
@@ -854,8 +1077,8 @@ def compile_runtime_ship_parameters(
         remote_control,
         fuel_available,
         tuple(failures),
-        canonical_sha256(snapshot.hull.aerodynamic_cache),
-        canonical_sha256(snapshot.hull.hull_rcs_cache),
+        snapshot.hull.aerodynamic_cache.source_sha256,
+        snapshot.hull.hull_rcs_cache.source_sha256,
         snapshot.hull.hull_durability_volume_proxy_m3,
         snapshot.hull.longitudinal_bottleneck_m,
         snapshot.hull.lateral_bottleneck_m,

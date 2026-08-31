@@ -1,0 +1,64 @@
+{
+  "acceptance": {
+    "direct_event_digest_equivalence": "12_of_12_PASS",
+    "environment_metadata_collection": "1_per_run_PASS",
+    "fixed_step_excludes_observer_drain": "PASS",
+    "headless_v2_cli_resume": "PASS",
+    "low_frequency_memory_sampling": "PASS",
+    "measurement_input_negative_cases": "2_of_2_PASS",
+    "real_time_factor_includes_drain": "PASS",
+    "result_schema": "PASS",
+    "resume_rejects_stale_or_incomplete_results": "3_of_3_PASS"
+  },
+  "diagnostic_event_digest_ms": {
+    "functional_6.guided_projectiles": {
+      "t0b1d_full_resolution_materialization": 2.3563,
+      "t0b1e_direct_event_payload": 0.2039
+    },
+    "functional_6.motion_only": {
+      "t0b1d_full_resolution_materialization": 1.1409,
+      "t0b1e_direct_event_payload": 0.0198
+    },
+    "stress_30.guided_projectiles": {
+      "t0b1d_full_resolution_materialization": 17.587,
+      "t0b1e_direct_event_payload": 0.8719
+    },
+    "stress_30.motion_only": {
+      "t0b1d_full_resolution_materialization": 6.5228,
+      "t0b1e_direct_event_payload": 0.0161
+    },
+    "target_20.guided_projectiles": {
+      "t0b1d_full_resolution_materialization": 8.7939,
+      "t0b1e_direct_event_payload": 0.629
+    },
+    "target_20.motion_only": {
+      "t0b1d_full_resolution_materialization": 4.699,
+      "t0b1e_direct_event_payload": 0.0158
+    }
+  },
+  "headless_interface": "gaotian.t0-headless-baseline/v2",
+  "implementation_hashes": {
+    "benchmarks/t0/__main__.py": "7d2f8a7267cd9b2ab17d6e1cec9ec2d4da548bc15e9d26c0ab8f344de4b2040a",
+    "benchmarks/t0/diagnostics.py": "73aee4d5708bcdfee2039f21869487860f9515f52fc4238990fec5d2aad31c3f",
+    "benchmarks/t0/headless.py": "302833c0872df4cb4d8f805abe9b442bd3084917f8d76d4ec39c88accf3ece6d",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "contracts/web_bridge/t0-benchmark-result.v1.schema.json": "daa0998ce6e24bafb3b6a084496a4d0f035f1e3efba19f926f7361bf9e4eaa17",
+    "高天荒野T0测量边界与观察器测试.py": "50385727bf21704983c82c4de019f6b54b2326a01a923c044c5f0a307e461be7",
+    "高天荒野T0确定性场景与无界面基线测试.py": "57fb7ab0b8a802e99afa55ad34e2bf1b833840931e94676760609ff708d146b9"
+  },
+  "interface": "gaotian.stage-t0b1e-measurement-boundary/v1",
+  "local_timing_artifact_policy": "diagnostic_only_not_official_t0",
+  "measurement_contract": {
+    "authoritative_fixed_step": "advance_scenario_step_only",
+    "default_resident_memory_interval_steps": 60,
+    "event_digest": "direct_event_fields_without_resolution_to_dict",
+    "measurement_policy": "gaotian.t0-headless-measurement-boundary/v1",
+    "observer_drain": "event_digest_entity_counts_event_totals_low_frequency_memory_and_final_state_hash",
+    "real_time_factor_scope": "simulated_time_divided_by_wall_time_including_observer_drain"
+  },
+  "next_slice": "T0b1f_short_diagnostic_decision_gate",
+  "official_performance_runs_executed": 0,
+  "scope": "measurement_and_result_materialization_boundary_only",
+  "status": "PASS",
+  "t0_performance_measured": false
+}

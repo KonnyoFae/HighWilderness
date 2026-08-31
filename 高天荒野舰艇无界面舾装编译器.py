@@ -7,7 +7,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from math import hypot
 from typing import Any
 
@@ -562,6 +562,14 @@ class DerivedShipSnapshot:
 
     hull: CompiledHull
     outfit: CompiledOutfit
+    _source_sha256: str = field(init=False, repr=False, compare=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(
+            self,
+            "_source_sha256",
+            compute_derived_ship_snapshot_sha256(self),
+        )
 
     @property
     def id(self) -> str:
@@ -573,7 +581,7 @@ class DerivedShipSnapshot:
 
     @property
     def source_sha256(self) -> str:
-        return canonical_sha256(self)
+        return self._source_sha256
 
     def to_dict(self) -> dict[str, Any]:
         plan = self.outfit.normalized_plan
@@ -664,6 +672,27 @@ class DerivedShipSnapshot:
             "version": self.version,
             "warnings": [warning.to_dict() for warning in self.outfit.warnings],
         }
+
+
+def compute_derived_ship_snapshot_sha256(snapshot: DerivedShipSnapshot) -> str:
+    """重新计算设计态快照的规范内容指纹。"""
+
+    return canonical_sha256(snapshot)
+
+
+def verify_derived_ship_snapshot_fingerprint(
+    snapshot: DerivedShipSnapshot,
+    *,
+    path: str = "$",
+) -> None:
+    """在不可信边界核对缓存指纹与当前规范内容。"""
+
+    if compute_derived_ship_snapshot_sha256(snapshot) != snapshot.source_sha256:
+        raise ContractError(
+            "snapshot.fingerprint_mismatch",
+            path,
+            "派生快照缓存指纹与当前规范内容不一致",
+        )
 
 
 class _OutfitCompiler:

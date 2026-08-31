@@ -1,0 +1,26 @@
+{
+  "fixture_level": "contract_fixture",
+  "id": "gtw.weapon_timing.fixture.t0_benchmark",
+  "kind": "WeaponTimingProfileCatalog",
+  "name": "T0基准武器时间技术替身配置",
+  "profiles": [
+    {
+      "cyclic_rate_rpm": 60.0,
+      "prototype": {
+        "id": "gtw.module.fixture.unmanned.weapon",
+        "version": 1
+      },
+      "reload_seconds_per_round": 0.25
+    },
+    {
+      "cyclic_rate_rpm": 60.0,
+      "prototype": {
+        "id": "gtw.module.fixture.weapon",
+        "version": 1
+      },
+      "reload_seconds_per_round": 0.25
+    }
+  ],
+  "schema": "gaotian.weapon-timing/v1alpha1",
+  "version": 1
+}

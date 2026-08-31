@@ -1,0 +1,189 @@
+{
+  "acceptance": {
+    "all_profile_stage_initial_states": "12_of_12_PASS",
+    "authority_hash_repeatability": "PASS",
+    "headless_result_contract": "PASS",
+    "legal_ammunition_and_weapon_timeline": "PASS",
+    "negative_inputs": "PASS",
+    "step_smoke": "4_of_4_PASS"
+  },
+  "headless_smoke": {
+    "authority_event_sha256": "58d24370d7d8bf348cceaa9836a7c2a35d3eb2502112d55a3bce95d3d195b92c",
+    "authority_state_sha256": "75dd83a57763eb011cfa0e0a7d722f53284d8a5f5bb759320b8b04878346eea2",
+    "measured_steps": 2,
+    "official_duration": false,
+    "status": "NOT_COVERED",
+    "warmup_steps": 0
+  },
+  "implementation_hashes": {
+    "benchmarks/t0/__main__.py": "5addc060c883cacdf25a9319a78715bd4b8da5eb0ed8d9e33ec8672da5a57073",
+    "benchmarks/t0/headless.py": "302833c0872df4cb4d8f805abe9b442bd3084917f8d76d4ec39c88accf3ece6d",
+    "benchmarks/t0/matrix.py": "aad381eccdb79aef63733db928e34596ada6780887b0e8b1ccd1d340e366f7ff",
+    "benchmarks/t0/metadata.py": "82d48595bafea9c73abd3affb86b72d77ab09a04d9eb5475307ac8780f5ef047",
+    "benchmarks/t0/scenario.py": "94a8c442a74da209ad9756d4ea28b57351de4ca5afe8af8eda3f4ce58e1964c6",
+    "tools/Invoke-HighWildernessT0.ps1": "2f229f7abee280dcfbcd94b83e2417c8f2172f97b5d0fcf3c41bc3dd083430dd",
+    "舰艇数据/标定/T0基准武器时间技术替身配置.v1.json": "c934504075954ed97e14bb537374dae047d69748f870e75d539ddfad17f59e5e"
+  },
+  "interface": "gaotian.stage-t0b-deterministic-scene-headless-regression/v1",
+  "load_integrity": {
+    "maximum_sustained_weapon_action_events_per_second": {
+      "functional_6": 8.0,
+      "stress_30": 40.0,
+      "target_20": 28.0
+    },
+    "planned_targets_remain_not_covered": true,
+    "reason": "补足无人武器时间配置后仍低于 24/120/300 次每秒目标"
+  },
+  "next_slice": "T0b1_authoritative_hot_path_optimization",
+  "official_headless_runs_executed": 0,
+  "scenario_manifests": {
+    "functional_6.guided_projectiles": {
+      "actual_initial_entity_counts": {
+        "active_ships": 6,
+        "ammunition_units": 404,
+        "guided_projectiles": 12,
+        "ordinary_projectiles": 120,
+        "projectiles": 132,
+        "weapon_sequences": 4
+      },
+      "initial_scene_sha256": "71ebacb179fbaaa09ccf5af0570ba0dbdb5c38726cb732a87497cc0d3f7a10c9",
+      "input_stream_sha256": "d78e659208cbcdbeeca93dffbc4ce6b7a6dbb223b83d40a04aefed0fe9071dfa"
+    },
+    "functional_6.motion_only": {
+      "actual_initial_entity_counts": {
+        "active_ships": 6,
+        "ammunition_units": 404,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 0,
+        "projectiles": 0,
+        "weapon_sequences": 0
+      },
+      "initial_scene_sha256": "69c4c1d79952501d86475f71becad8285df25114f304bb434a8205c9aaacf708",
+      "input_stream_sha256": "42782c295d774471ef9a68d5c7791ef1f92b27da3423b77b3d94bb365148e536"
+    },
+    "functional_6.ordinary_projectiles": {
+      "actual_initial_entity_counts": {
+        "active_ships": 6,
+        "ammunition_units": 404,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 120,
+        "projectiles": 120,
+        "weapon_sequences": 4
+      },
+      "initial_scene_sha256": "df7b06bbfad95b5f917436a61222bb1643f96ec2d671545c64033192f08e75de",
+      "input_stream_sha256": "f5a1e2e61d5376de0a618bfec0a980bc1bc2cd060ec3cbe438d0e684f1e5c70b"
+    },
+    "functional_6.scripted_damage_and_recompile": {
+      "actual_initial_entity_counts": {
+        "active_ships": 6,
+        "ammunition_units": 404,
+        "guided_projectiles": 12,
+        "ordinary_projectiles": 120,
+        "projectiles": 132,
+        "weapon_sequences": 4
+      },
+      "initial_scene_sha256": "f8d36945b39a2a6a87a06bd47c05b0604edeb2bb29f1aa2bdbc2f0d00f4000ec",
+      "input_stream_sha256": "fe5e40894575e2e93e491410007f1385446bcb574e2099fc805ee75de7c848fe"
+    },
+    "stress_30.guided_projectiles": {
+      "actual_initial_entity_counts": {
+        "active_ships": 30,
+        "ammunition_units": 2020,
+        "guided_projectiles": 150,
+        "ordinary_projectiles": 1500,
+        "projectiles": 1650,
+        "weapon_sequences": 20
+      },
+      "initial_scene_sha256": "1b106fbe36b8709c86118a88f1c1ff909adb6693fd2aa2f28c7e3420a61a5010",
+      "input_stream_sha256": "b386f7f30c160563d20972feb3026155e21565e5256cf2d66be8d75cfc8543dd"
+    },
+    "stress_30.motion_only": {
+      "actual_initial_entity_counts": {
+        "active_ships": 30,
+        "ammunition_units": 2020,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 0,
+        "projectiles": 0,
+        "weapon_sequences": 0
+      },
+      "initial_scene_sha256": "df26a513ba5013271c06fc33b0eb9dd3866cea7f4b2ec10364b21147ab7dc998",
+      "input_stream_sha256": "8d64d5b1ddcafecd56c0fec9a4f7f5e9677fcf250d802b91cdba8dfd7207c272"
+    },
+    "stress_30.ordinary_projectiles": {
+      "actual_initial_entity_counts": {
+        "active_ships": 30,
+        "ammunition_units": 2020,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 1500,
+        "projectiles": 1500,
+        "weapon_sequences": 20
+      },
+      "initial_scene_sha256": "65a6b13baa08b0883ad35d2397f6c72f16be095adf248714a188425c577d8f6b",
+      "input_stream_sha256": "a07dda95c481bad9e11670e7de31742b7b7dfc68207dbed2c7974adc7cfc2fbd"
+    },
+    "stress_30.scripted_damage_and_recompile": {
+      "actual_initial_entity_counts": {
+        "active_ships": 30,
+        "ammunition_units": 2020,
+        "guided_projectiles": 150,
+        "ordinary_projectiles": 1500,
+        "projectiles": 1650,
+        "weapon_sequences": 20
+      },
+      "initial_scene_sha256": "e0dc8aea10da978d1db38c1a399e104e63e873945abf303a02bb32fc5641d295",
+      "input_stream_sha256": "7d85aed685d213168a4a3ade303133fe9d9d9d4e17b6171af48c82ea2b74a56b"
+    },
+    "target_20.guided_projectiles": {
+      "actual_initial_entity_counts": {
+        "active_ships": 20,
+        "ammunition_units": 1414,
+        "guided_projectiles": 60,
+        "ordinary_projectiles": 600,
+        "projectiles": 660,
+        "weapon_sequences": 14
+      },
+      "initial_scene_sha256": "2d4f1997dd8d6329d3ad3c9cb80a6773ccaaf52fb55b0320829b205ba2888cf4",
+      "input_stream_sha256": "2cf99b75c04fa5cd310bfb87902bdd286af6841f117f2c13e64f19c2fa8baa72"
+    },
+    "target_20.motion_only": {
+      "actual_initial_entity_counts": {
+        "active_ships": 20,
+        "ammunition_units": 1414,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 0,
+        "projectiles": 0,
+        "weapon_sequences": 0
+      },
+      "initial_scene_sha256": "b0d1d8fc5bf24a0ce9113e1c510013aa9b9782bae4a0b0feaf592957cd3ff4df",
+      "input_stream_sha256": "62ea1d11889bb6d6d86889a1624a5605e62b7b4f0fac40dab111aa6212217b6f"
+    },
+    "target_20.ordinary_projectiles": {
+      "actual_initial_entity_counts": {
+        "active_ships": 20,
+        "ammunition_units": 1414,
+        "guided_projectiles": 0,
+        "ordinary_projectiles": 600,
+        "projectiles": 600,
+        "weapon_sequences": 14
+      },
+      "initial_scene_sha256": "e120b60071e02cb43a97e4c11e34b6ee4eaf212f6dcd70027aca8de6656674f8",
+      "input_stream_sha256": "55c319a0598a3e7b00ae2f76d3d7e1643c769277d6ab8e300c5856094a22b9e4"
+    },
+    "target_20.scripted_damage_and_recompile": {
+      "actual_initial_entity_counts": {
+        "active_ships": 20,
+        "ammunition_units": 1414,
+        "guided_projectiles": 60,
+        "ordinary_projectiles": 600,
+        "projectiles": 660,
+        "weapon_sequences": 14
+      },
+      "initial_scene_sha256": "fce5f11e841dde12b9b0777526455ab710692718ff3d7dcbfecf365203d91f40",
+      "input_stream_sha256": "4193f0f0f978c41ad255a33d03a06dd3818367680640d396dee5c00a3191f9c1"
+    }
+  },
+  "scope": "t0b_deterministic_scenarios_legal_loadout_and_headless_baseline_only",
+  "status": "PASS",
+  "t0_gate_status": "NOT_COVERED",
+  "t0_performance_measured": false
+}

@@ -104,6 +104,38 @@ def _keys(
         raise ContractError("object.extra_keys", path, f"未知字段 {extra}")
 
 
+@dataclass(frozen=True)
+class _FrozenJsonObject:
+    """区分于数组元组的内部不可变 JSON 对象。"""
+
+    items: tuple[tuple[str, Any], ...]
+
+
+def _freeze_json_value(value: Any) -> Any:
+    """深度冻结已通过契约校验的 JSON 值。"""
+
+    if isinstance(value, dict):
+        return _FrozenJsonObject(
+            tuple(
+                (key, _freeze_json_value(item))
+                for key, item in sorted(value.items())
+            )
+        )
+    if isinstance(value, list):
+        return tuple(_freeze_json_value(item) for item in value)
+    return value
+
+
+def _thaw_json_value(value: Any) -> Any:
+    """为序列化返回全新的标准 JSON 容器。"""
+
+    if isinstance(value, _FrozenJsonObject):
+        return {key: _thaw_json_value(item) for key, item in value.items}
+    if isinstance(value, tuple):
+        return [_thaw_json_value(item) for item in value]
+    return value
+
+
 @dataclass(frozen=True, order=True)
 class ResourceReference:
     id: str
@@ -1167,10 +1199,16 @@ class ModuleCapability:
                     "supported_modes": list(modes),
                 }
             )
-        return cls(kind, tuple(sorted(parsed.items(), key=lambda item: item[0])))
+        return cls(
+            kind,
+            tuple(
+                (key, _freeze_json_value(item))
+                for key, item in sorted(parsed.items(), key=lambda item: item[0])
+            ),
+        )
 
     def to_dict(self) -> dict[str, Any]:
-        return dict(self.values)
+        return {key: _thaw_json_value(value) for key, value in self.values}
 
 
 @dataclass(frozen=True)
