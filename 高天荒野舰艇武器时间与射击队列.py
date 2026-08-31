@@ -47,6 +47,16 @@ WEAPON_TIMELINE_POLICY_ID = "gaotian.weapon-timeline/event-ordered-atomic-action
 FIXTURE_LEVELS = {"contract_fixture", "prototype_unbalanced", "balance_reference"}
 EPS = 1.0e-8
 MAX_EVENTS_PER_ADVANCE = 10000
+WEAPON_TIMELINE_ADVANCE_SAME_TIME_NOOP = "same_time_noop"
+WEAPON_TIMELINE_ADVANCE_CLOCK_ONLY = "clock_only"
+WEAPON_TIMELINE_ADVANCE_FULL = "full_advance"
+WEAPON_TIMELINE_ADVANCE_MODES = frozenset(
+    {
+        WEAPON_TIMELINE_ADVANCE_SAME_TIME_NOOP,
+        WEAPON_TIMELINE_ADVANCE_CLOCK_ONLY,
+        WEAPON_TIMELINE_ADVANCE_FULL,
+    }
+)
 
 
 def _resource_id(value: Any, path: str) -> str:
@@ -269,6 +279,20 @@ class WeaponTimelineAdvanceResolution:
             "source_instance_sha256": self.source_instance_sha256,
             "timeline_state": state.to_dict(),
         }
+
+
+@dataclass(frozen=True)
+class WeaponTimelineAdvancePlan:
+    """绑定精确源时间线的单边界推进分类，不进入存档。"""
+
+    source_tactical_time_s: float
+    target_tactical_time_s: float
+    next_due_tactical_time_s: float | None
+    mode: str
+    source_timeline_state: WeaponTimelineStateInput = field(
+        repr=False,
+        compare=True,
+    )
 
 
 def _weapon_modules(
@@ -756,18 +780,10 @@ def _event_success(
     )
 
 
-def advance_weapon_timeline(
-    snapshot: DerivedShipSnapshot,
-    sortie: CompiledSortieState,
-    instance: ShipInstanceSnapshotInput,
-    catalog: WeaponTimingProfileCatalog,
-    *,
+def _validated_target_tactical_time(
+    state: WeaponTimelineStateInput,
     target_tactical_time_s: float,
-    runtime_cache: RuntimeShipParametersCache | None = None,
-    runtime_validation_mode: str = RUNTIME_CACHE_VALIDATION_STRICT,
-) -> WeaponTimelineAdvanceResolution:
-    source_sha = canonical_sha256(instance)
-    state = _require_timeline(snapshot, instance, catalog)
+) -> float:
     if (
         isinstance(target_tactical_time_s, bool)
         or not isinstance(target_tactical_time_s, (int, float))
@@ -779,7 +795,119 @@ def advance_weapon_timeline(
             "$.target_tactical_time_s",
             "目标战术时刻必须是不早于当前时刻的有限数",
         )
-    target_time = float(target_tactical_time_s)
+    return float(target_tactical_time_s)
+
+
+def _plan_validated_weapon_timeline_advance(
+    state: WeaponTimelineStateInput,
+    target_time: float,
+) -> WeaponTimelineAdvancePlan:
+    next_due = min(
+        (item.next_event_time_s for item in state.sequences),
+        default=None,
+    )
+    if next_due is not None and next_due <= target_time + EPS:
+        mode = WEAPON_TIMELINE_ADVANCE_FULL
+    elif target_time == state.tactical_time_s:
+        mode = WEAPON_TIMELINE_ADVANCE_SAME_TIME_NOOP
+    else:
+        mode = WEAPON_TIMELINE_ADVANCE_CLOCK_ONLY
+    return WeaponTimelineAdvancePlan(
+        state.tactical_time_s,
+        target_time,
+        next_due,
+        mode,
+        state,
+    )
+
+
+def plan_weapon_timeline_advance(
+    snapshot: DerivedShipSnapshot,
+    instance: ShipInstanceSnapshotInput,
+    catalog: WeaponTimingProfileCatalog,
+    *,
+    target_tactical_time_s: float,
+) -> WeaponTimelineAdvancePlan:
+    """严格校验当前时间线并生成只对该精确状态有效的步内推进计划。"""
+
+    state = _require_timeline(snapshot, instance, catalog)
+    target_time = _validated_target_tactical_time(state, target_tactical_time_s)
+    return _plan_validated_weapon_timeline_advance(state, target_time)
+
+
+def apply_weapon_timeline_advance_plan(
+    instance: ShipInstanceSnapshotInput,
+    plan: WeaponTimelineAdvancePlan,
+    *,
+    _source_instance_sha256: str | None = None,
+) -> WeaponTimelineAdvanceResolution:
+    """应用无到期事件计划；源时间线变化时拒绝使用陈旧投影。"""
+
+    state = instance.weapon_timeline_state
+    if state is None:
+        raise ContractError(
+            "weapon_timeline.state_missing",
+            "$.weapon_timeline_state",
+            "执行时间队列前必须初始化武器时间状态",
+        )
+    if state != plan.source_timeline_state:
+        raise ContractError(
+            "weapon_timeline.advance_plan_stale",
+            "$.weapon_timeline_state",
+            "武器时间线已变化，必须重新生成步内推进计划",
+        )
+    if plan.mode == WEAPON_TIMELINE_ADVANCE_FULL:
+        raise ContractError(
+            "weapon_timeline.advance_plan_requires_full",
+            "$.weapon_timeline_state.sequences",
+            "存在到期事件，必须使用完整武器时间线引擎",
+        )
+    if plan.mode not in WEAPON_TIMELINE_ADVANCE_MODES:
+        raise ContractError(
+            "weapon_timeline.advance_plan_mode",
+            "$.weapon_timeline_state",
+            plan.mode,
+        )
+    source_sha = (
+        canonical_sha256(instance)
+        if _source_instance_sha256 is None
+        else _source_instance_sha256
+    )
+    if plan.mode == WEAPON_TIMELINE_ADVANCE_SAME_TIME_NOOP:
+        resulting_instance = instance
+    else:
+        resulting_instance = _replace_timeline(
+            instance,
+            replace(state, tactical_time_s=plan.target_tactical_time_s),
+        )
+    return WeaponTimelineAdvanceResolution(source_sha, resulting_instance, ())
+
+
+def advance_weapon_timeline(
+    snapshot: DerivedShipSnapshot,
+    sortie: CompiledSortieState,
+    instance: ShipInstanceSnapshotInput,
+    catalog: WeaponTimingProfileCatalog,
+    *,
+    target_tactical_time_s: float,
+    runtime_cache: RuntimeShipParametersCache | None = None,
+    runtime_validation_mode: str = RUNTIME_CACHE_VALIDATION_STRICT,
+    _source_instance_sha256: str | None = None,
+) -> WeaponTimelineAdvanceResolution:
+    source_sha = (
+        canonical_sha256(instance)
+        if _source_instance_sha256 is None
+        else _source_instance_sha256
+    )
+    state = _require_timeline(snapshot, instance, catalog)
+    target_time = _validated_target_tactical_time(state, target_tactical_time_s)
+    plan = _plan_validated_weapon_timeline_advance(state, target_time)
+    if plan.mode != WEAPON_TIMELINE_ADVANCE_FULL:
+        return apply_weapon_timeline_advance_plan(
+            instance,
+            plan,
+            _source_instance_sha256=source_sha,
+        )
     working = instance
     current = state
     sequence_map = {item.id: item for item in current.sequences}

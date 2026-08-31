@@ -132,7 +132,7 @@ def main() -> None:
     probes = observed["profiled"]["function_probes"]
     expected_probe_calls = {
         "advance_projectile_world": 1,
-        "advance_weapon_timeline": 12,
+        "advance_weapon_timeline": 0,
         "bind_tactical_ship_model": 6,
         "build_tactical_ship_model": 0,
         "build_tactical_ship_static_model": 0,

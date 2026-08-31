@@ -1,0 +1,56 @@
+{
+  "authority_golden": "12_of_12_PASS",
+  "due_scene_evidence": {
+    "launch_directives": 4,
+    "spawned_projectiles": 4,
+    "weapon_events": 4
+  },
+  "implementation_hashes": {
+    "高天荒野T0b2b3a精确边界上下文测试.py": "dd876c6147aecc058b766e5c25afff82d3ff871fec790b3df0f4429aef01caa3",
+    "高天荒野T0b2b3b武器时间线安全快进测试.py": "5fa437272e651858099abe488ee9e88eb868196abdcede3a961a5afffa1c5222",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "b42772254e326527b23186c3faa8159fc12dcf02aecd401ed80faac6eeeb66e1",
+    "高天荒野T0权威热路径基线测试.py": "c841a587d0f45e5a9885fb8dd32f9bb66280d915c8b6a6a30dbbc813f380c1d8",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "15d7e7e098f3725dbe6df583585a2ea86abda7f7930265dc2ec2852ee00651c7",
+    "高天荒野舰艇统一战术场景.py": "d05e9bcdcf8ef11d421458c3aaa5130949018c6c832ef33642c960320c8db61d",
+    "高天荒野舰艇武器时间与射击队列.py": "10dfb6f4dfdb32a20ae886ba69f438e473cda0124c65bc92ac99282f7017096a"
+  },
+  "interface": "gaotian.stage-t0b2b3b-weapon-timeline-safe-fast-forward/v1",
+  "mode_evidence": {
+    "clock_only_preserves_clocks_and_sequences": true,
+    "due_inside_eps_requires_full": true,
+    "due_outside_eps_uses_clock_only": true,
+    "full_plan_cannot_use_fast_apply": true,
+    "same_time_returns_exact_instance": true,
+    "stale_plan_after_cancel_rejected": true
+  },
+  "next_slice": "T0b.2b3c_intra_step_lifecycle_projection_reuse",
+  "official_performance_runs_executed": 0,
+  "regression": {
+    "python": "60_of_60_PASS",
+    "rust": "15_of_15_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "risk_controls": {
+    "due_failure_uses_full_engine": true,
+    "full_engine_event_order_unchanged": true,
+    "persistent_due_index_added": false,
+    "source_timeline_value_gate": true,
+    "stale_plan_fails_closed": true,
+    "timeline_clock_advances_without_events": true
+  },
+  "scope": "step_local_weapon_timeline_plan_and_no_due_fast_forward_only",
+  "short_diagnostic": {
+    "measurement_scope": "target_20.motion_only_10_warmup_plus_60_measured_steps_three_repetitions",
+    "resident_memory_maximum_bytes": 41828352,
+    "real_time_factor_minimum": 1.6272034572215532,
+    "worst_fixed_step_maximum_ms": 12.3333,
+    "worst_fixed_step_p95_ms": 11.5092
+  },
+  "status": "PASS",
+  "t0_performance_measured": false,
+  "target_20_motion_profile": {
+    "advance_weapon_timeline_calls": 0,
+    "canonical_sha256_calls": 22,
+    "derive_tactical_ship_lifecycle_calls": 40
+  }
+}

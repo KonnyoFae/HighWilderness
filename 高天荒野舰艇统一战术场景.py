@@ -33,9 +33,13 @@ from 高天荒野舰艇弹药与武器动作结算器 import (
     WEAPON_ACTION_WAKE_EVENT,
 )
 from 高天荒野舰艇武器时间与射击队列 import (
+    WEAPON_TIMELINE_ADVANCE_FULL,
     WeaponTimelineEvent,
+    WeaponTimelineAdvancePlan,
     WeaponTimingProfileCatalog,
+    apply_weapon_timeline_advance_plan,
     advance_weapon_timeline,
+    plan_weapon_timeline_advance,
 )
 from 高天荒野舰艇导弹制导 import (
     MissileGuidanceEvent,
@@ -1810,6 +1814,24 @@ def advance_tactical_scene_step(
     def resolve_boundary(boundary_time_s: float, boundary_step: int, motions: dict[str, TacticalMotionState]) -> None:
         nonlocal world, ship_map
         spawn_inputs: list[ProjectileSpawnInput] = []
+        timeline_plans: dict[
+            str,
+            tuple[WeaponTimelineAdvancePlan, str],
+        ] = {}
+        for ship_id in sorted(ship_map):
+            ship = ship_map[ship_id]
+            if ship.lifecycle_state.physical_status != "operational":
+                continue
+            context = step_context(ship_id, boundary_time_s, boundary_step)
+            timeline_plans[ship_id] = (
+                plan_weapon_timeline_advance(
+                    binding_by_id[ship_id].snapshot,
+                    ship.combat_state.instance,
+                    timing_catalog,
+                    target_tactical_time_s=boundary_time_s,
+                ),
+                context.runtime.instance_snapshot_sha256,
+            )
         for ship_id in sorted(ship_map):
             ship = ship_map[ship_id]
             binding = binding_by_id[ship_id]
@@ -1823,17 +1845,33 @@ def advance_tactical_scene_step(
                     combat_state=replace(ship.combat_state, instance=suspended),
                 )
                 continue
-            resolution = advance_weapon_timeline(
-                binding.snapshot,
-                binding.sortie,
-                ship.combat_state.instance,
-                timing_catalog,
-                target_tactical_time_s=boundary_time_s,
-                runtime_cache=binding.runtime_cache,
-                runtime_validation_mode=runtime_validation_mode,
-            )
-            ship = replace(ship, combat_state=replace(ship.combat_state, instance=resolution.resulting_instance))
-            ship_map[ship_id] = ship
+            plan, source_instance_sha256 = timeline_plans[ship_id]
+            if plan.mode == WEAPON_TIMELINE_ADVANCE_FULL:
+                resolution = advance_weapon_timeline(
+                    binding.snapshot,
+                    binding.sortie,
+                    ship.combat_state.instance,
+                    timing_catalog,
+                    target_tactical_time_s=boundary_time_s,
+                    runtime_cache=binding.runtime_cache,
+                    runtime_validation_mode=runtime_validation_mode,
+                    _source_instance_sha256=source_instance_sha256,
+                )
+            else:
+                resolution = apply_weapon_timeline_advance_plan(
+                    ship.combat_state.instance,
+                    plan,
+                    _source_instance_sha256=source_instance_sha256,
+                )
+            if resolution.resulting_instance is not ship.combat_state.instance:
+                ship = replace(
+                    ship,
+                    combat_state=replace(
+                        ship.combat_state,
+                        instance=resolution.resulting_instance,
+                    ),
+                )
+                ship_map[ship_id] = ship
             for event in resolution.events:
                 if abs(event.tactical_time_s - boundary_time_s) > EPS:
                     raise ContractError("tactical_scene.missed_weapon_boundary", f"$.ships.{ship_id}", "存在早于当前边界而未处理的武器事件")
