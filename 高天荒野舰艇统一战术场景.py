@@ -868,17 +868,39 @@ def _on_grid(time_s: float, fixed_step_s: float) -> bool:
     return abs(time_s - nearest * fixed_step_s) <= EPS
 
 
-def derive_tactical_ship_lifecycle(
+@dataclass(frozen=True)
+class TacticalShipLifecycleProjection:
+    """不含步号的生命周期语义投影，可安全比较同一步边界结果。"""
+
+    physical_status: str
+    command_status: str
+    failure_causes: tuple[str, ...]
+    exit_reason: str | None = None
+    exit_tactical_time_s: float | None = None
+
+
+def _lifecycle_projection_from_state(
+    state: TacticalShipLifecycleState,
+) -> TacticalShipLifecycleProjection:
+    return TacticalShipLifecycleProjection(
+        state.physical_status,
+        state.command_status,
+        state.failure_causes,
+        state.exit_reason,
+        state.exit_tactical_time_s,
+    )
+
+
+def project_tactical_ship_lifecycle(
     runtime: RuntimeShipParameters,
     sortie: CompiledSortieState,
     *,
-    step_index: int,
     previous: TacticalShipLifecycleState | None = None,
-) -> TacticalShipLifecycleState:
-    """由物理损伤与实际控制能力派生舰艇生命周期，不伪造坠落耗时。"""
+) -> TacticalShipLifecycleProjection:
+    """只计算生命周期语义；不决定转移发生在哪个固定步。"""
 
     if previous is not None and previous.physical_status == "exited":
-        return previous
+        return _lifecycle_projection_from_state(previous)
     causes: set[str] = set()
     if runtime.current_hull_integrity_fraction <= EPS:
         causes.add("hull_structure_collapsed")
@@ -911,24 +933,58 @@ def derive_tactical_ship_lifecycle(
                 causes.add("remote_control_lost")
         else:
             command_status = "scene_command"
-    normalized_causes = tuple(sorted(causes))
-    candidate = TacticalShipLifecycleState(
+    return TacticalShipLifecycleProjection(
         physical_status,
         command_status,
-        normalized_causes,
+        tuple(sorted(causes)),
+    )
+
+
+def _materialize_tactical_ship_lifecycle(
+    projection: TacticalShipLifecycleProjection,
+    *,
+    step_index: int,
+    previous: TacticalShipLifecycleState | None = None,
+) -> TacticalShipLifecycleState:
+    if previous is not None and previous.physical_status == "exited":
+        return previous
+    candidate = TacticalShipLifecycleState(
+        projection.physical_status,
+        projection.command_status,
+        projection.failure_causes,
         step_index,
+        projection.exit_reason,
+        projection.exit_tactical_time_s,
     )
     if previous is not None and (
-        previous.physical_status,
-        previous.command_status,
-        previous.failure_causes,
-    ) == (
-        candidate.physical_status,
-        candidate.command_status,
-        candidate.failure_causes,
+        _lifecycle_projection_from_state(previous) == projection
     ):
-        return replace(candidate, last_transition_step_index=previous.last_transition_step_index)
+        return replace(
+            candidate,
+            last_transition_step_index=previous.last_transition_step_index,
+        )
     return candidate
+
+
+def derive_tactical_ship_lifecycle(
+    runtime: RuntimeShipParameters,
+    sortie: CompiledSortieState,
+    *,
+    step_index: int,
+    previous: TacticalShipLifecycleState | None = None,
+) -> TacticalShipLifecycleState:
+    """由物理损伤与实际控制能力派生舰艇生命周期，不伪造坠落耗时。"""
+
+    projection = project_tactical_ship_lifecycle(
+        runtime,
+        sortie,
+        previous=previous,
+    )
+    return _materialize_tactical_ship_lifecycle(
+        projection,
+        step_index=step_index,
+        previous=previous,
+    )
 
 
 def evaluate_tactical_engagement(
@@ -1772,6 +1828,8 @@ def advance_tactical_scene_step(
     def refresh_lifecycle_boundary(
         boundary_time_s: float,
         boundary_step: int,
+        *,
+        reuse_unchanged_projection: bool = False,
     ) -> None:
         nonlocal ship_map
         for ship_id in sorted(ship_map):
@@ -1784,12 +1842,29 @@ def advance_tactical_scene_step(
                 boundary_time_s,
                 boundary_step,
             ).runtime
-            lifecycle = derive_tactical_ship_lifecycle(
-                runtime,
-                binding.sortie,
-                step_index=boundary_step,
-                previous=ship.lifecycle_state,
-            )
+            if reuse_unchanged_projection:
+                projection = project_tactical_ship_lifecycle(
+                    runtime,
+                    binding.sortie,
+                    previous=ship.lifecycle_state,
+                )
+                if projection == _lifecycle_projection_from_state(
+                    ship.lifecycle_state
+                ):
+                    lifecycle = ship.lifecycle_state
+                else:
+                    lifecycle = _materialize_tactical_ship_lifecycle(
+                        projection,
+                        step_index=boundary_step,
+                        previous=ship.lifecycle_state,
+                    )
+            else:
+                lifecycle = derive_tactical_ship_lifecycle(
+                    runtime,
+                    binding.sortie,
+                    step_index=boundary_step,
+                    previous=ship.lifecycle_state,
+                )
             if lifecycle.physical_status == "falling":
                 ship = replace(
                     ship,
@@ -2261,7 +2336,11 @@ def advance_tactical_scene_step(
             ),
         )
 
-    refresh_lifecycle_boundary(end_time_s, state.fixed_step_index + 1)
+    refresh_lifecycle_boundary(
+        end_time_s,
+        state.fixed_step_index + 1,
+        reuse_unchanged_projection=True,
+    )
     for outcome in sorted(evacuation_items, key=lambda item: item.ship_id):
         ship = ship_map[outcome.ship_id]
         evacuation = apply_crew_evacuation_outcome(

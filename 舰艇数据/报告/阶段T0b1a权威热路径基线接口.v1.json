@@ -14,7 +14,7 @@
     "build_tactical_ship_static_model": 0,
     "compile_projectile_target_geometry": 0,
     "compile_runtime_ship_parameters": 0,
-    "derive_tactical_ship_lifecycle": 12,
+    "derive_tactical_ship_lifecycle": 6,
     "design_snapshot_source_sha256": 60,
     "integrate_tactical_step": 6,
     "refresh_lifecycle_boundary": 2,

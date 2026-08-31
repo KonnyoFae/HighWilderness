@@ -1,0 +1,67 @@
+{
+  "authority_golden": "12_of_12_PASS",
+  "baseline": {
+    "commit": "2afd5e7cae35eb843caefc6332f154d822010fbd",
+    "slice": "T0b.2b3b_complete"
+  },
+  "changed_boundary_evidence": {
+    "cic_damage_detected_at_end_boundary": true,
+    "impact_and_lifecycle_event_same_resolution_step": true,
+    "resulting_physical_status": "falling"
+  },
+  "implementation_hashes": {
+    "高天荒野T0b2b3c生命周期同一步投影测试.py": "74f2649e1081bfde29f52d219371d6dabafbc9b6dd05d2e129501fe5841d8e3f",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "a0ad7f905600133db87f6385ad0f3089d298e082d2e77010eb7b491bc2761abd",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "e631b9c4206bd4ba599ef3eee9b59287271f68b268648a6d4548bd612c756986",
+    "高天荒野舰艇统一战术场景.py": "8209ac7c44dfb1267d63cf5156b31bd09f73e1d2c4878ff7a3c6e8d97e8884a4"
+  },
+  "interface": "gaotian.stage-t0b2b3c-intra-step-lifecycle-projection/v1",
+  "next_slice": "T0b.2b3d_profile_and_optional_step_local_scratch",
+  "official_performance_runs_executed": 0,
+  "projection_evidence": {
+    "case_count": 6,
+    "derived_projection_parity": true,
+    "falling_and_exit_sticky": true
+  },
+  "regression": {
+    "python": "61_of_61_PASS",
+    "rust": "15_of_15_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "reuse_evidence": {
+    "end_boundary_materializations": 0,
+    "materializations_total": 20,
+    "projections_total": 40,
+    "ships": 20
+  },
+  "risk_controls": {
+    "cross_step_projection_cache_added": false,
+    "dirty_flag_authorizes_skip": false,
+    "end_boundary_exact_runtime_still_resolved": true,
+    "end_boundary_projection_still_evaluated": true,
+    "lifecycle_event_order_unchanged": true,
+    "reuse_requires_exact_semantic_projection_equality": true,
+    "single_authoritative_rule_copy": true
+  },
+  "scope": "same_step_lifecycle_semantic_projection_and_unchanged_state_reuse_only",
+  "short_diagnostic": {
+    "measurement_scope": "target_20.motion_only_10_warmup_plus_60_measured_steps_three_repetitions",
+    "real_time_factors": [
+      1.699604434064016,
+      1.6890978866007242,
+      1.696354567960544
+    ],
+    "resident_memory_maximum_bytes": 40046592,
+    "real_time_factor_minimum": 1.6890978866007242,
+    "worst_fixed_step_maximum_ms": 13.1486,
+    "worst_fixed_step_p95_ms": 10.7528
+  },
+  "status": "PASS",
+  "t0_performance_measured": false,
+  "target_20_motion_profile": {
+    "advance_weapon_timeline_calls": 0,
+    "canonical_sha256_calls": 22,
+    "derive_tactical_ship_lifecycle_calls": 20,
+    "runtime_cache_resolve_calls": 60
+  }
+}

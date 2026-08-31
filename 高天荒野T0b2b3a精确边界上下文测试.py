@@ -90,7 +90,7 @@ def main() -> None:
     assert probes["bind_tactical_ship_model"]["total_calls"] <= 20
     assert probes["compile_runtime_ship_parameters"]["total_calls"] == 0
     assert probes["runtime_view_bind"]["total_calls"] == 0
-    assert probes["derive_tactical_ship_lifecycle"]["total_calls"] == 40
+    assert probes["derive_tactical_ship_lifecycle"]["total_calls"] <= 40
     # b3b 及后续等价切片可以继续减少完整时间线引擎调用。
     assert probes["advance_weapon_timeline"]["total_calls"] <= 40
 

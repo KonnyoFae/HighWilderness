@@ -205,7 +205,7 @@ def main() -> None:
     assert probes["canonical_sha256"]["total_calls"] <= 22
     assert probes["runtime_cache_resolve"]["total_calls"] <= 60
     assert probes["bind_tactical_ship_model"]["total_calls"] <= 20
-    assert probes["derive_tactical_ship_lifecycle"]["total_calls"] == 40
+    assert probes["derive_tactical_ship_lifecycle"]["total_calls"] <= 40
 
     report = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
     assert report["interface"] == "gaotian.stage-t0b2b3b-weapon-timeline-safe-fast-forward/v1"
@@ -217,7 +217,9 @@ def main() -> None:
     assert report["target_20_motion_profile"] == {
         "advance_weapon_timeline_calls": 0,
         "canonical_sha256_calls": probes["canonical_sha256"]["total_calls"],
-        "derive_tactical_ship_lifecycle_calls": 40,
+        "derive_tactical_ship_lifecycle_calls": probes[
+            "derive_tactical_ship_lifecycle"
+        ]["total_calls"],
     }
     for relative_path in (
         "高天荒野T0b2b3a精确边界上下文测试.py",
