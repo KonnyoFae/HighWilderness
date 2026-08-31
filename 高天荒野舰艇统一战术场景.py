@@ -742,7 +742,7 @@ class TacticalSceneShipStepResult:
                     "structure_ratio": self.diagnostics.structure_ratio,
                 }
             ),
-            "resulting_runtime_parameters_sha256": canonical_sha256(self.resulting_runtime),
+            "resulting_runtime_parameters_sha256": self.resulting_runtime.source_sha256,
             "ship_id": self.ship_id,
         }
 

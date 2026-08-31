@@ -20,14 +20,14 @@
   },
   "golden_sha256": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
   "implementation_hashes": {
-    "benchmarks/t0/diagnostics.py": "ef5848f75b23cf82e24aae26072e5742a69670fa120532c34e830cc2c6e8c884",
+    "benchmarks/t0/diagnostics.py": "61d9e1f901b3a8959f836a58bbe8e383caddf3da99e37f81b2a6b80f0e90d756",
     "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
     "高天荒野T0运行时与静态模型复用测试.py": "65468491b1dcb5a991b8c8e7ddbd873953c0d06a0da1c399abf689ab52f4a49e",
     "高天荒野舰艇弹药与武器动作结算器.py": "ef678cfd18320d1116bfcc59c7a4ff92e6299436437627c75181287acfd8d1c4",
     "高天荒野舰艇战术机动求解器.py": "03c62cf450e7ec58783fd98ba7190ad28a86d1caaec9f3f044a398f28a6b2986",
     "高天荒野舰艇武器时间与射击队列.py": "894b15afd667c191d941297b7a7ded3d1dbecd47b3b56f489eb8d32b423504aa",
-    "高天荒野舰艇统一战术场景.py": "c0db111723668eb340b5840b3d106f89736b2c3f4b72d748a367e04db30edb7b",
-    "高天荒野舰艇运行时参数编译器.py": "7e000c7d6e2aeaba5d876363445e517a0e3bd821ad33d84661cf381b0d751aaf"
+    "高天荒野舰艇统一战术场景.py": "fd9f0ec827471a6912fe3957412123eaedfd58aa36135a5a2e260e662cf4d301",
+    "高天荒野舰艇运行时参数编译器.py": "3068126bd580cc24520f143bf7a8c85cd055e81bb60a22c54873113a56d70eb1"
   },
   "interface": "gaotian.stage-t0b1c-runtime-static-model-reuse/v1",
   "local_timing_artifact_policy": "ignored_not_persisted_in_regression_report",

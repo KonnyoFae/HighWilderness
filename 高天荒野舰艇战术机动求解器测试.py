@@ -266,7 +266,13 @@ def main() -> None:
         == remote_next.hull_integrity_fraction
     )
 
-    wrong_runtime = replace(runtime, derived_snapshot_sha256="0" * 64)
+    wrong_runtime = replace(
+        runtime,
+        _core=replace(
+            runtime.stable_core,
+            derived_snapshot_sha256="0" * 64,
+        ),
+    )
     require_contract_error(
         "tactical.derived_snapshot_mismatch",
         lambda: build_tactical_ship_model(wrong_runtime, snapshot),

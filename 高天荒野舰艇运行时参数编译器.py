@@ -46,6 +46,7 @@ RUNTIME_CACHE_VALIDATION_TRUSTED = "trusted_prevalidated"
 RUNTIME_CACHE_VALIDATION_MODES = frozenset(
     {RUNTIME_CACHE_VALIDATION_STRICT, RUNTIME_CACHE_VALIDATION_TRUSTED}
 )
+RUNTIME_INSTANCE_VIEW_HISTORY_LIMIT = 4
 POWER_ALLOCATION_POLICY_ID = "gaotian.power-allocation/categories-and-nearest/v1"
 DAMAGE_RESPONSE_POLICY_ID = "gaotian.module-damage-response/per-function-curves/v1"
 CREW_ALLOCATION_POLICY_ID = (
@@ -191,9 +192,9 @@ class RuntimeModuleResult:
 
 
 @dataclass(frozen=True)
-class RuntimeShipParameters:
-    instance_snapshot: ShipInstanceSnapshotInput
-    instance_snapshot_sha256: str
+class RuntimeShipParametersCore:
+    """只保存由 RuntimeStateRevision 与自动事件派生的稳定运行时核心。"""
+
     active_automatic_events: tuple[str, ...]
     derived_snapshot_sha256: str
     sortie_configuration_sha256: str
@@ -223,6 +224,15 @@ class RuntimeShipParameters:
     safe_lateral_mps2: float
     safe_yaw_acceleration_rad_s2: float
     safe_yaw_rate_rad_s: float
+
+
+@dataclass(frozen=True)
+class RuntimeShipParameters:
+    """把稳定派生核心绑定到当前精确舰艇实例的轻量不可变视图。"""
+
+    _core: RuntimeShipParametersCore = field(repr=False)
+    instance_snapshot: ShipInstanceSnapshotInput
+    instance_snapshot_sha256: str
     _source_sha256: str = field(init=False, repr=False, compare=False)
 
     def __post_init__(self) -> None:
@@ -231,6 +241,126 @@ class RuntimeShipParameters:
     @property
     def source_sha256(self) -> str:
         return self._source_sha256
+
+    @property
+    def stable_core(self) -> RuntimeShipParametersCore:
+        return self._core
+
+    @property
+    def active_automatic_events(self) -> tuple[str, ...]:
+        return self._core.active_automatic_events
+
+    @property
+    def derived_snapshot_sha256(self) -> str:
+        return self._core.derived_snapshot_sha256
+
+    @property
+    def sortie_configuration_sha256(self) -> str:
+        return self._core.sortie_configuration_sha256
+
+    @property
+    def height_layer(self) -> str:
+        return self._core.height_layer
+
+    @property
+    def current_hull_integrity_fraction(self) -> float:
+        return self._core.current_hull_integrity_fraction
+
+    @property
+    def current_mass_kg(self) -> float:
+        return self._core.current_mass_kg
+
+    @property
+    def current_inertia_kg_m2(self) -> float:
+        return self._core.current_inertia_kg_m2
+
+    @property
+    def current_lift_force_n(self) -> float:
+        return self._core.current_lift_force_n
+
+    @property
+    def current_lift_margin_n(self) -> float:
+        return self._core.current_lift_margin_n
+
+    @property
+    def lift_sufficient(self) -> bool:
+        return self._core.lift_sufficient
+
+    @property
+    def crew_safety_lock_enabled(self) -> bool:
+        return self._core.crew_safety_lock_enabled
+
+    @property
+    def crew_type_fulfillment(self) -> tuple[tuple[str, float], ...]:
+        return self._core.crew_type_fulfillment
+
+    @property
+    def modules(self) -> tuple[RuntimeModuleResult, ...]:
+        return self._core.modules
+
+    @property
+    def power(self) -> RuntimePowerAllocation:
+        return self._core.power
+
+    @property
+    def actuators(self) -> tuple[ActuatorInstance, ...]:
+        return self._core.actuators
+
+    @property
+    def actuator_aggregation(self) -> ActuatorAggregation:
+        return self._core.actuator_aggregation
+
+    @property
+    def cic_control_available(self) -> bool:
+        return self._core.cic_control_available
+
+    @property
+    def remote_control_available(self) -> bool:
+        return self._core.remote_control_available
+
+    @property
+    def fuel_available(self) -> bool:
+        return self._core.fuel_available
+
+    @property
+    def terminal_failures(self) -> tuple[str, ...]:
+        return self._core.terminal_failures
+
+    @property
+    def aerodynamic_cache_sha256(self) -> str:
+        return self._core.aerodynamic_cache_sha256
+
+    @property
+    def hull_rcs_cache_sha256(self) -> str:
+        return self._core.hull_rcs_cache_sha256
+
+    @property
+    def hull_durability_volume_proxy_m3(self) -> float:
+        return self._core.hull_durability_volume_proxy_m3
+
+    @property
+    def longitudinal_bottleneck_m(self) -> float:
+        return self._core.longitudinal_bottleneck_m
+
+    @property
+    def lateral_bottleneck_m(self) -> float:
+        return self._core.lateral_bottleneck_m
+
+    @property
+    def safe_longitudinal_mps2(self) -> float:
+        return self._core.safe_longitudinal_mps2
+
+    @property
+    def safe_lateral_mps2(self) -> float:
+        return self._core.safe_lateral_mps2
+
+    @property
+    def safe_yaw_acceleration_rad_s2(self) -> float:
+        return self._core.safe_yaw_acceleration_rad_s2
+
+    @property
+    def safe_yaw_rate_rad_s(self) -> float:
+        return self._core.safe_yaw_rate_rad_s
 
     def module(self, instance_id: str) -> RuntimeModuleResult:
         return next(item for item in self.modules if item.instance_id == instance_id)
@@ -294,6 +424,16 @@ class RuntimeShipParameters:
         }
 
 
+def _bind_runtime_ship_parameters(
+    core: RuntimeShipParametersCore,
+    instance: ShipInstanceSnapshotInput,
+    instance_snapshot_sha256: str,
+) -> RuntimeShipParameters:
+    """只在精确实例边界变化时生成新的 runtime 视图。"""
+
+    return RuntimeShipParameters(core, instance, instance_snapshot_sha256)
+
+
 @dataclass(frozen=True)
 class RuntimeStateRevision:
     """只包含会改变 RuntimeShipParameters 派生值的权威域。"""
@@ -338,8 +478,16 @@ class RuntimeShipParametersCache:
         self._lock = RLock()
         self._revision: RuntimeStateRevision | None = None
         self._entries: dict[tuple[str, ...], RuntimeShipParameters] = {}
+        self._view_history: dict[
+            tuple[str, ...], list[RuntimeShipParameters]
+        ] = {}
+        self._hashed_instance: ShipInstanceSnapshotInput | None = None
+        self._hashed_instance_sha256: str | None = None
+        self.direct_view_hit_count = 0
         self.hit_count = 0
+        self.instance_hash_count = 0
         self.miss_count = 0
+        self.runtime_rebind_count = 0
         self.invalidation_count = 0
         self.last_invalidated_domains: tuple[str, ...] = ()
 
@@ -357,21 +505,50 @@ class RuntimeShipParametersCache:
         with self._lock:
             self._revision = None
             self._entries.clear()
+            self._view_history.clear()
+            self._hashed_instance = None
+            self._hashed_instance_sha256 = None
+            self.direct_view_hit_count = 0
             self.hit_count = 0
+            self.instance_hash_count = 0
             self.miss_count = 0
+            self.runtime_rebind_count = 0
             self.invalidation_count = 0
             self.last_invalidated_domains = ()
 
     def stats(self) -> dict[str, Any]:
         with self._lock:
             return {
+                "direct_view_hit_count": self.direct_view_hit_count,
                 "entry_count": len(self._entries),
                 "hit_count": self.hit_count,
                 "invalidation_count": self.invalidation_count,
+                "instance_hash_count": self.instance_hash_count,
+                "instance_view_count": sum(
+                    len(history) for history in self._view_history.values()
+                ),
                 "last_invalidated_domains": list(self.last_invalidated_domains),
                 "maximum_event_variants": self.maximum_event_variants,
+                "maximum_instance_views_per_event": RUNTIME_INSTANCE_VIEW_HISTORY_LIMIT,
                 "miss_count": self.miss_count,
+                "runtime_rebind_count": self.runtime_rebind_count,
             }
+
+    def _instance_snapshot_sha256(
+        self,
+        instance: ShipInstanceSnapshotInput,
+    ) -> str:
+        if (
+            self._hashed_instance is not None
+            and self._hashed_instance == instance
+        ):
+            assert self._hashed_instance_sha256 is not None
+            return self._hashed_instance_sha256
+        result = canonical_sha256(instance)
+        self._hashed_instance = instance
+        self._hashed_instance_sha256 = result
+        self.instance_hash_count += 1
+        return result
 
     def resolve(
         self,
@@ -411,6 +588,7 @@ class RuntimeShipParametersCache:
         if self._revision is not None and self._revision != revision:
             invalidated = self._revision.changed_domains(revision)
             self._entries.clear()
+            self._view_history.clear()
             self.invalidation_count += 1
         self._revision = revision
         self.last_invalidated_domains = invalidated
@@ -419,24 +597,42 @@ class RuntimeShipParametersCache:
         if cached is not None:
             if validation_mode == RUNTIME_CACHE_VALIDATION_STRICT:
                 _validate_runtime_cache_hit(snapshot, sortie, instance)
-            refreshed = replace(
-                cached,
-                instance_snapshot=instance,
-                instance_snapshot_sha256=canonical_sha256(instance),
+            history = self._view_history[events]
+            for index in range(len(history) - 1, -1, -1):
+                candidate = history[index]
+                if candidate.instance_snapshot == instance:
+                    if index != len(history) - 1:
+                        history.append(history.pop(index))
+                        self._entries[events] = candidate
+                    self.direct_view_hit_count += 1
+                    self.hit_count += 1
+                    return RuntimeCacheResolution(candidate, True, invalidated)
+            refreshed = _bind_runtime_ship_parameters(
+                cached.stable_core,
+                instance,
+                self._instance_snapshot_sha256(instance),
             )
             self._entries[events] = refreshed
+            history.append(refreshed)
+            if len(history) > RUNTIME_INSTANCE_VIEW_HISTORY_LIMIT:
+                del history[0]
+            self.runtime_rebind_count += 1
             self.hit_count += 1
             return RuntimeCacheResolution(refreshed, True, invalidated)
+        instance_snapshot_sha256 = self._instance_snapshot_sha256(instance)
         runtime = compile_runtime_ship_parameters(
             snapshot,
             sortie,
             instance,
             active_automatic_events=events,
+            _instance_snapshot_sha256=instance_snapshot_sha256,
         )
         if len(self._entries) >= self.maximum_event_variants:
             oldest = next(iter(self._entries))
             del self._entries[oldest]
+            del self._view_history[oldest]
         self._entries[events] = runtime
+        self._view_history[events] = [runtime]
         self.miss_count += 1
         return RuntimeCacheResolution(runtime, False, invalidated)
 
@@ -891,6 +1087,7 @@ def compile_runtime_ship_parameters(
     instance: ShipInstanceSnapshotInput,
     *,
     active_automatic_events: tuple[str, ...] = (),
+    _instance_snapshot_sha256: str | None = None,
 ) -> RuntimeShipParameters:
     """从设计、出航配置和当前实例状态生成唯一战术运行参数。"""
 
@@ -1054,9 +1251,7 @@ def compile_runtime_ship_parameters(
     if not lift_sufficient:
         failures.append("insufficient_lift")
 
-    return RuntimeShipParameters(
-        instance,
-        canonical_sha256(instance),
+    core = RuntimeShipParametersCore(
         normalized_events,
         snapshot.source_sha256,
         sortie.source_sha256,
@@ -1086,4 +1281,14 @@ def compile_runtime_ship_parameters(
         snapshot.hull.safe_lateral_mps2,
         snapshot.hull.safe_yaw_acceleration_rad_s2,
         snapshot.hull.safe_yaw_rate_rad_s,
+    )
+    instance_snapshot_sha256 = (
+        canonical_sha256(instance)
+        if _instance_snapshot_sha256 is None
+        else _instance_snapshot_sha256
+    )
+    return _bind_runtime_ship_parameters(
+        core,
+        instance,
+        instance_snapshot_sha256,
     )

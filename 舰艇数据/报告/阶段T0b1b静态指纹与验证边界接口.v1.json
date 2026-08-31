@@ -22,7 +22,7 @@
   },
   "golden_sha256": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
   "implementation_hashes": {
-    "benchmarks/t0/diagnostics.py": "ef5848f75b23cf82e24aae26072e5742a69670fa120532c34e830cc2c6e8c884",
+    "benchmarks/t0/diagnostics.py": "61d9e1f901b3a8959f836a58bbe8e383caddf3da99e37f81b2a6b80f0e90d756",
     "benchmarks/t0/scenario.py": "94a8c442a74da209ad9756d4ea28b57351de4ca5afe8af8eda3f4ce58e1964c6",
     "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
     "高天荒野T0静态指纹与验证边界测试.py": "ad824ee40ae5f9ebf9298fd4d6c52d0c1a36426a43815e7247d067dbb270c06a",
@@ -35,8 +35,8 @@
     "高天荒野舰艇无界面舾装编译器.py": "9058b1dae342db4602e4a19bc25c29b66080a087c3f4d87e675c982e6939aa68",
     "高天荒野舰艇武器时间与射击队列.py": "894b15afd667c191d941297b7a7ded3d1dbecd47b3b56f489eb8d32b423504aa",
     "高天荒野舰艇气动缓存.py": "089634e966b3467f91907c7eecf1e989c5c5f002644da2355e3181f0ae3655e3",
-    "高天荒野舰艇统一战术场景.py": "c0db111723668eb340b5840b3d106f89736b2c3f4b72d748a367e04db30edb7b",
-    "高天荒野舰艇运行时参数编译器.py": "7e000c7d6e2aeaba5d876363445e517a0e3bd821ad33d84661cf381b0d751aaf"
+    "高天荒野舰艇统一战术场景.py": "fd9f0ec827471a6912fe3957412123eaedfd58aa36135a5a2e260e662cf4d301",
+    "高天荒野舰艇运行时参数编译器.py": "3068126bd580cc24520f143bf7a8c85cd055e81bb60a22c54873113a56d70eb1"
   },
   "interface": "gaotian.stage-t0b1b-static-fingerprint-validation-boundary/v1",
   "local_timing_artifact_policy": "ignored_not_persisted_in_regression_report",

@@ -30,7 +30,7 @@
   "golden_sha256": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
   "implementation_hashes": {
     "benchmarks/t0/__main__.py": "5addc060c883cacdf25a9319a78715bd4b8da5eb0ed8d9e33ec8672da5a57073",
-    "benchmarks/t0/diagnostics.py": "ef5848f75b23cf82e24aae26072e5742a69670fa120532c34e830cc2c6e8c884",
+    "benchmarks/t0/diagnostics.py": "61d9e1f901b3a8959f836a58bbe8e383caddf3da99e37f81b2a6b80f0e90d756",
     "benchmarks/t0/headless.py": "302833c0872df4cb4d8f805abe9b442bd3084917f8d76d4ec39c88accf3ece6d",
     "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
     "contracts/web_bridge/t0-hot-path-diagnostic.v1.json": "dce0f27394edf0d2bc56cfb0d7da4a0bd73be263ade11bf6db18b42af8aaf3dd",

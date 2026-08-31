@@ -1,0 +1,113 @@
+{
+  "acceptance": {
+    "authority_golden": "12_of_12_PASS",
+    "canonical_sha256_reduction_percent": 72.0721,
+    "dirty_domain_invalidation": "8_of_8_PASS",
+    "authority_repeatability": "6_of_6_cases_3_of_3_repetitions_PASS",
+    "passthrough_instance_core_reuse": "PASS",
+    "python_regression": "58_of_58_PASS",
+    "recent_view_replay_reuse": "PASS",
+    "runtime_compile_calls": "0_PASS",
+    "runtime_view_bind_calls_on_profile_replay": "0_PASS",
+    "rust_regression": "15_of_15_PASS",
+    "strict_cache_hit_validation": "PASS",
+    "target_20_motion_short_realtime": "0_of_3_NOT_MET_final_rerun",
+    "typescript_regression": "4_of_4_PASS"
+  },
+  "baseline": {
+    "commit": "c94bc80cf2f0499f97bd2c35336a0f0971489439",
+    "tree": "d135975304cf30196de79db70012debb328a35ff"
+  },
+  "design": {
+    "authority_key": "RuntimeStateRevision_value_semantics_plus_normalized_automatic_events",
+    "instance_hash_policy": "once_per_distinct_exact_instance_value_boundary_shared_across_event_variants",
+    "runtime_layout": "stable_RuntimeShipParametersCore_plus_exact_instance_immutable_view",
+    "strict_validation_order": "validate_before_any_view_reuse",
+    "view_history_limit_per_event_variant": 4
+  },
+  "dirty_domain_matrix": {
+    "cargo_change": "cargo",
+    "crew_change": "crew",
+    "fuel_availability_boundary": "fuel",
+    "height_transition": "height_layer",
+    "hull_damage": "hull",
+    "module_damage": "modules",
+    "power_policy_change": "power",
+    "resource_revision": "design_sources"
+  },
+  "implementation_hashes": {
+    "benchmarks/t0/diagnostics.py": "61d9e1f901b3a8959f836a58bbe8e383caddf3da99e37f81b2a6b80f0e90d756",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "61b800b2649ca570a2550a15a6169b6a0fc2a83a06bcc701ab4b22ead80030de",
+    "高天荒野T0b2运行时稳定核心测试.py": "51df2fbcb37f890968e2634bf7fe85b53d993024f221cb8705e918e4ac0f5fab",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "5ab35382aa5fde78f3b8a80c3db6e9b7cefdea8d49996c979641e1c9f2698126",
+    "高天荒野舰艇战术机动求解器测试.py": "f08fefa22381c3fd0933050958ea87e5b27d23b7ecebfd5e9b87bbc764f55f74",
+    "高天荒野舰艇统一战术场景.py": "fd9f0ec827471a6912fe3957412123eaedfd58aa36135a5a2e260e662cf4d301",
+    "高天荒野舰艇运行时参数编译器.py": "3068126bd580cc24520f143bf7a8c85cd055e81bb60a22c54873113a56d70eb1"
+  },
+  "interface": "gaotian.stage-t0b2b2-runtime-stable-core/v1",
+  "next_slice": "T0b.2b3_boundary_context_and_dirty_skips",
+  "official_performance_runs_executed": 0,
+  "scope": "authority_equivalent_runtime_core_view_hash_boundary_optimization_only",
+  "short_diagnostic": {
+    "artifact_sha256": "c9f6586cad504171f0b181f2e370b1c3e2e5231af69668484b40b57ba9200e0f",
+    "environment_metadata_sha256": "e493a21d9a14c8358a60558286818280811605b2010e3a287a3040713031ddbf",
+    "legacy_branch_advice": "evidence_only_does_not_override_frozen_T0b2_dependency_order",
+    "policy": "10_warmup_plus_60_measurement_steps_3_repetitions_diagnostic_only",
+    "runs": 18,
+    "target_20_guided_projectiles": {
+      "fixed_step_maximum_ms": 66.3568,
+      "fixed_step_p95_ms": 57.2726,
+      "real_time_factors": [
+        0.32065597490623293,
+        0.31934575507419644,
+        0.43047592169522453
+      ]
+    },
+    "target_20_motion_only": {
+      "fixed_step_maximum_ms": 18.0185,
+      "fixed_step_p95_ms": 17.6037,
+      "real_time_factors": [
+        0.9908613845365578,
+        0.9968936792953159,
+        0.9851273355891436
+      ]
+    }
+  },
+  "status": "PASS",
+  "t0_performance_measured": false,
+  "target_20_motion_profile": {
+    "authority_equivalent": true,
+    "canonical_sha256_calls": {
+      "after": 62,
+      "before": 222,
+      "reduction_percent": 72.0721
+    },
+    "runtime_cache_resolve_calls": 80,
+    "runtime_compile_calls": 0,
+    "runtime_view_bind_calls": 0
+  },
+  "unit_evidence": {
+    "bounded_view_history": true,
+    "cache_stats": {
+      "direct_view_hit_count": 5,
+      "entry_count": 2,
+      "hit_count": 6,
+      "instance_hash_count": 2,
+      "instance_view_count": 3,
+      "invalidation_count": 0,
+      "last_invalidated_domains": [],
+      "maximum_event_variants": 8,
+      "maximum_instance_views_per_event": 4,
+      "miss_count": 2,
+      "runtime_rebind_count": 1
+    },
+    "canonical_calls": {
+      "RuntimeShipParameters": 3,
+      "ShipInstanceSnapshotInput": 2
+    },
+    "event_variant_core_separated": true,
+    "replay_view_reused": true,
+    "stable_core_reused_across_passthrough_change": true
+  }
+}

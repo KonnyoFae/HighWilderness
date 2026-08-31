@@ -121,6 +121,7 @@ FUNCTION_PROBES = (
     FunctionProbe("validate_instance_current_design", "integrity_validation", "高天荒野舰艇实例设计状态.py", "validate_instance_current_design"),
     FunctionProbe("compile_runtime_ship_parameters", "runtime_compile", "高天荒野舰艇运行时参数编译器.py", "compile_runtime_ship_parameters"),
     FunctionProbe("runtime_cache_resolve", "runtime_compile", "高天荒野舰艇运行时参数编译器.py", "resolve"),
+    FunctionProbe("runtime_view_bind", "runtime_compile", "高天荒野舰艇运行时参数编译器.py", "_bind_runtime_ship_parameters"),
     FunctionProbe("runtime_state_revision", "runtime_compile", "高天荒野舰艇运行时参数编译器.py", "runtime_state_revision"),
     FunctionProbe("derive_tactical_ship_lifecycle", "lifecycle", "高天荒野舰艇统一战术场景.py", "derive_tactical_ship_lifecycle"),
     FunctionProbe("refresh_lifecycle_boundary", "lifecycle", "高天荒野舰艇统一战术场景.py", "refresh_lifecycle_boundary"),
