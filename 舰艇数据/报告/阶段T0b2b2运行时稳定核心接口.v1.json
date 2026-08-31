@@ -38,9 +38,9 @@
   "implementation_hashes": {
     "benchmarks/t0/diagnostics.py": "61d9e1f901b3a8959f836a58bbe8e383caddf3da99e37f81b2a6b80f0e90d756",
     "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
-    "高天荒野T0b2推进响应与权威性能优化规划.md": "ca9e07338ae70b02c8d77672122c805683dff9e8146116e7936e4b52cec5d113",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "59a6d7fcd4b9b8f54e80b4ae34a2e3faa55cf6d1507a38ef9c10c1d8f104fdbb",
     "高天荒野T0b2运行时稳定核心测试.py": "69837ac3bd4b2bc24c21df9b021583002c997cf1f798a0f989028803bd54c9f8",
-    "高天荒野Web客户端编辑器与战术验证实施计划.md": "a6c38b5f3b7448ca87af490265e1603d639525b998cc8c068f886c14742d902a",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "9c6f2e553663ea51cb223db6a93b07ce8e7835af6a24d624f20b5fbc329a729f",
     "高天荒野舰艇战术机动求解器测试.py": "f08fefa22381c3fd0933050958ea87e5b27d23b7ecebfd5e9b87bbc764f55f74",
     "高天荒野舰艇统一战术场景.py": "8209ac7c44dfb1267d63cf5156b31bd09f73e1d2c4878ff7a3c6e8d97e8884a4",
     "高天荒野舰艇运行时参数编译器.py": "3068126bd580cc24520f143bf7a8c85cd055e81bb60a22c54873113a56d70eb1"

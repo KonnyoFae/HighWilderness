@@ -1,0 +1,64 @@
+{
+  "authority_golden": "12_of_12_PASS",
+  "baseline": {
+    "commit": "cc7c72f",
+    "slice": "T0b.2b3d_complete"
+  },
+  "determinism_evidence": {
+    "deterministic_replays": 3,
+    "result_sha256": "c0c32c52b8a96faf6b12bc20b4d4c82f2a1f2f9e8a8d3eba7bb14c7f5a944837",
+    "strict_negative_cases": 5
+  },
+  "evaluation_evidence": {
+    "current_unsafe_downsearch_calls": 6,
+    "hard_limit_survives_overg": true,
+    "no_safe_stage_calls": 12,
+    "safe_steady_calls": 1,
+    "safe_upstage_calls": 2,
+    "unsafe_upstage_calls": 2
+  },
+  "hysteresis_evidence": {
+    "combined_reason_order": [
+      "structure_limit",
+      "crew_limit"
+    ],
+    "hard_ceiling_after_overg": 25,
+    "release_hold_steps_observed": 2,
+    "skipped_step_resets_release_hold": true
+  },
+  "implementation_hashes": {
+    "高天荒野T0b2c1推进安全判定器测试.py": "880e7e95b541124da13d6893b3deb3d88f7da32659f099436fd522e80c5219ff",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "59a6d7fcd4b9b8f54e80b4ae34a2e3faa55cf6d1507a38ef9c10c1d8f104fdbb",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "9c6f2e553663ea51cb223db6a93b07ce8e7835af6a24d624f20b5fbc329a729f",
+    "高天荒野舰艇推进安全判定器.py": "5767ec8e0236fce09430330cadd08efe47fa1b08fb09a3bf7683ecd430a80b8d"
+  },
+  "interface": "gaotian.stage-t0b2c1-propulsion-safety-governor/v1",
+  "isolation_evidence": {
+    "existing_scene_call_count": 0,
+    "existing_scene_import_count": 0,
+    "scene_advanced_steps": 1
+  },
+  "next_slice": "T0b.2c2a_propulsion_resource_contracts",
+  "official_performance_runs_executed": 0,
+  "regression": {
+    "python": "63_of_63_PASS",
+    "rust": "15_of_15_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "risk_controls": {
+    "all_stage_eager_evaluation_added": false,
+    "existing_scene_wired": false,
+    "hard_availability_survives_overg": true,
+    "load_callback_semantics": "whole_ship_composite_load_for_candidate_output_stage",
+    "persistent_schema_changed": false,
+    "state_types_persisted": false
+  },
+  "scope": "pure_unwired_discrete_propulsion_safety_governor_only",
+  "stage_evidence": {
+    "notches": 6,
+    "ordered_stage_pairs": 484,
+    "stages": 22
+  },
+  "status": "PASS",
+  "t0_performance_measured": false
+}
