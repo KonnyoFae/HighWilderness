@@ -1,0 +1,63 @@
+{
+  "acceptance": {
+    "code_changes": 0,
+    "golden_results_changed": false,
+    "remaining_review_items": 0,
+    "rfc_decisions_frozen": "12_of_12_PASS",
+    "t0b2pre_baseline_reused": true
+  },
+  "baseline": {
+    "commit": "ffa2cdce58287684b87e1ec5b19b9241fbae93ae",
+    "tree": "4bf9bbef86d268d8a0f1db30f08026525df58f83"
+  },
+  "decisions": {
+    "actuator_state_owner": "TacticalSceneShipState.TacticalPropulsionState",
+    "damage_timing_effect_first_release": "none; damage changes availability and maximum thrust only",
+    "hard_trip_bypassable_by_overg": false,
+    "main_engine_command": "six_notches_per_direction_group",
+    "maneuver_thruster_command": "existing_allocator_quantized_down_to_authority_response_ladder",
+    "module_mode_and_engine_phase": "separate_administrative_and_high_frequency_state",
+    "multirate": "separate_authority_changing_experiment_only",
+    "opposed_direction_interlock": "old_group_must_reach_zero_before_opposed_group_increases",
+    "response_ladder_percent": [
+      0,
+      2,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60,
+      65,
+      70,
+      75,
+      80,
+      85,
+      90,
+      95,
+      100
+    ],
+    "rust_boundary": "one_flat_f64_batch_per_projectile_substep_python_owns_rules_and_events",
+    "safety_governor": "retain_command_discrete_soft_ceiling_with_hysteresis",
+    "safety_profile_defaults": "no_implicit_defaults_explicit_versioned_resource_required",
+    "startup_energy_first_release": "existing_module_active_load_no_extra_startup_fuel_or_heat",
+    "startup_time": "main_engine_positive_maneuver_thruster_zero",
+    "state_migration": "explicit_named_migrator_no_parser_field_defaults"
+  },
+  "interface": "gaotian.stage-t0b2a-propulsion-optimization-rfc-freeze/v1",
+  "next_slice": "T0b.2b1_existing_safety_search_fast_path",
+  "official_performance_runs_executed": 0,
+  "regression_basis": {
+    "reason": "documentation-only RFC freeze on the same implementation tree verified by T0b.2-pre",
+    "rust": "15_of_15_PASS",
+    "ship_python": "56_of_56_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "status": "PASS"
+}
