@@ -388,6 +388,24 @@ class TacticalSceneShipBinding:
 
 
 @dataclass(frozen=True)
+class ShipStepContext:
+    """只在一个场景固定步内复用的精确舰艇边界视图。"""
+
+    ship_id: str
+    boundary_step_index: int
+    boundary_tactical_time_s: float
+    instance_generation: int
+    instance_snapshot: ShipInstanceSnapshotInput
+    automatic_events: tuple[str, ...]
+    runtime: RuntimeShipParameters
+    tactical_model: TacticalShipModel | None = field(
+        default=None,
+        repr=False,
+        compare=False,
+    )
+
+
+@dataclass(frozen=True)
 class TacticalEngagementDefinition:
     initiating_side_id: str
     responding_side_id: str
@@ -1614,6 +1632,66 @@ def advance_tactical_scene_step(
     observation_resolution = TacticalObservationResolution((), (), (), ())
     generated_guidance_fact_events: tuple[GeneratedGuidanceFactEvent, ...] = ()
     effective_guidance_inputs = manual_guidance_inputs
+    ship_step_contexts: dict[str, ShipStepContext] = {}
+    ship_instance_generations = {ship_id: 0 for ship_id in ship_map}
+    last_context_instances = {
+        ship_id: ship.combat_state.instance for ship_id, ship in ship_map.items()
+    }
+
+    def step_context(
+        ship_id: str,
+        boundary_time_s: float,
+        boundary_step: int,
+        *,
+        require_model: bool = False,
+    ) -> ShipStepContext:
+        """以精确实例值为最终门禁复用 runtime，并按需绑定战术模型。"""
+
+        ship = ship_map[ship_id]
+        binding = binding_by_id[ship_id]
+        instance = ship.combat_state.instance
+        if last_context_instances[ship_id] != instance:
+            ship_instance_generations[ship_id] += 1
+            last_context_instances[ship_id] = instance
+        generation = ship_instance_generations[ship_id]
+        events = _runtime_automatic_events(
+            binding,
+            instance,
+            observation_events_by_ship.get(ship_id, ()),
+        )
+        context = ship_step_contexts.get(ship_id)
+        if not (
+            context is not None
+            and context.boundary_step_index == boundary_step
+            and context.boundary_tactical_time_s == boundary_time_s
+            and context.instance_generation == generation
+            and context.instance_snapshot == instance
+            and context.automatic_events == events
+        ):
+            runtime = binding.runtime_cache.resolve(
+                binding.snapshot,
+                binding.sortie,
+                instance,
+                active_automatic_events=events,
+                validation_mode=runtime_validation_mode,
+            ).runtime
+            context = ShipStepContext(
+                ship_id,
+                boundary_step,
+                boundary_time_s,
+                generation,
+                instance,
+                events,
+                runtime,
+            )
+            ship_step_contexts[ship_id] = context
+        if require_model and context.tactical_model is None:
+            context = replace(
+                context,
+                tactical_model=_binding_tactical_model(binding, context.runtime),
+            )
+            ship_step_contexts[ship_id] = context
+        return context
 
     def observation_contexts(
         motions: dict[str, TacticalMotionState],
@@ -1622,12 +1700,11 @@ def advance_tactical_scene_step(
         for ship_id in sorted(ship_map):
             ship = ship_map[ship_id]
             binding = binding_by_id[ship_id]
-            runtime = _resolve_binding_runtime(
-                binding,
-                ship.combat_state.instance,
-                observation_events_by_ship.get(ship_id, ()),
-                validation_mode=runtime_validation_mode,
-            )
+            runtime = step_context(
+                ship_id,
+                state.tactical_time_s,
+                state.fixed_step_index,
+            ).runtime
             motion = motions[ship_id]
             contexts.append(
                 TacticalObservationShipContext(
@@ -1698,12 +1775,11 @@ def advance_tactical_scene_step(
             if ship.lifecycle_state.physical_status == "exited":
                 continue
             binding = binding_by_id[ship_id]
-            runtime = _resolve_binding_runtime(
-                binding,
-                ship.combat_state.instance,
-                observation_events_by_ship.get(ship_id, ()),
-                validation_mode=runtime_validation_mode,
-            )
+            runtime = step_context(
+                ship_id,
+                boundary_time_s,
+                boundary_step,
+            ).runtime
             lifecycle = derive_tactical_ship_lifecycle(
                 runtime,
                 binding.sortie,
@@ -1885,13 +1961,13 @@ def advance_tactical_scene_step(
     diagnostics: dict[str, TacticalStepDiagnostics | None] = {}
     for ship_id in sorted(ship_map):
         ship = ship_map[ship_id]
-        binding = binding_by_id[ship_id]
-        runtime = _resolve_binding_runtime(
-            binding,
-            ship.combat_state.instance,
-            observation_events_by_ship.get(ship_id, ()),
-            validation_mode=runtime_validation_mode,
+        context = step_context(
+            ship_id,
+            state.tactical_time_s,
+            state.fixed_step_index,
+            require_model=ship.lifecycle_state.physical_status != "exited",
         )
+        runtime = context.runtime
         runtimes_at_step_start[ship_id] = runtime
         if ship.lifecycle_state.physical_status == "exited":
             next_motions[ship_id] = replace(
@@ -1900,7 +1976,8 @@ def advance_tactical_scene_step(
             )
             diagnostics[ship_id] = None
             continue
-        model = _binding_tactical_model(binding, runtime)
+        model = context.tactical_model
+        assert model is not None
         if abs(model.tuning.fixed_step_s - state.fixed_step_s) > EPS:
             raise ContractError("tactical_scene.fixed_step_mismatch", "$.fixed_step_s", "场景固定步与舰艇动力学配置不一致")
         models[ship_id] = model
@@ -2176,20 +2253,18 @@ def advance_tactical_scene_step(
     final_ships: list[TacticalSceneShipState] = []
     for ship_id in sorted(ship_map):
         ship = ship_map[ship_id]
-        binding = binding_by_id[ship_id]
         motion = replace(
             next_motions[ship_id],
             hull_integrity_fraction=ship.combat_state.instance.current_hull_integrity_fraction,
             fuel_units=ship.combat_state.instance.operational_state.fuel_units,
         )
         ship = replace(ship, motion_state=motion)
-        runtime = _resolve_binding_runtime(
-            binding,
-            ship.combat_state.instance,
-            observation_events_by_ship.get(ship_id, ()),
-            validation_mode=runtime_validation_mode,
-        )
-        _binding_tactical_model(binding, runtime)
+        ship_map[ship_id] = ship
+        runtime = step_context(
+            ship_id,
+            end_time_s,
+            state.fixed_step_index + 1,
+        ).runtime
         ship_results.append(TacticalSceneShipStepResult(ship_id, diagnostics[ship_id], runtime))
         final_ships.append(ship)
     engagement = state.engagement_state

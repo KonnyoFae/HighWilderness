@@ -296,7 +296,8 @@ def main() -> None:
         cache_resolves = probes["runtime_cache_resolve"]["total_calls"]
         assert compile_calls == 0
         assert static_builds == legacy_builds == 0
-        assert cache_resolves == BASELINE_RUNTIME_COMPILES[case.id]
+        # 后续等价切片可以继续收敛边界解析，但不得超过 b1c 历史基线。
+        assert cache_resolves <= BASELINE_RUNTIME_COMPILES[case.id]
         assert 1.0 - compile_calls / BASELINE_RUNTIME_COMPILES[case.id] >= 0.75
         probe_results[case.id] = {
             "baseline_runtime_compile_calls": BASELINE_RUNTIME_COMPILES[case.id],

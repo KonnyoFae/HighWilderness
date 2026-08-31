@@ -1,0 +1,51 @@
+{
+  "authority_golden": "12_of_12_PASS",
+  "exact_instance_evidence": {
+    "final_runtime_matches_exact_instance": true,
+    "start_boundary_launch_count": 4,
+    "weapon_mutation_preserved_after_motion_commit": true
+  },
+  "implementation_hashes": {
+    "高天荒野T0b2b3a精确边界上下文测试.py": "0577a9c41afef41d03595e9ac8f1d72bf33d11b79cfa787d7e70a42758cbbdb6",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "ce5d20ff24868df63b0e9615ee8fdf403e678660cea1a4ddf2a5d387c8a43c83",
+    "高天荒野T0b2运行时稳定核心测试.py": "69837ac3bd4b2bc24c21df9b021583002c997cf1f798a0f989028803bd54c9f8",
+    "高天荒野T0权威热路径基线测试.py": "e5d33384e59b4e81bc0aa6c404a879d4752ce9c272ea1f095e7209acc4fff1eb",
+    "高天荒野T0运行时与静态模型复用测试.py": "8f72c88c47a6e0cb84af264c3b5d5dd72662bce9cb2455aae4b89dba9be37a87",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "06889118961f7e13e9910c1fd80d376a7956d67633049fee4ece2d5e30c54676",
+    "高天荒野舰艇统一战术场景.py": "4305c23679188e7324d8397867f7d6d3d82b5b1513c88629747e0077cf2aedc8"
+  },
+  "interface": "gaotian.stage-t0b2b3a-exact-ship-step-context/v1",
+  "next_slice": "T0b.2b3b_timeline_safe_fast_forward",
+  "official_performance_runs_executed": 0,
+  "regression": {
+    "python": "59_of_59_PASS",
+    "rust": "15_of_15_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "risk_controls": {
+    "automatic_event_value_gate": true,
+    "context_cross_step_persistence": false,
+    "exact_instance_value_gate": true,
+    "instance_generation_gate": true,
+    "lifecycle_dirty_skip_added": false,
+    "persistent_due_index_added": false,
+    "tactical_model_requires_exact_instance": true,
+    "weapon_timeline_skip_added": false
+  },
+  "scope": "single_step_exact_ship_context_and_lazy_tactical_model_only",
+  "short_diagnostic": {
+    "measurement_scope": "target_20.motion_only_10_warmup_plus_60_measured_steps_three_repetitions",
+    "resident_memory_maximum_bytes": 39907328,
+    "real_time_factor_minimum": 1.5299798012066645,
+    "worst_fixed_step_maximum_ms": 11.7713,
+    "worst_fixed_step_p95_ms": 11.5236
+  },
+  "status": "PASS",
+  "t0_performance_measured": false,
+  "target_20_motion_profile": {
+    "bind_tactical_ship_model_calls": 20,
+    "compile_runtime_ship_parameters_calls": 0,
+    "runtime_cache_resolve_calls": 60,
+    "runtime_view_bind_calls": 0
+  }
+}

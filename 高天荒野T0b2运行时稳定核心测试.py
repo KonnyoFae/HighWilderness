@@ -166,7 +166,8 @@ def main() -> None:
     assert canonical_calls <= 62
     assert canonical_calls < BASELINE_TARGET_MOTION_CANONICAL_CALLS
     assert runtime_view_binds == 0
-    assert probes["runtime_cache_resolve"]["total_calls"] == 80
+    # 后续等价优化可以继续收敛边界重复解析，但不得倒退超过 b2 基线。
+    assert probes["runtime_cache_resolve"]["total_calls"] <= 80
     assert probes["compile_runtime_ship_parameters"]["total_calls"] == 0
 
     report = json.loads(REPORT_PATH.read_text(encoding="utf-8"))
