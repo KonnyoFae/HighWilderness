@@ -225,6 +225,16 @@ def _parse_exact_timing_capability(
     )
 
 
+def validate_propulsion_timing_capability(
+    capability: ModuleCapability,
+    actuator_category: str,
+) -> tuple[int, int]:
+    """公开 d2a 资源桥所需的纯校验入口，不推进任何执行器状态。"""
+
+    timing = _parse_exact_timing_capability(capability, actuator_category)
+    return timing.startup_steps, timing.response_steps
+
+
 @dataclass(frozen=True)
 class PropulsionTimeBoundaryResult:
     fixed_step_index: int

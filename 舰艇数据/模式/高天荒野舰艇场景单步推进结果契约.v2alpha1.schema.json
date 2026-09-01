@@ -1,0 +1,32 @@
+{
+  "$id": "gaotian.tactical-scene-step-resolution/v2alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "ammunition_cookoff_events": {"items": {"type": "object"}, "type": "array"},
+    "continuous_damage_events": {"items": {"type": "object"}, "type": "array"},
+    "crew_casualty_events": {"items": {"type": "object"}, "type": "array"},
+    "crew_evacuation_events": {"items": {"type": "object"}, "type": "array"},
+    "crew_rescue_manifests": {"items": {"type": "object"}, "type": "array"},
+    "engagement_events": {"items": {"type": "object"}, "type": "array"},
+    "expired_events": {"items": {"type": "object"}, "type": "array"},
+    "fire_control_support_events": {"items": {"type": "object"}, "type": "array"},
+    "fire_propagation_events": {"items": {"type": "object"}, "type": "array"},
+    "generated_guidance_fact_events": {"items": {"type": "object"}, "type": "array"},
+    "guidance_events": {"items": {"type": "object"}, "type": "array"},
+    "impact_events": {"items": {"type": "object"}, "type": "array"},
+    "interface": {"const": "gaotian.tactical-scene-step-resolution/v2alpha1"},
+    "lifecycle_events": {"items": {"type": "object"}, "type": "array"},
+    "policy": {"const": "gaotian.tactical-scene-step/boundary-events-propulsion-stable/v1"},
+    "propulsion_events": {"items": {"$ref": "gaotian.tactical-scene-propulsion-event/v1alpha1"}, "type": "array"},
+    "radar_emission_events": {"items": {"type": "object"}, "type": "array"},
+    "resulting_scene_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+    "sensor_observation_events": {"items": {"type": "object"}, "type": "array"},
+    "ship_results": {"items": {"type": "object"}, "type": "array"},
+    "source_scene_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+    "spawned_projectiles": {"items": {"type": "object"}, "type": "array"},
+    "weapon_events": {"items": {"type": "object"}, "type": "array"}
+  },
+  "required": ["engagement_events", "expired_events", "impact_events", "interface", "lifecycle_events", "policy", "propulsion_events", "resulting_scene_sha256", "ship_results", "source_scene_sha256", "spawned_projectiles", "weapon_events"],
+  "type": "object"
+}

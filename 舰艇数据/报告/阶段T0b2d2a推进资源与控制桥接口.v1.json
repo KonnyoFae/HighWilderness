@@ -1,0 +1,126 @@
+{
+  "authority_golden": "12_of_12_PASS",
+  "baseline": {
+    "commit": "c48d1c7",
+    "slice": "T0b.2d1r_complete_contract_version_repair"
+  },
+  "binding_evidence": {
+    "actuator_bindings": 1224,
+    "category_counts": {
+      "main_engine": 328,
+      "maneuver_thruster": 896
+    },
+    "channel_counts": {
+      "forward": 328,
+      "left": 448,
+      "reverse": 0,
+      "right": 448
+    },
+    "response_steps": [
+      60
+    ],
+    "scene_bindings": {
+      "functional_6.guided_projectiles": 32,
+      "functional_6.motion_only": 32,
+      "functional_6.ordinary_projectiles": 32,
+      "functional_6.scripted_damage_and_recompile": 32,
+      "stress_30.guided_projectiles": 164,
+      "stress_30.motion_only": 164,
+      "stress_30.ordinary_projectiles": 164,
+      "stress_30.scripted_damage_and_recompile": 164,
+      "target_20.guided_projectiles": 110,
+      "target_20.motion_only": 110,
+      "target_20.ordinary_projectiles": 110,
+      "target_20.scripted_damage_and_recompile": 110
+    },
+    "startup_steps": [
+      0,
+      60
+    ],
+    "tampered_catalog_rejected": true
+  },
+  "control_evidence": {
+    "automatic_brake_main_engine_notch": "quarter",
+    "automatic_brake_maneuver_target_percent": 25,
+    "deterministic_replays_per_control": 3,
+    "legacy_controls_migrated": 224,
+    "named_source_counts": {
+      "gtw.migration.t0.control.forward-left": 112,
+      "gtw.migration.t0.control.forward-right": 112
+    },
+    "strict_negative_cases": 4,
+    "unique_target_controls": 2
+  },
+  "implementation_hashes": {
+    "舰艇数据/模式/高天荒野舰艇场景单步推进结果契约.v2alpha1.schema.json": "bdfcc12ef11604078a89ca04d1199b4a958fb58570f4ffee9484944293e859e1",
+    "舰艇数据/模式/高天荒野舰艇场景推进事件契约.v1alpha1.schema.json": "070a1a9fcb87107e7bf3d67f07eed4132fd75374bdf27aa565ff144369921b25",
+    "舰艇数据/模式/高天荒野舰艇推进执行器绑定契约.v1alpha1.schema.json": "9e9487ab1b0ff30804884c1d73307373f4cc6c69bab54379a2f0ba17d892f8c0",
+    "舰艇数据/模式/高天荒野舰艇推进离散控制契约.v1alpha1.schema.json": "d3734661ece60186aa9b0faa68521b671ff49e2a2ebfb36a5fe65cfe7005ca36",
+    "舰艇数据/模式/高天荒野舰艇模块目录数据契约.v3.schema.json": "feb856b66dde2d877e323231c6db5c04654273ce17fe04e8da800d5b4f45d67e",
+    "高天荒野T0b2d2a推进资源与控制桥测试.py": "c3a1950cb30eed14a0318d1fd2690472707b705955052e067ea3ab772b40704d",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "cda119c43b780759b639a1dd2863a63794808b34124098107e61b9136df4a05a",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "290f50a8fba0f6bb7860ba33e9be2910b1034c8a34a83ba96b7739d1fd07da18",
+    "高天荒野舰艇推进时间内核.py": "b17a5992097aea4389d514ab1944d29243762097ace4b0af84eab58df2cbb9d6",
+    "高天荒野舰艇推进资源与控制桥.py": "3ff4d7fcfab3339b738c3ba479aa282f7cb5cd764f7379fc5f0cf3d8e2148f45",
+    "高天荒野舰艇数据契约.py": "e259accc6498a21b9bb3bb48813759cdfc782ec08d05c9a6a42c54713b32ae10"
+  },
+  "interface": "gaotian.stage-t0b2d2a-propulsion-resource-control-bridge/v1",
+  "isolation_evidence": {
+    "authority_golden": "12_of_12_PASS",
+    "legacy_catalog_schema": "gaotian.ship/v1alpha1",
+    "new_mechanics_steps_advanced": 0,
+    "official_performance_runs_executed": 0
+  },
+  "next_slice": "T0b.2d2b_propulsion_mechanics_wiring",
+  "official_performance_runs_executed": 0,
+  "regression": {
+    "python": "68_of_68_PASS",
+    "rust": "15_of_15_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "resource_evidence": {
+    "catalog_types_migrated": 3,
+    "deterministic_replays_per_resource": 3,
+    "outfit_types_migrated": 3,
+    "propulsion_modules_in_scene_catalogs": 8,
+    "source_v2_hashes": {
+      "conventional_crewed": "5c4620ddd9db8cf436a526c5638a89324bfb61edd3d0c828f38b255e7b9fdd5b",
+      "minimum_legal": "75c4ef8c6cf873d0d94455a0fdb27ec0f062924aa5c3b8854861ecb8c00ed396",
+      "unmanned_flagship": "a7d482132f28e82767dae76c0d3e09b28e0ced001646d24b77562bfb690402f7"
+    },
+    "strict_negative_cases": 4,
+    "target_catalog_hashes": {
+      "conventional_crewed": "7c5eba7a9fed2eed72f8fb05d23290461fa665a80063b67544ddcbfef3c3a2ea",
+      "minimum_legal": "2700ae7625761260087b6cd3a1b95292c55bc78a00406bbf3fc1653ebe0dbe4a",
+      "unmanned_flagship": "6ed3bb86a241245578e5711cbc02a0ca38e2b2e7fed0ff04ed9d703e4cc6c472"
+    },
+    "target_outfit_hashes": {
+      "conventional_crewed": "0b43256e0221213f4953df3ad6692dd69bb45d970488ef0f75c905d0622b23d3",
+      "minimum_legal": "d8ae45c8b5fc8516ca404727e06b43a25b5ccb130d916e37264ca7db75937b62",
+      "unmanned_flagship": "006592f738461a15607412950d03b70c0a259cc2936a9dc9cb84f481f68d7602"
+    }
+  },
+  "result_evidence": {
+    "event_sort_key": [
+      "fixed_step_index",
+      "ship_id",
+      "actuator_instance_id",
+      "event_kind_order"
+    ],
+    "new_mechanics_steps_advanced": 0,
+    "propulsion_events_roundtrip": 2,
+    "strict_negative_cases": 3,
+    "unwired_advance_rejected": true
+  },
+  "risk_controls": {
+    "c2a_v2_values_rewritten": false,
+    "hard_faults_wired": false,
+    "legacy_golden_changed": false,
+    "propulsion_mechanics_wired": false,
+    "propulsion_unwired_removed": false,
+    "safety_governor_wired": false,
+    "unknown_continuous_control_allowed": false
+  },
+  "scope": "schedulable_v3_catalog_named_outfit_migration_exact_actuator_binding_discrete_control_and_step_result_contracts_only",
+  "status": "PASS"
+}

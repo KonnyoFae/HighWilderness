@@ -1,0 +1,31 @@
+{
+  "$id": "gaotian.tactical-propulsion-control/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "automatic_brake": {"type": "boolean"},
+    "automatic_brake_policy": {"const": "gaotian.propulsion-control/opposing-direction-quarter-brake/v1"},
+    "direction_commands": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "command_channel": {"enum": ["forward", "reverse", "left", "right"]},
+          "main_engine_notch": {"enum": ["stop", "dead_slow", "quarter", "half", "three_quarter", "full"]},
+          "maneuver_target_percent": {"enum": [0, 2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]}
+        },
+        "required": ["command_channel", "main_engine_notch", "maneuver_target_percent"],
+        "type": "object"
+      },
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array"
+    },
+    "interface": {"const": "gaotian.tactical-propulsion-control/v1alpha1"},
+    "main_engine_quantization_policy": {"const": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1"},
+    "maneuver_quantization_policy": {"const": "gaotian.propulsion-control/nearest-stage-ties-up/v1"},
+    "overg_requested": {"type": "boolean"},
+    "source_migration_id": {"type": ["string", "null"]}
+  },
+  "required": ["automatic_brake", "automatic_brake_policy", "direction_commands", "interface", "main_engine_quantization_policy", "maneuver_quantization_policy", "overg_requested", "source_migration_id"],
+  "type": "object"
+}

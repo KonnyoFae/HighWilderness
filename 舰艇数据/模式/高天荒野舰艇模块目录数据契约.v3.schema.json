@@ -1,0 +1,45 @@
+{
+  "$id": "gaotian.module-prototype-catalog/v3",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "fixture_level": {
+      "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/moduleFixtureLevel"
+    },
+    "id": {
+      "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/resourceId"
+    },
+    "kind": {
+      "const": "ModulePrototypeCatalog"
+    },
+    "modules": {
+      "items": {
+        "$ref": "gaotian.module-prototype-catalog/v2#/$defs/modulePrototypeV2"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gaotian.module-prototype-catalog/v3"
+    },
+    "version": {
+      "minimum": 3,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "kind",
+    "id",
+    "version",
+    "name",
+    "fixture_level",
+    "modules"
+  ],
+  "type": "object",
+  "$comment": "推进 capability 沿用 v2 字段集合；Python 合同额外强制 60Hz 精确离散响应可排程。"
+}

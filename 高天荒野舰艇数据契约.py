@@ -10,6 +10,7 @@ HullBlueprint、OutfitPlan、SortieConfiguration、ShipInstanceSnapshot；后两
 from __future__ import annotations
 
 from dataclasses import dataclass
+from decimal import Decimal, ROUND_CEILING
 from hashlib import sha256
 import json
 from math import isfinite
@@ -20,9 +21,45 @@ from typing import Any, Iterable
 
 SCHEMA_ID = "gaotian.ship/v1alpha1"
 MODULE_CATALOG_V2_SCHEMA_ID = "gaotian.module-prototype-catalog/v2"
+MODULE_CATALOG_V3_SCHEMA_ID = "gaotian.module-prototype-catalog/v3"
 COMBAT_SYSTEM_MODULE_CONTRACT_ID = "gaotian.combat-system-modules/v1alpha1"
 RESOURCE_ID_PATTERN = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+
+_PROPULSION_FIXED_STEP_HZ = Decimal(60)
+_PROPULSION_OUTPUT_STAGES_PERCENT = (0, 2, *range(5, 101, 5))
+
+
+def _propulsion_response_is_schedulable(response_time_s: float) -> bool:
+    """检查 d1 精确响应规则能否让相邻阶段占用不同固定步边界。"""
+
+    response_quanta = Decimal(str(response_time_s)) * _PROPULSION_FIXED_STEP_HZ
+    response_steps = int(response_quanta.to_integral_value(rounding=ROUND_CEILING))
+    for origin, targets in (
+        (0, _PROPULSION_OUTPUT_STAGES_PERCENT[1:]),
+        (100, tuple(reversed(_PROPULSION_OUTPUT_STAGES_PERCENT[:-1]))),
+    ):
+        offsets = tuple(
+            int(
+                (
+                    response_quanta
+                    * Decimal(abs(target - origin))
+                    / Decimal(100)
+                ).to_integral_value(rounding=ROUND_CEILING)
+            )
+            for target in targets
+        )
+        if (
+            not offsets
+            or offsets[0] <= 0
+            or offsets[-1] != response_steps
+            or any(
+                current <= previous
+                for previous, current in zip(offsets, offsets[1:])
+            )
+        ):
+            return False
+    return True
 
 
 class ContractError(ValueError):
@@ -915,7 +952,7 @@ class ModuleCapability:
                         "local_thrust_axis",
                     ),
                 )
-            elif propulsion_capability_version == 2:
+            elif propulsion_capability_version in {2, 3}:
                 _keys(
                     obj,
                     path,
@@ -967,6 +1004,17 @@ class ModuleCapability:
             if parsed["thrust_n"] <= 0.0 or parsed["response_time_s"] <= 0.0:
                 raise ContractError(
                     "module.engine_output", path, "推力与响应时间都必须是正数"
+                )
+            if (
+                propulsion_capability_version == 3
+                and not _propulsion_response_is_schedulable(
+                    parsed["response_time_s"]
+                )
+            ):
+                raise ContractError(
+                    "module.propulsion_response_unschedulable",
+                    f"{path}.response_time_s",
+                    "响应时间无法在 60Hz 下为全部相邻离散阶段分配独立边界",
                 )
             axis = _string(obj["local_thrust_axis"], f"{path}.local_thrust_axis")
             if axis != "+Y":
@@ -1433,13 +1481,16 @@ class ModulePrototype:
             raise ContractError("module.capability_category_mismatch", path, "能力类型必须与模块类别一致")
         if (
             category in {"main_engine", "maneuver_thruster"}
-            and propulsion_capability_version == 2
-            and reference.version < 2
+            and propulsion_capability_version in {2, 3}
+            and reference.version < propulsion_capability_version
         ):
             raise ContractError(
-                "module.propulsion_v2_resource_version",
+                f"module.propulsion_v{propulsion_capability_version}_resource_version",
                 f"{path}.version",
-                "推进 capability v2 的模块资源版本不得低于 2",
+                (
+                    f"推进 capability v{propulsion_capability_version} 的模块资源版本"
+                    f"不得低于 {propulsion_capability_version}"
+                ),
             )
         rcs_value = obj["base_external_rcs_m2"]
         rcs = None if rcs_value is None else _number(
@@ -1621,11 +1672,17 @@ class ModulePrototypeCatalog:
         obj = _object(resource, path)
         _keys(obj, path, ("schema", "kind", "id", "version", "name", "fixture_level", "modules"))
         schema = _string(obj["schema"], f"{path}.schema")
-        if schema not in {SCHEMA_ID, MODULE_CATALOG_V2_SCHEMA_ID}:
+        if schema not in {
+            SCHEMA_ID,
+            MODULE_CATALOG_V2_SCHEMA_ID,
+            MODULE_CATALOG_V3_SCHEMA_ID,
+        }:
             raise ContractError("schema.unsupported", f"{path}.schema", schema)
-        propulsion_capability_version = (
-            2 if schema == MODULE_CATALOG_V2_SCHEMA_ID else 1
-        )
+        propulsion_capability_version = {
+            SCHEMA_ID: 1,
+            MODULE_CATALOG_V2_SCHEMA_ID: 2,
+            MODULE_CATALOG_V3_SCHEMA_ID: 3,
+        }[schema]
         if obj["kind"] != "ModulePrototypeCatalog":
             raise ContractError(
                 "resource.kind_mismatch", f"{path}.kind", "必须是 ModulePrototypeCatalog"
@@ -1676,6 +1733,12 @@ class ModulePrototypeCatalog:
                 "module.catalog_v2_resource_version",
                 f"{path}.version",
                 "模块目录 v2 的资源版本不得低于 2",
+            )
+        if schema == MODULE_CATALOG_V3_SCHEMA_ID and version < 3:
+            raise ContractError(
+                "module.catalog_v3_resource_version",
+                f"{path}.version",
+                "模块目录 v3 的资源版本不得低于 3",
             )
         return cls(
             _resource_id(obj["id"], f"{path}.id"),

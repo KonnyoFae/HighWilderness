@@ -1,0 +1,12 @@
+{
+  "$id": "gaotian.tactical-scene-propulsion-event/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "event": {"$ref": "gaotian.propulsion-state-event/v1alpha1"},
+    "interface": {"const": "gaotian.tactical-scene-propulsion-event/v1alpha1"},
+    "ship_id": {"pattern": "^[a-z0-9][a-z0-9._-]*$", "type": "string"}
+  },
+  "required": ["event", "interface", "ship_id"],
+  "type": "object"
+}
