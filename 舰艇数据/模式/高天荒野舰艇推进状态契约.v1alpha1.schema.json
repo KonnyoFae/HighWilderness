@@ -1,0 +1,122 @@
+{
+  "$id": "gaotian.tactical-propulsion-state/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "engines": {
+      "items": {"$ref": "#/$defs/engineRuntimeState"},
+      "minItems": 1,
+      "type": "array"
+    },
+    "governors": {
+      "items": {"$ref": "#/$defs/propulsionGovernorState"},
+      "maxItems": 4,
+      "minItems": 4,
+      "type": "array"
+    },
+    "interface": {"const": "gaotian.tactical-propulsion-state/v1alpha1"}
+  },
+  "required": ["engines", "governors", "interface"],
+  "type": "object",
+  "$defs": {
+    "engineRuntimeState": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {"properties": {"actuator_category": {"const": "main_engine"}}},
+          "then": {
+            "properties": {
+              "commanded_notch": {
+                "enum": ["stop", "dead_slow", "quarter", "half", "three_quarter", "full"]
+              }
+            }
+          },
+          "else": {"properties": {"commanded_notch": {"type": "null"}}}
+        },
+        {
+          "if": {"properties": {"phase": {"enum": ["off", "tripped"]}}},
+          "then": {
+            "properties": {
+              "actual_output_percent": {"const": 0},
+              "next_transition_step": {"type": "null"},
+              "ready_at_fixed_step": {"type": "null"},
+              "target_output_percent": {"const": 0}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"phase": {"const": "starting"}}},
+          "then": {
+            "properties": {
+              "actual_output_percent": {"const": 0},
+              "next_transition_step": {"minimum": 0, "type": "integer"},
+              "ready_at_fixed_step": {"minimum": 0, "type": "integer"},
+              "target_output_percent": {"enum": [2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"phase": {"const": "ready"}}},
+          "then": {
+            "properties": {
+              "actual_output_percent": {"const": 0},
+              "next_transition_step": {"type": "null"},
+              "ready_at_fixed_step": {"minimum": 0, "type": "integer"},
+              "target_output_percent": {"const": 0}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"phase": {"const": "running"}}},
+          "then": {
+            "properties": {
+              "actual_output_percent": {"enum": [2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]},
+              "ready_at_fixed_step": {"minimum": 0, "type": "integer"},
+              "target_output_percent": {"enum": [2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]}
+            }
+          }
+        },
+        {
+          "if": {"properties": {"phase": {"const": "stopping"}}},
+          "then": {
+            "properties": {
+              "actual_output_percent": {"enum": [2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]},
+              "next_transition_step": {"minimum": 0, "type": "integer"},
+              "ready_at_fixed_step": {"minimum": 0, "type": "integer"},
+              "target_output_percent": {"const": 0}
+            }
+          }
+        }
+      ],
+      "properties": {
+        "actual_output_percent": {"enum": [0, 2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]},
+        "actuator_category": {"enum": ["main_engine", "maneuver_thruster"]},
+        "actuator_instance_id": {"pattern": "^[a-z0-9][a-z0-9._-]*$", "type": "string"},
+        "commanded_notch": {"type": ["string", "null"]},
+        "interface": {"const": "gaotian.engine-runtime-state/v1alpha1"},
+        "next_transition_step": {"type": ["integer", "null"], "minimum": 0},
+        "phase": {"enum": ["off", "starting", "ready", "running", "stopping", "tripped"]},
+        "ready_at_fixed_step": {"type": ["integer", "null"], "minimum": 0},
+        "target_output_percent": {"enum": [0, 2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]}
+      },
+      "required": ["actual_output_percent", "actuator_category", "actuator_instance_id", "commanded_notch", "interface", "next_transition_step", "phase", "ready_at_fixed_step", "target_output_percent"],
+      "type": "object"
+    },
+    "propulsionGovernorState": {
+      "additionalProperties": false,
+      "properties": {
+        "command_channel": {"enum": ["forward", "reverse", "left", "right"]},
+        "commanded_notch": {"enum": ["stop", "dead_slow", "quarter", "half", "three_quarter", "full"]},
+        "interface": {"const": "gaotian.propulsion-governor-state/v1alpha1"},
+        "last_evaluated_step_index": {"type": ["integer", "null"], "minimum": 0},
+        "release_candidate_since_step": {"type": ["integer", "null"], "minimum": 0},
+        "safety_ceiling_percent": {"enum": [0, 2, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100]},
+        "safety_limited_since_step": {"type": ["integer", "null"], "minimum": 0},
+        "safety_reasons": {"items": {"enum": ["structure_limit", "crew_limit"]}, "type": "array", "uniqueItems": true},
+        "safety_revision": {"minimum": 0, "type": "integer"}
+      },
+      "required": ["command_channel", "commanded_notch", "interface", "last_evaluated_step_index", "release_candidate_since_step", "safety_ceiling_percent", "safety_limited_since_step", "safety_reasons", "safety_revision"],
+      "type": "object"
+    }
+  }
+}

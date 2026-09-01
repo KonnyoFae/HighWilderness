@@ -1,0 +1,78 @@
+{
+  "authority_golden": "12_of_12_PASS",
+  "baseline": {
+    "commit": "e0168e3",
+    "slice": "T0b.2c2a_complete"
+  },
+  "event_evidence": {
+    "event_kinds": 10,
+    "roundtrip_examples": 4,
+    "strict_negative_cases": 6
+  },
+  "implementation_hashes": {
+    "舰艇数据/模式/高天荒野舰艇推进状态契约.v1alpha1.schema.json": "acb489de4ed972a325c42a3b83260db1afdcd937f34716dbf278b332f7e004d8",
+    "舰艇数据/模式/高天荒野舰艇推进事件契约.v1alpha1.schema.json": "43c67aba8d1c1868b3c13f23944a2fac97df1458be5436ae16880a1eaeff2914",
+    "舰艇数据/模式/高天荒野舰艇统一战术场景状态契约.v2alpha1.schema.json": "6d54a3311a79501549ac3a09f31e0f8a95f760f74a4bf1472de0805e7d8c1c99",
+    "高天荒野T0b2c2b推进场景状态与迁移测试.py": "4201a7269291b219496b104713626d5e27dfbd5aade5acfbb14f2a18bf7a930f",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "ee0cf262fbb9f6d38830f5331564a6afb6da93a659ff82dbf2dd274a3b71d504",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "9340541a9a4c38bda203949637f09b59c846406b71960d8f254a5d4d59938e80",
+    "高天荒野舰艇推进状态合同.py": "2a6cefcbe4310ed5f81904fc91846b77e5014eb1b92161f1332f37892dc48816",
+    "高天荒野舰艇统一战术场景.py": "40cb63d6b6e4f3e768e3f7ed38964988ac473b212e5f9a42cf7a2b9aaf5c8ce4"
+  },
+  "interface": "gaotian.stage-t0b2c2b-propulsion-scene-state/v1",
+  "isolation_evidence": {
+    "authority_golden": "12_of_12_PASS",
+    "new_scene_fixed_steps_advanced": 0,
+    "strict_scene_negative_cases": 5,
+    "unwired_advance_rejected": true
+  },
+  "migration_evidence": {
+    "deterministic_replays_per_scene": 3,
+    "engine_states_migrated": 1224,
+    "governor_states_migrated": 896,
+    "off_engines": 0,
+    "ready_engines": 1224,
+    "scenes_migrated": 12,
+    "target_hashes": {
+      "functional_6.guided_projectiles": "e08e72039b409fc96fa9e85a7fa3fcecfa81871b46498903f8ebb0d87979ee82",
+      "functional_6.motion_only": "3c01237be110ebd5514c6f97abb612f88a96584fbfbc5d887b8c3d352435b4ad",
+      "functional_6.ordinary_projectiles": "b916839b55b9edead1fae90f155ae917098eceb12b958267deb817666aad841a",
+      "functional_6.scripted_damage_and_recompile": "b99ef863534f8b29dd1deaeeaddb8a1fd916db9a4a9f2e3c4267b18de45f8951",
+      "stress_30.guided_projectiles": "a5c4127d80d6b94e100f3116ad0eace09692c2344ab1a0bf24e6e9d28e82be7b",
+      "stress_30.motion_only": "4ab7b9031b01867085f5a8b5da7c1eca2727beb6b20e53bbe8ec1792255bc005",
+      "stress_30.ordinary_projectiles": "c7471c74fdf4dbb80fb279f577cbb1b4e75e23daef1b799586404d15f3e51e3e",
+      "stress_30.scripted_damage_and_recompile": "d47e239f93f6ca99cedd85c0d6f4a1415c83513b13fbde808b717bc801869fc0",
+      "target_20.guided_projectiles": "09a050f7314a417ee60b01b9615af6e749bc7df5c62a58e92dd0c0093beaa391",
+      "target_20.motion_only": "635807fe0960e6c62a197d0d44fb93126a329a1cc55cf0369eca037650852970",
+      "target_20.ordinary_projectiles": "e712408c962558ca8229b998935f171a2eb46635e9b9305cadd1f33c478e36de",
+      "target_20.scripted_damage_and_recompile": "16c074608e7cecd671379d18043dab7ca81bbf2ce80b49adcf5b4d062ade9a8f"
+    },
+    "unknown_tampered_and_profile_mismatch_rejected": 3
+  },
+  "next_slice": "T0b.2d1_propulsion_time_kernel",
+  "official_performance_runs_executed": 0,
+  "regression": {
+    "python": "65_of_65_PASS",
+    "rust": "15_of_15_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "risk_controls": {
+    "existing_v1_scene_schema_changed": false,
+    "legacy_scene_hash_changed": false,
+    "propulsion_mechanics_wired": false,
+    "propulsion_time_advanced": false,
+    "resource_reference_fallback_allowed": false,
+    "unknown_migration_defaults_allowed": false
+  },
+  "scope": "strict_propulsion_scene_state_events_and_named_v1_scene_migrations_only",
+  "state_evidence": {
+    "engine_phases": 6,
+    "governor_channels": 4,
+    "module_mode_mappings": 3,
+    "state_sha256": "cd4881be252aef035adc716276fe6b37d5539e3c23636a17e4e3ac6d7d363b11",
+    "strict_negative_cases": 13,
+    "v1_schema_unchanged": true
+  },
+  "status": "PASS",
+  "t0_performance_measured": false
+}

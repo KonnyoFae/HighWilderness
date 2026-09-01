@@ -18,6 +18,13 @@ from 高天荒野舰艇数据契约 import (
     ShipInstanceSnapshotInput,
     canonical_sha256,
 )
+from 高天荒野舰艇推进状态合同 import (
+    EngineRuntimeState,
+    PROPULSION_COMMAND_CHANNELS,
+    PropulsionGovernorState,
+    TacticalPropulsionState,
+    migrate_engine_runtime_state_from_module_mode,
+)
 from 高天荒野舰艇无界面舾装编译器 import (
     DerivedShipSnapshot,
     verify_derived_ship_snapshot_fingerprint,
@@ -131,6 +138,12 @@ BINDING_VALIDATION_MODES = frozenset(
 
 TACTICAL_SCENE_INTERFACE_ID = "gaotian.tactical-scene-timeline/v1alpha1"
 TACTICAL_SCENE_POLICY_ID = "gaotian.tactical-scene/boundary-lifecycle-fire-motion-impact/v2"
+TACTICAL_PROPULSION_SCENE_INTERFACE_ID = (
+    "gaotian.tactical-scene-timeline/v2alpha1"
+)
+TACTICAL_PROPULSION_SCENE_POLICY_ID = (
+    "gaotian.tactical-scene/boundary-lifecycle-fire-motion-impact-propulsion-state/v3"
+)
 TACTICAL_ENGAGEMENT_BOUNDARY_SCHEMA_ID = "gaotian.tactical-engagement-boundary/v1alpha1"
 TACTICAL_ENGAGEMENT_POLICY_ID = "gaotian.tactical-engagement/responding-ship-layer-pairwise-distance/v1"
 PROJECTILE_SUBSTEP_S = 0.005
@@ -586,9 +599,10 @@ class TacticalSceneShipState:
     combat_state: ShipCombatState
     motion_state: TacticalMotionState
     lifecycle_state: TacticalShipLifecycleState
+    propulsion_state: TacticalPropulsionState | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        result = {
             "combat_state": self.combat_state.to_dict(),
             "derived_snapshot_sha256": self.derived_snapshot_sha256,
             "fleet_id": self.fleet_id,
@@ -598,21 +612,33 @@ class TacticalSceneShipState:
             "side_id": self.side_id,
             "sortie_configuration_sha256": self.sortie_configuration_sha256,
         }
+        if self.propulsion_state is not None:
+            result["propulsion_state"] = self.propulsion_state.to_dict()
+        return result
 
     @classmethod
-    def parse(cls, value: Any, path: str) -> "TacticalSceneShipState":
+    def parse(
+        cls,
+        value: Any,
+        path: str,
+        *,
+        propulsion_required: bool = False,
+    ) -> "TacticalSceneShipState":
+        keys = {
+            "ship_id",
+            "side_id",
+            "fleet_id",
+            "derived_snapshot_sha256",
+            "sortie_configuration_sha256",
+            "combat_state",
+            "lifecycle_state",
+            "motion_state",
+        }
+        if propulsion_required:
+            keys.add("propulsion_state")
         obj = _exact_object(
             value,
-            {
-                "ship_id",
-                "side_id",
-                "fleet_id",
-                "derived_snapshot_sha256",
-                "sortie_configuration_sha256",
-                "combat_state",
-                "lifecycle_state",
-                "motion_state",
-            },
+            keys,
             path,
         )
         return cls(
@@ -624,6 +650,14 @@ class TacticalSceneShipState:
             ShipCombatState.parse(obj["combat_state"], f"{path}.combat_state"),
             _parse_motion_state(obj["motion_state"], f"{path}.motion_state"),
             TacticalShipLifecycleState.parse(obj["lifecycle_state"], f"{path}.lifecycle_state"),
+            (
+                TacticalPropulsionState.parse(
+                    obj["propulsion_state"],
+                    f"{path}.propulsion_state",
+                )
+                if propulsion_required
+                else None
+            ),
         )
 
 
@@ -635,9 +669,12 @@ class TacticalSceneState:
     projectile_world: ProjectileWorldState
     ships: tuple[TacticalSceneShipState, ...]
     engagement_state: TacticalEngagementState | None = None
+    propulsion_safety_profile: ResourceReference | None = None
+    propulsion_safety_profile_sha256: str | None = None
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        has_propulsion = self.propulsion_safety_profile is not None
+        result = {
             "fixed_step_index": self.fixed_step_index,
             "fixed_step_s": self.fixed_step_s,
             "engagement_state": (
@@ -645,37 +682,81 @@ class TacticalSceneState:
                 if self.engagement_state is None
                 else self.engagement_state.to_dict()
             ),
-            "interface": TACTICAL_SCENE_INTERFACE_ID,
-            "policy": TACTICAL_SCENE_POLICY_ID,
+            "interface": (
+                TACTICAL_PROPULSION_SCENE_INTERFACE_ID
+                if has_propulsion
+                else TACTICAL_SCENE_INTERFACE_ID
+            ),
+            "policy": (
+                TACTICAL_PROPULSION_SCENE_POLICY_ID
+                if has_propulsion
+                else TACTICAL_SCENE_POLICY_ID
+            ),
             "projectile_world": self.projectile_world.to_dict(),
             "ships": [item.to_dict() for item in self.ships],
             "tactical_time_s": self.tactical_time_s,
         }
+        if has_propulsion:
+            assert self.propulsion_safety_profile is not None
+            result["propulsion_safety_profile"] = (
+                self.propulsion_safety_profile.to_dict()
+            )
+            result["propulsion_safety_profile_sha256"] = (
+                self.propulsion_safety_profile_sha256
+            )
+        return result
 
     @classmethod
     def parse(cls, value: Any, path: str = "$") -> "TacticalSceneState":
+        if not isinstance(value, dict):
+            raise ContractError("object.keys", path, "场景必须是对象")
+        interface = value.get("interface")
+        if interface == TACTICAL_SCENE_INTERFACE_ID:
+            propulsion_required = False
+            expected_policy = TACTICAL_SCENE_POLICY_ID
+        elif interface == TACTICAL_PROPULSION_SCENE_INTERFACE_ID:
+            propulsion_required = True
+            expected_policy = TACTICAL_PROPULSION_SCENE_POLICY_ID
+        else:
+            raise ContractError(
+                "tactical_scene.interface",
+                f"{path}.interface",
+                str(interface),
+            )
+        keys = {
+            "fixed_step_index",
+            "fixed_step_s",
+            "engagement_state",
+            "interface",
+            "policy",
+            "projectile_world",
+            "ships",
+            "tactical_time_s",
+        }
+        if propulsion_required:
+            keys.update(
+                {
+                    "propulsion_safety_profile",
+                    "propulsion_safety_profile_sha256",
+                }
+            )
         obj = _exact_object(
             value,
-            {
-                "fixed_step_index",
-                "fixed_step_s",
-                "engagement_state",
-                "interface",
-                "policy",
-                "projectile_world",
-                "ships",
-                "tactical_time_s",
-            },
+            keys,
             path,
         )
-        if obj["interface"] != TACTICAL_SCENE_INTERFACE_ID or obj["policy"] != TACTICAL_SCENE_POLICY_ID:
+        if obj["policy"] != expected_policy:
             raise ContractError("tactical_scene.interface", path, "不是当前统一战术场景合同")
         if not isinstance(obj["ships"], list) or not obj["ships"]:
             raise ContractError("tactical_scene.ships", f"{path}.ships", "场景必须至少包含一艘舰艇")
         ships = tuple(
             sorted(
                 (
-                    TacticalSceneShipState.parse(item, f"{path}.ships[{index}]")
+                    TacticalSceneShipState.parse(
+                        item,
+                        f"{path}.ships[{index}]",
+                        propulsion_required=propulsion_required,
+                    )
                     for index, item in enumerate(obj["ships"])
                 ),
                 key=lambda item: item.ship_id,
@@ -696,6 +777,22 @@ class TacticalSceneState:
                     obj["engagement_state"],
                     f"{path}.engagement_state",
                 )
+            ),
+            (
+                ResourceReference.parse(
+                    obj["propulsion_safety_profile"],
+                    f"{path}.propulsion_safety_profile",
+                )
+                if propulsion_required
+                else None
+            ),
+            (
+                _sha256(
+                    obj["propulsion_safety_profile_sha256"],
+                    f"{path}.propulsion_safety_profile_sha256",
+                )
+                if propulsion_required
+                else None
             ),
         )
         _validate_internal_state(state)
@@ -1222,6 +1319,29 @@ def _validate_internal_state(state: TacticalSceneState) -> None:
         raise ContractError("tactical_scene.clock_mismatch", "$.tactical_time_s", "场景时刻必须由固定步号唯一派生")
     if abs(state.projectile_world.tactical_time_s - state.tactical_time_s) > EPS:
         raise ContractError("tactical_scene.projectile_clock_mismatch", "$.projectile_world.tactical_time_s", "弹丸世界与场景时钟不同步")
+    has_propulsion_profile = state.propulsion_safety_profile is not None
+    if has_propulsion_profile != (
+        state.propulsion_safety_profile_sha256 is not None
+    ):
+        raise ContractError(
+            "tactical_scene.propulsion_profile_partial",
+            "$.propulsion_safety_profile",
+            "推进安全配置引用与内容指纹必须同时存在或同时省略",
+        )
+    if state.propulsion_safety_profile_sha256 is not None:
+        _sha256(
+            state.propulsion_safety_profile_sha256,
+            "$.propulsion_safety_profile_sha256",
+        )
+    if any(
+        (ship.propulsion_state is not None) != has_propulsion_profile
+        for ship in state.ships
+    ):
+        raise ContractError(
+            "tactical_scene.propulsion_state_partial",
+            "$.ships",
+            "新场景每艘舰都必须携带推进状态，旧场景则全部不得携带",
+        )
     engagement = state.engagement_state
     if engagement is not None:
         if engagement.last_evaluated_step_index != state.fixed_step_index:
@@ -1237,6 +1357,59 @@ def _validate_internal_state(state: TacticalSceneState) -> None:
         lifecycle = ship.lifecycle_state
         continuous_damage = instance.continuous_damage_state
         crew_casualty = instance.crew_casualty_state
+        propulsion = ship.propulsion_state
+        if propulsion is not None:
+            for engine in propulsion.engines:
+                if (
+                    engine.phase in {"ready", "running", "stopping"}
+                    and engine.ready_at_fixed_step is not None
+                    and engine.ready_at_fixed_step > state.fixed_step_index
+                ):
+                    raise ContractError(
+                        "tactical_scene.propulsion_ready_clock_ahead",
+                        f"$.ships.{ship.ship_id}.propulsion_state.engines.{engine.actuator_instance_id}",
+                        "已就绪执行器的就绪步不得超前场景",
+                    )
+                if (
+                    engine.phase == "starting"
+                    and engine.ready_at_fixed_step is not None
+                    and engine.ready_at_fixed_step <= state.fixed_step_index
+                ):
+                    raise ContractError(
+                        "tactical_scene.propulsion_start_due",
+                        f"$.ships.{ship.ship_id}.propulsion_state.engines.{engine.actuator_instance_id}",
+                        "已到启动完成边界的状态不得继续保存为 starting",
+                    )
+                if (
+                    engine.next_transition_step is not None
+                    and engine.next_transition_step <= state.fixed_step_index
+                ):
+                    raise ContractError(
+                        "tactical_scene.propulsion_transition_due",
+                        f"$.ships.{ship.ship_id}.propulsion_state.engines.{engine.actuator_instance_id}",
+                        "待转换步必须位于当前已提交场景之后",
+                    )
+            for governor in propulsion.governors:
+                for value, field_name in (
+                    (
+                        governor.safety_limited_since_step,
+                        "safety_limited_since_step",
+                    ),
+                    (
+                        governor.release_candidate_since_step,
+                        "release_candidate_since_step",
+                    ),
+                    (
+                        governor.last_evaluated_step_index,
+                        "last_evaluated_step_index",
+                    ),
+                ):
+                    if value is not None and value > state.fixed_step_index:
+                        raise ContractError(
+                            "tactical_scene.propulsion_governor_clock_ahead",
+                            f"$.ships.{ship.ship_id}.propulsion_state.governors.{governor.command_channel}.{field_name}",
+                            "governor 步号不得超前场景",
+                        )
         if motion.fixed_step_index != state.fixed_step_index:
             raise ContractError("tactical_scene.motion_clock_mismatch", f"$.ships.{ship.ship_id}.motion_state.fixed_step_index", "舰艇机动步号与场景不同步")
         if timeline is None or abs(timeline.tactical_time_s - state.tactical_time_s) > EPS:
@@ -1352,6 +1525,187 @@ def _validate_bindings(
         actual_maximum = {item.key: item.maximum_durability_proxy for item in ship.combat_state.armor_edges}
         if actual_maximum != expected_maximum:
             raise ContractError("tactical_scene.armor_state_mismatch", f"$.ships.{ship_id}.combat_state.armor_edges", "局部装甲状态必须与精确船壳的全部边一一对应")
+
+
+@dataclass(frozen=True)
+class TacticalSceneV1ToPropulsionV2Migration:
+    migration_id: str
+    source_scene_sha256: str
+
+
+KNOWN_TACTICAL_SCENE_V1_TO_PROPULSION_V2_MIGRATIONS = (
+    TacticalSceneV1ToPropulsionV2Migration(
+        "functional_6.guided_projectiles",
+        "71ebacb179fbaaa09ccf5af0570ba0dbdb5c38726cb732a87497cc0d3f7a10c9",
+    ),
+    TacticalSceneV1ToPropulsionV2Migration(
+        "functional_6.motion_only",
+        "69c4c1d79952501d86475f71becad8285df25114f304bb434a8205c9aaacf708",
+    ),
+    TacticalSceneV1ToPropulsionV2Migration(
+        "functional_6.ordinary_projectiles",
+        "df7b06bbfad95b5f917436a61222bb1643f96ec2d671545c64033192f08e75de",
+    ),
+    TacticalSceneV1ToPropulsionV2Migration(
+        "functional_6.scripted_damage_and_recompile",
+        "f8d36945b39a2a6a87a06bd47c05b0604edeb2bb29f1aa2bdbc2f0d00f4000ec",
+    ),
+    TacticalSceneV1ToPropulsionV2Migration(
+        "stress_30.guided_projectiles",
+        "1b106fbe36b8709c86118a88f1c1ff909adb6693fd2aa2f28c7e3420a61a5010",
+    ),
+    TacticalSceneV1ToPropulsionV2Migration(
+        "stress_30.motion_only",
+        "df26a513ba5013271c06fc33b0eb9dd3866cea7f4b2ec10364b21147ab7dc998",
+    ),
+    TacticalSceneV1ToPropulsionV2Migration(
+        "stress_30.ordinary_projectiles",
+        "65a6b13baa08b0883ad35d2397f6c72f16be095adf248714a188425c577d8f6b",
+    ),
+    TacticalSceneV1ToPropulsionV2Migration(
+        "stress_30.scripted_damage_and_recompile",
+        "e0dc8aea10da978d1db38c1a399e104e63e873945abf303a02bb32fc5641d295",
+    ),
+    TacticalSceneV1ToPropulsionV2Migration(
+        "target_20.guided_projectiles",
+        "2d4f1997dd8d6329d3ad3c9cb80a6773ccaaf52fb55b0320829b205ba2888cf4",
+    ),
+    TacticalSceneV1ToPropulsionV2Migration(
+        "target_20.motion_only",
+        "b0d1d8fc5bf24a0ce9113e1c510013aa9b9782bae4a0b0feaf592957cd3ff4df",
+    ),
+    TacticalSceneV1ToPropulsionV2Migration(
+        "target_20.ordinary_projectiles",
+        "e120b60071e02cb43a97e4c11e34b6ee4eaf212f6dcd70027aca8de6656674f8",
+    ),
+    TacticalSceneV1ToPropulsionV2Migration(
+        "target_20.scripted_damage_and_recompile",
+        "fce5f11e841dde12b9b0777526455ab710692718ff3d7dcbfecf365203d91f40",
+    ),
+)
+T0_PROPULSION_SAFETY_PROFILE_REFERENCE = ResourceReference(
+    "gtw.propulsion_safety.fixture.t0",
+    1,
+)
+T0_PROPULSION_SAFETY_PROFILE_SHA256 = (
+    "a67f71517c39243d54dc01bf84f3981ca73e59551fc85787ce8da7e336ea5d6f"
+)
+
+
+def validate_tactical_scene_propulsion_profile(
+    state: TacticalSceneState,
+    profile: Any,
+) -> None:
+    if state.propulsion_safety_profile is None:
+        raise ContractError(
+            "tactical_scene.propulsion_profile_unexpected",
+            "$.propulsion_safety_profile",
+            "旧场景没有推进安全配置引用",
+        )
+    if (
+        state.propulsion_safety_profile != profile.reference
+        or state.propulsion_safety_profile_sha256 != profile.source_sha256
+    ):
+        raise ContractError(
+            "tactical_scene.propulsion_profile_mismatch",
+            "$.propulsion_safety_profile",
+            "推进安全配置引用或内容指纹不匹配",
+        )
+
+
+def migrate_known_tactical_scene_v1_to_propulsion_v2(
+    migration_id: str,
+    state: TacticalSceneState,
+    bindings: Iterable[TacticalSceneShipBinding],
+    profile: Any,
+) -> TacticalSceneState:
+    """只迁移具名、指纹锁定的旧 T0 初始场景，不推进任何权威时间。"""
+
+    if (
+        state.propulsion_safety_profile is not None
+        or any(ship.propulsion_state is not None for ship in state.ships)
+    ):
+        raise ContractError(
+            "tactical_scene.propulsion_migration_source_interface",
+            "$.interface",
+            "推进场景不得再次执行 v1→v2 迁移",
+        )
+    specification = next(
+        (
+            item
+            for item in KNOWN_TACTICAL_SCENE_V1_TO_PROPULSION_V2_MIGRATIONS
+            if item.migration_id == migration_id
+        ),
+        None,
+    )
+    if specification is None:
+        raise ContractError(
+            "tactical_scene.propulsion_migration_unknown",
+            "$.migration_id",
+            migration_id,
+        )
+    source_sha256 = canonical_sha256(state)
+    if source_sha256 != specification.source_scene_sha256:
+        raise ContractError(
+            "tactical_scene.propulsion_migration_source_hash",
+            "$.scene",
+            f"{migration_id} 的旧场景内容指纹不匹配",
+        )
+    if (
+        profile.reference != T0_PROPULSION_SAFETY_PROFILE_REFERENCE
+        or profile.source_sha256 != T0_PROPULSION_SAFETY_PROFILE_SHA256
+    ):
+        raise ContractError(
+            "tactical_scene.propulsion_migration_profile",
+            "$.propulsion_safety_profile",
+            "具名 T0 场景迁移必须绑定冻结的兼容推进安全配置",
+        )
+    binding_by_id = _binding_map(bindings)
+    _validate_bindings(state, binding_by_id, BINDING_VALIDATION_STRICT)
+    migrated_ships: list[TacticalSceneShipState] = []
+    for ship in state.ships:
+        binding = binding_by_id[ship.ship_id]
+        module_state_by_id = {
+            item.instance_id: item
+            for item in ship.combat_state.instance.module_states
+        }
+        engines: list[EngineRuntimeState] = []
+        for actuator in sorted(
+            binding.snapshot.outfit.actuators,
+            key=lambda item: item.instance_id,
+        ):
+            module_state = module_state_by_id.get(actuator.instance_id)
+            if module_state is None:
+                raise ContractError(
+                    "tactical_scene.propulsion_migration_actuator_state_missing",
+                    f"$.ships.{ship.ship_id}.combat_state.instance.module_states",
+                    actuator.instance_id,
+                )
+            engines.append(
+                migrate_engine_runtime_state_from_module_mode(
+                    actuator.instance_id,
+                    actuator.category,
+                    module_state.operating_mode,
+                    state.fixed_step_index,
+                )
+            )
+        propulsion = TacticalPropulsionState(
+            tuple(engines),
+            tuple(
+                PropulsionGovernorState.initial(channel)
+                for channel in PROPULSION_COMMAND_CHANNELS
+            ),
+        )
+        migrated_ships.append(replace(ship, propulsion_state=propulsion))
+    migrated = replace(
+        state,
+        ships=tuple(migrated_ships),
+        propulsion_safety_profile=profile.reference,
+        propulsion_safety_profile_sha256=profile.source_sha256,
+    )
+    _validate_internal_state(migrated)
+    validate_tactical_scene_propulsion_profile(migrated, profile)
+    return migrated
 
 
 def initialize_tactical_scene(
@@ -1539,6 +1893,12 @@ def advance_tactical_scene_step(
     binding_validation_mode: str = BINDING_VALIDATION_STRICT,
 ) -> TacticalSceneStepResolution:
     _validate_internal_state(state)
+    if state.propulsion_safety_profile is not None:
+        raise ContractError(
+            "tactical_scene.propulsion_unwired",
+            "$.interface",
+            "推进场景合同已迁移，但时间内核与力学接线留待 T0b.2d1/d2",
+        )
     if state.engagement_state is not None:
         if state.engagement_state.status != "active":
             raise ContractError("tactical_engagement.closed", "$.engagement_state.status", "已经脱离或分出结果的战术场景不能继续推进")

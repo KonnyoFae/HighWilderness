@@ -1,0 +1,83 @@
+{
+  "$id": "gaotian.tactical-scene-timeline/v2alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "engagement_state": {"type": ["object", "null"]},
+    "fixed_step_index": {"minimum": 0, "type": "integer"},
+    "fixed_step_s": {"exclusiveMinimum": 0, "type": "number"},
+    "interface": {"const": "gaotian.tactical-scene-timeline/v2alpha1"},
+    "policy": {"const": "gaotian.tactical-scene/boundary-lifecycle-fire-motion-impact-propulsion-state/v3"},
+    "projectile_world": {"type": "object"},
+    "propulsion_safety_profile": {"$ref": "#/$defs/resourceReference"},
+    "propulsion_safety_profile_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+    "ships": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "combat_state": {"type": "object"},
+          "derived_snapshot_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+          "fleet_id": {"pattern": "^[a-z0-9._-]+$", "type": "string"},
+          "lifecycle_state": {
+            "additionalProperties": false,
+            "properties": {
+              "command_status": {"enum": ["scene_command", "local_only", "uncommanded"]},
+              "exit_reason": {"enum": ["distance_disengaged", "fell_below_scene", "scripted_transfer", null]},
+              "exit_tactical_time_s": {"minimum": 0, "type": ["number", "null"]},
+              "failure_causes": {"items": {"type": "string"}, "type": "array", "uniqueItems": true},
+              "last_transition_step_index": {"minimum": 0, "type": "integer"},
+              "physical_status": {"enum": ["operational", "falling", "exited"]}
+            },
+            "required": ["command_status", "exit_reason", "exit_tactical_time_s", "failure_causes", "last_transition_step_index", "physical_status"],
+            "type": "object"
+          },
+          "motion_state": {
+            "additionalProperties": false,
+            "properties": {
+              "fixed_step_index": {"minimum": 0, "type": "integer"},
+              "fuel_units": {"minimum": 0, "type": "number"},
+              "heading_rad": {"type": "number"},
+              "height_layer": {"enum": ["upper", "cloud", "rain"]},
+              "hull_integrity_fraction": {"maximum": 1, "minimum": 0, "type": "number"},
+              "layer_transition": {"type": ["object", "null"]},
+              "position_world_m": {"$ref": "#/$defs/vector2"},
+              "velocity_world_mps": {"$ref": "#/$defs/vector2"},
+              "yaw_rate_radps": {"type": "number"}
+            },
+            "required": ["fixed_step_index", "fuel_units", "heading_rad", "height_layer", "hull_integrity_fraction", "layer_transition", "position_world_m", "velocity_world_mps", "yaw_rate_radps"],
+            "type": "object"
+          },
+          "propulsion_state": {"$ref": "gaotian.tactical-propulsion-state/v1alpha1"},
+          "ship_id": {"pattern": "^[a-z0-9._-]+$", "type": "string"},
+          "side_id": {"pattern": "^[a-z0-9._-]+$", "type": "string"},
+          "sortie_configuration_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"}
+        },
+        "required": ["combat_state", "derived_snapshot_sha256", "fleet_id", "lifecycle_state", "motion_state", "propulsion_state", "ship_id", "side_id", "sortie_configuration_sha256"],
+        "type": "object"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "tactical_time_s": {"minimum": 0, "type": "number"}
+  },
+  "required": ["engagement_state", "fixed_step_index", "fixed_step_s", "interface", "policy", "projectile_world", "propulsion_safety_profile", "propulsion_safety_profile_sha256", "ships", "tactical_time_s"],
+  "type": "object",
+  "$defs": {
+    "resourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {"pattern": "^[a-z0-9][a-z0-9._-]*$", "type": "string"},
+        "version": {"minimum": 1, "type": "integer"}
+      },
+      "required": ["id", "version"],
+      "type": "object"
+    },
+    "vector2": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [{"type": "number"}, {"type": "number"}],
+      "type": "array"
+    }
+  }
+}
