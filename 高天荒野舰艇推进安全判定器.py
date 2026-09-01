@@ -2,14 +2,32 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
+import json
 from math import isfinite
+from pathlib import Path
 from typing import Any, Callable
+
+from 高天荒野舰艇数据契约 import (
+    ContractError,
+    RESOURCE_ID_PATTERN,
+    ResourceReference,
+    canonical_sha256,
+)
 
 
 PROPULSION_SAFETY_INTERFACE_ID = (
     "gaotian.propulsion-safety-governor/v1alpha1"
 )
+PROPULSION_SAFETY_PROFILE_SCHEMA_ID = (
+    "gaotian.propulsion-safety-profile/v1alpha1"
+)
+PROPULSION_SAFETY_PROFILE_KIND = "PropulsionSafetyProfile"
+PROPULSION_SAFETY_FIXTURE_LEVELS = {
+    "contract_fixture",
+    "prototype_unbalanced",
+    "balance_reference",
+}
 EPS = 1.0e-9
 
 THRUST_OUTPUT_STAGES_PERCENT = (
@@ -81,6 +99,43 @@ def _require_ordered_reasons(
         raise ValueError(f"{name} 必须使用稳定顺序、不得重复且不得包含未知原因")
 
 
+def _profile_exact_object(
+    value: Any,
+    expected: set[str],
+    path: str,
+) -> dict[str, Any]:
+    if not isinstance(value, dict) or set(value) != expected:
+        raise ContractError("object.keys", path, f"必须恰含 {sorted(expected)}")
+    return value
+
+
+def _profile_resource_id(value: Any, path: str) -> str:
+    if not isinstance(value, str) or not RESOURCE_ID_PATTERN.fullmatch(value):
+        raise ContractError("resource.id_invalid", path, str(value))
+    return value
+
+
+def _profile_string(value: Any, path: str) -> str:
+    if not isinstance(value, str) or not value:
+        raise ContractError("type.string", path, "必须是非空字符串")
+    return value
+
+
+def _profile_positive_number(value: Any, path: str) -> float:
+    if isinstance(value, bool) or not isinstance(value, (int, float)):
+        raise ContractError("type.number", path, "必须是数值")
+    result = float(value)
+    if not isfinite(result) or result <= 0.0:
+        raise ContractError("value.positive", path, "必须为正有限数")
+    return result
+
+
+def _profile_positive_integer(value: Any, path: str) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < 1:
+        raise ContractError("type.integer", path, "必须是正整数")
+    return value
+
+
 def telegraph_notch_percent(notch: str) -> int:
     for item, percent in TELEGRAPH_NOTCH_PERCENT:
         if item == notch:
@@ -110,10 +165,24 @@ class PropulsionSafetyProfile:
     crew_engage_g: float
     crew_release_g: float
     release_hold_steps: int
+    version: int = 1
+    name: str = "推进安全配置"
+    fixture_level: str = "contract_fixture"
+    _source_sha256: str = field(init=False, repr=False, compare=False)
 
     def __post_init__(self) -> None:
-        if not isinstance(self.id, str) or not self.id:
-            raise ValueError("安全配置 id 不得为空")
+        if not isinstance(self.id, str) or not RESOURCE_ID_PATTERN.fullmatch(self.id):
+            raise ValueError("安全配置 id 必须是规范资源标识")
+        if (
+            isinstance(self.version, bool)
+            or not isinstance(self.version, int)
+            or self.version < 1
+        ):
+            raise ValueError("安全配置 version 必须是正整数")
+        if not isinstance(self.name, str) or not self.name:
+            raise ValueError("安全配置 name 不得为空")
+        if self.fixture_level not in PROPULSION_SAFETY_FIXTURE_LEVELS:
+            raise ValueError("安全配置 fixture_level 非法")
         for value, name in (
             (self.structure_engage_ratio, "structure_engage_ratio"),
             (self.structure_release_ratio, "structure_release_ratio"),
@@ -133,16 +202,129 @@ class PropulsionSafetyProfile:
             or self.release_hold_steps < 1
         ):
             raise ValueError("release_hold_steps 必须是正整数")
+        object.__setattr__(self, "_source_sha256", canonical_sha256(self))
+
+    @property
+    def reference(self) -> ResourceReference:
+        return ResourceReference(self.id, self.version)
+
+    @property
+    def source_sha256(self) -> str:
+        return self._source_sha256
+
+    @classmethod
+    def parse(cls, value: Any, path: str = "$") -> "PropulsionSafetyProfile":
+        obj = _profile_exact_object(
+            value,
+            {
+                "schema",
+                "kind",
+                "id",
+                "version",
+                "name",
+                "fixture_level",
+                "structure_engage_ratio",
+                "structure_release_ratio",
+                "crew_engage_g",
+                "crew_release_g",
+                "release_hold_steps",
+            },
+            path,
+        )
+        if obj["schema"] != PROPULSION_SAFETY_PROFILE_SCHEMA_ID:
+            raise ContractError(
+                "schema.unsupported",
+                f"{path}.schema",
+                str(obj["schema"]),
+            )
+        if obj["kind"] != PROPULSION_SAFETY_PROFILE_KIND:
+            raise ContractError(
+                "resource.kind_mismatch",
+                f"{path}.kind",
+                PROPULSION_SAFETY_PROFILE_KIND,
+            )
+        fixture_level = _profile_string(
+            obj["fixture_level"],
+            f"{path}.fixture_level",
+        )
+        if fixture_level not in PROPULSION_SAFETY_FIXTURE_LEVELS:
+            raise ContractError(
+                "propulsion_safety.fixture_level",
+                f"{path}.fixture_level",
+                str(fixture_level),
+            )
+        structure_engage = _profile_positive_number(
+            obj["structure_engage_ratio"],
+            f"{path}.structure_engage_ratio",
+        )
+        structure_release = _profile_positive_number(
+            obj["structure_release_ratio"],
+            f"{path}.structure_release_ratio",
+        )
+        if structure_release >= structure_engage:
+            raise ContractError(
+                "propulsion_safety.structure_hysteresis",
+                path,
+                "结构释放阈值必须位于介入阈值更安全的一侧",
+            )
+        crew_engage = _profile_positive_number(
+            obj["crew_engage_g"],
+            f"{path}.crew_engage_g",
+        )
+        crew_release = _profile_positive_number(
+            obj["crew_release_g"],
+            f"{path}.crew_release_g",
+        )
+        if crew_release >= crew_engage:
+            raise ContractError(
+                "propulsion_safety.crew_hysteresis",
+                path,
+                "乘员释放阈值必须位于介入阈值更安全的一侧",
+            )
+        return cls(
+            _profile_resource_id(obj["id"], f"{path}.id"),
+            structure_engage,
+            structure_release,
+            crew_engage,
+            crew_release,
+            _profile_positive_integer(
+                obj["release_hold_steps"],
+                f"{path}.release_hold_steps",
+            ),
+            version=_profile_positive_integer(obj["version"], f"{path}.version"),
+            name=_profile_string(obj["name"], f"{path}.name"),
+            fixture_level=fixture_level,
+        )
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "crew_engage_g": self.crew_engage_g,
             "crew_release_g": self.crew_release_g,
+            "fixture_level": self.fixture_level,
             "id": self.id,
+            "kind": PROPULSION_SAFETY_PROFILE_KIND,
+            "name": self.name,
             "release_hold_steps": self.release_hold_steps,
+            "schema": PROPULSION_SAFETY_PROFILE_SCHEMA_ID,
             "structure_engage_ratio": self.structure_engage_ratio,
             "structure_release_ratio": self.structure_release_ratio,
+            "version": self.version,
         }
+
+
+def load_propulsion_safety_profile(
+    path: str | Path,
+) -> PropulsionSafetyProfile:
+    source_path = Path(path)
+    try:
+        value = json.loads(source_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as error:
+        raise ContractError(
+            "resource.load_failed",
+            str(source_path),
+            str(error),
+        ) from error
+    return PropulsionSafetyProfile.parse(value, str(source_path))
 
 
 @dataclass(frozen=True)

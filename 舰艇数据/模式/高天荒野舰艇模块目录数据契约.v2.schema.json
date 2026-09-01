@@ -1,0 +1,257 @@
+{
+  "$id": "gaotian.module-prototype-catalog/v2",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "fixture_level": {
+      "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/moduleFixtureLevel"
+    },
+    "id": {
+      "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/resourceId"
+    },
+    "kind": {
+      "const": "ModulePrototypeCatalog"
+    },
+    "modules": {
+      "items": {
+        "$ref": "#/$defs/modulePrototypeV2"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "schema": {
+      "const": "gaotian.module-prototype-catalog/v2"
+    },
+    "version": {
+      "minimum": 2,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "kind",
+    "id",
+    "version",
+    "name",
+    "fixture_level",
+    "modules"
+  ],
+  "type": "object",
+  "$defs": {
+    "moduleCapabilityV2": {
+      "oneOf": [
+        {
+          "additionalProperties": false,
+          "properties": {
+            "fuel_units_per_s": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "kind": {
+              "const": "main_engine"
+            },
+            "local_thrust_axis": {
+              "const": "+Y"
+            },
+            "response_time_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "startup_time_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "thrust_n": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "kind",
+            "thrust_n",
+            "fuel_units_per_s",
+            "startup_time_s",
+            "response_time_s",
+            "local_thrust_axis"
+          ],
+          "type": "object"
+        },
+        {
+          "additionalProperties": false,
+          "properties": {
+            "fuel_units_per_s": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "kind": {
+              "const": "maneuver_thruster"
+            },
+            "local_thrust_axis": {
+              "const": "+Y"
+            },
+            "response_time_s": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            },
+            "startup_time_s": {
+              "const": 0
+            },
+            "thrust_n": {
+              "exclusiveMinimum": 0,
+              "type": "number"
+            }
+          },
+          "required": [
+            "kind",
+            "thrust_n",
+            "fuel_units_per_s",
+            "startup_time_s",
+            "response_time_s",
+            "local_thrust_axis"
+          ],
+          "type": "object"
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/moduleCapability"
+            },
+            {
+              "not": {
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "main_engine",
+                      "maneuver_thruster"
+                    ]
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "modulePrototypeV2": {
+      "additionalProperties": false,
+      "properties": {
+        "automatic_activation_events": {
+          "items": {
+            "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/resourceId"
+          },
+          "type": "array",
+          "uniqueItems": true
+        },
+        "automation": {
+          "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/moduleAutomation"
+        },
+        "balance_status": {
+          "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/moduleFixtureLevel"
+        },
+        "base_external_rcs_m2": {
+          "minimum": 0,
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "capability": {
+          "$ref": "#/$defs/moduleCapabilityV2"
+        },
+        "category": {
+          "enum": [
+            "ammunition_magazine",
+            "cic",
+            "lift_fuel_tank",
+            "main_engine",
+            "maneuver_thruster",
+            "generator",
+            "damage_control",
+            "crew_quarters",
+            "remote_core",
+            "cargo_hold",
+            "fire_control",
+            "sensor",
+            "weapon"
+          ],
+          "type": "string"
+        },
+        "counts_toward_departure_minimum": {
+          "type": "boolean"
+        },
+        "crew": {
+          "items": {
+            "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/moduleCrewRequirement"
+          },
+          "type": "array"
+        },
+        "damage_responses": {
+          "items": {
+            "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/moduleFunctionDamageResponse"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "default_operating_mode": {
+          "enum": [
+            "off",
+            "standby",
+            "active"
+          ],
+          "type": "string"
+        },
+        "durability_points": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "id": {
+          "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/resourceId"
+        },
+        "installation": {
+          "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/moduleInstallation"
+        },
+        "mass_kg": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "power": {
+          "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/modulePower"
+        },
+        "version": {
+          "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/version"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "name",
+        "category",
+        "balance_status",
+        "installation",
+        "mass_kg",
+        "durability_points",
+        "base_external_rcs_m2",
+        "power",
+        "crew",
+        "damage_responses",
+        "counts_toward_departure_minimum",
+        "default_operating_mode",
+        "automatic_activation_events",
+        "automation",
+        "capability"
+      ],
+      "type": "object"
+    }
+  }
+}

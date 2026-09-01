@@ -1,0 +1,13 @@
+{
+  "crew_engage_g": 12.0,
+  "crew_release_g": 10.0,
+  "fixture_level": "prototype_unbalanced",
+  "id": "gtw.propulsion_safety.fixture.t0",
+  "kind": "PropulsionSafetyProfile",
+  "name": "T0·推进结构与乘员安全技术替身配置",
+  "release_hold_steps": 2,
+  "schema": "gaotian.propulsion-safety-profile/v1alpha1",
+  "structure_engage_ratio": 1.0,
+  "structure_release_ratio": 0.8,
+  "version": 1
+}

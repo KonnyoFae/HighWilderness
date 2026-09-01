@@ -19,6 +19,7 @@ from typing import Any, Iterable
 
 
 SCHEMA_ID = "gaotian.ship/v1alpha1"
+MODULE_CATALOG_V2_SCHEMA_ID = "gaotian.module-prototype-catalog/v2"
 COMBAT_SYSTEM_MODULE_CONTRACT_ID = "gaotian.combat-system-modules/v1alpha1"
 RESOURCE_ID_PATTERN = re.compile(r"^[a-z0-9][a-z0-9._-]*$")
 SHA256_PATTERN = re.compile(r"^[0-9a-f]{64}$")
@@ -874,7 +875,13 @@ class ModuleCapability:
     values: tuple[tuple[str, Any], ...]
 
     @classmethod
-    def parse(cls, value: Any, path: str) -> "ModuleCapability":
+    def parse(
+        cls,
+        value: Any,
+        path: str,
+        *,
+        propulsion_capability_version: int = 1,
+    ) -> "ModuleCapability":
         obj = _object(value, path)
         kind = _string(obj.get("kind"), f"{path}.kind")
         if kind not in MODULE_CATEGORIES:
@@ -896,11 +903,60 @@ class ModuleCapability:
                     "module.lift_tank_output", path, "升力与燃料容量都必须是正数"
                 )
         elif kind in {"main_engine", "maneuver_thruster"}:
-            _keys(
-                obj,
-                path,
-                ("kind", "thrust_n", "fuel_units_per_s", "response_time_s", "local_thrust_axis"),
-            )
+            if propulsion_capability_version == 1:
+                _keys(
+                    obj,
+                    path,
+                    (
+                        "kind",
+                        "thrust_n",
+                        "fuel_units_per_s",
+                        "response_time_s",
+                        "local_thrust_axis",
+                    ),
+                )
+            elif propulsion_capability_version == 2:
+                _keys(
+                    obj,
+                    path,
+                    (
+                        "kind",
+                        "thrust_n",
+                        "fuel_units_per_s",
+                        "startup_time_s",
+                        "response_time_s",
+                        "local_thrust_axis",
+                    ),
+                )
+                parsed["startup_time_s"] = _number(
+                    obj["startup_time_s"],
+                    f"{path}.startup_time_s",
+                    0.0,
+                )
+                if (
+                    kind == "main_engine"
+                    and parsed["startup_time_s"] <= 0.0
+                ):
+                    raise ContractError(
+                        "module.main_engine_startup_time",
+                        f"{path}.startup_time_s",
+                        "主发动机启动时间必须是正数",
+                    )
+                if (
+                    kind == "maneuver_thruster"
+                    and parsed["startup_time_s"] != 0.0
+                ):
+                    raise ContractError(
+                        "module.maneuver_thruster_startup_time",
+                        f"{path}.startup_time_s",
+                        "首轮姿态推进器启动时间必须严格为 0",
+                    )
+            else:
+                raise ContractError(
+                    "module.propulsion_capability_version",
+                    path,
+                    str(propulsion_capability_version),
+                )
             parsed["thrust_n"] = _number(obj["thrust_n"], f"{path}.thrust_n", 0.0)
             parsed["fuel_units_per_s"] = _number(
                 obj["fuel_units_per_s"], f"{path}.fuel_units_per_s", 0.0
@@ -1231,7 +1287,13 @@ class ModulePrototype:
     capability: ModuleCapability
 
     @classmethod
-    def parse(cls, value: Any, path: str) -> "ModulePrototype":
+    def parse(
+        cls,
+        value: Any,
+        path: str,
+        *,
+        propulsion_capability_version: int = 1,
+    ) -> "ModulePrototype":
         obj = _object(value, path)
         _keys(
             obj,
@@ -1255,6 +1317,10 @@ class ModulePrototype:
                 "automation",
                 "capability",
             ),
+        )
+        reference = ResourceReference(
+            _resource_id(obj["id"], f"{path}.id"),
+            _integer(obj["version"], f"{path}.version", 1),
         )
         category = _string(obj["category"], f"{path}.category")
         if category not in MODULE_CATEGORIES:
@@ -1358,9 +1424,23 @@ class ModulePrototype:
                 f"{path}.automation.automated_functions",
                 f"找不到对应战损响应：{unknown_automation_functions}",
             )
-        capability = ModuleCapability.parse(obj["capability"], f"{path}.capability")
+        capability = ModuleCapability.parse(
+            obj["capability"],
+            f"{path}.capability",
+            propulsion_capability_version=propulsion_capability_version,
+        )
         if capability.kind != category:
             raise ContractError("module.capability_category_mismatch", path, "能力类型必须与模块类别一致")
+        if (
+            category in {"main_engine", "maneuver_thruster"}
+            and propulsion_capability_version == 2
+            and reference.version < 2
+        ):
+            raise ContractError(
+                "module.propulsion_v2_resource_version",
+                f"{path}.version",
+                "推进 capability v2 的模块资源版本不得低于 2",
+            )
         rcs_value = obj["base_external_rcs_m2"]
         rcs = None if rcs_value is None else _number(
             rcs_value, f"{path}.base_external_rcs_m2", 0.0
@@ -1461,10 +1541,7 @@ class ModulePrototype:
                 "遥控核心舱必须默认待机并响应 ship.remote_control_selected",
             )
         return cls(
-            ResourceReference(
-                _resource_id(obj["id"], f"{path}.id"),
-                _integer(obj["version"], f"{path}.version", 1),
-            ),
+            reference,
             _string(obj["name"], f"{path}.name"),
             category,
             status,
@@ -1537,13 +1614,18 @@ class ModulePrototypeCatalog:
     name: str
     fixture_level: str
     modules: tuple[ModulePrototype, ...]
+    schema: str = SCHEMA_ID
 
     @classmethod
     def parse(cls, resource: Any, path: str = "$") -> "ModulePrototypeCatalog":
         obj = _object(resource, path)
         _keys(obj, path, ("schema", "kind", "id", "version", "name", "fixture_level", "modules"))
-        if obj["schema"] != SCHEMA_ID:
-            raise ContractError("schema.unsupported", f"{path}.schema", str(obj["schema"]))
+        schema = _string(obj["schema"], f"{path}.schema")
+        if schema not in {SCHEMA_ID, MODULE_CATALOG_V2_SCHEMA_ID}:
+            raise ContractError("schema.unsupported", f"{path}.schema", schema)
+        propulsion_capability_version = (
+            2 if schema == MODULE_CATALOG_V2_SCHEMA_ID else 1
+        )
         if obj["kind"] != "ModulePrototypeCatalog":
             raise ContractError(
                 "resource.kind_mismatch", f"{path}.kind", "必须是 ModulePrototypeCatalog"
@@ -1557,7 +1639,11 @@ class ModulePrototypeCatalog:
         modules = tuple(
             sorted(
                 (
-                    ModulePrototype.parse(item, f"{path}.modules[{index}]")
+                    ModulePrototype.parse(
+                        item,
+                        f"{path}.modules[{index}]",
+                        propulsion_capability_version=propulsion_capability_version,
+                    )
                     for index, item in enumerate(module_values)
                 ),
                 key=lambda module: module.reference,
@@ -1584,12 +1670,20 @@ class ModulePrototypeCatalog:
                     f"{path}.modules",
                     "无人改进版必须是同类别的完全无人化模块",
                 )
+        version = _integer(obj["version"], f"{path}.version", 1)
+        if schema == MODULE_CATALOG_V2_SCHEMA_ID and version < 2:
+            raise ContractError(
+                "module.catalog_v2_resource_version",
+                f"{path}.version",
+                "模块目录 v2 的资源版本不得低于 2",
+            )
         return cls(
             _resource_id(obj["id"], f"{path}.id"),
-            _integer(obj["version"], f"{path}.version", 1),
+            version,
             _string(obj["name"], f"{path}.name"),
             fixture_level,
             modules,
+            schema,
         )
 
     def module(self, reference: ResourceReference, path: str = "$") -> ModulePrototype:
@@ -1605,7 +1699,7 @@ class ModulePrototypeCatalog:
             "kind": "ModulePrototypeCatalog",
             "modules": [module.to_dict() for module in self.modules],
             "name": self.name,
-            "schema": SCHEMA_ID,
+            "schema": self.schema,
             "version": self.version,
         }
 
@@ -1617,6 +1711,7 @@ def merge_module_prototype_catalogs(
     version: int,
     name: str,
     fixture_level: str,
+    schema: str = SCHEMA_ID,
 ) -> ModulePrototypeCatalog:
     """把多个模块内容目录确定性合并为舾装编译器使用的精确目录。"""
 
@@ -1632,10 +1727,118 @@ def merge_module_prototype_catalogs(
             "kind": "ModulePrototypeCatalog",
             "modules": modules,
             "name": name,
-            "schema": SCHEMA_ID,
+            "schema": schema,
             "version": version,
         },
         "$.merged_module_catalog",
+    )
+
+
+@dataclass(frozen=True)
+class ModuleCatalogV1ToV2Migration:
+    source_id: str
+    source_version: int
+    source_sha256: str
+    target_version: int
+    startup_time_s_by_module_id: tuple[tuple[str, float], ...]
+
+
+KNOWN_MODULE_CATALOG_V1_TO_V2_MIGRATIONS = (
+    ModuleCatalogV1ToV2Migration(
+        "gtw.module_catalog.fixture.minimum",
+        1,
+        "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a",
+        2,
+        (
+            ("gtw.module.fixture.main_engine", 1.0),
+            ("gtw.module.fixture.maneuver_thruster", 0.0),
+        ),
+    ),
+    ModuleCatalogV1ToV2Migration(
+        "gtw.module_catalog.fixture.stage_f_unmanned",
+        1,
+        "15825e048d2275b6d20c9b040ec01e437758f1160d9367bc0495b10bdca627bf",
+        2,
+        (
+            ("gtw.module.fixture.unmanned.main_engine", 1.0),
+            ("gtw.module.fixture.unmanned.maneuver_thruster", 0.0),
+        ),
+    ),
+    ModuleCatalogV1ToV2Migration(
+        "gtw.module_catalog.fixture.combat_system",
+        1,
+        "1740797702b3de4a7e3c5919a3f59f9d12cfb92f69e338666e1a05639e018ab1",
+        2,
+        (),
+    ),
+)
+
+
+def migrate_known_module_catalog_v1_to_v2(
+    catalog: ModulePrototypeCatalog,
+) -> ModulePrototypeCatalog:
+    """只迁移仓库内具名且内容指纹精确匹配的 v1 模块目录。"""
+
+    migration = next(
+        (
+            item
+            for item in KNOWN_MODULE_CATALOG_V1_TO_V2_MIGRATIONS
+            if (item.source_id, item.source_version)
+            == (catalog.id, catalog.version)
+        ),
+        None,
+    )
+    if migration is None or catalog.schema != SCHEMA_ID:
+        raise ContractError(
+            "module.catalog_migration_unknown",
+            "$.module_catalog",
+            f"没有 {catalog.id}@{catalog.version} 的具名 v1→v2 迁移",
+        )
+    source_sha256 = canonical_sha256(catalog)
+    if source_sha256 != migration.source_sha256:
+        raise ContractError(
+            "module.catalog_migration_source_hash",
+            "$.module_catalog",
+            f"{catalog.id}@{catalog.version} 内容指纹不匹配",
+        )
+    startup_by_id = dict(migration.startup_time_s_by_module_id)
+    propulsion_ids = {
+        module.reference.id
+        for module in catalog.modules
+        if module.category in {"main_engine", "maneuver_thruster"}
+    }
+    if set(startup_by_id) != propulsion_ids:
+        raise ContractError(
+            "module.catalog_migration_table_incomplete",
+            "$.module_catalog",
+            f"推进模块映射不完整：{sorted(propulsion_ids)}",
+        )
+    modules: list[dict[str, Any]] = []
+    for module in catalog.modules:
+        value = module.to_dict()
+        if module.category in {"main_engine", "maneuver_thruster"}:
+            if module.reference.version != 1:
+                raise ContractError(
+                    "module.catalog_migration_module_version",
+                    "$.module_catalog.modules",
+                    f"{module.reference.id} 不是版本 1",
+                )
+            value["version"] = 2
+            value["capability"]["startup_time_s"] = startup_by_id[
+                module.reference.id
+            ]
+        modules.append(value)
+    return ModulePrototypeCatalog.parse(
+        {
+            "fixture_level": catalog.fixture_level,
+            "id": catalog.id,
+            "kind": "ModulePrototypeCatalog",
+            "modules": modules,
+            "name": catalog.name,
+            "schema": MODULE_CATALOG_V2_SCHEMA_ID,
+            "version": migration.target_version,
+        },
+        "$.migrated_module_catalog",
     )
 
 

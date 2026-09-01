@@ -1,0 +1,63 @@
+{
+  "authority_golden": "12_of_12_PASS",
+  "baseline": {
+    "commit": "d4e4e57",
+    "slice": "T0b.2c1_complete"
+  },
+  "capability_evidence": {
+    "main_engine_startup_time_s": 1.0,
+    "maneuver_thruster_startup_time_s": 0.0,
+    "strict_negative_cases": 8,
+    "v1_schema_unchanged": true,
+    "v2_schema": "gaotian.module-prototype-catalog/v2"
+  },
+  "implementation_hashes": {
+    "舰艇数据/标定/T0推进安全技术替身配置.v1.json": "a67f71517c39243d54dc01bf84f3981ca73e59551fc85787ce8da7e336ea5d6f",
+    "舰艇数据/模式/高天荒野舰艇推进安全配置契约.v1alpha1.schema.json": "d8fc7994e34257df2ffc1b5a6a3ab3c25d6871843713271e6a6c2ab4433a51d5",
+    "舰艇数据/模式/高天荒野舰艇模块目录数据契约.v2.schema.json": "0e9d5e3ee78ff306f31684a3c18648c5c374132ccb2b83bef7c4d8ae2493bc95",
+    "高天荒野T0b2c2a推进资源合同测试.py": "39eddfb7f07a77d8a943faf4e6c0da537718f9f6b7e9c81294f036633a27c905",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "6e78837d0b54bdda93e5df25ee6d68a61a12d6dc0035a5b3cfc97083b02a436a",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "3593d6ab96eeb0fa87319f1bf068e7e38c050f46e17ef2ca04fdcbb11762b4aa",
+    "高天荒野舰艇数据契约.py": "77e2ff99f58b83fc33df2d1c78ebb35a503dda6dbf95b3909c79f69bde3fc532",
+    "高天荒野舰艇推进安全判定器.py": "024e75de648a4c9dc87554ef07d028f817a177f71f93e823c9ff6ffefb82514f"
+  },
+  "interface": "gaotian.stage-t0b2c2a-propulsion-resource-contracts/v1",
+  "isolation_evidence": {
+    "authority_golden": "12_of_12_PASS",
+    "existing_v1_catalogs_canonical": 3,
+    "scene_propulsion_resource_reference_count": 0
+  },
+  "migration_evidence": {
+    "catalogs_migrated": 3,
+    "deterministic_replays_per_catalog": 3,
+    "propulsion_modules_migrated": 4,
+    "target_hashes": {
+      "gtw.module_catalog.fixture.combat_system": "fc6caff7d1a50d34763da36e231115f46ba3a0a9486a92d99846a34c60406772",
+      "gtw.module_catalog.fixture.minimum": "75c4ef8c6cf873d0d94455a0fdb27ec0f062924aa5c3b8854861ecb8c00ed396",
+      "gtw.module_catalog.fixture.stage_f_unmanned": "3375ddfd345104624e9859a30825f3120c1ae388f2621059f156fc600bf4e7fc"
+    },
+    "unknown_and_tampered_rejected": 2
+  },
+  "next_slice": "T0b.2c2b_propulsion_scene_state_and_migration",
+  "official_performance_runs_executed": 0,
+  "profile_evidence": {
+    "profile_reference": "gtw.propulsion_safety.fixture.t0@1",
+    "profile_sha256": "a67f71517c39243d54dc01bf84f3981ca73e59551fc85787ce8da7e336ea5d6f",
+    "strict_negative_cases": 12
+  },
+  "regression": {
+    "python": "64_of_64_PASS",
+    "rust": "15_of_15_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "risk_controls": {
+    "existing_v1_catalogs_rewritten": false,
+    "existing_v1_schema_changed": false,
+    "persistent_propulsion_state_added": false,
+    "scene_or_mechanics_wired": false,
+    "unknown_migration_defaults_allowed": false
+  },
+  "scope": "strict_unwired_propulsion_resources_and_named_catalog_migrations_only",
+  "status": "PASS",
+  "t0_performance_measured": false
+}

@@ -1,0 +1,66 @@
+{
+  "$id": "gaotian.propulsion-safety-profile/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "crew_engage_g": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "crew_release_g": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "fixture_level": {
+      "enum": [
+        "contract_fixture",
+        "prototype_unbalanced",
+        "balance_reference"
+      ]
+    },
+    "id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "kind": {
+      "const": "PropulsionSafetyProfile"
+    },
+    "name": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "release_hold_steps": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "schema": {
+      "const": "gaotian.propulsion-safety-profile/v1alpha1"
+    },
+    "structure_engage_ratio": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "structure_release_ratio": {
+      "exclusiveMinimum": 0,
+      "type": "number"
+    },
+    "version": {
+      "minimum": 1,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "schema",
+    "kind",
+    "id",
+    "version",
+    "name",
+    "fixture_level",
+    "structure_engage_ratio",
+    "structure_release_ratio",
+    "crew_engage_g",
+    "crew_release_g",
+    "release_hold_steps"
+  ],
+  "type": "object"
+}
