@@ -1,0 +1,100 @@
+{
+  "acceptance": {
+    "authority_rules_changed": false,
+    "golden_results_changed": false,
+    "planning_files_changed": 2,
+    "production_code_files_changed": 0,
+    "python_regression": "66_of_66_PASS",
+    "rust_regression": "15_of_15_PASS",
+    "typescript_regression": "4_of_4_PASS"
+  },
+  "actuator_audit": {
+    "actuators": 1224,
+    "all_ships_blocked_by_unschedulable_thruster": true,
+    "response_inventory": [
+      {
+        "actuator_category": "main_engine",
+        "count": 48,
+        "response_time_s": 0.5,
+        "schedulable_under_d1": false
+      },
+      {
+        "actuator_category": "main_engine",
+        "count": 280,
+        "response_time_s": 1.0,
+        "schedulable_under_d1": true
+      },
+      {
+        "actuator_category": "maneuver_thruster",
+        "count": 896,
+        "response_time_s": 0.2,
+        "schedulable_under_d1": false
+      }
+    ],
+    "scenes": 12,
+    "ships": 224,
+    "ships_blocked": 224,
+    "unschedulable_actuator_fraction": 0.7712418300653595,
+    "unschedulable_actuators": 944
+  },
+  "baseline": {
+    "commit": "772e09a",
+    "slice": "T0b.2d1_complete"
+  },
+  "binding_audit": {
+    "all_propulsion_module_references_version": 1,
+    "direct_named_v1_to_v2_scene_catalog_bindings": 1,
+    "dynamic_combined_catalog_bindings_without_direct_migration": 2,
+    "persisted_v2_propulsion_catalogs": 0,
+    "propulsion_prototype_references": 4,
+    "scene_bound_v1_catalogs": 3
+  },
+  "contract_audit": {
+    "engine_runtime_interface_before_repair": "gaotian.engine-runtime-state/v1alpha1",
+    "required_anchor_fields_added_without_interface_increment": [
+      "response_start_output_percent",
+      "response_started_at_fixed_step"
+    ],
+    "scene_step_resolution_propulsion_events_present": false,
+    "scene_step_resolution_uses_propulsion_scene_interface": false,
+    "tactical_propulsion_interface_before_repair": "gaotian.tactical-propulsion-state/v1alpha1"
+  },
+  "control_audit": {
+    "benchmark_absolute_wheel": 0.05,
+    "benchmark_move_body_x": 0.0,
+    "benchmark_move_body_y": 0.1,
+    "current_authority_input": "continuous_move_body_wheel_brake_overg",
+    "d1_main_engine_input": "six_position_telegraph_notch",
+    "silent_continuous_to_discrete_mapping_allowed": false
+  },
+  "implementation_hashes": {
+    "benchmarks/t0/scenario.py": "94a8c442a74da209ad9756d4ea28b57351de4ca5afe8af8eda3f4ce58e1964c6",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "d79d2dee15fee59e69701bc7ea26af1d827e03590ba69f6cf6a8c49b036fa613",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "856f4fd3e083edaef570cfeb6a9ca5b2613a3f8295c8fabb595fb782833ad32d",
+    "高天荒野舰艇战术机动求解器.py": "03c62cf450e7ec58783fd98ba7190ad28a86d1caaec9f3f044a398f28a6b2986",
+    "高天荒野舰艇推进时间内核.py": "d9fd9e26ad628712ba10e6b743776a8a27b033277a4f26d3ec8cec8007b5a175",
+    "高天荒野舰艇推进状态合同.py": "27bf8bc209dc69579d25dfe1c81484e4d61310ef7e0aa8652712715fa363d907",
+    "高天荒野舰艇数据契约.py": "77e2ff99f58b83fc33df2d1c78ebb35a503dda6dbf95b3909c79f69bde3fc532",
+    "高天荒野舰艇统一战术场景.py": "40cb63d6b6e4f3e768e3f7ed38964988ac473b212e5f9a42cf7a2b9aaf5c8ce4",
+    "高天荒野舰艇阶段F三舰集成测试.py": "24c5449732fcd5fac439f1214b1d15eb6afe98c6266bc2280315b2e229f2c342"
+  },
+  "interface": "gaotian.stage-t0b2d1p-preintegration-review-and-replan/v1",
+  "next_slice": "T0b.2d1r_propulsion_state_contract_version_repair",
+  "official_performance_runs_executed": 0,
+  "revised_sequence": [
+    "T0b.2d1r",
+    "T0b.2d2a",
+    "T0b.2d2b",
+    "T0b.2d3",
+    "T0b.2d4",
+    "T0b.2e1"
+  ],
+  "slice_boundaries": {
+    "T0b.2d1r": "state_and_scene_alpha_interface_version_repair_and_named_migration_only",
+    "T0b.2d2a": "schedulable_capability_catalog_outfit_binding_control_and_step_result_contracts_only",
+    "T0b.2d2b": "scene_time_kernel_force_torque_fuel_and_new_golden_integration",
+    "T0b.2d3": "discrete_soft_safety_governor_integration",
+    "T0b.2d4": "hard_trip_reset_emergency_cutoff_and_direction_interlock"
+  },
+  "status": "PASS"
+}
