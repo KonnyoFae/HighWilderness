@@ -1,0 +1,64 @@
+{
+  "authority_golden": "12_of_12_PASS",
+  "baseline": {
+    "commit": "9441f9f",
+    "slice": "T0b.2c2b_complete"
+  },
+  "contract_evidence": {
+    "fixed_step_hz": 60,
+    "result_roundtrips": 1,
+    "strict_negative_cases": 7,
+    "unschedulable_compatibility_capabilities_rejected": 2
+  },
+  "implementation_hashes": {
+    "舰艇数据/模式/高天荒野舰艇推进状态契约.v1alpha1.schema.json": "0be50b77e46470b7ac77fd45ce908f8332bf13b70f2d11ef914da326a0e672e6",
+    "舰艇数据/模式/高天荒野舰艇推进时间边界结果契约.v1alpha1.schema.json": "7c9d2a0dccc1015a8fa60979df93e94d0070664f4afd96b733b6c2ed35f88031",
+    "高天荒野T0b2d1推进时间内核测试.py": "1b7463b59b65a8f85bab46d74c175496d897c08feed02e440242b5381ae77dcf",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "feee0af321c32949ab7fbed2f6a9ed3a54b462dbd92887f6536ab1456538928b",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "c16ffeab566ba44f38f7124b27a8a6ecfd4852766dd2affb883192528052b817",
+    "高天荒野舰艇推进时间内核.py": "d9fd9e26ad628712ba10e6b743776a8a27b033277a4f26d3ec8cec8007b5a175",
+    "高天荒野舰艇推进状态合同.py": "27bf8bc209dc69579d25dfe1c81484e4d61310ef7e0aa8652712715fa363d907",
+    "高天荒野舰艇统一战术场景.py": "40cb63d6b6e4f3e768e3f7ed38964988ac473b212e5f9a42cf7a2b9aaf5c8ce4"
+  },
+  "interface": "gaotian.stage-t0b2d1-propulsion-time-kernel/v1",
+  "isolation_evidence": {
+    "authority_golden": "12_of_12_PASS",
+    "deterministic_replays": 3,
+    "propulsion_mechanics_wired": false,
+    "replay_sha256": "40880677404059396576a2b636e435ae745b9581093531cefe587b4e451825b7",
+    "tactical_scene_imports_time_kernel": false
+  },
+  "next_slice": "T0b.2d2_propulsion_scene_integration",
+  "official_performance_runs_executed": 0,
+  "regression": {
+    "python": "66_of_66_PASS",
+    "rust": "15_of_15_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "response_evidence": {
+    "adjacent_downstage_events": 21,
+    "mid_command_origin_percent": 20,
+    "mid_command_target_percent": 25,
+    "missed_boundary_and_tripped_rejected": 2,
+    "stop_completed_at_step": 260
+  },
+  "risk_controls": {
+    "hard_faults_wired": false,
+    "legacy_scene_hash_changed": false,
+    "propulsion_mechanics_wired": false,
+    "safety_governor_wired": false,
+    "single_boundary_multi_stage_allowed": false,
+    "unschedulable_capability_fallback_allowed": false,
+    "wall_clock_or_float_accumulation_used": false
+  },
+  "scope": "independent_single_actuator_cold_start_adjacent_response_mid_command_and_stop_only",
+  "startup_evidence": {
+    "adjacent_upstage_events": 21,
+    "cold_start_completed_at_step": 60,
+    "full_output_completed_at_step": 120,
+    "maneuver_thruster_zero_startup": true,
+    "response_steps": 60
+  },
+  "status": "PASS",
+  "t0_performance_measured": false
+}

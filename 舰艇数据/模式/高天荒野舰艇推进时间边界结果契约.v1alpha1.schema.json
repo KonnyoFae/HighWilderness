@@ -1,0 +1,16 @@
+{
+  "$id": "gaotian.propulsion-time-boundary-result/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "events": {
+      "items": {"$ref": "gaotian.propulsion-state-event/v1alpha1"},
+      "type": "array"
+    },
+    "fixed_step_index": {"minimum": 0, "type": "integer"},
+    "interface": {"const": "gaotian.propulsion-time-boundary-result/v1alpha1"},
+    "state": {"$ref": "gaotian.tactical-propulsion-state/v1alpha1#/$defs/engineRuntimeState"}
+  },
+  "required": ["events", "fixed_step_index", "interface", "state"],
+  "type": "object"
+}

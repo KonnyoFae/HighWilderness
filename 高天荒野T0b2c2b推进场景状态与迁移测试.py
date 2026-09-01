@@ -132,11 +132,11 @@ def test_propulsion_state_contracts() -> dict[str, object]:
 
     main_source = deepcopy(_first_main_engine(source))
     phase_examples = {
-        "starting": (25, 0, 5, 5),
-        "ready": (0, 0, 0, None),
-        "running": (25, 20, 0, 5),
-        "stopping": (0, 20, 0, 5),
-        "tripped": (0, 0, None, None),
+        "starting": (25, 0, 5, 5, None, None),
+        "ready": (0, 0, 0, None, None, None),
+        "running": (25, 20, 0, 5, 1, 10),
+        "stopping": (0, 20, 0, 5, 1, 25),
+        "tripped": (0, 0, None, None, None, None),
     }
     for phase, values in phase_examples.items():
         candidate = deepcopy(main_source)
@@ -145,6 +145,8 @@ def test_propulsion_state_contracts() -> dict[str, object]:
         candidate["actual_output_percent"] = values[1]
         candidate["ready_at_fixed_step"] = values[2]
         candidate["next_transition_step"] = values[3]
+        candidate["response_started_at_fixed_step"] = values[4]
+        candidate["response_start_output_percent"] = values[5]
         assert EngineRuntimeState.parse(candidate, f"$.phase.{phase}").phase == phase
     assert set(phase_examples) | {"off"} == set(ENGINE_PHASES)
     assert tuple(

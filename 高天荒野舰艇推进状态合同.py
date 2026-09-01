@@ -145,6 +145,8 @@ class EngineRuntimeState:
     actual_output_percent: int
     ready_at_fixed_step: int | None
     next_transition_step: int | None
+    response_started_at_fixed_step: int | None = None
+    response_start_output_percent: int | None = None
 
     def __post_init__(self) -> None:
         if (
@@ -164,7 +166,11 @@ class EngineRuntimeState:
         for value in (self.target_output_percent, self.actual_output_percent):
             if isinstance(value, bool) or value not in THRUST_OUTPUT_STAGES_PERCENT:
                 raise ValueError("输出必须位于规范离散阶段")
-        for value in (self.ready_at_fixed_step, self.next_transition_step):
+        for value in (
+            self.ready_at_fixed_step,
+            self.next_transition_step,
+            self.response_started_at_fixed_step,
+        ):
             if value is not None and (
                 isinstance(value, bool) or not isinstance(value, int) or value < 0
             ):
@@ -175,32 +181,45 @@ class EngineRuntimeState:
                 or self.actual_output_percent != 0
                 or self.ready_at_fixed_step is not None
                 or self.next_transition_step is not None
+                or self.response_started_at_fixed_step is not None
+                or self.response_start_output_percent is not None
             ):
-                raise ValueError("off/tripped 必须归零且不得保留转换步号")
+                raise ValueError("off/tripped 必须归零且不得保留转换排程")
         elif self.phase == "starting":
             if (
                 self.actual_output_percent != 0
                 or self.target_output_percent == 0
                 or self.ready_at_fixed_step is None
                 or self.next_transition_step != self.ready_at_fixed_step
+                or self.response_started_at_fixed_step is not None
+                or self.response_start_output_percent is not None
             ):
-                raise ValueError("starting 必须归零并保存同一启动完成/下次转换步")
+                raise ValueError("starting 必须归零、保存启动完成步且不得提前建立响应排程")
         elif self.phase == "ready":
             if (
                 self.target_output_percent != 0
                 or self.actual_output_percent != 0
                 or self.ready_at_fixed_step is None
                 or self.next_transition_step is not None
+                or self.response_started_at_fixed_step is not None
+                or self.response_start_output_percent is not None
             ):
-                raise ValueError("ready 必须归零并保存就绪步且无待转换步")
+                raise ValueError("ready 必须归零并保存就绪步且无响应排程")
         elif self.phase == "running":
             if (
                 self.target_output_percent == 0
-                or self.actual_output_percent == 0
                 or self.ready_at_fixed_step is None
                 or (
                     (self.actual_output_percent != self.target_output_percent)
                     != (self.next_transition_step is not None)
+                )
+                or (
+                    (self.actual_output_percent != self.target_output_percent)
+                    != (self.response_started_at_fixed_step is not None)
+                )
+                or (
+                    (self.actual_output_percent != self.target_output_percent)
+                    != (self.response_start_output_percent is not None)
                 )
             ):
                 raise ValueError("running 的目标、实际输出与待转换步不一致")
@@ -210,8 +229,35 @@ class EngineRuntimeState:
                 or self.actual_output_percent == 0
                 or self.ready_at_fixed_step is None
                 or self.next_transition_step is None
+                or self.response_started_at_fixed_step is None
+                or self.response_start_output_percent is None
             ):
                 raise ValueError("stopping 必须向零输出转换并保存待转换步")
+        if self.response_start_output_percent is not None:
+            if (
+                isinstance(self.response_start_output_percent, bool)
+                or self.response_start_output_percent
+                not in THRUST_OUTPUT_STAGES_PERCENT
+            ):
+                raise ValueError("响应起点必须位于规范离散阶段")
+            if self.response_started_at_fixed_step is None:
+                raise ValueError("响应起点与排程步必须同时存在")
+            low = min(
+                self.response_start_output_percent,
+                self.target_output_percent,
+            )
+            high = max(
+                self.response_start_output_percent,
+                self.target_output_percent,
+            )
+            if not low <= self.actual_output_percent <= high:
+                raise ValueError("实际输出必须位于响应起点与目标之间")
+            if (
+                self.next_transition_step is None
+                or self.next_transition_step
+                <= self.response_started_at_fixed_step
+            ):
+                raise ValueError("下次转换步必须晚于响应排程起点")
 
     @classmethod
     def parse(cls, value: Any, path: str) -> "EngineRuntimeState":
@@ -226,6 +272,8 @@ class EngineRuntimeState:
                 "next_transition_step",
                 "phase",
                 "ready_at_fixed_step",
+                "response_start_output_percent",
+                "response_started_at_fixed_step",
                 "target_output_percent",
             },
             path,
@@ -281,6 +329,14 @@ class EngineRuntimeState:
                     obj["next_transition_step"],
                     f"{path}.next_transition_step",
                 ),
+                _optional_integer(
+                    obj["response_started_at_fixed_step"],
+                    f"{path}.response_started_at_fixed_step",
+                ),
+                _optional_stage(
+                    obj["response_start_output_percent"],
+                    f"{path}.response_start_output_percent",
+                ),
             )
         except ContractError:
             raise
@@ -301,6 +357,8 @@ class EngineRuntimeState:
             "next_transition_step": self.next_transition_step,
             "phase": self.phase,
             "ready_at_fixed_step": self.ready_at_fixed_step,
+            "response_start_output_percent": self.response_start_output_percent,
+            "response_started_at_fixed_step": self.response_started_at_fixed_step,
             "target_output_percent": self.target_output_percent,
         }
 
@@ -335,6 +393,8 @@ def migrate_engine_runtime_state_from_module_mode(
         0,
         0,
         fixed_step_index if active else None,
+        None,
+        None,
         None,
     )
 
