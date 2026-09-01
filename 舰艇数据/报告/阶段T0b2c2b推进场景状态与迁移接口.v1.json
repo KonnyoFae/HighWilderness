@@ -10,14 +10,14 @@
     "strict_negative_cases": 6
   },
   "implementation_hashes": {
-    "舰艇数据/模式/高天荒野舰艇推进状态契约.v1alpha1.schema.json": "0be50b77e46470b7ac77fd45ce908f8332bf13b70f2d11ef914da326a0e672e6",
+    "舰艇数据/模式/高天荒野舰艇推进状态契约.v1alpha1.schema.json": "acb489de4ed972a325c42a3b83260db1afdcd937f34716dbf278b332f7e004d8",
     "舰艇数据/模式/高天荒野舰艇推进事件契约.v1alpha1.schema.json": "43c67aba8d1c1868b3c13f23944a2fac97df1458be5436ae16880a1eaeff2914",
     "舰艇数据/模式/高天荒野舰艇统一战术场景状态契约.v2alpha1.schema.json": "6d54a3311a79501549ac3a09f31e0f8a95f760f74a4bf1472de0805e7d8c1c99",
-    "高天荒野T0b2c2b推进场景状态与迁移测试.py": "aaf42a27028c14355370f6f2f0e456caf254379b7cb2fc944f1ca6116edc64ea",
-    "高天荒野T0b2推进响应与权威性能优化规划.md": "d79d2dee15fee59e69701bc7ea26af1d827e03590ba69f6cf6a8c49b036fa613",
-    "高天荒野Web客户端编辑器与战术验证实施计划.md": "856f4fd3e083edaef570cfeb6a9ca5b2613a3f8295c8fabb595fb782833ad32d",
-    "高天荒野舰艇推进状态合同.py": "27bf8bc209dc69579d25dfe1c81484e4d61310ef7e0aa8652712715fa363d907",
-    "高天荒野舰艇统一战术场景.py": "40cb63d6b6e4f3e768e3f7ed38964988ac473b212e5f9a42cf7a2b9aaf5c8ce4"
+    "高天荒野T0b2c2b推进场景状态与迁移测试.py": "6ab830eab3a581d053640b226a21fc1a704dfcdddf738377c66172bc24d6c5cd",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "fa05fee49e638909bb6c9af34008d5e1db549908fa091fb85d90727ff0201330",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "d383f93aec763d762ec7b91a09247a2a24bcd6ee46ceaf8cd475517c370af53a",
+    "高天荒野舰艇推进状态合同.py": "260ea07edc52a152a4c6ad8cf3fc86a02a834c17389b3b41f2d05839bd9f4c8a",
+    "高天荒野舰艇统一战术场景.py": "7c2757ed2698ec49ba59926edd5fd43a46b91816787a1f628193f093b4348af6"
   },
   "interface": "gaotian.stage-t0b2c2b-propulsion-scene-state/v1",
   "isolation_evidence": {
@@ -34,18 +34,18 @@
     "ready_engines": 1224,
     "scenes_migrated": 12,
     "target_hashes": {
-      "functional_6.guided_projectiles": "376a85d5645c219988713235810a9250b14a56ccc36d589319703af42c70af20",
-      "functional_6.motion_only": "fa1f92ef1177ef8b874d7aa135d1ad1ac2a1715efa607767dce2ced65b123046",
-      "functional_6.ordinary_projectiles": "d0b5767a4ee9a36c10ecdcf76fbce40940f1b25ad56f90c6e84d67a6215f1f02",
-      "functional_6.scripted_damage_and_recompile": "48c9b930e8aa2150ead600ea0cc512e32f6d343d021efa0912ede8048e0535db",
-      "stress_30.guided_projectiles": "4f79209d8866e69e3003823ffbc6b6ce233fc8006f5b385e0d5c48204b9a67b2",
-      "stress_30.motion_only": "9e511d932026da293140d031ca42b90d9862936cafb6a8e8c0b097a35c12f3b4",
-      "stress_30.ordinary_projectiles": "9d8a9f13866d0ddfa789a426ac2712a8e87ac4f8d1be03d24062d32f28efed11",
-      "stress_30.scripted_damage_and_recompile": "b9e7ae5c649c2f59e776960be88f4a9b69c07e27f79239f2497d75484ba3425b",
-      "target_20.guided_projectiles": "384c37da5c1c2c88eb666c375b8fd613a94408ae3ef689032667660a18840126",
-      "target_20.motion_only": "6b9672b12db601cdb58ae68786d4aaff1ec98e3fbbb888cb17ea0f394235f822",
-      "target_20.ordinary_projectiles": "860d1a69d2380693a6cba730eb1c1832fdc6a17a118032e77b9891e86420e1f5",
-      "target_20.scripted_damage_and_recompile": "3723d4a105eca0009ce66c635fd173b8bdaac1a24842f026c130db73d75be320"
+      "functional_6.guided_projectiles": "e08e72039b409fc96fa9e85a7fa3fcecfa81871b46498903f8ebb0d87979ee82",
+      "functional_6.motion_only": "3c01237be110ebd5514c6f97abb612f88a96584fbfbc5d887b8c3d352435b4ad",
+      "functional_6.ordinary_projectiles": "b916839b55b9edead1fae90f155ae917098eceb12b958267deb817666aad841a",
+      "functional_6.scripted_damage_and_recompile": "b99ef863534f8b29dd1deaeeaddb8a1fd916db9a4a9f2e3c4267b18de45f8951",
+      "stress_30.guided_projectiles": "a5c4127d80d6b94e100f3116ad0eace09692c2344ab1a0bf24e6e9d28e82be7b",
+      "stress_30.motion_only": "4ab7b9031b01867085f5a8b5da7c1eca2727beb6b20e53bbe8ec1792255bc005",
+      "stress_30.ordinary_projectiles": "c7471c74fdf4dbb80fb279f577cbb1b4e75e23daef1b799586404d15f3e51e3e",
+      "stress_30.scripted_damage_and_recompile": "d47e239f93f6ca99cedd85c0d6f4a1415c83513b13fbde808b717bc801869fc0",
+      "target_20.guided_projectiles": "09a050f7314a417ee60b01b9615af6e749bc7df5c62a58e92dd0c0093beaa391",
+      "target_20.motion_only": "635807fe0960e6c62a197d0d44fb93126a329a1cc55cf0369eca037650852970",
+      "target_20.ordinary_projectiles": "e712408c962558ca8229b998935f171a2eb46635e9b9305cadd1f33c478e36de",
+      "target_20.scripted_damage_and_recompile": "16c074608e7cecd671379d18043dab7ca81bbf2ce80b49adcf5b4d062ade9a8f"
     },
     "unknown_tampered_and_profile_mismatch_rejected": 3
   },
@@ -69,7 +69,7 @@
     "engine_phases": 6,
     "governor_channels": 4,
     "module_mode_mappings": 3,
-    "state_sha256": "5599abfd515e80e12760a3eccc22da2417df319076dd02d5e01bc3b1b272480a",
+    "state_sha256": "cd4881be252aef035adc716276fe6b37d5539e3c23636a17e4e3ac6d7d363b11",
     "strict_negative_cases": 13,
     "v1_schema_unchanged": true
   },

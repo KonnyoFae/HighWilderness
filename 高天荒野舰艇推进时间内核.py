@@ -18,6 +18,7 @@ from 高天荒野舰艇推进安全判定器 import (
     telegraph_notch_percent,
 )
 from 高天荒野舰艇推进状态合同 import (
+    ENGINE_RUNTIME_STATE_INTERFACE_ID,
     PROPULSION_EVENT_KIND_ORDER,
     EngineRuntimeState,
     PropulsionStateEvent,
@@ -659,6 +660,12 @@ def advance_propulsion_time_boundary(
             "propulsion_time.state_type",
             "$.state",
             "必须传入 EngineRuntimeState",
+        )
+    if state.interface_id != ENGINE_RUNTIME_STATE_INTERFACE_ID:
+        raise ContractError(
+            "propulsion_time.state_interface",
+            "$.state.interface",
+            "c2b 状态必须先显式迁移到 d1 interface",
         )
     boundary = _nonnegative_integer(fixed_step_index, "$.fixed_step_index")
     if not isinstance(command, PropulsionTimeCommand):

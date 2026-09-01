@@ -9,7 +9,7 @@
     },
     "fixed_step_index": {"minimum": 0, "type": "integer"},
     "interface": {"const": "gaotian.propulsion-time-boundary-result/v1alpha1"},
-    "state": {"$ref": "gaotian.tactical-propulsion-state/v1alpha1#/$defs/engineRuntimeState"}
+    "state": {"$ref": "gaotian.tactical-propulsion-state/v2alpha1#/$defs/engineRuntimeState"}
   },
   "required": ["events", "fixed_step_index", "interface", "state"],
   "type": "object"

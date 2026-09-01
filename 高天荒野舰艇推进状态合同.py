@@ -1,4 +1,4 @@
-"""T0b.2c2b：未接入力学的推进场景持久状态与事件合同。"""
+"""T0b.2d1r：版本化推进场景持久状态与 c2b→d1 显式迁移合同。"""
 
 from __future__ import annotations
 
@@ -18,12 +18,16 @@ from 高天荒野舰艇推进安全判定器 import (
 )
 
 
-ENGINE_RUNTIME_STATE_INTERFACE_ID = "gaotian.engine-runtime-state/v1alpha1"
+C2B_ENGINE_RUNTIME_STATE_INTERFACE_ID = "gaotian.engine-runtime-state/v1alpha1"
+ENGINE_RUNTIME_STATE_INTERFACE_ID = "gaotian.engine-runtime-state/v2alpha1"
 PROPULSION_GOVERNOR_STATE_INTERFACE_ID = (
     "gaotian.propulsion-governor-state/v1alpha1"
 )
-TACTICAL_PROPULSION_STATE_INTERFACE_ID = (
+C2B_TACTICAL_PROPULSION_STATE_INTERFACE_ID = (
     "gaotian.tactical-propulsion-state/v1alpha1"
+)
+TACTICAL_PROPULSION_STATE_INTERFACE_ID = (
+    "gaotian.tactical-propulsion-state/v2alpha1"
 )
 PROPULSION_STATE_EVENT_INTERFACE_ID = (
     "gaotian.propulsion-state-event/v1alpha1"
@@ -147,8 +151,22 @@ class EngineRuntimeState:
     next_transition_step: int | None
     response_started_at_fixed_step: int | None = None
     response_start_output_percent: int | None = None
+    interface_id: str = ENGINE_RUNTIME_STATE_INTERFACE_ID
 
     def __post_init__(self) -> None:
+        if self.interface_id not in {
+            C2B_ENGINE_RUNTIME_STATE_INTERFACE_ID,
+            ENGINE_RUNTIME_STATE_INTERFACE_ID,
+        }:
+            raise ValueError("engine runtime interface 非法")
+        if (
+            self.interface_id == C2B_ENGINE_RUNTIME_STATE_INTERFACE_ID
+            and (
+                self.response_started_at_fixed_step is not None
+                or self.response_start_output_percent is not None
+            )
+        ):
+            raise ValueError("c2b engine runtime 不得携带 d1 响应排程锚点")
         if (
             not isinstance(self.actuator_instance_id, str)
             or not RESOURCE_ID_PATTERN.fullmatch(self.actuator_instance_id)
@@ -206,20 +224,25 @@ class EngineRuntimeState:
             ):
                 raise ValueError("ready 必须归零并保存就绪步且无响应排程")
         elif self.phase == "running":
+            response_active = (
+                self.actual_output_percent != self.target_output_percent
+            )
             if (
                 self.target_output_percent == 0
                 or self.ready_at_fixed_step is None
                 or (
-                    (self.actual_output_percent != self.target_output_percent)
-                    != (self.next_transition_step is not None)
+                    self.interface_id == C2B_ENGINE_RUNTIME_STATE_INTERFACE_ID
+                    and self.actual_output_percent == 0
                 )
+                or response_active != (self.next_transition_step is not None)
                 or (
-                    (self.actual_output_percent != self.target_output_percent)
-                    != (self.response_started_at_fixed_step is not None)
-                )
-                or (
-                    (self.actual_output_percent != self.target_output_percent)
-                    != (self.response_start_output_percent is not None)
+                    self.interface_id == ENGINE_RUNTIME_STATE_INTERFACE_ID
+                    and (
+                        response_active
+                        != (self.response_started_at_fixed_step is not None)
+                        or response_active
+                        != (self.response_start_output_percent is not None)
+                    )
                 )
             ):
                 raise ValueError("running 的目标、实际输出与待转换步不一致")
@@ -229,8 +252,14 @@ class EngineRuntimeState:
                 or self.actual_output_percent == 0
                 or self.ready_at_fixed_step is None
                 or self.next_transition_step is None
-                or self.response_started_at_fixed_step is None
-                or self.response_start_output_percent is None
+                or (
+                    self.interface_id == ENGINE_RUNTIME_STATE_INTERFACE_ID
+                    and self.response_started_at_fixed_step is None
+                )
+                or (
+                    self.interface_id == ENGINE_RUNTIME_STATE_INTERFACE_ID
+                    and self.response_start_output_percent is None
+                )
             ):
                 raise ValueError("stopping 必须向零输出转换并保存待转换步")
         if self.response_start_output_percent is not None:
@@ -261,9 +290,23 @@ class EngineRuntimeState:
 
     @classmethod
     def parse(cls, value: Any, path: str) -> "EngineRuntimeState":
-        obj = _exact_object(
-            value,
-            {
+        if not isinstance(value, dict):
+            raise ContractError("object.keys", path, "发动机状态必须是对象")
+        interface = value.get("interface")
+        if interface == C2B_ENGINE_RUNTIME_STATE_INTERFACE_ID:
+            keys = {
+                "actual_output_percent",
+                "actuator_category",
+                "actuator_instance_id",
+                "commanded_notch",
+                "interface",
+                "next_transition_step",
+                "phase",
+                "ready_at_fixed_step",
+                "target_output_percent",
+            }
+        elif interface == ENGINE_RUNTIME_STATE_INTERFACE_ID:
+            keys = {
                 "actual_output_percent",
                 "actuator_category",
                 "actuator_instance_id",
@@ -275,15 +318,18 @@ class EngineRuntimeState:
                 "response_start_output_percent",
                 "response_started_at_fixed_step",
                 "target_output_percent",
-            },
-            path,
-        )
-        if obj["interface"] != ENGINE_RUNTIME_STATE_INTERFACE_ID:
+            }
+        else:
             raise ContractError(
                 "propulsion_state.engine_interface",
                 f"{path}.interface",
-                str(obj["interface"]),
+                str(interface),
             )
+        obj = _exact_object(
+            value,
+            keys,
+            path,
+        )
         category = obj["actuator_category"]
         if category not in PROPULSION_ACTUATOR_CATEGORIES:
             raise ContractError(
@@ -329,14 +375,23 @@ class EngineRuntimeState:
                     obj["next_transition_step"],
                     f"{path}.next_transition_step",
                 ),
-                _optional_integer(
-                    obj["response_started_at_fixed_step"],
-                    f"{path}.response_started_at_fixed_step",
+                (
+                    _optional_integer(
+                        obj["response_started_at_fixed_step"],
+                        f"{path}.response_started_at_fixed_step",
+                    )
+                    if interface == ENGINE_RUNTIME_STATE_INTERFACE_ID
+                    else None
                 ),
-                _optional_stage(
-                    obj["response_start_output_percent"],
-                    f"{path}.response_start_output_percent",
+                (
+                    _optional_stage(
+                        obj["response_start_output_percent"],
+                        f"{path}.response_start_output_percent",
+                    )
+                    if interface == ENGINE_RUNTIME_STATE_INTERFACE_ID
+                    else None
                 ),
+                interface,
             )
         except ContractError:
             raise
@@ -348,19 +403,25 @@ class EngineRuntimeState:
             ) from error
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        result = {
             "actual_output_percent": self.actual_output_percent,
             "actuator_category": self.actuator_category,
             "actuator_instance_id": self.actuator_instance_id,
             "commanded_notch": self.commanded_notch,
-            "interface": ENGINE_RUNTIME_STATE_INTERFACE_ID,
+            "interface": self.interface_id,
             "next_transition_step": self.next_transition_step,
             "phase": self.phase,
             "ready_at_fixed_step": self.ready_at_fixed_step,
-            "response_start_output_percent": self.response_start_output_percent,
-            "response_started_at_fixed_step": self.response_started_at_fixed_step,
             "target_output_percent": self.target_output_percent,
         }
+        if self.interface_id == ENGINE_RUNTIME_STATE_INTERFACE_ID:
+            result["response_start_output_percent"] = (
+                self.response_start_output_percent
+            )
+            result["response_started_at_fixed_step"] = (
+                self.response_started_at_fixed_step
+            )
+        return result
 
 
 def migrate_engine_runtime_state_from_module_mode(
@@ -368,6 +429,8 @@ def migrate_engine_runtime_state_from_module_mode(
     actuator_category: str,
     operating_mode: str,
     fixed_step_index: int,
+    *,
+    interface_id: str = ENGINE_RUNTIME_STATE_INTERFACE_ID,
 ) -> EngineRuntimeState:
     """冻结旧实例模式到新推进初态的显式映射，不提供解析默认值。"""
 
@@ -384,6 +447,15 @@ def migrate_engine_runtime_state_from_module_mode(
             actuator_category,
         )
     _integer(fixed_step_index, "$.fixed_step_index")
+    if interface_id not in {
+        C2B_ENGINE_RUNTIME_STATE_INTERFACE_ID,
+        ENGINE_RUNTIME_STATE_INTERFACE_ID,
+    }:
+        raise ContractError(
+            "propulsion_state.engine_interface",
+            "$.interface",
+            interface_id,
+        )
     active = operating_mode == "active"
     return EngineRuntimeState(
         _resource_id(actuator_instance_id, "$.actuator_instance_id"),
@@ -396,6 +468,7 @@ def migrate_engine_runtime_state_from_module_mode(
         None,
         None,
         None,
+        interface_id,
     )
 
 
@@ -553,8 +626,24 @@ class PropulsionGovernorState:
 class TacticalPropulsionState:
     engines: tuple[EngineRuntimeState, ...]
     governors: tuple[PropulsionGovernorState, ...]
+    interface_id: str = TACTICAL_PROPULSION_STATE_INTERFACE_ID
 
     def __post_init__(self) -> None:
+        if self.interface_id not in {
+            C2B_TACTICAL_PROPULSION_STATE_INTERFACE_ID,
+            TACTICAL_PROPULSION_STATE_INTERFACE_ID,
+        }:
+            raise ValueError("tactical propulsion interface 非法")
+        expected_engine_interface = (
+            C2B_ENGINE_RUNTIME_STATE_INTERFACE_ID
+            if self.interface_id == C2B_TACTICAL_PROPULSION_STATE_INTERFACE_ID
+            else ENGINE_RUNTIME_STATE_INTERFACE_ID
+        )
+        if any(
+            engine.interface_id != expected_engine_interface
+            for engine in self.engines
+        ):
+            raise ValueError("推进聚合状态与发动机状态 interface 不匹配")
         engine_ids = tuple(item.actuator_instance_id for item in self.engines)
         if not engine_ids:
             raise ValueError("推进状态必须至少包含一个执行器")
@@ -573,11 +662,15 @@ class TacticalPropulsionState:
     @classmethod
     def parse(cls, value: Any, path: str) -> "TacticalPropulsionState":
         obj = _exact_object(value, {"engines", "governors", "interface"}, path)
-        if obj["interface"] != TACTICAL_PROPULSION_STATE_INTERFACE_ID:
+        interface = obj["interface"]
+        if interface not in {
+            C2B_TACTICAL_PROPULSION_STATE_INTERFACE_ID,
+            TACTICAL_PROPULSION_STATE_INTERFACE_ID,
+        }:
             raise ContractError(
                 "propulsion_state.interface",
                 f"{path}.interface",
-                str(obj["interface"]),
+                str(interface),
             )
         if not isinstance(obj["engines"], list) or not isinstance(
             obj["governors"], list
@@ -592,7 +685,7 @@ class TacticalPropulsionState:
             for index, item in enumerate(obj["governors"])
         )
         try:
-            return cls(engines, governors)
+            return cls(engines, governors, interface)
         except ContractError:
             raise
         except ValueError as error:
@@ -606,8 +699,49 @@ class TacticalPropulsionState:
         return {
             "engines": [item.to_dict() for item in self.engines],
             "governors": [item.to_dict() for item in self.governors],
-            "interface": TACTICAL_PROPULSION_STATE_INTERFACE_ID,
+            "interface": self.interface_id,
         }
+
+
+def migrate_tactical_propulsion_state_c2b_to_d1(
+    state: TacticalPropulsionState,
+) -> TacticalPropulsionState:
+    """把严格 c2b 状态升级为 d1 形状；不得猜测缺失的运行中排程。"""
+
+    if state.interface_id != C2B_TACTICAL_PROPULSION_STATE_INTERFACE_ID:
+        raise ContractError(
+            "propulsion_state.c2b_migration_source_interface",
+            "$.interface",
+            state.interface_id,
+        )
+    migrated_engines: list[EngineRuntimeState] = []
+    for engine in state.engines:
+        if engine.phase in {"running", "stopping"}:
+            raise ContractError(
+                "propulsion_state.c2b_migration_ambiguous_schedule",
+                f"$.engines.{engine.actuator_instance_id}",
+                "c2b 运行中状态没有足够信息恢复 d1 响应排程锚点",
+            )
+        migrated_engines.append(
+            EngineRuntimeState(
+                engine.actuator_instance_id,
+                engine.actuator_category,
+                engine.phase,
+                engine.commanded_notch,
+                engine.target_output_percent,
+                engine.actual_output_percent,
+                engine.ready_at_fixed_step,
+                engine.next_transition_step,
+                None,
+                None,
+                ENGINE_RUNTIME_STATE_INTERFACE_ID,
+            )
+        )
+    return TacticalPropulsionState(
+        tuple(migrated_engines),
+        state.governors,
+        TACTICAL_PROPULSION_STATE_INTERFACE_ID,
+    )
 
 
 @dataclass(frozen=True)

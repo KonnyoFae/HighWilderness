@@ -1,0 +1,77 @@
+{
+  "authority_golden": "12_of_12_PASS",
+  "baseline": {
+    "commit": "fb7f7c0",
+    "slice": "T0b.2d1p_complete_preintegration_replan"
+  },
+  "contract_evidence": {
+    "c2b_engine_interface": "gaotian.engine-runtime-state/v1alpha1",
+    "c2b_scene_interface": "gaotian.tactical-scene-timeline/v2alpha1",
+    "c2b_state_interface": "gaotian.tactical-propulsion-state/v1alpha1",
+    "d1_engine_interface": "gaotian.engine-runtime-state/v2alpha1",
+    "d1_scene_interface": "gaotian.tactical-scene-timeline/v3alpha1",
+    "d1_state_interface": "gaotian.tactical-propulsion-state/v2alpha1",
+    "strict_cross_version_negative_cases": 6
+  },
+  "implementation_hashes": {
+    "舰艇数据/模式/高天荒野舰艇推进状态契约.v1alpha1.schema.json": "acb489de4ed972a325c42a3b83260db1afdcd937f34716dbf278b332f7e004d8",
+    "舰艇数据/模式/高天荒野舰艇推进状态契约.v2alpha1.schema.json": "9338f07f22966869c6154bb22e6d7dfa16d36f3f0a4d178038aa92706dbfb16c",
+    "舰艇数据/模式/高天荒野舰艇推进时间边界结果契约.v1alpha1.schema.json": "6f1955e141e52975d06a50e81364c426cfa3f55cbb7802743d5b7eaac10e2431",
+    "舰艇数据/模式/高天荒野舰艇统一战术场景状态契约.v2alpha1.schema.json": "6d54a3311a79501549ac3a09f31e0f8a95f760f74a4bf1472de0805e7d8c1c99",
+    "舰艇数据/模式/高天荒野舰艇统一战术场景状态契约.v3alpha1.schema.json": "77fd3df296ed2eece2ef414d88005337e2e55ff864ff017091c46122cd0954b0",
+    "高天荒野T0b2c2b推进场景状态与迁移测试.py": "6ab830eab3a581d053640b226a21fc1a704dfcdddf738377c66172bc24d6c5cd",
+    "高天荒野T0b2d1推进时间内核测试.py": "1f46f3b768719996eafebfdb0c33a02e2e008ec6e43cc64a579b9005006b6b9d",
+    "高天荒野T0b2d1r推进状态合同修复测试.py": "cda7ee050fd7c684b43bd8494e93b0f7168af8b03c46ebcef6c82a57a7a00a61",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "fa05fee49e638909bb6c9af34008d5e1db549908fa091fb85d90727ff0201330",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "d383f93aec763d762ec7b91a09247a2a24bcd6ee46ceaf8cd475517c370af53a",
+    "高天荒野舰艇推进时间内核.py": "71786974e9d2cc2fadd475fe69fa3f4fb4bb46ef1728aaf12a047f93b2c5d260",
+    "高天荒野舰艇推进状态合同.py": "260ea07edc52a152a4c6ad8cf3fc86a02a834c17389b3b41f2d05839bd9f4c8a",
+    "高天荒野舰艇统一战术场景.py": "7c2757ed2698ec49ba59926edd5fd43a46b91816787a1f628193f093b4348af6"
+  },
+  "interface": "gaotian.stage-t0b2d1r-propulsion-state-contract-repair/v1",
+  "isolation_evidence": {
+    "authority_golden": "12_of_12_PASS",
+    "new_scene_fixed_steps_advanced": 0,
+    "propulsion_mechanics_wired": false,
+    "strict_scene_negative_cases": 4
+  },
+  "migration_evidence": {
+    "deterministic_replays_per_scene": 3,
+    "engine_states_migrated": 1224,
+    "governor_states_preserved": 896,
+    "scenes_migrated": 12,
+    "target_hashes": {
+      "functional_6.guided_projectiles": "9855ef6792314b82477d899c0242dbb26dda8a42e70917f875fc17d786fc85ef",
+      "functional_6.motion_only": "bebcf376b14060e032783be7b83ae020d59815b009161f7f2e1c2cad86cd667d",
+      "functional_6.ordinary_projectiles": "62fe481a028df3eff9c5e83a36fafa3607eb0bd32ac00f69c0ec0b6cc6d94d36",
+      "functional_6.scripted_damage_and_recompile": "ae32ce92ea7706322a72954ee9424de025f165dd96393f977a811d01785c52ed",
+      "stress_30.guided_projectiles": "57969cea7afb603286ee2e4f152ddf8088ea35e65bac40412e727fe60e4b1594",
+      "stress_30.motion_only": "0ec6638a4437ac829a8a3cf1167a1996da8caf2caa24a936ad9b88c9fb38cf5b",
+      "stress_30.ordinary_projectiles": "a3d13ffddcdc3df1738f012f14fc3ebf1c04527377223a7e7c53269c472c36c8",
+      "stress_30.scripted_damage_and_recompile": "0e361265f9488d5ad9d138dc0c18c58165e3ae391e6e4a29528480b706187c13",
+      "target_20.guided_projectiles": "87dfda7f721f0223a97a4aa0cc8a782706137be80e396118431d00e2e8a2bd1d",
+      "target_20.motion_only": "26bd89fb88a6495ebece0fbd2aae2deed03a61c241617908214c7822dedc5da0",
+      "target_20.ordinary_projectiles": "571554b204f8df650fdd8e0ea6bfc7a3bef9c1322d54f03cbcb9f8e7f5769dc8",
+      "target_20.scripted_damage_and_recompile": "49ecc29217ae73fa54dc75d609a9812ea761ee45fb7adc46e9734a03c3448f92"
+    },
+    "unknown_tampered_and_repeat_rejected": 3
+  },
+  "next_slice": "T0b.2d2a_propulsion_resource_and_control_bridge",
+  "official_performance_runs_executed": 0,
+  "regression": {
+    "python": "67_of_67_PASS",
+    "rust": "15_of_15_PASS",
+    "typescript": "4_of_4_PASS"
+  },
+  "risk_controls": {
+    "c2b_contract_shape_rewritten": false,
+    "d1_schedule_algorithm_changed": false,
+    "hard_faults_wired": false,
+    "legacy_golden_changed": false,
+    "propulsion_mechanics_wired": false,
+    "safety_governor_wired": false,
+    "silent_anchor_default_allowed": false
+  },
+  "scope": "state_and_scene_alpha_interface_version_repair_and_named_c2b_to_d1_migration_only",
+  "status": "PASS"
+}

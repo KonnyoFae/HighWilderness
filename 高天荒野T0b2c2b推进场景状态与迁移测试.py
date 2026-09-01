@@ -24,20 +24,20 @@ from 高天荒野舰艇数据契约 import (
 )
 from 高天荒野舰艇推进安全判定器 import load_propulsion_safety_profile
 from 高天荒野舰艇推进状态合同 import (
+    C2B_ENGINE_RUNTIME_STATE_INTERFACE_ID,
+    C2B_TACTICAL_PROPULSION_STATE_INTERFACE_ID,
     ENGINE_PHASES,
-    ENGINE_RUNTIME_STATE_INTERFACE_ID,
     PROPULSION_EVENT_KIND_ORDER,
     PROPULSION_STATE_EVENT_INTERFACE_ID,
-    TACTICAL_PROPULSION_STATE_INTERFACE_ID,
     EngineRuntimeState,
     PropulsionStateEvent,
     TacticalPropulsionState,
     migrate_engine_runtime_state_from_module_mode,
 )
 from 高天荒野舰艇统一战术场景 import (
+    C2B_TACTICAL_PROPULSION_SCENE_INTERFACE_ID,
+    C2B_TACTICAL_PROPULSION_SCENE_POLICY_ID,
     KNOWN_TACTICAL_SCENE_V1_TO_PROPULSION_V2_MIGRATIONS,
-    TACTICAL_PROPULSION_SCENE_INTERFACE_ID,
-    TACTICAL_PROPULSION_SCENE_POLICY_ID,
     TACTICAL_SCENE_INTERFACE_ID,
     TacticalSceneState,
     advance_tactical_scene_step,
@@ -117,11 +117,11 @@ def _first_main_engine(value: dict[str, object]) -> dict[str, object]:
 def test_propulsion_state_contracts() -> dict[str, object]:
     state_schema = load_json(PROPULSION_STATE_SCHEMA_PATH)
     scene_schema = load_json(NEW_SCENE_SCHEMA_PATH)
-    assert state_schema["$id"] == TACTICAL_PROPULSION_STATE_INTERFACE_ID
+    assert state_schema["$id"] == C2B_TACTICAL_PROPULSION_STATE_INTERFACE_ID
     assert state_schema["additionalProperties"] is False
-    assert scene_schema["$id"] == TACTICAL_PROPULSION_SCENE_INTERFACE_ID
+    assert scene_schema["$id"] == C2B_TACTICAL_PROPULSION_SCENE_INTERFACE_ID
     assert scene_schema["properties"]["policy"]["const"] == (
-        TACTICAL_PROPULSION_SCENE_POLICY_ID
+        C2B_TACTICAL_PROPULSION_SCENE_POLICY_ID
     )
     assert "propulsion_state" not in OLD_SCENE_SCHEMA_PATH.read_text(encoding="utf-8")
 
@@ -132,11 +132,11 @@ def test_propulsion_state_contracts() -> dict[str, object]:
 
     main_source = deepcopy(_first_main_engine(source))
     phase_examples = {
-        "starting": (25, 0, 5, 5, None, None),
-        "ready": (0, 0, 0, None, None, None),
-        "running": (25, 20, 0, 5, 1, 10),
-        "stopping": (0, 20, 0, 5, 1, 25),
-        "tripped": (0, 0, None, None, None, None),
+        "starting": (25, 0, 5, 5),
+        "ready": (0, 0, 0, None),
+        "running": (25, 20, 0, 5),
+        "stopping": (0, 20, 0, 5),
+        "tripped": (0, 0, None, None),
     }
     for phase, values in phase_examples.items():
         candidate = deepcopy(main_source)
@@ -145,8 +145,6 @@ def test_propulsion_state_contracts() -> dict[str, object]:
         candidate["actual_output_percent"] = values[1]
         candidate["ready_at_fixed_step"] = values[2]
         candidate["next_transition_step"] = values[3]
-        candidate["response_started_at_fixed_step"] = values[4]
-        candidate["response_start_output_percent"] = values[5]
         assert EngineRuntimeState.parse(candidate, f"$.phase.{phase}").phase == phase
     assert set(phase_examples) | {"off"} == set(ENGINE_PHASES)
     assert tuple(
@@ -155,6 +153,7 @@ def test_propulsion_state_contracts() -> dict[str, object]:
             "main_engine",
             mode,
             7,
+            interface_id=C2B_ENGINE_RUNTIME_STATE_INTERFACE_ID,
         ).phase
         for mode in ("active", "standby", "off")
     ) == ("ready", "off", "off")
@@ -351,8 +350,8 @@ def test_named_scene_migrations() -> dict[str, object]:
         assert len(set(hashes)) == 1
         assert runs[0] == migrated
         value = json.loads(canonical_json(migrated))
-        assert value["interface"] == TACTICAL_PROPULSION_SCENE_INTERFACE_ID
-        assert value["policy"] == TACTICAL_PROPULSION_SCENE_POLICY_ID
+        assert value["interface"] == C2B_TACTICAL_PROPULSION_SCENE_INTERFACE_ID
+        assert value["policy"] == C2B_TACTICAL_PROPULSION_SCENE_POLICY_ID
         assert TacticalSceneState.parse(value) == migrated
         validate_tactical_scene_propulsion_profile(migrated, profile)
         target_hashes[migration_id] = hashes[0]

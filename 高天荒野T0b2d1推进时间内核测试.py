@@ -37,7 +37,7 @@ ROOT = Path(__file__).resolve().parent
 PLAN_PATH = ROOT / "contracts" / "web_bridge" / "t0-benchmark-plan.v1.json"
 GOLDEN_PATH = ROOT / "contracts" / "web_bridge" / "t0-authority-step-golden.v1.json"
 STATE_SCHEMA_PATH = (
-    ROOT / "舰艇数据" / "模式" / "高天荒野舰艇推进状态契约.v1alpha1.schema.json"
+    ROOT / "舰艇数据" / "模式" / "高天荒野舰艇推进状态契约.v2alpha1.schema.json"
 )
 RESULT_SCHEMA_PATH = (
     ROOT
@@ -102,6 +102,9 @@ def test_boundary_contract_and_capability_gate() -> dict[str, object]:
     state_schema = load_json(STATE_SCHEMA_PATH)
     assert result_schema["$id"] == PROPULSION_TIME_BOUNDARY_INTERFACE_ID
     assert result_schema["additionalProperties"] is False
+    assert result_schema["properties"]["state"]["$ref"] == (
+        "gaotian.tactical-propulsion-state/v2alpha1#/$defs/engineRuntimeState"
+    )
     engine_definition = state_schema["$defs"]["engineRuntimeState"]
     assert {
         "response_start_output_percent",
@@ -481,7 +484,7 @@ def main() -> None:
     assert report["official_performance_runs_executed"] == 0
     assert report["next_slice"] == "T0b.2d2_propulsion_scene_integration"
     for relative_path in (
-        "舰艇数据/模式/高天荒野舰艇推进状态契约.v1alpha1.schema.json",
+        "舰艇数据/模式/高天荒野舰艇推进状态契约.v2alpha1.schema.json",
         "舰艇数据/模式/高天荒野舰艇推进时间边界结果契约.v1alpha1.schema.json",
         "高天荒野T0b2d1推进时间内核测试.py",
         "高天荒野T0b2推进响应与权威性能优化规划.md",
