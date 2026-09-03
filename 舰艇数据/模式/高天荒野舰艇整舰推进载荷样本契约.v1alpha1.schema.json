@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.whole-ship-propulsion-load-sample/v1alpha1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.whole-ship-propulsion-load-sample/v1alpha1"
+    },
+    "load_context_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "vector": {
+      "$ref": "gaotian.propulsion-output-vector/v1alpha1"
+    },
+    "structure_ratio": {
+      "type": "number",
+      "minimum": 0
+    },
+    "crew_g": {
+      "type": "number",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "interface",
+    "load_context_sha256",
+    "vector",
+    "structure_ratio",
+    "crew_g"
+  ]
+}

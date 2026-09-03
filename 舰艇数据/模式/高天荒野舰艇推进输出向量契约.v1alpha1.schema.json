@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.propulsion-output-vector/v1alpha1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.propulsion-output-vector/v1alpha1"
+    },
+    "outputs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "actuator_instance_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$"
+          },
+          "output_percent": {
+            "type": "integer",
+            "enum": [
+              0,
+              2,
+              5,
+              10,
+              15,
+              20,
+              25,
+              30,
+              35,
+              40,
+              45,
+              50,
+              55,
+              60,
+              65,
+              70,
+              75,
+              80,
+              85,
+              90,
+              95,
+              100
+            ]
+          }
+        },
+        "required": [
+          "actuator_instance_id",
+          "output_percent"
+        ]
+      }
+    }
+  },
+  "required": [
+    "interface",
+    "outputs"
+  ]
+}

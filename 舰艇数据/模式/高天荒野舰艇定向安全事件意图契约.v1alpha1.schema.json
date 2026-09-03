@@ -1,0 +1,116 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.directional-propulsion-safety-intent/v1alpha1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.directional-propulsion-safety-intent/v1alpha1"
+    },
+    "command_channel": {
+      "enum": [
+        "translation.forward",
+        "translation.reverse",
+        "translation.left",
+        "translation.right",
+        "yaw.counterclockwise",
+        "yaw.clockwise"
+      ]
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": [
+            "engine_safety_limit_engaged",
+            "engine_safety_limit_changed",
+            "engine_safety_limit_released"
+          ]
+        },
+        "fixed_step_index": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "previous_ceiling_percent": {
+          "type": "integer",
+          "enum": [
+            0,
+            2,
+            5,
+            10,
+            15,
+            20,
+            25,
+            30,
+            35,
+            40,
+            45,
+            50,
+            55,
+            60,
+            65,
+            70,
+            75,
+            80,
+            85,
+            90,
+            95,
+            100
+          ]
+        },
+        "resulting_ceiling_percent": {
+          "type": "integer",
+          "enum": [
+            0,
+            2,
+            5,
+            10,
+            15,
+            20,
+            25,
+            30,
+            35,
+            40,
+            45,
+            50,
+            55,
+            60,
+            65,
+            70,
+            75,
+            80,
+            85,
+            90,
+            95,
+            100
+          ]
+        },
+        "reasons": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "structure_limit",
+              "crew_limit"
+            ]
+          },
+          "maxItems": 2,
+          "minItems": 1
+        }
+      },
+      "required": [
+        "kind",
+        "fixed_step_index",
+        "previous_ceiling_percent",
+        "resulting_ceiling_percent",
+        "reasons"
+      ]
+    }
+  },
+  "required": [
+    "interface",
+    "command_channel",
+    "event"
+  ]
+}
