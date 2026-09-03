@@ -1,0 +1,48 @@
+{
+  "$id": "gaotian.actual-actuation-request/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "d2b.3 技术夹具合同；不代表软保护、硬故障或方向互锁已接线。资源/时钟关联和派生值由领域代码验证。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.actual-actuation-request/v1alpha1"
+    },
+    "derived_snapshot_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "runtime_parameters_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_fixed_step_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "force_body_n": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {
+        "type": "number"
+      }
+    },
+    "torque_n_m": {
+      "type": "number"
+    },
+    "fuel_units_per_s": {
+      "type": "number",
+      "minimum": 0
+    }
+  },
+  "required": [
+    "interface",
+    "derived_snapshot_sha256",
+    "runtime_parameters_sha256",
+    "source_fixed_step_index",
+    "force_body_n",
+    "torque_n_m",
+    "fuel_units_per_s"
+  ]
+}

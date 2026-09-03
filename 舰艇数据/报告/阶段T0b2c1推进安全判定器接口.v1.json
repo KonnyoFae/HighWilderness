@@ -28,8 +28,8 @@
   },
   "implementation_hashes": {
     "高天荒野T0b2c1推进安全判定器测试.py": "880e7e95b541124da13d6893b3deb3d88f7da32659f099436fd522e80c5219ff",
-    "高天荒野T0b2推进响应与权威性能优化规划.md": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
-    "高天荒野Web客户端编辑器与战术验证实施计划.md": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01",
     "高天荒野舰艇推进安全判定器.py": "024e75de648a4c9dc87554ef07d028f817a177f71f93e823c9ff6ffefb82514f"
   },
   "interface": "gaotian.stage-t0b2c1-propulsion-safety-governor/v1",

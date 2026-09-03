@@ -1,0 +1,155 @@
+{
+  "$id": "gaotian.actual-propulsion-aggregation/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "d2b.3 技术夹具合同；不代表软保护、硬故障或方向互锁已接线。资源/时钟关联和派生值由领域代码验证。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.actual-propulsion-aggregation/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.propulsion/runtime-use-then-actual-output/v1"
+    },
+    "scene_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "ship_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request": {
+      "$ref": "gaotian.actual-actuation-request/v1alpha1"
+    },
+    "contributions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "actuator_instance_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "command_channel": {
+            "enum": [
+              "translation.forward",
+              "translation.reverse",
+              "translation.left",
+              "translation.right",
+              "yaw.counterclockwise",
+              "yaw.clockwise"
+            ]
+          },
+          "target_output_percent": {
+            "type": "integer",
+            "enum": [
+              0,
+              2,
+              5,
+              10,
+              15,
+              20,
+              25,
+              30,
+              35,
+              40,
+              45,
+              50,
+              55,
+              60,
+              65,
+              70,
+              75,
+              80,
+              85,
+              90,
+              95,
+              100
+            ]
+          },
+          "actual_output_percent": {
+            "type": "integer",
+            "enum": [
+              0,
+              2,
+              5,
+              10,
+              15,
+              20,
+              25,
+              30,
+              35,
+              40,
+              45,
+              50,
+              55,
+              60,
+              65,
+              70,
+              75,
+              80,
+              85,
+              90,
+              95,
+              100
+            ]
+          },
+          "runtime_available": {
+            "type": "boolean"
+          },
+          "runtime_efficiency": {
+            "type": "number",
+            "minimum": 0
+          },
+          "runtime_thrust_n": {
+            "type": "number",
+            "minimum": 0
+          },
+          "balance_scale": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "force_body_n": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "number"
+            }
+          },
+          "torque_n_m": {
+            "type": "number"
+          },
+          "fuel_units_per_s": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "actuator_instance_id",
+          "command_channel",
+          "target_output_percent",
+          "actual_output_percent",
+          "runtime_available",
+          "runtime_efficiency",
+          "runtime_thrust_n",
+          "balance_scale",
+          "force_body_n",
+          "torque_n_m",
+          "fuel_units_per_s"
+        ]
+      }
+    }
+  },
+  "required": [
+    "interface",
+    "policy",
+    "scene_id",
+    "ship_id",
+    "request",
+    "contributions"
+  ]
+}

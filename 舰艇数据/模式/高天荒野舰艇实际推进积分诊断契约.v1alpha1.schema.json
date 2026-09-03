@@ -1,0 +1,158 @@
+{
+  "$id": "gaotian.actual-propulsion-step-diagnostics/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "d2b.3 技术夹具合同；不代表软保护、硬故障或方向互锁已接线。资源/时钟关联和派生值由领域代码验证。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "request": {
+      "$ref": "gaotian.actual-actuation-request/v1alpha1"
+    },
+    "resulting_fixed_step_index": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "requested_fuel_units": {
+      "type": "number",
+      "minimum": 0
+    },
+    "fuel_delivery_fraction": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "structure_ratio": {
+      "type": "number",
+      "minimum": 0
+    },
+    "crew_g": {
+      "type": "number",
+      "minimum": 1
+    },
+    "hull_integrity_damage": {
+      "type": "number",
+      "minimum": 0
+    },
+    "fuel_units_consumed": {
+      "type": "number",
+      "minimum": 0
+    },
+    "active_force_body_n": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    },
+    "active_torque_n_m": {
+      "type": "number"
+    },
+    "drag_force_world_n": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y"
+      ]
+    },
+    "drag_breakdown": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "beta_deg": {
+          "type": "number"
+        },
+        "speed_mps": {
+          "type": "number"
+        },
+        "mach": {
+          "type": "number"
+        },
+        "reynolds_number": {
+          "type": "number"
+        },
+        "skin_friction_coefficient": {
+          "type": "number"
+        },
+        "form_area_m2": {
+          "type": "number"
+        },
+        "skin_area_m2": {
+          "type": "number"
+        },
+        "wave_area_m2": {
+          "type": "number"
+        },
+        "equivalent_drag_area_m2": {
+          "type": "number"
+        },
+        "drag_force_n": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "beta_deg",
+        "speed_mps",
+        "mach",
+        "reynolds_number",
+        "skin_friction_coefficient",
+        "form_area_m2",
+        "skin_area_m2",
+        "wave_area_m2",
+        "equivalent_drag_area_m2",
+        "drag_force_n"
+      ]
+    },
+    "interface": {
+      "const": "gaotian.actual-propulsion-step-diagnostics/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.tactical-dynamics/actual-output-unprotected/v1"
+    },
+    "soft_governor_status": {
+      "const": "unwired"
+    },
+    "hard_fault_status": {
+      "const": "unwired"
+    },
+    "direction_interlock_status": {
+      "const": "unwired"
+    }
+  },
+  "required": [
+    "request",
+    "resulting_fixed_step_index",
+    "requested_fuel_units",
+    "fuel_delivery_fraction",
+    "structure_ratio",
+    "crew_g",
+    "hull_integrity_damage",
+    "fuel_units_consumed",
+    "active_force_body_n",
+    "active_torque_n_m",
+    "drag_force_world_n",
+    "drag_breakdown",
+    "interface",
+    "policy",
+    "soft_governor_status",
+    "hard_fault_status",
+    "direction_interlock_status"
+  ]
+}

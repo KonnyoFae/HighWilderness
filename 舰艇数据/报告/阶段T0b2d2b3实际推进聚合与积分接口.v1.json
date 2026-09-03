@@ -1,0 +1,362 @@
+{
+  "interface": "gaotian.stage-t0b2d2b3-actual-propulsion-aggregation-integration/v1",
+  "status": "PASS",
+  "baseline": {
+    "commit": "9ab2e9a",
+    "slice": "T0b.2d2b.2_complete_propulsion_resource_lineage",
+    "checkpoint": "local_commit_only_not_pushed"
+  },
+  "scope": "pure_per_actuator_actual_output_aggregation_and_independent_fixed_step_integration_only",
+  "request_interface": "gaotian.actual-actuation-request/v1alpha1",
+  "aggregation_interface": "gaotian.actual-propulsion-aggregation/v1alpha1",
+  "diagnostics_interface": "gaotian.actual-propulsion-step-diagnostics/v1alpha1",
+  "aggregation_policy": "gaotian.propulsion/runtime-use-then-actual-output/v1",
+  "integration_policy": "gaotian.tactical-dynamics/actual-output-unprotected/v1",
+  "entrypoints": {
+    "compile_context": "高天荒野舰艇实际推进聚合器.compile_actual_propulsion_context",
+    "aggregate": "高天荒野舰艇实际推进聚合器.aggregate_actual_propulsion",
+    "request_parse": "高天荒野舰艇实际推进合同.ActualActuationRequest.parse",
+    "integrate": "高天荒野舰艇战术机动求解器.integrate_actual_tactical_step"
+  },
+  "aggregation_order": [
+    "Validate exact snapshot, runtime fingerprint, module identities and physical directional bindings.",
+    "Consume runtime efficiency/availability and precomputed balance uses; do not allocate or balance again.",
+    "Apply each engine actual_output_percent once to that actuator's runtime use force, torque and fuel rate.",
+    "Preserve unavailable actuator identities with zero contributions; sort by actuator identity and sum with math.fsum."
+  ],
+  "fuel_policy": {
+    "requested_step_fuel": "fuel_units_per_s * fixed_dt",
+    "delivery_fraction": "min(1, available_fuel / requested_step_fuel) if requested_step_fuel > 0 else 1",
+    "shared_fraction_for": [
+      "force_body_n",
+      "torque_n_m",
+      "fuel_units_per_s"
+    ],
+    "tiny_positive_requests": "No EPS cutoff.",
+    "refresh_boundary": "Motion fuel, hull and layer must match runtime before integration. Recompile after changes; stale model/runtime is rejected."
+  },
+  "preserved_physics": [
+    "Old allocator, drag and soft-safety inputs remain unchanged in integrate_tactical_step.",
+    "The shared delivered-actuation helper preserves old mass/inertia, turn_scale, body/world transforms, semi-implicit position, layer transition, load and overload hull-damage formulas.",
+    "The actual-output path never invokes the allocator or soft limiter; crew safety lock does not silently rescale its forces."
+  ],
+  "boundary_limits": [
+    "Explicit actual requests are finite, versioned force requests with source fingerprints and step, not signatures proving aggregation or gameplay safety.",
+    "Existing off/tripped engine states are consumed with zero output; no hard-fault transition is implemented.",
+    "Opposing target or actual channels are rejected while direction interlock remains unwired.",
+    "No unified scene advancement or engine state advancement is introduced."
+  ],
+  "availability_fixture_note": "The original fixture's automated engine.throttle correctly remains available without crew. Zero-crew and zero-power checks use separate in-memory manual and electrically loaded variants (the latter reuses an existing power category). No production propulsion power-category policy or fixture asset is changed.",
+  "schema_validation": "Three closed shape declarations, payload top-level shapes and all local request references checked. Contextual Python contracts enforce numerical, identity and source invariants. No external JSON Schema validation engine run.",
+  "evidence": {
+    "asymmetric_output_sha256": "664c68feef3d991842f046f7bac095040bd3fe3cd919456952f1f0270a278404",
+    "asymmetry": {
+      "asynchronous_main_force_y_n": 105000,
+      "asynchronous_main_torque_n_m": -475000,
+      "asynchronous_yaw_force_x_n": 9500,
+      "asynchronous_yaw_torque_n_m": 288750
+    },
+    "cold_import_orders": 2,
+    "four_step_fuel_exhaustion_replay_sha256": "73a87ee99e26d5e73630e0ba7d4548cfd489cdc86edbe280b1e61352f34a51f7",
+    "integration": {
+      "partial_fuel_delivery_fraction": 0.5,
+      "unprotected_crewed_g": 90.57531082243081,
+      "unprotected_hull_damage": 0.0006169596029232305,
+      "unprotected_structure_ratio": 1.6084207111480824
+    },
+    "isolation": {
+      "authority_golden": "12_of_12_PASS",
+      "legacy_catalog_schema": "gaotian.ship/v1alpha1",
+      "new_mechanics_steps_advanced": 0,
+      "official_performance_runs_executed": 0
+    },
+    "negative_cases": 38,
+    "replays": 3,
+    "runtime": {
+      "manual_no_crew_zero_output": true,
+      "original_automated_throttle_preserved": true,
+      "runtime_scaled_port_thrust_n": 75000,
+      "single_yaw_survivor_force_x_n": 10000,
+      "synthetic_no_power_zero_output": true
+    },
+    "scene_input_coverage": {
+      "actuators": 1224,
+      "request_hashes": {
+        "functional_6.guided_projectiles": "dde9dd3a604f582867f829d69da9b858c17f9095a2d34ea80b3188a2fe6e16ea",
+        "functional_6.motion_only": "8bcb793b5db7e614f7dc7b28682c216a387470c6e68cd66819940162e660cf7e",
+        "functional_6.ordinary_projectiles": "a129c45daa95169ba05e45241392a1de605067cca13c662381ed2d394bdd5315",
+        "functional_6.scripted_damage_and_recompile": "77508daaac0c6070e0c8a469c95760f11a8001fef4c634cc5cade28b7d7fd492",
+        "stress_30.guided_projectiles": "4e8a56609c22969c4f97b6bf41c2d05fbeeb19ce65eaeddb6f4ad6b4720d006e",
+        "stress_30.motion_only": "3e766d9485ec8fe11d19119a573624389159337096984da8351c58c73968292b",
+        "stress_30.ordinary_projectiles": "178e5ba85be43a38ccf92d4bda365e0528d594f84d20e108d81dceaccdd2a738",
+        "stress_30.scripted_damage_and_recompile": "a5f2bfa8b17934add5e2c53c0742129d387095479869b25d748e376502d71732",
+        "target_20.guided_projectiles": "142a43b3f877f2876695fe5d602fcedf0c5ca9b6e84648cf739327b9f506f2f2",
+        "target_20.motion_only": "831491e3709791530d78b654cbda41e23a2c20f55d3861eeda8f55644494d2a3",
+        "target_20.ordinary_projectiles": "c91cbf3e69cf67fde160b045cdc889a97a4c931129bd3af011fb542f384cd3c0",
+        "target_20.scripted_damage_and_recompile": "512263c4356158bffb92b05150e27cff1262566b9f03abc9ed77fa1154094c3b"
+      },
+      "scenes": 12,
+      "ships": 224
+    },
+    "scene_steps_advanced": 0,
+    "schema_shapes_and_local_refs": 3
+  },
+  "regression": {
+    "python": "71_of_71_PASS",
+    "typescript": "4_of_4_PASS",
+    "rust": "15_of_15_PASS"
+  },
+  "regression_commands": {
+    "python": "python -X utf8 高天荒野舰艇测试总入口.py",
+    "typescript": [
+      "node node_modules/typescript/bin/tsc -b (cwd apps/desktop)",
+      "node node_modules/vitest/vitest.mjs run (cwd apps/desktop)"
+    ],
+    "rust": "C:/Users/Yichen/.cargo/bin/cargo.exe test --manifest-path apps/desktop/src-tauri/Cargo.toml --locked",
+    "targeted": "python -X utf8 高天荒野T0b2d2b3实际推进聚合与积分测试.py"
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇实际推进合同.py": "9f5f646711f7d50a03646fa97904ecb2d5ebdd7bce134e5ac386d7055bf1e265",
+    "高天荒野舰艇实际推进聚合器.py": "db59a96449bbe5a44794069e30e686a1d071c83a9e52f121851f985c38a39036",
+    "高天荒野T0b2d2b3实际推进聚合与积分测试.py": "cddb6dbcc711086e427f42575fdb872c6274c8f995f6e9db5d3bd5cced17eb51",
+    "高天荒野舰艇战术机动求解器.py": "1f8bd679cd466c897a08413cfe2c8c8d78e83d152917bfb803b669331d5f290d",
+    "舰艇数据/模式/高天荒野舰艇实际执行量请求契约.v1alpha1.schema.json": "241fd8c7562d65047d5562b5327ae0a8fe02c6cd4e2432a3fd51bffa153f9510",
+    "舰艇数据/模式/高天荒野舰艇实际推进聚合结果契约.v1alpha1.schema.json": "4c6c3925a79823c7701725b71a8046259bb5dc3ac76d0d1985c591b90dc8b8d8",
+    "舰艇数据/模式/高天荒野舰艇实际推进积分诊断契约.v1alpha1.schema.json": "a18b0b12a8606b95bb832801f87db3fe67a743057cfafdb4d5f3f107eeaf012d",
+    "高天荒野T0b2d2b推进力学接线实施细则.md": "665ecd6267191cd1b78ae0e5dc6d6612e9f79eeb4db76e0a8bda0ef2ed47244c",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01",
+    "高天荒野舰艇推进场景构建器.py": "768b38bb344575c8d2abab818e87b9777c7a6a3f8fd9018f0856eab0f862447f",
+    "高天荒野舰艇定向推进控制桥.py": "6268d40785346a91043f7fe7faa7788f3d0ddac53b3e4fc32e81e61853958b1a",
+    "高天荒野舰艇推进资源与控制桥.py": "2b84020a51abdb0a5ff55c6ab0db537e244e2d2fa9a43beaf2c2b03ecde251f1",
+    "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
+    "高天荒野舰艇推进时间内核.py": "4134056652b8c13945e739bdfee80ed222e3b20ec2dda03f9a5b45b0021d8a3e",
+    "高天荒野舰艇统一战术场景.py": "d0334ff72d18554fdb95d2bd5d876000fe2222c59092d8cdf6e8cddc67173035",
+    "高天荒野舰艇无界面舾装编译器.py": "9058b1dae342db4602e4a19bc25c29b66080a087c3f4d87e675c982e6939aa68",
+    "高天荒野舰艇运行时参数编译器.py": "3068126bd580cc24520f143bf7a8c85cd055e81bb60a22c54873113a56d70eb1",
+    "benchmarks/t0/scenario.py": "94a8c442a74da209ad9756d4ea28b57351de4ca5afe8af8eda3f4ce58e1964c6",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095"
+  },
+  "historical_report_hash_maintenance": {
+    "policy": "Only 34 implementation_hashes entries in 17 historical reports were refreshed for four changed source/plan files after targeted actual-output, shared-formula and 12 old authority-golden assertions passed. Historical evidence, counts and nested maintenance audits remain unchanged; unrelated pre-existing stale hashes are not refreshed.",
+    "baseline": "9ab2e9a",
+    "report_count": 17,
+    "entry_count": 34,
+    "changes": [
+      {
+        "report": "舰艇数据/报告/阶段T0b1b静态指纹与验证边界接口.v1.json",
+        "source": "高天荒野舰艇战术机动求解器.py",
+        "previous": "03c62cf450e7ec58783fd98ba7190ad28a86d1caaec9f3f044a398f28a6b2986",
+        "current": "1f8bd679cd466c897a08413cfe2c8c8d78e83d152917bfb803b669331d5f290d"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b1c运行时与静态模型复用接口.v1.json",
+        "source": "高天荒野舰艇战术机动求解器.py",
+        "previous": "03c62cf450e7ec58783fd98ba7190ad28a86d1caaec9f3f044a398f28a6b2986",
+        "current": "1f8bd679cd466c897a08413cfe2c8c8d78e83d152917bfb803b669331d5f290d"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2b1安全搜索快速路径接口.v1.json",
+        "source": "高天荒野舰艇战术机动求解器.py",
+        "previous": "03c62cf450e7ec58783fd98ba7190ad28a86d1caaec9f3f044a398f28a6b2986",
+        "current": "1f8bd679cd466c897a08413cfe2c8c8d78e83d152917bfb803b669331d5f290d"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2b2运行时稳定核心接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2b2运行时稳定核心接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2b3a精确边界上下文接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2b3a精确边界上下文接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2b3b武器时间线安全快进接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2b3b武器时间线安全快进接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2b3c生命周期同一步投影接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2b3c生命周期同一步投影接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2b3d画像与Scratch决策接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2b3d画像与Scratch决策接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2c1推进安全判定器接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2c1推进安全判定器接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2c2a推进资源合同接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2c2a推进资源合同接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2c2b推进场景状态与迁移接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2c2b推进场景状态与迁移接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d1推进时间内核接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d1推进时间内核接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d1p接线前复盘与计划重排接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d1p接线前复盘与计划重排接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d1p接线前复盘与计划重排接口.v1.json",
+        "source": "高天荒野舰艇战术机动求解器.py",
+        "previous": "03c62cf450e7ec58783fd98ba7190ad28a86d1caaec9f3f044a398f28a6b2986",
+        "current": "1f8bd679cd466c897a08413cfe2c8c8d78e83d152917bfb803b669331d5f290d"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d1r推进状态合同修复接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d1r推进状态合同修复接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d2a推进资源与控制桥接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d2a推进资源与控制桥接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d2b1定向控制与边界合同接口.v1.json",
+        "source": "高天荒野T0b2d2b推进力学接线实施细则.md",
+        "previous": "16d1354e3cfe0cd007577102da8ab5e2ed53ab646f3351010bcc15cbac675995",
+        "current": "665ecd6267191cd1b78ae0e5dc6d6612e9f79eeb4db76e0a8bda0ef2ed47244c"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d2b1定向控制与边界合同接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d2b1定向控制与边界合同接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d2b2完整推进资源链接口.v1.json",
+        "source": "高天荒野T0b2d2b推进力学接线实施细则.md",
+        "previous": "16d1354e3cfe0cd007577102da8ab5e2ed53ab646f3351010bcc15cbac675995",
+        "current": "665ecd6267191cd1b78ae0e5dc6d6612e9f79eeb4db76e0a8bda0ef2ed47244c"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d2b2完整推进资源链接口.v1.json",
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "previous": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+        "current": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1"
+      },
+      {
+        "report": "舰艇数据/报告/阶段T0b2d2b2完整推进资源链接口.v1.json",
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "previous": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
+        "current": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01"
+      }
+    ]
+  },
+  "unwired": [
+    "unified_scene_actual_output_path",
+    "soft_governor",
+    "hard_fault_transition",
+    "direction_interlock_transition"
+  ],
+  "new_motion_goldens_created": 0,
+  "official_performance_runs_executed": 0,
+  "next_slice": "T0b.2d2b.4_scene_wiring_and_new_goldens",
+  "next_slice_gate": "Review and independently checkpoint this slice before scene wiring; commit/push only when authorized."
+}

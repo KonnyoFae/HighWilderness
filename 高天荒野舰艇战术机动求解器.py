@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass, replace
+from dataclasses import asdict, dataclass, replace
 from math import atan2, cos, degrees, hypot, pi, radians, sin, sqrt
 from typing import Any
 
@@ -14,6 +14,9 @@ from 高天荒野舰艇气动缓存 import (
     velocity_body_to_beta_deg,
 )
 from 高天荒野舰艇数据契约 import ContractError, ShipInstanceSnapshotInput
+from 高天荒野舰艇实际推进合同 import (
+    ACTUAL_INTEGRATION_POLICY_ID, ActualActuationRequest, finite_number, fixed_step_index,
+)
 from 高天荒野舰艇无界面舾装编译器 import (
     ActuatorAggregation,
     DerivedShipSnapshot,
@@ -850,28 +853,16 @@ def _advance_layer_transition(state: TacticalMotionState, dt: float) -> tuple[st
     return state.height_layer, replace(transition, elapsed_s=elapsed)
 
 
-def integrate_tactical_step(
+def _integrate_delivered_actuation(
     model: TacticalShipModel,
     state: TacticalMotionState,
-    controls: TacticalControlInput,
-    *,
-    dt: float | None = None,
+    actuation: AllocatedActuation,
+    drag: TacticalDragResult,
+    scale: float,
+    metrics: LoadMetrics,
+    step: float,
 ) -> tuple[TacticalMotionState, TacticalStepDiagnostics]:
-    step = model.tuning.fixed_step_s if dt is None else dt
-    if abs(step - model.tuning.fixed_step_s) > 1.0e-12:
-        raise ValueError("正式战术求解器只接受配置中声明的固定物理步")
-    actuation = allocate_tactical_actuation(model, state, controls)
-    drag = calculate_tactical_drag(model, state)
-    scale, metrics = _choose_command_scale(
-        model, state, controls, actuation, drag.force_world_n, step
-    )
-    if actuation.fuel_units_per_s > EPS:
-        fuel_scale = state.fuel_units / (actuation.fuel_units_per_s * step)
-        if fuel_scale < scale:
-            scale = max(0.0, fuel_scale)
-            metrics = _load_metrics(
-                model, state, actuation, drag.force_world_n, scale, step
-            )
+    """新旧入口共享既有公式；这里不分配控制，也不决定交付比例。"""
     active_force_body = actuation.active_force_body_n * scale
     active_force_world = body_to_world(active_force_body, state.heading_rad)
     acceleration_world = (
@@ -924,6 +915,119 @@ def integrate_tactical_step(
         active_torque,
         drag.force_world_n,
         drag.breakdown,
+    )
+
+
+def integrate_tactical_step(
+    model: TacticalShipModel,
+    state: TacticalMotionState,
+    controls: TacticalControlInput,
+    *,
+    dt: float | None = None,
+) -> tuple[TacticalMotionState, TacticalStepDiagnostics]:
+    step = model.tuning.fixed_step_s if dt is None else dt
+    if abs(step - model.tuning.fixed_step_s) > 1.0e-12:
+        raise ValueError("正式战术求解器只接受配置中声明的固定物理步")
+    actuation = allocate_tactical_actuation(model, state, controls)
+    drag = calculate_tactical_drag(model, state)
+    scale, metrics = _choose_command_scale(
+        model, state, controls, actuation, drag.force_world_n, step
+    )
+    if actuation.fuel_units_per_s > EPS:
+        fuel_scale = state.fuel_units / (actuation.fuel_units_per_s * step)
+        if fuel_scale < scale:
+            scale = max(0.0, fuel_scale)
+            metrics = _load_metrics(
+                model, state, actuation, drag.force_world_n, scale, step
+            )
+    return _integrate_delivered_actuation(model, state, actuation, drag, scale, metrics, step)
+
+
+@dataclass(frozen=True)
+class ActualTacticalStepDiagnostics:
+    request: ActualActuationRequest
+    resulting_fixed_step_index: int
+    requested_fuel_units: float
+    fuel_delivery_fraction: float
+    structure_ratio: float
+    crew_g: float
+    hull_integrity_damage: float
+    fuel_units_consumed: float
+    active_force_body_n: Vec2
+    active_torque_n_m: float
+    drag_force_world_n: Vec2
+    drag_breakdown: DragBreakdown
+
+    @property
+    def soft_governor_status(self) -> str:
+        return "unwired"
+
+    def to_dict(self) -> dict[str, Any]:
+        value = asdict(self)
+        value["request"] = self.request.to_dict()
+        value.update(interface="gaotian.actual-propulsion-step-diagnostics/v1alpha1",
+                     policy=ACTUAL_INTEGRATION_POLICY_ID, soft_governor_status="unwired",
+                     hard_fault_status="unwired", direction_interlock_status="unwired")
+        return value
+
+
+def integrate_actual_tactical_step(
+    model: TacticalShipModel,
+    state: TacticalMotionState,
+    request: ActualActuationRequest,
+    *,
+    dt: float | None = None,
+) -> tuple[TacticalMotionState, ActualTacticalStepDiagnostics]:
+    """只供显式技术夹具：实际力/力矩积分，燃料约束独立，软保护尚未接线。"""
+    if not isinstance(request, ActualActuationRequest):
+        raise ContractError("actual_propulsion.request_type", "$.request", "必须显式提供实际执行量合同")
+    configured_step = finite_number(model.tuning.fixed_step_s, "$.tuning.fixed_step_s", 0)
+    step = finite_number(configured_step if dt is None else dt, "$.dt", 0)
+    if step <= 0 or abs(step - configured_step) > 1.0e-12:
+        raise ContractError("actual_propulsion.fixed_step", "$.dt", "只接受配置中的固定物理步")
+    fixed_step_index(state.fixed_step_index)
+    if request.source_fixed_step_index != state.fixed_step_index:
+        raise ContractError("actual_propulsion.source_step", "$.request", "执行量已过期或超前当前边界")
+    runtime = model.runtime
+    if request.runtime_parameters_sha256 != runtime.source_sha256 or model.runtime_parameters_sha256 != runtime.source_sha256 or (
+        request.derived_snapshot_sha256 != model.derived_snapshot_sha256 or model.derived_snapshot_sha256 != runtime.derived_snapshot_sha256
+    ):
+        raise ContractError("actual_propulsion.model_source", "$.request", "实际执行量必须绑定当前精确模型")
+    for key in ("current_mass_kg", "current_inertia_kg_m2"):
+        if finite_number(getattr(runtime, key), f"$.runtime.{key}", 0) <= 0:
+            raise ContractError("actual_propulsion.runtime_mass", "$.runtime", "质量和惯量必须大于零")
+    for key in ("heading_rad", "yaw_rate_radps", "hull_integrity_fraction", "fuel_units"):
+        finite_number(getattr(state, key), f"$.state.{key}")
+    for vector in (state.position_world_m, state.velocity_world_mps):
+        finite_number(vector.x, "$.state.vector.x")
+        finite_number(vector.y, "$.state.vector.y")
+    if state.fuel_units < 0 or not 0 <= state.hull_integrity_fraction <= 1:
+        raise ContractError("actual_propulsion.state_range", "$.state", "燃料或船壳完整度非法")
+    if (state.fuel_units != runtime.instance_snapshot.operational_state.fuel_units
+        or state.hull_integrity_fraction != runtime.current_hull_integrity_fraction
+        or state.height_layer != runtime.height_layer):
+        raise ContractError("actual_propulsion.stale_runtime", "$.state", "燃料、船壳或高度层变化后必须重新编译运行时")
+    if not runtime.fuel_available and (request.fuel_units_per_s or request.torque_n_m or any(request.force_body_n)):
+        raise ContractError("actual_propulsion.runtime_unavailable", "$.request", "断油运行时不能交付非零推进请求")
+    requested_fuel = finite_number(request.fuel_units_per_s * step, "$.requested_fuel_units", 0)
+    fraction = min(1.0, state.fuel_units / requested_fuel) if requested_fuel > 0 else 1.0
+    actuation = AllocatedActuation(Vec2(*request.force_body_n), Vec2(), request.torque_n_m, 0.0, 0.0, request.fuel_units_per_s)
+    drag = calculate_tactical_drag(model, state)
+    try:
+        metrics = _load_metrics(model, state, actuation, drag.force_world_n, fraction, step)
+        result, delivered = _integrate_delivered_actuation(model, state, actuation, drag, fraction, metrics, step)
+    except (OverflowError, ZeroDivisionError) as error:
+        raise ContractError("actual_propulsion.numeric_range", "$.integration", "输入导致非有限物理结果") from error
+    for value in (result.position_world_m.x, result.position_world_m.y,
+                  result.velocity_world_mps.x, result.velocity_world_mps.y,
+                  result.heading_rad, result.yaw_rate_radps, delivered.structure_ratio,
+                  delivered.crew_g, delivered.hull_integrity_damage, delivered.fuel_units_consumed):
+        finite_number(value, "$.integration.result")
+    return result, ActualTacticalStepDiagnostics(
+        request, result.fixed_step_index, requested_fuel, fraction, delivered.structure_ratio,
+        delivered.crew_g, delivered.hull_integrity_damage, delivered.fuel_units_consumed,
+        delivered.active_force_body_n, delivered.active_torque_n_m, delivered.drag_force_world_n,
+        delivered.drag_breakdown,
     )
 
 
