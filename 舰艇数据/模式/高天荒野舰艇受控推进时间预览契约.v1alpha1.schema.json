@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.governed-propulsion-time-preview/v1alpha1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.governed-propulsion-time-preview/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.propulsion-time/preview-authorize-effective-target/v1"
+    },
+    "fixed_step_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "capability_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_state": {
+      "$ref": "gaotian.tactical-propulsion-state/v2alpha1#/$defs/engineRuntimeState"
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "commanded_notch": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            null,
+            "stop",
+            "dead_slow",
+            "quarter",
+            "half",
+            "three_quarter",
+            "full"
+          ]
+        },
+        "target_output_percent": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "enum": [
+            null,
+            0,
+            2,
+            5,
+            10,
+            15,
+            20,
+            25,
+            30,
+            35,
+            40,
+            45,
+            50,
+            55,
+            60,
+            65,
+            70,
+            75,
+            80,
+            85,
+            90,
+            95,
+            100
+          ]
+        }
+      },
+      "required": [
+        "commanded_notch",
+        "target_output_percent"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "commanded_notch": {
+              "type": "string"
+            },
+            "target_output_percent": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "commanded_notch": {
+              "type": "null"
+            },
+            "target_output_percent": {
+              "type": "integer"
+            }
+          }
+        }
+      ]
+    },
+    "candidate_state": {
+      "$ref": "gaotian.tactical-propulsion-state/v2alpha1#/$defs/engineRuntimeState"
+    },
+    "candidate_events": {
+      "type": "array",
+      "items": {
+        "$ref": "gaotian.propulsion-state-event/v1alpha1"
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "interface",
+    "policy",
+    "fixed_step_index",
+    "capability_sha256",
+    "source_state",
+    "command",
+    "candidate_state",
+    "candidate_events"
+  ]
+}

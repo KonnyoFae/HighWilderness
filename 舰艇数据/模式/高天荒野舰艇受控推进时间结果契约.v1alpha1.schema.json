@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.governed-propulsion-time-result/v1alpha1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.governed-propulsion-time-result/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.propulsion-time/preview-authorize-effective-target/v1"
+    },
+    "preview": {
+      "$ref": "gaotian.governed-propulsion-time-preview/v1alpha1"
+    },
+    "preview_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "effective_target_percent": {
+      "type": "integer",
+      "enum": [
+        0,
+        2,
+        5,
+        10,
+        15,
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80,
+        85,
+        90,
+        95,
+        100
+      ]
+    },
+    "allow_upstage": {
+      "type": "boolean"
+    },
+    "upstage_rejected": {
+      "type": "boolean"
+    },
+    "state": {
+      "$ref": "gaotian.tactical-propulsion-state/v2alpha1#/$defs/engineRuntimeState"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "gaotian.propulsion-state-event/v1alpha1"
+      },
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "interface",
+    "policy",
+    "preview",
+    "preview_sha256",
+    "effective_target_percent",
+    "allow_upstage",
+    "upstage_rejected",
+    "state",
+    "events"
+  ]
+}
