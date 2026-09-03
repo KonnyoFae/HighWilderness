@@ -22,6 +22,7 @@ from 高天荒野舰艇推进状态合同 import (
     PROPULSION_EVENT_KIND_ORDER,
     EngineRuntimeState,
     PropulsionStateEvent,
+    PROPULSION_STATE_EVENT_INTERFACE_ID,
 )
 
 
@@ -81,7 +82,7 @@ class PropulsionTimeCommand:
         ):
             raise ValueError("commanded_notch 必须是规范车钟档位")
         if self.target_output_percent is not None and (
-            isinstance(self.target_output_percent, bool)
+            type(self.target_output_percent) is not int
             or self.target_output_percent not in THRUST_OUTPUT_STAGES_PERCENT
         ):
             raise ValueError("target_output_percent 必须是规范离散阶段")
@@ -242,6 +243,10 @@ class PropulsionTimeBoundaryResult:
     events: tuple[PropulsionStateEvent, ...]
 
     def __post_init__(self) -> None:
+        if any(item.interface_id != PROPULSION_STATE_EVENT_INTERFACE_ID for item in self.events):
+            raise ValueError("d1 时间结果只接受 v1 无歧义发动机事件")
+        if self.state.interface_id != ENGINE_RUNTIME_STATE_INTERFACE_ID:
+            raise ValueError("d1 时间结果只接受 engine v2 状态")
         if (
             isinstance(self.fixed_step_index, bool)
             or not isinstance(self.fixed_step_index, int)

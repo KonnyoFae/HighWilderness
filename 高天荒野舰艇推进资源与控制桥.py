@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from math import isfinite
-from typing import Any, Iterable
+from typing import Any, Iterable, TYPE_CHECKING
 
 from 高天荒野舰艇数据契约 import (
     MODULE_CATALOG_V2_SCHEMA_ID,
@@ -32,12 +32,13 @@ from 高天荒野舰艇推进安全判定器 import (
 from 高天荒野舰艇推进时间内核 import validate_propulsion_timing_capability
 from 高天荒野舰艇推进状态合同 import (
     PROPULSION_COMMAND_CHANNELS,
+    PROPULSION_STATE_EVENT_INTERFACE_ID,
     PropulsionStateEvent,
 )
-from 高天荒野舰艇统一战术场景 import (
-    TACTICAL_PROPULSION_SCENE_INTERFACE_ID,
-    TacticalSceneStepResolution,
-)
+from 高天荒野舰艇推进通道合同 import D1_SCENE_INTERFACE_ID
+
+if TYPE_CHECKING:
+    from 高天荒野舰艇统一战术场景 import TacticalSceneStepResolution
 
 
 PROPULSION_CONTROL_INTERFACE_ID = "gaotian.tactical-propulsion-control/v1alpha1"
@@ -330,6 +331,8 @@ def _nearest_stage_percent(fraction: float) -> int:
             "$.fraction",
             "必须是数值",
         )
+    if not isfinite(float(fraction)):
+        raise ContractError("propulsion_control.fraction_finite", "$.fraction", "必须是有限数")
     clamped_percent = min(100.0, max(0.0, abs(float(fraction)) * 100.0))
     return min(
         THRUST_OUTPUT_STAGES_PERCENT,
@@ -338,6 +341,7 @@ def _nearest_stage_percent(fraction: float) -> int:
 
 
 def _nearest_telegraph_notch(fraction: float) -> str:
+    _nearest_stage_percent(fraction)  # 两条量化入口使用相同的严格数值闸门。
     target_percent = min(100.0, max(0.0, abs(float(fraction)) * 100.0))
     return min(
         TELEGRAPH_NOTCH_PERCENT,
@@ -356,7 +360,7 @@ class DirectionPropulsionCommand:
             raise ValueError("command_channel 非法")
         if self.main_engine_notch not in TELEGRAPH_NOTCHES:
             raise ValueError("main_engine_notch 非法")
-        if self.maneuver_target_percent not in THRUST_OUTPUT_STAGES_PERCENT:
+        if type(self.maneuver_target_percent) is not int or self.maneuver_target_percent not in THRUST_OUTPUT_STAGES_PERCENT:
             raise ValueError("maneuver_target_percent 非法")
 
     @classmethod
@@ -760,6 +764,8 @@ class TacticalScenePropulsionEvent:
     event: PropulsionStateEvent
 
     def __post_init__(self) -> None:
+        if self.event.interface_id != PROPULSION_STATE_EVENT_INTERFACE_ID:
+            raise ValueError("旧场景事件封装只接受 v1 推进事件")
         if not isinstance(self.ship_id, str) or not RESOURCE_ID_PATTERN.fullmatch(
             self.ship_id
         ):
@@ -811,7 +817,7 @@ class TacticalPropulsionStepResolutionEnvelope:
 
     def __post_init__(self) -> None:
         scene_value = self.base_resolution.resulting_scene.to_dict()
-        if scene_value["interface"] != TACTICAL_PROPULSION_SCENE_INTERFACE_ID:
+        if scene_value["interface"] != D1_SCENE_INTERFACE_ID:
             raise ValueError("新结果接口必须绑定 d1 推进场景")
         if tuple(sorted(self.propulsion_events, key=lambda item: item.sort_key)) != (
             self.propulsion_events

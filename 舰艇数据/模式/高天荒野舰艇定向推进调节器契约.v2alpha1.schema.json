@@ -1,0 +1,86 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.propulsion-governor-state/v2alpha1"
+    },
+    "last_evaluated_step_index": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "release_candidate_since_step": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "safety_ceiling_percent": {
+      "enum": [
+        0,
+        2,
+        5,
+        10,
+        15,
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80,
+        85,
+        90,
+        95,
+        100
+      ],
+      "type": "integer"
+    },
+    "safety_limited_since_step": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "safety_reasons": {
+      "items": {
+        "enum": [
+          "structure_limit",
+          "crew_limit"
+        ]
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "safety_revision": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "command": {
+      "$ref": "gaotian.tactical-propulsion-control/v2alpha1#/$defs/channelCommand"
+    }
+  },
+  "required": [
+    "interface",
+    "last_evaluated_step_index",
+    "release_candidate_since_step",
+    "safety_ceiling_percent",
+    "safety_limited_since_step",
+    "safety_reasons",
+    "safety_revision",
+    "command"
+  ],
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.propulsion-governor-state/v2alpha1"
+}

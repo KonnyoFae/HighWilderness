@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.tactical-scene-propulsion-event/v2alpha1",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.tactical-scene-propulsion-event/v2alpha1"
+    },
+    "ship_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "boundary_phase": {
+      "enum": [
+        "opening",
+        "closing"
+      ]
+    },
+    "event": {
+      "$ref": "gaotian.propulsion-state-event/v2alpha1"
+    }
+  },
+  "required": [
+    "interface",
+    "ship_id",
+    "boundary_phase",
+    "event"
+  ]
+}

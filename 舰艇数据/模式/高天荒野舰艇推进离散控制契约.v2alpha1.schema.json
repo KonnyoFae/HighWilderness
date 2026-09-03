@@ -1,0 +1,236 @@
+{
+  "$id": "gaotian.tactical-propulsion-control/v2alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "automatic_brake": {
+      "type": "boolean"
+    },
+    "automatic_brake_policy": {
+      "const": "gaotian.propulsion-control/translation-only-quarter-brake/v2"
+    },
+    "interface": {
+      "const": "gaotian.tactical-propulsion-control/v2alpha1"
+    },
+    "main_engine_quantization_policy": {
+      "const": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1"
+    },
+    "maneuver_quantization_policy": {
+      "const": "gaotian.propulsion-control/nearest-stage-ties-up/v1"
+    },
+    "overg_requested": {
+      "type": "boolean"
+    },
+    "source_migration_id": {
+      "enum": [
+        null,
+        "gtw.migration.t0.control.d2a-forward-left-to-directional",
+        "gtw.migration.t0.control.d2a-forward-right-to-directional"
+      ]
+    },
+    "channel_commands": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": false,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/channelCommand"
+            },
+            {
+              "properties": {
+                "command_channel": {
+                  "const": "translation.forward"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/channelCommand"
+            },
+            {
+              "properties": {
+                "command_channel": {
+                  "const": "translation.reverse"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/channelCommand"
+            },
+            {
+              "properties": {
+                "command_channel": {
+                  "const": "translation.left"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/channelCommand"
+            },
+            {
+              "properties": {
+                "command_channel": {
+                  "const": "translation.right"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/channelCommand"
+            },
+            {
+              "properties": {
+                "command_channel": {
+                  "const": "yaw.counterclockwise"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/channelCommand"
+            },
+            {
+              "properties": {
+                "command_channel": {
+                  "const": "yaw.clockwise"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "automatic_brake",
+    "automatic_brake_policy",
+    "interface",
+    "main_engine_quantization_policy",
+    "maneuver_quantization_policy",
+    "overg_requested",
+    "source_migration_id",
+    "channel_commands"
+  ],
+  "type": "object",
+  "$defs": {
+    "channelCommand": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "command_channel": {
+          "enum": [
+            "translation.forward",
+            "translation.reverse",
+            "translation.left",
+            "translation.right",
+            "yaw.counterclockwise",
+            "yaw.clockwise"
+          ]
+        },
+        "commanded_notch": {
+          "enum": [
+            "stop",
+            "dead_slow",
+            "quarter",
+            "half",
+            "three_quarter",
+            "full",
+            null
+          ]
+        },
+        "target_output_percent": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "enum": [
+            0,
+            2,
+            5,
+            10,
+            15,
+            20,
+            25,
+            30,
+            35,
+            40,
+            45,
+            50,
+            55,
+            60,
+            65,
+            70,
+            75,
+            80,
+            85,
+            90,
+            95,
+            100,
+            null
+          ]
+        }
+      },
+      "required": [
+        "command_channel",
+        "commanded_notch",
+        "target_output_percent"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "command_channel": {
+              "enum": [
+                "translation.forward",
+                "translation.reverse",
+                "translation.left",
+                "translation.right"
+              ]
+            },
+            "commanded_notch": {
+              "type": "string"
+            },
+            "target_output_percent": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "command_channel": {
+              "enum": [
+                "yaw.counterclockwise",
+                "yaw.clockwise"
+              ]
+            },
+            "commanded_notch": {
+              "type": "null"
+            },
+            "target_output_percent": {
+              "type": "integer"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

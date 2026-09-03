@@ -1,0 +1,135 @@
+{
+  "$id": "gaotian.propulsion-actuator-binding/v2alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actuator_category": {
+      "enum": [
+        "main_engine",
+        "maneuver_thruster"
+      ]
+    },
+    "actuator_instance_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "command_channels": {
+      "items": {
+        "enum": [
+          "translation.forward",
+          "translation.reverse",
+          "translation.left",
+          "translation.right",
+          "yaw.counterclockwise",
+          "yaw.clockwise"
+        ]
+      },
+      "minItems": 1,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "interface": {
+      "const": "gaotian.propulsion-actuator-binding/v2alpha1"
+    },
+    "module_catalog": {
+      "$ref": "#/$defs/resourceReference"
+    },
+    "module_catalog_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "prototype": {
+      "$ref": "#/$defs/resourceReference"
+    },
+    "response_steps": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "scene_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "ship_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "startup_steps": {
+      "minimum": 0,
+      "type": "integer"
+    }
+  },
+  "required": [
+    "actuator_category",
+    "actuator_instance_id",
+    "command_channels",
+    "interface",
+    "module_catalog",
+    "module_catalog_sha256",
+    "prototype",
+    "response_steps",
+    "scene_id",
+    "ship_id",
+    "startup_steps"
+  ],
+  "type": "object",
+  "$defs": {
+    "resourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "pattern": "^[a-z0-9][a-z0-9._-]*$",
+          "type": "string"
+        },
+        "version": {
+          "minimum": 3,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "type": "object"
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "actuator_category": {
+          "const": "main_engine"
+        },
+        "command_channels": {
+          "items": {
+            "enum": [
+              "translation.forward",
+              "translation.reverse",
+              "translation.left",
+              "translation.right"
+            ]
+          }
+        },
+        "startup_steps": {
+          "minimum": 1
+        }
+      }
+    },
+    {
+      "properties": {
+        "actuator_category": {
+          "const": "maneuver_thruster"
+        },
+        "command_channels": {
+          "items": {
+            "enum": [
+              "yaw.counterclockwise",
+              "yaw.clockwise"
+            ]
+          }
+        },
+        "startup_steps": {
+          "const": 0
+        }
+      }
+    }
+  ]
+}

@@ -5,6 +5,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
+from 高天荒野舰艇推进通道合同 import (
+    DIRECTIONAL_CHANNELS, DIRECTIONAL_STATE_INTERFACE_ID, DIRECTIONAL_EVENT_INTERFACE_ID,
+    DirectionalPropulsionGovernorState, OPPOSING_CHANNEL_PAIRS,
+)
+
 from 高天荒野舰艇数据契约 import (
     ContractError,
     RESOURCE_ID_PATTERN,
@@ -95,7 +100,7 @@ def _optional_integer(value: Any, path: str) -> int | None:
 
 
 def _stage(value: Any, path: str) -> int:
-    if isinstance(value, bool) or value not in THRUST_OUTPUT_STAGES_PERCENT:
+    if type(value) is not int or value not in THRUST_OUTPUT_STAGES_PERCENT:
         raise ContractError(
             "propulsion_state.output_stage",
             path,
@@ -182,7 +187,7 @@ class EngineRuntimeState:
         elif self.commanded_notch is not None:
             raise ValueError("姿态推进器不得保存主发动机车钟档位")
         for value in (self.target_output_percent, self.actual_output_percent):
-            if isinstance(value, bool) or value not in THRUST_OUTPUT_STAGES_PERCENT:
+            if type(value) is not int or value not in THRUST_OUTPUT_STAGES_PERCENT:
                 raise ValueError("输出必须位于规范离散阶段")
         for value in (
             self.ready_at_fixed_step,
@@ -264,7 +269,7 @@ class EngineRuntimeState:
                 raise ValueError("stopping 必须向零输出转换并保存待转换步")
         if self.response_start_output_percent is not None:
             if (
-                isinstance(self.response_start_output_percent, bool)
+                type(self.response_start_output_percent) is not int
                 or self.response_start_output_percent
                 not in THRUST_OUTPUT_STAGES_PERCENT
             ):
@@ -489,7 +494,7 @@ class PropulsionGovernorState:
         if self.commanded_notch not in TELEGRAPH_NOTCHES:
             raise ValueError("commanded_notch 非法")
         if (
-            isinstance(self.safety_ceiling_percent, bool)
+            type(self.safety_ceiling_percent) is not int
             or self.safety_ceiling_percent not in THRUST_OUTPUT_STAGES_PERCENT
         ):
             raise ValueError("safety_ceiling_percent 非法")
@@ -625,13 +630,14 @@ class PropulsionGovernorState:
 @dataclass(frozen=True)
 class TacticalPropulsionState:
     engines: tuple[EngineRuntimeState, ...]
-    governors: tuple[PropulsionGovernorState, ...]
+    governors: tuple[PropulsionGovernorState | DirectionalPropulsionGovernorState, ...]
     interface_id: str = TACTICAL_PROPULSION_STATE_INTERFACE_ID
 
     def __post_init__(self) -> None:
         if self.interface_id not in {
             C2B_TACTICAL_PROPULSION_STATE_INTERFACE_ID,
             TACTICAL_PROPULSION_STATE_INTERFACE_ID,
+            DIRECTIONAL_STATE_INTERFACE_ID,
         }:
             raise ValueError("tactical propulsion interface 非法")
         expected_engine_interface = (
@@ -651,9 +657,17 @@ class TacticalPropulsionState:
             engine_ids
         ):
             raise ValueError("执行器必须按 id 排序且不得重复")
+        directional = self.interface_id == DIRECTIONAL_STATE_INTERFACE_ID
+        expected_governor = DirectionalPropulsionGovernorState if directional else PropulsionGovernorState
+        if any(type(item) is not expected_governor for item in self.governors):
+            raise ValueError("推进组合状态与 governor 版本不匹配")
         channels = tuple(item.command_channel for item in self.governors)
-        if channels != PROPULSION_COMMAND_CHANNELS:
-            raise ValueError("governor 必须恰按稳定顺序覆盖四个主方向通道")
+        if channels != (DIRECTIONAL_CHANNELS if directional else PROPULSION_COMMAND_CHANNELS):
+            raise ValueError("governor 必须恰按稳定顺序覆盖当前版本的全部通道")
+        if directional:
+            requests = {item.command_channel: item.command.requested_percent for item in self.governors}
+            if any(requests[a] and requests[b] for a, b in OPPOSING_CHANNEL_PAIRS):
+                raise ValueError("定向状态不得保存同轴对向请求")
 
     @property
     def source_sha256(self) -> str:
@@ -666,6 +680,7 @@ class TacticalPropulsionState:
         if interface not in {
             C2B_TACTICAL_PROPULSION_STATE_INTERFACE_ID,
             TACTICAL_PROPULSION_STATE_INTERFACE_ID,
+            DIRECTIONAL_STATE_INTERFACE_ID,
         }:
             raise ContractError(
                 "propulsion_state.interface",
@@ -680,8 +695,9 @@ class TacticalPropulsionState:
             EngineRuntimeState.parse(item, f"{path}.engines[{index}]")
             for index, item in enumerate(obj["engines"])
         )
+        governor_type = DirectionalPropulsionGovernorState if interface == DIRECTIONAL_STATE_INTERFACE_ID else PropulsionGovernorState
         governors = tuple(
-            PropulsionGovernorState.parse(item, f"{path}.governors[{index}]")
+            governor_type.parse(item, f"{path}.governors[{index}]")
             for index, item in enumerate(obj["governors"])
         )
         try:
@@ -755,8 +771,11 @@ class PropulsionStateEvent:
     previous_stage_percent: int | None
     resulting_stage_percent: int | None
     reasons: tuple[str, ...]
+    interface_id: str = PROPULSION_STATE_EVENT_INTERFACE_ID
 
     def __post_init__(self) -> None:
+        if self.interface_id not in (PROPULSION_STATE_EVENT_INTERFACE_ID, DIRECTIONAL_EVENT_INTERFACE_ID):
+            raise ValueError("推进事件 interface 非法")
         if (
             isinstance(self.fixed_step_index, bool)
             or not isinstance(self.fixed_step_index, int)
@@ -769,7 +788,7 @@ class PropulsionStateEvent:
         ):
             raise ValueError("actuator_instance_id 非法")
         if self.command_channel is not None and self.command_channel not in (
-            PROPULSION_COMMAND_CHANNELS
+            DIRECTIONAL_CHANNELS if self.interface_id == DIRECTIONAL_EVENT_INTERFACE_ID else PROPULSION_COMMAND_CHANNELS
         ):
             raise ValueError("command_channel 非法")
         if self.kind not in PROPULSION_EVENT_KIND_ORDER:
@@ -786,8 +805,8 @@ class PropulsionStateEvent:
             or self.resulting_stage_percent is not None
         )
         if stages_present and (
-            isinstance(self.previous_stage_percent, bool)
-            or isinstance(self.resulting_stage_percent, bool)
+            type(self.previous_stage_percent) is not int
+            or type(self.resulting_stage_percent) is not int
             or self.previous_stage_percent not in THRUST_OUTPUT_STAGES_PERCENT
             or self.resulting_stage_percent not in THRUST_OUTPUT_STAGES_PERCENT
             or self.previous_stage_percent == self.resulting_stage_percent
@@ -837,7 +856,7 @@ class PropulsionStateEvent:
             },
             path,
         )
-        if obj["interface"] != PROPULSION_STATE_EVENT_INTERFACE_ID:
+        if obj["interface"] not in (PROPULSION_STATE_EVENT_INTERFACE_ID, DIRECTIONAL_EVENT_INTERFACE_ID):
             raise ContractError(
                 "propulsion_event.interface",
                 f"{path}.interface",
@@ -859,7 +878,7 @@ class PropulsionStateEvent:
                 ),
                 _optional_enum(
                     obj["command_channel"],
-                    PROPULSION_COMMAND_CHANNELS,
+                    DIRECTIONAL_CHANNELS if obj["interface"] == DIRECTIONAL_EVENT_INTERFACE_ID else PROPULSION_COMMAND_CHANNELS,
                     "propulsion_state.command_channel",
                     f"{path}.command_channel",
                 ),
@@ -889,6 +908,7 @@ class PropulsionStateEvent:
                     PROPULSION_EVENT_REASON_ORDER,
                     f"{path}.reasons",
                 ),
+                obj["interface"],
             )
         except ContractError:
             raise
@@ -904,7 +924,7 @@ class PropulsionStateEvent:
             "actuator_instance_id": self.actuator_instance_id,
             "command_channel": self.command_channel,
             "fixed_step_index": self.fixed_step_index,
-            "interface": PROPULSION_STATE_EVENT_INTERFACE_ID,
+            "interface": self.interface_id,
             "kind": self.kind,
             "previous_phase": self.previous_phase,
             "previous_stage_percent": self.previous_stage_percent,

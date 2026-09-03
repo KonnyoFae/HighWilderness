@@ -1,0 +1,157 @@
+{
+  "$id": "gaotian.propulsion-state-event/v2alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actuator_instance_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "command_channel": {
+      "enum": [
+        "translation.forward",
+        "translation.reverse",
+        "translation.left",
+        "translation.right",
+        "yaw.counterclockwise",
+        "yaw.clockwise",
+        null
+      ]
+    },
+    "fixed_step_index": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "interface": {
+      "const": "gaotian.propulsion-state-event/v2alpha1"
+    },
+    "kind": {
+      "enum": [
+        "engine_start_requested",
+        "engine_start_completed",
+        "engine_safety_limit_engaged",
+        "engine_safety_limit_changed",
+        "engine_safety_limit_released",
+        "engine_output_stage_changed",
+        "engine_stop_requested",
+        "engine_stopped",
+        "engine_tripped",
+        "engine_reset"
+      ]
+    },
+    "previous_phase": {
+      "enum": [
+        "off",
+        "starting",
+        "ready",
+        "running",
+        "stopping",
+        "tripped",
+        null
+      ]
+    },
+    "previous_stage_percent": {
+      "enum": [
+        0,
+        2,
+        5,
+        10,
+        15,
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80,
+        85,
+        90,
+        95,
+        100,
+        null
+      ],
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "reasons": {
+      "items": {
+        "enum": [
+          "structure_limit",
+          "crew_limit",
+          "fuel_unavailable",
+          "power_unavailable",
+          "crew_unavailable",
+          "actuator_destroyed",
+          "host_destroyed",
+          "engine_tripped",
+          "direction_interlock"
+        ]
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "resulting_phase": {
+      "enum": [
+        "off",
+        "starting",
+        "ready",
+        "running",
+        "stopping",
+        "tripped",
+        null
+      ]
+    },
+    "resulting_stage_percent": {
+      "enum": [
+        0,
+        2,
+        5,
+        10,
+        15,
+        20,
+        25,
+        30,
+        35,
+        40,
+        45,
+        50,
+        55,
+        60,
+        65,
+        70,
+        75,
+        80,
+        85,
+        90,
+        95,
+        100,
+        null
+      ],
+      "type": [
+        "integer",
+        "null"
+      ]
+    }
+  },
+  "required": [
+    "actuator_instance_id",
+    "command_channel",
+    "fixed_step_index",
+    "interface",
+    "kind",
+    "previous_phase",
+    "previous_stage_percent",
+    "reasons",
+    "resulting_phase",
+    "resulting_stage_percent"
+  ],
+  "type": "object"
+}

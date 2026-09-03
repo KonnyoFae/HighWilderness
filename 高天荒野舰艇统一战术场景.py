@@ -8,6 +8,13 @@ from math import hypot, isfinite
 from pathlib import Path
 from typing import Any, Iterable
 
+from 高天荒野舰艇推进通道合同 import (
+    D1_SCENE_INTERFACE_ID,
+    DIRECTIONAL_STATE_INTERFACE_ID,
+    DIRECTIONAL_SCENE_INTERFACE_ID,
+    DIRECTIONAL_SCENE_POLICY_ID,
+)
+
 from 高天荒野舰艇炮弹与甲弹公式 import Aftereffect
 from 高天荒野舰艇出航配置编译器 import CompiledSortieState
 from 高天荒野舰艇数据契约 import (
@@ -149,9 +156,7 @@ C2B_TACTICAL_PROPULSION_SCENE_INTERFACE_ID = (
 C2B_TACTICAL_PROPULSION_SCENE_POLICY_ID = (
     "gaotian.tactical-scene/boundary-lifecycle-fire-motion-impact-propulsion-state/v3"
 )
-TACTICAL_PROPULSION_SCENE_INTERFACE_ID = (
-    "gaotian.tactical-scene-timeline/v3alpha1"
-)
+TACTICAL_PROPULSION_SCENE_INTERFACE_ID = D1_SCENE_INTERFACE_ID
 TACTICAL_PROPULSION_SCENE_POLICY_ID = (
     "gaotian.tactical-scene/boundary-lifecycle-fire-motion-impact-propulsion-state/v4"
 )
@@ -713,6 +718,9 @@ class TacticalSceneState:
         elif propulsion_interfaces == {TACTICAL_PROPULSION_STATE_INTERFACE_ID}:
             scene_interface = TACTICAL_PROPULSION_SCENE_INTERFACE_ID
             scene_policy = TACTICAL_PROPULSION_SCENE_POLICY_ID
+        elif propulsion_interfaces == {DIRECTIONAL_STATE_INTERFACE_ID}:
+            scene_interface = DIRECTIONAL_SCENE_INTERFACE_ID
+            scene_policy = DIRECTIONAL_SCENE_POLICY_ID
         else:
             raise ValueError("场景推进状态 interface 缺失或混用")
         result = {
@@ -753,6 +761,9 @@ class TacticalSceneState:
         elif interface == TACTICAL_PROPULSION_SCENE_INTERFACE_ID:
             propulsion_interface_id = TACTICAL_PROPULSION_STATE_INTERFACE_ID
             expected_policy = TACTICAL_PROPULSION_SCENE_POLICY_ID
+        elif interface == DIRECTIONAL_SCENE_INTERFACE_ID:
+            propulsion_interface_id = DIRECTIONAL_STATE_INTERFACE_ID
+            expected_policy = DIRECTIONAL_SCENE_POLICY_ID
         else:
             raise ContractError(
                 "tactical_scene.interface",
