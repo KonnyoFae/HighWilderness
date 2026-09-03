@@ -1,0 +1,248 @@
+{
+  "$id": "gaotian.directional-scene-resource-bundle/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "高天荒野已知初始定向推进场景资源包",
+  "description": "只适用于十二份已知 d1 初态。重载必须提供精确来源场景、绑定和资源根目录；不接受任意进行中的存档。此合同不开放推进力学。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.directional-scene-resource-bundle/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.directional-scene/known-initial-resource-chain/v1"
+    },
+    "migration_id": {
+      "const": "gtw.migration.propulsion.d1-initial-to-directional-resource-chain"
+    },
+    "scene_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_scene_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "profiles": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "prefixItems": [
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/profile"
+            },
+            {
+              "properties": {
+                "profile_key": {
+                  "const": "minimum_legal"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/profile"
+            },
+            {
+              "properties": {
+                "profile_key": {
+                  "const": "conventional_crewed"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            {
+              "$ref": "#/$defs/profile"
+            },
+            {
+              "properties": {
+                "profile_key": {
+                  "const": "unmanned_flagship"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "ships": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/ship"
+      }
+    },
+    "scene": {
+      "$ref": "gaotian.tactical-scene-timeline/v4alpha1"
+    },
+    "execution_status": {
+      "const": "propulsion_unwired"
+    }
+  },
+  "required": [
+    "interface",
+    "policy",
+    "migration_id",
+    "scene_id",
+    "source_scene_sha256",
+    "profiles",
+    "ships",
+    "scene",
+    "execution_status"
+  ],
+  "$defs": {
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "profile_key": {
+          "enum": [
+            "minimum_legal",
+            "conventional_crewed",
+            "unmanned_flagship"
+          ]
+        },
+        "source_derived_snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "module_catalog": {
+          "$ref": "gaotian.module-prototype-catalog/v3"
+        },
+        "hull_blueprint": {
+          "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/hullBlueprint"
+        },
+        "outfit_plan": {
+          "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/outfitPlan"
+        },
+        "compiled_outfit": {
+          "type": "object",
+          "description": "不可手填的舾装编译结果；本 schema 仅声明对象边界，全部字段和值由上下文加载器重新编译后逐项严格核对。"
+        },
+        "derived_snapshot": {
+          "type": "object",
+          "description": "不可手填的派生快照；本 schema 仅声明对象边界，全部字段和值由上下文加载器重新编译后逐项严格核对。"
+        },
+        "derived_snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "profile_key",
+        "source_derived_snapshot_sha256",
+        "module_catalog",
+        "hull_blueprint",
+        "outfit_plan",
+        "compiled_outfit",
+        "derived_snapshot",
+        "derived_snapshot_sha256"
+      ]
+    },
+    "ship": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "ship_id": {
+          "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/resourceId"
+        },
+        "profile_key": {
+          "enum": [
+            "minimum_legal",
+            "conventional_crewed",
+            "unmanned_flagship"
+          ]
+        },
+        "side_id": {
+          "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/resourceId"
+        },
+        "fleet_id": {
+          "$ref": "https://gaotianwilderness.invalid/schema/ship/v1alpha1#/$defs/resourceId"
+        },
+        "active_automatic_events": {
+          "const": []
+        },
+        "source_derived_snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "source_sortie_configuration_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "derived_snapshot_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "sortie": {
+          "type": "object",
+          "description": "精确引用新舾装的出航编译结果；本 schema 仅声明对象边界，全部字段和值由上下文加载器重新编译后逐项严格核对。"
+        },
+        "actuator_bindings": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "gaotian.propulsion-actuator-binding/v2alpha1"
+          }
+        },
+        "cache_lineage": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "validated_snapshot_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "static_model_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "projectile_geometry_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "runtime_revision_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "validated_snapshot_sha256",
+            "static_model_sha256",
+            "projectile_geometry_sha256",
+            "runtime_revision_sha256"
+          ]
+        },
+        "missing_translation_channels": {
+          "const": [
+            "translation.reverse",
+            "translation.left",
+            "translation.right"
+          ]
+        }
+      },
+      "required": [
+        "ship_id",
+        "profile_key",
+        "side_id",
+        "fleet_id",
+        "active_automatic_events",
+        "source_derived_snapshot_sha256",
+        "source_sortie_configuration_sha256",
+        "derived_snapshot_sha256",
+        "sortie",
+        "actuator_bindings",
+        "cache_lineage",
+        "missing_translation_channels"
+      ]
+    }
+  }
+}

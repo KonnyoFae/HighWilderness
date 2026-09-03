@@ -1585,6 +1585,36 @@ def _validate_bindings(
             raise ContractError("tactical_scene.armor_state_mismatch", f"$.ships.{ship_id}.combat_state.armor_edges", "局部装甲状态必须与精确船壳的全部边一一对应")
 
 
+def prepare_tactical_scene_bindings(
+    state: TacticalSceneState,
+    bindings: Iterable[TacticalSceneShipBinding],
+) -> tuple[TacticalSceneShipBinding, ...]:
+    """严格重建绑定与派生缓存，不推进场景，也不接收外部缓存/token。"""
+
+    _validate_internal_state(state)
+    supplied = _binding_map(bindings)
+    fresh = {
+        ship_id: replace(binding)
+        for ship_id, binding in sorted(supplied.items())
+    }
+    _validate_bindings(state, fresh, BINDING_VALIDATION_STRICT)
+    for ship in state.ships:
+        binding = fresh[ship.ship_id]
+        instance = ship.combat_state.instance
+        runtime = _resolve_binding_runtime(
+            binding, instance, validation_mode=RUNTIME_CACHE_VALIDATION_STRICT,
+        )
+        _prewarm_binding_runtime_variants(binding, instance)
+        model = _binding_tactical_model(binding, runtime)
+        if abs(model.tuning.fixed_step_s - state.fixed_step_s) > EPS:
+            raise ContractError(
+                "tactical_scene.fixed_step_mismatch", "$.bindings",
+                "绑定模型的固定步必须与场景一致",
+            )
+        _binding_projectile_target_geometry(binding)
+    return tuple(fresh.values())
+
+
 @dataclass(frozen=True)
 class TacticalSceneV1ToPropulsionV2Migration:
     migration_id: str

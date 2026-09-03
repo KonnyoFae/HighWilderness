@@ -14,11 +14,11 @@
     "舰艇数据/模式/高天荒野舰艇推进状态契约.v2alpha1.schema.json": "9338f07f22966869c6154bb22e6d7dfa16d36f3f0a4d178038aa92706dbfb16c",
     "舰艇数据/模式/高天荒野舰艇推进时间边界结果契约.v1alpha1.schema.json": "6f1955e141e52975d06a50e81364c426cfa3f55cbb7802743d5b7eaac10e2431",
     "高天荒野T0b2d1推进时间内核测试.py": "1f46f3b768719996eafebfdb0c33a02e2e008ec6e43cc64a579b9005006b6b9d",
-    "高天荒野T0b2推进响应与权威性能优化规划.md": "7da048f80fe0280aae4401bd209c93ec162e21f54c4c4e06cab960b80d7f505a",
-    "高天荒野Web客户端编辑器与战术验证实施计划.md": "793348649f8d762a84c4db4c79dc42cf5c3b718bd2089809738dcdaa20c4f55b",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "205616d90c95fc3d470e15b99e6cd65a0b4534921a41fc8de4f5d90960204a73",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "b73660195dfe1a69c51ea55e0ab08903c3aaa59e849a1b7c71ebe09c8699ba4d",
     "高天荒野舰艇推进时间内核.py": "4134056652b8c13945e739bdfee80ed222e3b20ec2dda03f9a5b45b0021d8a3e",
     "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
-    "高天荒野舰艇统一战术场景.py": "410d3f7138e86eca1a54b47bf822c5693aba18149212924702041c8c9d858bfe"
+    "高天荒野舰艇统一战术场景.py": "d0334ff72d18554fdb95d2bd5d876000fe2222c59092d8cdf6e8cddc67173035"
   },
   "interface": "gaotian.stage-t0b2d1-propulsion-time-kernel/v1",
   "isolation_evidence": {
