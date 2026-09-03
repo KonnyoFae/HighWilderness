@@ -1,0 +1,24 @@
+{
+  "$id": "gaotian.actual-propulsion-scene-save/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "只保存严格 v5 当前场景及内容指纹。加载必须明确给出原始 d1 初态和资源根目录，重新编译资源链及缓存；不是通用旧存档迁移，也不是防篡改签名。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.actual-propulsion-scene-save/v1alpha1"
+    },
+    "scene": {
+      "$ref": "gaotian.tactical-scene-timeline/v5alpha1"
+    },
+    "scene_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "interface",
+    "scene",
+    "scene_sha256"
+  ]
+}

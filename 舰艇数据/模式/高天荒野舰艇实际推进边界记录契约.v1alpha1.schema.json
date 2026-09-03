@@ -1,0 +1,125 @@
+{
+  "$id": "gaotian.actual-propulsion-boundary/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "只记录发生变化的内核边界调用，保留原生事件及完整命令/前后排程。上下文加载器使用精确 capability 重放，不伪造 ready 接令为启动事件。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.actual-propulsion-boundary/v1alpha1"
+    },
+    "ship_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "boundary_phase": {
+      "enum": [
+        "opening",
+        "closing"
+      ]
+    },
+    "fixed_step_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "before": {
+      "$ref": "gaotian.tactical-propulsion-state/v3alpha1#/$defs/engineRuntimeState"
+    },
+    "command": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "commanded_notch": {
+          "enum": [
+            "stop",
+            "dead_slow",
+            "quarter",
+            "half",
+            "three_quarter",
+            "full",
+            null
+          ]
+        },
+        "target_output_percent": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "enum": [
+                0,
+                2,
+                5,
+                10,
+                15,
+                20,
+                25,
+                30,
+                35,
+                40,
+                45,
+                50,
+                55,
+                60,
+                65,
+                70,
+                75,
+                80,
+                85,
+                90,
+                95,
+                100
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "commanded_notch",
+        "target_output_percent"
+      ],
+      "oneOf": [
+        {
+          "properties": {
+            "commanded_notch": {
+              "type": "string"
+            },
+            "target_output_percent": {
+              "type": "null"
+            }
+          }
+        },
+        {
+          "properties": {
+            "commanded_notch": {
+              "type": "null"
+            },
+            "target_output_percent": {
+              "type": "integer"
+            }
+          }
+        }
+      ]
+    },
+    "after": {
+      "$ref": "gaotian.tactical-propulsion-state/v3alpha1#/$defs/engineRuntimeState"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "$ref": "gaotian.propulsion-state-event/v1alpha1"
+      }
+    }
+  },
+  "required": [
+    "interface",
+    "ship_id",
+    "boundary_phase",
+    "fixed_step_index",
+    "before",
+    "command",
+    "after",
+    "events"
+  ]
+}

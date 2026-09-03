@@ -236,6 +236,37 @@ def validate_propulsion_timing_capability(
     return timing.startup_steps, timing.response_steps
 
 
+def validate_committed_propulsion_time_state(
+    state: EngineRuntimeState, capability: ModuleCapability, fixed_step_index: int,
+) -> None:
+    """校验存档/场景边界的精确排程锚点；不提交事件、不改变既有内核行为。"""
+    boundary = _nonnegative_integer(fixed_step_index, "$.fixed_step_index")
+    EngineRuntimeState.parse(state.to_dict(), "$.state")
+    if state.interface_id != ENGINE_RUNTIME_STATE_INTERFACE_ID:
+        raise ContractError("propulsion_time.state_interface", "$.state", "只接受 d1 时间状态")
+    timing = _parse_exact_timing_capability(capability, state.actuator_category)
+    if state.phase == "starting":
+        if not boundary < state.ready_at_fixed_step <= boundary + timing.startup_steps or state.ready_at_fixed_step < timing.startup_steps:
+            raise ContractError("propulsion_time.committed_start", "$.state", "启动完成时间不属于当前精确能力")
+        return
+    if state.ready_at_fixed_step is not None and state.ready_at_fixed_step > boundary:
+        raise ContractError("propulsion_time.committed_ready", "$.state", "已就绪时间不得超前当前边界")
+    if state.next_transition_step is None:
+        return
+    anchor, origin = state.response_started_at_fixed_step, state.response_start_output_percent
+    actual, target = state.actual_output_percent, state.target_output_percent
+    if anchor is None or origin is None or anchor > boundary or anchor < state.ready_at_fixed_step:
+        raise ContractError("propulsion_time.committed_anchor", "$.state", "响应起点必须已提交且不早于就绪")
+    if not (origin <= actual < target or origin >= actual > target):
+        raise ContractError("propulsion_time.committed_direction", "$.state", "实际阶段必须位于响应起点与目标之间")
+    adjacent = adjacent_output_stage_percent(actual, target)
+    expected = _transition_step(timing, anchor, origin, adjacent)
+    if state.next_transition_step != expected or expected <= boundary or (
+        actual != origin and _transition_step(timing, anchor, origin, actual) > boundary
+    ):
+        raise ContractError("propulsion_time.committed_schedule", "$.state", "阶段与精确响应时间表不匹配")
+
+
 @dataclass(frozen=True)
 class PropulsionTimeBoundaryResult:
     fixed_step_index: int

@@ -14,6 +14,15 @@ from 高天荒野舰艇推进通道合同 import (
     DIRECTIONAL_SCENE_INTERFACE_ID,
     DIRECTIONAL_SCENE_POLICY_ID,
 )
+from 高天荒野舰艇推进固定步接线 import (
+    ACTUAL_SCENE_INTERFACE_ID, ACTUAL_SCENE_POLICY_ID,
+    ACTUAL_STEP_INTERFACE_ID, ACTUAL_STEP_POLICY_ID,
+    ActualPropulsionExecution, ActualScenePropulsionContext, ActualPropulsionBoundaryRecord,
+    validate_ship_propulsion_state, select_actual_scene_control,
+    advance_ship_propulsion_boundary, serialized_propulsion_events, validate_boundary_replay,
+)
+from 高天荒野舰艇定向推进控制桥 import DirectionalPropulsionControlInput
+from 高天荒野舰艇实际推进聚合器 import ActualPropulsionAggregation, aggregate_actual_propulsion
 
 from 高天荒野舰艇炮弹与甲弹公式 import Aftereffect
 from 高天荒野舰艇出航配置编译器 import CompiledSortieState
@@ -114,12 +123,15 @@ from 高天荒野舰艇战术机动求解器 import (
     TacticalShipModel,
     TacticalShipStaticModel,
     TacticalStepDiagnostics,
+    ActualTacticalStepDiagnostics,
     Vec2,
     bind_tactical_ship_model,
     build_tactical_ship_static_model,
     commit_tactical_state_to_instance,
     initialize_tactical_motion_state,
     integrate_tactical_step,
+    integrate_actual_tactical_step,
+    world_to_body,
 )
 from 高天荒野舰艇战术弹丸世界 import (
     ProjectileSpawnInput,
@@ -616,6 +628,7 @@ class TacticalSceneShipState:
     motion_state: TacticalMotionState
     lifecycle_state: TacticalShipLifecycleState
     propulsion_state: TacticalPropulsionState | None = None
+    propulsion_control: DirectionalPropulsionControlInput | None = None
 
     def to_dict(self) -> dict[str, Any]:
         result = {
@@ -630,6 +643,8 @@ class TacticalSceneShipState:
         }
         if self.propulsion_state is not None:
             result["propulsion_state"] = self.propulsion_state.to_dict()
+        if self.propulsion_control is not None:
+            result["propulsion_control"] = self.propulsion_control.to_dict()
         return result
 
     @classmethod
@@ -639,6 +654,7 @@ class TacticalSceneShipState:
         path: str,
         *,
         propulsion_interface_id: str | None = None,
+        actual_propulsion: bool = False,
     ) -> "TacticalSceneShipState":
         keys = {
             "ship_id",
@@ -652,6 +668,8 @@ class TacticalSceneShipState:
         }
         if propulsion_interface_id is not None:
             keys.add("propulsion_state")
+        if actual_propulsion:
+            keys.add("propulsion_control")
         obj = _exact_object(
             value,
             keys,
@@ -674,6 +692,8 @@ class TacticalSceneShipState:
                 if propulsion_interface_id is not None
                 else None
             ),
+            DirectionalPropulsionControlInput.parse(obj["propulsion_control"], f"{path}.propulsion_control")
+            if actual_propulsion else None,
         )
         if (
             result.propulsion_state is not None
@@ -697,6 +717,7 @@ class TacticalSceneState:
     engagement_state: TacticalEngagementState | None = None
     propulsion_safety_profile: ResourceReference | None = None
     propulsion_safety_profile_sha256: str | None = None
+    propulsion_execution: ActualPropulsionExecution | None = None
 
     def to_dict(self) -> dict[str, Any]:
         has_propulsion = self.propulsion_safety_profile is not None
@@ -707,7 +728,12 @@ class TacticalSceneState:
         }
         if not has_propulsion and propulsion_interfaces:
             raise ValueError("旧场景不得携带逐舰推进状态")
-        if not has_propulsion:
+        if self.propulsion_execution is not None:
+            if not has_propulsion or propulsion_interfaces != {DIRECTIONAL_STATE_INTERFACE_ID}:
+                raise ValueError("实际推进只支持完整定向场景")
+            scene_interface = ACTUAL_SCENE_INTERFACE_ID
+            scene_policy = ACTUAL_SCENE_POLICY_ID
+        elif not has_propulsion:
             scene_interface = TACTICAL_SCENE_INTERFACE_ID
             scene_policy = TACTICAL_SCENE_POLICY_ID
         elif propulsion_interfaces == {
@@ -745,6 +771,8 @@ class TacticalSceneState:
             result["propulsion_safety_profile_sha256"] = (
                 self.propulsion_safety_profile_sha256
             )
+        if self.propulsion_execution is not None:
+            result["propulsion_execution"] = self.propulsion_execution.to_dict()
         return result
 
     @classmethod
@@ -764,6 +792,9 @@ class TacticalSceneState:
         elif interface == DIRECTIONAL_SCENE_INTERFACE_ID:
             propulsion_interface_id = DIRECTIONAL_STATE_INTERFACE_ID
             expected_policy = DIRECTIONAL_SCENE_POLICY_ID
+        elif interface == ACTUAL_SCENE_INTERFACE_ID:
+            propulsion_interface_id = DIRECTIONAL_STATE_INTERFACE_ID
+            expected_policy = ACTUAL_SCENE_POLICY_ID
         else:
             raise ContractError(
                 "tactical_scene.interface",
@@ -787,6 +818,8 @@ class TacticalSceneState:
                     "propulsion_safety_profile_sha256",
                 }
             )
+        if interface == ACTUAL_SCENE_INTERFACE_ID:
+            keys.add("propulsion_execution")
         obj = _exact_object(
             value,
             keys,
@@ -803,6 +836,7 @@ class TacticalSceneState:
                         item,
                         f"{path}.ships[{index}]",
                         propulsion_interface_id=propulsion_interface_id,
+                        actual_propulsion=interface == ACTUAL_SCENE_INTERFACE_ID,
                     )
                     for index, item in enumerate(obj["ships"])
                 ),
@@ -841,6 +875,8 @@ class TacticalSceneState:
                 if propulsion_interface_id is not None
                 else None
             ),
+            ActualPropulsionExecution.parse(obj["propulsion_execution"], f"{path}.propulsion_execution")
+            if interface == ACTUAL_SCENE_INTERFACE_ID else None,
         )
         _validate_internal_state(state)
         return state
@@ -892,14 +928,18 @@ class TacticalShipLifecycleEvent:
 @dataclass(frozen=True)
 class TacticalSceneShipStepResult:
     ship_id: str
-    diagnostics: TacticalStepDiagnostics | None
+    diagnostics: TacticalStepDiagnostics | ActualTacticalStepDiagnostics | None
     resulting_runtime: RuntimeShipParameters
+    propulsion_aggregation: ActualPropulsionAggregation | None = None
+    propulsion_delivery_status: str | None = None
+    missing_propulsion_channels: tuple[str, ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
-        return {
+        result = {
             "diagnostics": (
                 None
                 if self.diagnostics is None
+                else self.diagnostics.to_dict() if isinstance(self.diagnostics, ActualTacticalStepDiagnostics)
                 else {
                     "command_scale": self.diagnostics.command_scale,
                     "crew_g": self.diagnostics.crew_g,
@@ -911,6 +951,11 @@ class TacticalSceneShipStepResult:
             "resulting_runtime_parameters_sha256": self.resulting_runtime.source_sha256,
             "ship_id": self.ship_id,
         }
+        if self.propulsion_delivery_status is not None:
+            result.update(propulsion_aggregation=None if self.propulsion_aggregation is None else self.propulsion_aggregation.to_dict(),
+                propulsion_delivery_status=self.propulsion_delivery_status,
+                missing_propulsion_channels=list(self.missing_propulsion_channels))
+        return result
 
 
 @dataclass(frozen=True)
@@ -935,6 +980,8 @@ class TacticalSceneStepResolution:
     radar_emission_events: tuple[RadarEmissionEvent, ...] = ()
     fire_control_support_events: tuple[FireControlSupportEvent, ...] = ()
     generated_guidance_fact_events: tuple[GeneratedGuidanceFactEvent, ...] = ()
+    propulsion_boundaries: tuple[ActualPropulsionBoundaryRecord, ...] = ()
+    source_fixed_step_index: int | None = None
 
     def to_dict(self) -> dict[str, Any]:
         result = {
@@ -994,6 +1041,15 @@ class TacticalSceneStepResolution:
             result["generated_guidance_fact_events"] = [
                 item.to_dict() for item in self.generated_guidance_fact_events
             ]
+        if self.resulting_scene.propulsion_execution is not None:
+            if self.source_fixed_step_index != self.resulting_scene.fixed_step_index - 1:
+                raise ContractError("actual_scene.result_step", "$.source_fixed_step_index", "实际结果必须记录精确源步")
+            result.update(interface=ACTUAL_STEP_INTERFACE_ID, policy=ACTUAL_STEP_POLICY_ID,
+                source_fixed_step_index=self.source_fixed_step_index,
+                resulting_fixed_step_index=self.resulting_scene.fixed_step_index,
+                propulsion_boundaries=[r.to_dict() for r in self.propulsion_boundaries],
+                propulsion_events=serialized_propulsion_events(self.propulsion_boundaries),
+                soft_governor_status="unwired", hard_fault_status="unwired", direction_interlock_status="unwired")
         return result
 
 
@@ -1367,6 +1423,13 @@ def _validate_internal_state(state: TacticalSceneState) -> None:
     if abs(state.projectile_world.tactical_time_s - state.tactical_time_s) > EPS:
         raise ContractError("tactical_scene.projectile_clock_mismatch", "$.projectile_world.tactical_time_s", "弹丸世界与场景时钟不同步")
     has_propulsion_profile = state.propulsion_safety_profile is not None
+    actual_propulsion = state.propulsion_execution is not None
+    if actual_propulsion:
+        ActualPropulsionExecution.parse(state.propulsion_execution.to_dict())
+        if not has_propulsion_profile or abs(state.fixed_step_s - 1 / 60) > 1e-12:
+            raise ContractError("actual_scene.fixed_step", "$.fixed_step_s", "实际推进要求完整配置及 60 Hz 固定步")
+    if any((ship.propulsion_control is not None) != actual_propulsion for ship in state.ships):
+        raise ContractError("actual_scene.control_partial", "$.ships", "只有实际场景且每艘舰必须持久保存控制")
     if has_propulsion_profile != (
         state.propulsion_safety_profile_sha256 is not None
     ):
@@ -1416,6 +1479,12 @@ def _validate_internal_state(state: TacticalSceneState) -> None:
         continuous_damage = instance.continuous_damage_state
         crew_casualty = instance.crew_casualty_state
         propulsion = ship.propulsion_state
+        if actual_propulsion:
+            if propulsion is None or propulsion.interface_id != DIRECTIONAL_STATE_INTERFACE_ID:
+                raise ContractError("actual_scene.state_interface", "$.ships", "实际场景只接受定向推进状态")
+            DirectionalPropulsionControlInput.parse(ship.propulsion_control.to_dict())
+            if tuple(g.command for g in propulsion.governors) != ship.propulsion_control.channel_commands:
+                raise ContractError("actual_scene.control_state", "$.ships", "持久控制与 governor 命令不一致")
         if propulsion is not None:
             for engine in propulsion.engines:
                 if (
@@ -1699,6 +1768,24 @@ def validate_tactical_scene_propulsion_profile(
             "$.propulsion_safety_profile",
             "推进安全配置引用或内容指纹不匹配",
         )
+
+
+def validate_actual_scene_context(state: TacticalSceneState, context: ActualScenePropulsionContext) -> None:
+    """新版本显式资源门；不会给 c2b/d1/定向合同初态自动开启力学。"""
+    if not isinstance(context, ActualScenePropulsionContext) or state.propulsion_execution is None:
+        raise ContractError("actual_scene.context_required", "$.propulsion_context", "必须提供实际场景及精确资源上下文")
+    if state.propulsion_execution != context.execution:
+        raise ContractError("actual_scene.execution_lineage", "$.propulsion_execution", "场景与资源包来源不一致")
+    validate_tactical_scene_propulsion_profile(state, context.safety_profile)
+    if {s.ship_id for s in state.ships} != {s.ship_id for s in context.ships}:
+        raise ContractError("actual_scene.ship_set", "$.ships", "实际场景舰艇集合必须与资源精确一致")
+    for ship in state.ships:
+        resources = context.ship(ship.ship_id)
+        if (ship.derived_snapshot_sha256, ship.sortie_configuration_sha256) != (
+            resources.aggregation_context.snapshot.source_sha256, resources.sortie_configuration_sha256
+        ):
+            raise ContractError("actual_scene.resource_mismatch", "$.ships", "派生快照或出航配置来源不匹配")
+        validate_ship_propulsion_state(resources, ship.propulsion_state, ship.propulsion_control, state.fixed_step_index)
 
 
 def migrate_known_tactical_scene_v1_to_propulsion_v2(
@@ -2095,6 +2182,8 @@ def advance_tactical_scene_step(
     crew_casualty_outcomes: Iterable[CrewCasualtyOutcome] = (),
     crew_evacuation_outcomes: Iterable[CrewEvacuationOutcome] = (),
     controls: dict[str, TacticalControlInput] | None = None,
+    propulsion_context: ActualScenePropulsionContext | None = None,
+    propulsion_controls: dict[str, DirectionalPropulsionControlInput] | None = None,
     launch_directives: Iterable[TacticalSceneLaunchDirective] = (),
     exit_directives: Iterable[TacticalSceneExitDirective] = (),
     engagement_boundary_profile: TacticalEngagementBoundaryProfile | None = None,
@@ -2102,12 +2191,19 @@ def advance_tactical_scene_step(
     binding_validation_mode: str = BINDING_VALIDATION_STRICT,
 ) -> TacticalSceneStepResolution:
     _validate_internal_state(state)
-    if state.propulsion_safety_profile is not None:
+    actual_propulsion = state.propulsion_execution is not None
+    if state.propulsion_safety_profile is not None and not actual_propulsion:
         raise ContractError(
             "tactical_scene.propulsion_unwired",
             "$.interface",
             "推进场景合同已迁移，但时间内核与力学接线留待 T0b.2d1/d2",
         )
+    if actual_propulsion:
+        validate_actual_scene_context(state, propulsion_context)
+        if controls is not None:
+            raise ContractError("actual_scene.legacy_control", "$.controls", "实际场景不得隐式量化连续控制")
+    elif propulsion_context is not None or propulsion_controls is not None:
+        raise ContractError("actual_scene.unexpected_input", "$.propulsion_controls", "旧场景不得接收新接线参数")
     if state.engagement_state is not None:
         if state.engagement_state.status != "active":
             raise ContractError("tactical_engagement.closed", "$.engagement_state.status", "已经脱离或分出结果的战术场景不能继续推进")
@@ -2220,6 +2316,11 @@ def advance_tactical_scene_step(
     control_map = {} if controls is None else controls
     if set(control_map) - set(ship_map):
         raise ContractError("tactical_scene.control_unknown_ship", "$.controls", "控制输入引用了未绑定舰艇")
+    if propulsion_controls is not None and not isinstance(propulsion_controls, dict):
+        raise ContractError("actual_scene.control_map", "$.propulsion_controls", "控制必须按舰艇 id 映射")
+    propulsion_control_map = {} if propulsion_controls is None else propulsion_controls
+    if set(propulsion_control_map) - set(ship_map):
+        raise ContractError("tactical_scene.control_unknown_ship", "$.propulsion_controls", "控制输入引用了未绑定舰艇")
     directives = tuple(launch_directives)
     directive_map: dict[tuple[str, str, int], TacticalSceneLaunchDirective] = {}
     projectile_ids: set[str] = set()
@@ -2262,6 +2363,10 @@ def advance_tactical_scene_step(
     generated_guidance_fact_events: tuple[GeneratedGuidanceFactEvent, ...] = ()
     effective_guidance_inputs = manual_guidance_inputs
     ship_step_contexts: dict[str, ShipStepContext] = {}
+    propulsion_boundaries: list[ActualPropulsionBoundaryRecord] = []
+    actual_aggregations: dict[str, ActualPropulsionAggregation] = {}
+    propulsion_delivery_status: dict[str, str] = {}
+    missing_propulsion_channels: dict[str, tuple[str, ...]] = {}
     ship_instance_generations = {ship_id: 0 for ship_id in ship_map}
     last_context_instances = {
         ship_id: ship.combat_state.instance for ship_id, ship in ship_map.items()
@@ -2616,7 +2721,7 @@ def advance_tactical_scene_step(
             observation_step_input,
             tactical_time_s=state.tactical_time_s,
         )
-    for ship_id in control_map:
+    for ship_id in set(control_map) | set(propulsion_control_map):
         lifecycle = ship_map[ship_id].lifecycle_state
         if lifecycle.command_status == "uncommanded" or lifecycle.physical_status != "operational":
             raise ContractError(
@@ -2640,7 +2745,7 @@ def advance_tactical_scene_step(
     models = {}
     runtimes_at_step_start: dict[str, RuntimeShipParameters] = {}
     next_motions: dict[str, TacticalMotionState] = {}
-    diagnostics: dict[str, TacticalStepDiagnostics | None] = {}
+    diagnostics: dict[str, TacticalStepDiagnostics | ActualTacticalStepDiagnostics | None] = {}
     for ship_id in sorted(ship_map):
         ship = ship_map[ship_id]
         context = step_context(
@@ -2651,6 +2756,23 @@ def advance_tactical_scene_step(
         )
         runtime = context.runtime
         runtimes_at_step_start[ship_id] = runtime
+        if actual_propulsion:
+            resources = propulsion_context.ship(ship_id)
+            body_velocity = world_to_body(ship.motion_state.velocity_world_mps, ship.motion_state.heading_rad)
+            command_available = ship.lifecycle_state.physical_status == "operational" and ship.lifecycle_state.command_status != "uncommanded"
+            control, missing = select_actual_scene_control(resources, ship.propulsion_state,
+                ship.propulsion_control, propulsion_control_map.get(ship_id),
+                velocity_body=(body_velocity.x, body_velocity.y), command_available=command_available)
+            opened, records = advance_ship_propulsion_boundary(resources, ship.propulsion_state,
+                control, state.fixed_step_index, "opening")
+            propulsion_boundaries.extend(records)
+            ship = replace(ship, propulsion_state=opened, propulsion_control=control)
+            ship_map[ship_id] = ship
+            missing_propulsion_channels[ship_id] = missing
+            actual_aggregations[ship_id] = aggregate_actual_propulsion(resources.aggregation_context,
+                runtime, opened.engines, state.fixed_step_index)
+            propulsion_delivery_status[ship_id] = ("delivered" if command_available else
+                "suppressed_" + (ship.lifecycle_state.physical_status if ship.lifecycle_state.physical_status != "operational" else "uncommanded"))
         if ship.lifecycle_state.physical_status == "exited":
             next_motions[ship_id] = replace(
                 ship.motion_state,
@@ -2673,7 +2795,14 @@ def advance_tactical_scene_step(
             if ship.lifecycle_state.physical_status == "falling"
             else control_map.get(ship_id, TacticalControlInput())
         )
-        next_motion, diagnostic = integrate_tactical_step(model, synced_motion, controls_for_ship)
+        if actual_propulsion:
+            request = actual_aggregations[ship_id].request
+            if propulsion_delivery_status[ship_id] != "delivered":
+                # 继承生命周期禁止推进的物理门；不伪造硬跳闸或清空发动机实际阶段。
+                request = replace(request, force_body_n=(0.0, 0.0), torque_n_m=0.0, fuel_units_per_s=0.0)
+            next_motion, diagnostic = integrate_actual_tactical_step(model, synced_motion, request)
+        else:
+            next_motion, diagnostic = integrate_tactical_step(model, synced_motion, controls_for_ship)
         committed_instance = commit_tactical_state_to_instance(model, next_motion)
         ship_map[ship_id] = replace(ship, combat_state=replace(ship.combat_state, instance=committed_instance))
         next_motions[ship_id] = next_motion
@@ -2931,6 +3060,13 @@ def advance_tactical_scene_step(
         )
     apply_exit_boundary(end_time_s, state.fixed_step_index + 1)
     resolve_boundary(end_time_s, state.fixed_step_index + 1, next_motions)
+    if actual_propulsion:
+        for ship_id in sorted(ship_map):
+            ship = ship_map[ship_id]
+            closed, records = advance_ship_propulsion_boundary(propulsion_context.ship(ship_id),
+                ship.propulsion_state, ship.propulsion_control, state.fixed_step_index + 1, "closing")
+            propulsion_boundaries.extend(records)
+            ship_map[ship_id] = replace(ship, propulsion_state=closed)
     unused = sorted(set(directive_map) - used_directives)
     if unused:
         raise ContractError("tactical_scene.launch_directive_unmatched", "$.launch_directives", f"没有对应成功开火事件：{unused}")
@@ -2951,7 +3087,9 @@ def advance_tactical_scene_step(
             end_time_s,
             state.fixed_step_index + 1,
         ).runtime
-        ship_results.append(TacticalSceneShipStepResult(ship_id, diagnostics[ship_id], runtime))
+        ship_results.append(TacticalSceneShipStepResult(ship_id, diagnostics[ship_id], runtime,
+            actual_aggregations.get(ship_id), propulsion_delivery_status.get(ship_id),
+            missing_propulsion_channels.get(ship_id, ())))
         final_ships.append(ship)
     engagement = state.engagement_state
     if engagement is not None:
@@ -2982,8 +3120,17 @@ def advance_tactical_scene_step(
         world,
         tuple(final_ships),
         engagement,
+        state.propulsion_safety_profile,
+        state.propulsion_safety_profile_sha256,
+        state.propulsion_execution,
     )
     _validate_internal_state(resulting_scene)
+    if actual_propulsion:
+        validate_actual_scene_context(resulting_scene, propulsion_context)
+        propulsion_boundaries.sort(key=lambda r: r.sort_key)
+        validate_boundary_replay({s.ship_id: s.propulsion_state for s in state.ships},
+            {s.ship_id: s.propulsion_state for s in resulting_scene.ships}, propulsion_context,
+            state.fixed_step_index, tuple(propulsion_boundaries))
     return TacticalSceneStepResolution(
         canonical_sha256(state),
         resulting_scene,
@@ -3063,4 +3210,6 @@ def advance_tactical_scene_step(
         observation_resolution.radar_emission_events,
         observation_resolution.fire_control_support_events,
         generated_guidance_fact_events,
+        tuple(propulsion_boundaries),
+        state.fixed_step_index if actual_propulsion else None,
     )

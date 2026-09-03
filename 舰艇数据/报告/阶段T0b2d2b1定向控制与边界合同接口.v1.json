@@ -79,16 +79,16 @@
     "舰艇数据/模式/高天荒野舰艇推进离散控制契约.v2alpha1.schema.json": "afd6c4718b58bde5f9d91318ae08631a80a3177b4db4b9ddb4bda2193165d04e",
     "舰艇数据/模式/高天荒野舰艇统一战术场景状态契约.v4alpha1.schema.json": "385b58d2df8a95b7ffb017c1e5455d772f35cb25e47bb2436d895955b16d6fdb",
     "高天荒野T0b2d2b1定向控制与边界合同测试.py": "204d5baa0871cfbaf11e46b6e735da47c602bd6a3f560cf446b2135ce2852b11",
-    "高天荒野T0b2d2b推进力学接线实施细则.md": "665ecd6267191cd1b78ae0e5dc6d6612e9f79eeb4db76e0a8bda0ef2ed47244c",
-    "高天荒野T0b2推进响应与权威性能优化规划.md": "d28d88afdaa8257bb7922f8412e788266486a627618cc265821009a1eae12fa1",
-    "高天荒野Web客户端编辑器与战术验证实施计划.md": "2c8bd2bf4a5c28bd3b2e7bfd22e8aba5187aae7e368b52dd5aa64fafa1af1c01",
+    "高天荒野T0b2d2b推进力学接线实施细则.md": "bde9d7477ad2d07c487c319d39bf6e8e22538924861b688d07a683bc52b2f5de",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "8a8ee5d0f23557f7c4c338b78c33f97e287f1640b4142c96646e959d3d124755",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "7edde1665020b4a654894508f32e871824d43c6b44bd0e29012eb69027b1a376",
     "高天荒野舰艇场景推进结果.py": "e2125415a0eb9be8f1c30a01ef89aa3af22c13a31be31447da9396c1706609d6",
     "高天荒野舰艇定向推进控制桥.py": "6268d40785346a91043f7fe7faa7788f3d0ddac53b3e4fc32e81e61853958b1a",
-    "高天荒野舰艇推进时间内核.py": "4134056652b8c13945e739bdfee80ed222e3b20ec2dda03f9a5b45b0021d8a3e",
+    "高天荒野舰艇推进时间内核.py": "4feb447dbca2e22ee517c5cc6fcf5b5d6342362fcd2377263995a61a0d03270d",
     "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
     "高天荒野舰艇推进资源与控制桥.py": "2b84020a51abdb0a5ff55c6ab0db537e244e2d2fa9a43beaf2c2b03ecde251f1",
     "高天荒野舰艇推进通道合同.py": "c408934a513605f68dc32f95526793eede7f56b37131ef99caa662a0f4880b7e",
-    "高天荒野舰艇统一战术场景.py": "d0334ff72d18554fdb95d2bd5d876000fe2222c59092d8cdf6e8cddc67173035"
+    "高天荒野舰艇统一战术场景.py": "e4e9eb2a094b4a829a2db9270b1d087faacb1801f8bc0c33b6f084ab1f37b73f"
   },
   "historical_report_hash_maintenance": {
     "policy": "Only implementation_hashes are refreshed from the 973ec4f versions after behavior assertions and old goldens pass; historical regression counts and evidence are not restated as current results.",
