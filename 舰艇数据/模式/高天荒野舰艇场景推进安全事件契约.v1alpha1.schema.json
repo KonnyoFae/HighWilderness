@@ -1,0 +1,14 @@
+{
+  "$id": "gaotian.tactical-scene-propulsion-safety-event/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "舰艇与通道级收边界安全事件；不得虚构执行器身份。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {"const": "gaotian.tactical-scene-propulsion-safety-event/v1alpha1"},
+    "ship_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+    "boundary_phase": {"const": "closing"},
+    "intent": {"$ref": "gaotian.directional-propulsion-safety-intent/v1alpha1"}
+  },
+  "required": ["interface", "ship_id", "boundary_phase", "intent"]
+}

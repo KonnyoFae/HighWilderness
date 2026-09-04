@@ -1,0 +1,145 @@
+{
+  "interface": "gaotian.stage-t0b2d3d-scene-free-governed-propulsion-adapter/v1",
+  "status": "PASS",
+  "slice": "T0b.2d3.3_scene_free_opening_command_closing_safety_adapter",
+  "baseline": {
+    "commit": "def414c",
+    "branch": "main",
+    "pushed_to": "origin/main",
+    "preexisting_worktree_scope": "d3.3_contracts_legacy_gate_and_preintegration_plans"
+  },
+  "scope": "scene_free_governor_initialization_opening_command_actual_interval_closing_safety_delivery_suppression_and_exact_replay_only",
+  "adapter": {
+    "imports_unified_scene": false,
+    "saved_state_boundary": "S_n_fully_committed",
+    "initialization_boundary": 0,
+    "opening_boundary": "command_persistence_and_d3_1_reschedule_under_existing_soft_and_neutral_hard_ceilings",
+    "interval": "actual_vector_from_opening_result_state_integrates_n_to_n_plus_1",
+    "closing_boundary": "one_d3_2_evaluation_on_final_synchronized_runtime_model_motion_and_delivery_status",
+    "hard_availability": "explicit_100_percent_neutral_per_non_tripped_actuator",
+    "exited_policy": "reject_and_freeze_outside_adapter",
+    "hard_fault_status": "unwired",
+    "direction_interlock_status": "unwired"
+  },
+  "evidence": {
+    "named_initialization": {
+      "actuators": 1224,
+      "governors": 1344,
+      "load_evaluations": 224,
+      "maximum_crew_g": 1.0,
+      "maximum_structure_ratio": 0.0,
+      "scenes": 12,
+      "ships": 224
+    },
+    "negative_and_isolation": {
+      "exited_and_tripped_rejected": true,
+      "negative_cases": 7,
+      "opening_and_closing_tamper_rejected": true,
+      "strictly_due_opening_rejected": true,
+      "unified_scene_imported": false
+    },
+    "opening_interval_closing": {
+      "automatic_brake_control_audited": true,
+      "closing_safety_evaluations": 1,
+      "committed_upstage_percent": 2,
+      "first_committed_upstage_step": 2,
+      "interval_source_force_body_n": [
+        0.0,
+        0.0
+      ],
+      "opening_actual_output_unchanged": true,
+      "opening_engine_results": 6,
+      "opening_interval_closing_replayed": 3,
+      "opening_safety_evaluations": 0,
+      "serialized_boundary_round_trips": 2,
+      "unbound_channel_command_audited": true
+    },
+    "safety_and_suppression": {
+      "engaged_safety_events": 1,
+      "opening_preserved_safety_revision": true,
+      "overg_release_boundary": 2,
+      "released_safety_events": 1,
+      "suppressed_interval_force_zero": true,
+      "suppressed_interval_fuel_zero": true,
+      "suppressed_load_uses_zero_propulsion_and_original_drag": true
+    }
+  },
+  "invariants": {
+    "opening_load_evaluations": 0,
+    "opening_actual_output_changes": 0,
+    "opening_safety_history_changes": 0,
+    "closing_safety_evaluations_per_active_ship": 1,
+    "first_full_command_upstage": "2_percent_at_closing_boundary_2_for_next_interval",
+    "diagnostic_lineage": "opening_result_propulsion_state_and_six_governors",
+    "suppressed_integration": "zero_force_zero_torque_zero_fuel_with_original_drag",
+    "suppressed_safety_sampling": "zero_propulsion_delivery_metrics_bound_to_original_candidate_vector",
+    "safety_event_identity": "ship_and_command_channel_without_actuator_id",
+    "replay_inputs": "exact_context_state_control_runtime_model_motion_delivery_and_crew_lock"
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇受控推进无场景适配器.py": "192b80fe4d5765da16ca9a1702facc878ce561650943fb44685b4d595022dad8",
+    "高天荒野T0b2d3d无场景受控推进适配器测试.py": "527efe04f5040521adad36e52dfcafa5aacb699fcdb02e9c1e34109fc506c05f",
+    "高天荒野舰艇受控推进场景合同.py": "22b61dbb8ec378530f7bc571ca6d3dec741367b77ff804f94d355947bac6d597",
+    "高天荒野舰艇受控推进场景版本.py": "88c4c9be4c42019c1c5d49d592f56bcb1ecbfe4712817d47ccf57356519617c0",
+    "高天荒野舰艇受控推进时间边界.py": "c41d684d8ae2571d8bb92c483a74627af1443847347a9a10682e2b89cb24bfe3",
+    "高天荒野舰艇整舰推进安全判定.py": "0c924711f9051dc1e4ca3b701adc9a43ddc89dfc44a7bb3ac3542f20bed3af2f",
+    "高天荒野舰艇推进向量载荷.py": "536cbf2dcd58a166012003613e59e447b7717da23f85825e316a81bee5c63b32",
+    "高天荒野舰艇实际推进聚合器.py": "db59a96449bbe5a44794069e30e686a1d071c83a9e52f121851f985c38a39036",
+    "高天荒野舰艇战术机动求解器.py": "1f8bd679cd466c897a08413cfe2c8c8d78e83d152917bfb803b669331d5f290d",
+    "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
+    "高天荒野舰艇推进通道合同.py": "c408934a513605f68dc32f95526793eede7f56b37131ef99caa662a0f4880b7e",
+    "高天荒野舰艇定向推进控制桥.py": "6268d40785346a91043f7fe7faa7788f3d0ddac53b3e4fc32e81e61853958b1a",
+    "高天荒野舰艇统一战术场景.py": "a74e8981f2a6b9bb8a5c906382b2e626345270a8f5832eda649f56d0008cedfe",
+    "高天荒野T0b2d3软安全接线实施细则.md": "a23246104e4c5c69966dc64a89dab1a62d9d375ba78a807271b0f5784a89d3de",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "ea6c380db020c013339916d0afe7e18007189811431a737608f4c47b821b47f5",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "d11572136832c2e669b4aa51401b60fd909b6ee2ebcacd10399c7869b7391b99",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "contracts/web_bridge/t0-actual-propulsion-step-golden.v1.json": "6636afd396df0dd1ec17906f4b8fbe0d23d1a88e49d47dae64d1872f259d78ed"
+  },
+  "historical_report_hash_maintenance": {
+    "status": "20_reports_44_hash_entries_only_PASS",
+    "reports": 20,
+    "entries": 44,
+    "scope": "top_level_implementation_hashes_only",
+    "changes_by_source": [
+      {
+        "source": "高天荒野T0b2d3软安全接线实施细则.md",
+        "reports": 4,
+        "previous": "ddfad7543fc5214af17c518d80f210660b6cb64f0214a28fd1ee6f5662c44586",
+        "current": "71e598bc0bd02ed5f1036d2c70e784cbcbfb9959ecffd1a1263bbd1895fc7d81"
+      },
+      {
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "reports": 20,
+        "previous": "7b17cb6f136b73d497d7c414592f877fa4625f6a4cac609393ad4fdf0c62e9c9",
+        "current": "7ad355cae6acd0ed5d42d547cb9f7325241bfb4abdfa585fabc1471e58ce1944"
+      },
+      {
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "reports": 20,
+        "previous": "15cb70217851becd007ff4c944bb16ff1c0d730f826d27766891f2ed85d53134",
+        "current": "cdca62d88e421d27347f6c0b908db40b613800cc0b5938ca9dc13f2a11e8abee"
+      }
+    ]
+  },
+  "regression": {
+    "focused_adapter": "PASS",
+    "d3_1_governed_time": "PASS",
+    "d3_2_whole_ship_safety": "PASS",
+    "d3_3_contracts_and_legacy_gate": "PASS",
+    "python": "77_of_77_PASS",
+    "typescript": "4_of_4_PASS",
+    "rust": "15_of_15_PASS"
+  },
+  "risk_controls": {
+    "v6_runtime_enabled": true,
+    "unified_scene_modified_for_adapter": true,
+    "named_v6_scene_builder_implemented": true,
+    "governed_save_loader_implemented": true,
+    "independent_governed_golden_created": false,
+    "legacy_goldens_changed": false,
+    "official_performance_runs_executed": 0,
+    "normal_gameplay_opened": false
+  },
+  "next_phase": "T0b.2d3.3_independent_governed_golden_12_scene_three_replays_and_full_regression"
+}

@@ -1,0 +1,25 @@
+{
+  "$id": "gaotian.governed-propulsion-execution/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "显式绑定 d3.1、d3.2 与唯一收边界所有权；不根据当前限幅状态推断场景策略。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {"const": "gaotian.governed-propulsion-execution/v1alpha1"},
+    "time_policy": {"const": "gaotian.propulsion-time/preview-authorize-effective-target/v1"},
+    "safety_policy": {"const": "gaotian.propulsion-safety/joint-upstage-batch-bounded-cap-path/v1"},
+    "boundary_policy": {"const": "gaotian.governed-propulsion/command-open-safety-close/v1"},
+    "soft_governor_status": {"const": "wired"},
+    "hard_fault_status": {"const": "unwired"},
+    "direction_interlock_status": {"const": "unwired"}
+  },
+  "required": [
+    "interface",
+    "time_policy",
+    "safety_policy",
+    "boundary_policy",
+    "soft_governor_status",
+    "hard_fault_status",
+    "direction_interlock_status"
+  ]
+}

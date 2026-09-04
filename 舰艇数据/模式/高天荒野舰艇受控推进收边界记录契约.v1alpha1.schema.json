@@ -1,0 +1,37 @@
+{
+  "$id": "gaotian.governed-propulsion-closing-record/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "收边界唯一 d3.2 判定记录，绑定最终运行时、运动状态、交付策略与完整安全结果。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {"const": "gaotian.governed-propulsion-closing-record/v1alpha1"},
+    "policy": {"const": "gaotian.governed-propulsion/command-open-safety-close/v1"},
+    "boundary_phase": {"const": "closing"},
+    "ship_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+    "fixed_step_index": {"type": "integer", "minimum": 1},
+    "source_propulsion_state_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "resulting_propulsion_state_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "runtime_parameters_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "motion_state_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "propulsion_delivery_status": {
+      "enum": ["delivered", "suppressed_falling", "suppressed_exited", "suppressed_uncommanded"]
+    },
+    "crew_safety_lock_enabled": {"type": "boolean"},
+    "safety_result": {"$ref": "gaotian.whole-ship-propulsion-safety-result/v1alpha1"}
+  },
+  "required": [
+    "interface",
+    "policy",
+    "boundary_phase",
+    "ship_id",
+    "fixed_step_index",
+    "source_propulsion_state_sha256",
+    "resulting_propulsion_state_sha256",
+    "runtime_parameters_sha256",
+    "motion_state_sha256",
+    "propulsion_delivery_status",
+    "crew_safety_lock_enabled",
+    "safety_result"
+  ]
+}

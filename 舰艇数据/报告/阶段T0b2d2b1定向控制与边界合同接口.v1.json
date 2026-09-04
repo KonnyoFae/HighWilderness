@@ -80,15 +80,15 @@
     "舰艇数据/模式/高天荒野舰艇统一战术场景状态契约.v4alpha1.schema.json": "385b58d2df8a95b7ffb017c1e5455d772f35cb25e47bb2436d895955b16d6fdb",
     "高天荒野T0b2d2b1定向控制与边界合同测试.py": "204d5baa0871cfbaf11e46b6e735da47c602bd6a3f560cf446b2135ce2852b11",
     "高天荒野T0b2d2b推进力学接线实施细则.md": "bde9d7477ad2d07c487c319d39bf6e8e22538924861b688d07a683bc52b2f5de",
-    "高天荒野T0b2推进响应与权威性能优化规划.md": "7c7a636937c3ce9e0255908b252f184c0358765b66850761fe1e897b97ee0e8b",
-    "高天荒野Web客户端编辑器与战术验证实施计划.md": "59d30aa929c546999110da96535a248da595a49b989d2a099818376185ac9dbe",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "ea6c380db020c013339916d0afe7e18007189811431a737608f4c47b821b47f5",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "d11572136832c2e669b4aa51401b60fd909b6ee2ebcacd10399c7869b7391b99",
     "高天荒野舰艇场景推进结果.py": "e2125415a0eb9be8f1c30a01ef89aa3af22c13a31be31447da9396c1706609d6",
     "高天荒野舰艇定向推进控制桥.py": "6268d40785346a91043f7fe7faa7788f3d0ddac53b3e4fc32e81e61853958b1a",
     "高天荒野舰艇推进时间内核.py": "4feb447dbca2e22ee517c5cc6fcf5b5d6342362fcd2377263995a61a0d03270d",
     "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
     "高天荒野舰艇推进资源与控制桥.py": "2b84020a51abdb0a5ff55c6ab0db537e244e2d2fa9a43beaf2c2b03ecde251f1",
     "高天荒野舰艇推进通道合同.py": "c408934a513605f68dc32f95526793eede7f56b37131ef99caa662a0f4880b7e",
-    "高天荒野舰艇统一战术场景.py": "e4e9eb2a094b4a829a2db9270b1d087faacb1801f8bc0c33b6f084ab1f37b73f"
+    "高天荒野舰艇统一战术场景.py": "a74e8981f2a6b9bb8a5c906382b2e626345270a8f5832eda649f56d0008cedfe"
   },
   "historical_report_hash_maintenance": {
     "policy": "Only implementation_hashes are refreshed from the 973ec4f versions after behavior assertions and old goldens pass; historical regression counts and evidence are not restated as current results.",

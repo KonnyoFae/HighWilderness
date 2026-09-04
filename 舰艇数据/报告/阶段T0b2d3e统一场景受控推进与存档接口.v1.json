@@ -1,0 +1,104 @@
+{
+  "interface": "gaotian.stage-t0b2d3e-governed-scene-save-wiring/v1",
+  "status": "PASS",
+  "slice": "T0b.2d3.3_named_v6_unified_scene_and_governed_save_wiring",
+  "baseline": {
+    "commit": "def414c",
+    "branch": "main",
+    "pushed_to": "origin/main",
+    "preexisting_worktree_scope": "d3.3_contracts_legacy_gate_and_scene_free_adapter"
+  },
+  "scope": "named_v6_initialization_unified_open_integrate_close_timing_governed_events_and_save_reload_only",
+  "evidence": {
+    "first_command_and_contract": {
+      "closing_records": 6,
+      "closing_safety_evaluations": 6,
+      "diagnostic_v2_wired": true,
+      "first_interval_force_zero": true,
+      "opening_records": 6
+    },
+    "import_isolation": {
+      "legacy_unified_cold_imports_d3_2": false,
+      "legacy_unified_cold_imports_vector_sampler": false
+    },
+    "joint_refusal_and_overg": {
+      "actuator_events_after_release": 2,
+      "crew_lock_bound_to_closing": true,
+      "first_post_release_upstage_boundary": 5,
+      "joint_candidate_percent": 2,
+      "joint_candidates": 2,
+      "joint_upstage_rejected": true,
+      "overg_release_boundary": 3
+    },
+    "lifecycle_and_damage": {
+      "closing_impact_events": 1,
+      "closing_uses_post_impact_runtime": true,
+      "exited_opening_and_closing_records": 5,
+      "exited_state_frozen_next_step": true,
+      "falling_zero_delivery": true
+    },
+    "named_builder": {
+      "actuators": 1224,
+      "governors": 1344,
+      "initial_governor_clock": 0,
+      "scenes": 12,
+      "ships": 224
+    },
+    "save_reload": {
+      "limiting_state_equal": true,
+      "release_candidate_state_equal": true,
+      "release_event_equal": true,
+      "released_result_sha256": "74cb728040488d77b78a6e106d5d515adfdfb449cb8550fdc80aa79b40b1af4b",
+      "reload_boundaries": [
+        0,
+        1
+      ],
+      "runtime_caches_rebuilt": true
+    }
+  },
+  "invariants": {
+    "saved_state_boundary": "S_n_fully_committed",
+    "opening_boundary": "control_persistence_and_d3_1_reschedule_without_safety_evaluation",
+    "interval": "actual_request_bound_to_opening_result_propulsion_state_and_governors",
+    "closing_boundary": "one_d3_2_evaluation_per_active_ship_after_weapon_projectile_damage_crew_lifecycle_and_exit_processing",
+    "joint_candidate_policy": "all_due_upstages_evaluated_as_one_whole_ship_vector_and_rejected_as_one_batch_when_unsafe",
+    "overg_policy": "soft_limit_release_only_at_closing_and_new_upstage_schedule_only_from_next_opening",
+    "exited_policy": "source_exited_ship_has_no_opening_or_closing_and_freezes_propulsion_governors_and_control",
+    "save_policy": "serialize_only_committed_v6_state_then_rebuild_named_resources_runtime_models_and_caches_on_load",
+    "hard_fault_status": "unwired",
+    "direction_interlock_status": "unwired"
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇受控推进场景.py": "3b18bf810f356bfc8b48f6dae0b609af2102b2cf65de7139b347ef5d8eaf4f9d",
+    "高天荒野舰艇统一战术场景.py": "a74e8981f2a6b9bb8a5c906382b2e626345270a8f5832eda649f56d0008cedfe",
+    "高天荒野舰艇受控推进无场景适配器.py": "192b80fe4d5765da16ca9a1702facc878ce561650943fb44685b4d595022dad8",
+    "高天荒野舰艇受控推进场景合同.py": "22b61dbb8ec378530f7bc571ca6d3dec741367b77ff804f94d355947bac6d597",
+    "高天荒野舰艇受控推进场景版本.py": "88c4c9be4c42019c1c5d49d592f56bcb1ecbfe4712817d47ccf57356519617c0",
+    "高天荒野T0b2d3e统一场景受控推进与存档测试.py": "2acbc55a6133588fbc0a1d783ad48a1bf794057faad39d0297205d55037c16f5",
+    "高天荒野T0b2d3c受控场景合同与旧版门禁测试.py": "d8d51630962e692f87a0f87adc80180f4a1e51c3cee5d1033c2f41cd3935edbf",
+    "高天荒野T0b2d3d无场景受控推进适配器测试.py": "527efe04f5040521adad36e52dfcafa5aacb699fcdb02e9c1e34109fc506c05f",
+    "高天荒野T0b2d3软安全接线实施细则.md": "a23246104e4c5c69966dc64a89dab1a62d9d375ba78a807271b0f5784a89d3de",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "ea6c380db020c013339916d0afe7e18007189811431a737608f4c47b821b47f5",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "d11572136832c2e669b4aa51401b60fd909b6ee2ebcacd10399c7869b7391b99",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "contracts/web_bridge/t0-actual-propulsion-step-golden.v1.json": "6636afd396df0dd1ec17906f4b8fbe0d23d1a88e49d47dae64d1872f259d78ed"
+  },
+  "regression": {
+    "focused_v6_scene_and_save": "PASS",
+    "d3_3_contracts_updated_for_wired_runtime": "PASS",
+    "scene_free_adapter_evidence": "PASS",
+    "python": "77_of_77_PASS",
+    "typescript": "4_of_4_PASS",
+    "rust": "15_of_15_PASS"
+  },
+  "risk_controls": {
+    "v6_runtime_enabled_for_named_builder": true,
+    "production_default_switched_to_v6": false,
+    "independent_governed_golden_created": false,
+    "legacy_goldens_changed": false,
+    "official_performance_runs_executed": 0,
+    "normal_gameplay_opened": false,
+    "web_or_editor_switched": false
+  },
+  "next_phase": "T0b.2d3.3_independent_governed_golden_12_scene_three_replays_and_full_regression"
+}

@@ -1,0 +1,205 @@
+{
+  "interface": "gaotian.stage-t0b2d3f-governed-golden-and-full-matrix/v1",
+  "status": "PASS",
+  "slice": "T0b.2d3.3_independent_governed_golden_and_exit_gate",
+  "baseline": {
+    "commit": "def414c",
+    "branch": "main",
+    "pushed_to": "origin/main",
+    "worktree_scope": "complete_d3.3_four_phase_slice_pending_checkpoint"
+  },
+  "scope": "independent_governed_golden_12_scene_three_replays_long_sequence_reload_matrix_and_final_regression_only",
+  "interfaces": {
+    "scene": "gaotian.tactical-scene-timeline/v6alpha1",
+    "step": "gaotian.tactical-scene-step-resolution/v5alpha1",
+    "save": "gaotian.governed-propulsion-scene-save/v1alpha1",
+    "diagnostic": "gaotian.actual-propulsion-integration-diagnostic/v2alpha1",
+    "golden": "gaotian.t0-governed-propulsion-step-golden/v1"
+  },
+  "differences_explained": [
+    "Policy: actual-propulsion v5 remains explicitly soft-governor-unwired; governed v6 binds d3.1 controlled time, d3.2 whole-ship vector safety and closing-boundary ownership through a dedicated governance marker.",
+    "State: governed v6 initializes and advances six-channel governor clocks on every active ship. Scene and result hashes therefore intentionally differ from v5 even when no safety limit engages.",
+    "Events: native actuator phase/output events remain equal to v5. Safety intent uses a separate ship/channel closing-boundary envelope; all twelve default-profile matrix cases correctly produce zero false safety events.",
+    "Motion and fuel: all twelve 12-step cases match actual-propulsion v5 exactly because the default profile does not limit these inputs. The golden does not claim general physical equivalence after a safety intervention.",
+    "Persistence: the 331-step probe begins from a valid committed limited state and releases it through the ordinary profile. Continuous execution and reloads at boundaries 121 and 200 have identical per-step scene/result hashes.",
+    "Version isolation: authority v1 and actual-propulsion v5 goldens remain byte-for-byte unchanged; governed results are stored only in the new independent golden."
+  ],
+  "goldens": {
+    "authority": {
+      "path": "contracts/web_bridge/t0-authority-step-golden.v1.json",
+      "sha256": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+      "changed": false
+    },
+    "actual_propulsion": {
+      "path": "contracts/web_bridge/t0-actual-propulsion-step-golden.v1.json",
+      "sha256": "6636afd396df0dd1ec17906f4b8fbe0d23d1a88e49d47dae64d1872f259d78ed",
+      "changed": false
+    },
+    "governed_propulsion": {
+      "path": "contracts/web_bridge/t0-governed-propulsion-step-golden.v1.json",
+      "sha256": "eb253fa94e691505564071d00716104f19443d1ef7f76719d8a49c719f725882",
+      "cases": 12,
+      "steps_per_case": 12,
+      "replays": 3
+    }
+  },
+  "evidence": {
+    "legacy_isolation": {
+      "actual_propulsion_golden_sha256": "6636afd396df0dd1ec17906f4b8fbe0d23d1a88e49d47dae64d1872f259d78ed",
+      "authority_golden_sha256": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+      "legacy_probe_result_trace_sha256": "a7e2ee21acbda9513a92e0be21c89861b3160ecaaaf8cfe9844b612b41638fe2",
+      "legacy_probe_scene_interface": "gaotian.tactical-scene-timeline/v1alpha1"
+    },
+    "long_sequence_and_reload": {
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 100,
+        "propulsion_safety_events": 1,
+        "spawned_projectiles": 0,
+        "weapon_events": 0
+      },
+      "final_scene_sha256": "886c55992e39d9eac604b8a90509bb5b9571a75c4048d2f01b406fdbcc6254bb",
+      "reload_boundaries": [
+        121,
+        200
+      ],
+      "replays": 3,
+      "samples": {
+        "1": {
+          "actual_main_outputs": [0, 0],
+          "fuel_units": 800.0,
+          "release_candidate_since_step": 1,
+          "safety_ceiling_percent": 25,
+          "safety_reasons": ["crew_limit"]
+        },
+        "121": {
+          "actual_main_outputs": [100, 100],
+          "fuel_units": 797.0486666666693,
+          "release_candidate_since_step": null,
+          "safety_ceiling_percent": 100,
+          "safety_reasons": []
+        },
+        "131": {
+          "actual_main_outputs": [100, 100],
+          "fuel_units": 796.7153333333363,
+          "release_candidate_since_step": null,
+          "safety_ceiling_percent": 100,
+          "safety_reasons": []
+        },
+        "171": {
+          "actual_main_outputs": [50, 50],
+          "fuel_units": 795.7903333333371,
+          "release_candidate_since_step": null,
+          "safety_ceiling_percent": 100,
+          "safety_reasons": []
+        },
+        "2": {
+          "actual_main_outputs": [2, 2],
+          "fuel_units": 800.0,
+          "release_candidate_since_step": null,
+          "safety_ceiling_percent": 100,
+          "safety_reasons": []
+        },
+        "200": {
+          "actual_main_outputs": [50, 50],
+          "fuel_units": 795.3070000000042,
+          "release_candidate_since_step": null,
+          "safety_ceiling_percent": 100,
+          "safety_reasons": []
+        },
+        "211": {
+          "actual_main_outputs": [50, 50],
+          "fuel_units": 795.123666666671,
+          "release_candidate_since_step": null,
+          "safety_ceiling_percent": 100,
+          "safety_reasons": []
+        },
+        "281": {
+          "actual_main_outputs": [0, 0],
+          "fuel_units": 794.8663333333379,
+          "release_candidate_since_step": null,
+          "safety_ceiling_percent": 100,
+          "safety_reasons": []
+        },
+        "3": {
+          "actual_main_outputs": [2, 2],
+          "fuel_units": 799.9993333333333,
+          "release_candidate_since_step": null,
+          "safety_ceiling_percent": 100,
+          "safety_reasons": []
+        },
+        "331": {
+          "actual_main_outputs": [25, 25],
+          "fuel_units": 794.5156666666716,
+          "release_candidate_since_step": null,
+          "safety_ceiling_percent": 100,
+          "safety_reasons": []
+        },
+        "5": {
+          "actual_main_outputs": [5, 5],
+          "fuel_units": 799.997,
+          "release_candidate_since_step": null,
+          "safety_ceiling_percent": 100,
+          "safety_reasons": []
+        }
+      },
+      "steps_per_replay": 331,
+      "trace_sha256": "dd32904752f35115337f7b7198c6aa6ecedfa20f23293a12d061afafc32dab12"
+    },
+    "matrix": {
+      "closing_records_per_replay": 2688,
+      "comparison_to_actual_v5": {
+        "governed_safety_event_free_cases": 12,
+        "motion_and_fuel_equal_cases": 12,
+        "native_propulsion_event_count_equal_cases": 12,
+        "serialization_and_result_hashes_intentionally_different_cases": 12
+      },
+      "replays": 3,
+      "scenes": 12,
+      "ship_steps_per_replay": 2688,
+      "steps_per_scene_per_replay": 12
+    },
+    "official_performance_runs_executed": 0
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇受控推进场景.py": "3b18bf810f356bfc8b48f6dae0b609af2102b2cf65de7139b347ef5d8eaf4f9d",
+    "高天荒野舰艇统一战术场景.py": "a74e8981f2a6b9bb8a5c906382b2e626345270a8f5832eda649f56d0008cedfe",
+    "高天荒野舰艇受控推进无场景适配器.py": "192b80fe4d5765da16ca9a1702facc878ce561650943fb44685b4d595022dad8",
+    "高天荒野舰艇受控推进场景合同.py": "22b61dbb8ec378530f7bc571ca6d3dec741367b77ff804f94d355947bac6d597",
+    "高天荒野舰艇受控推进场景版本.py": "88c4c9be4c42019c1c5d49d592f56bcb1ecbfe4712817d47ccf57356519617c0",
+    "高天荒野T0b2d3c受控场景合同与旧版门禁测试.py": "d8d51630962e692f87a0f87adc80180f4a1e51c3cee5d1033c2f41cd3935edbf",
+    "高天荒野T0b2d3d无场景受控推进适配器测试.py": "527efe04f5040521adad36e52dfcafa5aacb699fcdb02e9c1e34109fc506c05f",
+    "高天荒野T0b2d3e统一场景受控推进与存档测试.py": "2acbc55a6133588fbc0a1d783ad48a1bf794057faad39d0297205d55037c16f5",
+    "高天荒野T0b2d3f受控黄金与完整矩阵测试.py": "3600265ff120e881c332f662b1f3d07f105ba72ffb18fbabdd590d6e3c36a227",
+    "高天荒野T0b2d3软安全接线实施细则.md": "a23246104e4c5c69966dc64a89dab1a62d9d375ba78a807271b0f5784a89d3de",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "ea6c380db020c013339916d0afe7e18007189811431a737608f4c47b821b47f5",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "d11572136832c2e669b4aa51401b60fd909b6ee2ebcacd10399c7869b7391b99",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "contracts/web_bridge/t0-actual-propulsion-step-golden.v1.json": "6636afd396df0dd1ec17906f4b8fbe0d23d1a88e49d47dae64d1872f259d78ed",
+    "contracts/web_bridge/t0-governed-propulsion-step-golden.v1.json": "eb253fa94e691505564071d00716104f19443d1ef7f76719d8a49c719f725882"
+  },
+  "regression": {
+    "focused_d3_3_exit_gate": "PASS",
+    "python": "78_of_78_PASS",
+    "typescript": "4_of_4_PASS",
+    "rust": "15_of_15_PASS"
+  },
+  "historical_report_hash_maintenance": {
+    "policy": "Refresh only implementation_hashes entries affected by the three updated plan documents, plus the direct d3p reference to the changed d3b report. Preserve historical evidence and unrelated pre-existing stale entries.",
+    "report_count": 22,
+    "entry_count": 51,
+    "unrelated_preexisting_stale_entries_preserved": 8
+  },
+  "risk_controls": {
+    "production_default_switched_to_v6": false,
+    "official_performance_runs_executed": 0,
+    "normal_gameplay_opened": false,
+    "web_or_editor_switched": false,
+    "hard_fault_status": "unwired",
+    "direction_interlock_status": "unwired"
+  },
+  "next_phase": "T0b.2d4_hard_fault_and_direction_switching_preimplementation_review"
+}

@@ -1,0 +1,13 @@
+{
+  "$id": "gaotian.governed-propulsion-scene-save/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "只保存严格 v6 受控场景及内容指纹；加载必须重建并验证完整资源、运行时与治理血缘。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {"const": "gaotian.governed-propulsion-scene-save/v1alpha1"},
+    "scene": {"$ref": "gaotian.tactical-scene-timeline/v6alpha1"},
+    "scene_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "required": ["interface", "scene", "scene_sha256"]
+}

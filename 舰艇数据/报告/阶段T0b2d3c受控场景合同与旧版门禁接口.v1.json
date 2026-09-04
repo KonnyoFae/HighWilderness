@@ -1,0 +1,141 @@
+{
+  "interface": "gaotian.stage-t0b2d3c-governed-scene-contracts/v1",
+  "status": "PASS",
+  "slice": "T0b.2d3.3_contracts_and_legacy_gate",
+  "baseline": {
+    "commit": "def414c",
+    "branch": "main",
+    "pushed_to": "origin/main",
+    "preexisting_worktree_scope": "d3.3_preintegration_plans_and_hash_maintenance"
+  },
+  "scope": "strict_governed_scene_contracts_and_explicit_legacy_execution_gate_only",
+  "interfaces": {
+    "scene": "gaotian.tactical-scene-timeline/v6alpha1",
+    "scene_policy": "gaotian.tactical-scene/actual-propulsion-soft-governed-closing-boundary/v1",
+    "step": "gaotian.tactical-scene-step-resolution/v5alpha1",
+    "step_policy": "gaotian.tactical-scene-step/open-command-integrate-close-safety/v1",
+    "save": "gaotian.governed-propulsion-scene-save/v1alpha1",
+    "diagnostic": "gaotian.actual-propulsion-step-diagnostics/v2alpha1",
+    "governance": "gaotian.governed-propulsion-execution/v1alpha1",
+    "opening_record": "gaotian.governed-propulsion-opening-record/v1alpha1",
+    "closing_record": "gaotian.governed-propulsion-closing-record/v1alpha1",
+    "safety_event": "gaotian.tactical-scene-propulsion-safety-event/v1alpha1"
+  },
+  "evidence": {
+    "contracts": {
+      "closing_safety_events": 2,
+      "negative_contracts": 24,
+      "opening_governor_commands": 6,
+      "strict_contract_forms": 6
+    },
+    "scene_and_legacy_gates": {
+      "governed_save_round_trip": true,
+      "legacy_v4_step_unchanged": true,
+      "legacy_v5_hash_unchanged": "4df89aedc6b51bb913b0d376bc6dfe5177a473b27c232a1c02945d07af63ad3d",
+      "mixed_or_unwired_paths_rejected": 7,
+      "v6_round_trip": true,
+      "v6_runtime_wired": true
+    },
+    "schemas": {
+      "references_checked": 57,
+      "schemas": 8,
+      "strict_top_level_samples": 8
+    }
+  },
+  "contract_invariants": {
+    "saved_state_boundary": "S_n_fully_committed",
+    "non_exited_governor_clock": "last_evaluated_step_index_equals_scene_fixed_step_index",
+    "opening_boundary": "source_and_result_controls_plus_six_source_governors_six_result_commands_and_all_d3_1_engine_results",
+    "opening_safety_history_mutation": false,
+    "closing_boundary": "one_complete_d3_2_result_bound_to_final_runtime_motion_delivery_and_crew_lock",
+    "step_ship_coverage": "exactly_one_opening_and_closing_record_per_non_exited_ship; exited_ships_have_neither",
+    "diagnostic_lineage": "opening_result_propulsion_state_and_resulting_six_governors",
+    "safety_event_identity": "ship_and_command_channel_only_without_actuator_id",
+    "safety_event_source": "exactly_the_final_closing_d3_2_intents",
+    "hard_fault_status": "unwired",
+    "direction_interlock_status": "unwired",
+    "tripped_before_d4": "rejected"
+  },
+  "legacy_gates": {
+    "v5_accepts_governance_marker": false,
+    "v6_accepts_missing_or_modified_governance_marker": false,
+    "v6_can_run_through_v5_actual_context": false,
+    "v6_requires_governed_context_and_cannot_fall_back_to_v5": true,
+    "v6_serializes_only_through_v5_governed_step_path": true,
+    "legacy_scene_imports_d3_2_or_vector_sampler": false,
+    "legacy_v5_policy_changed": false,
+    "legacy_v4_policy_changed": false,
+    "legacy_save_or_diagnostic_changed": false
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇受控推进场景版本.py": "88c4c9be4c42019c1c5d49d592f56bcb1ecbfe4712817d47ccf57356519617c0",
+    "高天荒野舰艇受控推进场景合同.py": "22b61dbb8ec378530f7bc571ca6d3dec741367b77ff804f94d355947bac6d597",
+    "高天荒野舰艇统一战术场景.py": "a74e8981f2a6b9bb8a5c906382b2e626345270a8f5832eda649f56d0008cedfe",
+    "高天荒野T0b2d3c受控场景合同与旧版门禁测试.py": "d8d51630962e692f87a0f87adc80180f4a1e51c3cee5d1033c2f41cd3935edbf",
+    "舰艇数据/模式/高天荒野舰艇受控推进治理标记契约.v1alpha1.schema.json": "57bdbbc94951c80b042e5b8e871c9f509e433bf423a795ec5e557df8b6af1160",
+    "舰艇数据/模式/高天荒野舰艇受控推进开边界记录契约.v1alpha1.schema.json": "506296108184b7f1925f5e3089b4bfee9102410538028d671d8cca9ebb811e83",
+    "舰艇数据/模式/高天荒野舰艇受控推进收边界记录契约.v1alpha1.schema.json": "4ddff016dfb16368d564a4aea2e3b48477134d7fac035813e1d50c56aebed28d",
+    "舰艇数据/模式/高天荒野舰艇场景推进安全事件契约.v1alpha1.schema.json": "2aa68002631db1f4a659f80ba4edde3f297ba083cbaa3573d15d17e9263402fa",
+    "舰艇数据/模式/高天荒野舰艇实际推进积分诊断契约.v2alpha1.schema.json": "753a638d6ac397459483f93b2cfb32e6dea578b828356442d4d8119d594c93f9",
+    "舰艇数据/模式/高天荒野舰艇统一战术场景状态契约.v6alpha1.schema.json": "c60fab6c51acfb35eeab0c36a36f615a4bfe7bef593eca843b9d1e6c2f18c2c4",
+    "舰艇数据/模式/高天荒野舰艇受控实际推进场景存档契约.v1alpha1.schema.json": "5ae7ec1a72449b4e76636d89f0f31cfde84e6cdc5bf59d343ebe97861e29fa91",
+    "舰艇数据/模式/高天荒野舰艇场景单步推进结果契约.v5alpha1.schema.json": "978e1cdd40e01b6fade012f9c0eb38f2488516bfcafcd9506e7608d8257de045",
+    "高天荒野T0b2d3软安全接线实施细则.md": "a23246104e4c5c69966dc64a89dab1a62d9d375ba78a807271b0f5784a89d3de",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "ea6c380db020c013339916d0afe7e18007189811431a737608f4c47b821b47f5",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "d11572136832c2e669b4aa51401b60fd909b6ee2ebcacd10399c7869b7391b99",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "contracts/web_bridge/t0-actual-propulsion-step-golden.v1.json": "6636afd396df0dd1ec17906f4b8fbe0d23d1a88e49d47dae64d1872f259d78ed",
+    "舰艇数据/模式/高天荒野舰艇统一战术场景状态契约.v5alpha1.schema.json": "e0c45816405878eb9207c2efb0c825a50f4ee01d493ca3f9d42d6080ed0fd690",
+    "舰艇数据/模式/高天荒野舰艇场景单步推进结果契约.v4alpha1.schema.json": "aeabd7689a24fd36631a2021ebee360eadec62ca5326d335fcbf945fcb5e9097",
+    "舰艇数据/模式/高天荒野舰艇实际推进场景存档契约.v1alpha1.schema.json": "445e44a40038cf94c7ac2c789dcf120014f5fb50174869bcde5302d0424f5811",
+    "舰艇数据/模式/高天荒野舰艇实际推进积分诊断契约.v1alpha1.schema.json": "a18b0b12a8606b95bb832801f87db3fe67a743057cfafdb4d5f3f107eeaf012d"
+  },
+  "historical_report_hash_maintenance": {
+    "status": "22_reports_59_hash_entries_only_PASS",
+    "reports": 22,
+    "entries": 59,
+    "scope": "top_level_implementation_hashes_only",
+    "changes_by_source": [
+      {
+        "source": "高天荒野T0b2d3软安全接线实施细则.md",
+        "reports": 3,
+        "previous": "4eba80cbf834240b625b5c0ad81a1b488875e6cca9419a563e8f77050fcd60e4",
+        "current": "ddfad7543fc5214af17c518d80f210660b6cb64f0214a28fd1ee6f5662c44586"
+      },
+      {
+        "source": "高天荒野T0b2推进响应与权威性能优化规划.md",
+        "reports": 19,
+        "previous": "e320e0e52b6d87c5af618fce117930b65aebac3a0765b91cbdd60abd9a9aaf04",
+        "current": "7b17cb6f136b73d497d7c414592f877fa4625f6a4cac609393ad4fdf0c62e9c9"
+      },
+      {
+        "source": "高天荒野Web客户端编辑器与战术验证实施计划.md",
+        "reports": 19,
+        "previous": "21453051c49f6179e9346666212dc8f22069d0f0450673c0ad5e8d3a92145fc8",
+        "current": "15cb70217851becd007ff4c944bb16ff1c0d730f826d27766891f2ed85d53134"
+      },
+      {
+        "source": "高天荒野舰艇统一战术场景.py",
+        "reports": 18,
+        "previous": "e4e9eb2a094b4a829a2db9270b1d087faacb1801f8bc0c33b6f084ab1f37b73f",
+        "current": "6fd3fc4bcb6ee5da97ddba595b8b1d06379ebe34440b883ee8da32900ecd6210"
+      }
+    ]
+  },
+  "regression": {
+    "python": "77_of_77_PASS",
+    "typescript": "4_of_4_PASS",
+    "rust": "15_of_15_PASS"
+  },
+  "risk_controls": {
+    "v6_runtime_enabled": true,
+    "scene_free_governed_adapter_implemented": true,
+    "governed_scene_builder_implemented": true,
+    "governed_save_loader_implemented": true,
+    "independent_governed_golden_created": false,
+    "legacy_goldens_changed": false,
+    "official_performance_runs_executed": 0,
+    "normal_gameplay_opened": false
+  },
+  "next_phase": "T0b.2d3.3_independent_governed_golden_12_scene_three_replays_and_full_regression"
+}

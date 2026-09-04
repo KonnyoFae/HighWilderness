@@ -1,0 +1,118 @@
+{
+  "$id": "gaotian.tactical-scene-step-resolution/v5alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "受控实际推进单步结果；开边界只提交命令，收边界唯一推进软 governor，并分别保存完整审计。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {"const": "gaotian.tactical-scene-step-resolution/v5alpha1"},
+    "policy": {"const": "gaotian.tactical-scene-step/open-command-integrate-close-safety/v1"},
+    "source_scene_sha256": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/source_scene_sha256"},
+    "resulting_scene_sha256": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/resulting_scene_sha256"},
+    "source_fixed_step_index": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/source_fixed_step_index"},
+    "resulting_fixed_step_index": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/resulting_fixed_step_index"},
+    "weapon_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/weapon_events"},
+    "spawned_projectiles": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/spawned_projectiles"},
+    "impact_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/impact_events"},
+    "expired_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/expired_events"},
+    "lifecycle_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/lifecycle_events"},
+    "engagement_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/engagement_events"},
+    "guidance_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/guidance_events"},
+    "continuous_damage_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/continuous_damage_events"},
+    "crew_casualty_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/crew_casualty_events"},
+    "crew_evacuation_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/crew_evacuation_events"},
+    "crew_rescue_manifests": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/crew_rescue_manifests"},
+    "fire_propagation_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/fire_propagation_events"},
+    "ammunition_cookoff_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/ammunition_cookoff_events"},
+    "sensor_observation_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/sensor_observation_events"},
+    "radar_emission_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/radar_emission_events"},
+    "fire_control_support_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/fire_control_support_events"},
+    "generated_guidance_fact_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/generated_guidance_fact_events"},
+    "ship_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ship_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+          "resulting_runtime_parameters_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "diagnostics": {
+            "oneOf": [
+              {"$ref": "gaotian.actual-propulsion-step-diagnostics/v2alpha1"},
+              {"type": "null"}
+            ]
+          },
+          "propulsion_aggregation": {
+            "oneOf": [
+              {"$ref": "gaotian.actual-propulsion-aggregation/v1alpha1"},
+              {"type": "null"}
+            ]
+          },
+          "propulsion_delivery_status": {
+            "enum": ["delivered", "suppressed_falling", "suppressed_exited", "suppressed_uncommanded"]
+          },
+          "missing_propulsion_channels": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "translation.forward",
+                "translation.reverse",
+                "translation.left",
+                "translation.right",
+                "yaw.counterclockwise",
+                "yaw.clockwise"
+              ]
+            }
+          }
+        },
+        "required": [
+          "ship_id",
+          "resulting_runtime_parameters_sha256",
+          "diagnostics",
+          "propulsion_aggregation",
+          "propulsion_delivery_status",
+          "missing_propulsion_channels"
+        ]
+      }
+    },
+    "propulsion_opening_records": {
+      "type": "array",
+      "items": {"$ref": "gaotian.governed-propulsion-opening-record/v1alpha1"}
+    },
+    "propulsion_closing_records": {
+      "type": "array",
+      "items": {"$ref": "gaotian.governed-propulsion-closing-record/v1alpha1"}
+    },
+    "propulsion_events": {"$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/propulsion_events"},
+    "propulsion_safety_events": {
+      "type": "array",
+      "items": {"$ref": "gaotian.tactical-scene-propulsion-safety-event/v1alpha1"}
+    },
+    "soft_governor_status": {"const": "wired"},
+    "hard_fault_status": {"const": "unwired"},
+    "direction_interlock_status": {"const": "unwired"}
+  },
+  "required": [
+    "interface",
+    "policy",
+    "source_scene_sha256",
+    "resulting_scene_sha256",
+    "source_fixed_step_index",
+    "resulting_fixed_step_index",
+    "weapon_events",
+    "spawned_projectiles",
+    "impact_events",
+    "expired_events",
+    "lifecycle_events",
+    "engagement_events",
+    "ship_results",
+    "propulsion_opening_records",
+    "propulsion_closing_records",
+    "propulsion_events",
+    "propulsion_safety_events",
+    "soft_governor_status",
+    "hard_fault_status",
+    "direction_interlock_status"
+  ]
+}

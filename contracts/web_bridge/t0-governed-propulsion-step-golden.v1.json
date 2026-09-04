@@ -1,0 +1,263 @@
+{
+  "cases": {
+    "functional_6.guided_projectiles": {
+      "closing_records": 72,
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 32,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 4,
+        "weapon_events": 4
+      },
+      "final_motion_sha256": "2f1497d596b421fc0cff78e026a42e8f196eb21a27ff76041c7fb60df855a090",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "fc87fdcdc93584e5bfee69a8abcc88378e9d6d512f9c4f5f6f64ecd717241d0f",
+      "input_stream_sha256": "76b3966bf30299ad9817c11d3b7bbbcc00f828594baa5ded5fc318125f50421b",
+      "resource_bundle_sha256": "4f8299b5334b3b2df3e8a07a60abab043104f82caf0a9bb4e7c5a661e200c85f",
+      "resulting_scene_sha256": "6be0462d3a46ce7653e041ee729850e10f99d79271c8768f353684c123b60207",
+      "step_trace_sha256": "0e43c1b643cb840d99d2428b7dc5fd2207ee56a9482fd5617158b92935f1bc71",
+      "steps": 12
+    },
+    "functional_6.motion_only": {
+      "closing_records": 72,
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 32,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 0,
+        "weapon_events": 0
+      },
+      "final_motion_sha256": "2f1497d596b421fc0cff78e026a42e8f196eb21a27ff76041c7fb60df855a090",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "0c4d4576c9899d09d5536fb60acf193cbf564912e502d22bc684a89d6f02faf8",
+      "input_stream_sha256": "76b3966bf30299ad9817c11d3b7bbbcc00f828594baa5ded5fc318125f50421b",
+      "resource_bundle_sha256": "c5b3992da40a3b98529f35e66e80ed02c908e2aff4bca40ae7fbdb1f4ba30b3e",
+      "resulting_scene_sha256": "f1c95c026471dea3eef6d84ec3a51b1df0596017acc87693504dad11691cf7ee",
+      "step_trace_sha256": "c33f44930ed164069e9611886a00b7f0798488f3690c8055f7c6043cca36b1c5",
+      "steps": 12
+    },
+    "functional_6.ordinary_projectiles": {
+      "closing_records": 72,
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 32,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 4,
+        "weapon_events": 4
+      },
+      "final_motion_sha256": "2f1497d596b421fc0cff78e026a42e8f196eb21a27ff76041c7fb60df855a090",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "a4a0aae8dcaef43b1bac2656a552e6e0104b6bc35cef8f344b514c64acc78609",
+      "input_stream_sha256": "76b3966bf30299ad9817c11d3b7bbbcc00f828594baa5ded5fc318125f50421b",
+      "resource_bundle_sha256": "f7bcfcf8f763b8c505103915516b885b4781c10abbcb304fc8baf5818a71d2ce",
+      "resulting_scene_sha256": "499161a2298465734fc9202444b15b3ba8e6297d5c6ba71dfc93c2404dc90dea",
+      "step_trace_sha256": "d453391d429f1675639ac11022aa6f4c14f1b6572bf21979d214d5279274f8f1",
+      "steps": 12
+    },
+    "functional_6.scripted_damage_and_recompile": {
+      "closing_records": 72,
+      "event_counts": {
+        "continuous_damage_events": 72,
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 32,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 4,
+        "weapon_events": 4
+      },
+      "final_motion_sha256": "0d4e301f5dbef67b16937beb8cc246856b5762b7ef9e7552805b71c62f504271",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "35048a03cf8fa2070e702e7a707def5cba40bbdabfe4aa07330a80b45dd8a0b8",
+      "input_stream_sha256": "76b3966bf30299ad9817c11d3b7bbbcc00f828594baa5ded5fc318125f50421b",
+      "resource_bundle_sha256": "98f331c8cefec061680c5184d7436fae0742d4e2bc0dd79402bf156c3e41a717",
+      "resulting_scene_sha256": "ef307940c01788c05d865bdf90c8d65f71deb4cb00dbfa4b143643150f470a42",
+      "step_trace_sha256": "ef792b892a25e92d054e0666f7d71f7144967c1c5bdafbaf066477df6af56a90",
+      "steps": 12
+    },
+    "stress_30.guided_projectiles": {
+      "closing_records": 360,
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 164,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 20,
+        "weapon_events": 20
+      },
+      "final_motion_sha256": "60eb9cd6d626f23cd805d7bfb8780f849d3aad79ee9b907a6b0782971d0ca989",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "38bbb2e4fe4acf676fb93c31f7ba5648569e539826ebf715612e3f09ef32efb8",
+      "input_stream_sha256": "c0ab21ea3dcf9d09db91deec3556f0ebc437e0968e2c6703900099814fde35f7",
+      "resource_bundle_sha256": "741fcdb65e7387e54be797684d07d23b4b54b57204bb50cc958d6e1f4c47e465",
+      "resulting_scene_sha256": "6cc6156ba466ff2acb7aef14f4dde72f025551f76db6d4d45b6479fea26a769b",
+      "step_trace_sha256": "4b33e22f96049d12f3219cedbd4774b4b2bf312e2a8fc541793552ed096f580f",
+      "steps": 12
+    },
+    "stress_30.motion_only": {
+      "closing_records": 360,
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 164,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 0,
+        "weapon_events": 0
+      },
+      "final_motion_sha256": "60eb9cd6d626f23cd805d7bfb8780f849d3aad79ee9b907a6b0782971d0ca989",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "bdc1945dfeb284c7e7140d237873ed3142f6f7b02c669e57603b3f08ec7664ac",
+      "input_stream_sha256": "c0ab21ea3dcf9d09db91deec3556f0ebc437e0968e2c6703900099814fde35f7",
+      "resource_bundle_sha256": "d2d9e673b94d1be1833c564aca629e74c1f4d55f8cce455e6087c18cefebdf9c",
+      "resulting_scene_sha256": "e67c116e234c56fe742200227599fb84ec9e5f91c0408c47b707d25bfb561fe6",
+      "step_trace_sha256": "ebf370788c359b3f1bc3261328414234aa027ba74f18598a912ec112153e497c",
+      "steps": 12
+    },
+    "stress_30.ordinary_projectiles": {
+      "closing_records": 360,
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 164,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 20,
+        "weapon_events": 20
+      },
+      "final_motion_sha256": "60eb9cd6d626f23cd805d7bfb8780f849d3aad79ee9b907a6b0782971d0ca989",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "eeee7311aa4aa4253dfbe1b7a971126f44f94a8e4f95cde080f4b6c0b33726f2",
+      "input_stream_sha256": "c0ab21ea3dcf9d09db91deec3556f0ebc437e0968e2c6703900099814fde35f7",
+      "resource_bundle_sha256": "03238136a0ea3cd24e15632db3b02b682d7c71cf8602639015a92f2d944810b1",
+      "resulting_scene_sha256": "98ba48d253e241fc93b91206f3011e09877de5d85c54f8940bb5836b2c1c014a",
+      "step_trace_sha256": "ec80e91a33abd361e4e2b0fefed83aae660f0901ee97b2a3b4bd74ddf0e25b0c",
+      "steps": 12
+    },
+    "stress_30.scripted_damage_and_recompile": {
+      "closing_records": 360,
+      "event_counts": {
+        "continuous_damage_events": 360,
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 164,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 20,
+        "weapon_events": 20
+      },
+      "final_motion_sha256": "d5bdce794cae86bfb7a08723033942ae07215f58229202320ef32dffae33af29",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "fba511d8fac2f0c9c024ec43e940a1e836868626ea82e930bff058e09c901e17",
+      "input_stream_sha256": "c0ab21ea3dcf9d09db91deec3556f0ebc437e0968e2c6703900099814fde35f7",
+      "resource_bundle_sha256": "dfde33e0aa31013533fe346bf98d1c45e009f363d740354f4b5a6fd3de7d6fa4",
+      "resulting_scene_sha256": "45c7e08bc77666ba7634cacd77883fd5299198fd6ad91c45e708601eaf37decb",
+      "step_trace_sha256": "dd283fe3d04d5dbf52f97632916a131ddbe0869d95fee072f02c5910c60e91d1",
+      "steps": 12
+    },
+    "target_20.guided_projectiles": {
+      "closing_records": 240,
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 110,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 14,
+        "weapon_events": 14
+      },
+      "final_motion_sha256": "0f71992fcd6563221088bfab5e1db928f2e62c4f0c06c74c902c12d265d4d579",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "049f2291d273bbefcdcfb9541cd93c2e548ec783672bf2cf1fef49e542e925ea",
+      "input_stream_sha256": "8994742ae2698a5a75445091ade4d4338d5610efdbf4f36bbefafa8e8e2bc525",
+      "resource_bundle_sha256": "cb0a77c23230b9164030aaeb208c96d13c781144d9cbcc3a715f18ba32a17ae3",
+      "resulting_scene_sha256": "1ee41242544e3b7fa630c2f19372395558391327c6fffdc14b50de552c4a0882",
+      "step_trace_sha256": "4fe49ae9b68a99ab6b2892ccb9a532999c0bacacba0373c4a05780e3f0c3e307",
+      "steps": 12
+    },
+    "target_20.motion_only": {
+      "closing_records": 240,
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 110,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 0,
+        "weapon_events": 0
+      },
+      "final_motion_sha256": "0f71992fcd6563221088bfab5e1db928f2e62c4f0c06c74c902c12d265d4d579",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "ac49dd33ae539f3a73b68f66145e78e8b4df1bf8c02fbb97045975713bff0490",
+      "input_stream_sha256": "8994742ae2698a5a75445091ade4d4338d5610efdbf4f36bbefafa8e8e2bc525",
+      "resource_bundle_sha256": "830212ba79e897f72abf1bfac090aafea836b10a509dadeda3ca80230f572e81",
+      "resulting_scene_sha256": "6a5d4a5333ba53de6871d4bb580153b1d10d3b8b18f97179e03db0ca68add765",
+      "step_trace_sha256": "7be6487acf63e2a331229cd9f686b4c962c109c2b5e29855aa513fbc0c67faee",
+      "steps": 12
+    },
+    "target_20.ordinary_projectiles": {
+      "closing_records": 240,
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 110,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 14,
+        "weapon_events": 14
+      },
+      "final_motion_sha256": "0f71992fcd6563221088bfab5e1db928f2e62c4f0c06c74c902c12d265d4d579",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "fd4d0c4feaf679155db24b786786f035a6dcf71f3c49cd1507ef4a441949787f",
+      "input_stream_sha256": "8994742ae2698a5a75445091ade4d4338d5610efdbf4f36bbefafa8e8e2bc525",
+      "resource_bundle_sha256": "6057f0d32aed5f4842d553b6f5964f7087bb6417915713890cbe19e6dbe756ef",
+      "resulting_scene_sha256": "aa647e734c856dc63183a319c60613ffd79ae569f32bcd2ec76e9705cdf42f18",
+      "step_trace_sha256": "4f551d8cf27c41df8699032116b25f219cb1c786e49699e735eca30189003c90",
+      "steps": 12
+    },
+    "target_20.scripted_damage_and_recompile": {
+      "closing_records": 240,
+      "event_counts": {
+        "continuous_damage_events": 240,
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_events": 110,
+        "propulsion_safety_events": 0,
+        "spawned_projectiles": 14,
+        "weapon_events": 14
+      },
+      "final_motion_sha256": "beee9d38ebcf2d1edb44aa5dfaaab28d638b2337f03f0331cc5c7ad795efc881",
+      "governor_boundary": 12,
+      "initial_scene_sha256": "cfebe1c1faffcb155714042e060afb49706616c10b350bdb166c74322dc1a5dd",
+      "input_stream_sha256": "8994742ae2698a5a75445091ade4d4338d5610efdbf4f36bbefafa8e8e2bc525",
+      "resource_bundle_sha256": "599a1a4d17caad8be4ba0f82898db13ef21f41593196c8c36671c208e0dab497",
+      "resulting_scene_sha256": "6bbb22bda74b847fb22a170279508d9798e74403eda7d470a7971bdb1d754135",
+      "step_trace_sha256": "6f3fd2f4d95a08f1aa966ed05de11ab1dad9225d179e45ac4d02b18e7bd47e39",
+      "steps": 12
+    }
+  },
+  "interface": "gaotian.t0-governed-propulsion-step-golden/v1",
+  "replays": 3,
+  "scene_interface": "gaotian.tactical-scene-timeline/v6alpha1",
+  "step_interface": "gaotian.tactical-scene-step-resolution/v5alpha1"
+}

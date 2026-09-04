@@ -1,0 +1,35 @@
+{
+  "$id": "gaotian.tactical-scene-timeline/v6alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "显式软 governor 的实际推进场景；S_n 为已完成收边界安全提交的状态。v5 不得自动升级。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "engagement_state": {"$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/engagement_state"},
+    "fixed_step_index": {"$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/fixed_step_index"},
+    "fixed_step_s": {"$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/fixed_step_s"},
+    "interface": {"const": "gaotian.tactical-scene-timeline/v6alpha1"},
+    "policy": {"const": "gaotian.tactical-scene/actual-propulsion-soft-governed-closing-boundary/v1"},
+    "projectile_world": {"$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/projectile_world"},
+    "propulsion_safety_profile": {"$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/propulsion_safety_profile"},
+    "propulsion_safety_profile_sha256": {"$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/propulsion_safety_profile_sha256"},
+    "ships": {"$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/ships"},
+    "tactical_time_s": {"$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/tactical_time_s"},
+    "propulsion_execution": {"$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/propulsion_execution"},
+    "propulsion_governance": {"$ref": "gaotian.governed-propulsion-execution/v1alpha1"}
+  },
+  "required": [
+    "engagement_state",
+    "fixed_step_index",
+    "fixed_step_s",
+    "interface",
+    "policy",
+    "projectile_world",
+    "propulsion_safety_profile",
+    "propulsion_safety_profile_sha256",
+    "ships",
+    "tactical_time_s",
+    "propulsion_execution",
+    "propulsion_governance"
+  ]
+}

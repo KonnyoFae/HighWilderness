@@ -1,0 +1,48 @@
+{
+  "$id": "gaotian.governed-propulsion-opening-record/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "开边界命令审计；保存源/结果控制、六通道命令及全部逐执行器 d3.1 结果，不推进安全历史。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {"const": "gaotian.governed-propulsion-opening-record/v1alpha1"},
+    "policy": {"const": "gaotian.governed-propulsion/command-open-safety-close/v1"},
+    "boundary_phase": {"const": "opening"},
+    "ship_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+    "fixed_step_index": {"type": "integer", "minimum": 0},
+    "source_propulsion_state_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "resulting_propulsion_state_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "source_control": {"$ref": "gaotian.tactical-propulsion-control/v2alpha1"},
+    "resulting_control": {"$ref": "gaotian.tactical-propulsion-control/v2alpha1"},
+    "source_governors": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "gaotian.propulsion-governor-state/v2alpha1"}
+    },
+    "governor_commands": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {"$ref": "gaotian.tactical-propulsion-control/v2alpha1#/$defs/channelCommand"}
+    },
+    "engine_results": {
+      "type": "array",
+      "items": {"$ref": "gaotian.governed-propulsion-time-result/v1alpha1"}
+    }
+  },
+  "required": [
+    "interface",
+    "policy",
+    "boundary_phase",
+    "ship_id",
+    "fixed_step_index",
+    "source_propulsion_state_sha256",
+    "resulting_propulsion_state_sha256",
+    "source_control",
+    "resulting_control",
+    "source_governors",
+    "governor_commands",
+    "engine_results"
+  ]
+}
