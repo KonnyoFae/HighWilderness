@@ -1,0 +1,122 @@
+{
+  "interface": "gaotian.stage-t0b2d4d-direction-interlock/v1",
+  "status": "PASS",
+  "slice": "T0b.2d4.4",
+  "baseline": {
+    "commit": "4933e05",
+    "branch": "main",
+    "pushed_to": null
+  },
+  "scope": "pure_post_hard_fault_pre_time_direction_interlock_boundary_only",
+  "interfaces": {
+    "decision": "gaotian.propulsion-direction-interlock-decision/v1alpha1",
+    "boundary": "gaotian.governed-propulsion-direction-interlock/v1alpha1",
+    "policy": "gaotian.propulsion-direction-interlock/opposed-zero-before-increase/v1",
+    "control_reused": "gaotian.tactical-propulsion-control/v2alpha1",
+    "hard_fault_opening_reused": "gaotian.governed-propulsion-hard-fault-opening/v1alpha1",
+    "directional_state_reused": "gaotian.tactical-propulsion-state/v3alpha1"
+  },
+  "evidence": {
+    "channel_matrix": {
+      "channels": 6,
+      "opposing_pairs": 3,
+      "actuators": 6,
+      "idle_request_passes_unchanged": true,
+      "stable_channel_and_actuator_order": true,
+      "state_mutated": false
+    },
+    "block_and_release": {
+      "blocked_channel": "yaw.clockwise",
+      "blocking_actuators": 2,
+      "old_group_stop_passes": true,
+      "requested_control_preserved": true,
+      "governor_history_preserved": true,
+      "released_at_exact_zero": true,
+      "zero_output_starting_group_can_be_canceled_atomically": true
+    },
+    "mid_transition": {
+      "translation_reverse_without_bound_actuator_still_blocked": true,
+      "stop_during_transition_passes": true,
+      "return_to_old_direction_passes": true,
+      "preexisting_opposed_output_converges_to_stop": true,
+      "interlock_emits_engine_trip": false
+    },
+    "hard_fault_and_emergency": {
+      "emergency_cut_holds_all_channels_for_boundary": true,
+      "emergency_cut_actions": 6,
+      "requested_control_survives_emergency_hold": true,
+      "hard_trip_clears_direction_blockers_before_interlock": true,
+      "direction_interlock_reclassifies_hard_trip": false,
+      "overg_bypasses_emergency_or_hard_fault": false
+    },
+    "replay": {
+      "replays": 3,
+      "boundaries_per_replay": 2,
+      "reload_boundaries": [
+        0,
+        1
+      ],
+      "trace_sha256": "63804c023694e9578b95ad4492f7c9a9e826acad138b1ad4bae29ed78d42d350"
+    },
+    "negative_contracts": {
+      "strict_negative_cases": 48
+    },
+    "schema_and_isolation": {
+      "schemas": 2,
+      "references_checked": 5,
+      "cold_import_orders": 2,
+      "imports_scene_d3_adapter_or_benchmarks": false
+    }
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇推进方向互锁边界.py": "17ffc301f4f2e35fbd975e1d0bf34d89c3d4a9ff73700f129e5d32469072b06b",
+    "高天荒野T0b2d4d方向互锁边界测试.py": "2e61b62c5e96d9d7d3503937fa0d9dfaa1f5774e2b153de61bd9505dd615927c",
+    "舰艇数据/模式/高天荒野舰艇推进方向互锁决定契约.v1alpha1.schema.json": "1f5ce0e9a93538a6f6ddbbada794f1cf0af3debdd50c331a13bbf898889443e7",
+    "舰艇数据/模式/高天荒野舰艇受控推进方向互锁边界契约.v1alpha1.schema.json": "9d63b37532a89d2b75c4d8f65c4cb99efb1c0af517404b8ebd6fd7b6b151a981",
+    "高天荒野舰艇受控推进硬故障适配器.py": "320785068bf5b59e426b26e141bce03fe16e8deb19297f7ec76463f80c286b80",
+    "高天荒野舰艇定向推进控制桥.py": "6268d40785346a91043f7fe7faa7788f3d0ddac53b3e4fc32e81e61853958b1a",
+    "高天荒野舰艇推进通道合同.py": "c408934a513605f68dc32f95526793eede7f56b37131ef99caa662a0f4880b7e",
+    "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
+    "高天荒野舰艇测试总入口.py": "f6a7b05f59b1536b4495669006f23bb19253d93a48ca2d6e362ae45c12f5a0ea"
+  },
+  "regression": {
+    "targeted": "PASS",
+    "runner_unit": "3_of_3_PASS",
+    "quick": "16_of_16_PASS",
+    "quick_elapsed_ms": 95739.14,
+    "full_discovered": 82,
+    "full_executed": false
+  },
+  "risk_controls": {
+    "state_mutated": false,
+    "governor_history_changed": false,
+    "requested_control_overwritten": false,
+    "direction_interlock_emits_engine_trip": false,
+    "hard_trip_reclassified_as_interlock": false,
+    "emergency_cut_reclassified_as_interlock": false,
+    "opposed_output_allowed_to_increase": false,
+    "time_advanced": false,
+    "physical_load_evaluated": false,
+    "d3_adapter_changed": false,
+    "scene_wired": false,
+    "save_changed": false,
+    "legacy_golden_changed": false,
+    "actual_propulsion_golden_changed": false,
+    "governed_propulsion_golden_changed": false,
+    "official_performance_runs_executed": 0
+  },
+  "limitations": [
+    "This slice emits a pure effective-control decision and does not yet invoke the d3 time, delivery or closing boundaries.",
+    "Only exact actual output blocks an opposing increase; a zero-output starting or scheduled group can be canceled atomically before the new group is admitted.",
+    "The original requested control and governor history remain unchanged while the derived effective control supplies this boundary's time-command intent.",
+    "An emergency cut holds every effective channel at stop for the current boundary; hard-tripped actuators remain owned by the preceding hard-fault opening.",
+    "Tactical-scene mutation, save migration and new golden outputs remain unwired."
+  ],
+  "next_slice": "T0b.2d4.5_no_scene_composed_propulsion_adapter",
+  "next_slice_requirements": [
+    "Compose hard-fault opening, direction interlock, time advancement, physical delivery and safety closing in one no-scene authoritative step.",
+    "Allow healthy actuators to progress while tripped actuators remain latched and excluded, without weakening d3 soft-governor rules.",
+    "Persist original requested commands in governors while using interlocked effective commands only for engine time submission.",
+    "Freeze combined event ordering and exact replay before changing tactical-scene or save contracts."
+  ]
+}

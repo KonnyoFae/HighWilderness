@@ -1,0 +1,31 @@
+{
+  "$id": "gaotian.governed-propulsion-hard-fault-command/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "emergency_cut_cause": {
+      "enum": [
+        null,
+        "operator_requested",
+        "safety_system_requested"
+      ]
+    },
+    "interface": {
+      "const": "gaotian.governed-propulsion-hard-fault-command/v1alpha1"
+    },
+    "reset_actuator_instance_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "emergency_cut_cause",
+    "interface",
+    "reset_actuator_instance_ids"
+  ],
+  "type": "object"
+}

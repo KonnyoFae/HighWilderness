@@ -1,0 +1,41 @@
+{
+  "$id": "gaotian.propulsion-hard-fact-runtime-projection/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "fixed_step_index": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "interface": {
+      "const": "gaotian.propulsion-hard-fact-runtime-projection/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.propulsion-hard-fact/runtime-lineage-phase-aware/v1"
+    },
+    "propulsion_state_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "runtime_parameters_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "snapshots": {
+      "items": {
+        "$ref": "gaotian.propulsion-hard-fault-snapshot/v1alpha1"
+      },
+      "minItems": 1,
+      "type": "array"
+    }
+  },
+  "required": [
+    "fixed_step_index",
+    "interface",
+    "policy",
+    "propulsion_state_sha256",
+    "runtime_parameters_sha256",
+    "snapshots"
+  ],
+  "type": "object"
+}

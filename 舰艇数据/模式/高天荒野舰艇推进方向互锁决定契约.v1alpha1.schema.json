@@ -1,0 +1,74 @@
+{
+  "$id": "gaotian.propulsion-direction-interlock-decision/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "enum": [
+        "pass_through",
+        "blocked_until_opposing_zero",
+        "emergency_cut_hold"
+      ]
+    },
+    "actuator_instance_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "blocking_actuator_instance_ids": {
+      "items": {
+        "pattern": "^[a-z0-9][a-z0-9._-]*$",
+        "type": "string"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "command_channel": {
+      "enum": [
+        "translation.forward",
+        "translation.reverse",
+        "translation.left",
+        "translation.right",
+        "yaw.counterclockwise",
+        "yaw.clockwise"
+      ]
+    },
+    "effective_command": {
+      "$ref": "gaotian.tactical-propulsion-control/v2alpha1#/$defs/channelCommand"
+    },
+    "interface": {
+      "const": "gaotian.propulsion-direction-interlock-decision/v1alpha1"
+    },
+    "opposing_channel": {
+      "enum": [
+        "translation.forward",
+        "translation.reverse",
+        "translation.left",
+        "translation.right",
+        "yaw.counterclockwise",
+        "yaw.clockwise"
+      ]
+    },
+    "policy": {
+      "const": "gaotian.propulsion-direction-interlock/opposed-zero-before-increase/v1"
+    },
+    "requested_command": {
+      "$ref": "gaotian.tactical-propulsion-control/v2alpha1#/$defs/channelCommand"
+    }
+  },
+  "required": [
+    "action",
+    "actuator_instance_ids",
+    "blocking_actuator_instance_ids",
+    "command_channel",
+    "effective_command",
+    "interface",
+    "opposing_channel",
+    "policy",
+    "requested_command"
+  ],
+  "type": "object"
+}

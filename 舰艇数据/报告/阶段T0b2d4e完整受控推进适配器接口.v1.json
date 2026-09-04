@@ -1,0 +1,166 @@
+{
+  "interface": "gaotian.stage-t0b2d4e-fully-governed-adapter/v1",
+  "status": "PASS",
+  "slice": "T0b.2d4.5",
+  "baseline": {
+    "commit": "4933e05",
+    "branch": "main",
+    "pushed_to": null
+  },
+  "scope": "complete_no_scene_hard_fault_interlock_time_delivery_and_soft_safety_composition",
+  "d4_plan": [
+    {
+      "slice": "T0b.2d4.1",
+      "goal": "pure_hard_fault_trip_latch_and_explicit_reset_boundary",
+      "status": "complete"
+    },
+    {
+      "slice": "T0b.2d4.2",
+      "goal": "exact_runtime_hard_fact_projection",
+      "status": "complete"
+    },
+    {
+      "slice": "T0b.2d4.3",
+      "goal": "hard_fault_opening_reset_and_emergency_cut_command_ownership",
+      "status": "complete"
+    },
+    {
+      "slice": "T0b.2d4.4",
+      "goal": "pure_post_hard_fault_direction_interlock",
+      "status": "complete"
+    },
+    {
+      "slice": "T0b.2d4.5",
+      "goal": "complete_no_scene_authoritative_propulsion_step",
+      "status": "complete"
+    },
+    {
+      "slice": "T0b.2d4.6",
+      "goal": "scene_save_and_migration_contract_freeze",
+      "status": "next"
+    },
+    {
+      "slice": "T0b.2d4.7",
+      "goal": "unified_scene_wiring_and_save_reload_replay",
+      "status": "pending"
+    },
+    {
+      "slice": "T0b.2d4.8",
+      "goal": "independent_d4_goldens_long_replay_and_full_regression_closeout",
+      "status": "pending"
+    }
+  ],
+  "interfaces": {
+    "opening": "gaotian.fully-governed-propulsion-opening/v1alpha1",
+    "closing": "gaotian.fully-governed-propulsion-closing/v1alpha1",
+    "policy": "gaotian.governed-propulsion/hard-interlock-time-delivery-soft/v1",
+    "hard_fault_opening_reused": "gaotian.governed-propulsion-hard-fault-opening/v1alpha1",
+    "direction_interlock_reused": "gaotian.governed-propulsion-direction-interlock/v1alpha1",
+    "governed_time_result_reused": "gaotian.governed-propulsion-time-result/v1alpha1",
+    "whole_ship_safety_result_reused": "gaotian.whole-ship-propulsion-safety-result/v1alpha1",
+    "directional_state_reused": "gaotian.tactical-propulsion-state/v3alpha1"
+  },
+  "evidence": {
+    "normal_step": {
+      "pipeline_order": [
+        "hard_fault",
+        "direction_interlock",
+        "opening_time",
+        "physical_delivery",
+        "closing_time_and_soft_safety"
+      ],
+      "actuators": 6,
+      "source_step": 0,
+      "resulting_step": 1,
+      "requested_governor_commands_persist": true,
+      "old_d3_adapter_changed": false
+    },
+    "fault_reset_emergency": {
+      "explicit_reset_held_off_for_opening_boundary": true,
+      "healthy_peer_can_receive_command": true,
+      "emergency_cut_prevents_same_boundary_restart": true,
+      "hard_trip_events_precede_time_events": true,
+      "tripped_actuators_survive_interval_and_closing": true,
+      "overg_bypasses_hard_fault": false
+    },
+    "interlock_delivery_soft_safety": {
+      "opposed_new_direction_delivered": false,
+      "old_direction_downstage_target_committed": true,
+      "physical_interval_uses_old_actual_output": true,
+      "lifecycle_suppression_zeroes_delivery": true,
+      "soft_safety_history_updated": true,
+      "requested_commands_restored_after_shadow_safety": true
+    },
+    "replay": {
+      "replays": 3,
+      "boundaries_per_replay": 3,
+      "reload_boundaries": [
+        0,
+        2
+      ],
+      "trace_sha256": "25bfb02f2bf4381b57bc89d250befb6c96a7b43854931422c435e2a593f3afad"
+    },
+    "negative_contracts": {
+      "strict_negative_cases": 52
+    },
+    "schema_and_isolation": {
+      "schemas": 2,
+      "references_checked": 9,
+      "cold_import_orders": 2,
+      "imports_scene_or_benchmarks": false
+    }
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇受控推进完整安全适配器.py": "8c480ee8adf18a6999fa939f960db8f2c8c0739864672efb8f2ef2bcb57408c2",
+    "高天荒野T0b2d4e完整受控推进适配器测试.py": "9235ee348fe3df4905b325c37df658be35989d78cacb199ffa368fc727374aba",
+    "舰艇数据/模式/高天荒野舰艇完整受控推进开边界契约.v1alpha1.schema.json": "402107b1e158a9445011fd9c1da409550ca0172899a2c900cb9cdf61b26841cf",
+    "舰艇数据/模式/高天荒野舰艇完整受控推进收边界契约.v1alpha1.schema.json": "03d319c95ec2942e5ab43409c78c76c91b19105e37cb27fe71ad645be7ffccc5",
+    "高天荒野舰艇受控推进硬故障适配器.py": "320785068bf5b59e426b26e141bce03fe16e8deb19297f7ec76463f80c286b80",
+    "高天荒野舰艇推进方向互锁边界.py": "17ffc301f4f2e35fbd975e1d0bf34d89c3d4a9ff73700f129e5d32469072b06b",
+    "高天荒野舰艇受控推进时间边界.py": "c41d684d8ae2571d8bb92c483a74627af1443847347a9a10682e2b89cb24bfe3",
+    "高天荒野舰艇整舰推进安全判定.py": "0c924711f9051dc1e4ca3b701adc9a43ddc89dfc44a7bb3ac3542f20bed3af2f",
+    "高天荒野舰艇实际推进聚合器.py": "db59a96449bbe5a44794069e30e686a1d071c83a9e52f121851f985c38a39036",
+    "高天荒野舰艇测试总入口.py": "f6a7b05f59b1536b4495669006f23bb19253d93a48ca2d6e362ae45c12f5a0ea"
+  },
+  "regression": {
+    "targeted": "PASS",
+    "runner_unit": "3_of_3_PASS",
+    "quick": "17_of_17_PASS",
+    "quick_elapsed_ms": 100630.491,
+    "full_discovered": 83,
+    "full_executed": false
+  },
+  "risk_controls": {
+    "hard_fault_order_changed": false,
+    "direction_interlock_bypassed": false,
+    "explicit_reset_same_boundary_restart": false,
+    "emergency_cut_same_boundary_restart": false,
+    "tripped_actuator_removed_from_identity_set": false,
+    "requested_governor_command_lost": false,
+    "soft_safety_history_lost": false,
+    "old_d3_adapter_changed": false,
+    "time_kernel_changed": false,
+    "actual_aggregator_changed": false,
+    "whole_ship_safety_algorithm_changed": false,
+    "scene_wired": false,
+    "save_changed": false,
+    "legacy_golden_changed": false,
+    "actual_propulsion_golden_changed": false,
+    "governed_propulsion_golden_changed": false,
+    "official_performance_runs_executed": 0
+  },
+  "limitations": [
+    "The complete composition remains a no-scene adapter; unified tactical-scene state and save envelopes still expose the d3 governed path.",
+    "Hard facts are sampled at the opening boundary; resource changes caused during the interval become hard-fault inputs at the next opening boundary.",
+    "Soft safety is evaluated against an effective-control shadow and then only command metadata is restored, preserving both interlock behavior and requested governor history.",
+    "Reset is held off for its opening boundary and may start on the following boundary if the request persists and hard facts remain clear.",
+    "No scene migration, save reload matrix, d4 golden output or full regression has been produced yet."
+  ],
+  "next_slice": "T0b.2d4.6_scene_save_and_migration_contract_freeze",
+  "next_slice_requirements": [
+    "Publish new scene-step, save, diagnostic and governance markers that identify hard fault and direction interlock as wired without changing d3 contracts.",
+    "Freeze command ownership for per-ship reset and emergency cut inputs plus stable hard/time/soft event ordering.",
+    "Define an explicit d3-to-d4 save migration that rejects ambiguous tripped, pending reset or direction-transition state.",
+    "Keep unified scene execution and golden mutation out until the new contracts pass cold-import, strict round-trip and old-version gate tests."
+  ]
+}

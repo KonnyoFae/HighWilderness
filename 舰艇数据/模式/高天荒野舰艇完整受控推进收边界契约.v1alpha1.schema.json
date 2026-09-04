@@ -1,0 +1,67 @@
+{
+  "$id": "gaotian.fully-governed-propulsion-closing/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "crew_safety_lock_enabled": {
+      "type": "boolean"
+    },
+    "final_motion_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "final_runtime_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "fixed_step_index": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "interface": {
+      "const": "gaotian.fully-governed-propulsion-closing/v1alpha1"
+    },
+    "opening": {
+      "$ref": "gaotian.fully-governed-propulsion-opening/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.governed-propulsion/hard-interlock-time-delivery-soft/v1"
+    },
+    "propulsion_delivery_status": {
+      "enum": [
+        "delivered",
+        "suppressed_falling",
+        "suppressed_uncommanded"
+      ]
+    },
+    "resulting_state_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "safety_result": {
+      "$ref": "gaotian.whole-ship-propulsion-safety-result/v1alpha1"
+    },
+    "source_opening_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "state": {
+      "$ref": "gaotian.tactical-propulsion-state/v3alpha1"
+    }
+  },
+  "required": [
+    "crew_safety_lock_enabled",
+    "final_motion_sha256",
+    "final_runtime_sha256",
+    "fixed_step_index",
+    "interface",
+    "opening",
+    "policy",
+    "propulsion_delivery_status",
+    "resulting_state_sha256",
+    "safety_result",
+    "source_opening_sha256",
+    "state"
+  ],
+  "type": "object"
+}

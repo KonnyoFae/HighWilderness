@@ -1,0 +1,118 @@
+{
+  "interface": "gaotian.stage-t0b2d4b-hard-fact-projection/v1",
+  "status": "PASS",
+  "slice": "T0b.2d4.2",
+  "baseline": {
+    "commit": "4933e05",
+    "branch": "main",
+    "pushed_to": null
+  },
+  "scope": "exact_runtime_phase_power_crew_and_destroyed_host_fact_projection_only",
+  "interfaces": {
+    "projection": "gaotian.propulsion-hard-fact-runtime-projection/v1alpha1",
+    "policy": "gaotian.propulsion-hard-fact/runtime-lineage-phase-aware/v1",
+    "snapshot_reused": "gaotian.propulsion-hard-fault-snapshot/v1alpha1",
+    "directional_state_reused": "gaotian.tactical-propulsion-state/v3alpha1",
+    "power_policy_reused": "gaotian.power-allocation/categories-and-nearest/v1",
+    "crew_policy_reused": "gaotian.crew-allocation/critical-minimum-then-proportional/v1"
+  },
+  "evidence": {
+    "exact_runtime_lineage": {
+      "actuators": 6,
+      "destroyed_actuator_trips": true,
+      "destroyed_hull_marks_host": true,
+      "exact_runtime_and_state_hashes": true,
+      "fuel_is_direct_runtime_fact": true,
+      "partial_damage_trips": false
+    },
+    "host_lineage": {
+      "destroyed_ancestor_detected": true,
+      "off_ancestor_is_not_destroyed": true,
+      "tampered_host_availability_rejected": true
+    },
+    "isolation": {
+      "cold_import_orders": 2,
+      "production_imports_scene_adapter_or_benchmarks": false,
+      "schemas": 1,
+      "snapshot_schema_references": 1
+    },
+    "phase_aware_crew": {
+      "automated_throttle_needs_manual_crew": false,
+      "crew_required_phases": [
+        "ready",
+        "running",
+        "starting",
+        "stopping"
+      ],
+      "manual_throttle_checks_minimum_allocation": true,
+      "off_and_tripped_request_crew": false
+    },
+    "phase_aware_power": {
+      "disabled_category_respected": true,
+      "phase_power_modes": {
+        "off": "off",
+        "ready": "standby",
+        "running": "active",
+        "starting": "active",
+        "stopping": "active",
+        "tripped": "off"
+      },
+      "runtime_resource_replay_checked_before_override": true,
+      "safe_nearest_stable_winner": "main_engine_port",
+      "strict_category_phase_cases": 6
+    },
+    "replay_and_contracts": {
+      "boundaries_per_replay": 3,
+      "replays": 3,
+      "strict_negative_cases": 26,
+      "trace_sha256": "e830670b45a79cb6428966c59c453c0b95fc66983bf3716fecff724f9cc26640"
+    }
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇推进硬故障运行时投影.py": "9e814e9ceb06062faf7ed4c0fec03a6f320e3d48a4ee560a837324e2d4fec396",
+    "高天荒野T0b2d4b硬故障运行时投影测试.py": "ac1f1af5600b977791bdf9e1896ab3b9fea9fd6a547bea91fa663d19bb3ad71b",
+    "舰艇数据/模式/高天荒野舰艇推进硬故障运行时投影契约.v1alpha1.schema.json": "5f1664bb1bd8544ade9376979e53f50349bc97eef6e075b29d34ae9d5063306d",
+    "高天荒野舰艇推进硬故障边界.py": "6f69499d6b2ca8546c1ee94eb4c3f264b93016a9254731ccfa6235254bf8c786",
+    "高天荒野舰艇运行时参数编译器.py": "3068126bd580cc24520f143bf7a8c85cd055e81bb60a22c54873113a56d70eb1",
+    "高天荒野舰艇实际推进聚合器.py": "db59a96449bbe5a44794069e30e686a1d071c83a9e52f121851f985c38a39036",
+    "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
+    "高天荒野舰艇测试总入口.py": "f6a7b05f59b1536b4495669006f23bb19253d93a48ca2d6e362ae45c12f5a0ea"
+  },
+  "regression": {
+    "targeted": "PASS",
+    "runner_unit": "3_of_3_PASS",
+    "quick": "14_of_14_PASS",
+    "quick_elapsed_ms": 87846.061,
+    "full_discovered": 80,
+    "full_executed": false
+  },
+  "risk_controls": {
+    "aggregate_thrust_used_as_fault_source": false,
+    "existing_runtime_algorithm_duplicated": false,
+    "partial_damage_reclassified_as_destroyed": false,
+    "host_off_reclassified_as_destroyed": false,
+    "overg_injected": false,
+    "governed_adapter_wired": false,
+    "scene_wired": false,
+    "direction_interlock_implemented": false,
+    "emergency_cut_implemented": false,
+    "legacy_golden_changed": false,
+    "actual_propulsion_golden_changed": false,
+    "governed_propulsion_golden_changed": false,
+    "official_performance_runs_executed": 0
+  },
+  "limitations": [
+    "The projection is a pure no-scene boundary; no governed adapter or tactical scene consumes it yet.",
+    "Power and crew are recomputed with the existing runtime policies under phase-specific propulsion modes; the runtime compiler remains their sole algorithm owner.",
+    "Ready requests standby power while starting, running and stopping request active power; off and tripped request neither power nor crew.",
+    "Only exact actuator, hull or ancestor-host destruction produces destruction facts; partial damage remains an existing output multiplier.",
+    "Emergency cut, explicit reset commands, direction switching, save migration and new golden outputs remain unwired."
+  ],
+  "next_slice": "T0b.2d4.3_no_scene_hard_fault_adapter",
+  "next_slice_requirements": [
+    "Consume the exact per-actuator runtime projection at the governed no-scene boundary before time advancement and physical aggregation.",
+    "Freeze versioned explicit reset and emergency-cut command ownership without treating emergency cut as a resource failure.",
+    "Preserve deterministic event order and replay while keeping direction interlock and tactical scene mutation out of this slice.",
+    "Retain d3 soft-governor history and original commands without allowing hard faults to be bypassed by overg."
+  ]
+}

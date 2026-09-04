@@ -79,7 +79,7 @@
     "舰艇数据/模式/高天荒野舰艇推进硬故障状态边界结果契约.v1alpha1.schema.json": "6884be7a2765fd801c29f18f69068bba3b379ece041272212754213f8e49f77e",
     "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
     "高天荒野舰艇推进安全判定器.py": "024e75de648a4c9dc87554ef07d028f817a177f71f93e823c9ff6ffefb82514f",
-    "高天荒野舰艇测试总入口.py": "e2107a887bd79bf620643b476e2400e08e6d1fdd6b987e9fa42b1d0df4710b40"
+    "高天荒野舰艇测试总入口.py": "f6a7b05f59b1536b4495669006f23bb19253d93a48ca2d6e362ae45c12f5a0ea"
   },
   "regression": {
     "targeted": "PASS",

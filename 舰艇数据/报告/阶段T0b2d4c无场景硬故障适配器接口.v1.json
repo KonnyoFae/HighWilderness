@@ -1,0 +1,132 @@
+{
+  "interface": "gaotian.stage-t0b2d4c-no-scene-hard-fault-adapter/v1",
+  "status": "PASS",
+  "slice": "T0b.2d4.3",
+  "baseline": {
+    "commit": "4933e05",
+    "branch": "main",
+    "pushed_to": null
+  },
+  "scope": "governed_no_scene_hard_fault_opening_explicit_reset_and_emergency_cut_only",
+  "interfaces": {
+    "command": "gaotian.governed-propulsion-hard-fault-command/v1alpha1",
+    "emergency_cut_result": "gaotian.propulsion-emergency-cut-result/v1alpha1",
+    "opening": "gaotian.governed-propulsion-hard-fault-opening/v1alpha1",
+    "opening_policy": "gaotian.governed-propulsion/hard-fault-before-time-and-delivery/v1",
+    "emergency_cut_policy": "gaotian.propulsion-emergency-cut/immediate-zero/v1",
+    "projection_reused": "gaotian.propulsion-hard-fact-runtime-projection/v1alpha1",
+    "hard_fault_result_reused": "gaotian.propulsion-hard-fault-boundary-result/v1alpha1",
+    "directional_state_reused": "gaotian.tactical-propulsion-state/v3alpha1"
+  },
+  "evidence": {
+    "boundary_order": {
+      "actuators": 6,
+      "fuel_trip_before_following_stages": true,
+      "phase_power_trip_is_per_actuator": true,
+      "manual_crew_trip_is_per_actuator": true,
+      "aggregate_thrust_used_as_fault_source": false,
+      "time_advanced": false,
+      "physical_load_evaluated": false
+    },
+    "explicit_reset": {
+      "blocked_reset_is_atomic": true,
+      "selective_reset_count": 1,
+      "unselected_latches_preserved": 5,
+      "reset_starts_engine": false,
+      "governor_history_changed": false
+    },
+    "emergency_cut": {
+      "causes": [
+        "operator_requested",
+        "safety_system_requested"
+      ],
+      "actions": [
+        "cut",
+        "already_zero",
+        "tripped_preserved"
+      ],
+      "running_actuators_cut_immediately": 2,
+      "already_zero_audits": 4,
+      "starting_cancels_to_off": true,
+      "tripped_state_preserved": true,
+      "hard_fault_precedes_emergency_cut": true,
+      "emergency_cut_emits_engine_trip": false,
+      "governor_commands_changed": false,
+      "overg_bypasses_fault": false
+    },
+    "damage_and_host": {
+      "partial_damage_trips": false,
+      "destroyed_actuator_trips": true,
+      "destroyed_hull_trips_all": true
+    },
+    "replay": {
+      "replays": 3,
+      "boundaries_per_replay": 2,
+      "reload_boundaries": [
+        0,
+        1
+      ],
+      "trace_sha256": "6f78dcbc1eed7c4a16dcaf9509392855848a0efa6f3090262e361681151f6725"
+    },
+    "negative_contracts": {
+      "strict_negative_cases": 57
+    },
+    "schema_and_isolation": {
+      "schemas": 3,
+      "references_checked": 6,
+      "cold_import_orders": 2,
+      "imports_scene_d3_adapter_time_or_benchmarks": false
+    }
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇受控推进硬故障适配器.py": "320785068bf5b59e426b26e141bce03fe16e8deb19297f7ec76463f80c286b80",
+    "高天荒野T0b2d4c无场景硬故障适配器测试.py": "4898ee969bcaa96efcca2c7d1e189d41f193872cee497903b9e9bcb39648ee76",
+    "舰艇数据/模式/高天荒野舰艇受控推进硬故障命令契约.v1alpha1.schema.json": "970acfb288777946478d1ae5a6477a9af8a1b010795367ab15760442dec5c0d6",
+    "舰艇数据/模式/高天荒野舰艇推进紧急断推结果契约.v1alpha1.schema.json": "76bcc74c9d281323185e3bf0140cb88c3d1955d5838d65ad52f8715469a03c5d",
+    "舰艇数据/模式/高天荒野舰艇受控推进硬故障开边界契约.v1alpha1.schema.json": "96966130836c14c011b492d07526be665cf67c4412944763a0b2f5be506ae749",
+    "高天荒野舰艇推进硬故障运行时投影.py": "9e814e9ceb06062faf7ed4c0fec03a6f320e3d48a4ee560a837324e2d4fec396",
+    "高天荒野舰艇推进硬故障边界.py": "6f69499d6b2ca8546c1ee94eb4c3f264b93016a9254731ccfa6235254bf8c786",
+    "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
+    "高天荒野舰艇测试总入口.py": "f6a7b05f59b1536b4495669006f23bb19253d93a48ca2d6e362ae45c12f5a0ea"
+  },
+  "regression": {
+    "targeted": "PASS",
+    "runner_unit": "3_of_3_PASS",
+    "quick": "15_of_15_PASS",
+    "quick_elapsed_ms": 110566.213,
+    "full_discovered": 81,
+    "full_executed": false
+  },
+  "risk_controls": {
+    "hard_fault_after_time_or_delivery": false,
+    "aggregate_thrust_used_as_fault_source": false,
+    "emergency_cut_reclassified_as_resource_failure": false,
+    "emergency_cut_emits_engine_trip": false,
+    "implicit_reset_added": false,
+    "reset_starts_engine": false,
+    "soft_governor_history_changed": false,
+    "overg_hard_fault_bypass_added": false,
+    "d3_no_scene_adapter_changed": false,
+    "time_kernel_changed": false,
+    "scene_wired": false,
+    "direction_interlock_implemented": false,
+    "legacy_golden_changed": false,
+    "actual_propulsion_golden_changed": false,
+    "governed_propulsion_golden_changed": false,
+    "official_performance_runs_executed": 0
+  },
+  "limitations": [
+    "This slice freezes a standalone governed hard-fault opening and does not yet compose the d3 time, delivery or closing boundaries.",
+    "Hard facts are projected and committed before any future time advancement or physical aggregation; the opening itself performs neither stage.",
+    "Reset is explicit, atomic and returns an eligible tripped actuator to zero-output off without starting it; uncleared or unselected latches remain tripped.",
+    "Emergency cut is an independent audited command, preserves hard trips and governor command history, and is not represented as a resource failure or engine trip.",
+    "Direction switching, tactical-scene mutation, save migration and new golden outputs remain unwired."
+  ],
+  "next_slice": "T0b.2d4.4_direction_interlock_boundary",
+  "next_slice_requirements": [
+    "Freeze a pure per-channel direction-interlock boundary that prevents an opposed group from increasing until the old group reaches exact zero.",
+    "Keep direction interlock distinct from hard-fault trip state and emergency cut while preserving stable per-actuator audit order.",
+    "Compose the interlock after the hard-fault opening and before time advancement without importing the tactical scene.",
+    "Define deterministic restart and mid-transition command behavior while retaining original governor commands and exact replay."
+  ]
+}

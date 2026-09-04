@@ -1,0 +1,47 @@
+{
+  "$id": "gaotian.propulsion-emergency-cut-result/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "action": {
+      "enum": [
+        "cut",
+        "already_zero",
+        "tripped_preserved"
+      ]
+    },
+    "cause": {
+      "enum": [
+        "operator_requested",
+        "safety_system_requested"
+      ]
+    },
+    "fixed_step_index": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "interface": {
+      "const": "gaotian.propulsion-emergency-cut-result/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.propulsion-emergency-cut/immediate-zero/v1"
+    },
+    "source_state_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "state": {
+      "$ref": "gaotian.tactical-propulsion-state/v3alpha1#/$defs/engineRuntimeState"
+    }
+  },
+  "required": [
+    "action",
+    "cause",
+    "fixed_step_index",
+    "interface",
+    "policy",
+    "source_state_sha256",
+    "state"
+  ],
+  "type": "object"
+}

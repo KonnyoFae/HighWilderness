@@ -1,0 +1,60 @@
+{
+  "$id": "gaotian.governed-propulsion-hard-fault-opening/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "command": {
+      "$ref": "gaotian.governed-propulsion-hard-fault-command/v1alpha1"
+    },
+    "emergency_cut_results": {
+      "items": {
+        "$ref": "gaotian.propulsion-emergency-cut-result/v1alpha1"
+      },
+      "type": "array"
+    },
+    "fixed_step_index": {
+      "minimum": 0,
+      "type": "integer"
+    },
+    "hard_fault_results": {
+      "items": {
+        "$ref": "gaotian.propulsion-hard-fault-boundary-result/v1alpha1"
+      },
+      "minItems": 1,
+      "type": "array"
+    },
+    "interface": {
+      "const": "gaotian.governed-propulsion-hard-fault-opening/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.governed-propulsion/hard-fault-before-time-and-delivery/v1"
+    },
+    "projection": {
+      "$ref": "gaotian.propulsion-hard-fact-runtime-projection/v1alpha1"
+    },
+    "resulting_state_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "source_state_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "state": {
+      "$ref": "gaotian.tactical-propulsion-state/v3alpha1"
+    }
+  },
+  "required": [
+    "command",
+    "emergency_cut_results",
+    "fixed_step_index",
+    "hard_fault_results",
+    "interface",
+    "policy",
+    "projection",
+    "resulting_state_sha256",
+    "source_state_sha256",
+    "state"
+  ],
+  "type": "object"
+}
