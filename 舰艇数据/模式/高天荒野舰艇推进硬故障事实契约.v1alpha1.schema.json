@@ -1,0 +1,33 @@
+{
+  "$id": "gaotian.propulsion-hard-fault-snapshot/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "actuator_destroyed": {"type": "boolean"},
+    "actuator_instance_id": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "crew_available": {"type": "boolean"},
+    "fixed_step_index": {"minimum": 0, "type": "integer"},
+    "fuel_available": {"type": "boolean"},
+    "host_destroyed": {"type": "boolean"},
+    "interface": {
+      "const": "gaotian.propulsion-hard-fault-snapshot/v1alpha1"
+    },
+    "overg_requested": {"type": "boolean"},
+    "power_available": {"type": "boolean"}
+  },
+  "required": [
+    "actuator_destroyed",
+    "actuator_instance_id",
+    "crew_available",
+    "fixed_step_index",
+    "fuel_available",
+    "host_destroyed",
+    "interface",
+    "overg_requested",
+    "power_available"
+  ],
+  "type": "object"
+}

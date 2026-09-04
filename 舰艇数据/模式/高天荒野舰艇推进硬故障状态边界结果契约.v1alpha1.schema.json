@@ -1,0 +1,91 @@
+{
+  "$id": "gaotian.propulsion-hard-fault-boundary-result/v1alpha1",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "action": {"enum": ["trip", "latched"]}
+        }
+      },
+      "then": {
+        "properties": {
+          "hard_availability": {
+            "properties": {"ceiling_percent": {"const": 0}}
+          },
+          "state": {"properties": {"phase": {"const": "tripped"}}}
+        }
+      },
+      "else": {
+        "properties": {
+          "hard_availability": {
+            "properties": {
+              "ceiling_percent": {"const": 100},
+              "reasons": {"maxItems": 0}
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {"properties": {"action": {"enum": ["trip", "reset"]}}},
+      "then": {"properties": {"events": {"maxItems": 1, "minItems": 1}}},
+      "else": {"properties": {"events": {"maxItems": 0}}}
+    }
+  ],
+  "properties": {
+    "action": {"enum": ["available", "trip", "latched", "reset"]},
+    "events": {
+      "items": {"$ref": "gaotian.propulsion-state-event/v1alpha1"},
+      "maxItems": 1,
+      "type": "array"
+    },
+    "hard_availability": {
+      "additionalProperties": false,
+      "properties": {
+        "ceiling_percent": {"enum": [0, 100]},
+        "reasons": {
+          "items": {
+            "enum": [
+              "fuel_unavailable",
+              "power_unavailable",
+              "crew_unavailable",
+              "actuator_destroyed",
+              "host_destroyed",
+              "engine_tripped"
+            ]
+          },
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": ["ceiling_percent", "reasons"],
+      "type": "object"
+    },
+    "interface": {
+      "const": "gaotian.propulsion-hard-fault-boundary-result/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.propulsion-hard-fault/trip-latched-explicit-reset/v1"
+    },
+    "snapshot": {
+      "$ref": "gaotian.propulsion-hard-fault-snapshot/v1alpha1"
+    },
+    "source_state_sha256": {"pattern": "^[0-9a-f]{64}$", "type": "string"},
+    "state": {
+      "$ref": "gaotian.tactical-propulsion-state/v3alpha1#/$defs/engineRuntimeState"
+    }
+  },
+  "required": [
+    "action",
+    "events",
+    "hard_availability",
+    "interface",
+    "policy",
+    "snapshot",
+    "source_state_sha256",
+    "state"
+  ],
+  "type": "object"
+}

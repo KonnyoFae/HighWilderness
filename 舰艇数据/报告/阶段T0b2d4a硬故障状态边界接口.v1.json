@@ -1,0 +1,122 @@
+{
+  "interface": "gaotian.stage-t0b2d4a-hard-fault-boundary/v1",
+  "status": "PASS",
+  "slice": "T0b.2d4.1",
+  "baseline": {
+    "commit": "ba638e2",
+    "branch": "main",
+    "pushed_to": null
+  },
+  "scope": "pure_external_hard_fact_trip_latch_and_explicit_reset_boundary_only",
+  "interfaces": {
+    "snapshot": "gaotian.propulsion-hard-fault-snapshot/v1alpha1",
+    "result": "gaotian.propulsion-hard-fault-boundary-result/v1alpha1",
+    "policy": "gaotian.propulsion-hard-fault/trip-latched-explicit-reset/v1",
+    "engine_state_reused": "gaotian.engine-runtime-state/v2alpha1",
+    "engine_event_reused": "gaotian.propulsion-state-event/v1alpha1"
+  },
+  "evidence": {
+    "external_reason_matrix": {
+      "combined_reason_order": [
+        "fuel_unavailable",
+        "power_unavailable",
+        "crew_unavailable",
+        "actuator_destroyed",
+        "host_destroyed"
+      ],
+      "external_causes": 5,
+      "overg_bypasses_hard_fault": false,
+      "trip_hashes": [
+        "f2674954c246462cbdb17fc366524844983cf8af6040075615b8bc8da7c41df3",
+        "5f63b13849f80fa5c634bb6a2e85c1adf66cf8c4bd51d78bdfd5f24ff3907312",
+        "3c502d804813ad6f5b6d15b2bc2e61d8ceac357d0323009c386d5318fc0187a2",
+        "e54462f4a1062557dc84d4a1eb7e294ef4684a61f7264d7b4e71f8b23ae6f3cd",
+        "1b97215a54331bc10de3bd9f6fb5284c3d04b29ba443a247685151d99d026051"
+      ]
+    },
+    "isolation": {
+      "cold_import_orders": 2,
+      "production_imports_scene_runtime_or_benchmarks": false,
+      "references_checked": 3,
+      "schemas": 2
+    },
+    "latch_and_reset": {
+      "availability_recovery_auto_resets": false,
+      "blocked_reset_rejected": true,
+      "categories": 2,
+      "explicit_reset_to_off": true,
+      "reset_does_not_start": true
+    },
+    "negative_contracts": {
+      "strict_negative_cases": 42
+    },
+    "phase_and_category_matrix": {
+      "cases": 10,
+      "categories": 2,
+      "immediate_zero_and_schedule_clear": true,
+      "source_phases": [
+        "off",
+        "starting",
+        "ready",
+        "running",
+        "stopping"
+      ]
+    },
+    "replay": {
+      "boundaries_per_replay": 5,
+      "reload_boundaries": [
+        1,
+        3
+      ],
+      "replays": 3,
+      "trace_sha256": "59ed362211f5fd816e7fa54621b4e5ef43fbf653a62db3ef23443545408efdf4"
+    }
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇推进硬故障边界.py": "6f69499d6b2ca8546c1ee94eb4c3f264b93016a9254731ccfa6235254bf8c786",
+    "高天荒野T0b2d4a硬故障状态边界测试.py": "3e7eb5bc807d4af80f81fca6d723bd6bb71c3b1e218f1b71bc5b31d6f25d1d6b",
+    "舰艇数据/模式/高天荒野舰艇推进硬故障事实契约.v1alpha1.schema.json": "f2601b4763ed102776e831aebfa60f776a05e295973e7be8fadc408f7492b053",
+    "舰艇数据/模式/高天荒野舰艇推进硬故障状态边界结果契约.v1alpha1.schema.json": "6884be7a2765fd801c29f18f69068bba3b379ece041272212754213f8e49f77e",
+    "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
+    "高天荒野舰艇推进安全判定器.py": "024e75de648a4c9dc87554ef07d028f817a177f71f93e823c9ff6ffefb82514f",
+    "高天荒野舰艇测试总入口.py": "e2107a887bd79bf620643b476e2400e08e6d1fdd6b987e9fa42b1d0df4710b40"
+  },
+  "regression": {
+    "targeted": "PASS",
+    "runner_unit": "3_of_3_PASS",
+    "quick": "13_of_13_PASS",
+    "quick_elapsed_ms": 87416.45,
+    "full_discovered": 79,
+    "full_executed": false
+  },
+  "risk_controls": {
+    "existing_engine_state_changed": false,
+    "existing_event_contract_changed": false,
+    "soft_governor_changed": false,
+    "time_kernel_changed": false,
+    "runtime_fact_projection_implemented": false,
+    "governed_adapter_wired": false,
+    "scene_wired": false,
+    "direction_interlock_implemented": false,
+    "emergency_cut_implemented": false,
+    "overg_bypass_added": false,
+    "legacy_golden_changed": false,
+    "actual_propulsion_golden_changed": false,
+    "governed_propulsion_golden_changed": false,
+    "official_performance_runs_executed": 0
+  },
+  "limitations": [
+    "Facts are explicit inputs in this slice; runtime module, fuel, crew and host state projection remains unwired.",
+    "Reset returns a zero-output off state and never starts an engine; command authorization is a later boundary.",
+    "Emergency thrust cut needs a versioned cause and command contract and is intentionally not represented as another hard fact.",
+    "Direction interlock is not an engine trip cause and remains outside this boundary.",
+    "No tactical scene, save, replay envelope or golden output consumes this result yet."
+  ],
+  "next_slice": "T0b.2d4.2_runtime_hard_fact_projection",
+  "next_slice_requirements": [
+    "Derive the five explicit hard facts from the exact runtime, module, host, crew and fuel lineage without inferring from aggregate thrust alone.",
+    "Keep partial actuator damage as the existing thrust multiplier; only destroyed actuator or host facts trip.",
+    "Freeze phase-aware power and crew eligibility before wiring the governed adapter.",
+    "Do not add emergency cut, direction switching or tactical scene mutation to the runtime projection slice."
+  ]
+}

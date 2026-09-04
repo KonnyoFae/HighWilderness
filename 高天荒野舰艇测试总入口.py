@@ -31,6 +31,7 @@ QUICK_SCRIPT_NAMES = frozenset(
         "高天荒野T0b2d3c受控场景合同与旧版门禁测试.py",
         "高天荒野T0b2d3d无场景受控推进适配器测试.py",
         "高天荒野T0b2d3e统一场景受控推进与存档测试.py",
+        "高天荒野T0b2d4a硬故障状态边界测试.py",
     }
 )
 
