@@ -1,0 +1,1103 @@
+{
+  "interface": "gaotian.t0-fully-governed-propulsion-step-golden/v1",
+  "scene_interface": "gaotian.tactical-scene-timeline/v7alpha1",
+  "step_interface": "gaotian.tactical-scene-step-resolution/v6alpha1",
+  "cases": {
+    "functional_6.guided_projectiles": {
+      "steps": 12,
+      "ships": 6,
+      "opening_records": 72,
+      "closing_records": 72,
+      "initial_scene_sha256": "ad0dbb5096027e4179511fc2ac4fffdb60c2f7c951890c194bd02cd319f4aaf5",
+      "resulting_scene_sha256": "1c3a9e7841a44ba4466c31d51c55a53190c648026c712d1b2b1dd84512e43d88",
+      "input_stream_sha256": "76b3966bf30299ad9817c11d3b7bbbcc00f828594baa5ded5fc318125f50421b",
+      "resource_bundle_sha256": "4f8299b5334b3b2df3e8a07a60abab043104f82caf0a9bb4e7c5a661e200c85f",
+      "step_trace_sha256": "98501c82ea8f3668878190cac8642ca402016f2af2bb649555a88545ca2ef0b9",
+      "final_motion_sha256": "2f1497d596b421fc0cff78e026a42e8f196eb21a27ff76041c7fb60df855a090",
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 32,
+        "spawned_projectiles": 4,
+        "weapon_events": 4
+      },
+      "boundary_event_counts": {
+        "time": 32
+      }
+    },
+    "functional_6.motion_only": {
+      "steps": 12,
+      "ships": 6,
+      "opening_records": 72,
+      "closing_records": 72,
+      "initial_scene_sha256": "4049a349a91dd3f41c201b69b35cda69315709579738440966e66423538aee2a",
+      "resulting_scene_sha256": "66861fab4c4440b558af097bc071c504baed11839bd89e095ea3561e05c5c516",
+      "input_stream_sha256": "76b3966bf30299ad9817c11d3b7bbbcc00f828594baa5ded5fc318125f50421b",
+      "resource_bundle_sha256": "c5b3992da40a3b98529f35e66e80ed02c908e2aff4bca40ae7fbdb1f4ba30b3e",
+      "step_trace_sha256": "afdd05abe4d02e903341886abf1dfdaf07e61d9bcc513f7c599934c2dbc53999",
+      "final_motion_sha256": "2f1497d596b421fc0cff78e026a42e8f196eb21a27ff76041c7fb60df855a090",
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 32,
+        "spawned_projectiles": 0,
+        "weapon_events": 0
+      },
+      "boundary_event_counts": {
+        "time": 32
+      }
+    },
+    "functional_6.ordinary_projectiles": {
+      "steps": 12,
+      "ships": 6,
+      "opening_records": 72,
+      "closing_records": 72,
+      "initial_scene_sha256": "0d774decaaf715773593db1cda1e3782c883378cddd008643fb162154839a2fa",
+      "resulting_scene_sha256": "5fde82283f23798eaf4eefe8159f0487c82567d814c8d373917fcda74c9f9555",
+      "input_stream_sha256": "76b3966bf30299ad9817c11d3b7bbbcc00f828594baa5ded5fc318125f50421b",
+      "resource_bundle_sha256": "f7bcfcf8f763b8c505103915516b885b4781c10abbcb304fc8baf5818a71d2ce",
+      "step_trace_sha256": "654272ba108a97c97c3fb5b8945bf2d683377e481dfa6c07a001c8c4475a0c4b",
+      "final_motion_sha256": "2f1497d596b421fc0cff78e026a42e8f196eb21a27ff76041c7fb60df855a090",
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 32,
+        "spawned_projectiles": 4,
+        "weapon_events": 4
+      },
+      "boundary_event_counts": {
+        "time": 32
+      }
+    },
+    "functional_6.scripted_damage_and_recompile": {
+      "steps": 12,
+      "ships": 6,
+      "opening_records": 72,
+      "closing_records": 72,
+      "initial_scene_sha256": "0bfee52019fb2f0a525c1a02fe0b0a1e931e25bbbbd8be2d12b1a9d0b6bb9a66",
+      "resulting_scene_sha256": "65a833ceae2e95fd304876d180d4531013b07bba736cfebe98fe09a3b8383d7b",
+      "input_stream_sha256": "76b3966bf30299ad9817c11d3b7bbbcc00f828594baa5ded5fc318125f50421b",
+      "resource_bundle_sha256": "98f331c8cefec061680c5184d7436fae0742d4e2bc0dd79402bf156c3e41a717",
+      "step_trace_sha256": "ba7126226f3397c4a484887e97c78c9531fefd37730bab071b323545861ad502",
+      "final_motion_sha256": "0d4e301f5dbef67b16937beb8cc246856b5762b7ef9e7552805b71c62f504271",
+      "event_counts": {
+        "continuous_damage_events": 72,
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 32,
+        "spawned_projectiles": 4,
+        "weapon_events": 4
+      },
+      "boundary_event_counts": {
+        "time": 32
+      }
+    },
+    "stress_30.guided_projectiles": {
+      "steps": 12,
+      "ships": 30,
+      "opening_records": 360,
+      "closing_records": 360,
+      "initial_scene_sha256": "74518a5d34e5d4554c6bdae89b4286af0b6aad662db2baebcd043d9f6a0da1ab",
+      "resulting_scene_sha256": "5ad42610d7d06c2109d4a5575588a8ecdd6ecd9f66896fa1e81ee05e84ef06e8",
+      "input_stream_sha256": "c0ab21ea3dcf9d09db91deec3556f0ebc437e0968e2c6703900099814fde35f7",
+      "resource_bundle_sha256": "741fcdb65e7387e54be797684d07d23b4b54b57204bb50cc958d6e1f4c47e465",
+      "step_trace_sha256": "820d645f5865b2a6300273f8d5b5ea4dff6087435830fdfe1762c83c3a453e09",
+      "final_motion_sha256": "60eb9cd6d626f23cd805d7bfb8780f849d3aad79ee9b907a6b0782971d0ca989",
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 164,
+        "spawned_projectiles": 20,
+        "weapon_events": 20
+      },
+      "boundary_event_counts": {
+        "time": 164
+      }
+    },
+    "stress_30.motion_only": {
+      "steps": 12,
+      "ships": 30,
+      "opening_records": 360,
+      "closing_records": 360,
+      "initial_scene_sha256": "87a7799385359230359b852880d66a1b3c4a9f75dc6199dc4bdb971b75371e7e",
+      "resulting_scene_sha256": "ed1dc17028403f341fc7725750874203edcb2d6fc7bbdbdeb4b7f82ae22f87cd",
+      "input_stream_sha256": "c0ab21ea3dcf9d09db91deec3556f0ebc437e0968e2c6703900099814fde35f7",
+      "resource_bundle_sha256": "d2d9e673b94d1be1833c564aca629e74c1f4d55f8cce455e6087c18cefebdf9c",
+      "step_trace_sha256": "6c680cf1a011a0e9c57d70203c3d63ca6da2667da312dbb754b483f63d34259d",
+      "final_motion_sha256": "60eb9cd6d626f23cd805d7bfb8780f849d3aad79ee9b907a6b0782971d0ca989",
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 164,
+        "spawned_projectiles": 0,
+        "weapon_events": 0
+      },
+      "boundary_event_counts": {
+        "time": 164
+      }
+    },
+    "stress_30.ordinary_projectiles": {
+      "steps": 12,
+      "ships": 30,
+      "opening_records": 360,
+      "closing_records": 360,
+      "initial_scene_sha256": "f997d9636fef1178f748cd0985a32c058f50cd2e93c5957d6b3195b6d7e12666",
+      "resulting_scene_sha256": "a5a02d0ad19ea7c176be24c05976aa299639a965a79bf8adcb010b27550ea534",
+      "input_stream_sha256": "c0ab21ea3dcf9d09db91deec3556f0ebc437e0968e2c6703900099814fde35f7",
+      "resource_bundle_sha256": "03238136a0ea3cd24e15632db3b02b682d7c71cf8602639015a92f2d944810b1",
+      "step_trace_sha256": "11d9dcebc8b8e52dcfd46a3ed8ebe222ef7a2b550de9765c21c5a0e7dfb3b8eb",
+      "final_motion_sha256": "60eb9cd6d626f23cd805d7bfb8780f849d3aad79ee9b907a6b0782971d0ca989",
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 164,
+        "spawned_projectiles": 20,
+        "weapon_events": 20
+      },
+      "boundary_event_counts": {
+        "time": 164
+      }
+    },
+    "stress_30.scripted_damage_and_recompile": {
+      "steps": 12,
+      "ships": 30,
+      "opening_records": 360,
+      "closing_records": 360,
+      "initial_scene_sha256": "b852bed46ea43226d3727788c593f236b770fb7a681da11c0a7144c3abeefb1f",
+      "resulting_scene_sha256": "a779f6c71d9b5ff574a3948d76b702698ae7937fb6e9eecfe0edecad9dd48d61",
+      "input_stream_sha256": "c0ab21ea3dcf9d09db91deec3556f0ebc437e0968e2c6703900099814fde35f7",
+      "resource_bundle_sha256": "dfde33e0aa31013533fe346bf98d1c45e009f363d740354f4b5a6fd3de7d6fa4",
+      "step_trace_sha256": "70da98220435972b9055bd20e901d56ebcbac8a97fe4832b001f75a110546b45",
+      "final_motion_sha256": "d5bdce794cae86bfb7a08723033942ae07215f58229202320ef32dffae33af29",
+      "event_counts": {
+        "continuous_damage_events": 360,
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 164,
+        "spawned_projectiles": 20,
+        "weapon_events": 20
+      },
+      "boundary_event_counts": {
+        "time": 164
+      }
+    },
+    "target_20.guided_projectiles": {
+      "steps": 12,
+      "ships": 20,
+      "opening_records": 240,
+      "closing_records": 240,
+      "initial_scene_sha256": "41351a9036f666af325692a4d7cecf154ac66ed37c9662ff2b8d0c6e87204da1",
+      "resulting_scene_sha256": "27b8f93a9f71d865bf24abffefe38f1762e3281a5b6b3005cc744aee780632c7",
+      "input_stream_sha256": "8994742ae2698a5a75445091ade4d4338d5610efdbf4f36bbefafa8e8e2bc525",
+      "resource_bundle_sha256": "cb0a77c23230b9164030aaeb208c96d13c781144d9cbcc3a715f18ba32a17ae3",
+      "step_trace_sha256": "e3c111b4f6707e5f1a08537a44022d5fe0548273345335dc8495cc391f282094",
+      "final_motion_sha256": "0f71992fcd6563221088bfab5e1db928f2e62c4f0c06c74c902c12d265d4d579",
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 110,
+        "spawned_projectiles": 14,
+        "weapon_events": 14
+      },
+      "boundary_event_counts": {
+        "time": 110
+      }
+    },
+    "target_20.motion_only": {
+      "steps": 12,
+      "ships": 20,
+      "opening_records": 240,
+      "closing_records": 240,
+      "initial_scene_sha256": "0675eb4fdaeec232f3438553f85bd8cc8e843aa9ac5f7ecac4185edd222cd9ed",
+      "resulting_scene_sha256": "967462540fdd2012ac9eaa5e2d9a1ea29fcfa12fb280fd19b2edb2e4ed758eda",
+      "input_stream_sha256": "8994742ae2698a5a75445091ade4d4338d5610efdbf4f36bbefafa8e8e2bc525",
+      "resource_bundle_sha256": "830212ba79e897f72abf1bfac090aafea836b10a509dadeda3ca80230f572e81",
+      "step_trace_sha256": "c9b79447c39ff2397a0327740df594430c99e6a45632cb3be1cdbb62d50c3862",
+      "final_motion_sha256": "0f71992fcd6563221088bfab5e1db928f2e62c4f0c06c74c902c12d265d4d579",
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 110,
+        "spawned_projectiles": 0,
+        "weapon_events": 0
+      },
+      "boundary_event_counts": {
+        "time": 110
+      }
+    },
+    "target_20.ordinary_projectiles": {
+      "steps": 12,
+      "ships": 20,
+      "opening_records": 240,
+      "closing_records": 240,
+      "initial_scene_sha256": "25b848216914d80495d88dafd9733cf86a5b1241aa2e7ac81c0311c82863039c",
+      "resulting_scene_sha256": "9cc97992c7e61c912c860bfc07e7de95bf27864602a60ecb1d78790a52150c70",
+      "input_stream_sha256": "8994742ae2698a5a75445091ade4d4338d5610efdbf4f36bbefafa8e8e2bc525",
+      "resource_bundle_sha256": "6057f0d32aed5f4842d553b6f5964f7087bb6417915713890cbe19e6dbe756ef",
+      "step_trace_sha256": "2c2cad40efb76a6b8d2b26230d25408a1c51dcf0f50d3dfd85c458b867b17ecd",
+      "final_motion_sha256": "0f71992fcd6563221088bfab5e1db928f2e62c4f0c06c74c902c12d265d4d579",
+      "event_counts": {
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 110,
+        "spawned_projectiles": 14,
+        "weapon_events": 14
+      },
+      "boundary_event_counts": {
+        "time": 110
+      }
+    },
+    "target_20.scripted_damage_and_recompile": {
+      "steps": 12,
+      "ships": 20,
+      "opening_records": 240,
+      "closing_records": 240,
+      "initial_scene_sha256": "5becf2564792d44a016c047880f8d7b60fc4773a60b4c33ce5687484402a456f",
+      "resulting_scene_sha256": "7043961b3773636e2e1f73b42f9cb15ec178fa16561e5a45470b42561c3ba006",
+      "input_stream_sha256": "8994742ae2698a5a75445091ade4d4338d5610efdbf4f36bbefafa8e8e2bc525",
+      "resource_bundle_sha256": "599a1a4d17caad8be4ba0f82898db13ef21f41593196c8c36671c208e0dab497",
+      "step_trace_sha256": "3c982644e129f7de7fd1d43b95ca8ec8631c71c95cbe1abdaf4b8fa64fc7534c",
+      "final_motion_sha256": "beee9d38ebcf2d1edb44aa5dfaaab28d638b2337f03f0331cc5c7ad795efc881",
+      "event_counts": {
+        "continuous_damage_events": 240,
+        "engagement_events": 0,
+        "expired_events": 0,
+        "impact_events": 0,
+        "lifecycle_events": 0,
+        "propulsion_boundary_events": 110,
+        "spawned_projectiles": 14,
+        "weapon_events": 14
+      },
+      "boundary_event_counts": {
+        "time": 110
+      }
+    }
+  },
+  "mixed_long_sequence": {
+    "steps": 401,
+    "initial_boundary": 1,
+    "final_boundary": 402,
+    "active_ships": 1,
+    "frozen_ships": 5,
+    "setup_sha256": "ed90a580301e6eb34a47a1fe74906fdd9fc64b754112a9a854db1a883369c74e",
+    "initial_scene_sha256": "add2ef4051f0ea188d02dd00f11fc9d27a2e3360e496cb87c3bab54e5e18c4ae",
+    "final_scene_sha256": "2e8882e22a31a5e8537d793a3a7779100beef548535766cbc1c574b114a9d10e",
+    "trace_sha256": "51658ad978295b0650809b0b1164f569e756dd3d50700968ef86850bed105477",
+    "input_stream_sha256": "4358ef247b3983206a70dd36a1f625b087df78585dd2133eeeb035c7282b3c46",
+    "samples": {
+      "2": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "main_engine_starboard": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_port_aft": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_port_fore": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          }
+        },
+        "fuel_units": 800.0,
+        "governors_sha256": "21d2370824f2b1cb07dd19f37fa7b17e77979de5139c4a4c96f083c122b5782a"
+      },
+      "4": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "running",
+            "actual": 2,
+            "target": 100
+          },
+          "main_engine_starboard": {
+            "phase": "running",
+            "actual": 2,
+            "target": 100
+          },
+          "thruster_port_aft": {
+            "phase": "running",
+            "actual": 5,
+            "target": 25
+          },
+          "thruster_port_fore": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "running",
+            "actual": 5,
+            "target": 25
+          }
+        },
+        "fuel_units": 799.9992666666667,
+        "governors_sha256": "745667cdede762fb95d163b536d8aa8df81e839d88ff39cbf2f4e3ecd34eea5d"
+      },
+      "91": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "running",
+            "actual": 100,
+            "target": 100
+          },
+          "main_engine_starboard": {
+            "phase": "running",
+            "actual": 100,
+            "target": 100
+          },
+          "thruster_port_aft": {
+            "phase": "running",
+            "actual": 25,
+            "target": 25
+          },
+          "thruster_port_fore": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "running",
+            "actual": 25,
+            "target": 25
+          }
+        },
+        "fuel_units": 798.0144333333309,
+        "governors_sha256": "4b77a7403b5598f54b5cfb4feb53faff022c1d28508b3d55d483000019c9dedf"
+      },
+      "92": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "running",
+            "actual": 100,
+            "target": 100
+          },
+          "main_engine_starboard": {
+            "phase": "running",
+            "actual": 100,
+            "target": 100
+          },
+          "thruster_port_aft": {
+            "phase": "stopping",
+            "actual": 25,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "stopping",
+            "actual": 25,
+            "target": 0
+          }
+        },
+        "fuel_units": 797.9802666666642,
+        "governors_sha256": "7611a150e9fc178626350a0cdfb970bee4c4ba2bc3c7f26f67b04eb3d0886bc6"
+      },
+      "93": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "running",
+            "actual": 100,
+            "target": 100
+          },
+          "main_engine_starboard": {
+            "phase": "running",
+            "actual": 100,
+            "target": 100
+          },
+          "thruster_port_aft": {
+            "phase": "stopping",
+            "actual": 25,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "stopping",
+            "actual": 25,
+            "target": 0
+          }
+        },
+        "fuel_units": 797.9460999999975,
+        "governors_sha256": "3efaa425e73853c56d176619af3631e1886441eadabb9e7a9bef7dbccb0852a4"
+      },
+      "112": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "main_engine_starboard": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 0.0,
+        "governors_sha256": "215c1c5586e4b5b0e3b99d06ffdbc316a766727efda6bf0bd6353e305fa9571b"
+      },
+      "113": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "main_engine_starboard": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 0.0,
+        "governors_sha256": "71aa02353f7033549343131c5a8e08a3b770e22d57315fc48f207e5ace3490c9"
+      },
+      "116": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "main_engine_starboard": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 800.0,
+        "governors_sha256": "4afb1eb6e046c1a5d8ffcc2f0c81eaf8428989c7cb222118d710dc862563553d"
+      },
+      "118": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "starting",
+            "actual": 0,
+            "target": 100
+          },
+          "main_engine_starboard": {
+            "phase": "starting",
+            "actual": 0,
+            "target": 100
+          },
+          "thruster_port_aft": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_starboard_aft": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_starboard_fore": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 800.0,
+        "governors_sha256": "e2f4448673ad45a2e283993ba2d793a05581edda296a35c154132bc86b44a524"
+      },
+      "119": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "starting",
+            "actual": 0,
+            "target": 100
+          },
+          "main_engine_starboard": {
+            "phase": "starting",
+            "actual": 0,
+            "target": 100
+          },
+          "thruster_port_aft": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_starboard_aft": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_starboard_fore": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 800.0,
+        "governors_sha256": "ed8e813154043a4366cf65ca2f90d5f6946e739e731f84a96cb1c494c5466228"
+      },
+      "211": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "running",
+            "actual": 55,
+            "target": 100
+          },
+          "main_engine_starboard": {
+            "phase": "running",
+            "actual": 55,
+            "target": 100
+          },
+          "thruster_port_aft": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "running",
+            "actual": 25,
+            "target": 25
+          },
+          "thruster_starboard_aft": {
+            "phase": "running",
+            "actual": 25,
+            "target": 25
+          },
+          "thruster_starboard_fore": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 799.6542666666627,
+        "governors_sha256": "6ccb913459cf4de6f65b480465b3d240538ea52ad50cf6fca7fa74255f91a8db"
+      },
+      "212": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "main_engine_starboard": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_aft": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 799.6542666666627,
+        "governors_sha256": "2387cac1c455a329c218a2443881fef82cd1c6c3a1749f99a4195fe5c54ed0e3"
+      },
+      "213": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "running",
+            "actual": 0,
+            "target": 100
+          },
+          "main_engine_starboard": {
+            "phase": "running",
+            "actual": 0,
+            "target": 100
+          },
+          "thruster_port_aft": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_starboard_aft": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_starboard_fore": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 799.6542666666627,
+        "governors_sha256": "5388b3d18a92865d51f70c3b72c266ea3fdbe6ca4553edccbbd882e723641ee0"
+      },
+      "268": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "stopping",
+            "actual": 20,
+            "target": 0
+          },
+          "main_engine_starboard": {
+            "phase": "stopping",
+            "actual": 20,
+            "target": 0
+          },
+          "thruster_port_aft": {
+            "phase": "stopping",
+            "actual": 25,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "ready",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "stopping",
+            "actual": 25,
+            "target": 0
+          }
+        },
+        "fuel_units": 799.0585333333277,
+        "governors_sha256": "45a84a6983f4a81e37436e82e9737ec6ab7baa6194f813da7fa74233f7f699f9"
+      },
+      "272": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "main_engine_starboard": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 0.0,
+        "governors_sha256": "de97473580f6e56a83a70d7c8f098b6cc037a20389d741049ad8b0b4dbb52ae9"
+      },
+      "273": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "main_engine_starboard": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 0.0,
+        "governors_sha256": "83e2dc8d1439be4381e4c8ea660dd43f326510c3f85967ba541f77cd1a8131b5"
+      },
+      "275": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "main_engine_starboard": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_aft": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_starboard_fore": {
+            "phase": "tripped",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 800.0,
+        "governors_sha256": "86f895173bef4c47fa8bd9a705d8628dde532ac1bb6c88a677fd873c2639950e"
+      },
+      "277": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "main_engine_starboard": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_aft": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_starboard_aft": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_starboard_fore": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 800.0,
+        "governors_sha256": "65f5995d3cb27209d324e8b95773fe6227b5eb09256904c6111f18ea056c2280"
+      },
+      "278": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "main_engine_starboard": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_aft": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_starboard_aft": {
+            "phase": "running",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_starboard_fore": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 800.0,
+        "governors_sha256": "d128d841c04f431120b3b79b1dc54328073ff12a95e19e4e4acd31af18436f89"
+      },
+      "338": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "starting",
+            "actual": 0,
+            "target": 25
+          },
+          "main_engine_starboard": {
+            "phase": "starting",
+            "actual": 0,
+            "target": 25
+          },
+          "thruster_port_aft": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "running",
+            "actual": 25,
+            "target": 25
+          },
+          "thruster_starboard_aft": {
+            "phase": "running",
+            "actual": 25,
+            "target": 25
+          },
+          "thruster_starboard_fore": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 799.9565999999975,
+        "governors_sha256": "41ac0893d4b65f1c4f61945482cbc9d951c8a48a1210013132dd7ab2766aef50"
+      },
+      "402": {
+        "engines": {
+          "main_engine_port": {
+            "phase": "running",
+            "actual": 25,
+            "target": 25
+          },
+          "main_engine_starboard": {
+            "phase": "running",
+            "actual": 25,
+            "target": 25
+          },
+          "thruster_port_aft": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          },
+          "thruster_port_fore": {
+            "phase": "running",
+            "actual": 25,
+            "target": 25
+          },
+          "thruster_starboard_aft": {
+            "phase": "running",
+            "actual": 25,
+            "target": 25
+          },
+          "thruster_starboard_fore": {
+            "phase": "off",
+            "actual": 0,
+            "target": 0
+          }
+        },
+        "fuel_units": 799.469266666661,
+        "governors_sha256": "459096cf5e526502481e6fd0dde208c77c81189edaf12634ebada53989fa5ead"
+      }
+    },
+    "trip_input_steps": [
+      110,
+      270
+    ],
+    "reset_input_steps": [
+      116,
+      275
+    ],
+    "emergency_input_steps": [
+      210
+    ],
+    "first_blocked_input_step": 90,
+    "first_released_input_step": 105,
+    "event_counts": {
+      "engagement_events": 0,
+      "expired_events": 0,
+      "impact_events": 0,
+      "lifecycle_events": 0,
+      "propulsion_boundary_events": 237,
+      "spawned_projectiles": 0,
+      "weapon_events": 0
+    },
+    "interlock_action_counts": {
+      "blocked_until_opposing_zero": 19,
+      "emergency_cut_hold": 6,
+      "pass_through": 2381
+    },
+    "actual_fuel_units_consumed": 4.152900000000012,
+    "final_soft_ceiling_percent": 100
+  },
+  "migration_resume": {
+    "loaded_ships": 6,
+    "receipt_sha256": "bf656e470f695453d0e9d720384509d3a1d3f325218e3ef0b266371e0e33ddac",
+    "resumed_result_sha256": "5a66b1c8f7e5222956a26f501efe2cfa451de08c721ca1b258ceaaa64d96fd2e",
+    "matches_named_v7": true
+  }
+}

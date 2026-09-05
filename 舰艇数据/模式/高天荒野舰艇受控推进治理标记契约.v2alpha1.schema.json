@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.governed-propulsion-execution/v2alpha1",
+  "description": "完整安全权威语义；当前程序是否开放执行由场景推进入口单独决定。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.governed-propulsion-execution/v2alpha1"
+    },
+    "time_policy": {
+      "const": "gaotian.propulsion-time/preview-authorize-effective-target/v1"
+    },
+    "safety_policy": {
+      "const": "gaotian.propulsion-safety/joint-upstage-batch-bounded-cap-path/v1"
+    },
+    "boundary_policy": {
+      "const": "gaotian.governed-propulsion/hard-interlock-time-delivery-soft/v1"
+    },
+    "event_policy": {
+      "const": "gaotian.propulsion-events/boundary-hard-time-soft-ship-local-order/v1"
+    },
+    "hard_fact_sampling": {
+      "const": "opening_runtime"
+    },
+    "command_ownership": {
+      "const": "one_shot_exact_scene_and_step"
+    },
+    "soft_governor_status": {
+      "const": "wired"
+    },
+    "hard_fault_status": {
+      "const": "wired"
+    },
+    "direction_interlock_status": {
+      "const": "wired"
+    }
+  },
+  "required": [
+    "interface",
+    "time_policy",
+    "safety_policy",
+    "boundary_policy",
+    "event_policy",
+    "hard_fact_sampling",
+    "command_ownership",
+    "soft_governor_status",
+    "hard_fault_status",
+    "direction_interlock_status"
+  ]
+}

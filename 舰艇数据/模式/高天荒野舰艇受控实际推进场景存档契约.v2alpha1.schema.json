@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.governed-propulsion-scene-save/v2alpha1",
+  "description": "只接受完整已提交边界；不包含待复位、一次性命令队列、缓存或中途互锁快照。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.governed-propulsion-scene-save/v2alpha1"
+    },
+    "boundary_phase": {
+      "const": "committed"
+    },
+    "scene": {
+      "$ref": "gaotian.tactical-scene-timeline/v7alpha1"
+    },
+    "scene_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "interface",
+    "boundary_phase",
+    "scene",
+    "scene_sha256"
+  ]
+}

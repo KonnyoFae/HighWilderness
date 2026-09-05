@@ -1,0 +1,227 @@
+{
+  "interface": "gaotian.stage-t0b2d4f-scene-save-migration-contracts/v1",
+  "status": "PASS",
+  "slice": "T0b.2d4.6",
+  "baseline": {
+    "commit": "5c25564",
+    "branch": "main",
+    "pushed_to": null
+  },
+  "scope": "versioned_scene_save_diagnostic_command_event_and_explicit_migration_contracts_only",
+  "evidence": {
+    "scene_save_migration": {
+      "scenes": 12,
+      "ships": 224,
+      "engines": 1224,
+      "governors": 1344,
+      "replays": 3,
+      "migration_trace_sha256": "5e79b1ff3f50d0ddae407d7c547438eebfdb0e604b8a4ab1d44c9c48441792b8",
+      "tripped_d4_round_trip": true,
+      "old_version_gates": 37
+    },
+    "step_evidence": {
+      "cases": 8,
+      "round_trips_per_case": 3,
+      "trace_sha256": "6d8271fab83c0929f1904b950c4c0c8f7971d28fc5f21373bfdf2905fa813108",
+      "multi_ship_causal_order": true
+    },
+    "negative_contracts": {
+      "strict_negative_cases": 118
+    },
+    "scene_source_links": {
+      "linked_ships": 6,
+      "payload_sha256": "6279d679282dd4ab2ac4f968eb1e13c989990500de2bc32e1f7a741128e68985",
+      "strict_source_negative_cases": 3,
+      "d4_scene_execution_used": false
+    },
+    "exited_scene_source_links": {
+      "linked_ships": 6,
+      "active_ships": 5,
+      "frozen_ships": 1,
+      "payload_sha256": "c17d3a8350249cb13b28b44dc106c958ca8c94b3535988bffe6bea74ce8ee232",
+      "exited_command_rejected": true
+    },
+    "schemas_and_imports": {
+      "schemas": 8,
+      "references_checked": 54,
+      "cold_import_orders": 2,
+      "legacy_scene_does_not_import_d4_algorithms": true
+    }
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇完整受控推进场景版本.py": "b730d93706976a69483dddb14594d4ebc9381ef0bd20813831a1480855b7216c",
+    "高天荒野舰艇完整受控推进场景合同.py": "8af654e8ba583dc2a2d7f01de5232ce0b9be1ef1d5d3c0ca271ce603923a70d7",
+    "高天荒野T0b2d4f场景存档与迁移合同测试.py": "71923bfa2adbfdcad21ee55927713ec04e722ddf87a309587b10338699b11d8f",
+    "高天荒野舰艇统一战术场景.py": "ee5e5525426f0a5c7124236dfd1b0db4b3d0583b3509db04a48df363e8d499a9",
+    "高天荒野舰艇测试总入口.py": "e2b3ea68099e7afdf99fab171e9ba196fbf538004246110190694b4ddf35e132",
+    "高天荒野舰艇受控推进完整安全适配器.py": "8c480ee8adf18a6999fa939f960db8f2c8c0739864672efb8f2ef2bcb57408c2",
+    "高天荒野舰艇受控推进场景版本.py": "88c4c9be4c42019c1c5d49d592f56bcb1ecbfe4712817d47ccf57356519617c0",
+    "高天荒野舰艇受控推进场景合同.py": "22b61dbb8ec378530f7bc571ca6d3dec741367b77ff804f94d355947bac6d597",
+    "舰艇数据/模式/高天荒野舰艇受控推进治理标记契约.v2alpha1.schema.json": "ef398c3ad832f020eab0d2017aa3bbd4308ca27e16d58223966982218b33be38",
+    "舰艇数据/模式/高天荒野舰艇统一战术场景状态契约.v7alpha1.schema.json": "82f0460b56e6c2d6d64a1a0073518a560129a4fe0f8f28a9a74506573f001b78",
+    "舰艇数据/模式/高天荒野舰艇受控实际推进场景存档契约.v2alpha1.schema.json": "08ba1655f8e3acc4d06a86bb7496763ad1227669313fbb8158af7e358aee58db",
+    "舰艇数据/模式/高天荒野舰艇场景硬故障命令批次契约.v1alpha1.schema.json": "591bf7392e293a039acd49f8ac3e99361437b69cda8486fed98b407f7938edd8",
+    "舰艇数据/模式/高天荒野舰艇受控推进存档迁移凭证契约.v1alpha1.schema.json": "3685f38186fc9a7a13ccf8d8d3ecf372c5354cb2e7d95caf41764ef23a42559b",
+    "舰艇数据/模式/高天荒野舰艇实际推进积分诊断契约.v3alpha1.schema.json": "36145fd93ca9d7a6a0bffcb3fc9475535b20febfc096d62b4a49c48552a02b12",
+    "舰艇数据/模式/高天荒野舰艇完整受控推进场景边界事件契约.v1alpha1.schema.json": "aff4af68286c65a2ad8755688e5a9b2ff3f9fabb11cee689401553301379e800",
+    "舰艇数据/模式/高天荒野舰艇场景单步推进结果契约.v6alpha1.schema.json": "12bd38211f653f505ec03d7bb3dc5bbdc732acd63092ac690a30677221f9eb1c",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "dc7f684c3dcc77766a3f2e7dba6beb0fe06b4be081c71c9779173054e4f32627",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "ed876d01170bfdc3a31466f8bb0ed36183638b8058ed7088ea573c141fae9266",
+    "高天荒野T0b2d4完整安全场景接线实施细则.md": "8f210e267fa755a45d608a1def7ba68e4171a9e83d42994867cd898ad89478f0"
+  },
+  "regression": {
+    "targeted": "PASS",
+    "runner_unit": "3_of_3_PASS",
+    "quick": "18_of_18_PASS_after_targeted_retry",
+    "quick_discovered": 18,
+    "full_discovered": 84,
+    "full_executed": false,
+    "quick_matrix_passed": 17,
+    "quick_matrix_failed": 1,
+    "quick_matrix_elapsed_ms": 134018.139,
+    "targeted_retry": {
+      "script": "高天荒野T0b2d3d无场景受控推进适配器测试.py",
+      "status": "PASS",
+      "elapsed_ms": 17097.777,
+      "reason": "Planning heading was corrected during the matrix, causing only a document fingerprint mismatch. The affected test passed after references were synchronized."
+    },
+    "quick_latest_results": [
+      {
+        "script": "高天荒野T0b2d1r推进状态合同修复测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d1推进时间内核测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d2b1定向控制与边界合同测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d3a受控时间边界测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d3b整舰安全判定测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d3c受控场景合同与旧版门禁测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d3d无场景受控推进适配器测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d3e统一场景受控推进与存档测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d4a硬故障状态边界测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d4b硬故障运行时投影测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d4c无场景硬故障适配器测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d4d方向互锁边界测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d4e完整受控推进适配器测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野T0b2d4f场景存档与迁移合同测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野舰艇战术机动求解器测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野舰艇舾装编译器测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野舰艇规范数据与船壳编译器测试.py",
+        "status": "PASS"
+      },
+      {
+        "script": "高天荒野舰艇运行时参数编译器测试.py",
+        "status": "PASS"
+      }
+    ],
+    "syntax": "PASS",
+    "diff_check": "PASS"
+  },
+  "shared_fingerprint_refresh_reports": [
+    "阶段T0b1b静态指纹与验证边界接口.v1.json",
+    "阶段T0b1c运行时与静态模型复用接口.v1.json",
+    "阶段T0b1d事件与弹丸热路径接口.v1.json",
+    "阶段T0b2b2运行时稳定核心接口.v1.json",
+    "阶段T0b2b3a精确边界上下文接口.v1.json",
+    "阶段T0b2b3b武器时间线安全快进接口.v1.json",
+    "阶段T0b2b3c生命周期同一步投影接口.v1.json",
+    "阶段T0b2b3d画像与Scratch决策接口.v1.json",
+    "阶段T0b2c1推进安全判定器接口.v1.json",
+    "阶段T0b2c2a推进资源合同接口.v1.json",
+    "阶段T0b2c2b推进场景状态与迁移接口.v1.json",
+    "阶段T0b2d1p接线前复盘与计划重排接口.v1.json",
+    "阶段T0b2d1r推进状态合同修复接口.v1.json",
+    "阶段T0b2d1推进时间内核接口.v1.json",
+    "阶段T0b2d2a推进资源与控制桥接口.v1.json",
+    "阶段T0b2d2b1定向控制与边界合同接口.v1.json",
+    "阶段T0b2d2b2完整推进资源链接口.v1.json",
+    "阶段T0b2d2b3实际推进聚合与积分接口.v1.json",
+    "阶段T0b2d2b4场景接线与独立新黄金接口.v1.json",
+    "阶段T0b2d3a受控时间边界接口.v1.json",
+    "阶段T0b2d3b整舰向量安全接口.v1.json",
+    "阶段T0b2d3c受控场景合同与旧版门禁接口.v1.json",
+    "阶段T0b2d3d无场景受控推进适配器接口.v1.json",
+    "阶段T0b2d3e统一场景受控推进与存档接口.v1.json",
+    "阶段T0b2d3f受控黄金与完整矩阵接口.v1.json",
+    "阶段T0b2d3p软安全场景接线前复盘与计划重排接口.v1.json",
+    "阶段T0b2d4a硬故障状态边界接口.v1.json",
+    "阶段T0b2d4b硬故障运行时投影接口.v1.json",
+    "阶段T0b2d4c无场景硬故障适配器接口.v1.json",
+    "阶段T0b2d4d方向互锁边界接口.v1.json",
+    "阶段T0b2d4e完整受控推进适配器接口.v1.json",
+    "阶段T0b2d4f场景存档与迁移合同接口.v1.json"
+  ],
+  "shared_fingerprint_refresh_scope": "Only fingerprints of changed shared scene parser, test manifest, planning documents and dependent report references updated; previous evidence and historical regression results retained. Full regression remains d4.8 work.",
+  "unchanged_goldens": {
+    "contracts/web_bridge/t0-actual-propulsion-step-golden.v1.json": "6636afd396df0dd1ec17906f4b8fbe0d23d1a88e49d47dae64d1872f259d78ed",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "contracts/web_bridge/t0-governed-propulsion-step-golden.v1.json": "eb253fa94e691505564071d00716104f19443d1ef7f76719d8a49c719f725882"
+  },
+  "risk_controls": {
+    "d4_scene_execution_enabled": false,
+    "d3_contracts_changed": false,
+    "d4_5_adapter_changed": false,
+    "time_kernel_changed": false,
+    "safety_algorithm_changed": false,
+    "goldens_changed": false,
+    "official_performance_runs_executed": 0
+  },
+  "limitations": [
+    "v7 parses and saves but unified execution remains explicitly gated until d4.7.",
+    "Migration accepts only settled off/ready/running states without pending transitions or opposed residual output; other historical states require another named migration.",
+    "Save structural validation and source-link contracts do not replace resource rebuilding, runtime replay or full d4 save-resume coverage in d4.7.",
+    "The linked fleet fixtures assemble d4.5 no-scene records with legacy non-propulsion scene fields; they are not d4 scene execution or golden results."
+  ],
+  "next_slice": "T0b.2d4.7_unified_scene_wiring_and_save_reload_replay",
+  "next_slice_requirements": [
+    "Build explicit v7 named scenes and rebuild exact resources and runtime on load.",
+    "Consume per-ship one-shot hard commands atomically, then wire hard faults, direction interlock, opening time, actual interval and closing soft safety.",
+    "Validate v6 step payloads with source and resulting scene lineage, physical resource recomputation and stable boundary event order.",
+    "Cover same-boundary exit, command suppression, faults, explicit reset, emergency cut, reversal zero-release and continuous versus saved-reloaded replay before opening the execution gate."
+  ]
+}

@@ -77,7 +77,7 @@
     "高天荒野舰艇定向推进控制桥.py": "6268d40785346a91043f7fe7faa7788f3d0ddac53b3e4fc32e81e61853958b1a",
     "高天荒野舰艇推进通道合同.py": "c408934a513605f68dc32f95526793eede7f56b37131ef99caa662a0f4880b7e",
     "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
-    "高天荒野舰艇测试总入口.py": "f6a7b05f59b1536b4495669006f23bb19253d93a48ca2d6e362ae45c12f5a0ea"
+    "高天荒野舰艇测试总入口.py": "e2b3ea68099e7afdf99fab171e9ba196fbf538004246110190694b4ddf35e132"
   },
   "regression": {
     "targeted": "PASS",

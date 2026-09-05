@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.tactical-scene-hard-fault-command-batch/v1alpha1",
+  "description": "精确场景与开边界的一次性输入。逐舰唯一排序，缺席表示无操作；不可向退出舰发令。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.tactical-scene-hard-fault-command-batch/v1alpha1"
+    },
+    "source_scene_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fixed_step_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "commands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ship_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$"
+          },
+          "command": {
+            "$ref": "gaotian.governed-propulsion-hard-fault-command/v1alpha1"
+          }
+        },
+        "required": [
+          "ship_id",
+          "command"
+        ]
+      }
+    }
+  },
+  "required": [
+    "interface",
+    "source_scene_sha256",
+    "fixed_step_index",
+    "commands"
+  ]
+}

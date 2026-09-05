@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.tactical-scene-step-resolution/v6alpha1",
+  "description": "完整开收证据、一次性命令及硬/时间/软事件链；只冻结合同，场景接线在 d4.7 完成。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.tactical-scene-step-resolution/v6alpha1"
+    },
+    "policy": {
+      "const": "gaotian.tactical-scene-step/hard-interlock-open-integrate-soft-close/v1"
+    },
+    "source_scene_sha256": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/source_scene_sha256"
+    },
+    "resulting_scene_sha256": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/resulting_scene_sha256"
+    },
+    "source_fixed_step_index": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/source_fixed_step_index"
+    },
+    "resulting_fixed_step_index": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/resulting_fixed_step_index"
+    },
+    "weapon_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/weapon_events"
+    },
+    "spawned_projectiles": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/spawned_projectiles"
+    },
+    "impact_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/impact_events"
+    },
+    "expired_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/expired_events"
+    },
+    "lifecycle_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/lifecycle_events"
+    },
+    "engagement_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/engagement_events"
+    },
+    "guidance_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/guidance_events"
+    },
+    "continuous_damage_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/continuous_damage_events"
+    },
+    "crew_casualty_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/crew_casualty_events"
+    },
+    "crew_evacuation_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/crew_evacuation_events"
+    },
+    "crew_rescue_manifests": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/crew_rescue_manifests"
+    },
+    "fire_propagation_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/fire_propagation_events"
+    },
+    "ammunition_cookoff_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/ammunition_cookoff_events"
+    },
+    "sensor_observation_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/sensor_observation_events"
+    },
+    "radar_emission_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/radar_emission_events"
+    },
+    "fire_control_support_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/fire_control_support_events"
+    },
+    "generated_guidance_fact_events": {
+      "$ref": "gaotian.tactical-scene-step-resolution/v4alpha1#/properties/generated_guidance_fact_events"
+    },
+    "ship_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ship_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$"
+          },
+          "resulting_runtime_parameters_sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "diagnostics": {
+            "oneOf": [
+              {
+                "$ref": "gaotian.actual-propulsion-step-diagnostics/v3alpha1"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "propulsion_aggregation": {
+            "oneOf": [
+              {
+                "$ref": "gaotian.actual-propulsion-aggregation/v1alpha1"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "propulsion_delivery_status": {
+            "enum": [
+              "delivered",
+              "suppressed_falling",
+              "suppressed_exited",
+              "suppressed_uncommanded"
+            ]
+          },
+          "missing_propulsion_channels": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+              "enum": [
+                "translation.forward",
+                "translation.reverse",
+                "translation.left",
+                "translation.right",
+                "yaw.counterclockwise",
+                "yaw.clockwise"
+              ]
+            }
+          }
+        },
+        "required": [
+          "ship_id",
+          "resulting_runtime_parameters_sha256",
+          "diagnostics",
+          "propulsion_aggregation",
+          "propulsion_delivery_status",
+          "missing_propulsion_channels"
+        ]
+      }
+    },
+    "propulsion_opening_records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ship_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$"
+          },
+          "opening": {
+            "$ref": "gaotian.fully-governed-propulsion-opening/v1alpha1"
+          }
+        },
+        "required": [
+          "ship_id",
+          "opening"
+        ]
+      }
+    },
+    "propulsion_closing_records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "ship_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$"
+          },
+          "closing": {
+            "$ref": "gaotian.fully-governed-propulsion-closing/v1alpha1"
+          }
+        },
+        "required": [
+          "ship_id",
+          "closing"
+        ]
+      }
+    },
+    "propulsion_governance": {
+      "$ref": "gaotian.governed-propulsion-execution/v2alpha1"
+    },
+    "hard_fault_commands": {
+      "$ref": "gaotian.tactical-scene-hard-fault-command-batch/v1alpha1"
+    },
+    "propulsion_boundary_events": {
+      "type": "array",
+      "items": {
+        "$ref": "gaotian.tactical-scene-propulsion-boundary-event/v1alpha1"
+      }
+    }
+  },
+  "required": [
+    "engagement_events",
+    "expired_events",
+    "hard_fault_commands",
+    "impact_events",
+    "interface",
+    "lifecycle_events",
+    "policy",
+    "propulsion_boundary_events",
+    "propulsion_closing_records",
+    "propulsion_governance",
+    "propulsion_opening_records",
+    "resulting_fixed_step_index",
+    "resulting_scene_sha256",
+    "ship_results",
+    "source_fixed_step_index",
+    "source_scene_sha256",
+    "spawned_projectiles",
+    "weapon_events"
+  ]
+}

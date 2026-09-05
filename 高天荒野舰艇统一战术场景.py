@@ -23,6 +23,10 @@ from 高天荒野舰艇推进固定步接线 import (
     advance_ship_propulsion_boundary, serialized_propulsion_events, validate_boundary_replay,
 )
 from 高天荒野舰艇定向推进控制桥 import DirectionalPropulsionControlInput
+from 高天荒野舰艇完整受控推进场景版本 import (
+    FULL_SCENE_INTERFACE_ID, FULL_SCENE_POLICY_ID,
+    FullyGovernedPropulsionExecutionPolicy,
+)
 from 高天荒野舰艇实际推进聚合器 import ActualPropulsionAggregation, aggregate_actual_propulsion
 from 高天荒野舰艇受控推进场景版本 import (
     GOVERNED_SCENE_INTERFACE_ID,
@@ -726,7 +730,7 @@ class TacticalSceneState:
     propulsion_safety_profile: ResourceReference | None = None
     propulsion_safety_profile_sha256: str | None = None
     propulsion_execution: ActualPropulsionExecution | None = None
-    propulsion_governance: GovernedPropulsionExecutionPolicy | None = None
+    propulsion_governance: GovernedPropulsionExecutionPolicy | FullyGovernedPropulsionExecutionPolicy | None = None
 
     def to_dict(self) -> dict[str, Any]:
         has_propulsion = self.propulsion_safety_profile is not None
@@ -742,6 +746,9 @@ class TacticalSceneState:
                 raise ValueError("受控实际推进只支持完整定向场景及显式资源血缘")
             scene_interface = GOVERNED_SCENE_INTERFACE_ID
             scene_policy = GOVERNED_SCENE_POLICY_ID
+            if isinstance(self.propulsion_governance, FullyGovernedPropulsionExecutionPolicy):
+                scene_interface = FULL_SCENE_INTERFACE_ID
+                scene_policy = FULL_SCENE_POLICY_ID
         elif self.propulsion_execution is not None:
             if not has_propulsion or propulsion_interfaces != {DIRECTIONAL_STATE_INTERFACE_ID}:
                 raise ValueError("实际推进只支持完整定向场景")
@@ -814,6 +821,9 @@ class TacticalSceneState:
         elif interface == GOVERNED_SCENE_INTERFACE_ID:
             propulsion_interface_id = DIRECTIONAL_STATE_INTERFACE_ID
             expected_policy = GOVERNED_SCENE_POLICY_ID
+        elif interface == FULL_SCENE_INTERFACE_ID:
+            propulsion_interface_id = DIRECTIONAL_STATE_INTERFACE_ID
+            expected_policy = FULL_SCENE_POLICY_ID
         else:
             raise ContractError(
                 "tactical_scene.interface",
@@ -837,9 +847,9 @@ class TacticalSceneState:
                     "propulsion_safety_profile_sha256",
                 }
             )
-        if interface in {ACTUAL_SCENE_INTERFACE_ID, GOVERNED_SCENE_INTERFACE_ID}:
+        if interface in {ACTUAL_SCENE_INTERFACE_ID, GOVERNED_SCENE_INTERFACE_ID, FULL_SCENE_INTERFACE_ID}:
             keys.add("propulsion_execution")
-        if interface == GOVERNED_SCENE_INTERFACE_ID:
+        if interface in {GOVERNED_SCENE_INTERFACE_ID, FULL_SCENE_INTERFACE_ID}:
             keys.add("propulsion_governance")
         obj = _exact_object(
             value,
@@ -857,7 +867,7 @@ class TacticalSceneState:
                         item,
                         f"{path}.ships[{index}]",
                         propulsion_interface_id=propulsion_interface_id,
-                        actual_propulsion=interface in {ACTUAL_SCENE_INTERFACE_ID, GOVERNED_SCENE_INTERFACE_ID},
+                        actual_propulsion=interface in {ACTUAL_SCENE_INTERFACE_ID, GOVERNED_SCENE_INTERFACE_ID, FULL_SCENE_INTERFACE_ID},
                     )
                     for index, item in enumerate(obj["ships"])
                 ),
@@ -897,9 +907,11 @@ class TacticalSceneState:
                 else None
             ),
             ActualPropulsionExecution.parse(obj["propulsion_execution"], f"{path}.propulsion_execution")
-            if interface in {ACTUAL_SCENE_INTERFACE_ID, GOVERNED_SCENE_INTERFACE_ID} else None,
-            GovernedPropulsionExecutionPolicy.parse(obj["propulsion_governance"], f"{path}.propulsion_governance")
-            if interface == GOVERNED_SCENE_INTERFACE_ID else None,
+            if interface in {ACTUAL_SCENE_INTERFACE_ID, GOVERNED_SCENE_INTERFACE_ID, FULL_SCENE_INTERFACE_ID} else None,
+            (FullyGovernedPropulsionExecutionPolicy.parse(obj["propulsion_governance"], f"{path}.propulsion_governance")
+             if interface == FULL_SCENE_INTERFACE_ID else
+             GovernedPropulsionExecutionPolicy.parse(obj["propulsion_governance"], f"{path}.propulsion_governance"))
+            if interface in {GOVERNED_SCENE_INTERFACE_ID, FULL_SCENE_INTERFACE_ID} else None,
         )
         _validate_internal_state(state)
         return state
@@ -1013,6 +1025,10 @@ class TacticalSceneStepResolution:
     propulsion_opening_records: tuple[Any, ...] = ()
     propulsion_closing_records: tuple[Any, ...] = ()
     propulsion_safety_events: tuple[Any, ...] = ()
+    fully_governed_openings: tuple[tuple[str, Any], ...] = ()
+    fully_governed_closings: tuple[tuple[str, Any], ...] = ()
+    propulsion_hard_fault_commands: Any | None = None
+    fully_governed_runtime_witnesses: tuple[tuple[str, Any, Any], ...] = ()
 
     def to_dict(self) -> dict[str, Any]:
         result = {
@@ -1072,7 +1088,25 @@ class TacticalSceneStepResolution:
             result["generated_guidance_fact_events"] = [
                 item.to_dict() for item in self.generated_guidance_fact_events
             ]
-        if self.resulting_scene.propulsion_governance is not None:
+        if isinstance(self.resulting_scene.propulsion_governance, FullyGovernedPropulsionExecutionPolicy):
+            from 高天荒野舰艇完整受控推进场景版本 import FULL_STEP_INTERFACE_ID, FULL_STEP_POLICY_ID
+            from 高天荒野舰艇完整受控推进场景合同 import (
+                SceneHardFaultCommandBatch, serialize_fully_governed_events, validate_fully_governed_scene_step_contract,
+            )
+            if not isinstance(self.propulsion_hard_fault_commands, SceneHardFaultCommandBatch):
+                raise ContractError('full_scene.result_commands', '$', '完整单步必须保存精确硬命令批次')
+            if self.propulsion_boundaries or self.propulsion_opening_records or self.propulsion_closing_records or self.propulsion_safety_events:
+                raise ContractError('full_scene.result_legacy_records', '$', '完整单步不得混入旧推进审计记录')
+            result.update(interface=FULL_STEP_INTERFACE_ID, policy=FULL_STEP_POLICY_ID,
+                source_fixed_step_index=self.source_fixed_step_index,
+                resulting_fixed_step_index=self.resulting_scene.fixed_step_index,
+                propulsion_governance=self.resulting_scene.propulsion_governance.to_dict(),
+                hard_fault_commands=self.propulsion_hard_fault_commands.to_dict(),
+                propulsion_opening_records=[{'ship_id': s, 'opening': o.to_dict()} for s, o in self.fully_governed_openings],
+                propulsion_closing_records=[{'ship_id': s, 'closing': c.to_dict()} for s, c in self.fully_governed_closings],
+                propulsion_boundary_events=serialize_fully_governed_events(self.fully_governed_openings, self.fully_governed_closings))
+            validate_fully_governed_scene_step_contract(result)
+        elif self.resulting_scene.propulsion_governance is not None:
             if self.source_fixed_step_index != self.resulting_scene.fixed_step_index - 1:
                 raise ContractError(
                     "governed_scene.result_step",
@@ -1539,10 +1573,12 @@ def _validate_internal_state(state: TacticalSceneState) -> None:
     has_propulsion_profile = state.propulsion_safety_profile is not None
     actual_propulsion = state.propulsion_execution is not None
     governed_propulsion = state.propulsion_governance is not None
+    fully_governed = isinstance(state.propulsion_governance, FullyGovernedPropulsionExecutionPolicy)
     if governed_propulsion and not actual_propulsion:
         raise ContractError("governed_scene.execution_required", "$.propulsion_execution", "受控场景必须保留完整实际资源血缘")
     if governed_propulsion:
-        GovernedPropulsionExecutionPolicy.parse(state.propulsion_governance.to_dict())
+        policy_type = FullyGovernedPropulsionExecutionPolicy if fully_governed else GovernedPropulsionExecutionPolicy
+        policy_type.parse(state.propulsion_governance.to_dict())
     if actual_propulsion:
         ActualPropulsionExecution.parse(state.propulsion_execution.to_dict())
         if not has_propulsion_profile or abs(state.fixed_step_s - 1 / 60) > 1e-12:
@@ -1605,7 +1641,7 @@ def _validate_internal_state(state: TacticalSceneState) -> None:
             if tuple(g.command for g in propulsion.governors) != ship.propulsion_control.channel_commands:
                 raise ContractError("actual_scene.control_state", "$.ships", "持久控制与 governor 命令不一致")
             if governed_propulsion:
-                if any(engine.phase == "tripped" for engine in propulsion.engines):
+                if not fully_governed and any(engine.phase == "tripped" for engine in propulsion.engines):
                     raise ContractError("governed_scene.tripped_unwired", "$.ships", "d4 前受控场景拒绝 tripped 执行器")
                 if lifecycle.physical_status != "exited" and any(
                     governor.last_evaluated_step_index != state.fixed_step_index
@@ -2392,6 +2428,7 @@ def advance_tactical_scene_step(
     controls: dict[str, TacticalControlInput] | None = None,
     propulsion_context: ActualScenePropulsionContext | None = None,
     propulsion_controls: dict[str, DirectionalPropulsionControlInput] | None = None,
+    propulsion_hard_fault_commands: Any | None = None,
     launch_directives: Iterable[TacticalSceneLaunchDirective] = (),
     exit_directives: Iterable[TacticalSceneExitDirective] = (),
     engagement_boundary_profile: TacticalEngagementBoundaryProfile | None = None,
@@ -2401,6 +2438,25 @@ def advance_tactical_scene_step(
     _validate_internal_state(state)
     actual_propulsion = state.propulsion_execution is not None
     governed_propulsion = state.propulsion_governance is not None
+    fully_governed = isinstance(state.propulsion_governance, FullyGovernedPropulsionExecutionPolicy)
+    hard_command_by_ship = {}
+    if fully_governed:
+        from 高天荒野舰艇完整受控推进场景 import validate_fully_governed_scene_context, select_fully_governed_propulsion_control
+        from 高天荒野舰艇完整受控推进场景合同 import SceneHardFaultCommandBatch, FullyGovernedStepDiagnostics
+        from 高天荒野舰艇受控推进硬故障适配器 import GovernedPropulsionHardFaultCommand
+        from 高天荒野舰艇受控推进完整安全适配器 import (
+            commit_fully_governed_propulsion_opening, integrate_fully_governed_propulsion_interval,
+            evaluate_fully_governed_propulsion_closing,
+        )
+        validate_fully_governed_scene_context(state, propulsion_context)
+        if propulsion_hard_fault_commands is None:
+            propulsion_hard_fault_commands = SceneHardFaultCommandBatch(canonical_sha256(state), state.fixed_step_index)
+        if not isinstance(propulsion_hard_fault_commands, SceneHardFaultCommandBatch):
+            raise ContractError('full_scene.command_type', '$.propulsion_hard_fault_commands', '必须提供严格硬命令批次')
+        SceneHardFaultCommandBatch.parse(propulsion_hard_fault_commands.to_dict()).validate_scene(state.to_dict())
+        hard_command_by_ship = dict(propulsion_hard_fault_commands.commands)
+    elif propulsion_hard_fault_commands is not None:
+        raise ContractError('full_scene.legacy_commands', '$.propulsion_hard_fault_commands', '只有 v7 场景接收完整硬命令')
     if state.propulsion_safety_profile is not None and not actual_propulsion:
         raise ContractError(
             "tactical_scene.propulsion_unwired",
@@ -2408,7 +2464,9 @@ def advance_tactical_scene_step(
             "推进场景合同已迁移，但时间内核与力学接线留待 T0b.2d1/d2",
         )
     if actual_propulsion:
-        if governed_propulsion:
+        if fully_governed:
+            pass  # 已在命令处理前完成 v7 资源门校验。
+        elif governed_propulsion:
             validate_governed_scene_context(state, propulsion_context)
         else:
             validate_actual_scene_context(state, propulsion_context)
@@ -2580,6 +2638,9 @@ def advance_tactical_scene_step(
     governed_closings: list[Any] = []
     governed_safety_events: list[Any] = []
     governed_active_ship_ids: set[str] = set()
+    fully_governed_openings: dict[str, Any] = {}
+    fully_governed_closings: dict[str, Any] = {}
+    fully_governed_runtime_witnesses: list[tuple[str, Any, Any]] = []
     actual_aggregations: dict[str, ActualPropulsionAggregation] = {}
     propulsion_delivery_status: dict[str, str] = {}
     missing_propulsion_channels: dict[str, tuple[str, ...]] = {}
@@ -2958,7 +3019,7 @@ def advance_tactical_scene_step(
         effective_guidance_inputs = guidance_fact_resolution.runtime_inputs
         generated_guidance_fact_events = guidance_fact_resolution.events
 
-    if governed_propulsion:
+    if governed_propulsion and not fully_governed:
         from 高天荒野舰艇受控推进无场景适配器 import (
             commit_governed_propulsion_opening,
             evaluate_governed_propulsion_closing,
@@ -2982,6 +3043,8 @@ def advance_tactical_scene_step(
         runtimes_at_step_start[ship_id] = runtime
         if governed_propulsion:
             if ship.lifecycle_state.physical_status == "exited":
+                if ship_id in hard_command_by_ship:
+                    raise ContractError('full_scene.command_exited', '$.propulsion_hard_fault_commands', '本开边界退出舰不能接收硬命令')
                 propulsion_delivery_status[ship_id] = "suppressed_exited"
                 missing_propulsion_channels[ship_id] = ()
             else:
@@ -2996,7 +3059,8 @@ def advance_tactical_scene_step(
                 )
                 source_state = ship.propulsion_state
                 source_control = ship.propulsion_control
-                control, missing = select_governed_propulsion_control(
+                selector = select_fully_governed_propulsion_control if fully_governed else select_governed_propulsion_control
+                control, missing = selector(
                     resources.aggregation_context,
                     source_state,
                     source_control,
@@ -3005,19 +3069,21 @@ def advance_tactical_scene_step(
                     command_available=command_available,
                     fixed_step_index=state.fixed_step_index,
                 )
-                opening = commit_governed_propulsion_opening(
-                    resources.aggregation_context,
-                    source_state,
-                    source_control,
-                    control,
-                    fixed_step_index=state.fixed_step_index,
-                )
-                governed_openings.append(opening.record)
+                if fully_governed:
+                    opening = commit_fully_governed_propulsion_opening(resources.aggregation_context, runtime,
+                        source_state, source_control, control,
+                        hard_command_by_ship.get(ship_id, GovernedPropulsionHardFaultCommand()),
+                        fixed_step_index=state.fixed_step_index)
+                    fully_governed_openings[ship_id] = opening
+                else:
+                    opening = commit_governed_propulsion_opening(resources.aggregation_context,
+                        source_state, source_control, control, fixed_step_index=state.fixed_step_index)
+                    governed_openings.append(opening.record)
                 governed_active_ship_ids.add(ship_id)
                 ship = replace(
                     ship,
                     propulsion_state=opening.state,
-                    propulsion_control=opening.control,
+                    propulsion_control=control,
                 )
                 ship_map[ship_id] = ship
                 missing_propulsion_channels[ship_id] = missing
@@ -3072,19 +3138,19 @@ def advance_tactical_scene_step(
         )
         if governed_propulsion:
             resources = propulsion_context.ship(ship_id)
-            interval = integrate_governed_propulsion_interval(
-                resources.aggregation_context,
-                runtime,
-                model,
-                synced_motion,
-                ship.propulsion_state,
-                ship.propulsion_control,
-                propulsion_delivery_status=propulsion_delivery_status[ship_id],
-            )
+            if fully_governed:
+                opening = fully_governed_openings[ship_id]
+                interval = integrate_fully_governed_propulsion_interval(resources.aggregation_context, runtime,
+                    model, synced_motion, opening, propulsion_delivery_status=propulsion_delivery_status[ship_id])
+                fully_governed_runtime_witnesses.append((ship_id, runtime, synced_motion))
+            else:
+                interval = integrate_governed_propulsion_interval(resources.aggregation_context,
+                    runtime, model, synced_motion, ship.propulsion_state, ship.propulsion_control,
+                    propulsion_delivery_status=propulsion_delivery_status[ship_id])
             actual_aggregations[ship_id] = interval.aggregation
             next_motion, diagnostic = (
                 interval.resulting_motion,
-                interval.diagnostics,
+                FullyGovernedStepDiagnostics.from_interval(interval, opening) if fully_governed else interval.diagnostics,
             )
         elif actual_propulsion:
             request = actual_aggregations[ship_id].request
@@ -3381,22 +3447,24 @@ def advance_tactical_scene_step(
             else:
                 # 本区间末端才退出的舰仍提交这次收边界；从下一步起完整冻结。
                 closing_delivery_status = propulsion_delivery_status[ship_id]
-            propulsion_delivery_status[ship_id] = closing_delivery_status
+            # v7 保留本区间实际交付；末端损毁只改变 closing 的最终安全采样。
+            if not fully_governed:
+                propulsion_delivery_status[ship_id] = closing_delivery_status
             resources = propulsion_context.ship(ship_id)
-            closing = evaluate_governed_propulsion_closing(
-                resources.aggregation_context,
-                ship.propulsion_state,
-                ship.propulsion_control,
-                propulsion_context.safety_profile,
-                final_runtime,
-                final_model,
-                final_motion,
-                fixed_step_index=state.fixed_step_index + 1,
-                propulsion_delivery_status=closing_delivery_status,
-                crew_safety_lock_enabled=final_runtime.crew_safety_lock_enabled,
-            )
-            governed_closings.append(closing.record)
-            governed_safety_events.extend(closing.safety_events)
+            if fully_governed:
+                closing = evaluate_fully_governed_propulsion_closing(resources.aggregation_context,
+                    fully_governed_openings[ship_id], propulsion_context.safety_profile, final_runtime, final_model, final_motion,
+                    fixed_step_index=state.fixed_step_index + 1, propulsion_delivery_status=closing_delivery_status,
+                    crew_safety_lock_enabled=final_runtime.crew_safety_lock_enabled)
+                fully_governed_closings[ship_id] = closing
+            else:
+                closing = evaluate_governed_propulsion_closing(resources.aggregation_context,
+                    ship.propulsion_state, ship.propulsion_control, propulsion_context.safety_profile,
+                    final_runtime, final_model, final_motion, fixed_step_index=state.fixed_step_index + 1,
+                    propulsion_delivery_status=closing_delivery_status,
+                    crew_safety_lock_enabled=final_runtime.crew_safety_lock_enabled)
+                governed_closings.append(closing.record)
+                governed_safety_events.extend(closing.safety_events)
             ship_map[ship_id] = replace(
                 ship,
                 propulsion_state=closing.state,
@@ -3467,7 +3535,9 @@ def advance_tactical_scene_step(
         state.propulsion_governance,
     )
     _validate_internal_state(resulting_scene)
-    if governed_propulsion:
+    if fully_governed:
+        validate_fully_governed_scene_context(resulting_scene, propulsion_context)
+    elif governed_propulsion:
         validate_governed_scene_context(resulting_scene, propulsion_context)
         governed_openings.sort(key=lambda record: record.sort_key)
         governed_closings.sort(key=lambda record: record.sort_key)
@@ -3562,4 +3632,8 @@ def advance_tactical_scene_step(
         tuple(governed_openings),
         tuple(governed_closings),
         tuple(governed_safety_events),
+        tuple(sorted(fully_governed_openings.items())),
+        tuple(sorted(fully_governed_closings.items())),
+        propulsion_hard_fault_commands,
+        tuple(fully_governed_runtime_witnesses),
     )

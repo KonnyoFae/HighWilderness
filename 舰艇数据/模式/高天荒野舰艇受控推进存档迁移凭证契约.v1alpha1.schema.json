@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.governed-propulsion-save-migration/v1alpha1",
+  "description": "d3 到 d4 具名迁移：拒绝跳闸、待处理命令、未完成响应及对向残留，保持非治理场景内容不变。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.governed-propulsion-save-migration/v1alpha1"
+    },
+    "migration": {
+      "const": "gaotian.migration/d3-save-v1-to-d4-save-v2-committed-unambiguous/v1"
+    },
+    "source_save_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "resulting_save_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fixed_step_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "preserved_scene_content_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "interface",
+    "migration",
+    "source_save_sha256",
+    "resulting_save_sha256",
+    "fixed_step_index",
+    "preserved_scene_content_sha256"
+  ]
+}

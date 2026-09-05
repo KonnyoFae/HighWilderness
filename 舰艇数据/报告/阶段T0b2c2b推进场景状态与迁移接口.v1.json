@@ -14,10 +14,10 @@
     "舰艇数据/模式/高天荒野舰艇推进事件契约.v1alpha1.schema.json": "43c67aba8d1c1868b3c13f23944a2fac97df1458be5436ae16880a1eaeff2914",
     "舰艇数据/模式/高天荒野舰艇统一战术场景状态契约.v2alpha1.schema.json": "6d54a3311a79501549ac3a09f31e0f8a95f760f74a4bf1472de0805e7d8c1c99",
     "高天荒野T0b2c2b推进场景状态与迁移测试.py": "6ab830eab3a581d053640b226a21fc1a704dfcdddf738377c66172bc24d6c5cd",
-    "高天荒野T0b2推进响应与权威性能优化规划.md": "ea6c380db020c013339916d0afe7e18007189811431a737608f4c47b821b47f5",
-    "高天荒野Web客户端编辑器与战术验证实施计划.md": "d11572136832c2e669b4aa51401b60fd909b6ee2ebcacd10399c7869b7391b99",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "dc7f684c3dcc77766a3f2e7dba6beb0fe06b4be081c71c9779173054e4f32627",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "ed876d01170bfdc3a31466f8bb0ed36183638b8058ed7088ea573c141fae9266",
     "高天荒野舰艇推进状态合同.py": "232fc08a9283f081ef05af36ca840bdfa509a1f37bb99cf0e053ac1009ffc2c7",
-    "高天荒野舰艇统一战术场景.py": "a74e8981f2a6b9bb8a5c906382b2e626345270a8f5832eda649f56d0008cedfe"
+    "高天荒野舰艇统一战术场景.py": "ee5e5525426f0a5c7124236dfd1b0db4b3d0583b3509db04a48df363e8d499a9"
   },
   "interface": "gaotian.stage-t0b2c2b-propulsion-scene-state/v1",
   "isolation_evidence": {

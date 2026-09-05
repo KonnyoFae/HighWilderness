@@ -1,0 +1,744 @@
+{
+  "interface": "gaotian.stage-t0b2d4h-fully-governed-goldens-and-full-regression/v1",
+  "status": "PASS",
+  "slice": "T0b.2d4.8",
+  "d4_exit_gate": "PASS",
+  "baseline": {
+    "commit": "5c25564",
+    "branch": "main",
+    "pushed_to": null
+  },
+  "scope": "independent_d4_goldens_three_replays_mixed_long_reload_migration_resume_and_full_regression",
+  "baseline_generation": {
+    "status": "PASS",
+    "scenes": 12,
+    "steps_per_scene": 12,
+    "replays": 1,
+    "long_sequence_steps": 401,
+    "long_replays": 1,
+    "counts_as_three_replay_validation": false
+  },
+  "evidence": {
+    "scenes": 12,
+    "steps_per_scene": 12,
+    "replays": 3,
+    "ships": 224,
+    "ship_steps_per_replay": 2688,
+    "opening_records_per_replay": 2688,
+    "closing_records_per_replay": 2688,
+    "motion_fuel_resource_and_native_events_match_d3_cases": 12,
+    "long_steps_per_replay": 401,
+    "long_replays": 3,
+    "long_reload_boundaries": [
+      [],
+      [
+        92,
+        112,
+        118,
+        212,
+        272,
+        277
+      ],
+      [
+        111,
+        117,
+        211,
+        267,
+        276,
+        337
+      ]
+    ],
+    "legacy_golden_hashes": {
+      "t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+      "t0-actual-propulsion-step-golden.v1.json": "6636afd396df0dd1ec17906f4b8fbe0d23d1a88e49d47dae64d1872f259d78ed",
+      "t0-governed-propulsion-step-golden.v1.json": "eb253fa94e691505564071d00716104f19443d1ef7f76719d8a49c719f725882"
+    },
+    "official_performance_runs_executed": 0
+  },
+  "implementation_hashes": {
+    "高天荒野T0b2d4h完整安全黄金与全回归测试.py": "cededad660f81d07e0552c4788da710cb9d7c011f288a4df316d464389814404",
+    "高天荒野T0b2d4g统一场景完整安全与存档测试.py": "c8242edfc88297576e145e57d4c3d79c78f86c2f47fcf7b371d8c4a38aba1703",
+    "高天荒野舰艇测试总入口.py": "e2b3ea68099e7afdf99fab171e9ba196fbf538004246110190694b4ddf35e132",
+    "高天荒野舰艇统一战术场景.py": "ee5e5525426f0a5c7124236dfd1b0db4b3d0583b3509db04a48df363e8d499a9",
+    "高天荒野舰艇完整受控推进场景.py": "e1ec8eea4ebe7a4c7616ecc76a10dcdbe24dc8707c9892e64408789787d18c98",
+    "高天荒野舰艇完整受控推进场景合同.py": "8af654e8ba583dc2a2d7f01de5232ce0b9be1ef1d5d3c0ca271ce603923a70d7",
+    "高天荒野舰艇完整受控推进场景版本.py": "b730d93706976a69483dddb14594d4ebc9381ef0bd20813831a1480855b7216c",
+    "高天荒野舰艇受控推进完整安全适配器.py": "8c480ee8adf18a6999fa939f960db8f2c8c0739864672efb8f2ef2bcb57408c2",
+    "高天荒野舰艇受控推进硬故障适配器.py": "320785068bf5b59e426b26e141bce03fe16e8deb19297f7ec76463f80c286b80",
+    "高天荒野舰艇推进方向互锁边界.py": "17ffc301f4f2e35fbd975e1d0bf34d89c3d4a9ff73700f129e5d32469072b06b",
+    "高天荒野舰艇推进时间内核.py": "4feb447dbca2e22ee517c5cc6fcf5b5d6342362fcd2377263995a61a0d03270d",
+    "高天荒野舰艇推进安全判定器.py": "024e75de648a4c9dc87554ef07d028f817a177f71f93e823c9ff6ffefb82514f",
+    "高天荒野T0b2d4完整安全场景接线实施细则.md": "8f210e267fa755a45d608a1def7ba68e4171a9e83d42994867cd898ad89478f0",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "dc7f684c3dcc77766a3f2e7dba6beb0fe06b4be081c71c9779173054e4f32627",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "ed876d01170bfdc3a31466f8bb0ed36183638b8058ed7088ea573c141fae9266",
+    "contracts/web_bridge/t0-fully-governed-propulsion-step-golden.v1.json": "31dbb20f3cb148c3f607e05c440833e1d4dbc1c2eba7c2e3a15bde921acaa7cb",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "contracts/web_bridge/t0-actual-propulsion-step-golden.v1.json": "6636afd396df0dd1ec17906f4b8fbe0d23d1a88e49d47dae64d1872f259d78ed",
+    "contracts/web_bridge/t0-governed-propulsion-step-golden.v1.json": "eb253fa94e691505564071d00716104f19443d1ef7f76719d8a49c719f725882"
+  },
+  "regression": {
+    "full": "86_of_86_PASS",
+    "full_discovered": 86,
+    "quick_discovered": 19,
+    "runner_unit": "3_of_3_PASS",
+    "full_executed": true,
+    "full_matrix": {
+      "discovered_count": 86,
+      "elapsed_ms": 2496701.389,
+      "executed_count": 86,
+      "fail_fast": false,
+      "failed": [],
+      "failed_count": 0,
+      "include_patterns": [],
+      "interface": "gaotian.ship-test-runner/v2",
+      "not_run_count": 0,
+      "omitted_count": 0,
+      "passed_count": 86,
+      "profile": "full",
+      "results": [
+        {
+          "duration_ms": 2143.936,
+          "exit_code": 0,
+          "script": "高天荒野T0b2b3a精确边界上下文测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2177.914,
+          "exit_code": 0,
+          "script": "高天荒野T0b2b3b武器时间线安全快进测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2362.913,
+          "exit_code": 0,
+          "script": "高天荒野T0b2b3c生命周期同一步投影测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2258.475,
+          "exit_code": 0,
+          "script": "高天荒野T0b2b3d画像与Scratch决策测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 1988.141,
+          "exit_code": 0,
+          "script": "高天荒野T0b2c1推进安全判定器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2069.26,
+          "exit_code": 0,
+          "script": "高天荒野T0b2c2a推进资源合同测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 4100.3,
+          "exit_code": 0,
+          "script": "高天荒野T0b2c2b推进场景状态与迁移测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 3538.325,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d1r推进状态合同修复测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 1942.923,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d1推进时间内核测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 3345.573,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d2a推进资源与控制桥测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 4870.023,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d2b1定向控制与边界合同测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 150593.28,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d2b2完整资源链测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 12084.127,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d2b3实际推进聚合与积分测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 109640.688,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d2b4场景接线与新黄金测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 8991.55,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d3a受控时间边界测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 19966.548,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d3b整舰安全判定测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2778.981,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d3c受控场景合同与旧版门禁测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 16358.951,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d3d无场景受控推进适配器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 24516.163,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d3e统一场景受控推进与存档测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 965469.085,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d3f受控黄金与完整矩阵测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 851.736,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4a硬故障状态边界测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2781.626,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4b硬故障运行时投影测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2702.69,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4c无场景硬故障适配器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2940.03,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4d方向互锁边界测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 3863.463,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4e完整受控推进适配器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 38377.445,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4f场景存档与迁移合同测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 193436.289,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4g统一场景完整安全与存档测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 865461.345,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4h完整安全黄金与全回归测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 1781.432,
+          "exit_code": 0,
+          "script": "高天荒野T0b2安全搜索快速路径测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 1885.87,
+          "exit_code": 0,
+          "script": "高天荒野T0b2运行时稳定核心测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2827.137,
+          "exit_code": 0,
+          "script": "高天荒野T0事件与弹丸热路径测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 975.082,
+          "exit_code": 0,
+          "script": "高天荒野T0基准框架测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 1727.437,
+          "exit_code": 0,
+          "script": "高天荒野T0权威热路径基线测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2202.078,
+          "exit_code": 0,
+          "script": "高天荒野T0测量边界与观察器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 922.918,
+          "exit_code": 0,
+          "script": "高天荒野T0短程诊断决策门测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 1673.009,
+          "exit_code": 0,
+          "script": "高天荒野T0确定性场景与无界面基线测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2652.98,
+          "exit_code": 0,
+          "script": "高天荒野T0运行时与静态模型复用测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 3401.343,
+          "exit_code": 0,
+          "script": "高天荒野T0静态指纹与验证边界测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 971.996,
+          "exit_code": 0,
+          "script": "高天荒野WebSidecar生命周期测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 152.963,
+          "exit_code": 0,
+          "script": "高天荒野Web桥接协议测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 626.614,
+          "exit_code": 0,
+          "script": "高天荒野舰艇RCS缓存测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 177.791,
+          "exit_code": 0,
+          "script": "高天荒野舰艇出航配置编译器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 58.983,
+          "exit_code": 0,
+          "script": "高天荒野舰艇基础装甲材质测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 200.233,
+          "exit_code": 0,
+          "script": "高天荒野舰艇战斗系统契约测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 234.141,
+          "exit_code": 0,
+          "script": "高天荒野舰艇战术机动求解器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 178.651,
+          "exit_code": 0,
+          "script": "高天荒野舰艇执行器聚合与派生快照测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 4515.886,
+          "exit_code": 0,
+          "script": "高天荒野舰艇机动性能公式原型测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 107.602,
+          "exit_code": 0,
+          "script": "高天荒野舰艇模块原型契约测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 298.108,
+          "exit_code": 0,
+          "script": "高天荒野舰艇气动缓存测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 109.298,
+          "exit_code": 0,
+          "script": "高天荒野舰艇炮弹飞行阻力公式原型测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 61.075,
+          "exit_code": 0,
+          "script": "高天荒野舰艇甲弹对抗公式测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 68.25,
+          "exit_code": 0,
+          "script": "高天荒野舰艇船壳结构公式原型测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 91.124,
+          "exit_code": 0,
+          "script": "高天荒野舰艇船壳结构公式变体测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 262.642,
+          "exit_code": 0,
+          "script": "高天荒野舰艇舾装编译器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 562.265,
+          "exit_code": 0,
+          "script": "高天荒野舰艇规范数据与船壳编译器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 233.217,
+          "exit_code": 0,
+          "script": "高天荒野舰艇运行时参数编译器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 1605.554,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段C综合回归.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 668.002,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段D综合回归.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 313.17,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段E载荷回归.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 984.314,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段E运行时回归.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 345.736,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段F三舰集成测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 341.099,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段F综合回归.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 720.479,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段G端到端集成测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 723.082,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段G综合回归.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 1288.842,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段H综合回归.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 1263.872,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段H编辑器领域层测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 375.781,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I二次毁伤测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 460.817,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I人员伤亡与运行时回写测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 347.5,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I医疗转移与救生测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 352.939,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I实例设计与改装测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 333.834,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I导弹制导状态测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 334.794,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I导弹制导运行时测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 436.586,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I弹丸世界与甲弹回归测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 244.944,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I弹药与武器动作测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 398.317,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I战术交战边界测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 510.839,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I战术生命周期测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 397.605,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I战术舰队指挥测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 379.91,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I战术观测与火控输入测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 463.186,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I持续毁伤与损管测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 857.007,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I教程基准包测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 861.696,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I教程基准综合回归.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 269.283,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I武器时间与射击队列测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 422.542,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I统一战术场景时间线测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 244.952,
+          "exit_code": 0,
+          "script": "高天荒野舰艇阶段I船坞后勤与战略工时测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 119.324,
+          "exit_code": 0,
+          "script": "高天荒野舰艇雷达反射截面积公式原型测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 59.584,
+          "exit_code": 0,
+          "script": "高天荒野舰艇首轮火炮口径测试.py",
+          "status": "PASS"
+        }
+      ],
+      "selected_count": 86,
+      "slowest": [
+        {
+          "duration_ms": 965469.085,
+          "script": "高天荒野T0b2d3f受控黄金与完整矩阵测试.py"
+        },
+        {
+          "duration_ms": 865461.345,
+          "script": "高天荒野T0b2d4h完整安全黄金与全回归测试.py"
+        },
+        {
+          "duration_ms": 193436.289,
+          "script": "高天荒野T0b2d4g统一场景完整安全与存档测试.py"
+        },
+        {
+          "duration_ms": 150593.28,
+          "script": "高天荒野T0b2d2b2完整资源链测试.py"
+        },
+        {
+          "duration_ms": 109640.688,
+          "script": "高天荒野T0b2d2b4场景接线与新黄金测试.py"
+        },
+        {
+          "duration_ms": 38377.445,
+          "script": "高天荒野T0b2d4f场景存档与迁移合同测试.py"
+        },
+        {
+          "duration_ms": 24516.163,
+          "script": "高天荒野T0b2d3e统一场景受控推进与存档测试.py"
+        },
+        {
+          "duration_ms": 19966.548,
+          "script": "高天荒野T0b2d3b整舰安全判定测试.py"
+        },
+        {
+          "duration_ms": 16358.951,
+          "script": "高天荒野T0b2d3d无场景受控推进适配器测试.py"
+        },
+        {
+          "duration_ms": 12084.127,
+          "script": "高天荒野T0b2d2b3实际推进聚合与积分测试.py"
+        }
+      ],
+      "status": "PASS",
+      "total_count": 86,
+      "utf8_mode": true
+    },
+    "quick": "19_of_19_PASS_as_full_subset",
+    "syntax": "PASS",
+    "diff_check": "PASS",
+    "changed_dependency_fingerprints": "PASS",
+    "desktop_typescript": "typecheck_and_4_of_4_PASS",
+    "desktop_rust": "15_of_15_PASS",
+    "desktop_environment_note": "The default npm shim referenced a missing installation and Cargo was absent from PATH; reruns used the existing system npm CLI and user Cargo executable without global configuration changes."
+  },
+  "golden": {
+    "path": "contracts/web_bridge/t0-fully-governed-propulsion-step-golden.v1.json",
+    "sha256": "31dbb20f3cb148c3f607e05c440833e1d4dbc1c2eba7c2e3a15bde921acaa7cb"
+  },
+  "unchanged_goldens": {
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "contracts/web_bridge/t0-actual-propulsion-step-golden.v1.json": "6636afd396df0dd1ec17906f4b8fbe0d23d1a88e49d47dae64d1872f259d78ed",
+    "contracts/web_bridge/t0-governed-propulsion-step-golden.v1.json": "eb253fa94e691505564071d00716104f19443d1ef7f76719d8a49c719f725882"
+  },
+  "shared_fingerprint_refresh_reports": [
+    "阶段T0b2b2运行时稳定核心接口.v1.json",
+    "阶段T0b2b3a精确边界上下文接口.v1.json",
+    "阶段T0b2b3b武器时间线安全快进接口.v1.json",
+    "阶段T0b2b3c生命周期同一步投影接口.v1.json",
+    "阶段T0b2b3d画像与Scratch决策接口.v1.json",
+    "阶段T0b2c1推进安全判定器接口.v1.json",
+    "阶段T0b2c2a推进资源合同接口.v1.json",
+    "阶段T0b2c2b推进场景状态与迁移接口.v1.json",
+    "阶段T0b2d1p接线前复盘与计划重排接口.v1.json",
+    "阶段T0b2d1r推进状态合同修复接口.v1.json",
+    "阶段T0b2d1推进时间内核接口.v1.json",
+    "阶段T0b2d2a推进资源与控制桥接口.v1.json",
+    "阶段T0b2d2b1定向控制与边界合同接口.v1.json",
+    "阶段T0b2d2b2完整推进资源链接口.v1.json",
+    "阶段T0b2d2b3实际推进聚合与积分接口.v1.json",
+    "阶段T0b2d2b4场景接线与独立新黄金接口.v1.json",
+    "阶段T0b2d3a受控时间边界接口.v1.json",
+    "阶段T0b2d3b整舰向量安全接口.v1.json",
+    "阶段T0b2d3c受控场景合同与旧版门禁接口.v1.json",
+    "阶段T0b2d3d无场景受控推进适配器接口.v1.json",
+    "阶段T0b2d3e统一场景受控推进与存档接口.v1.json",
+    "阶段T0b2d3f受控黄金与完整矩阵接口.v1.json",
+    "阶段T0b2d3p软安全场景接线前复盘与计划重排接口.v1.json",
+    "阶段T0b2d4a硬故障状态边界接口.v1.json",
+    "阶段T0b2d4b硬故障运行时投影接口.v1.json",
+    "阶段T0b2d4c无场景硬故障适配器接口.v1.json",
+    "阶段T0b2d4d方向互锁边界接口.v1.json",
+    "阶段T0b2d4e完整受控推进适配器接口.v1.json",
+    "阶段T0b2d4f场景存档与迁移合同接口.v1.json",
+    "阶段T0b2d4g统一场景完整安全与存档接口.v1.json"
+  ],
+  "shared_fingerprint_refresh_scope": "Refresh changed test-manifest and planning dependencies and downstream report hashes only; preserve historical evidence and regression records.",
+  "risk_controls": {
+    "production_authority_algorithm_changed": false,
+    "d4_scene_or_adapter_changed": false,
+    "existing_goldens_changed": false,
+    "new_independent_golden": true,
+    "web_editor_or_default_gameplay_changed": false,
+    "official_performance_runs_executed": 0
+  },
+  "limitations": [
+    "The 12-step named matrix is a deterministic correctness matrix, not an official performance or real-time acceptance run.",
+    "The 401-step mixed sequence uses one active and five exited ships while retaining the six-ship resource set; the named matrix separately exercises all 224 ships.",
+    "Fuel loss and restoration are explicit fixture inputs; no new gameplay resupply interface is introduced.",
+    "Scene reversal uses yaw thrusters because named fixtures have no reverse main-engine channel; all direction-channel pairs remain covered by d4.4 pure boundary tests.",
+    "Normal gameplay and Web/editor defaults remain unchanged; named d3 migration retains its committed-unambiguous-state gate."
+  ],
+  "next_slice": "T0b.2e1_python_projectile_batching_boundary_review_then_implementation",
+  "next_slice_requirements": [
+    "Review Python projectile batch boundaries against the completed d4 authoritative baseline.",
+    "Preserve all four golden files and authoritative results when implementing e1 optimizations.",
+    "Keep cross-step scheduling, multi-rate authority, Rust kernels, T0c and editor default changes behind their own gates."
+  ],
+  "completed_slices": [
+    "T0b.2d4.1",
+    "T0b.2d4.2",
+    "T0b.2d4.3",
+    "T0b.2d4.4",
+    "T0b.2d4.5",
+    "T0b.2d4.6",
+    "T0b.2d4.7",
+    "T0b.2d4.8"
+  ]
+}

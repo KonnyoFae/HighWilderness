@@ -1,0 +1,343 @@
+{
+  "interface": "gaotian.stage-t0b2d4g-fully-governed-scene-save/v1",
+  "status": "PASS",
+  "slice": "T0b.2d4.7",
+  "baseline": {
+    "commit": "5c25564",
+    "branch": "main",
+    "pushed_to": null
+  },
+  "scope": "explicit_v7_named_resources_unified_full_safety_execution_and_save_reload_replay",
+  "evidence": {
+    "named_matrix": {
+      "scenes": 12,
+      "ships": 224,
+      "engines": 1224,
+      "governors": 1344,
+      "steps_per_scene": 2,
+      "reload_boundary": 1,
+      "trace_sha256": "2e0377573f2f04d8151fe668bc17871e56aeee99e740fc57a410acf82bc0ea99",
+      "closing_once_per_active_ship": true
+    },
+    "fault_reset_emergency": {
+      "trip_with_overg": true,
+      "fuel_restore_preserves_latch": true,
+      "failed_reset_atomic": true,
+      "reset_opening_zero": true,
+      "reset_not_reconsumed": true,
+      "emergency_one_shot": true,
+      "reload_checkpoints": [
+        "tripped",
+        "reset",
+        "emergency"
+      ],
+      "trace_sha256": "53c6b93c6bf06ec67deb43fb7cdbbd7084605f403e730c32d15c880c22adff28"
+    },
+    "reversal_reload": {
+      "steps": 52,
+      "reload_boundaries": [
+        18,
+        20,
+        27
+      ],
+      "first_blocked_step": 18,
+      "first_released_step": 33,
+      "trace_sha256": "3d664807ca11831f11d35abd6473fa0482a0766e31dc18947d7b3a48f1c0c22f"
+    },
+    "lifecycle_rejections": {
+      "opening_exit_frozen": true,
+      "closing_exit_committed_once": true,
+      "invalid_save_cases": 7,
+      "automatic_brake_supported": true,
+      "uncommanded_zero_delivery": true,
+      "command_negative_cases": 5
+    },
+    "closing_damage_fault_delay": {
+      "real_projectile_impact": true,
+      "closing_uses_post_impact_runtime": true,
+      "interval_delivery_preserved_after_destruction": true,
+      "hard_fault_sampled_next_opening": true,
+      "post_damage_reload_replay": true,
+      "trace_sha256": "3b6f9badc0c9eb66deeb43d0fcf02bdedaa41fcea5db1518a75220aad8111110"
+    }
+  },
+  "implementation_hashes": {
+    "高天荒野舰艇完整受控推进场景.py": "e1ec8eea4ebe7a4c7616ecc76a10dcdbe24dc8707c9892e64408789787d18c98",
+    "高天荒野舰艇统一战术场景.py": "ee5e5525426f0a5c7124236dfd1b0db4b3d0583b3509db04a48df363e8d499a9",
+    "高天荒野舰艇完整受控推进场景合同.py": "8af654e8ba583dc2a2d7f01de5232ce0b9be1ef1d5d3c0ca271ce603923a70d7",
+    "高天荒野舰艇完整受控推进场景版本.py": "b730d93706976a69483dddb14594d4ebc9381ef0bd20813831a1480855b7216c",
+    "高天荒野舰艇受控推进完整安全适配器.py": "8c480ee8adf18a6999fa939f960db8f2c8c0739864672efb8f2ef2bcb57408c2",
+    "高天荒野舰艇受控推进硬故障适配器.py": "320785068bf5b59e426b26e141bce03fe16e8deb19297f7ec76463f80c286b80",
+    "高天荒野舰艇推进方向互锁边界.py": "17ffc301f4f2e35fbd975e1d0bf34d89c3d4a9ff73700f129e5d32469072b06b",
+    "高天荒野舰艇推进时间内核.py": "4feb447dbca2e22ee517c5cc6fcf5b5d6342362fcd2377263995a61a0d03270d",
+    "高天荒野舰艇推进安全判定器.py": "024e75de648a4c9dc87554ef07d028f817a177f71f93e823c9ff6ffefb82514f",
+    "高天荒野舰艇受控推进场景.py": "3b18bf810f356bfc8b48f6dae0b609af2102b2cf65de7139b347ef5d8eaf4f9d",
+    "高天荒野舰艇推进场景构建器.py": "768b38bb344575c8d2abab818e87b9777c7a6a3f8fd9018f0856eab0f862447f",
+    "高天荒野舰艇定向推进控制桥.py": "6268d40785346a91043f7fe7faa7788f3d0ddac53b3e4fc32e81e61853958b1a",
+    "高天荒野T0b2d4g统一场景完整安全与存档测试.py": "c8242edfc88297576e145e57d4c3d79c78f86c2f47fcf7b371d8c4a38aba1703",
+    "高天荒野T0b2d4f场景存档与迁移合同测试.py": "71923bfa2adbfdcad21ee55927713ec04e722ddf87a309587b10338699b11d8f",
+    "高天荒野舰艇测试总入口.py": "e2b3ea68099e7afdf99fab171e9ba196fbf538004246110190694b4ddf35e132",
+    "高天荒野T0b2d4完整安全场景接线实施细则.md": "8f210e267fa755a45d608a1def7ba68e4171a9e83d42994867cd898ad89478f0",
+    "高天荒野T0b2推进响应与权威性能优化规划.md": "dc7f684c3dcc77766a3f2e7dba6beb0fe06b4be081c71c9779173054e4f32627",
+    "高天荒野Web客户端编辑器与战术验证实施计划.md": "ed876d01170bfdc3a31466f8bb0ed36183638b8058ed7088ea573c141fae9266"
+  },
+  "regression": {
+    "targeted": "PASS",
+    "runner_unit": "3_of_3_PASS",
+    "quick": "19_of_19_PASS",
+    "quick_discovered": 19,
+    "full_discovered": 85,
+    "full_executed": false,
+    "quick_matrix": {
+      "discovered_count": 85,
+      "elapsed_ms": 333262.694,
+      "executed_count": 19,
+      "fail_fast": false,
+      "failed": [],
+      "failed_count": 0,
+      "include_patterns": [],
+      "interface": "gaotian.ship-test-runner/v2",
+      "not_run_count": 0,
+      "omitted_count": 66,
+      "passed_count": 19,
+      "profile": "quick",
+      "results": [
+        {
+          "duration_ms": 3070.378,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d1r推进状态合同修复测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 1658.877,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d1推进时间内核测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 4298.108,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d2b1定向控制与边界合同测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 9161.527,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d3a受控时间边界测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 18799.349,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d3b整舰安全判定测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2257.56,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d3c受控场景合同与旧版门禁测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 17081.292,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d3d无场景受控推进适配器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 25875.504,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d3e统一场景受控推进与存档测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 775.329,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4a硬故障状态边界测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2572.378,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4b硬故障运行时投影测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2457.555,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4c无场景硬故障适配器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 2622.203,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4d方向互锁边界测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 3454.123,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4e完整受控推进适配器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 38016.107,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4f场景存档与迁移合同测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 199872.251,
+          "exit_code": 0,
+          "script": "高天荒野T0b2d4g统一场景完整安全与存档测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 234.375,
+          "exit_code": 0,
+          "script": "高天荒野舰艇战术机动求解器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 253.841,
+          "exit_code": 0,
+          "script": "高天荒野舰艇舾装编译器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 571.043,
+          "exit_code": 0,
+          "script": "高天荒野舰艇规范数据与船壳编译器测试.py",
+          "status": "PASS"
+        },
+        {
+          "duration_ms": 229.749,
+          "exit_code": 0,
+          "script": "高天荒野舰艇运行时参数编译器测试.py",
+          "status": "PASS"
+        }
+      ],
+      "selected_count": 19,
+      "slowest": [
+        {
+          "duration_ms": 199872.251,
+          "script": "高天荒野T0b2d4g统一场景完整安全与存档测试.py"
+        },
+        {
+          "duration_ms": 38016.107,
+          "script": "高天荒野T0b2d4f场景存档与迁移合同测试.py"
+        },
+        {
+          "duration_ms": 25875.504,
+          "script": "高天荒野T0b2d3e统一场景受控推进与存档测试.py"
+        },
+        {
+          "duration_ms": 18799.349,
+          "script": "高天荒野T0b2d3b整舰安全判定测试.py"
+        },
+        {
+          "duration_ms": 17081.292,
+          "script": "高天荒野T0b2d3d无场景受控推进适配器测试.py"
+        },
+        {
+          "duration_ms": 9161.527,
+          "script": "高天荒野T0b2d3a受控时间边界测试.py"
+        },
+        {
+          "duration_ms": 4298.108,
+          "script": "高天荒野T0b2d2b1定向控制与边界合同测试.py"
+        },
+        {
+          "duration_ms": 3454.123,
+          "script": "高天荒野T0b2d4e完整受控推进适配器测试.py"
+        },
+        {
+          "duration_ms": 3070.378,
+          "script": "高天荒野T0b2d1r推进状态合同修复测试.py"
+        },
+        {
+          "duration_ms": 2622.203,
+          "script": "高天荒野T0b2d4d方向互锁边界测试.py"
+        }
+      ],
+      "status": "PASS",
+      "total_count": 19,
+      "utf8_mode": true
+    },
+    "syntax": "PASS",
+    "diff_check": "PASS",
+    "changed_dependency_fingerprints": "PASS"
+  },
+  "contract_clarification": {
+    "interval_delivery_status": "Preserves actual force and fuel delivered before end-of-interval lifecycle changes.",
+    "closing_delivery_status": "Derived from final lifecycle for closing safety sampling; can differ from interval delivery.",
+    "schema_or_version_changed": false,
+    "legacy_d3_semantics_changed": false,
+    "d4f_historical_evidence_retained": true
+  },
+  "shared_fingerprint_refresh_reports": [
+    "阶段T0b1b静态指纹与验证边界接口.v1.json",
+    "阶段T0b1c运行时与静态模型复用接口.v1.json",
+    "阶段T0b1d事件与弹丸热路径接口.v1.json",
+    "阶段T0b2b2运行时稳定核心接口.v1.json",
+    "阶段T0b2b3a精确边界上下文接口.v1.json",
+    "阶段T0b2b3b武器时间线安全快进接口.v1.json",
+    "阶段T0b2b3c生命周期同一步投影接口.v1.json",
+    "阶段T0b2b3d画像与Scratch决策接口.v1.json",
+    "阶段T0b2c1推进安全判定器接口.v1.json",
+    "阶段T0b2c2a推进资源合同接口.v1.json",
+    "阶段T0b2c2b推进场景状态与迁移接口.v1.json",
+    "阶段T0b2d1p接线前复盘与计划重排接口.v1.json",
+    "阶段T0b2d1r推进状态合同修复接口.v1.json",
+    "阶段T0b2d1推进时间内核接口.v1.json",
+    "阶段T0b2d2a推进资源与控制桥接口.v1.json",
+    "阶段T0b2d2b1定向控制与边界合同接口.v1.json",
+    "阶段T0b2d2b2完整推进资源链接口.v1.json",
+    "阶段T0b2d2b3实际推进聚合与积分接口.v1.json",
+    "阶段T0b2d2b4场景接线与独立新黄金接口.v1.json",
+    "阶段T0b2d3a受控时间边界接口.v1.json",
+    "阶段T0b2d3b整舰向量安全接口.v1.json",
+    "阶段T0b2d3c受控场景合同与旧版门禁接口.v1.json",
+    "阶段T0b2d3d无场景受控推进适配器接口.v1.json",
+    "阶段T0b2d3e统一场景受控推进与存档接口.v1.json",
+    "阶段T0b2d3f受控黄金与完整矩阵接口.v1.json",
+    "阶段T0b2d3p软安全场景接线前复盘与计划重排接口.v1.json",
+    "阶段T0b2d4a硬故障状态边界接口.v1.json",
+    "阶段T0b2d4b硬故障运行时投影接口.v1.json",
+    "阶段T0b2d4c无场景硬故障适配器接口.v1.json",
+    "阶段T0b2d4d方向互锁边界接口.v1.json",
+    "阶段T0b2d4e完整受控推进适配器接口.v1.json",
+    "阶段T0b2d4f场景存档与迁移合同接口.v1.json"
+  ],
+  "shared_fingerprint_refresh_scope": "Refresh only dependencies changed since d4.7 began and dependent report references; retain previous evidence and historical regression results.",
+  "unchanged_goldens": {
+    "contracts/web_bridge/t0-actual-propulsion-step-golden.v1.json": "6636afd396df0dd1ec17906f4b8fbe0d23d1a88e49d47dae64d1872f259d78ed",
+    "contracts/web_bridge/t0-authority-step-golden.v1.json": "e7e5cf3dd494e5d8390f2aeabfbb4d2e6f4426562901879dbc7268ee68b5f095",
+    "contracts/web_bridge/t0-governed-propulsion-step-golden.v1.json": "eb253fa94e691505564071d00716104f19443d1ef7f76719d8a49c719f725882"
+  },
+  "risk_controls": {
+    "d4_scene_execution_enabled": true,
+    "d3_contracts_changed": false,
+    "d4_5_adapter_changed": false,
+    "time_kernel_changed": false,
+    "safety_algorithm_changed": false,
+    "goldens_changed": false,
+    "official_performance_runs_executed": 0,
+    "web_editor_or_default_gameplay_changed": false,
+    "serialized_runtime_or_caches": false
+  },
+  "limitations": [
+    "The named matrix covers two steps per scene with reload at boundary 1; independent d4 goldens and three full replays remain d4.8 work.",
+    "The reversal sequence covers 52 steps and reloads at 18, 20 and 27; longer mixed fault/reset/reversal sequences remain d4.8 work.",
+    "End-of-interval destruction is a deterministic lifecycle injection through the real projectile interval interface; a separate real projectile impact validates post-impact runtime.",
+    "Named d3 migration continues to accept only committed unambiguous settled states.",
+    "No full 85-script regression or official performance matrix has been executed in this slice."
+  ],
+  "next_slice": "T0b.2d4.8_independent_goldens_long_sequences_and_full_regression",
+  "next_slice_requirements": [
+    "Freeze an independent fully governed d4 golden without modifying the three existing golden files.",
+    "Replay all twelve named scenes three times and compare step traces, resources, motion, fuel and events.",
+    "Cover longer mixed hard fault, reset, emergency and reversal sequences with save-reload checkpoints.",
+    "Run the full regression and close the d4 exit gate before considering later performance or editor work."
+  ]
+}

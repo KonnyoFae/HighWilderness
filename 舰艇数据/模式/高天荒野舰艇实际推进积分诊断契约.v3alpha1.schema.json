@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.actual-propulsion-step-diagnostics/v3alpha1",
+  "description": "积分诊断绑定完整开边界、运行时硬故障事实与方向互锁；旧 v2 诊断不得隐式升级。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "request": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/request"
+    },
+    "resulting_fixed_step_index": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/resulting_fixed_step_index"
+    },
+    "requested_fuel_units": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/requested_fuel_units"
+    },
+    "fuel_delivery_fraction": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/fuel_delivery_fraction"
+    },
+    "structure_ratio": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/structure_ratio"
+    },
+    "crew_g": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/crew_g"
+    },
+    "hull_integrity_damage": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/hull_integrity_damage"
+    },
+    "fuel_units_consumed": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/fuel_units_consumed"
+    },
+    "active_force_body_n": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/active_force_body_n"
+    },
+    "active_torque_n_m": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/active_torque_n_m"
+    },
+    "drag_force_world_n": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/drag_force_world_n"
+    },
+    "drag_breakdown": {
+      "$ref": "gaotian.actual-propulsion-step-diagnostics/v1alpha1#/properties/drag_breakdown"
+    },
+    "source_propulsion_state_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "source_governors_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "interface": {
+      "const": "gaotian.actual-propulsion-step-diagnostics/v3alpha1"
+    },
+    "policy": {
+      "const": "gaotian.tactical-dynamics/fully-governed-opening-output/v1"
+    },
+    "soft_governor_status": {
+      "const": "wired"
+    },
+    "hard_fault_status": {
+      "const": "wired"
+    },
+    "direction_interlock_status": {
+      "const": "wired"
+    },
+    "source_opening_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "hard_fact_projection_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "direction_interlock_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "required": [
+    "request",
+    "resulting_fixed_step_index",
+    "requested_fuel_units",
+    "fuel_delivery_fraction",
+    "structure_ratio",
+    "crew_g",
+    "hull_integrity_damage",
+    "fuel_units_consumed",
+    "active_force_body_n",
+    "active_torque_n_m",
+    "drag_force_world_n",
+    "drag_breakdown",
+    "source_propulsion_state_sha256",
+    "source_governors_sha256",
+    "interface",
+    "policy",
+    "soft_governor_status",
+    "hard_fault_status",
+    "direction_interlock_status",
+    "source_opening_sha256",
+    "hard_fact_projection_sha256",
+    "direction_interlock_sha256"
+  ]
+}

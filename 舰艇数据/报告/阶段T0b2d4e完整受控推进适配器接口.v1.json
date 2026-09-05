@@ -120,7 +120,7 @@
     "高天荒野舰艇受控推进时间边界.py": "c41d684d8ae2571d8bb92c483a74627af1443847347a9a10682e2b89cb24bfe3",
     "高天荒野舰艇整舰推进安全判定.py": "0c924711f9051dc1e4ca3b701adc9a43ddc89dfc44a7bb3ac3542f20bed3af2f",
     "高天荒野舰艇实际推进聚合器.py": "db59a96449bbe5a44794069e30e686a1d071c83a9e52f121851f985c38a39036",
-    "高天荒野舰艇测试总入口.py": "f6a7b05f59b1536b4495669006f23bb19253d93a48ca2d6e362ae45c12f5a0ea"
+    "高天荒野舰艇测试总入口.py": "e2b3ea68099e7afdf99fab171e9ba196fbf538004246110190694b4ddf35e132"
   },
   "regression": {
     "targeted": "PASS",

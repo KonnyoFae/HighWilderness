@@ -36,6 +36,8 @@ QUICK_SCRIPT_NAMES = frozenset(
         "高天荒野T0b2d4c无场景硬故障适配器测试.py",
         "高天荒野T0b2d4d方向互锁边界测试.py",
         "高天荒野T0b2d4e完整受控推进适配器测试.py",
+        "高天荒野T0b2d4f场景存档与迁移合同测试.py",
+        "高天荒野T0b2d4g统一场景完整安全与存档测试.py",
     }
 )
 
@@ -44,6 +46,7 @@ STAGE_HEAVY_SCRIPT_NAMES = frozenset(
     {
         "高天荒野T0b2d2b4场景接线与新黄金测试.py",
         "高天荒野T0b2d3f受控黄金与完整矩阵测试.py",
+        "高天荒野T0b2d4h完整安全黄金与全回归测试.py",
     }
 )
 

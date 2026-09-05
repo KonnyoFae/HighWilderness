@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.tactical-scene-propulsion-boundary-event/v1alpha1",
+  "description": "按边界、硬/时间/软、舰艇、局部顺序稳定发布；由完整开收记录唯一派生，不以事件类型重新排序。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "interface": {
+      "const": "gaotian.tactical-scene-propulsion-boundary-event/v1alpha1"
+    },
+    "policy": {
+      "const": "gaotian.propulsion-events/boundary-hard-time-soft-ship-local-order/v1"
+    },
+    "fixed_step_index": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "boundary_phase": {
+      "enum": [
+        "opening",
+        "closing"
+      ]
+    },
+    "event_stage": {
+      "enum": [
+        "hard",
+        "time",
+        "soft"
+      ]
+    },
+    "ship_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "local_sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "event": {
+      "oneOf": [
+        {
+          "$ref": "gaotian.propulsion-state-event/v2alpha1"
+        },
+        {
+          "$ref": "gaotian.directional-propulsion-safety-intent/v1alpha1"
+        }
+      ]
+    }
+  },
+  "required": [
+    "interface",
+    "policy",
+    "fixed_step_index",
+    "boundary_phase",
+    "event_stage",
+    "ship_id",
+    "local_sequence",
+    "event"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "gaotian.tactical-scene-timeline/v7alpha1",
+  "description": "完整受控推进的已提交状态；允许合法跳闸锁存，保留原始命令和六通道 governor 历史。",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "engagement_state": {
+      "$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/engagement_state"
+    },
+    "fixed_step_index": {
+      "$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/fixed_step_index"
+    },
+    "fixed_step_s": {
+      "$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/fixed_step_s"
+    },
+    "interface": {
+      "const": "gaotian.tactical-scene-timeline/v7alpha1"
+    },
+    "policy": {
+      "const": "gaotian.tactical-scene/fully-governed-closing-boundary/v1"
+    },
+    "projectile_world": {
+      "$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/projectile_world"
+    },
+    "propulsion_safety_profile": {
+      "$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/propulsion_safety_profile"
+    },
+    "propulsion_safety_profile_sha256": {
+      "$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/propulsion_safety_profile_sha256"
+    },
+    "ships": {
+      "$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/ships"
+    },
+    "tactical_time_s": {
+      "$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/tactical_time_s"
+    },
+    "propulsion_execution": {
+      "$ref": "gaotian.tactical-scene-timeline/v5alpha1#/properties/propulsion_execution"
+    },
+    "propulsion_governance": {
+      "$ref": "gaotian.governed-propulsion-execution/v2alpha1"
+    }
+  },
+  "required": [
+    "engagement_state",
+    "fixed_step_index",
+    "fixed_step_s",
+    "interface",
+    "policy",
+    "projectile_world",
+    "propulsion_safety_profile",
+    "propulsion_safety_profile_sha256",
+    "ships",
+    "tactical_time_s",
+    "propulsion_execution",
+    "propulsion_governance"
+  ]
+}
