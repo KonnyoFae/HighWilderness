@@ -5,15 +5,17 @@ use windows_sys::Win32::UI::Controls::Dialogs::*;
 pub fn choose(owner: isize, save: bool, initial_dir: &Path) -> Result<Option<PathBuf>, String> {
     let mut buffer = vec![0u16; 32768];
     if save {
-        for (i, c) in "船壳.json".encode_utf16().enumerate() {
+        for (i, c) in "舰艇设计.json".encode_utf16().enumerate() {
             buffer[i] = c;
         }
     }
-    let filter: Vec<u16> = "船壳 JSON 文件\0*.json\0\0".encode_utf16().collect();
+    let filter: Vec<u16> = "舰艇设计 JSON 文件（船壳 / 舾装）\0*.json\0\0"
+        .encode_utf16()
+        .collect();
     let title: Vec<u16> = if save {
-        "保存船壳\0"
+        "保存舰艇设计\0"
     } else {
-        "打开船壳\0"
+        "打开舰艇设计\0"
     }
     .encode_utf16()
     .collect();

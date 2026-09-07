@@ -1,0 +1,51 @@
+{
+  "interface": "gaotian.web-o3b-acceptance/v1alpha1",
+  "date": "2026-09-07",
+  "status": "PASS_MINIMAL_SCOPE",
+  "layout_interface": "gaotian.outfit-layout/v1alpha1",
+  "implementation": [
+    "SVG outfit canvas with exact placement commands and generated instance IDs",
+    "Grid placement, selection, drag move, allowed rotation and removal",
+    "Real side-slot selection and compatible unoccupied host selection",
+    "Deck switching, lower-deck reference, pan and zoom",
+    "Internal, top, side, body and clearance layers",
+    "Compiler-backed partial geometry survives blank and invalid outfits",
+    "Overlap participants highlighted and current selection prioritized for repair",
+    "Local footprint hints remain advisory; authoritative design validation unchanged"
+  ],
+  "checks": {
+    "new_python_tests": 6,
+    "new_frontend_tests": 8,
+    "frontend_tests_passed": 44,
+    "typescript": "PASS",
+    "frontend_build": "PASS",
+    "frontend_build_warning": "Main bundle above default 500 kB warning threshold; build successful",
+    "python_scripts_passed": 13,
+    "python_scripts_discovered": 93,
+    "python_scripts_omitted": 80,
+    "historical_stage_h_regression": "PASS"
+  },
+  "native_ui": {
+    "method": "Computer-use native input, screenshots and accessibility observations",
+    "backend_instance_id": "backend.02ca7d193cc04e978753cd92b1f7a3ad",
+    "source_document": "artifacts/o3a/bound-outfit.json",
+    "verified_steps": [
+      "Restarted backend and opened existing portable outfit",
+      "Observed compiled hull grid, CIC and lift tank on canvas",
+      "Dragged lift tank from (0,10) m to (0,15) m",
+      "Placed ammunition_magazine.0 directly at approximately (0,-10) m with forced snapping",
+      "Dragged ammunition onto CIC and observed internal/body overlap and both participants marked red",
+      "Dragged selected ammunition out of overlap and observed valid outfit again"
+    ],
+    "last_observed_state": "Legal revision 8, three modules, live editable draft; later user interaction may continue",
+    "file_policy": "Original O3a document not overwritten; submitted draft uses existing recovery mechanism",
+    "not_claimed": [
+      "Native four-mode and cross-deck full acceptance",
+      "Native file roundtrip of O3b edits",
+      "Native shortcut rotation verification"
+    ]
+  },
+  "preserved": ["Original pack and saved hull/outfit files", "Historical golden reports", "Existing recovery drafts", "Armor and fill rules", "Canonical compiler outputs"],
+  "deferred": ["Weapon groups and firing arc controls", "Full O4 three-ship canvas roundtrip", "Advanced batch/copy/mirror", "Fill settings and effects", "Tactical UI"],
+  "next_slice": "O3c weapon groups, then O4 full canvas acceptance"
+}

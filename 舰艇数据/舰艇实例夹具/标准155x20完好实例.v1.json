@@ -1,6 +1,6 @@
 {
   "current_hull_integrity_fraction": 1.0,
-  "derived_ship_snapshot_sha256": "e247bdb379b4a66f629f3334588a43b41060495dce4161ea1c1820e70fb849bf",
+  "derived_ship_snapshot_sha256": "41991a46af3794e661ae7fc9983700e5e89ade4c8d6f0125c585c138a355ebd3",
   "fixture_level": "contract_fixture",
   "id": "gtw.sortie.fixture.standard_155x20_loaded.instance",
   "kind": "ShipInstanceSnapshot",

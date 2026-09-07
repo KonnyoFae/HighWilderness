@@ -1,0 +1,233 @@
+{
+  "interface": "gaotian.web-o1o2-acceptance/v1alpha1",
+  "date": "2026-09-07",
+  "status": "PASS_MINIMAL_SCOPE",
+  "resource_index_interface": "gaotian.editor-resource-index/v2alpha1",
+  "module_count": 21,
+  "category_count": 13,
+  "catalog_content": [
+    {
+      "id": "gtw.module.fixture.ammunition_magazine",
+      "version": 1,
+      "sha256": "918e9fad338e7f3f14c163aeebfb79530577f7fd0ef76320601b70a878e1a83c",
+      "catalog_id": "gtw.module_catalog.fixture.combat_system",
+      "catalog_sha256": "1740797702b3de4a7e3c5919a3f59f9d12cfb92f69e338666e1a05639e018ab1"
+    },
+    {
+      "id": "gtw.module.fixture.cargo_hold",
+      "version": 1,
+      "sha256": "0ebd603ab0db2f2491d07f438765fed3cc096467eb308a2f358f9e115f54dec3",
+      "catalog_id": "gtw.module_catalog.fixture.minimum",
+      "catalog_sha256": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a"
+    },
+    {
+      "id": "gtw.module.fixture.cic",
+      "version": 1,
+      "sha256": "a363c9448e7f4f07f31cb11d4718908de5eb11413393269cbd84b141347f16da",
+      "catalog_id": "gtw.module_catalog.fixture.minimum",
+      "catalog_sha256": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a"
+    },
+    {
+      "id": "gtw.module.fixture.crew_quarters",
+      "version": 1,
+      "sha256": "84a99ef4016aabbd2a3b0556b77217fd2ced8bf2433164704da8508e98585914",
+      "catalog_id": "gtw.module_catalog.fixture.minimum",
+      "catalog_sha256": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a"
+    },
+    {
+      "id": "gtw.module.fixture.damage_control",
+      "version": 1,
+      "sha256": "faa2208187e73ec0fea0f98adceb4daada260c1a7737c0db63c58c1103dce172",
+      "catalog_id": "gtw.module_catalog.fixture.minimum",
+      "catalog_sha256": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a"
+    },
+    {
+      "id": "gtw.module.fixture.fire_control",
+      "version": 1,
+      "sha256": "ad43e06b1638356324cf13c025f23dae2f5d5957345dd3f10a1bf95a4c929df2",
+      "catalog_id": "gtw.module_catalog.fixture.combat_system",
+      "catalog_sha256": "1740797702b3de4a7e3c5919a3f59f9d12cfb92f69e338666e1a05639e018ab1"
+    },
+    {
+      "id": "gtw.module.fixture.generator",
+      "version": 1,
+      "sha256": "f7651afbc8b83c4aa3b882bbcb570f385fc47a0a34a59ab063680c3f63468e6f",
+      "catalog_id": "gtw.module_catalog.fixture.minimum",
+      "catalog_sha256": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a"
+    },
+    {
+      "id": "gtw.module.fixture.lift_fuel_tank",
+      "version": 1,
+      "sha256": "753793ad1f1a9282b54a3bcfc56fdd011a7a1cc039ca23fa159cfae61d775b37",
+      "catalog_id": "gtw.module_catalog.fixture.minimum",
+      "catalog_sha256": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a"
+    },
+    {
+      "id": "gtw.module.fixture.main_engine",
+      "version": 1,
+      "sha256": "d194a56793a443503eaeed4d9b74f2619e492a54d765ca15ae5a92d0ee403a0c",
+      "catalog_id": "gtw.module_catalog.fixture.minimum",
+      "catalog_sha256": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a"
+    },
+    {
+      "id": "gtw.module.fixture.maneuver_thruster",
+      "version": 1,
+      "sha256": "3452c7332b3a40e09a5ef89ef5860b477e01e3a219e3462c56241771f82e2c35",
+      "catalog_id": "gtw.module_catalog.fixture.minimum",
+      "catalog_sha256": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a"
+    },
+    {
+      "id": "gtw.module.fixture.remote_core",
+      "version": 1,
+      "sha256": "378d0e420f463dafbd2fc4a3a14dd68689353b31564f0d1d0861461f486e28fc",
+      "catalog_id": "gtw.module_catalog.fixture.minimum",
+      "catalog_sha256": "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a"
+    },
+    {
+      "id": "gtw.module.fixture.sensor",
+      "version": 1,
+      "sha256": "e4a2cd7668b9376c92c15c309b08786883a20aa460435b7078c208aac7e1a5af",
+      "catalog_id": "gtw.module_catalog.fixture.combat_system",
+      "catalog_sha256": "1740797702b3de4a7e3c5919a3f59f9d12cfb92f69e338666e1a05639e018ab1"
+    },
+    {
+      "id": "gtw.module.fixture.unmanned.cic",
+      "version": 1,
+      "sha256": "0509964ae546b795ba7c54498672cc64f02a52c7b47d6c367992eb419da7a4ea",
+      "catalog_id": "gtw.module_catalog.fixture.stage_f_unmanned",
+      "catalog_sha256": "15825e048d2275b6d20c9b040ec01e437758f1160d9367bc0495b10bdca627bf"
+    },
+    {
+      "id": "gtw.module.fixture.unmanned.damage_control",
+      "version": 1,
+      "sha256": "5fa8d93f25ba0f0c3aa8dcd423aca4bb3b5110e29c680af578ae0b252ac2766e",
+      "catalog_id": "gtw.module_catalog.fixture.stage_f_unmanned",
+      "catalog_sha256": "15825e048d2275b6d20c9b040ec01e437758f1160d9367bc0495b10bdca627bf"
+    },
+    {
+      "id": "gtw.module.fixture.unmanned.fire_control",
+      "version": 1,
+      "sha256": "ba3c85428b2619d18702374b84cdb99fd72b4dfad54135d2365bcdbe8c5bdb93",
+      "catalog_id": "gtw.module_catalog.fixture.stage_f_unmanned",
+      "catalog_sha256": "15825e048d2275b6d20c9b040ec01e437758f1160d9367bc0495b10bdca627bf"
+    },
+    {
+      "id": "gtw.module.fixture.unmanned.generator",
+      "version": 1,
+      "sha256": "02dc2467f45fde4533974559ae47524633f7b2bc8daee2bd349dd82e37130a68",
+      "catalog_id": "gtw.module_catalog.fixture.stage_f_unmanned",
+      "catalog_sha256": "15825e048d2275b6d20c9b040ec01e437758f1160d9367bc0495b10bdca627bf"
+    },
+    {
+      "id": "gtw.module.fixture.unmanned.main_engine",
+      "version": 1,
+      "sha256": "c939513144555707902853ea22eba9a347ff5dfc9c1f5aa1952be504bde97da5",
+      "catalog_id": "gtw.module_catalog.fixture.stage_f_unmanned",
+      "catalog_sha256": "15825e048d2275b6d20c9b040ec01e437758f1160d9367bc0495b10bdca627bf"
+    },
+    {
+      "id": "gtw.module.fixture.unmanned.maneuver_thruster",
+      "version": 1,
+      "sha256": "1396d40ba3355a62405700ad47be942b8ca62603ade37dafe7d19317ef07d86e",
+      "catalog_id": "gtw.module_catalog.fixture.stage_f_unmanned",
+      "catalog_sha256": "15825e048d2275b6d20c9b040ec01e437758f1160d9367bc0495b10bdca627bf"
+    },
+    {
+      "id": "gtw.module.fixture.unmanned.sensor",
+      "version": 1,
+      "sha256": "1605457ba59320638a7a97739ce1fb0d53d23aed7bdc6b6bf54f3475e32ee099",
+      "catalog_id": "gtw.module_catalog.fixture.stage_f_unmanned",
+      "catalog_sha256": "15825e048d2275b6d20c9b040ec01e437758f1160d9367bc0495b10bdca627bf"
+    },
+    {
+      "id": "gtw.module.fixture.unmanned.weapon",
+      "version": 1,
+      "sha256": "ac7d5c5e849548cadef2171b9c7112c2ece569233d73f6ec52bcbb5bc12c9a32",
+      "catalog_id": "gtw.module_catalog.fixture.stage_f_unmanned",
+      "catalog_sha256": "15825e048d2275b6d20c9b040ec01e437758f1160d9367bc0495b10bdca627bf"
+    },
+    {
+      "id": "gtw.module.fixture.weapon",
+      "version": 1,
+      "sha256": "e4be69bf09e63d6697f918a148bac6023a368b67cb966af1c1fb7de7954e28b7",
+      "catalog_id": "gtw.module_catalog.fixture.combat_system",
+      "catalog_sha256": "1740797702b3de4a7e3c5919a3f59f9d12cfb92f69e338666e1a05639e018ab1"
+    }
+  ],
+  "authoritative_fixture_summaries": [
+    {
+      "resource_id": "gtw.outfit.fixture.stage_f.minimum_legal",
+      "resource_sha256": "440be69e67713ba2395fcf0855c5246ef0d47446273dae33f3dcde414fe0085e",
+      "preview_sha256": "d703325847e5e104cfc0975b6852cbc769c84dbe98dc161f9c547a4384c28865",
+      "module_count": 10,
+      "design_mass_kg": 952000.0,
+      "hull_reference": {
+        "id": "gtw.hull.fixture.stage_f.minimum_legal",
+        "version": 1
+      },
+      "hull_source_sha256": "f927aff50202728585fb922dcb4f0c0700d0ca78cb04787c8c4ffee2a68d1276"
+    },
+    {
+      "resource_id": "gtw.outfit.fixture.stage_f.conventional_crewed",
+      "resource_sha256": "cb8862db2ea80727bfc85a53a0520a1f4c1e2730a49dce87531c86c829765570",
+      "preview_sha256": "a12287a4668a7034ecb844036df0a20294ef8e8e43be763fb6e97840d71e3907",
+      "module_count": 18,
+      "design_mass_kg": 2226780.0,
+      "hull_reference": {
+        "id": "gtw.hull.fixture.stage_f.conventional_crewed",
+        "version": 1
+      },
+      "hull_source_sha256": "2c6344986c45af918826f6f2db052a3f11fa7a9b99c728a197c72e5bcaee8e3a"
+    },
+    {
+      "resource_id": "gtw.outfit.fixture.stage_f.unmanned_flagship",
+      "resource_sha256": "84dd234ad868d35834bb2b87c6fe2c82a01509333520be3ad8e5791f448377e9",
+      "preview_sha256": "182d4946f3d95a81117d3ceb8fc9110d395379e49b9d6a02519f69f36a61ca84",
+      "module_count": 14,
+      "design_mass_kg": 1196200.0,
+      "hull_reference": {
+        "id": "gtw.hull.fixture.stage_f.unmanned_flagship",
+        "version": 1
+      },
+      "hull_source_sha256": "50fa56932193040c9cbb7296b0caa96240f84c29d997d540e7b96f20efce7254"
+    }
+  ],
+  "checks": {
+    "new_python_tests": 8,
+    "new_frontend_tests": 6,
+    "frontend_tests_passed": 35,
+    "typescript": "PASS",
+    "frontend_build": "PASS",
+    "python_scripts_passed": 11,
+    "python_scripts_discovered": 91,
+    "python_scripts_omitted": 80,
+    "historical_stage_h_regression": "PASS"
+  },
+  "native_ui": {
+    "method": "Manually recorded computer-use native input, screenshot and accessibility observation",
+    "backend_instance_id": "backend.46f10df2bb324a7c95e5d93f273a7971",
+    "steps": [
+      "Opened conventional_crewed outfit: legal revision 0, 18 modules, 21 catalog prototypes",
+      "Moved cargo_hold from (5,10) m to (5,15) m: legal revision 1",
+      "Undo: source-equivalent legal revision 2"
+    ],
+    "coverage": "Open, catalog view, one grid move and undo only; not O4 four-mode UI/file-roundtrip acceptance"
+  },
+  "automatic_file_roundtrip": "Three resource-pack outfits saved and reopened through real EditorService file grants; complete previews equal",
+  "preserved": [
+    "source pack resources",
+    "historical phase H golden reports",
+    "existing user recovery drafts",
+    "hull recovery material dependency semantics"
+  ],
+  "not_implemented": [
+    "user hull dependency file binding",
+    "blank outfit creation",
+    "drag-and-drop canvas and conflict layers",
+    "weapon group editing",
+    "advanced bulk/copy/mirror operations",
+    "fill material selection and effects",
+    "tactical UI"
+  ],
+  "next_slice": "O3a user hull dependency binding and blank outfit"
+}

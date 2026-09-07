@@ -127,7 +127,7 @@ class FileStore:
         path = self.recovery_path(key)
         if not path.exists() and len(list(self.recovery_dir.glob("*.json"))) >= 32:
             error("recovery_limit", "恢复记录已满，请先恢复并关闭旧草稿")
-        record = {"interface": RECOVERY_INTERFACE, "payload": payload, "sha256": canonical_sha256(payload)}
+        record = {"interface": "gaotian.editor-recovery/v3alpha1" if "hull_binding" in payload else RECOVERY_INTERFACE, "payload": payload, "sha256": canonical_sha256(payload)}
         atomic_write(path, json.dumps(record, ensure_ascii=False, sort_keys=True).encode("utf-8"), fingerprint(path))
 
     def remove_recovery(self, key):
@@ -136,8 +136,10 @@ class FileStore:
 
     def read_recovery(self, key):
         record, _ = read_json(self.recovery_path(key))
-        if not isinstance(record, dict) or set(record) != {"interface", "payload", "sha256"} or record["interface"] not in {RECOVERY_INTERFACE, "gaotian.editor-recovery/v1alpha1"} or canonical_sha256(record["payload"]) != record["sha256"]:
+        if not isinstance(record, dict) or set(record) != {"interface", "payload", "sha256"} or record["interface"] not in {RECOVERY_INTERFACE, "gaotian.editor-recovery/v1alpha1", "gaotian.editor-recovery/v3alpha1"} or canonical_sha256(record["payload"]) != record["sha256"]:
             error("recovery_invalid", "恢复记录版本或完整性校验失败")
+        if (record["interface"] == "gaotian.editor-recovery/v3alpha1") != (isinstance(record["payload"], dict) and "hull_binding" in record["payload"]):
+            error("recovery_invalid", "恢复记录版本与船壳快照字段不一致")
         return record["payload"]
 
     def list_recovery(self):

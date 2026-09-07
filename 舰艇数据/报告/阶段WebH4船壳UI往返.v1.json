@@ -1,0 +1,75 @@
+{
+  "report": "gaotian.web-h4-saved-artifact-verification/v1",
+  "status": "PASS",
+  "scope": "saved_files_recompiled_by_authoritative_domain",
+  "ui_evidence": "contracts/web_bridge/h4-hull-ui-acceptance.md",
+  "ui_actions_rerun_by_this_script": false,
+  "unmodified_roundtrips": [
+    {
+      "case": "conventional",
+      "status": "PASS",
+      "artifact": "conventional.json",
+      "resource_id": "gtw.hull.fixture.stage_f.conventional_crewed",
+      "version": 1,
+      "file_sha256": "2c6344986c45af918826f6f2db052a3f11fa7a9b99c728a197c72e5bcaee8e3a",
+      "source_sha256": "2c6344986c45af918826f6f2db052a3f11fa7a9b99c728a197c72e5bcaee8e3a",
+      "full_preview_sha256": "55b3480df14ca35f7bffbb5b70510fd6281ce541e698f5ffc68deddf47b5de97",
+      "compared": [
+        "canonical_resource",
+        "decks_and_installation_space",
+        "complete_derived_including_aerodynamics_and_rcs",
+        "source_sha256"
+      ],
+      "deck_count": 2,
+      "hull_mass_kg": 2207930.0
+    },
+    {
+      "case": "minimum",
+      "status": "PASS",
+      "artifact": "minimum.json",
+      "resource_id": "gtw.hull.fixture.stage_f.minimum_legal",
+      "version": 1,
+      "file_sha256": "f927aff50202728585fb922dcb4f0c0700d0ca78cb04787c8c4ffee2a68d1276",
+      "source_sha256": "f927aff50202728585fb922dcb4f0c0700d0ca78cb04787c8c4ffee2a68d1276",
+      "full_preview_sha256": "39a575dc5a20eb74881034a8685497f9828e8743a420b0f6ca1bf93b0b242184",
+      "compared": [
+        "canonical_resource",
+        "decks_and_installation_space",
+        "complete_derived_including_aerodynamics_and_rcs",
+        "source_sha256"
+      ],
+      "deck_count": 1,
+      "hull_mass_kg": 942000.0
+    },
+    {
+      "case": "unmanned",
+      "status": "PASS",
+      "artifact": "unmanned.json",
+      "resource_id": "gtw.hull.fixture.stage_f.unmanned_flagship",
+      "version": 1,
+      "file_sha256": "50fa56932193040c9cbb7296b0caa96240f84c29d997d540e7b96f20efce7254",
+      "source_sha256": "50fa56932193040c9cbb7296b0caa96240f84c29d997d540e7b96f20efce7254",
+      "full_preview_sha256": "ce18de47d57ba29caf91234343d9bd1387fa5b235747f8af66a045d8da639ad5",
+      "compared": [
+        "canonical_resource",
+        "decks_and_installation_space",
+        "complete_derived_including_aerodynamics_and_rcs",
+        "source_sha256"
+      ],
+      "deck_count": 1,
+      "hull_mass_kg": 1177500.0
+    }
+  ],
+  "edited_roundtrip": {
+    "status": "PASS",
+    "artifact": "edited.json",
+    "file_sha256": "e95e1af48c62980189d87a54e694eed7f9d7c0555aea85cbb454571b5e26c3a5",
+    "source_sha256": "e95e1af48c62980189d87a54e694eed7f9d7c0555aea85cbb454571b5e26c3a5",
+    "full_preview_sha256": "2024094399f3282ad9d28d14224c7ce38876410cfdfa49b27ae42e0137c8a6ba",
+    "region_count": 1,
+    "vertex_count": 6,
+    "bow_armor_thickness_m": 0.1,
+    "base_armor_mass_kg": 78500.0,
+    "hull_mass_kg": 1177500.0
+  }
+}

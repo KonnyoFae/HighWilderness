@@ -1,0 +1,140 @@
+{
+  "hull_binding": {
+    "catalog_dependencies_sha256": "06a23c5bc0e62f725e4dae53666f5ed2af8335b177b9f4de48a7aef00d323f35",
+    "hull": {
+      "decks": [
+        {
+          "id": "deck.0",
+          "is_base": true,
+          "level": 0,
+          "regions": [
+            {
+              "edge_armor": [
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                }
+              ],
+              "id": "deck.0.region.0",
+              "vertices_m": [
+                [
+                  -7.5,
+                  -40.0
+                ],
+                [
+                  7.5,
+                  -40.0
+                ],
+                [
+                  7.5,
+                  40.0
+                ],
+                [
+                  -7.5,
+                  40.0
+                ]
+              ]
+            }
+          ],
+          "structure_material": {
+            "id": "gtw.material.structure.armor_steel",
+            "version": 1
+          }
+        }
+      ],
+      "fixture_level": "canonical_blueprint_fixture",
+      "grid": {
+        "cell_size_m": 5.0,
+        "cic_origin_cell": [
+          0,
+          0
+        ],
+        "deck_height_m": 5.0,
+        "forward_axis": "+Y",
+        "symmetry_axis": "Y"
+      },
+      "id": "gtw.hull.fixture.stage_f.minimum_legal",
+      "kind": "HullBlueprint",
+      "name": "阶段F最小合法舰船壳",
+      "schema": "gaotian.ship/v1alpha1",
+      "version": 1
+    },
+    "hull_sha256": "f927aff50202728585fb922dcb4f0c0700d0ca78cb04787c8c4ffee2a68d1276",
+    "interface": "gaotian.outfit-hull-binding/v1alpha1"
+  },
+  "interface": "gaotian.outfit-document/v1alpha1",
+  "outfit": {
+    "fixture_level": "prototype_unbalanced",
+    "hull_blueprint": {
+      "id": "gtw.hull.fixture.stage_f.minimum_legal",
+      "version": 1
+    },
+    "hull_coating": {
+      "id": "gtw.coating.hull.ordinary",
+      "version": 1
+    },
+    "id": "user.outfit.31fcd516-15f8-4308-8f6d-813df33e0a99",
+    "kind": "OutfitPlan",
+    "modules": [
+      {
+        "id": "cic",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            0
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.cic",
+          "version": 1
+        }
+      },
+      {
+        "id": "lift",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            4
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.lift_fuel_tank",
+          "version": 1
+        }
+      }
+    ],
+    "name": "新建舾装",
+    "schema": "gaotian.ship/v1alpha1",
+    "version": 1
+  }
+}

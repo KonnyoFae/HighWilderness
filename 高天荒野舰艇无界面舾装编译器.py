@@ -40,6 +40,16 @@ STANDARD_GRAVITY_MPS2 = 9.80665
 CELL_SIZE_M = 5.0
 HALF_CELL_M = 2.5
 EPS = 1.0e-8
+# Temporary per-instance baseline until external prototype RCS is calibrated.
+# Apply at derivation time so existing catalog identities and saved bindings survive.
+DEFAULT_EXTERNAL_RCS_M2 = 1.0
+
+
+def effective_external_rcs_m2(prototype: ModulePrototype) -> float:
+    if not (prototype.installation.top_footprint_half_cells
+            or prototype.installation.side_external_footprint_half_cells):
+        return 0.0
+    return DEFAULT_EXTERNAL_RCS_M2 if prototype.base_external_rcs_m2 is None else prototype.base_external_rcs_m2
 
 
 GridOccupancy = tuple[int, int, int]
@@ -719,6 +729,9 @@ class _OutfitCompiler:
         self.hosted_slot_users: dict[tuple[str, str], str] = {}
 
     def compile(self) -> CompiledOutfit:
+        from 高天荒野舰艇武器组 import weapon_groups
+        if self.plan.weapon_groups is not None:
+            weapon_groups(self.plan, self.module_catalog)
         hull_reference = ResourceReference(
             self.hull.normalized_blueprint.id, self.hull.normalized_blueprint.version
         )
@@ -770,7 +783,6 @@ class _OutfitCompiler:
         standard_crew: dict[str, int] = {}
         crew_capacity: dict[str, int] = {}
         known_external_rcs = 0.0
-        unresolved_rcs: list[str] = []
         for instance in instances:
             prototype = instance.prototype
             if prototype.power.consumer_category is not None:
@@ -787,15 +799,7 @@ class _OutfitCompiler:
                     crew_capacity[crew_type] = crew_capacity.get(crew_type, 0) + int(
                         capacity["capacity"]
                     )
-            has_external = bool(
-                prototype.installation.top_footprint_half_cells
-                or prototype.installation.side_external_footprint_half_cells
-            )
-            if has_external:
-                if prototype.base_external_rcs_m2 is None:
-                    unresolved_rcs.append(instance.id)
-                else:
-                    known_external_rcs += prototype.base_external_rcs_m2
+            known_external_rcs += effective_external_rcs_m2(prototype)
 
         warnings: list[OutfitWarning] = []
         if not any(instance.prototype.category == "main_engine" for instance in instances):
@@ -821,14 +825,6 @@ class _OutfitCompiler:
                         f"最低需求 {count}，人员容量 {crew_capacity.get(crew_type, 0)}",
                     )
                 )
-        if unresolved_rcs:
-            warnings.append(
-                OutfitWarning(
-                    "outfit.external_rcs_unresolved",
-                    "$",
-                    "部分外露模块尚无正式基准 RCS，不能生成完整整舰 RCS",
-                )
-            )
 
         actuators = tuple(
             instance.actuator for instance in instances if instance.actuator is not None
@@ -888,7 +884,7 @@ class _OutfitCompiler:
             crew_capacity=tuple(sorted(crew_capacity.items())),
             actuators=actuators,
             actuator_aggregation=actuator_aggregation,
-            unresolved_external_rcs_instances=tuple(sorted(unresolved_rcs)),
+            unresolved_external_rcs_instances=(),
             known_external_rcs_m2=known_external_rcs,
             warnings=tuple(warnings),
         )
@@ -1272,6 +1268,38 @@ class _OutfitCompiler:
                         f"$.modules[{instance.id}]",
                         f"净空与 {other} 的本体冲突：{key}",
                     )
+
+
+def preview_outfit_layout(plan, hull, module_catalog, coating_catalog):
+    """Partial editor geometry using the same placement compiler, without ship readiness.
+
+    Failed placements remain diagnostics; successful placements are retained even
+    when CIC, lift or another module is invalid. This is not a compiled ship.
+    """
+    compiler = _OutfitCompiler(plan, hull, module_catalog, coating_catalog)
+    instances, errors, conflicts = [], [], []
+    for item in plan.modules:
+        try:
+            instances.append(compiler._compile_instance(item.id))
+        except ContractError as error:
+            errors.append(dict(instance_id=item.id, code=error.code, message=error.message, path=error.path))
+    users = {}
+    for instance in instances:
+        for layer, values in (("internal", instance.internal_cells), ("top", instance.top_cells),
+                              ("side", instance.side_slots), ("body", instance.body_spatial_keys)):
+            for key in values:
+                users.setdefault((layer, key), []).append(instance.id)
+    for (layer, key), ids in users.items():
+        if len(ids) > 1:
+            conflicts.append(dict(layer=layer, key=list(key), instance_ids=ids))
+    for instance in instances:
+        for key in instance.clearance_spatial_keys:
+            ids = users.get(("body", key), [])
+            if ids:
+                conflicts.append(dict(layer="clearance", key=list(key), instance_ids=[instance.id, *ids]))
+    return dict(interface="gaotian.outfit-layout/v1alpha1",
+                hull=hull.normalized_blueprint.to_dict(), decks=[d.to_dict() for d in hull.decks],
+                modules=[i.to_dict() for i in instances], errors=errors, conflicts=conflicts)
 
 
 def compile_outfit(

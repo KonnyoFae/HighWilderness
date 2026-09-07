@@ -1,6 +1,7 @@
 import { Application, Graphics } from "pixi.js";
 import { useEffect, useRef, useState } from "react";
 import { HullInspector } from "./HullInspector";
+import { currentEdgeSpace } from "./edgeSpace";
 import { closedRegion, deferredCommit, nextId } from "./interaction";
 import { drawingPoint, sameBoundary, symmetricDrawing, symmetrizeRegion } from "./symmetry";
 import type { SourceSide } from "./symmetry";
@@ -11,9 +12,9 @@ import type { Camera, Point, Selection } from "./viewport";
 export function HullViewport({ session, busy, materials, onCommand, onLocalDraft }: {
   session: SessionSnapshot; busy: boolean; materials: MaterialOption[]; onCommand: HullCommand; onLocalDraft: (busy: boolean) => void;
 }) {
-  const [deckId, setDeckId] = useState(session.draft.decks[0]?.id ?? "");
-  const deck = session.draft.decks.find(d => d.id === deckId) ?? session.draft.decks[0];
-  const below = lowerDeck(session.draft.decks, deck);
+  const [deckId, setDeckId] = useState((session.draft.decks ?? [])[0]?.id ?? "");
+  const deck = (session.draft.decks ?? []).find(d => d.id === deckId) ?? (session.draft.decks ?? [])[0];
+  const below = lowerDeck((session.draft.decks ?? []), deck);
   const visibleRegions = [...(below?.regions ?? []), ...(deck?.regions ?? [])];
   const [drawing, setDrawing] = useState(false);
   const [symmetric, setSymmetric] = useState(true);
@@ -23,11 +24,13 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
   const [moving, setMoving] = useState<{ region: string; vertex: number; point: Point } | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [showSpace, setShowSpace] = useState(true);
+  const [showEdgeSpace, setShowEdgeSpace] = useState(true);
   const deferred = useRef(deferredCommit());
   const alive = useRef(true);
   const structureMaterial = materials.find(m => m.category === "structure");
   const armorMaterial = materials.find(m => m.category === "base_armor");
   const localDraft = drawing || moving !== null || submitting || symmetryPreview !== null;
+  const edgeSpace = currentEdgeSpace(session.preview, deck?.id, localDraft);
   const locked = busy || submitting;
   useEffect(() => { onLocalDraft(localDraft); }, [localDraft, onLocalDraft]);
   useEffect(() => { alive.current = true; return () => { alive.current = false; deferred.current.cancel(); onLocalDraft(false); }; }, [onLocalDraft]);
@@ -75,9 +78,9 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
   }
   async function addDeck() {
     if (!structureMaterial || locked || localDraft) return;
-    const levels = session.draft.decks.map(d => d.level);
+    const levels = (session.draft.decks ?? []).map(d => d.level);
     let level = 0; while (levels.includes(level)) level++;
-    const id = nextId("deck", session.draft.decks.map(d => d.id));
+    const id = nextId("deck", (session.draft.decks ?? []).map(d => d.id));
     if (await onCommand("hull.add_deck", { deck_id: id, level, material: { id: structureMaterial.id, version: structureMaterial.version } })) {
       setDeckId(id); select(null);
     }
@@ -178,6 +181,12 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
       g.stroke({ color: moving || !session.preview.valid ? 0xf7ab77 : active ? 0xa6ffe0 : r.id === hover?.region ? 0xe1d29a : 0x60a8a6, width: active ? 2.5 : 1.5 });
       points.forEach((p, i) => g.circle(p.x, p.y, active && selected?.vertex === i ? 6 : 3).fill(active && selected?.vertex === i ? 0xffd58b : 0x96c9c0));
     }
+    if (showEdgeSpace && edgeSpace) {
+      for (const piece of edgeSpace.pieces) {
+        const points = piece.vertices_m.map(([x, y]) => screen({ x, y }, camera));
+        g.poly(points.flatMap(p => [p.x, p.y]), true).fill({ color: 0xf4a261, alpha: 0.48 });
+      }
+    }
     if (showSpace && session.preview.valid && !localDraft) {
       const compiled = (session.preview.model.decks as DeckView[] | undefined)?.find(d => d.id === deck?.id)?.compiled_installation_space;
       for (const [x, y] of compiled?.internal_cells ?? []) {
@@ -216,12 +225,12 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
       g.moveTo(p.x - 7, p.y).lineTo(p.x + 7, p.y).moveTo(p.x, p.y - 7).lineTo(p.x, p.y + 7).stroke({ color: 0xffd58b, width: 1.5 });
     }
     app.render();
-  }, [camera, deck, below, selected, hover, cursor, size, ready, session.preview, showSpace, localDraft, drawing, drawPoints, moving, symmetric, symmetryPreview]);
+  }, [camera, deck, below, selected, hover, cursor, size, ready, session.preview, showSpace, showEdgeSpace, edgeSpace, localDraft, drawing, drawPoints, moving, symmetric, symmetryPreview]);
 
   function locate(path: string) {
     if (localDraft || locked) return;
     const match = /decks\[(\d+)\](?:\.regions\[(\d+)\])?(?:\.vertices_m\[(\d+)\])?/.exec(path);
-    const target = match ? session.draft.decks[Number(match[1])] : undefined;
+    const target = match ? (session.draft.decks ?? [])[Number(match[1])] : undefined;
     if (!target) return;
     const r = target.regions[Number(match?.[2] ?? 0)];
     requestedFocus.current = target.id !== deck?.id ? r?.id ?? null : null;
@@ -237,7 +246,7 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
   return <div className="hull-workspace">
     <div className="viewport-toolbar">
       <label>当前甲板 <select aria-label="当前甲板" value={deck?.id ?? ""} disabled={localDraft || locked} onChange={e => { setDeckId(e.target.value); select(null); }}>
-        {session.draft.decks.map(d => <option key={d.id} value={d.id}>{d.id} · 第 {d.level} 层{d.is_base ? " · 基底" : ""}</option>)}
+        {(session.draft.decks ?? []).map(d => <option key={d.id} value={d.id}>{d.id} · 第 {d.level} 层{d.is_base ? " · 基底" : ""}</option>)}
       </select></label>
       <button onClick={() => setCamera(fit(visibleRegions, size.width, size.height))}>适应船壳</button>
       <button aria-label="放大画布" onClick={() => setCamera(c => zoom(c, { x: size.width / 2, y: size.height / 2 }, 1.25))}>＋</button>
@@ -251,6 +260,7 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
       {symmetryPreview && <button disabled={locked} onClick={() => void applySymmetry()}>应用对称替换</button>}
       {localDraft && <button disabled={busy} onClick={cancelLocal}>取消本地编辑</button>}
       <label><input type="checkbox" checked={showSpace} onChange={e => setShowSpace(e.target.checked)} /> 安装空间</label>
+      <label><input type="checkbox" checked={showEdgeSpace} onChange={e => setShowEdgeSpace(e.target.checked)} /> 边缘余量</label>
       <span>端点强制吸附 · 2.5 m</span>
       {below && <span className="lower-deck-legend">下层参考：{below.id} · 第 {below.level} 层（半透明）</span>}
       {deck && deck.level > 0 && !below && <span className="lower-deck-missing">缺少第 {deck.level - 1} 层，无法显示下层支撑参考</span>}
@@ -322,6 +332,15 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
         <HullInspector deck={deck} region={region} selection={selected} materials={materials} busy={locked || moving !== null || symmetryPreview !== null}
           drawing={drawing} onCommand={onCommand} onPoint={appendPoint} onSymmetry={previewSymmetry} />
         <HullDerived session={session} deckId={deck?.id} localDraft={localDraft} />
+        <section aria-label="边缘填充空间"><h3>边缘填充空间</h3>
+          {edgeSpace ? <>
+            <p>边缘面积 {edgeSpace.area_m2.toLocaleString(undefined, { maximumFractionDigits: 2 })} m²</p>
+            <p>毛体积 {edgeSpace.gross_volume_m3.toLocaleString(undefined, { maximumFractionDigits: 2 })} m³</p>
+            {edgeSpace.area_m2 === 0 && <p>本层没有安装整格之外的边缘余量。</p>}
+            <p className="muted">橙色区域是完整安装格之外的船内余量。毛体积尚未扣除装甲、结构与储存设施，不能作为实际燃料容量。</p>
+            <p className="muted">填充材料选择与效果尚未开放。</p>
+          </> : <p className="muted">{localDraft || !session.preview.valid ? "当前草稿的边缘空间待合法提交后更新。" : "当前预览未提供边缘空间，请重新打开会话或更新后台。"}</p>}
+        </section>
         <h3>检查结果</h3>
         {!session.preview.diagnostics.length && <p className="muted">{localDraft ? "本地草稿等待提交检查。" : "当前船壳通过合法性检查。"}</p>}
         {session.preview.diagnostics.map((d, i) => <button key={i} className="diagnostic-item" disabled={localDraft || locked} onClick={() => locate(d.path)}>

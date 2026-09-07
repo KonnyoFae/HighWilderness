@@ -353,7 +353,8 @@ class HullEditorDocument:
         }
         return self
 
-    def preview(self) -> EditorPreview:
+    def preview(self, *, include_edge_space: bool = False) -> EditorPreview:
+        view_interface = "gaotian.hull-editor-view/v2alpha1" if include_edge_space else HULL_EDITOR_VIEW_INTERFACE_ID
         try:
             compiled = self.compile()
         except ContractError as error:
@@ -365,7 +366,7 @@ class HullEditorDocument:
                 False,
                 {
                     "canonical_resource": self.source_dict(),
-                    "view_interface": HULL_EDITOR_VIEW_INTERFACE_ID,
+                    "view_interface": view_interface,
                 },
                 diagnostics,
             )
@@ -384,6 +385,12 @@ class HullEditorDocument:
                     "structure_material": deepcopy(deck["structure_material"]),
                 }
             )
+        if include_edge_space:
+            from 高天荒野舰艇边缘空间 import build_deck_edge_space
+            for deck in deck_views:
+                deck["edge_space"] = build_deck_edge_space(
+                    deck["regions"], deck["compiled_installation_space"]["internal_cells"]
+                )
         return EditorPreview(
             "HullBlueprint",
             True,
@@ -392,7 +399,7 @@ class HullEditorDocument:
                 "decks": deck_views,
                 "derived": compiled.to_dict(),
                 "source_sha256": compiled.source_sha256,
-                "view_interface": HULL_EDITOR_VIEW_INTERFACE_ID,
+                "view_interface": view_interface,
             },
             (),
         )
@@ -503,10 +510,19 @@ class OutfitEditorDocument:
         if duplicate is not None:
             raise ContractError("outfit.instance_id_duplicate", "$.modules", duplicate)
 
-    def remove(self, instance_id: str) -> "OutfitEditorDocument":
+    def remove(self, instance_id: str, *, cascade_hosted: bool = False) -> "OutfitEditorDocument":
+        self._module(instance_id)
+        removed = {instance_id}
+        if cascade_hosted:
+            while True:
+                children = {item["id"] for item in self._source["modules"]
+                            if item["placement"].get("host_instance_id") in removed}
+                if children <= removed:
+                    break
+                removed |= children
         before = len(self._source["modules"])
         self._source["modules"] = [
-            item for item in self._source["modules"] if item.get("id") != instance_id
+            item for item in self._source["modules"] if item.get("id") not in removed
         ]
         if len(self._source["modules"]) == before:
             raise ContractError("editor.item_missing", "$.modules", f"找不到 {instance_id}")
@@ -751,6 +767,99 @@ class OutfitEditorDocument:
         placement["rotation_deg"] = rotation_deg
         return self
 
+    def move_side(
+        self, instance_id: str, deck_id: str, region_id: str,
+        edge_index: int, start_slot_index: int, rotation_deg: int = 0,
+        *, allow_invalid_draft: bool = False,
+    ) -> "OutfitEditorDocument":
+        """Validate a detached complete replacement before changing the source."""
+        candidate = OutfitEditorDocument(self.source_dict(), self._hull, self._module_catalog, self._coating_catalog)
+        module = candidate._module(instance_id)
+        if module["placement"].get("kind") != "side":
+            raise ContractError("editor.placement_kind", "$.modules", "只能移动侧挂模块")
+        module["placement"] = dict(kind="side", deck_id=deck_id, region_id=region_id,
+            edge_index=edge_index, start_slot_index=start_slot_index, rotation_deg=rotation_deg)
+        if allow_invalid_draft:
+            candidate.validate_placement_edit(instance_id)
+        else:
+            candidate.compile()
+        self._source = candidate.source_dict()
+        return self
+
+    def rehost(self, instance_id: str, host_instance_id: str, *, allow_invalid_draft: bool = False) -> "OutfitEditorDocument":
+        candidate = OutfitEditorDocument(self.source_dict(), self._hull, self._module_catalog, self._coating_catalog)
+        module = candidate._module(instance_id)
+        if module["placement"].get("kind") != "hosted":
+            raise ContractError("editor.placement_kind", "$.modules", "只能为嵌入模块更换宿主")
+        module["placement"] = dict(kind="hosted", host_instance_id=host_instance_id)
+        if allow_invalid_draft:
+            candidate.validate_placement_edit(instance_id)
+        else:
+            candidate.compile()
+        self._source = candidate.source_dict()
+        return self
+
+    def validate_placement_edit(self, instance_id: str) -> None:
+        """Check the edited placement and hosted descendants, not unrelated draft errors."""
+        self._module(instance_id)
+        affected = {instance_id}
+        while True:
+            children = {m["id"] for m in self._source["modules"]
+                        if m["placement"].get("host_instance_id") in affected}
+            if children <= affected:
+                break
+            affected |= children
+        # Slot ownership must not depend on canonical instance-ID ordering: the
+        # compiler can report a collision on the existing peer, not the edit.
+        slot_users = {}
+        for module in self.parse().modules:
+            host_id = getattr(module.placement, "host_instance_id", None)
+            slot = self._module_catalog.module(module.prototype).installation.host_slot
+            if host_id is not None and slot is not None:
+                slot_users.setdefault((host_id, slot), []).append(module.id)
+        for ids in slot_users.values():
+            if len(ids) > 1 and affected.intersection(ids):
+                raise ContractError("outfit.host_slot_occupied", f"$.modules[{instance_id}]",
+                                    "宿主槽位重复占用：" + " / ".join(ids))
+        layout = self.layout_preview()
+        for error in layout["errors"]:
+            if error["instance_id"] in affected:
+                raise ContractError(error["code"], error["path"], error["message"])
+        codes = {"internal": "outfit.internal_overlap", "top": "outfit.top_overlap",
+                 "side": "outfit.side_overlap", "body": "outfit.body_overlap", "clearance": "outfit.clearance_conflict"}
+        for conflict in layout["conflicts"]:
+            if affected.intersection(conflict["instance_ids"]):
+                raise ContractError(codes[conflict["layer"]], f"$.modules[{instance_id}]",
+                                    "安装占用或净空冲突：" + " / ".join(conflict["instance_ids"]))
+
+    def set_weapon_groups(self, groups) -> "OutfitEditorDocument":
+        from 高天荒野舰艇武器组 import set_weapon_groups
+        self._source = set_weapon_groups(self._source, groups, self._module_catalog)
+        return self
+
+    def reconcile_weapon_groups(self) -> "OutfitEditorDocument":
+        from 高天荒野舰艇武器组 import reconcile_weapon_groups
+        self._source = reconcile_weapon_groups(self._source, self._module_catalog)
+        return self
+
+    def weapon_control_preview(self, layout) -> dict:
+        from 高天荒野舰艇武器组 import weapon_groups
+        from 高天荒野舰艇水平射界 import horizontal_fire_arc
+        groups = weapon_groups(self.parse(), self._module_catalog)
+        # Layout uses the same placement compiler; invalid weapons have no fabricated arc.
+        views = {m["id"]: m for m in layout["modules"]}
+        invalid = {e["instance_id"] for e in layout["errors"]} | {id for c in layout["conflicts"] for id in c["instance_ids"]}
+        arcs = []
+        for m in self.parse().modules:
+            if self._module_catalog.module(m.prototype).category != "weapon":
+                continue
+            v = None if m.id in invalid else views.get(m.id)
+            arc = horizontal_fire_arc(self._hull, v["anchor_m"], v["base_deck_level"]) if v else dict(
+                origin_m=None, base_deck_level=None, status="placement_invalid", intervals_deg=[], blocked_intervals_deg=[])
+            arcs.append(dict(arc, instance_id=m.id))
+        return dict(interface="gaotian.weapon-control-view/v2alpha1", groups=[g.to_dict() for g in groups],
+                    grouping="automatic" if self.parse().weapon_groups is None else "explicit", arcs=arcs)
+
     def _weapon_arc_preview(self, instance: Any) -> dict[str, Any] | None:
         if instance.prototype.category != "weapon":
             return None
@@ -764,12 +873,8 @@ class OutfitEditorDocument:
                 "policy": WEAPON_ARC_PREVIEW_POLICY_ID,
                 "status": "full_circle_no_higher_deck",
             }
-        return {
-            "intervals_deg": [],
-            "origin_m": list(instance.anchor_m),
-            "policy": WEAPON_ARC_PREVIEW_POLICY_ID,
-            "status": "requires_higher_deck_hull_raycast",
-        }
+        from 高天荒野舰艇水平射界 import horizontal_fire_arc
+        return horizontal_fire_arc(self._hull, instance.anchor_m, instance.base_deck_level)
 
     def preview(self) -> EditorPreview:
         try:
@@ -849,6 +954,10 @@ class OutfitEditorDocument:
             },
             diagnostics,
         )
+
+    def layout_preview(self) -> dict:
+        from 高天荒野舰艇无界面舾装编译器 import preview_outfit_layout
+        return preview_outfit_layout(self.parse(), self._hull, self._module_catalog, self._coating_catalog)
 
     def canonical_text(self) -> str:
         return canonical_json(self.compile().normalized_plan)

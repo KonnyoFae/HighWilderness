@@ -1,0 +1,96 @@
+{
+  "interface": "gaotian.web-h5a-edge-space-acceptance/v1alpha1",
+  "date": "2026-09-07",
+  "status": "PASS",
+  "geometry": "legal deck polygon union minus all full internal installation cells",
+  "volume": "gross area times 5 m; not net capacity",
+  "automated_fixture_comparison": [
+    {
+      "resource_id": "gtw.hull.fixture.stage_f.minimum_legal",
+      "source_sha256": "f927aff50202728585fb922dcb4f0c0700d0ca78cb04787c8c4ffee2a68d1276",
+      "legacy_preview_sha256": "39a575dc5a20eb74881034a8685497f9828e8743a420b0f6ca1bf93b0b242184",
+      "new_preview_sha256": "41c9f0eecea1fe6056d31d9d2313bb6b20259040e51820be50cd2c125c08c6f9",
+      "legacy_complete_equivalence": true,
+      "canonical_resource_unchanged": true,
+      "decks": [
+        {
+          "id": "deck.0",
+          "area_m2": 75.0,
+          "gross_volume_m3": 375.0,
+          "piece_count": 2,
+          "edge_space_sha256": "2941a3dc3fc88ccdfce25f491892c1c36f0122669561c2ec6d9daeea6866e93b"
+        }
+      ]
+    },
+    {
+      "resource_id": "gtw.hull.fixture.stage_f.conventional_crewed",
+      "source_sha256": "2c6344986c45af918826f6f2db052a3f11fa7a9b99c728a197c72e5bcaee8e3a",
+      "legacy_preview_sha256": "55b3480df14ca35f7bffbb5b70510fd6281ce541e698f5ffc68deddf47b5de97",
+      "new_preview_sha256": "1e9d45ff022d687385439ae3fc7e472fe6b2e2a63683e43804080c20c9534290",
+      "legacy_complete_equivalence": true,
+      "canonical_resource_unchanged": true,
+      "decks": [
+        {
+          "id": "deck.0",
+          "area_m2": 775.0000000000001,
+          "gross_volume_m3": 3875.0000000000005,
+          "piece_count": 65,
+          "edge_space_sha256": "f35bc5c5674150e9dafdd73608a578476e945ac606efcc2638982a06a4abe052"
+        },
+        {
+          "id": "deck.1",
+          "area_m2": 50.0,
+          "gross_volume_m3": 250.0,
+          "piece_count": 4,
+          "edge_space_sha256": "e2d64fe123a8f30f07d75c090e36407d1ea0d87b631481b03dd01a7c7c1c0ff3"
+        }
+      ]
+    },
+    {
+      "resource_id": "gtw.hull.fixture.stage_f.unmanned_flagship",
+      "source_sha256": "50fa56932193040c9cbb7296b0caa96240f84c29d997d540e7b96f20efce7254",
+      "legacy_preview_sha256": "ce18de47d57ba29caf91234343d9bd1387fa5b235747f8af66a045d8da639ad5",
+      "new_preview_sha256": "5aeb487feef0957caaf2f58ebcb613949ada11927863f3c3d4a055629b77cafd",
+      "legacy_complete_equivalence": true,
+      "canonical_resource_unchanged": true,
+      "decks": [
+        {
+          "id": "deck.0",
+          "area_m2": 75.0,
+          "gross_volume_m3": 375.0,
+          "piece_count": 2,
+          "edge_space_sha256": "5258c6636a88aaba4b5e36730010e50baa2a5053889943d3ab1306ae951c846b"
+        }
+      ]
+    }
+  ],
+  "executed_checks": {
+    "frontend_tests": 29,
+    "frontend_types": "PASS",
+    "frontend_build": "PASS",
+    "python_scripts_passed": 9,
+    "python_scripts_discovered": 90,
+    "python_scripts_not_run": 81,
+    "new_python_tests": 6
+  },
+  "observed_native_ui": {
+    "backend_id": "backend.2ffdeeee001244f0a79b079a6d2373dc",
+    "method": "computer-use native input with screenshot and accessibility observation; manually recorded, not replayed by this report",
+    "checks": [
+      "conventional deck.0: 775 m2 / 3875 m3",
+      "edge overlay off/on; installation grid retained; revision unchanged",
+      "deck.1: 50 m2 / 250 m3 with lower-deck translucent reference",
+      "grid-snapped invalid vertex (15,20): edge overlay and totals hidden",
+      "undo: legal source-equivalent revision 2; edge view restored"
+    ],
+    "new_ui_file_roundtrip_this_slice": false
+  },
+  "not_implemented": [
+    "material selection",
+    "net capacity",
+    "fill mass/inertia",
+    "fuel supply/consumption",
+    "fireproof and micro-repair effects"
+  ],
+  "next_slice": "O1/O2 outfit resources and minimum installation commands"
+}

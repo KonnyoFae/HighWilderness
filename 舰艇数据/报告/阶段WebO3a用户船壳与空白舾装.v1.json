@@ -1,0 +1,78 @@
+{
+  "interface": "gaotian.web-o3a-acceptance/v1alpha1",
+  "date": "2026-09-07",
+  "status": "PASS_MINIMAL_SCOPE",
+  "binding_policy": "immutable embedded canonical hull; no external path resolution or automatic rebinding",
+  "document_interface": "gaotian.outfit-document/v1alpha1",
+  "binding_interface": "gaotian.outfit-hull-binding/v1alpha1",
+  "bound_session_interface": "gaotian.editor-session/v3alpha1",
+  "bound_recovery_interface": "gaotian.editor-recovery/v3alpha1",
+  "checks": {
+    "new_python_tests": 8,
+    "new_frontend_tests": 1,
+    "frontend_tests_passed": 36,
+    "typescript": "PASS",
+    "frontend_build": "PASS",
+    "python_scripts_passed": 12,
+    "python_scripts_discovered": 92,
+    "python_scripts_omitted": 80,
+    "historical_stage_h_regression": "PASS",
+    "git_diff_check": "PASS"
+  },
+  "automatic_coverage": [
+    "Custom hull ID and base deck ID, blank recoverable invalid outfit",
+    "CIC plus lift installation, legal/invalid undo and redo",
+    "Portable save/open with complete preview equality after source hull changes and moves",
+    "Derived outfit version preserves hull binding",
+    "Restart recovery of blank draft and invalid history with last valid preview",
+    "One-use grant replay and changed selected hull rejected before session creation",
+    "Unknown wrapper versions, extra path fields, corrupted hash, reference and dependency mismatch rejected",
+    "Pack hull with same identity cannot override explicit snapshot",
+    "Hull overwrite and external outfit target conflict rejected",
+    "Changed catalog on save and mismatched recovered history rejected"
+  ],
+  "native_ui": {
+    "method": "Computer-use native input with screenshot and accessibility observation",
+    "backend_instance_id": "backend.efbf203802a34753b7577213fde0e877",
+    "source_hull": "artifacts/h4/minimum.json",
+    "steps": [
+      "Selected saved hull through native file dialog and created blank outfit",
+      "Observed fixed hull identity, zero modules, CIC diagnostic and disabled save",
+      "Placed cic at deck.0 (0,0) m: revision 1 retained as draft with insufficient lift diagnostic",
+      "Placed lift at deck.0 (0,10) m: legal revision 2, two modules, design mass 944000 kg",
+      "Saved as artifacts/o3a/bound-outfit.json through native save dialog",
+      "Closed clean session and reopened saved document through native open dialog",
+      "Observed legal clean revision 0, two modules and the same fixed hull"
+    ],
+    "coverage": "Single saved hull to blank outfit, two grid placements and native save/open roundtrip; not O4 full canvas or four-mode acceptance",
+    "remaining_ui_polish": "Shared native file dialog still uses historical hull wording",
+    "final_state": "Application open on clean bound-outfit.json; original four recovery drafts preserved"
+  },
+  "saved_artifact": {
+    "path": "artifacts/o3a/bound-outfit.json",
+    "file_sha256": "403ab95ab230b22c64d2cb60f3b9a4729ca1546d0c106bbb18309d167f270eca",
+    "hull_sha256": "f927aff50202728585fb922dcb4f0c0700d0ca78cb04787c8c4ffee2a68d1276",
+    "outfit_sha256": "e094d9e298ef040c5f1ebca4cfef68db13a526e5008a8c19efb0c73f9038fa14",
+    "preview_sha256": "09e631ffa89c8230108bf3e23f632baf77a65a51b62df7f97a1e2299a3deb407",
+    "module_count": 2,
+    "design_mass_kg": 944000.0,
+    "independent_file_compile": "PASS after validating wrapper and unpacking canonical hull/outfit pair",
+    "operational_scope": "Legal design only; lacks main engine and is not a completed sortie loadout"
+  },
+  "preserved": [
+    "Source hull file and resource pack",
+    "Historical golden reports",
+    "Existing recovery drafts",
+    "Legacy raw outfit open/save and unbound session/recovery behavior",
+    "Existing armor formulas and deferred fill parameters"
+  ],
+  "not_implemented": [
+    "Hull rebinding or migration of existing outfit",
+    "Outfit drag canvas and occupancy/conflict layers",
+    "Weapon group editor",
+    "Fill material settings and effects",
+    "Sortie adapter for portable outfit document",
+    "Tactical UI"
+  ],
+  "next_slice": "O3b outfit canvas, occupancy/conflict and host selection"
+}

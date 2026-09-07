@@ -1,4 +1,5 @@
 import type { EditorRequest } from "../editor/model";
+import type { TacticalRequest } from "../tactical/model";
 import { Channel, invoke } from "@tauri-apps/api/core";
 
 import type { BridgeStatus, DesktopBridgeEvent } from "./types";
@@ -8,6 +9,7 @@ export type EventHandler = (event: DesktopBridgeEvent) => void;
 export interface BridgeTransport {
   status(): Promise<BridgeStatus>;
   editor<T>(request: EditorRequest): Promise<T>;
+  tactical<T>(request: TacticalRequest): Promise<T>;
   chooseFile(request: EditorRequest): Promise<{ destination_handle: string; label: string } | null>;
   start(onEvent: EventHandler): Promise<BridgeStatus>;
   restart(onEvent: EventHandler): Promise<BridgeStatus>;
@@ -36,6 +38,10 @@ export class TauriBridgeTransport implements BridgeTransport {
 
   public editor<T>(request: EditorRequest): Promise<T> {
     return this.port.invoke("bridge_editor_request", { request });
+  }
+
+  public tactical<T>(request: TacticalRequest): Promise<T> {
+    return this.port.invoke("bridge_tactical_request", { request });
   }
 
   public chooseFile(request: EditorRequest): Promise<{ destination_handle: string; label: string } | null> {

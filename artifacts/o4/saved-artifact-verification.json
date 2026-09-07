@@ -1,0 +1,24 @@
+{
+  "report": "gaotian.web-o4-saved-artifact-verification/v1",
+  "status": "NOT_COVERED",
+  "scope": "saved_files_recompiled_by_authoritative_service",
+  "ui_actions_rerun_by_this_script": false,
+  "o4_ui_gate_certified_by_this_script": false,
+  "cases": [
+    {
+      "artifact": "minimum.json",
+      "status": "NOT_COVERED",
+      "reason": "UI-saved file not present"
+    },
+    {
+      "artifact": "conventional.json",
+      "status": "NOT_COVERED",
+      "reason": "UI-saved file not present"
+    },
+    {
+      "artifact": "unmanned.json",
+      "status": "NOT_COVERED",
+      "reason": "UI-saved file not present"
+    }
+  ]
+}

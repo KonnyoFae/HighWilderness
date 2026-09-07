@@ -1,0 +1,60 @@
+{
+  "interface": "gaotian.web-o3c-acceptance/v1alpha1",
+  "date": "2026-09-07",
+  "status": "PASS_MINIMAL_SCOPE_FULL_REGRESSION_NOT_PASSED",
+  "outfit_schema": "gaotian.outfit-plan/v2alpha1",
+  "preview_interface": "gaotian.weapon-control-view/v1alpha1",
+  "implementation": [
+    "Nonmutating exact-prototype default groups for legacy outfits",
+    "Rename, split, merge and canvas member selection",
+    "Atomic explicit full-partition validation and module add/remove reconciliation",
+    "Versioned persistence, undo, redo and validated recovery history",
+    "Compiler-backed placement/conflict and conservative higher-deck arc hints"
+  ],
+  "checks": {
+    "new_python_tests": 9,
+    "new_frontend_tests": 6,
+    "frontend_tests_passed": 50,
+    "typescript": "PASS",
+    "frontend_build": "PASS",
+    "frontend_build_warning": "Main bundle above existing 500 kB warning threshold",
+    "python_targeted_scripts_passed": 15,
+    "python_targeted_scripts_discovered": 94,
+    "python_targeted_scripts_omitted": 79,
+    "python_targeted_include_patterns": ["*Web*测试.py", "*舾装编译器测试.py", "*阶段H编辑器领域层测试.py", "*阶段H综合回归.py", "*规范数据与船壳编译器测试.py", "*运行时参数编译器测试.py"],
+    "test_runner_unit_tests": 3,
+    "diff_check": "PASS",
+    "python_full_regression": {
+      "status": "STOPPED_NOT_PASSED",
+      "discovered": 94,
+      "completed_failed_scripts": 19,
+      "interrupted_script": "高天荒野T0b2d3f受控黄金与完整矩阵测试.py",
+      "not_started_scripts": 74,
+      "checked_failures": ["高天荒野T0b2c1推进安全判定器测试.py:480 historical implementation_hashes equality", "高天荒野T0b2b3a精确边界上下文测试.py:124 historical implementation_hashes equality"],
+      "limitation": "The long matrix was stopped after earlier failures. Not all failure causes or remaining golden matrices were examined; no full PASS is claimed. Historical reports were not rewritten."
+    },
+    "ordinary_and_portable_file_roundtrip": "PASS_SERVICE_LAYER",
+    "restart_and_history_validation": "PASS_SERVICE_LAYER"
+  },
+  "native_ui": {
+    "method": "Computer-use skill; native mouse and keyboard with observed screenshots",
+    "fixture": "artifacts/o3c/two-weapons.json",
+    "verified": [
+      "Restarted backend; five existing recovery drafts still available",
+      "Loaded valid two-weapon outfit with nineteen modules",
+      "Observed one automatic group containing both exact-prototype weapons",
+      "Selected one member, split and applied as one valid revision",
+      "Selected new group member in canvas; deck changed to deck.1 and reference circle displayed",
+      "Undo restored source-equivalent revision 2; redo restored dirty valid revision 3"
+    ],
+    "last_observed": "User interacting with test design at revision 3; native input stopped",
+    "not_claimed": ["Native grouped-file save and reopen", "Full O4 acceptance", "Native merge interaction"]
+  },
+  "artifacts": {
+    "two-weapons.json": "Automated initial fixture; subsequently opened and edited via UI",
+    "grouped-reference.json": "Automated legal v2 reference, not a native-save artifact"
+  },
+  "preserved": ["Resource pack", "Historical golden reports", "Prior user recovery drafts", "Armor and fill rules", "Legacy v1 canonical resource output"],
+  "deferred": ["Full upper-deck raycast", "Ammo and tactical firing input", "O4 three-ship and four-mount UI roundtrip", "H5b net volume and fill settings", "Advanced outfit batch/copy/mirror"],
+  "next_slice": "O4 outfit UI acceptance, then T1a basic tactical protocol"
+}

@@ -2028,6 +2028,33 @@ class OutfitModuleInstanceInput:
         }
 
 
+OUTFIT_PLAN_V2_SCHEMA_ID = "gaotian.outfit-plan/v2alpha1"
+
+
+@dataclass(frozen=True)
+class WeaponGroupInput:
+    id: str
+    name: str
+    prototype: ResourceReference
+    weapon_instance_ids: tuple[str, ...]
+
+    @classmethod
+    def parse(cls, value, path):
+        obj = _object(value, path)
+        _keys(obj, path, ("id", "name", "prototype", "weapon_instance_ids"))
+        name = _string(obj["name"], f"{path}.name")
+        if not name.strip() or len(name) > 80:
+            raise ContractError("outfit.group_name", f"{path}.name", "武器组名称需要 1—80 个字符")
+        members = tuple(sorted(_resource_id(m, f"{path}.weapon_instance_ids") for m in _array(obj["weapon_instance_ids"], f"{path}.weapon_instance_ids")))
+        if not 1 <= len(members) <= 2048 or len(set(members)) != len(members):
+            raise ContractError("outfit.group_members", path, "武器组需要不重复的武器成员，不能空组")
+        return cls(_resource_id(obj["id"], f"{path}.id"), name,
+                   ResourceReference.parse(obj["prototype"], f"{path}.prototype"), members)
+
+    def to_dict(self):
+        return dict(id=self.id, name=self.name, prototype=self.prototype.to_dict(), weapon_instance_ids=list(self.weapon_instance_ids))
+
+
 @dataclass(frozen=True)
 class OutfitPlanInput:
     id: str
@@ -2037,6 +2064,7 @@ class OutfitPlanInput:
     hull_blueprint: ResourceReference
     hull_coating: ResourceReference
     modules: tuple[OutfitModuleInstanceInput, ...]
+    weapon_groups: tuple[WeaponGroupInput, ...] | None = None
 
     @classmethod
     def parse(cls, resource: Any, path: str = "$") -> "OutfitPlanInput":
@@ -2054,9 +2082,9 @@ class OutfitPlanInput:
                 "hull_blueprint",
                 "hull_coating",
                 "modules",
-            ),
+            ) + (("weapon_groups",) if obj.get("schema") == OUTFIT_PLAN_V2_SCHEMA_ID else ()),
         )
-        if obj["schema"] != SCHEMA_ID:
+        if obj["schema"] not in (SCHEMA_ID, OUTFIT_PLAN_V2_SCHEMA_ID):
             raise ContractError("schema.unsupported", f"{path}.schema", str(obj["schema"]))
         if obj["kind"] != "OutfitPlan":
             raise ContractError("resource.kind_mismatch", f"{path}.kind", "必须是 OutfitPlan")
@@ -2074,6 +2102,14 @@ class OutfitPlanInput:
         )
         if len({instance.id for instance in modules}) != len(modules):
             raise ContractError("outfit.instance_id_duplicate", f"{path}.modules", "实例 id 不得重复")
+        groups = None
+        if obj["schema"] == OUTFIT_PLAN_V2_SCHEMA_ID:
+            entries = _array(obj["weapon_groups"], f"{path}.weapon_groups")
+            if len(entries) > 64:
+                raise ContractError("outfit.group_limit", path, "最多 64 个武器组")
+            groups = tuple(sorted((WeaponGroupInput.parse(g, f"{path}.weapon_groups[{i}]") for i, g in enumerate(entries)), key=lambda g: g.id))
+            if len({g.id for g in groups}) != len(groups):
+                raise ContractError("outfit.group_id_duplicate", path, "武器组 ID 不得重复")
         return cls(
             _resource_id(obj["id"], f"{path}.id"),
             _integer(obj["version"], f"{path}.version", 1),
@@ -2082,6 +2118,7 @@ class OutfitPlanInput:
             ResourceReference.parse(obj["hull_blueprint"], f"{path}.hull_blueprint"),
             ResourceReference.parse(obj["hull_coating"], f"{path}.hull_coating"),
             modules,
+            groups,
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -2092,8 +2129,9 @@ class OutfitPlanInput:
             "id": self.id,
             "kind": "OutfitPlan",
             "modules": [instance.to_dict() for instance in self.modules],
+            **({"weapon_groups": [g.to_dict() for g in self.weapon_groups]} if self.weapon_groups is not None else {}),
             "name": self.name,
-            "schema": SCHEMA_ID,
+            "schema": OUTFIT_PLAN_V2_SCHEMA_ID if self.weapon_groups is not None else SCHEMA_ID,
             "version": self.version,
         }
 

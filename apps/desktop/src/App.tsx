@@ -1,4 +1,5 @@
 import { EditorPanel } from "./editor/EditorPanel";
+import { TacticalPanel } from "./tactical/TacticalPanel";
 import { useEffect, useMemo, useReducer } from "react";
 
 import {
@@ -80,6 +81,9 @@ export function App() {
 
       {status.state === "READY" && status.backend_instance_id && (
         <EditorPanel key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport} />
+      )}
+      {status.state === "READY" && status.backend_instance_id && status.capabilities.includes("tactical.create") && (
+        <TacticalPanel key={`tactical.${status.backend_instance_id}`} instance={status.backend_instance_id} transport={transport} />
       )}
 
       <section className="status-grid" aria-label="桥接状态">

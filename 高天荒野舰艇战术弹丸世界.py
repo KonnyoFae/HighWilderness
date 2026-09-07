@@ -538,6 +538,8 @@ def _build_projectile_from_weapon_event(
     weapon = modules.get(event.weapon_instance_id)
     if weapon is None or weapon.prototype.category != "weapon":
         raise ContractError("projectile_world.weapon_missing", "$.event.weapon_instance_id", event.weapon_instance_id)
+    from 高天荒野舰艇水平射界 import validate_weapon_launch
+    validate_weapon_launch(snapshot.hull, weapon, request.launch_direction_local_xy)
     if request.selected_target_deck_level < 0:
         raise ContractError("projectile_world.deck_level", "$.selected_target_deck_level", str(request.selected_target_deck_level))
     magnitude = hypot(*request.launch_direction_local_xy)

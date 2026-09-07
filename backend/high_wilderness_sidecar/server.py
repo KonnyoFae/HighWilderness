@@ -7,6 +7,7 @@ from queue import Queue, Full
 from threading import Thread
 
 from .sessions import EditorService, EDITOR_CAPABILITIES
+from .tactical import TacticalService, TACTICAL_CAPABILITIES
 from typing import Any, BinaryIO
 
 from 高天荒野舰艇数据契约 import ContractError
@@ -66,6 +67,7 @@ class SidecarServer:
         if not ID_PATTERN.fullmatch(instance_id):
             raise _bridge_error("invalid_instance_id", "$.backend_instance_id", "实例 ID 非法")
         self.editor = EditorService(instance_id, recovery_dir=recovery_dir)
+        self.tactical = TacticalService(instance_id)
         self.instance_id = instance_id
         self.handshake_complete = False
         self.last_request_number = 0
@@ -119,7 +121,7 @@ class SidecarServer:
                 error = _bridge_error("handshake_required", "$.method", "首条请求必须是 system.hello")
                 return (response_for(message, error=_error_payload(error)),), True
             try:
-                result = hello_result(message, ("system.hello", "system.ping", "system.shutdown", *EDITOR_CAPABILITIES))
+                result = hello_result(message, ("system.hello", "system.ping", "system.shutdown", *EDITOR_CAPABILITIES, *TACTICAL_CAPABILITIES))
             except ContractError as error:
                 return (response_for(message, error=_error_payload(error)),), True
             self.handshake_complete = True
@@ -147,6 +149,12 @@ class SidecarServer:
             if params["reason"] not in SHUTDOWN_REASONS:
                 raise _bridge_error("invalid_message", "$.params.reason", "未知关闭原因")
             return (response_for(message, result={"accepted": True}),), True
+
+        if method in TACTICAL_CAPABILITIES:
+            try:
+                return (response_for(message, result=self.tactical.dispatch(message)),), False
+            except ContractError as error:
+                return (response_for(message, error=_error_payload(error)),), False
 
         if method in (*EDITOR_CAPABILITIES, "editor.bind_file"):
             try:
@@ -191,7 +199,7 @@ class SidecarServer:
                         outputs, _ = self.execute(message)
                     except Exception as error:
                         # Preserve queue liveness without leaking internal exception data.
-                        failure = _bridge_error("domain_worker_failed", "$", "编辑操作失败，请重新读取会话")
+                        failure = _bridge_error("domain_worker_failed", "$", "操作失败，请重新读取当前会话或场景")
                         write_failure_log(failure)
                         outputs = (response_for(message, error=_error_payload(failure)),)
                     outgoing.put(outputs)
@@ -212,11 +220,11 @@ class SidecarServer:
                     break
                 for raw in decoder.feed(chunk):
                     message = self.accept(raw)
-                    if self.handshake_complete and message["method"] in (*EDITOR_CAPABILITIES, "editor.bind_file"):
+                    if self.handshake_complete and message["method"] in (*EDITOR_CAPABILITIES, "editor.bind_file", *TACTICAL_CAPABILITIES):
                         try:
                             jobs.put_nowait(message)
                         except Full:
-                            error = _bridge_error("busy", "$.method", "编辑队列已满，请稍后重新读取会话")
+                            error = _bridge_error("busy", "$.method", "操作队列已满，请稍后重新读取")
                             outgoing.put((response_for(message, error=_error_payload(error)),))
                         continue
                     # Shutdown is acknowledged only after accepted editor work drains.

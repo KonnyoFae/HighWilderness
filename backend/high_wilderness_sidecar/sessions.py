@@ -1,4 +1,4 @@
-"""Bounded hull sessions with host-granted file access and durable draft recovery.
+"""Bounded hull/outfit sessions with granted file access and durable recovery.
 
 All domain operations and persistence run on one serial worker.
 """
@@ -8,6 +8,7 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from pathlib import Path
 from uuid import uuid4
+from . import outfits, outfit_documents
 from .storage import FileStore, fingerprint, read_json, atomic_write
 from typing import Any
 
@@ -71,15 +72,16 @@ class ResourceIndex:
             key = f"resource.{digest}"
             descriptor = dict(key=key, kind=kind, id=source["id"], version=source["version"],
                               name=source.get("name", source["id"]), sha256=digest,
-                              editable=kind == "HullBlueprint", read_only=True,
+                              editable=kind in {"HullBlueprint", "OutfitPlan"}, read_only=True,
                               usage="contract_fixture" if kind in {"HullBlueprint", "OutfitPlan", "ModulePrototypeCatalog"} else "reference")
             self.resources[key] = descriptor, source
 
-    def listing(self) -> dict:
+    def listing(self, *, include_modules=False) -> dict:
         options = [dict(id=m["id"], version=m["version"], name=m["name"], category=source["catalog_type"])
             for descriptor, source in self.resources.values() if descriptor["kind"] == "MaterialCatalog"
             for m in source["materials"]]
-        return {"interface": INDEX_INTERFACE, "material_options": deepcopy(options),
+        return {"interface": "gaotian.editor-resource-index/v2alpha1" if include_modules else INDEX_INTERFACE,
+            **({"module_options": outfits.module_options(self)} if include_modules else {}), "material_options": deepcopy(options),
             "resources": deepcopy(sorted((descriptor for descriptor, _ in self.resources.values()),
                 key=lambda item: (item["kind"], item["id"], item["version"])))}
 
@@ -102,6 +104,7 @@ class EditorSession:
     file_sha256: str | None = None
     recovered: bool = False
     recovery_warning: str | None = None
+    hull_binding: dict | None = None
 
 
 class EditorService:
@@ -121,7 +124,8 @@ class EditorService:
 
     def snapshot(self, session: EditorSession) -> dict:
         return deepcopy({
-            "interface": SESSION_INTERFACE, "backend_instance_id": self.instance_id,
+            "interface": "gaotian.editor-session/v3alpha1" if session.hull_binding else SESSION_INTERFACE,
+            **({"hull_binding": session.hull_binding} if session.hull_binding else {}), "backend_instance_id": self.instance_id,
             "session_id": session.id, "revision": session.revision,
             "resource": session.resource, "draft": session.draft,
             "draft_sha256": canonical_sha256(session.draft),
@@ -141,8 +145,33 @@ class EditorService:
         session = self.sessions.get(session_id)
         return session.revision if session else None
 
-    def dependency_hash(self):
-        return canonical_sha256([entry for entry in self.index.listing()["resources"] if entry["kind"] == "MaterialCatalog"])
+    def dependency_hash(self, kind="HullBlueprint", index=None):
+        kinds = {"MaterialCatalog"} if kind == "HullBlueprint" else {"MaterialCatalog", "ModulePrototypeCatalog", "HullBlueprint", "HullCoatingCatalog"}
+        return canonical_sha256([entry for entry in (index or self.index).listing()["resources"] if entry["kind"] in kinds])
+
+    def document(self, source, binding=None):
+        if isinstance(source, dict) and source.get("kind") == "OutfitPlan":
+            hull = outfit_documents.validate(binding, source, self.index) if binding is not None else None
+            return outfits.document(source, self.index, hull)
+        return HullEditorDocument(source, self.index.registry)
+
+    def preview(self, source, binding=None):
+        document = self.document(source, binding)
+        if isinstance(document, HullEditorDocument):
+            return document.preview(include_edge_space=True).to_dict()
+        preview = document.preview().to_dict()
+        preview["model"]["layout"] = document.layout_preview()
+        preview["model"]["weapon_control"] = document.weapon_control_preview(preview["model"]["layout"])
+        return preview
+
+    def validate_draft(self, source, kind):
+        if not isinstance(source, dict) or source.get("kind") != kind:
+            fail("recovery_invalid", "$.draft.kind", "历史资源种类不一致")
+        (validate_hull_draft if kind == "HullBlueprint" else outfits.validate_draft)(source)
+        if kind == "OutfitPlan":
+            from 高天荒野舰艇数据契约 import OutfitPlanInput
+            from 高天荒野舰艇武器组 import weapon_groups
+            weapon_groups(OutfitPlanInput.parse(source), outfits.module_catalog(self.index))
 
     def persist(self, session):
         if canonical_sha256(session.draft) == session.origin_sha256:
@@ -152,7 +181,9 @@ class EditorService:
             "origin_sha256": session.origin_sha256, "revision": session.revision,
             "undo": session.undo, "redo": session.redo,
             "last_valid_source": session.last_valid_preview["model"]["canonical_resource"] if session.last_valid_preview else None,
-            "last_valid_revision": session.last_valid_revision, "dependencies": self.dependency_hash()}
+            "last_valid_revision": session.last_valid_revision, "dependencies": outfit_documents.catalog_hash(self.index) if session.hull_binding else self.dependency_hash(session.resource["kind"])}
+        if session.hull_binding:
+            payload["hull_binding"] = deepcopy(session.hull_binding)
         self.store.save_recovery(session.recovery_id, payload)
 
     def dispatch(self, request: dict) -> tuple[dict, int | None]:
@@ -193,19 +224,29 @@ class EditorService:
             active = {s.recovery_id for s in self.sessions.values()}
             return {"records": [r for r in self.store.list_recovery() if r["key"] not in active]}, None
         if method == "editor.create":
-            exact(params, {"resource_id", "name"})
+            creating_outfit = isinstance(params, dict) and params.get("kind") == "OutfitPlan"
+            exact(params, {"kind", "resource_id", "name", "hull_handle"} if creating_outfit else {"resource_id", "name"})
             if request["session_id"] is not None or request["expected_revision"] is not None:
                 fail("unexpected_session", "$.session_id", "新建不能绑定已有会话")
             if len(self.sessions) >= MAX_SESSIONS:
                 fail("session_limit", "$.session_id", "请先关闭一个编辑会话")
-            document = HullEditorDocument.blank(params["resource_id"], string(params["name"], "$.params.name"), self.index.registry)
-            source = document.source_dict()
+            binding = None
+            name = string(params["name"], "$.params.name")
+            if creating_outfit:
+                grant = self.store.consume(params["hull_handle"], "open", None, None)
+                source, digest = read_json(grant["path"])
+                if digest != grant["expected"]:
+                    fail("file_conflict", "$.file", "选择后船壳文件发生变化，请重新选择")
+                binding = outfit_documents.bind(source, self.index)
+                source = outfit_documents.blank(params["resource_id"], name, binding)
+            else:
+                source = HullEditorDocument.blank(params["resource_id"], name, self.index.registry).source_dict()
             digest = canonical_sha256(source)
-            descriptor = dict(key="resource." + digest, kind="HullBlueprint", id=source["id"],
+            descriptor = dict(key="resource." + digest, kind=source["kind"], id=source["id"],
                 version=1, name=source["name"], sha256=digest, editable=True, read_only=False, usage="prototype_unbalanced")
             # An unsaved new document has no clean file baseline, even before the first edit.
             session = EditorSession(f"editor.session.{self.next_session}", descriptor, source,
-                canonical_sha256(None), preview=document.preview().to_dict())
+                canonical_sha256(None), preview=self.preview(source, binding), hull_binding=binding)
             self.next_session += 1
             self.sessions[session.id] = session
             return self.snapshot(session), None
@@ -220,24 +261,31 @@ class EditorService:
                 source, digest = read_json(grant["path"])
                 if digest != grant["expected"]:
                     fail("file_conflict", "$.file", "选择后文件发生变化，请重新选择")
-                document = HullEditorDocument(source, self.index.registry)
-                preview = document.preview().to_dict()
+                source, binding = outfit_documents.unpack(source, self.index)
+                preview = self.preview(source, binding)
                 if not preview["valid"]:
-                    fail("invalid_resource", "$.file", "文件中的船壳不能合法编译")
-                descriptor = dict(key="resource." + canonical_sha256(source), kind="HullBlueprint", id=source["id"],
+                    fail("invalid_resource", "$.file", "文件中的设计不能合法编译")
+                descriptor = dict(key="resource." + canonical_sha256(source), kind=source["kind"], id=source["id"],
                     version=source["version"], name=source["name"], sha256=canonical_sha256(source), editable=True, read_only=False, usage="prototype_unbalanced")
                 session = EditorSession(f"editor.session.{self.next_session}", descriptor, source, canonical_sha256(source),
                     preview=preview, last_valid_preview=preview, last_valid_revision=0,
-                    file_path=grant["path"] if not grant["path"].is_relative_to(self.store.pack) else None, file_sha256=digest)
+                    file_path=grant["path"] if not grant["path"].is_relative_to(self.store.pack) else None, file_sha256=digest, hull_binding=binding)
             else:
                 exact(params, {"recovery_key"})
                 key = params["recovery_key"]
                 if any(s.recovery_id == key for s in self.sessions.values()):
                     fail("recovery_active", "$.recovery_key", "此草稿已经打开")
                 payload = self.store.read_recovery(key)
-                exact(payload, {"resource", "draft", "origin_sha256", "revision", "undo", "redo", "last_valid_source", "last_valid_revision", "dependencies"}, "$.recovery")
-                if payload["dependencies"] != self.dependency_hash():
-                    fail("recovery_dependencies_changed", "$.recovery", "材料资源已改变，不能自动恢复旧草稿")
+                binding = payload.get("hull_binding") if isinstance(payload, dict) else None
+                extra = {"hull_binding"} if binding is not None else set()
+                exact(payload, {"resource", "draft", "origin_sha256", "revision", "undo", "redo", "last_valid_source", "last_valid_revision", "dependencies"} | extra, "$.recovery")
+                if binding is not None:
+                    outfit_documents.validate(binding, payload["draft"], self.index)
+                kind = payload["resource"].get("kind") if isinstance(payload["resource"], dict) else None
+                if kind not in {"HullBlueprint", "OutfitPlan"}:
+                    fail("recovery_invalid", "$.recovery.resource.kind", "恢复资源种类非法")
+                if payload["dependencies"] != (outfit_documents.catalog_hash(self.index) if binding else self.dependency_hash(kind)):
+                    fail("recovery_dependencies_changed", "$.recovery", "依赖资源已改变，不能自动恢复旧草稿")
                 if type(payload["revision"]) is not int or not 0 <= payload["revision"] < 2**53:
                     fail("recovery_invalid", "$.recovery", "恢复修订非法")
                 import re
@@ -247,11 +295,13 @@ class EditorService:
                     if not isinstance(history, list) or len(history) > MAX_HISTORY:
                         fail("recovery_invalid", "$.recovery", "恢复历史超限")
                     for source in history:
-                        validate_hull_draft(source)
-                validate_hull_draft(payload["draft"])
+                        self.validate_draft(source, kind)
+                        if binding:
+                            outfit_documents.validate(binding, source, self.index)
+                self.validate_draft(payload["draft"], kind)
                 resource = exact(payload["resource"], {"key", "kind", "id", "version", "name", "sha256", "editable", "read_only", "usage"}, "$.recovery.resource")
                 ResourceReference.parse({"id": resource["id"], "version": resource["version"]}, "$.recovery.resource")
-                if resource["kind"] != "HullBlueprint" or resource["editable"] is not True or type(resource["read_only"]) is not bool or resource["usage"] not in {"contract_fixture", "prototype_unbalanced"}:
+                if resource["kind"] not in {"HullBlueprint", "OutfitPlan"} or resource["editable"] is not True or type(resource["read_only"]) is not bool or resource["usage"] not in {"contract_fixture", "prototype_unbalanced"}:
                     fail("recovery_invalid", "$.recovery.resource", "恢复资源描述非法")
                 string(resource["name"], "$.recovery.resource.name")
                 if not isinstance(resource["sha256"], str) or not re.fullmatch("[0-9a-f]{64}", resource["sha256"]) or resource["key"] != "resource." + resource["sha256"]:
@@ -263,13 +313,14 @@ class EditorService:
                     fail("recovery_invalid", "$.recovery", "最近合法修订非法")
                 last_preview = None
                 if payload["last_valid_source"] is not None:
-                    last_preview = HullEditorDocument(payload["last_valid_source"], self.index.registry).preview().to_dict()
+                    self.validate_draft(payload["last_valid_source"], kind)
+                    last_preview = self.preview(payload["last_valid_source"], binding)
                     if not last_preview["valid"]:
                         fail("recovery_invalid", "$.recovery", "最近合法船壳重建失败")
-                preview = HullEditorDocument(payload["draft"], self.index.registry).preview().to_dict()
+                preview = self.preview(payload["draft"], binding)
                 session = EditorSession(f"editor.session.{self.next_session}", payload["resource"], payload["draft"], payload["origin_sha256"],
                     revision=payload["revision"], undo=payload["undo"], redo=payload["redo"], preview=preview,
-                    last_valid_preview=last_preview, last_valid_revision=last_revision, recovery_id=key, recovered=True)
+                    last_valid_preview=last_preview, last_valid_revision=last_revision, recovery_id=key, recovered=True, hull_binding=binding)
             self.next_session += 1
             self.sessions[session.id] = session
             return self.snapshot(session), None
@@ -278,19 +329,19 @@ class EditorService:
                 fail("unexpected_session", "$.session_id", "此操作不能绑定已有会话")
             if method == "resource.list":
                 exact(params, set())
-                return self.index.listing(), None
+                return self.index.listing(include_modules=True), None
             exact(params, {"resource_key"})
             key = string(params["resource_key"], "$.params.resource_key")
             if key not in self.index.resources:
                 fail("resource_missing", "$.params.resource_key", "资源不在已验证目录中")
             descriptor, source = self.index.resources[key]
             if not descriptor["editable"]:
-                fail("kind_not_supported", "$.params.resource_key", "本切片只开放船壳编辑会话")
+                fail("kind_not_supported", "$.params.resource_key", "只开放船壳与舾装编辑会话")
             if len(self.sessions) >= MAX_SESSIONS:
                 fail("session_limit", "$.session_id", "请先关闭一个编辑会话")
-            preview = HullEditorDocument(source, self.index.registry).preview().to_dict()
+            preview = self.preview(source)
             if not preview["valid"]:
-                fail("invalid_resource", "$.params.resource_key", "源船壳无法合法编译")
+                fail("invalid_resource", "$.params.resource_key", "源设计无法合法编译")
             session = EditorSession(f"editor.session.{self.next_session}", descriptor, deepcopy(source),
                                     canonical_sha256(source), preview=preview,
                                     last_valid_preview=preview, last_valid_revision=0)
@@ -323,18 +374,26 @@ class EditorService:
                     if params["new_version"]:
                         fail("new_version_destination", "$.file", "新版本必须另存到不同文件")
                     expected = session.file_sha256
-            document = HullEditorDocument(session.draft, self.index.registry)
+            document = self.document(session.draft, session.hull_binding)
             if params["new_version"]:
                 document = document.derive_version()
             compiled = document.compile()
-            candidate = compiled.normalized_blueprint.to_dict()
+            candidate = (compiled.normalized_blueprint if session.resource["kind"] == "HullBlueprint" else compiled.normalized_plan).to_dict()
             text = document.canonical_text()
             if path.is_relative_to(self.store.pack):
                 fail("read_only_resource", "$.file", "测试资源包只读")
-            current_materials = [entry for entry in ResourceIndex(self.root).listing()["resources"] if entry["kind"] == "MaterialCatalog"]
-            if canonical_sha256(current_materials) != self.dependency_hash():
-                fail("save_dependencies_changed", "$.file", "材料目录已变化，请重启并重新验证船壳")
-            preview = HullEditorDocument(candidate, self.index.registry).preview().to_dict()
+            current_index = ResourceIndex(self.root)
+            expected_dependencies = outfit_documents.catalog_hash(self.index) if session.hull_binding else self.dependency_hash(session.resource["kind"])
+            actual_dependencies = outfit_documents.catalog_hash(current_index) if session.hull_binding else self.dependency_hash(session.resource["kind"], current_index)
+            if actual_dependencies != expected_dependencies:
+                fail("save_dependencies_changed", "$.file", "依赖资源已变化，请重启并重新验证设计")
+            if session.hull_binding:
+                if path.exists():
+                    existing, _ = read_json(path)
+                    if isinstance(existing, dict) and existing.get("kind") == "HullBlueprint":
+                        fail("hull_destination_conflict", "$.file", "舾装不能覆盖船壳文件，请另选位置")
+                text = outfit_documents.encode(candidate, session.hull_binding)
+            preview = self.preview(candidate, session.hull_binding)
             digest = atomic_write(path, text.encode("utf-8"), expected)
             if candidate != session.draft:
                 session.undo = (session.undo + [session.draft])[-MAX_HISTORY:]
@@ -369,8 +428,10 @@ class EditorService:
         elif method == "editor.command":
             exact(params, {"command", "arguments"})
             args = params["arguments"]
-            document = HullEditorDocument(session.draft, self.index.registry)
-            if params["command"] == "hull.rename":
+            document = self.document(session.draft, session.hull_binding)
+            if session.resource["kind"] == "OutfitPlan":
+                outfits.command(document, params["command"], args, self.index)
+            elif params["command"] == "hull.rename":
                 exact(args, {"name"}, "$.params.arguments")
                 document.rename(string(args["name"], "$.params.arguments.name"))
             elif params["command"] == "hull.set_structure_material":
@@ -389,7 +450,7 @@ class EditorService:
             fail("method_not_supported", "$.method", "未知会话操作")
         # Compile on a detached candidate. Malformed operations never mutate history;
         # validly shaped but illegal designs remain recoverable editable drafts.
-        preview = HullEditorDocument(candidate, self.index.registry).preview().to_dict()
+        preview = self.preview(candidate, session.hull_binding)
         session.draft, session.undo, session.redo = candidate, undo[-MAX_HISTORY:], redo[-MAX_HISTORY:]
         session.revision += 1
         session.preview = preview

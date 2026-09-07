@@ -8,6 +8,19 @@ const snapshot = (instance = "backend.1", session = "session.1", revision = 1) =
 }) as SessionSnapshot;
 
 describe("editor response ownership", () => {
+  it("accepts an explicit bound outfit session but rejects missing or mismatched bindings", () => {
+    const value = { ...snapshot(), interface: "gaotian.editor-session/v3alpha1", resource: { kind: "OutfitPlan", key: "r", id: "outfit", version: 1, name: "test", sha256: "a".repeat(64), editable: true, read_only: false, usage: "prototype_unbalanced" },
+      draft: { name: "test", hull_blueprint: { id: "user.hull", version: 2 } },
+      hull_binding: { interface: "gaotian.outfit-hull-binding/v1alpha1", hull: { kind: "HullBlueprint", id: "user.hull", version: 2, name: "test hull", decks: [] },
+        hull_sha256: "a".repeat(64), catalog_dependencies_sha256: "b".repeat(64) } } as SessionSnapshot;
+    const model = editorReducer(initialEditorModel("backend.1"), { type: "begin", ticket: 1 });
+    const accept = (v: SessionSnapshot) => editorReducer(model, { type: "snapshot", ticket: 1, value: v }).session;
+    expect(accept(value)).toBe(value);
+    expect(accept({ ...value, hull_binding: undefined })).toBeNull();
+    expect(accept({ ...value, interface: "gaotian.editor-session/v2alpha1" })).toBeNull();
+    expect(accept({ ...value, draft: { name: "bad", hull_blueprint: { id: "other", version: 2 } } })).toBeNull();
+    expect(accept({ ...value, hull_binding: { ...value.hull_binding!, hull_sha256: "bad" } })).toBeNull();
+  });
   it("ignores older request completions and never rolls revision back", () => {
     let model = editorReducer(initialEditorModel("backend.1"), { type: "begin", ticket: 1 });
     model = editorReducer(model, { type: "snapshot", ticket: 1, value: snapshot() });

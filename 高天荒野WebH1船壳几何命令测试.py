@@ -201,7 +201,7 @@ class GeometryTests(unittest.TestCase):
 
     def test_legacy_resources_roundtrip_and_legacy_recovery(self):
         for descriptor, source in self.service.index.resources.values():
-            if descriptor['editable']:
+            if descriptor['kind'] == 'HullBlueprint':
                 validate_hull_draft(source)
                 doc = HullEditorDocument(source, self.service.index.registry)
                 self.assertEqual(canonical_sha256(doc.compile().normalized_blueprint.to_dict()), canonical_sha256(source))

@@ -78,6 +78,17 @@ async fn bridge_editor_request(
 }
 
 #[tauri::command]
+async fn bridge_tactical_request(
+    state: State<'_, DesktopState>,
+    request: EditorRequest,
+) -> Result<Value, HostFailure> {
+    let supervisor = Arc::clone(&state.supervisor);
+    tauri::async_runtime::spawn_blocking(move || supervisor.tactical_request(request))
+        .await
+        .map_err(join_failure)?
+}
+
+#[tauri::command]
 async fn bridge_choose_file(
     window: tauri::WebviewWindow,
     state: State<'_, DesktopState>,
@@ -134,6 +145,7 @@ pub fn run() {
             bridge_restart,
             bridge_ping,
             bridge_editor_request,
+            bridge_tactical_request,
             bridge_choose_file,
             bridge_stop,
             bridge_status,

@@ -1,0 +1,116 @@
+{
+  "authority_interface": "gaotian.tactical-scene-timeline/v7alpha1",
+  "date": "2026-09-07",
+  "initial_scene_sha256": "b07536561efb352b11335ef33edcfc636823977a9a022271f7e110b0deda9557",
+  "initial_step": 0,
+  "internal_verification_result_step": 1,
+  "module_counts": [
+    18,
+    18
+  ],
+  "not_covered": [
+    "native_panel_clicks",
+    "live_scheduling_and_player_input",
+    "tactical_canvas",
+    "combat_ui",
+    "real_time_performance",
+    "historical_full_matrix"
+  ],
+  "report": "gaotian.web-t1a-two-ship-acceptance/v1",
+  "resources": {
+    "coating_catalog_sha256": "2b8bb38311a02406a491b685aad160f9b051049ab9b35e25f95f3c1c66de7fa5",
+    "continuous_damage_sha256": "b5a70251299f88ef8cc910933d041bc0728644f12cd860533eb2de58c0adb4b2",
+    "derived_snapshot_sha256": "4b7991911e4afc7d8e4dfe197a344bbceb453c3ee31e28cfb7901ef10db1d209",
+    "hull_sha256": "2c6344986c45af918826f6f2db052a3f11fa7a9b99c728a197c72e5bcaee8e3a",
+    "initial_scene_sha256": "42aca1b8e0cfe10ebc4c53e2748fba1cd313786dc4fe616a669845eec91b44fe",
+    "interface": "gaotian.web-two-ship-resources/v1alpha1",
+    "material_catalogs_sha256": "fa8d465ca3a38a549b06e8217595ad3e9966a38ea75fe80547ee98c6e133f521",
+    "module_catalog_sha256": "7c5eba7a9fed2eed72f8fb05d23290461fa665a80063b67544ddcbfef3c3a2ea",
+    "projectile_sha256": "b3bd4f0fe251f3173ea2252456f484c1d14d04965bf8c6de438216f91f109d63",
+    "safety_sha256": "a67f71517c39243d54dc01bf84f3981ca73e59551fc85787ce8da7e336ea5d6f",
+    "scenario_id": "gtw.sample.web.two_ship.v1",
+    "sortie_configuration": {
+      "active_remote_core_instance_id": null,
+      "ammunition_loadout": {
+        "magazines": [
+          {
+            "instance_id": "ammunition_magazine",
+            "inventory": [
+              {
+                "munition_id": "gtw.munition.fixture.76mm.standard",
+                "units": 20
+              }
+            ]
+          }
+        ],
+        "weapons": [
+          {
+            "instance_id": "weapon_upper_port",
+            "munition_id": "gtw.munition.fixture.76mm.standard",
+            "ready_rounds": 1
+          }
+        ]
+      },
+      "bulk_cargo": [],
+      "control_mode": "crewed",
+      "crew": [
+        {
+          "count": 2,
+          "crew_type": "officer"
+        },
+        {
+          "count": 10,
+          "crew_type": "ordinary"
+        },
+        {
+          "count": 4,
+          "crew_type": "technical_officer"
+        },
+        {
+          "count": 2,
+          "crew_type": "veteran_damage_control"
+        }
+      ],
+      "fixture_level": "contract_fixture",
+      "fuel_units": 800.0,
+      "height_layer": "upper",
+      "id": "gtw.sortie.web.two_ship.conventional",
+      "kind": "SortieConfiguration",
+      "name": "两舰试航技术出航预设",
+      "outfit_plan": {
+        "id": "gtw.outfit.fixture.stage_f.conventional_crewed",
+        "version": 2
+      },
+      "schema": "gaotian.ship/v1alpha1",
+      "version": 1
+    },
+    "sortie_sha256": "6bfd0db21dfe81bfe15e52a07666e2cd91aeae044ff70e64c8245c2c50cb53bd",
+    "source_catalog_sha256": [
+      "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a",
+      "1740797702b3de4a7e3c5919a3f59f9d12cfb92f69e338666e1a05639e018ab1"
+    ],
+    "source_outfit_sha256": "cb8862db2ea80727bfc85a53a0520a1f4c1e2730a49dce87531c86c829765570",
+    "timing_sha256": "d463c1cd824b63c3b65c57a1e33f6f44a6f0b94841946a665e27e7cbea98042d"
+  },
+  "resulting_scene_sha256": "9ea02732cf6ef62f340eaa6679a19ac2c13f31fa811454e58e38fbf2f8a9fa91",
+  "sample_initial_render_bytes": 15783,
+  "scenario_id": "gtw.sample.web.two_ship.v1",
+  "scope": "paused_sample_and_automated_bridge_roundtrip",
+  "ship_count": 2,
+  "static_sha256": "f29002ac96b6d65b8137428544b15943e7a745504d185fd11568e0f5c1c4b79c",
+  "status": "PASS",
+  "verification_executed": {
+    "frontend_build": "PASS",
+    "frontend_tests": 63,
+    "python_scripts": [
+      "高天荒野WebT1a战术场景测试.py",
+      "高天荒野Web桥接协议测试.py",
+      "高天荒野WebSidecar生命周期测试.py",
+      "高天荒野WebW2a编辑会话测试.py",
+      "高天荒野WebW2b保存与恢复测试.py",
+      "高天荒野WebO4舾装验收测试.py"
+    ],
+    "rust_tests": 20,
+    "t1a_tests": 9
+  }
+}

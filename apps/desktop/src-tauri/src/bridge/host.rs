@@ -939,6 +939,16 @@ impl BackendSupervisor {
         self.editor_request_impl(request, false)
     }
 
+    pub fn tactical_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
+        if !matches!(request.method.as_str(), "tactical.create" | "tactical.inspect" | "tactical.close") {
+            return Err(HostFailure::host("method_not_supported", "tactical method not enabled"));
+        }
+        if request.session_id.is_some() || request.expected_revision.is_some() {
+            return Err(HostFailure::host("invalid_scope", "tactical requests use a scene id in params"));
+        }
+        self.domain_request(request)
+    }
+
     fn editor_request_impl(
         self: &Arc<Self>,
         request: EditorRequest,
@@ -972,6 +982,10 @@ impl BackendSupervisor {
                 "session and revision must be paired",
             ));
         }
+        self.domain_request(request)
+    }
+
+    fn domain_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
         let running = {
             let state = self.state.lock().unwrap();
             if state.lifecycle != Lifecycle::Ready {
@@ -981,7 +995,7 @@ impl BackendSupervisor {
             if running.instance_id != request.backend_instance_id {
                 return Err(HostFailure::host(
                     "stale_instance",
-                    "reopen the editor after restart",
+                    "reopen the session or scene after restart",
                 ));
             }
             running
@@ -995,7 +1009,7 @@ impl BackendSupervisor {
             false,
             scope,
         )
-        .map(|result| result.expect("editor request must be enqueued"))
+        .map(|result| result.expect("domain request must be enqueued"))
     }
 
     pub fn ping(self: &Arc<Self>, nonce: String) -> HostResult<Value> {
@@ -1270,6 +1284,37 @@ mod tests {
     }
 
     #[test]
+    fn real_tactical_scene_roundtrip_and_scope_rejection() {
+        let supervisor = BackendSupervisor::new(repo_root());
+        let (events, _) = sink();
+        let status = supervisor.start(events).unwrap();
+        assert!(status.capabilities.contains(&"tactical.create".into()));
+        let instance = status.backend_instance_id.unwrap();
+        let request = |method: &str, params: Value| EditorRequest {
+            backend_instance_id: instance.clone(), method: method.into(), params,
+            session_id: None, expected_revision: None,
+        };
+        let created = supervisor.tactical_request(request("tactical.create", json!({"scenario_id":"gtw.sample.web.two_ship.v1"}))).unwrap();
+        assert_eq!(created["ships"].as_array().unwrap().len(), 2);
+        assert_eq!(created["authority_interface"], "gaotian.tactical-scene-timeline/v7alpha1");
+        assert_eq!(created["fixed_step"], 0);
+        let inspect = || request("tactical.inspect", json!({"scene_id":created["scene_id"],"known_static_sha256":created["static_sha256"]}));
+        let read = supervisor.tactical_request(inspect()).unwrap();
+        assert_eq!(read["static"], Value::Null);
+        assert_eq!(read["ships"], created["ships"]);
+        assert_eq!(read, supervisor.tactical_request(inspect()).unwrap());
+        assert_eq!(supervisor.tactical_request(request("editor.save", json!({}))).unwrap_err().code, "host.method_not_supported");
+        let mut scoped = inspect(); scoped.session_id = Some("editor.1".into()); scoped.expected_revision = Some(0);
+        assert_eq!(supervisor.tactical_request(scoped).unwrap_err().code, "host.invalid_scope");
+        supervisor.tactical_request(request("tactical.close", json!({"scene_id":created["scene_id"]}))).unwrap();
+        assert_eq!(supervisor.tactical_request(inspect()).unwrap_err().code, "tactical.scene_missing");
+        let (events, _) = sink();
+        supervisor.restart(events).unwrap();
+        assert_eq!(supervisor.tactical_request(inspect()).unwrap_err().code, "host.stale_instance");
+        supervisor.stop("user_exit").unwrap();
+    }
+
+    #[test]
     fn real_editor_scopes_conflicts_restart_and_concurrent_requests() {
         let supervisor = BackendSupervisor::new(repo_root());
         let (sink, _) = sink();
@@ -1329,6 +1374,94 @@ mod tests {
             "host.stale_instance"
         );
         supervisor.stop("user_exit").unwrap();
+    }
+
+    #[test]
+    fn real_outfit_three_ship_file_roundtrips() {
+        let directory = std::env::temp_dir().join(format!("high-wilderness-o4-{}", Uuid::new_v4()));
+        std::fs::create_dir_all(&directory).unwrap();
+        let supervisor = BackendSupervisor::new(repo_root());
+        supervisor.set_recovery_dir(directory.join("recovery"));
+        let (sink, _) = sink();
+        let instance = supervisor.start(sink).unwrap().backend_instance_id.unwrap();
+        let make = |method: &str, params: Value, state: Option<&Value>| EditorRequest {
+            backend_instance_id: instance.clone(),
+            method: method.into(),
+            params,
+            session_id: state.map(|s| s["session_id"].as_str().unwrap().to_string()),
+            expected_revision: state.map(|s| s["revision"].as_u64().unwrap()),
+        };
+        let resources = supervisor
+            .editor_request(make("resource.list", json!({}), None))
+            .unwrap();
+        let outfits: Vec<_> = resources["resources"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .filter(|entry| entry["kind"] == "OutfitPlan")
+            .collect();
+        assert_eq!(outfits.len(), 3);
+        for (n, entry) in outfits.into_iter().enumerate() {
+            let opened = supervisor
+                .editor_request(make(
+                    "editor.open",
+                    json!({"resource_key":entry["key"]}),
+                    None,
+                ))
+                .unwrap();
+            assert_eq!(opened["preview"]["valid"], true);
+            assert_eq!(
+                opened["preview"]["model"]["layout"]["interface"],
+                "gaotian.outfit-layout/v1alpha1"
+            );
+            assert_eq!(
+                opened["preview"]["model"]["weapon_control"]["interface"],
+                "gaotian.weapon-control-view/v2alpha1"
+            );
+            let path = directory.join(format!("outfit-{n}.json"));
+            let token = supervisor
+                .bind_selected_file(make("save", json!({}), Some(&opened)), path.clone())
+                .unwrap();
+            let saved = supervisor
+                .editor_request(make(
+                    "editor.save",
+                    json!({"destination_handle":token["destination_handle"],"new_version":false}),
+                    Some(&opened),
+                ))
+                .unwrap();
+            assert_eq!(saved["preview"], opened["preview"]);
+            assert_eq!(saved["dirty"], false);
+            supervisor
+                .editor_request(make(
+                    "editor.close",
+                    json!({"discard_changes":false}),
+                    Some(&saved),
+                ))
+                .unwrap();
+            let token = supervisor
+                .bind_selected_file(make("open", json!({}), None), path)
+                .unwrap();
+            let reloaded = supervisor
+                .editor_request(make(
+                    "editor.open_file",
+                    json!({"destination_handle":token["destination_handle"]}),
+                    None,
+                ))
+                .unwrap();
+            assert_eq!(reloaded["draft"], opened["draft"]);
+            assert_eq!(reloaded["preview"], opened["preview"]);
+            assert_eq!(reloaded["dirty"], false);
+            supervisor
+                .editor_request(make(
+                    "editor.close",
+                    json!({"discard_changes":false}),
+                    Some(&reloaded),
+                ))
+                .unwrap();
+        }
+        supervisor.stop("user_exit").unwrap();
+        assert!(directory.starts_with(std::env::temp_dir()));
+        std::fs::remove_dir_all(directory).unwrap();
     }
 
     #[test]

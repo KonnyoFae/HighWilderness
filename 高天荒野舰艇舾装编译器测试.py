@@ -134,9 +134,10 @@ def main() -> None:
         0.0,
     )
     assert [warning.code for warning in compiled.warnings] == [
-        "outfit.external_rcs_unresolved",
         "outfit.no_clockwise_turning_torque",
     ]
+    assert compiled.unresolved_external_rcs_instances == ()
+    require_close(compiled.known_external_rcs_m2, 2.0)
     snapshot = build_derived_ship_snapshot(hull, compiled)
     snapshot_dict = snapshot.to_dict()
     assert snapshot_dict["kind"] == "DerivedShipSnapshot"
