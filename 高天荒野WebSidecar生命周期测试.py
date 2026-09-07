@@ -140,7 +140,7 @@ def main() -> None:
 
     proc = spawn()
     missing = hello()
-    missing["params"]["required_capabilities"] = ["editor.command"]
+    missing["params"]["required_capabilities"] = ["save.write"]
     write(proc, missing)
     response = read_line(proc.stdout)
     assert response["error"]["code"] == "bridge.capability_missing"

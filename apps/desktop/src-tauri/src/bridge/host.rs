@@ -8,7 +8,7 @@ use std::sync::{Arc, Condvar, Mutex, Weak, mpsc};
 use std::thread;
 use std::time::{Duration, Instant};
 
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
 use uuid::Uuid;
 
@@ -16,6 +16,16 @@ use super::protocol::{BRIDGE_INTERFACE, FrameDecoder, encode_message};
 
 const HOST_INTERFACE: &str = "gaotian.desktop-bridge-host/v1alpha1";
 const EVENT_INTERFACE: &str = "gaotian.desktop-bridge-event/v1alpha1";
+
+#[derive(Debug, Deserialize)]
+#[serde(deny_unknown_fields)]
+pub struct EditorRequest {
+    pub backend_instance_id: String,
+    pub method: String,
+    pub params: Value,
+    pub session_id: Option<String>,
+    pub expected_revision: Option<u64>,
+}
 
 #[derive(Debug, Clone, Serialize, PartialEq)]
 pub struct HostFailure {
@@ -220,6 +230,7 @@ impl BackendCommand {
 }
 
 struct PendingRequest {
+    session_id: Option<String>,
     result: mpsc::SyncSender<HostResult<Value>>,
 }
 
@@ -228,6 +239,7 @@ struct RunningBackend {
     child: Mutex<Child>,
     writer: mpsc::SyncSender<Vec<u8>>,
     pending: Mutex<HashMap<String, PendingRequest>>,
+    enqueue_lock: Mutex<()>,
     next_request: AtomicU64,
     next_event: AtomicU64,
     queued_bytes: AtomicUsize,
@@ -246,6 +258,7 @@ struct SupervisorState {
 pub struct BackendSupervisor {
     repo_root: PathBuf,
     config: SupervisorConfig,
+    recovery_dir: Mutex<Option<PathBuf>>,
     state: Mutex<SupervisorState>,
 }
 
@@ -258,6 +271,7 @@ impl BackendSupervisor {
         Arc::new(Self {
             repo_root,
             config,
+            recovery_dir: Mutex::new(None),
             state: Mutex::new(SupervisorState {
                 lifecycle: Lifecycle::Stopped,
                 running: None,
@@ -403,6 +417,18 @@ impl BackendSupervisor {
                                 let request_id = message["request_id"].as_str().unwrap().to_owned();
                                 let pending = running.pending.lock().unwrap().remove(&request_id);
                                 if let Some(pending) = pending {
+                                    if message["session_id"].as_str()
+                                        != pending.session_id.as_deref()
+                                    {
+                                        let error = HostFailure::protocol(
+                                            "bridge.session_mismatch",
+                                            "$.session_id",
+                                            "response belongs to a different session",
+                                        );
+                                        let _ = pending.result.send(Err(error.clone()));
+                                        fail_weak(&supervisor, &running, error);
+                                        return;
+                                    }
                                     let _ = pending.result.send(Ok(message));
                                 } else if !running.stopping.load(Ordering::SeqCst) {
                                     fail_weak(
@@ -567,7 +593,11 @@ impl BackendSupervisor {
 
     pub fn start(self: &Arc<Self>, sink: EventSink) -> HostResult<BridgeStatus> {
         let instance_id = format!("backend.{}", Uuid::new_v4().simple());
-        let command = BackendCommand::production(&self.repo_root, &instance_id);
+        let mut command = BackendCommand::production(&self.repo_root, &instance_id);
+        if let Some(path) = self.recovery_dir.lock().unwrap().as_ref() {
+            command.arguments.push("--recovery-dir".into());
+            command.arguments.push(path.as_os_str().to_owned());
+        }
         self.start_command(command, instance_id, sink)
     }
 
@@ -612,6 +642,7 @@ impl BackendSupervisor {
             child: Mutex::new(child),
             writer,
             pending: Mutex::new(HashMap::new()),
+            enqueue_lock: Mutex::new(()),
             next_request: AtomicU64::new(1),
             next_event: AtomicU64::new(1),
             queued_bytes: AtomicUsize::new(0),
@@ -808,17 +839,31 @@ impl BackendSupervisor {
         timeout: Duration,
         only_if_idle: bool,
     ) -> HostResult<Option<Value>> {
+        self.request_scoped(running, method, params, timeout, only_if_idle, None)
+    }
+
+    fn request_scoped(
+        self: &Arc<Self>,
+        running: &Arc<RunningBackend>,
+        method: &str,
+        params: Value,
+        timeout: Duration,
+        only_if_idle: bool,
+        scope: Option<(&str, u64)>,
+    ) -> HostResult<Option<Value>> {
+        // Number assignment and enqueue must be atomic across UI and heartbeat callers.
+        let enqueue_guard = running.enqueue_lock.lock().unwrap();
         let request_number = running.next_request.fetch_add(1, Ordering::SeqCst);
         let request_id = format!("req.{request_number}");
         let request = json!({
             "backend_instance_id": running.instance_id,
-            "expected_revision": null,
+            "expected_revision": scope.map(|(_, revision)| revision),
             "interface": BRIDGE_INTERFACE,
             "kind": "request",
             "method": method,
             "params": params,
             "request_id": request_id,
-            "session_id": null,
+            "session_id": scope.map(|(session_id, _)| session_id),
         });
         let wire = encode_message(&request)
             .map_err(|error| HostFailure::protocol(error.code, error.path, error.message))?;
@@ -831,7 +876,13 @@ impl BackendSupervisor {
             if pending.len() >= self.config.max_in_flight {
                 return Err(HostFailure::busy("too many in-flight requests"));
             }
-            pending.insert(request_id.clone(), PendingRequest { result: sender });
+            pending.insert(
+                request_id.clone(),
+                PendingRequest {
+                    session_id: scope.map(|(id, _)| id.to_owned()),
+                    result: sender,
+                },
+            );
         }
         if !self.reserve_queue_bytes(running, wire.len()) {
             running.pending.lock().unwrap().remove(&request_id);
@@ -847,6 +898,7 @@ impl BackendSupervisor {
             running.pending.lock().unwrap().remove(&request_id);
             return Err(HostFailure::busy("sidecar writer queue is unavailable"));
         }
+        drop(enqueue_guard);
         let response = match receiver.recv_timeout(timeout) {
             Ok(result) => result?,
             Err(_) => {
@@ -861,6 +913,89 @@ impl BackendSupervisor {
         } else {
             Err(HostFailure::from_response(&response))
         }
+    }
+
+    pub fn set_recovery_dir(&self, path: PathBuf) {
+        *self.recovery_dir.lock().unwrap() = Some(path);
+    }
+
+    pub fn bind_selected_file(
+        self: &Arc<Self>,
+        mut request: EditorRequest,
+        path: PathBuf,
+    ) -> HostResult<Value> {
+        if !matches!(request.method.as_str(), "open" | "save") {
+            return Err(HostFailure::host(
+                "invalid_file_mode",
+                "invalid file selection mode",
+            ));
+        }
+        request.params = json!({"mode": request.method, "host_path": path});
+        request.method = "editor.bind_file".into();
+        self.editor_request_impl(request, true)
+    }
+
+    pub fn editor_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
+        self.editor_request_impl(request, false)
+    }
+
+    fn editor_request_impl(
+        self: &Arc<Self>,
+        request: EditorRequest,
+        trusted_file_selection: bool,
+    ) -> HostResult<Value> {
+        if !matches!(
+            request.method.as_str(),
+            "resource.list"
+                | "editor.open"
+                | "editor.create"
+                | "editor.inspect"
+                | "editor.preview"
+                | "editor.command"
+                | "editor.undo"
+                | "editor.redo"
+                | "editor.close"
+                | "editor.open_file"
+                | "editor.save"
+                | "editor.recovery_list"
+                | "editor.recover"
+        ) && !(trusted_file_selection && request.method == "editor.bind_file")
+        {
+            return Err(HostFailure::host(
+                "method_not_supported",
+                "editor method not enabled",
+            ));
+        }
+        if request.session_id.is_some() != request.expected_revision.is_some() {
+            return Err(HostFailure::host(
+                "invalid_scope",
+                "session and revision must be paired",
+            ));
+        }
+        let running = {
+            let state = self.state.lock().unwrap();
+            if state.lifecycle != Lifecycle::Ready {
+                return Err(HostFailure::host("not_ready", "sidecar is not ready"));
+            }
+            let running = Arc::clone(state.running.as_ref().unwrap());
+            if running.instance_id != request.backend_instance_id {
+                return Err(HostFailure::host(
+                    "stale_instance",
+                    "reopen the editor after restart",
+                ));
+            }
+            running
+        };
+        let scope = request.session_id.as_deref().zip(request.expected_revision);
+        self.request_scoped(
+            &running,
+            &request.method,
+            request.params,
+            self.config.request_timeout,
+            false,
+            scope,
+        )
+        .map(|result| result.expect("editor request must be enqueued"))
     }
 
     pub fn ping(self: &Arc<Self>, nonce: String) -> HostResult<Value> {
@@ -1095,6 +1230,215 @@ mod tests {
                 .iter()
                 .any(|event| event["payload"]["state"] == "STOPPED")
         );
+    }
+
+    #[test]
+    fn real_blank_hull_geometry_batch_and_undo() {
+        let supervisor = BackendSupervisor::new(repo_root());
+        let (sink, _) = sink();
+        let instance = supervisor.start(sink).unwrap().backend_instance_id.unwrap();
+        let call = |method: &str, params: Value, session: Option<String>, revision: Option<u64>| {
+            supervisor.editor_request(EditorRequest {
+                backend_instance_id: instance.clone(),
+                method: method.into(),
+                params,
+                session_id: session,
+                expected_revision: revision,
+            })
+        };
+        let created = call(
+            "editor.create",
+            json!({"resource_id":"user.hull.rust", "name":"Rust H1"}),
+            None,
+            None,
+        )
+        .unwrap();
+        assert_eq!(created["draft"]["decks"], json!([]));
+        assert_eq!(created["dirty"], true);
+        let id = created["session_id"].as_str().unwrap().to_string();
+        let armor = json!({"material":{"id":"gtw.material.base_armor.armor_steel","version":1},"thickness_m":0});
+        let edited = call("editor.command", json!({"command":"hull.batch","arguments":{"commands":[
+            {"command":"hull.add_deck","arguments":{"deck_id":"deck.0","level":0,"material":{"id":"gtw.material.structure.armor_steel","version":1}}},
+            {"command":"hull.add_region","arguments":{"deck_id":"deck.0","region":{"id":"region.0","vertices_m":[[-10,-10],[10,-10],[10,10],[-10,10]],"edge_armor":[armor.clone(),armor.clone(),armor.clone(),armor]}}}
+        ]}}), Some(id.clone()), Some(0)).unwrap();
+        assert_eq!(edited["preview"]["valid"], true);
+        assert_eq!(edited["revision"], 1);
+        let undone = call("editor.undo", json!({}), Some(id), Some(1)).unwrap();
+        assert_eq!(undone["draft_sha256"], created["draft_sha256"]);
+        assert_eq!(undone["dirty"], true);
+        supervisor.stop("user_exit").unwrap();
+    }
+
+    #[test]
+    fn real_editor_scopes_conflicts_restart_and_concurrent_requests() {
+        let supervisor = BackendSupervisor::new(repo_root());
+        let (sink, _) = sink();
+        let status = supervisor.start(Arc::clone(&sink)).unwrap();
+        let instance = status.backend_instance_id.unwrap();
+        let call = |method: &str, params: Value, session: Option<String>, revision: Option<u64>| {
+            supervisor.editor_request(EditorRequest {
+                backend_instance_id: instance.clone(),
+                method: method.into(),
+                params,
+                session_id: session,
+                expected_revision: revision,
+            })
+        };
+        let resources = call("resource.list", json!({}), None, None).unwrap();
+        let key = resources["resources"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|entry| entry["editable"] == true)
+            .unwrap()["key"]
+            .clone();
+        let opened = call("editor.open", json!({"resource_key": key}), None, None).unwrap();
+        let session = opened["session_id"].as_str().unwrap().to_string();
+        let changed = call(
+            "editor.command",
+            json!({"command": "hull.rename",
+            "arguments": {"name": "Rust bridge test"}}),
+            Some(session.clone()),
+            Some(0),
+        )
+        .unwrap();
+        assert_eq!(changed["revision"], 1);
+        assert_eq!(
+            call("editor.undo", json!({}), Some(session.clone()), Some(0))
+                .unwrap_err()
+                .code,
+            "editor.revision_conflict"
+        );
+        assert_eq!(supervisor.status().state, "READY");
+        let restored = call("editor.undo", json!({}), Some(session.clone()), Some(1)).unwrap();
+        assert_eq!(restored["draft_sha256"], opened["draft_sha256"]);
+        let threads: Vec<_> = (0..8)
+            .map(|n| {
+                let supervisor = Arc::clone(&supervisor);
+                thread::spawn(move || supervisor.ping(format!("ping.concurrent.{n}")).unwrap())
+            })
+            .collect();
+        for thread in threads {
+            thread.join().unwrap();
+        }
+        supervisor.restart(sink).unwrap();
+        assert_eq!(
+            call("editor.inspect", json!({}), Some(session), Some(2))
+                .unwrap_err()
+                .code,
+            "host.stale_instance"
+        );
+        supervisor.stop("user_exit").unwrap();
+    }
+
+    #[test]
+    fn file_binding_is_host_only_and_recovery_survives_restart() {
+        let directory =
+            std::env::temp_dir().join(format!("high-wilderness-w2b-{}", Uuid::new_v4()));
+        std::fs::create_dir_all(&directory).unwrap();
+        let supervisor = BackendSupervisor::new(repo_root());
+        supervisor.set_recovery_dir(directory.join("recovery"));
+        let (sink, _) = sink();
+        let instance = supervisor
+            .start(Arc::clone(&sink))
+            .unwrap()
+            .backend_instance_id
+            .unwrap();
+        let make = |method: &str,
+                    params: Value,
+                    session_id: Option<String>,
+                    expected_revision: Option<u64>| EditorRequest {
+            backend_instance_id: instance.clone(),
+            method: method.into(),
+            params,
+            session_id,
+            expected_revision,
+        };
+        assert_eq!(
+            supervisor
+                .editor_request(make(
+                    "editor.bind_file",
+                    json!({"host_path":"x", "mode":"save"}),
+                    None,
+                    None
+                ))
+                .unwrap_err()
+                .code,
+            "host.method_not_supported"
+        );
+        let index = supervisor
+            .editor_request(make("resource.list", json!({}), None, None))
+            .unwrap();
+        let key = index["resources"]
+            .as_array()
+            .unwrap()
+            .iter()
+            .find(|r| r["editable"] == true)
+            .unwrap()["key"]
+            .clone();
+        let opened = supervisor
+            .editor_request(make("editor.open", json!({"resource_key":key}), None, None))
+            .unwrap();
+        let id = opened["session_id"].as_str().unwrap().to_string();
+        supervisor
+            .editor_request(make(
+                "editor.command",
+                json!({"command":"hull.rename", "arguments":{"name":"恢复验收舰"}}),
+                Some(id.clone()),
+                Some(0),
+            ))
+            .unwrap();
+        let token = supervisor
+            .bind_selected_file(
+                make("save", json!({}), Some(id.clone()), Some(1)),
+                directory.join("ship.json"),
+            )
+            .unwrap();
+        let saved = supervisor
+            .editor_request(make(
+                "editor.save",
+                json!({"destination_handle":token["destination_handle"],"new_version":false}),
+                Some(id.clone()),
+                Some(1),
+            ))
+            .unwrap();
+        assert_eq!(saved["dirty"], false);
+        supervisor
+            .editor_request(make(
+                "editor.command",
+                json!({"command":"hull.rename", "arguments":{"name":"恢复验收舰第二次修改"}}),
+                Some(id),
+                Some(1),
+            ))
+            .unwrap();
+        let new_instance = supervisor
+            .restart(sink)
+            .unwrap()
+            .backend_instance_id
+            .unwrap();
+        let list = supervisor
+            .editor_request(EditorRequest {
+                backend_instance_id: new_instance.clone(),
+                method: "editor.recovery_list".into(),
+                params: json!({}),
+                session_id: None,
+                expected_revision: None,
+            })
+            .unwrap();
+        assert_eq!(list["records"].as_array().unwrap().len(), 1);
+        let recovered = supervisor
+            .editor_request(EditorRequest {
+                backend_instance_id: new_instance,
+                method: "editor.recover".into(),
+                params: json!({"recovery_key":list["records"][0]["key"]}),
+                session_id: None,
+                expected_revision: None,
+            })
+            .unwrap();
+        assert_eq!(recovered["draft"]["name"], "恢复验收舰第二次修改");
+        assert_eq!(recovered["can_save_current"], false);
+        supervisor.stop("user_exit").unwrap();
+        std::fs::remove_dir_all(directory).unwrap();
     }
 
     #[test]

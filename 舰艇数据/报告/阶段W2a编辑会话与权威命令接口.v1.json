@@ -1,0 +1,105 @@
+{
+  "interface": "gaotian.stage-w2a-editor-session-and-authoritative-commands/v1",
+  "status": "PASS",
+  "slice": "W2a",
+  "date": "2026-09-07",
+  "baseline_commit": "70c4bb7",
+  "implementation_state": "working_tree_not_committed",
+  "scope": "read_only_resource_index_in_memory_hull_sessions_serial_domain_worker_real_desktop_edit_loop",
+  "interfaces": [
+    "gaotian.editor-resource-index/v1alpha1",
+    "gaotian.editor-session/v1alpha1"
+  ],
+  "resources": {
+    "indexed": 12,
+    "editable_hulls": 3,
+    "source_writes": 0
+  },
+  "limits": {
+    "sessions": 8,
+    "undo_history": 64,
+    "redo_history": 64,
+    "domain_queue": 8,
+    "output_queue": 16,
+    "frame_bytes": 8388608
+  },
+  "validation": {
+    "python_w2a": {
+      "passed": 7,
+      "command": "python -X utf8 高天荒野WebW2a编辑会话测试.py"
+    },
+    "python_selected_regression": {
+      "passed_scripts": 5,
+      "discovered_scripts": 87,
+      "omitted_scripts": 82,
+      "full_matrix_executed": false,
+      "command": "python -X utf8 高天荒野舰艇测试总入口.py --profile full --include \"*Web*测试.py\" --include \"*阶段H*测试.py\" --include \"*阶段H*回归.py\""
+    },
+    "typescript": {
+      "passed": 7,
+      "files": 3,
+      "typecheck": "PASS",
+      "command": "tools/Invoke-HighWildernessWeb.ps1 -Action web-check"
+    },
+    "rust": {
+      "passed": 16,
+      "command": "tools/Invoke-HighWildernessWeb.ps1 -Action rust-check"
+    },
+    "desktop_debug_build": "PASS",
+    "frontend_production_build": "PASS",
+    "manual_real_desktop": {
+      "status": "PASS",
+      "method": "computer-use Windows accessibility and screenshot verification",
+      "steps": [
+        "automatic READY and 12 resources",
+        "open conventional crewed hull: revision 0, valid, clean",
+        "rename: revision 1, valid, dirty",
+        "undo: revision 2, valid, clean",
+        "redo: revision 3, valid, dirty",
+        "preview: revision stays 3"
+      ],
+      "standalone_browser_mock_used": false
+    }
+  },
+  "coverage": [
+    "strict argument and resource-key boundaries",
+    "three real hull previews",
+    "atomic stale and malformed command rejection",
+    "undo/redo hash roundtrip and branching",
+    "illegal material draft retains last valid preview",
+    "detached response ownership",
+    "dirty close and session limit",
+    "real Python process command responses",
+    "heartbeat during blocked domain work",
+    "bounded domain overflow rejects before execution",
+    "Rust concurrent request ordering and old instance rejection",
+    "frontend stale ticket/instance/session/revision filtering",
+    "domain errors preserve editor usability"
+  ],
+  "not_implemented": [
+    "W2b durable save and recovery",
+    "W3 canvas",
+    "outfit sessions and editing commands",
+    "tactical UI",
+    "formal T0 performance"
+  ],
+  "official_performance_runs_executed": 0,
+  "next_slice": "W2b",
+  "implementation_sha256": {
+    "backend/high_wilderness_sidecar/sessions.py": "b90457170cafa4205fc3c2a20d29a86731ce4d08c08afc88918d2edc848e5e19",
+    "backend/high_wilderness_sidecar/server.py": "ba7f55bba013076254f198c7bede00fc99ff04f9419dae9da0764d71eeaecc1c",
+    "apps/desktop/src-tauri/src/bridge/host.rs": "fe831d56ab4d10f5ca7d40a2a8973cc7c544cf9be507184754c2a8916e36bb38",
+    "apps/desktop/src-tauri/src/bridge/mod.rs": "3f800a801cf2354651981ce2d8817663e69fb145f071c1add45c431ed8c9d5b8",
+    "apps/desktop/src-tauri/src/lib.rs": "3fed716476d54bcf455b60b6c7dc4a114bec4d7565d22a518a302f5e02977e52",
+    "apps/desktop/src/editor/model.ts": "6713feb23ad9e538879301afaa82fc3f1d6d3807bd131df4c418bdfe78d46ede",
+    "apps/desktop/src/editor/EditorPanel.tsx": "e00232114f9e5545471def670023b682291a6f6a84001164240491773367cc8e",
+    "apps/desktop/src/editor/model.test.ts": "74e81b6ec7e8db78ab0a52cad3906d0f44ae68aaf04e825df15a3c34479223c5",
+    "apps/desktop/src/App.tsx": "7116db64ccfe5600e3e345aba99671637f555b2bd036c41760db8a38afaa2a0a",
+    "apps/desktop/src/bridge/transport.ts": "48523ed0c35de9d0de6c69c64e80f785a8c08c56c68ef516c7bb6f21c09aa903",
+    "apps/desktop/src/styles.css": "3855f93a13b9b0b4c448034b6c1c5b5436457a87d2c85e8e6841ee4bb4466671",
+    "tests/fixtures/w1_backend_fixture.py": "73fc8d6abe5970a1cbd83e738279a315042c4edd19498e81c3c3a7e8e2e24c8b",
+    "高天荒野WebW2a编辑会话测试.py": "cad9a7bc9c26562d03ba4377fa9b0a710557273f553495bd547f6c3e6bcc3be8",
+    "高天荒野WebSidecar生命周期测试.py": "87e7491ef59ecd401f2da6a56c322b7b7d4d9f596591a0283fd422c430b68743",
+    "contracts/web_bridge/w2a-editor-session.md": "2d8879a45c53b53ce636de7d2ad21c692be815d80a9c598280e8fce78e1a22e8"
+  }
+}

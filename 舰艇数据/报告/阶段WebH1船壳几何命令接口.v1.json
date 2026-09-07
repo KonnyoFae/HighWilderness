@@ -1,0 +1,45 @@
+{
+  "interface": "gaotian.stage-web-h1-hull-commands/v1",
+  "status": "PASS",
+  "scope": "H1_minimal_domain_commands",
+  "date": "2026-09-07",
+  "baseline_commit": "70c4bb7",
+  "implementation_state": "working_tree_not_committed",
+  "command_interface": "gaotian.hull-edit-commands/v1alpha1",
+  "recovery_write_interface": "gaotian.editor-recovery/v2alpha1",
+  "recovery_read_legacy": "v1alpha1",
+  "validation": {
+    "python_h1": {
+      "passed": 14,
+      "command": "python -X utf8 高天荒野WebH1船壳几何命令测试.py"
+    },
+    "selected_regression": {
+      "passed_scripts": 8,
+      "discovered_scripts": 89,
+      "omitted_scripts": 81,
+      "full_matrix_executed": false,
+      "command": "python -X utf8 高天荒野舰艇测试总入口.py --profile full --include \"*Web*测试.py\" --include \"*阶段H*测试.py\" --include \"*阶段H*回归.py\" --include \"*规范数据与船壳编译器测试.py\""
+    },
+    "rust": {
+      "passed": 18,
+      "command": "tools/Invoke-HighWildernessWeb.ps1 -Action rust-check",
+      "new_real_process_test": "real_blank_hull_geometry_batch_and_undo"
+    }
+  },
+  "not_covered": [
+    "full_89_script_matrix",
+    "new_geometry_ui",
+    "dedicated_split_delete_edge_tools",
+    "outfit_and_tactical_ui"
+  ],
+  "next_slice": "H2_H3_minimal_hull_interaction",
+  "source_sha256": {
+    "高天荒野舰艇船壳编辑命令.py": "c3af12ef0075ed5a5f4d0f5e31e449fc84e66c4e2a8c61f74c40e6debbe93000",
+    "高天荒野舰艇编辑器领域层.py": "77b386dfc927b5463f4c6672064e1616ab9f41aaf534e963c38b13059aef05fa",
+    "backend/high_wilderness_sidecar/sessions.py": "85d3075f059ce11cbcc1e3a04885991200594ad9b4069cf3e16fafc97d5bf9c6",
+    "backend/high_wilderness_sidecar/storage.py": "1b645387355ad172222b56fad6beb240a88ac9c581b2b52dee32965d386b4ad1",
+    "apps/desktop/src-tauri/src/bridge/host.rs": "4c0edad42dca0516c9cb957f7da7aba2461e11c9cfb490be003a93db0c5d717f",
+    "高天荒野WebH1船壳几何命令测试.py": "296ecce42c52348fcefc5af15dbcf3bcac90dc0872039b409714ecf663449e9e",
+    "contracts/web_bridge/h1-hull-commands.md": "f6d5c2913df7dc0203abb7953464c8fcf987d827e0626dca1acace09b1dc76a8"
+  }
+}

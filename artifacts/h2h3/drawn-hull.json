@@ -1,0 +1,144 @@
+{
+  "decks": [
+    {
+      "id": "deck.0",
+      "is_base": true,
+      "level": 0,
+      "regions": [
+        {
+          "edge_armor": [
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            }
+          ],
+          "id": "deck.0.region.0",
+          "vertices_m": [
+            [
+              -12.5,
+              -12.5
+            ],
+            [
+              12.5,
+              -12.5
+            ],
+            [
+              12.5,
+              12.5
+            ],
+            [
+              -12.5,
+              12.5
+            ]
+          ]
+        }
+      ],
+      "structure_material": {
+        "id": "gtw.material.structure.armor_steel",
+        "version": 1
+      }
+    },
+    {
+      "id": "deck.1",
+      "is_base": false,
+      "level": 1,
+      "regions": [
+        {
+          "edge_armor": [
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            },
+            {
+              "material": {
+                "id": "gtw.material.base_armor.armor_steel",
+                "version": 1
+              },
+              "thickness_m": 0.0
+            }
+          ],
+          "id": "deck.1.region.0",
+          "vertices_m": [
+            [
+              -7.5,
+              -7.5
+            ],
+            [
+              7.5,
+              -7.5
+            ],
+            [
+              7.5,
+              7.5
+            ],
+            [
+              -7.5,
+              7.5
+            ]
+          ]
+        }
+      ],
+      "structure_material": {
+        "id": "gtw.material.structure.armor_steel",
+        "version": 1
+      }
+    }
+  ],
+  "fixture_level": "canonical_blueprint_fixture",
+  "grid": {
+    "cell_size_m": 5.0,
+    "cic_origin_cell": [
+      0,
+      0
+    ],
+    "deck_height_m": 5.0,
+    "forward_axis": "+Y",
+    "symmetry_axis": "Y"
+  },
+  "id": "user.hull.5f0b6b76-42eb-44ea-9676-2f1ddc754842",
+  "kind": "HullBlueprint",
+  "name": "新建船壳",
+  "schema": "gaotian.ship/v1alpha1",
+  "version": 1
+}

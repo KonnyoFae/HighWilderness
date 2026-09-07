@@ -1,0 +1,37 @@
+{
+  "interface": "gaotian.stage-w3a-viewport/v1",
+  "status": "PASS",
+  "date": "2026-09-07",
+  "implementation_state": "working_tree_not_committed",
+  "pixi_version": "8.20.1",
+  "typescript_tests": 13,
+  "new_geometry_tests": 5,
+  "typecheck": "PASS",
+  "production_build": "PASS",
+  "real_desktop": [
+    "hull_render",
+    "vertex_coordinates",
+    "zoom_preserves_selection"
+  ],
+  "fixture_ui": [
+    "invalid_outline_and_save_disabled",
+    "cross_deck_diagnostic_focus",
+    "pan",
+    "800px_responsive",
+    "close_reopen"
+  ],
+  "not_covered": [
+    "multi_monitor_dpi_matrix",
+    "automated_e2e_suite",
+    "full_python_rust_regression",
+    "hull_geometry_mutation",
+    "outfit_and_tactical_ui"
+  ],
+  "next_slice": "H1_hull_commands",
+  "source_sha256": {
+    "apps/desktop/src/editor/HullViewport.tsx": "080ca3930d5ddeb7a516d7490e00a10e4acdadc0c30cad6ebe8eab5403be8666",
+    "apps/desktop/src/editor/viewport.ts": "e4b60ad6948c04e91d04aeb5d95282228105ee84d607bf2ae96c1267022a65df",
+    "apps/desktop/src/editor/viewport.test.ts": "69367e3ee729510ed6d22c4563b5317489c13bc55959deffc38484acac5bcfd6",
+    "apps/desktop/package-lock.json": "39a0c94910d6cce9b5e08bd68b05eb61d6f812ed3881ffbd496c4e8fcdbe382f"
+  }
+}

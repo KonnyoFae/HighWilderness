@@ -1,3 +1,4 @@
+import { EditorPanel } from "./editor/EditorPanel";
 import { useEffect, useMemo, useReducer } from "react";
 
 import {
@@ -64,8 +65,8 @@ export function App() {
     <main className="app-shell">
       <header className="hero">
         <div>
-          <p className="eyebrow">HIGH WILDERNESS · W1</p>
-          <h1>桌面桥接诊断</h1>
+          <p className="eyebrow">HIGH WILDERNESS · H2/H3</p>
+          <h1>舰艇编辑工作台</h1>
           <p className="lede">Tauri 进程监管 · Python 权威规则进程 · UTF-8 JSON Lines</p>
         </div>
         <div
@@ -76,6 +77,10 @@ export function App() {
           {status.state}
         </div>
       </header>
+
+      {status.state === "READY" && status.backend_instance_id && (
+        <EditorPanel key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport} />
+      )}
 
       <section className="status-grid" aria-label="桥接状态">
         <article>
@@ -113,7 +118,7 @@ export function App() {
       <section className="panel capability-panel">
         <div>
           <p className="panel-kicker">NEGOTIATED CAPABILITIES</p>
-          <h2>本切片只开放系统生命周期</h2>
+          <h2>后台可用能力</h2>
         </div>
         <div className="capabilities">
           {status.capabilities.length === 0 ? (

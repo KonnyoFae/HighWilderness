@@ -21,7 +21,7 @@ class FixtureServer(SidecarServer):
         super().__init__(instance_id)
         self.mode = mode
 
-    def handle(self, request):
+    def execute(self, request):
         method = request.get("method") if isinstance(request, dict) else None
         if self.handshake_complete and method == "system.ping":
             if self.mode == "hang_ping":
@@ -34,7 +34,7 @@ class FixtureServer(SidecarServer):
             error = ContractError("vessel.fixture_rejected", "$.fixture", "受控领域错误")
             return (response_for(request, error=contract_error_payload(error)),), False
 
-        outputs, should_stop = super().handle(request)
+        outputs, should_stop = super().execute(request)
         if self.handshake_complete and method == "system.ping" and self.mode == "wrong_instance":
             response = dict(outputs[0])
             response["backend_instance_id"] = "backend.fixture.old_epoch"

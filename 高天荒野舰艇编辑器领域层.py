@@ -223,6 +223,16 @@ class HullEditorDocument:
         self._material_registry = material_registry
 
     @classmethod
+    def blank(cls, resource_id: str, name: str, material_registry: MaterialRegistry) -> "HullEditorDocument":
+        from 高天荒野舰艇船壳编辑命令 import blank_hull
+        return cls(blank_hull(resource_id, name), material_registry)
+
+    def apply_command(self, command: str, arguments: dict[str, Any]) -> "HullEditorDocument":
+        from 高天荒野舰艇船壳编辑命令 import apply_hull_edit
+        self._source = apply_hull_edit(self._source, command, arguments)
+        return self
+
+    @classmethod
     def load(cls, path: str | Path, material_registry: MaterialRegistry) -> "HullEditorDocument":
         return cls(load_json(path), material_registry)
 

@@ -1,0 +1,82 @@
+{
+  "interface": "gaotian.stage-w2b-editor-files-and-recovery/v1",
+  "status": "PASS",
+  "slice": "W2b",
+  "date": "2026-09-07",
+  "baseline_commit": "70c4bb7",
+  "implementation_state": "working_tree_not_committed",
+  "interfaces": [
+    "gaotian.editor-session/v2alpha1",
+    "gaotian.editor-recovery/v1alpha1"
+  ],
+  "scope": [
+    "host_owned_native_file_dialog",
+    "one_shot_file_grants",
+    "legal_hull_atomic_save_and_version_derivation",
+    "external_file_conflict_detection",
+    "durable_dirty_draft_and_history_recovery",
+    "dirty_close_prompt"
+  ],
+  "limits": {
+    "file_bytes": 8388608,
+    "file_grants": 32,
+    "grant_lifetime_seconds": 300,
+    "recovery_records": 32,
+    "undo_history": 64,
+    "redo_history": 64
+  },
+  "validation": {
+    "python_w2b": {
+      "passed": 12,
+      "command": "python -X utf8 高天荒野WebW2b保存与恢复测试.py"
+    },
+    "selected_regression": {
+      "passed_scripts": 6,
+      "discovered_scripts": 88,
+      "omitted_scripts": 82,
+      "full_matrix_executed": false,
+      "command": "python -X utf8 高天荒野舰艇测试总入口.py --profile full --include \"*Web*测试.py\" --include \"*阶段H*测试.py\" --include \"*阶段H*回归.py\""
+    },
+    "typescript": {
+      "passed": 8,
+      "typecheck": "PASS",
+      "production_build": "PASS"
+    },
+    "rust": {
+      "passed": 17,
+      "offline_check": "PASS",
+      "debug_build": "PASS"
+    },
+    "native_ui": {
+      "save_as": "PASS",
+      "apply_name_then_backend_restart": "PASS",
+      "recover_dirty_revision_and_undo_available": "PASS",
+      "recovery_requires_new_file_selection": "PASS",
+      "saved_file_unchanged_by_recovered_draft": "PASS",
+      "window_dirty_close_prompt_and_cancel": "PASS",
+      "artifact": "artifacts/w2b/desktop-hull.json"
+    }
+  },
+  "not_covered": [
+    "complete_88_script_matrix",
+    "cross_process_transaction_lock",
+    "power_loss_directory_durability",
+    "canvas_and_hull_geometry_ui",
+    "outfit_editor",
+    "tactical_view",
+    "release_installer"
+  ],
+  "next_slice": "W3a_canvas",
+  "source_sha256": {
+    "backend/high_wilderness_sidecar/storage.py": "b8d4ab99f2e704825bd916dabcc8f4f11302fe42363760928745e701197b42c4",
+    "backend/high_wilderness_sidecar/sessions.py": "6d98655ee8b2b2c7d35834d76949871cca173df4f1587a4992005e52c8fbf371",
+    "backend/high_wilderness_sidecar/server.py": "727eb788ce0b05a311c347e34dbdef4cf04911806d5ab4b8fc4e2bb5c65a3aae",
+    "apps/desktop/src-tauri/src/file_dialog.rs": "e74d07caddc01d52e765ae9f90328a21b0a7176a245231e293b987dc61b5c334",
+    "apps/desktop/src-tauri/src/bridge/host.rs": "4cc3849bbeefda032e72b33e5aea60f0f14aaa5d1b8337b8b487a849cd039d65",
+    "apps/desktop/src-tauri/src/lib.rs": "2cefdbcbae7177ab5fdf1320bfebf4e9443a0df596a92fe1c4294377fb68fe6e",
+    "apps/desktop/src/editor/EditorPanel.tsx": "b29ca2147d1a5c196ccb3c7705957696041a92e3d240ac0b307e4596990254e8",
+    "apps/desktop/src/editor/model.ts": "a27063350d7c829cfbe67d24d240d76b72d229ce94553f6adb3214a596c53ec8",
+    "高天荒野WebW2b保存与恢复测试.py": "070b889e39ca65f73aec374d93872afec1f303446df8fcc02c7369c6ea1286df",
+    "contracts/web_bridge/w2b-editor-files.md": "98d891bb00a8039022f580f94328405eb6e91420fd8f1f00e3bc5c93244a95cf"
+  }
+}

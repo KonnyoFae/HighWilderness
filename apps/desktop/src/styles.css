@@ -134,7 +134,7 @@ h2 { margin: 7px 0 0; font-size: 19px; }
 
 .actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; padding-block: 18px; }
 
-.actions button {
+.actions button, .editor-panel button {
   padding: 10px 17px;
   border: 1px solid #76b99f;
   border-radius: 8px;
@@ -144,8 +144,8 @@ h2 { margin: 7px 0 0; font-size: 19px; }
   cursor: pointer;
 }
 
-.actions button.secondary { color: #b8cbc3; background: transparent; }
-.actions button:disabled { opacity: 0.38; cursor: not-allowed; }
+.actions button.secondary, .editor-panel button.secondary { color: #b8cbc3; background: transparent; }
+.actions button:disabled, .editor-panel button:disabled { opacity: 0.38; cursor: not-allowed; }
 .action-progress { margin-left: auto; color: #cbb27d; font-size: 12px; }
 
 .failure-panel { align-items: flex-start; border-color: rgb(255 128 111 / 36%); background: rgb(73 25 22 / 34%); }
@@ -178,3 +178,46 @@ h2 { margin: 7px 0 0; font-size: 19px; }
   .capabilities { justify-content: flex-start; }
   .event-panel li { grid-template-columns: 1fr; gap: 5px; }
 }
+
+/* Editor session controls and the shared W3a viewport. */
+.editor-panel { margin-bottom: 24px; }
+.editor-heading, .editor-row, .editor-summary { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.editor-heading { justify-content: space-between; }
+.editor-note { color: #a9bcb2; margin: 16px 0; }
+.editor-row { margin-block: 16px; align-items: end; }
+.editor-row label { display: grid; gap: 8px; flex: 1; min-width: 200px; }
+.editor-row input, .editor-row select { font: inherit; width: 100%; padding: 10px; color: #e8f2ed; background: #0c211a; border: 1px solid #416452; border-radius: 6px; }
+.editor-summary { padding: 14px; background: #142b21; border-radius: 6px; margin-block: 16px; }
+.editor-summary strong { color: #9be3b3; }
+.editor-error { padding: 12px; color: #ffd1b4; background: #39291e; border-radius: 6px; }
+.editor-panel pre { max-height: 360px; overflow: auto; font-size: 12px; }
+.editor-panel code { overflow-wrap: anywhere; }
+.editor-panel summary { cursor: pointer; }
+.hull-workspace { margin-block: 20px; border: 1px solid #35585b; border-radius: 10px; overflow: hidden; }
+.viewport-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; padding: 12px; background: #10272b; }
+.viewport-toolbar select { font: inherit; color: #d3eee4; background: #122e2e; padding: 8px; border: 1px solid #456463; border-radius: 5px; }
+.viewport-toolbar button { padding: 7px 12px; }
+.viewport-columns { display: grid; grid-template-columns: minmax(0, 1fr) 230px; }
+.hull-canvas { height: 460px; width: 100%; position: relative; overflow: hidden; touch-action: none; cursor: crosshair; }
+.hull-canvas canvas { display: block; }
+.hull-canvas:focus-visible { outline: 2px solid #8ed4b8; outline-offset: -2px; }
+.viewport-status { display: flex; justify-content: space-between; gap: 10px; padding: 10px; font-size: 12px; background: #0d2326; font-variant-numeric: tabular-nums; }
+.viewport-help { font-size: 12px; padding: 10px; }
+.hull-properties { padding: 16px; border-left: 1px solid #35585b; background: #102326; overflow-wrap: anywhere; font-size: 13px; }
+.hull-properties h3 { margin: 0 0 14px; font-size: 15px; }
+.hull-properties p { margin-block: 12px; line-height: 1.6; }
+.region-list { display: grid; gap: 6px; margin-block: 16px 24px; }
+.region-list button[aria-pressed="true"] { background: #2d5e53; }
+.editor-panel .diagnostic-item { display: block; text-align: left; background: #473023; color: #ffdbbd; border-color: #84644b; margin-bottom: 8px; padding: 9px; }
+.diagnostic-item small { display: block; margin-top: 5px; overflow-wrap: anywhere; }
+@media (max-width: 850px) { .viewport-columns { grid-template-columns: 1fr; } .hull-properties { border-left: 0; border-top: 1px solid #35585b; } }
+
+.lower-deck-legend { color: #a4bddd; font-size: 12px; }
+.lower-deck-missing { color: #f7ab77; font-size: 12px; }
+.hull-inspector fieldset { margin: 14px 0; padding: 0; border: 0; display: grid; gap: 9px; }
+.hull-inspector label { display: grid; gap: 6px; }
+.hull-inspector input, .hull-inspector select { width: 100%; min-width: 0; padding: 7px; border: 1px solid #456463; border-radius: 5px; background: #122e2e; color: #e8f2ed; font: inherit; }
+.hull-inspector button { padding: 8px; font-size: 12px; }
+.hull-inspector small { color: #a5b8b1; line-height: 1.5; }
+.hull-inspector h4 { margin: 8px 0; }
+.point-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }

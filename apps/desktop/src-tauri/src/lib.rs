@@ -1,12 +1,13 @@
 mod bridge;
+mod file_dialog;
 
 use std::path::PathBuf;
 use std::sync::Arc;
 
-use bridge::{BackendSupervisor, BridgeStatus, HostFailure};
+use bridge::{BackendSupervisor, BridgeStatus, EditorRequest, HostFailure};
 use serde_json::{Value, json};
-use tauri::State;
 use tauri::ipc::Channel;
+use tauri::{Manager, State};
 
 struct DesktopState {
     supervisor: Arc<BackendSupervisor>,
@@ -66,6 +67,44 @@ async fn bridge_ping(state: State<'_, DesktopState>, nonce: String) -> Result<Va
 }
 
 #[tauri::command]
+async fn bridge_editor_request(
+    state: State<'_, DesktopState>,
+    request: EditorRequest,
+) -> Result<Value, HostFailure> {
+    let supervisor = Arc::clone(&state.supervisor);
+    tauri::async_runtime::spawn_blocking(move || supervisor.editor_request(request))
+        .await
+        .map_err(join_failure)?
+}
+
+#[tauri::command]
+async fn bridge_choose_file(
+    window: tauri::WebviewWindow,
+    state: State<'_, DesktopState>,
+    request: EditorRequest,
+) -> Result<Option<Value>, HostFailure> {
+    if !matches!(request.method.as_str(), "open" | "save") || request.params != json!({}) {
+        return Err(join_failure("未知文件选择操作"));
+    }
+    let owner = window.hwnd().map_err(join_failure)?.0 as isize;
+    let directory = window
+        .app_handle()
+        .path()
+        .app_data_dir()
+        .map_err(join_failure)?;
+    let supervisor = Arc::clone(&state.supervisor);
+    tauri::async_runtime::spawn_blocking(move || {
+        let selected = file_dialog::choose(owner, request.method == "save", &directory)
+            .map_err(join_failure)?;
+        selected
+            .map(|path| supervisor.bind_selected_file(request, path))
+            .transpose()
+    })
+    .await
+    .map_err(join_failure)?
+}
+
+#[tauri::command]
 async fn bridge_stop(state: State<'_, DesktopState>) -> Result<BridgeStatus, HostFailure> {
     let supervisor = Arc::clone(&state.supervisor);
     tauri::async_runtime::spawn_blocking(move || supervisor.stop("user_exit"))
@@ -82,11 +121,20 @@ pub fn run() {
     let supervisor = BackendSupervisor::new(repo_root());
     let application_supervisor = Arc::clone(&supervisor);
     tauri::Builder::default()
+        .setup(|app| {
+            let recovery = app.path().app_data_dir()?.join("editor-recovery");
+            app.state::<DesktopState>()
+                .supervisor
+                .set_recovery_dir(recovery);
+            Ok(())
+        })
         .manage(DesktopState { supervisor })
         .invoke_handler(tauri::generate_handler![
             bridge_start,
             bridge_restart,
             bridge_ping,
+            bridge_editor_request,
+            bridge_choose_file,
             bridge_stop,
             bridge_status,
         ])

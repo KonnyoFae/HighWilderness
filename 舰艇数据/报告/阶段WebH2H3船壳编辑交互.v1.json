@@ -1,0 +1,80 @@
+{
+  "interface": "gaotian.stage-web-h2h3-hull-interaction/v1",
+  "status": "PASS",
+  "scope": "H2_H3_minimal_interaction",
+  "date": "2026-09-07",
+  "baseline_commit": "70c4bb7",
+  "implementation_state": "working_tree_not_committed",
+  "validation": {
+    "frontend": {
+      "tests_passed": 19,
+      "typecheck": "PASS",
+      "production_build": "PASS",
+      "command": "tools/Invoke-HighWildernessWeb.ps1 -Action web-check"
+    },
+    "python": {
+      "selected_scripts_passed": 8,
+      "discovered_scripts": 89,
+      "omitted_scripts": 81,
+      "h1_tests_passed": 17,
+      "command": "python -X utf8 高天荒野舰艇测试总入口.py --profile full --include \"*Web*测试.py\" --include \"*阶段H*测试.py\" --include \"*阶段H*回归.py\" --include \"*规范数据与船壳编译器测试.py\""
+    },
+    "rust": "NOT_RERUN_no_host_changes_in_this_slice"
+  },
+  "native_ui": {
+    "runtime": "Tauri debug + Vite + real Python sidecar",
+    "blank_create_add_deck_draw_four_points": "PASS_revision_2_legal_25_internal_25_exposed_20_side",
+    "single_vertex_drag": "PASS_exactly_one_revision_increment_2_to_3_invalid_mirror_diagnostic_save_disabled",
+    "undo": "PASS_revision_4_legal",
+    "native_save_as": "PASS",
+    "second_deck": "PASS_revision_5_empty_with_lower_ghost_then_revision_6_legal_after_four_point_drawing",
+    "off_grid_pointer_snapping": "PASS_upper_vertices_at_plus_minus_7_5m",
+    "lower_reference_during_drawing": "PASS_translucent_pale_blue",
+    "native_save_close_open": "PASS_clean_revision_0_two_decks_mass_702_58_t"
+  },
+  "artifact": {
+    "path": "artifacts/h2h3/drawn-hull.json",
+    "file_sha256": "be263a3bfdc4014b8c2850db4ad63c7688e54eb52e3d05edb2e8ace5ded81741",
+    "canonical_source_sha256": "be263a3bfdc4014b8c2850db4ad63c7688e54eb52e3d05edb2e8ace5ded81741",
+    "recompile_valid": true,
+    "canonical_roundtrip_equal": true,
+    "all_vertices_on_2_5m_grid": true,
+    "decks": [
+      {
+        "id": "deck.0",
+        "internal": 25,
+        "exposed": 16,
+        "side": 20
+      },
+      {
+        "id": "deck.1",
+        "internal": 9,
+        "exposed": 9,
+        "side": 12
+      }
+    ]
+  },
+  "not_covered": [
+    "H4_three_technical_hulls_full_native_UI_roundtrip",
+    "H4_mirror_and_armor_native_UI_matrix",
+    "full_89_script_matrix",
+    "multi_display_DPI_matrix",
+    "dedicated_edge_mode_and_aero_RCS_charts",
+    "outfit_and_tactical_UI"
+  ],
+  "next_slice": "H4_minimal_hull_UI_gate",
+  "source_sha256": {
+    "apps/desktop/src/editor/EditorPanel.tsx": "43eb936bd852cd3d88d9f2f7c97f9ad95cd44a6165497c2a3521320b487f182f",
+    "apps/desktop/src/editor/HullViewport.tsx": "7a013473663e4138033aa6546461942493421f6229098162f778e61814423b98",
+    "apps/desktop/src/editor/HullInspector.tsx": "5b15e61a820391c7fb6b86cc987560e6bf9a8ae03178c67e47b0ec2a15dec7d8",
+    "apps/desktop/src/editor/interaction.ts": "11463f9504a7789497df4b6f2dec94a16c75ef9dcda7e94803e5ce3f51cd08c3",
+    "apps/desktop/src/editor/interaction.test.ts": "7ab74da6b5d5ceabb155fad70f863277d3b72850a04a0f672b1ef6538d985657",
+    "apps/desktop/src/editor/model.ts": "9c4a5be6cf450e4ef26e1068cb0433356d5ca2af646ee597adcffa5d14875875",
+    "apps/desktop/src/editor/viewport.ts": "134a8168529f0f5b16165495add3c8726c7524f1971df2104d95f6b4f6a9dad9",
+    "apps/desktop/src/editor/viewport.test.ts": "4ee6ab68de1eeda15f59deabd999b038c9c0201de4a078c66aa68ac213d89bf0",
+    "apps/desktop/src/styles.css": "7bfb19f73c4c0cf4d1c6fff05d2c2e265b7dc32e4ebae3a52caa843d89d9a84b",
+    "backend/high_wilderness_sidecar/sessions.py": "b977c06ea78cb744c4e1287fbbee37eeb21aee23c33885ce3a80478fa3c2463b",
+    "高天荒野WebH1船壳几何命令测试.py": "d168064e1afd86aa8c139b90bb8d5412ba026ae248a0f5a24250d487f09f9648",
+    "contracts/web_bridge/h2h3-hull-interaction.md": "0249deb3331cd4170cb431a870202a5c468773820b20df31fb142e4e956dec21"
+  }
+}

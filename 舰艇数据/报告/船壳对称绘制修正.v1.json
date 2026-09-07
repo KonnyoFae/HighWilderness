@@ -1,0 +1,43 @@
+{
+  "interface": "gaotian.hull-symmetry-interaction-check/v1",
+  "date": "2026-09-07",
+  "scope": "symmetric_drawing_and_region_replacement",
+  "automated_validation": {
+    "frontend_tests": 25,
+    "python_h1_tests": 19,
+    "selected_python_scripts": 8,
+    "rust_tests": 18,
+    "typescript": "PASS",
+    "production_build": "PASS",
+    "desktop_debug_build": "PASS"
+  },
+  "desktop": {
+    "restarted": true,
+    "recovery_records_preserved": 2,
+    "new_window_default_mode_observed": "对称绘制（画一侧）",
+    "agent_drawing_workflow": "NOT_COMPLETED_user_began_testing_so_input_returned_to_user"
+  },
+  "behavior": [
+    "one_closed_region_without_axis_seam",
+    "source_side_armor_reflected_in_reverse_edge_order",
+    "already_symmetric_noop",
+    "explicit_preview_before_atomic_region_replacement",
+    "hard_grid_validation_retained",
+    "lower_deck_overlay_retained"
+  ],
+  "not_covered": [
+    "H4_full_three_hull_UI_matrix",
+    "native_automated_symmetry_workflow",
+    "disconnected_multi_crossing_regions"
+  ],
+  "source_sha256": {
+    "apps/desktop/src/editor/symmetry.ts": "511eecd5ed1371f1afc007364775a55262f83001b91da8ce7d4554c7dd781794",
+    "apps/desktop/src/editor/symmetry.test.ts": "e51a9f1b6ba79b34c40660fc0097bb7677164e994dc1efa6b4875f8cebd0afe8",
+    "apps/desktop/src/editor/HullViewport.tsx": "58c27b19513cb16bc9839973eb6d88a1403e01c10903e7dce6e2d3b8fb27cfcf",
+    "apps/desktop/src/editor/HullInspector.tsx": "2b1c28f01b57ae712149d9d4d1746586b30ba012bf52621e3d516d9e0f91bb71",
+    "apps/desktop/src/editor/EditorPanel.tsx": "bd869b8f7a7b7d830f98e0debe5a7bdc065e4e5e9c54ec1e1e1ad85dd53c5454",
+    "apps/desktop/src-tauri/capabilities/default.json": "81960e113634bf916eb33ef371f8589b051829fdc79fcaf65e9793a93e887e72",
+    "高天荒野舰艇船壳编辑命令.py": "de36c9f7bedf92f2f1e6f1485d6e69d0fc682c832851b950fafb9cec0f664eb2",
+    "高天荒野WebH1船壳几何命令测试.py": "b19a2fa051bfdc5aa320e3651170fe815c9e91babe3f11378c57196ddd4e1b34"
+  }
+}

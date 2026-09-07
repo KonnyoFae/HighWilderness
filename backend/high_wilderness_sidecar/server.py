@@ -1,12 +1,12 @@
-"""W1 system-only sidecar dispatcher.
-
-This module intentionally exposes no editor, resource, save, tactical or strategy
-business capability. W2 introduces the serialized authoritative domain worker.
-"""
+"""W2a system I/O with a bounded, serialized editor worker."""
 
 from __future__ import annotations
 
 import json
+from queue import Queue, Full
+from threading import Thread
+
+from .sessions import EditorService, EDITOR_CAPABILITIES
 from typing import Any, BinaryIO
 
 from 高天荒野舰艇数据契约 import ContractError
@@ -62,9 +62,10 @@ def write_failure_log(error: ContractError) -> None:
 
 
 class SidecarServer:
-    def __init__(self, instance_id: str):
+    def __init__(self, instance_id: str, recovery_dir=None):
         if not ID_PATTERN.fullmatch(instance_id):
             raise _bridge_error("invalid_instance_id", "$.backend_instance_id", "实例 ID 非法")
+        self.editor = EditorService(instance_id, recovery_dir=recovery_dir)
         self.instance_id = instance_id
         self.handshake_complete = False
         self.last_request_number = 0
@@ -94,7 +95,7 @@ class SidecarServer:
             )
         self.last_request_number = request_number
 
-    def handle(self, request: Any) -> tuple[tuple[dict[str, Any], ...], bool]:
+    def accept(self, request: Any) -> dict[str, Any]:
         message = validate_message(request)
         if message["kind"] != "request":
             raise FatalProtocolError("bridge.unexpected_message", "$.kind", "sidecar 只接收请求")
@@ -105,6 +106,12 @@ class SidecarServer:
                 "请求不属于当前 sidecar 实例",
             )
         self._accept_request_number(message["request_id"])
+        return message
+
+    def handle(self, request: Any) -> tuple[tuple[dict[str, Any], ...], bool]:
+        return self.execute(self.accept(request))
+
+    def execute(self, message: dict) -> tuple[tuple[dict[str, Any], ...], bool]:
         method = message["method"]
 
         if not self.handshake_complete:
@@ -112,7 +119,7 @@ class SidecarServer:
                 error = _bridge_error("handshake_required", "$.method", "首条请求必须是 system.hello")
                 return (response_for(message, error=_error_payload(error)),), True
             try:
-                result = hello_result(message)
+                result = hello_result(message, ("system.hello", "system.ping", "system.shutdown", *EDITOR_CAPABILITIES))
             except ContractError as error:
                 return (response_for(message, error=_error_payload(error)),), True
             self.handshake_complete = True
@@ -141,35 +148,96 @@ class SidecarServer:
                 raise _bridge_error("invalid_message", "$.params.reason", "未知关闭原因")
             return (response_for(message, result={"accepted": True}),), True
 
-        error = _bridge_error("method_not_supported", "$.method", f"W1 未启用能力：{method}")
+        if method in (*EDITOR_CAPABILITIES, "editor.bind_file"):
+            try:
+                result, revision = self.editor.dispatch(message)
+                return (response_for(message, result=result, revision=revision),), False
+            except ContractError as error:
+                revision = self.editor.current_revision(message["session_id"])
+                return (response_for(message, error=_error_payload(error), revision=revision),), False
+
+        error = _bridge_error("method_not_supported", "$.method", f"未启用能力：{method}")
         return (response_for(message, error=_error_payload(error)),), False
 
     def serve(self, input_stream: BinaryIO, output_stream: BinaryIO) -> int:
-        decoder = JsonLineDecoder()
-        while True:
-            chunk = input_stream.read1(READ_CHUNK_BYTES)
-            if not chunk:
+        # At most eight 8 MiB input frames and sixteen output frames are retained.
+        # Only the domain worker touches sessions. Reader handles heartbeat directly.
+        jobs: Queue = Queue(maxsize=8)
+        outgoing: Queue = Queue(maxsize=16)
+        writer_errors: list[BaseException] = []
+
+        def write_outputs() -> None:
+            while True:
+                outputs = outgoing.get()
                 try:
-                    decoder.finish()
-                except ContractError as error:
-                    write_failure_log(error)
-                    return 2
-                return 0
-            try:
-                messages = decoder.feed(chunk)
-                for message in messages:
+                    if outputs is None:
+                        return
+                    if not writer_errors:
+                        for output in outputs:
+                            output_stream.write(encode_message(output))
+                        output_stream.flush()
+                except (OSError, ContractError) as error:
+                    writer_errors.append(error)
+                finally:
+                    outgoing.task_done()
+
+        def work() -> None:
+            while True:
+                message = jobs.get()
+                try:
+                    if message is None:
+                        return
                     try:
-                        outputs, should_stop = self.handle(message)
+                        outputs, _ = self.execute(message)
+                    except Exception as error:
+                        # Preserve queue liveness without leaking internal exception data.
+                        failure = _bridge_error("domain_worker_failed", "$", "编辑操作失败，请重新读取会话")
+                        write_failure_log(failure)
+                        outputs = (response_for(message, error=_error_payload(failure)),)
+                    outgoing.put(outputs)
+                finally:
+                    jobs.task_done()
+
+        writer = Thread(target=write_outputs, name="sidecar-output", daemon=True)
+        worker = Thread(target=work, name="sidecar-domain", daemon=True)
+        writer.start()
+        worker.start()
+        decoder = JsonLineDecoder()
+        exit_code = 0
+        try:
+            while True:
+                chunk = input_stream.read1(READ_CHUNK_BYTES)
+                if not chunk:
+                    decoder.finish()
+                    break
+                for raw in decoder.feed(chunk):
+                    message = self.accept(raw)
+                    if self.handshake_complete and message["method"] in (*EDITOR_CAPABILITIES, "editor.bind_file"):
+                        try:
+                            jobs.put_nowait(message)
+                        except Full:
+                            error = _bridge_error("busy", "$.method", "编辑队列已满，请稍后重新读取会话")
+                            outgoing.put((response_for(message, error=_error_payload(error)),))
+                        continue
+                    # Shutdown is acknowledged only after accepted editor work drains.
+                    if message["method"] == "system.shutdown":
+                        jobs.join()
+                    try:
+                        outputs, should_stop = self.execute(message)
                     except FatalProtocolError:
                         raise
                     except ContractError as error:
                         outputs = (response_for(message, error=_error_payload(error)),)
                         should_stop = False
-                    for output in outputs:
-                        output_stream.write(encode_message(output))
-                    output_stream.flush()
+                    outgoing.put(outputs)
                     if should_stop:
-                        return 0 if outputs[-1].get("ok") is True else 2
-            except ContractError as error:
-                write_failure_log(error)
-                return 2
+                        return 0 if outputs[0].get("ok") is True else 2
+        except ContractError as error:
+            write_failure_log(error)
+            exit_code = 2
+        finally:
+            jobs.put(None)
+            worker.join()
+            outgoing.put(None)
+            writer.join()
+        return 2 if writer_errors else exit_code
