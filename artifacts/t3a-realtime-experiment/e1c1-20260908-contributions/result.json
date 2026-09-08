@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "scope": "E1c.1 static contribution export and unchanged E1b flight replay only",
+  "not_covered": [
+    "event deltas",
+    "simplified flight",
+    "safety wiring",
+    "damage integration",
+    "new-policy save/load",
+    "real-time performance",
+    "desktop integration"
+  ],
+  "evidence_sha256": {
+    "comparison.json": "96b5bfe19da99505372042c9340ddf4e6bc076887d12696ff1556ade818ea78e",
+    "contributions.json": "260e73b387c83ef2f9b37eb9806b7959d28c6ec5bf1b3bdcde5d2e45832ab198",
+    "manifest.json": "d782a33f420e7e057e27f0375ba1a55a5a1ce21d67380089f90f2c2a358e737e",
+    "source-resources.zip": "6602472d97f65df06981bdacb666e755bc0cb2fd59d8dcf6879d97a754d01038",
+    "tracked-python.patch": "dfa210f9a5da43c4cf3f1f72d6f8bc76b8665a9714ead362c35780c3faa4f12d"
+  }
+}

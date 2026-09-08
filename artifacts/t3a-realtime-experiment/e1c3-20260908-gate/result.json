@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "stage": "E1c.3",
+  "core_throughput": "PASS",
+  "product_realtime": "NOT_PASSED",
+  "cases": [
+    "steady",
+    "maneuvers",
+    "damage_bursts"
+  ],
+  "repeats": 3,
+  "warmup_steps": 600,
+  "measured_steps": 3600,
+  "compared_boundaries": 12603,
+  "worst_repeat_mean_ms": 0.17704649985211696,
+  "worst_p95_ms": 0.2521999995224178,
+  "worst_p99_ms": 0.3422000154387206,
+  "maximum_ms": 1.0126999986823648,
+  "scope": "Two integrated ships, one controlled; 3 workloads, 3 independent unthrottled runs each. Timed step includes explicit command parsing/event validation; tape construction, actual domain producers, correctness oracle and profiles excluded. Whole measured loop wall time includes harness overhead.",
+  "not_covered": [
+    "actual damage/power/crew/host producers",
+    "full I9/lifecycle/trip-reset integration",
+    "dynamic mass/structure changes",
+    "save/load",
+    "both ships under active control",
+    "wall-clock scheduler",
+    "UI/IPC",
+    "30-minute/2-hour long run",
+    "combat",
+    "fleet scale"
+  ],
+  "evidence_sha256": {
+    "correctness.json": "3a7698a792aa0d14d89fb2a7ae66041605fc4e880479bccc0cf1a00aa467a865",
+    "damage_bursts-checkpoints.jsonl.gz": "f486935ca8fef6b79885435bad1483074bae3ca28c2f6c10fb09d912d62c2153",
+    "damage_bursts-resources.json": "5707abc3595bbc7c6ca87deff81db8877deb56e2dd228ca338a9a74c9831a58d",
+    "inputs.json": "2eabd5416818885927027b6dcd2b3d6b62faf42b361cd3caeeaf7bd6b95925a0",
+    "maneuvers-checkpoints.jsonl.gz": "d72138d95262113384ced1b87569ea38bbacbaed2af3c18b3a9b6c35c5f763e3",
+    "maneuvers-resources.json": "5707abc3595bbc7c6ca87deff81db8877deb56e2dd228ca338a9a74c9831a58d",
+    "manifest.json": "c217a539e5dd09c9f16a33e490780f037d901776d88f2f020be752ddac903329",
+    "mechanisms.json": "af7724e99db4b823ca7a8841b08e5ad66a99ade0439c5dc4bc1b325fc1058cb0",
+    "policy-differences.json": "ab81e356e6494a7c7b9de896bb939d60c592a8a2f3d295369fccba784a652f58",
+    "source-resources.zip": "0bca137982715d7e4c2f2ced81012fc64e5c989ac4f1a29b444ae6b13a634e7b",
+    "steady-checkpoints.jsonl.gz": "8b74f7d0a78074803cd5e8a5bb70157241e0c26de234413a9ec32b5a90d97037",
+    "steady-resources.json": "5707abc3595bbc7c6ca87deff81db8877deb56e2dd228ca338a9a74c9831a58d",
+    "timing.json": "d35635df02f05c8af91988673c600eac0466083ccdf449d76ff26ca6a0ff3480",
+    "tracked-python.patch": "dfa210f9a5da43c4cf3f1f72d6f8bc76b8665a9714ead362c35780c3faa4f12d"
+  }
+}

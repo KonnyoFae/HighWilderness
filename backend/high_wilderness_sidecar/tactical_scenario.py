@@ -34,6 +34,7 @@ from 高天荒野舰艇推进固定步接线 import ActualPropulsionExecution, A
 from 高天荒野舰艇受控推进无场景适配器 import initialize_governed_propulsion_state
 from 高天荒野舰艇完整受控推进场景版本 import FullyGovernedPropulsionExecutionPolicy
 from 高天荒野舰艇完整受控推进场景 import validate_fully_governed_scene_context
+from .tactical_resources import compile_tactical_fuel_resources, compile_trial_propulsion_catalog
 
 SCENARIO_ID = "gtw.sample.web.two_ship.v1"
 PRESET_ID = "gtw.sortie.web.two_ship.conventional"
@@ -73,6 +74,8 @@ def build_two_ship_scenario(root: Path) -> TwoShipScenario:
     catalog = migrate_known_scene_catalog_v2_to_v3(compose_known_scene_catalog_v2("conventional_crewed", components))
     source_plan = load_outfit_plan(root / "舰艇数据/舾装方案夹具/阶段F常规有人战舰舾装.v1.json")
     plan = migrate_known_scene_outfit_v1_to_d2a(source_plan)
+    catalog, plan, fuel_policy = compile_tactical_fuel_resources(catalog, plan)
+    catalog, plan, trial_policy = compile_trial_propulsion_catalog(catalog, plan)
     hull = compile_hull(load_hull_blueprint(root / "舰艇数据/船壳蓝图夹具/阶段F常规有人战舰船壳.v1.json"), materials)
     snapshot = build_derived_ship_snapshot(hull, compile_outfit(plan, hull, catalog, coatings))
     loadout = ShipAmmunitionStateInput(
@@ -107,6 +110,8 @@ def build_two_ship_scenario(root: Path) -> TwoShipScenario:
     scene = initialize_tactical_scene(bindings, projectiles, timing, initial_motion_states=motion,
                                      initial_combat_states=combat, continuous_damage_profile=damage)
     manifest = dict(interface="gaotian.web-two-ship-resources/v1alpha1", scenario_id=SCENARIO_ID,
+                    tactical_fuel=fuel_policy,
+                    trial_propulsion=trial_policy,
                     source_outfit_sha256=canonical_sha256(source_plan), source_catalog_sha256=[canonical_sha256(c) for c in components],
                     module_catalog_sha256=canonical_sha256(catalog), hull_sha256=hull.source_sha256,
                     coating_catalog_sha256=canonical_sha256(coatings), material_catalogs_sha256=canonical_sha256([

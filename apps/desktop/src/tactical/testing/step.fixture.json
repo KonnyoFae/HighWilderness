@@ -1,0 +1,1754 @@
+[
+  {
+    "input": {
+      "interface": "gaotian.tactical-input/v1alpha1",
+      "scene_id": "scene.fixture",
+      "input_seq": 1,
+      "target_step": 0,
+      "command": "control",
+      "arguments": {
+        "ship_id": "ship.web.blue",
+        "control": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      }
+    },
+    "sha256": "2568539c633d570db1f0e32399c18936cdd458fb194b361cd5b18bef5fe3c131",
+    "result": {
+      "interface": "gaotian.tactical-render-snapshot/v1alpha1",
+      "backend_instance_id": "fixture.1",
+      "scene_id": "scene.fixture",
+      "authority_interface": "gaotian.tactical-scene-timeline/v7alpha1",
+      "paused": true,
+      "fixed_step": 1,
+      "fixed_step_s": 0.016666666666666666,
+      "time_s": 0.016666666666666666,
+      "static_sha256": "c515200daa3aa4a16d35b9159fb602ebf96f6fcab17f47043a50b8b1909b2c2e",
+      "static": null,
+      "ships": [
+        {
+          "id": "ship.web.blue",
+          "position_m": [
+            0.0,
+            -300.0
+          ],
+          "heading_rad": 0.0,
+          "velocity_mps": [
+            0.0,
+            0.0
+          ],
+          "speed_mps": 0.0,
+          "yaw_rate_radps": 0.0,
+          "height_layer": "upper",
+          "hull_integrity": 1.0,
+          "physical_status": "operational",
+          "command_status": "scene_command",
+          "modules": [
+            {
+              "id": "ammunition_magazine",
+              "durability": 100.0
+            },
+            {
+              "id": "cargo_hold",
+              "durability": 100.0
+            },
+            {
+              "id": "cic",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_base",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_upper",
+              "durability": 100.0
+            },
+            {
+              "id": "damage_control",
+              "durability": 100.0
+            },
+            {
+              "id": "fire_control",
+              "durability": 100.0
+            },
+            {
+              "id": "generator",
+              "durability": 100.0
+            },
+            {
+              "id": "lift_tank",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_port",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "remote_core",
+              "durability": 100.0
+            },
+            {
+              "id": "sensor_upper_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "weapon_upper_port",
+              "durability": 100.0
+            }
+          ]
+        },
+        {
+          "id": "ship.web.red",
+          "position_m": [
+            0.0,
+            300.0
+          ],
+          "heading_rad": -3.141592653589793,
+          "velocity_mps": [
+            0.0,
+            0.0
+          ],
+          "speed_mps": 0.0,
+          "yaw_rate_radps": 0.0,
+          "height_layer": "upper",
+          "hull_integrity": 1.0,
+          "physical_status": "operational",
+          "command_status": "scene_command",
+          "modules": [
+            {
+              "id": "ammunition_magazine",
+              "durability": 100.0
+            },
+            {
+              "id": "cargo_hold",
+              "durability": 100.0
+            },
+            {
+              "id": "cic",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_base",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_upper",
+              "durability": 100.0
+            },
+            {
+              "id": "damage_control",
+              "durability": 100.0
+            },
+            {
+              "id": "fire_control",
+              "durability": 100.0
+            },
+            {
+              "id": "generator",
+              "durability": 100.0
+            },
+            {
+              "id": "lift_tank",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_port",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "remote_core",
+              "durability": 100.0
+            },
+            {
+              "id": "sensor_upper_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "weapon_upper_port",
+              "durability": 100.0
+            }
+          ]
+        }
+      ],
+      "events": [],
+      "advance_state": null,
+      "control_state": {
+        "interface": "gaotian.tactical-paused-control-state/v1alpha1",
+        "adapter_interface": "gaotian.directional-direct-command-step/v1alpha1",
+        "direct_ship_id": "ship.web.blue",
+        "available": true,
+        "unavailable_reason": null,
+        "last_input_seq": 1,
+        "last_input_sha256": "2568539c633d570db1f0e32399c18936cdd458fb194b361cd5b18bef5fe3c131",
+        "last_executed_step": 0,
+        "requested_control": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        },
+        "delivery_status": "delivered",
+        "missing_channels": [],
+        "command_state_sha256": "74684e683cd25da9a29d342984c64724d471d71ea94e50fbe960f876ddb0eaf0",
+        "tuning_sha256": "67d455f96ab06dc7955e202b6376f4ffdc1edc3adb963ba75a5272efbe381da7",
+        "channels": [
+          {
+            "channel": "translation.forward",
+            "requested_percent": 100,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.reverse",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.left",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.right",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "yaw.counterclockwise",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "yaw.clockwise",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          }
+        ],
+        "engines": [
+          {
+            "id": "main_engine_port",
+            "actual_percent": 0,
+            "target_percent": 100,
+            "phase": "running"
+          },
+          {
+            "id": "main_engine_starboard",
+            "actual_percent": 0,
+            "target_percent": 100,
+            "phase": "running"
+          },
+          {
+            "id": "thruster_port_aft",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          },
+          {
+            "id": "thruster_port_fore",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          },
+          {
+            "id": "thruster_starboard_aft",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          },
+          {
+            "id": "thruster_starboard_fore",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          }
+        ],
+        "fuel_units": 800.0,
+        "fuel_policy": "gaotian.tactical-fuel/no-propulsion-burn/v1",
+        "last_arbitration": {
+          "interface": "gaotian.directional-direct-command-step/v1alpha1",
+          "ship_id": "ship.web.blue",
+          "source": "player_direct",
+          "source_command_state_sha256": "781c69337da2569850d4469e6548920a025bcaabc0ff20ba7228c60e1b5a32ae",
+          "resulting_command_state_sha256": "74684e683cd25da9a29d342984c64724d471d71ea94e50fbe960f876ddb0eaf0",
+          "source_scene_sha256": "b250819c5f4f225c7cf355a8734be50e3a3584f50817d32c477ea66cbf427766",
+          "resulting_scene_sha256": "766ba3e07a259b8476e2dfafd1c2ffc9e9e5809648de0b604bc3a21c91099841",
+          "requested_control": {
+            "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+            "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+            "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+            "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+            "channel_commands": [
+              {
+                "command_channel": "translation.forward",
+                "commanded_notch": "full",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.reverse",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.left",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.right",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "yaw.counterclockwise",
+                "commanded_notch": null,
+                "target_output_percent": 0
+              },
+              {
+                "command_channel": "yaw.clockwise",
+                "commanded_notch": null,
+                "target_output_percent": 0
+              }
+            ],
+            "automatic_brake": false,
+            "overg_requested": false,
+            "source_migration_id": null
+          },
+          "command_events": []
+        }
+      }
+    }
+  },
+  {
+    "input": {
+      "interface": "gaotian.tactical-input/v1alpha1",
+      "scene_id": "scene.fixture",
+      "input_seq": 2,
+      "target_step": 1,
+      "command": "control",
+      "arguments": {
+        "ship_id": "ship.web.blue",
+        "control": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      }
+    },
+    "sha256": "69dc4db6ab60439657620f7865488a4c75b8bfaa9f1830cdfce1f08389a070c6",
+    "result": {
+      "interface": "gaotian.tactical-render-snapshot/v1alpha1",
+      "backend_instance_id": "fixture.1",
+      "scene_id": "scene.fixture",
+      "authority_interface": "gaotian.tactical-scene-timeline/v7alpha1",
+      "paused": true,
+      "fixed_step": 2,
+      "fixed_step_s": 0.016666666666666666,
+      "time_s": 0.03333333333333333,
+      "static_sha256": "c515200daa3aa4a16d35b9159fb602ebf96f6fcab17f47043a50b8b1909b2c2e",
+      "static": null,
+      "ships": [
+        {
+          "id": "ship.web.blue",
+          "position_m": [
+            0.0,
+            -300.0
+          ],
+          "heading_rad": 0.0,
+          "velocity_mps": [
+            0.0,
+            0.0
+          ],
+          "speed_mps": 0.0,
+          "yaw_rate_radps": 0.0,
+          "height_layer": "upper",
+          "hull_integrity": 1.0,
+          "physical_status": "operational",
+          "command_status": "scene_command",
+          "modules": [
+            {
+              "id": "ammunition_magazine",
+              "durability": 100.0
+            },
+            {
+              "id": "cargo_hold",
+              "durability": 100.0
+            },
+            {
+              "id": "cic",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_base",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_upper",
+              "durability": 100.0
+            },
+            {
+              "id": "damage_control",
+              "durability": 100.0
+            },
+            {
+              "id": "fire_control",
+              "durability": 100.0
+            },
+            {
+              "id": "generator",
+              "durability": 100.0
+            },
+            {
+              "id": "lift_tank",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_port",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "remote_core",
+              "durability": 100.0
+            },
+            {
+              "id": "sensor_upper_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "weapon_upper_port",
+              "durability": 100.0
+            }
+          ]
+        },
+        {
+          "id": "ship.web.red",
+          "position_m": [
+            0.0,
+            300.0
+          ],
+          "heading_rad": -3.141592653589793,
+          "velocity_mps": [
+            0.0,
+            0.0
+          ],
+          "speed_mps": 0.0,
+          "yaw_rate_radps": 0.0,
+          "height_layer": "upper",
+          "hull_integrity": 1.0,
+          "physical_status": "operational",
+          "command_status": "scene_command",
+          "modules": [
+            {
+              "id": "ammunition_magazine",
+              "durability": 100.0
+            },
+            {
+              "id": "cargo_hold",
+              "durability": 100.0
+            },
+            {
+              "id": "cic",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_base",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_upper",
+              "durability": 100.0
+            },
+            {
+              "id": "damage_control",
+              "durability": 100.0
+            },
+            {
+              "id": "fire_control",
+              "durability": 100.0
+            },
+            {
+              "id": "generator",
+              "durability": 100.0
+            },
+            {
+              "id": "lift_tank",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_port",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "remote_core",
+              "durability": 100.0
+            },
+            {
+              "id": "sensor_upper_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "weapon_upper_port",
+              "durability": 100.0
+            }
+          ]
+        }
+      ],
+      "events": [],
+      "advance_state": null,
+      "control_state": {
+        "interface": "gaotian.tactical-paused-control-state/v1alpha1",
+        "adapter_interface": "gaotian.directional-direct-command-step/v1alpha1",
+        "direct_ship_id": "ship.web.blue",
+        "available": true,
+        "unavailable_reason": null,
+        "last_input_seq": 2,
+        "last_input_sha256": "69dc4db6ab60439657620f7865488a4c75b8bfaa9f1830cdfce1f08389a070c6",
+        "last_executed_step": 1,
+        "requested_control": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        },
+        "delivery_status": "delivered",
+        "missing_channels": [],
+        "command_state_sha256": "eba221b48c32daea3855e34c6563d90df31c406e3ac9f76eb817f8190e43e29f",
+        "tuning_sha256": "67d455f96ab06dc7955e202b6376f4ffdc1edc3adb963ba75a5272efbe381da7",
+        "channels": [
+          {
+            "channel": "translation.forward",
+            "requested_percent": 100,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.reverse",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.left",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.right",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "yaw.counterclockwise",
+            "requested_percent": 25,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "yaw.clockwise",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          }
+        ],
+        "engines": [
+          {
+            "id": "main_engine_port",
+            "actual_percent": 2,
+            "target_percent": 100,
+            "phase": "running"
+          },
+          {
+            "id": "main_engine_starboard",
+            "actual_percent": 2,
+            "target_percent": 100,
+            "phase": "running"
+          },
+          {
+            "id": "thruster_port_aft",
+            "actual_percent": 0,
+            "target_percent": 25,
+            "phase": "running"
+          },
+          {
+            "id": "thruster_port_fore",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          },
+          {
+            "id": "thruster_starboard_aft",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          },
+          {
+            "id": "thruster_starboard_fore",
+            "actual_percent": 0,
+            "target_percent": 25,
+            "phase": "running"
+          }
+        ],
+        "fuel_units": 800.0,
+        "fuel_policy": "gaotian.tactical-fuel/no-propulsion-burn/v1",
+        "last_arbitration": {
+          "interface": "gaotian.directional-direct-command-step/v1alpha1",
+          "ship_id": "ship.web.blue",
+          "source": "player_direct",
+          "source_command_state_sha256": "74684e683cd25da9a29d342984c64724d471d71ea94e50fbe960f876ddb0eaf0",
+          "resulting_command_state_sha256": "eba221b48c32daea3855e34c6563d90df31c406e3ac9f76eb817f8190e43e29f",
+          "source_scene_sha256": "766ba3e07a259b8476e2dfafd1c2ffc9e9e5809648de0b604bc3a21c91099841",
+          "resulting_scene_sha256": "c54bd9964d87394aa1536934fbbf5f81ba9260bbd8ca8869ef98108ec7c92d21",
+          "requested_control": {
+            "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+            "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+            "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+            "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+            "channel_commands": [
+              {
+                "command_channel": "translation.forward",
+                "commanded_notch": "full",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.reverse",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.left",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.right",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "yaw.counterclockwise",
+                "commanded_notch": null,
+                "target_output_percent": 25
+              },
+              {
+                "command_channel": "yaw.clockwise",
+                "commanded_notch": null,
+                "target_output_percent": 0
+              }
+            ],
+            "automatic_brake": false,
+            "overg_requested": false,
+            "source_migration_id": null
+          },
+          "command_events": []
+        }
+      }
+    }
+  },
+  {
+    "input": {
+      "interface": "gaotian.tactical-input/v1alpha1",
+      "scene_id": "scene.fixture",
+      "input_seq": 3,
+      "target_step": 2,
+      "command": "control",
+      "arguments": {
+        "ship_id": "ship.web.blue",
+        "control": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": true,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      }
+    },
+    "sha256": "23103025bc0704b30dc8c4520dc1b6cfa7b13caf597f88b3cb2b980193e5dc86",
+    "result": {
+      "interface": "gaotian.tactical-render-snapshot/v1alpha1",
+      "backend_instance_id": "fixture.1",
+      "scene_id": "scene.fixture",
+      "authority_interface": "gaotian.tactical-scene-timeline/v7alpha1",
+      "paused": true,
+      "fixed_step": 3,
+      "fixed_step_s": 0.016666666666666666,
+      "time_s": 0.05,
+      "static_sha256": "c515200daa3aa4a16d35b9159fb602ebf96f6fcab17f47043a50b8b1909b2c2e",
+      "static": null,
+      "ships": [
+        {
+          "id": "ship.web.blue",
+          "position_m": [
+            0.0,
+            -299.99997505117005
+          ],
+          "heading_rad": 0.0,
+          "velocity_mps": [
+            0.0,
+            0.001496929796986381
+          ],
+          "speed_mps": 0.001496929796986381,
+          "yaw_rate_radps": 0.0,
+          "height_layer": "upper",
+          "hull_integrity": 1.0,
+          "physical_status": "operational",
+          "command_status": "scene_command",
+          "modules": [
+            {
+              "id": "ammunition_magazine",
+              "durability": 100.0
+            },
+            {
+              "id": "cargo_hold",
+              "durability": 100.0
+            },
+            {
+              "id": "cic",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_base",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_upper",
+              "durability": 100.0
+            },
+            {
+              "id": "damage_control",
+              "durability": 100.0
+            },
+            {
+              "id": "fire_control",
+              "durability": 100.0
+            },
+            {
+              "id": "generator",
+              "durability": 100.0
+            },
+            {
+              "id": "lift_tank",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_port",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "remote_core",
+              "durability": 100.0
+            },
+            {
+              "id": "sensor_upper_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "weapon_upper_port",
+              "durability": 100.0
+            }
+          ]
+        },
+        {
+          "id": "ship.web.red",
+          "position_m": [
+            0.0,
+            300.0
+          ],
+          "heading_rad": -3.141592653589793,
+          "velocity_mps": [
+            0.0,
+            0.0
+          ],
+          "speed_mps": 0.0,
+          "yaw_rate_radps": 0.0,
+          "height_layer": "upper",
+          "hull_integrity": 1.0,
+          "physical_status": "operational",
+          "command_status": "scene_command",
+          "modules": [
+            {
+              "id": "ammunition_magazine",
+              "durability": 100.0
+            },
+            {
+              "id": "cargo_hold",
+              "durability": 100.0
+            },
+            {
+              "id": "cic",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_base",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_upper",
+              "durability": 100.0
+            },
+            {
+              "id": "damage_control",
+              "durability": 100.0
+            },
+            {
+              "id": "fire_control",
+              "durability": 100.0
+            },
+            {
+              "id": "generator",
+              "durability": 100.0
+            },
+            {
+              "id": "lift_tank",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_port",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "remote_core",
+              "durability": 100.0
+            },
+            {
+              "id": "sensor_upper_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "weapon_upper_port",
+              "durability": 100.0
+            }
+          ]
+        }
+      ],
+      "events": [],
+      "advance_state": null,
+      "control_state": {
+        "interface": "gaotian.tactical-paused-control-state/v1alpha1",
+        "adapter_interface": "gaotian.directional-direct-command-step/v1alpha1",
+        "direct_ship_id": "ship.web.blue",
+        "available": true,
+        "unavailable_reason": null,
+        "last_input_seq": 3,
+        "last_input_sha256": "23103025bc0704b30dc8c4520dc1b6cfa7b13caf597f88b3cb2b980193e5dc86",
+        "last_executed_step": 2,
+        "requested_control": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": true,
+          "overg_requested": false,
+          "source_migration_id": null
+        },
+        "delivery_status": "delivered",
+        "missing_channels": [],
+        "command_state_sha256": "bc004c76c1e0107a9241908cb3ce4f6d2d0512498ae2f1794d73e797c68ab92d",
+        "tuning_sha256": "67d455f96ab06dc7955e202b6376f4ffdc1edc3adb963ba75a5272efbe381da7",
+        "channels": [
+          {
+            "channel": "translation.forward",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.reverse",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.left",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.right",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "yaw.counterclockwise",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "yaw.clockwise",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          }
+        ],
+        "engines": [
+          {
+            "id": "main_engine_port",
+            "actual_percent": 2,
+            "target_percent": 0,
+            "phase": "stopping"
+          },
+          {
+            "id": "main_engine_starboard",
+            "actual_percent": 2,
+            "target_percent": 0,
+            "phase": "stopping"
+          },
+          {
+            "id": "thruster_port_aft",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          },
+          {
+            "id": "thruster_port_fore",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          },
+          {
+            "id": "thruster_starboard_aft",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          },
+          {
+            "id": "thruster_starboard_fore",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          }
+        ],
+        "fuel_units": 800.0,
+        "fuel_policy": "gaotian.tactical-fuel/no-propulsion-burn/v1",
+        "last_arbitration": {
+          "interface": "gaotian.directional-direct-command-step/v1alpha1",
+          "ship_id": "ship.web.blue",
+          "source": "player_direct",
+          "source_command_state_sha256": "eba221b48c32daea3855e34c6563d90df31c406e3ac9f76eb817f8190e43e29f",
+          "resulting_command_state_sha256": "bc004c76c1e0107a9241908cb3ce4f6d2d0512498ae2f1794d73e797c68ab92d",
+          "source_scene_sha256": "c54bd9964d87394aa1536934fbbf5f81ba9260bbd8ca8869ef98108ec7c92d21",
+          "resulting_scene_sha256": "8907a6b2513e371765767196a58c0214e1b7ba7d51b738408894cfd8d098e5c3",
+          "requested_control": {
+            "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+            "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+            "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+            "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+            "channel_commands": [
+              {
+                "command_channel": "translation.forward",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.reverse",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.left",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.right",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "yaw.counterclockwise",
+                "commanded_notch": null,
+                "target_output_percent": 0
+              },
+              {
+                "command_channel": "yaw.clockwise",
+                "commanded_notch": null,
+                "target_output_percent": 0
+              }
+            ],
+            "automatic_brake": true,
+            "overg_requested": false,
+            "source_migration_id": null
+          },
+          "command_events": []
+        }
+      }
+    }
+  },
+  {
+    "input": {
+      "interface": "gaotian.tactical-input/v1alpha1",
+      "scene_id": "scene.fixture",
+      "input_seq": 4,
+      "target_step": 3,
+      "command": "control",
+      "arguments": {
+        "ship_id": "ship.web.blue",
+        "control": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      }
+    },
+    "sha256": "84a2ec3f0f4edebdd3fb2d13b74db971551f3cbc4689bf149443dfa39d92047a",
+    "result": {
+      "interface": "gaotian.tactical-render-snapshot/v1alpha1",
+      "backend_instance_id": "fixture.1",
+      "scene_id": "scene.fixture",
+      "authority_interface": "gaotian.tactical-scene-timeline/v7alpha1",
+      "paused": true,
+      "fixed_step": 4,
+      "fixed_step_s": 0.016666666666666666,
+      "time_s": 0.06666666666666667,
+      "static_sha256": "c515200daa3aa4a16d35b9159fb602ebf96f6fcab17f47043a50b8b1909b2c2e",
+      "static": null,
+      "ships": [
+        {
+          "id": "ship.web.blue",
+          "position_m": [
+            0.0,
+            -299.99992515351016
+          ],
+          "heading_rad": 0.0,
+          "velocity_mps": [
+            0.0,
+            0.002993859592731134
+          ],
+          "speed_mps": 0.002993859592731134,
+          "yaw_rate_radps": 0.0,
+          "height_layer": "upper",
+          "hull_integrity": 1.0,
+          "physical_status": "operational",
+          "command_status": "scene_command",
+          "modules": [
+            {
+              "id": "ammunition_magazine",
+              "durability": 100.0
+            },
+            {
+              "id": "cargo_hold",
+              "durability": 100.0
+            },
+            {
+              "id": "cic",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_base",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_upper",
+              "durability": 100.0
+            },
+            {
+              "id": "damage_control",
+              "durability": 100.0
+            },
+            {
+              "id": "fire_control",
+              "durability": 100.0
+            },
+            {
+              "id": "generator",
+              "durability": 100.0
+            },
+            {
+              "id": "lift_tank",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_port",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "remote_core",
+              "durability": 100.0
+            },
+            {
+              "id": "sensor_upper_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "weapon_upper_port",
+              "durability": 100.0
+            }
+          ]
+        },
+        {
+          "id": "ship.web.red",
+          "position_m": [
+            0.0,
+            300.0
+          ],
+          "heading_rad": -3.141592653589793,
+          "velocity_mps": [
+            0.0,
+            0.0
+          ],
+          "speed_mps": 0.0,
+          "yaw_rate_radps": 0.0,
+          "height_layer": "upper",
+          "hull_integrity": 1.0,
+          "physical_status": "operational",
+          "command_status": "scene_command",
+          "modules": [
+            {
+              "id": "ammunition_magazine",
+              "durability": 100.0
+            },
+            {
+              "id": "cargo_hold",
+              "durability": 100.0
+            },
+            {
+              "id": "cic",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_base",
+              "durability": 100.0
+            },
+            {
+              "id": "crew_quarters_upper",
+              "durability": 100.0
+            },
+            {
+              "id": "damage_control",
+              "durability": 100.0
+            },
+            {
+              "id": "fire_control",
+              "durability": 100.0
+            },
+            {
+              "id": "generator",
+              "durability": 100.0
+            },
+            {
+              "id": "lift_tank",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_port",
+              "durability": 100.0
+            },
+            {
+              "id": "main_engine_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "remote_core",
+              "durability": 100.0
+            },
+            {
+              "id": "sensor_upper_starboard",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_port_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_aft",
+              "durability": 100.0
+            },
+            {
+              "id": "thruster_starboard_fore",
+              "durability": 100.0
+            },
+            {
+              "id": "weapon_upper_port",
+              "durability": 100.0
+            }
+          ]
+        }
+      ],
+      "events": [],
+      "advance_state": null,
+      "control_state": {
+        "interface": "gaotian.tactical-paused-control-state/v1alpha1",
+        "adapter_interface": "gaotian.directional-direct-command-step/v1alpha1",
+        "direct_ship_id": "ship.web.blue",
+        "available": true,
+        "unavailable_reason": null,
+        "last_input_seq": 4,
+        "last_input_sha256": "84a2ec3f0f4edebdd3fb2d13b74db971551f3cbc4689bf149443dfa39d92047a",
+        "last_executed_step": 3,
+        "requested_control": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        },
+        "delivery_status": "delivered",
+        "missing_channels": [],
+        "command_state_sha256": "fed112e99b635aca0eeb59c2875f19e0c8ca93e3621d141accea07e87ac946f5",
+        "tuning_sha256": "67d455f96ab06dc7955e202b6376f4ffdc1edc3adb963ba75a5272efbe381da7",
+        "channels": [
+          {
+            "channel": "translation.forward",
+            "requested_percent": 100,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.reverse",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.left",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "translation.right",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "yaw.counterclockwise",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          },
+          {
+            "channel": "yaw.clockwise",
+            "requested_percent": 0,
+            "safety_ceiling_percent": 100,
+            "safety_reasons": []
+          }
+        ],
+        "engines": [
+          {
+            "id": "main_engine_port",
+            "actual_percent": 2,
+            "target_percent": 100,
+            "phase": "running"
+          },
+          {
+            "id": "main_engine_starboard",
+            "actual_percent": 2,
+            "target_percent": 100,
+            "phase": "running"
+          },
+          {
+            "id": "thruster_port_aft",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          },
+          {
+            "id": "thruster_port_fore",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          },
+          {
+            "id": "thruster_starboard_aft",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          },
+          {
+            "id": "thruster_starboard_fore",
+            "actual_percent": 0,
+            "target_percent": 0,
+            "phase": "ready"
+          }
+        ],
+        "fuel_units": 800.0,
+        "fuel_policy": "gaotian.tactical-fuel/no-propulsion-burn/v1",
+        "last_arbitration": {
+          "interface": "gaotian.directional-direct-command-step/v1alpha1",
+          "ship_id": "ship.web.blue",
+          "source": "player_direct",
+          "source_command_state_sha256": "bc004c76c1e0107a9241908cb3ce4f6d2d0512498ae2f1794d73e797c68ab92d",
+          "resulting_command_state_sha256": "fed112e99b635aca0eeb59c2875f19e0c8ca93e3621d141accea07e87ac946f5",
+          "source_scene_sha256": "8907a6b2513e371765767196a58c0214e1b7ba7d51b738408894cfd8d098e5c3",
+          "resulting_scene_sha256": "ad63843cae42ef2b0ff3e6c693a42fce759ad710dc50d7a9a85b7a62a58c42c9",
+          "requested_control": {
+            "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+            "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+            "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+            "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+            "channel_commands": [
+              {
+                "command_channel": "translation.forward",
+                "commanded_notch": "full",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.reverse",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.left",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "translation.right",
+                "commanded_notch": "stop",
+                "target_output_percent": null
+              },
+              {
+                "command_channel": "yaw.counterclockwise",
+                "commanded_notch": null,
+                "target_output_percent": 0
+              },
+              {
+                "command_channel": "yaw.clockwise",
+                "commanded_notch": null,
+                "target_output_percent": 0
+              }
+            ],
+            "automatic_brake": false,
+            "overg_requested": false,
+            "source_migration_id": null
+          },
+          "command_events": []
+        }
+      }
+    }
+  }
+]

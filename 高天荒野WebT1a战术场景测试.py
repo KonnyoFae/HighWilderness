@@ -137,7 +137,7 @@ class TacticalTests(unittest.TestCase):
         self.assertIsNone(created["revision"])
         self.assertLess(len(encode_message(created)), 128 * 1024)
         self.assertTrue(call(3, "system.ping", {"nonce": "test.ping"})["ok"])
-        self.assertEqual(call(4, "tactical.step", {})["error"]["code"], "bridge.method_not_supported")
+        self.assertEqual(call(4, "tactical.step", {})["error"]["code"], "tactical.invalid_arguments")
 
     def test_tactical_work_shares_bounded_queue_without_blocking_heartbeat(self):
         from 高天荒野WebSidecar生命周期测试 import hello, request, INSTANCE_ID

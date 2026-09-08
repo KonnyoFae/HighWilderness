@@ -1,0 +1,29 @@
+{
+  "scope": "Diagnostic-only proof-scope enable/disable, identical E0 mixed72; no timing claim; final observations equal",
+  "runs": [
+    {
+      "proof_reuse": false,
+      "measured_steps": 60,
+      "parse_calls": {
+        "EngineRuntimeState": 54000,
+        "TacticalPropulsionState": 2280,
+        "DirectionalPropulsionControlInput": 3480,
+        "FullyGovernedPropulsionOpening": 240,
+        "GovernedPropulsionTimeResult": 1440,
+        "TacticalSceneState": 60
+      }
+    },
+    {
+      "proof_reuse": true,
+      "measured_steps": 60,
+      "parse_calls": {
+        "EngineRuntimeState": 10986,
+        "TacticalPropulsionState": 960,
+        "DirectionalPropulsionControlInput": 960,
+        "FullyGovernedPropulsionOpening": 0,
+        "GovernedPropulsionTimeResult": 0,
+        "TacticalSceneState": 60
+      }
+    }
+  ]
+}

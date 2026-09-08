@@ -1,0 +1,4 @@
+{
+  "status": "FAIL",
+  "error": "RuntimeError('Static work remains in compiled hot path')"
+}

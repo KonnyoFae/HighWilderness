@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "comparison": "Exact complete legacy observations including ordered events and receipts",
+  "cases": [
+    {
+      "case": "mixed72",
+      "matched_boundaries": 73
+    },
+    {
+      "case": "transitions120",
+      "matched_boundaries": 121
+    }
+  ]
+}

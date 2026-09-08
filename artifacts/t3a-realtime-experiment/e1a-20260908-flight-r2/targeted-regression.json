@@ -1,0 +1,66 @@
+{
+  "scope": "Existing functional checks only; historical report/source hash wrappers not rerun or modified",
+  "rows": [
+    {
+      "module": "高天荒野T0b2d1推进时间内核测试",
+      "function": "test_boundary_contract_and_capability_gate",
+      "status": "PASS"
+    },
+    {
+      "module": "高天荒野T0b2d1推进时间内核测试",
+      "function": "test_cold_start_and_adjacent_response",
+      "status": "PASS"
+    },
+    {
+      "module": "高天荒野T0b2d1推进时间内核测试",
+      "function": "test_mid_command_and_stop",
+      "status": "PASS"
+    },
+    {
+      "module": "高天荒野T0b2d1推进时间内核测试",
+      "function": "test_replay_and_scene_isolation",
+      "status": "FAIL",
+      "error": "AssertionError('conventional_crewed 保存的完好实例不再等于规范输入初始化结果')"
+    },
+    {
+      "module": "高天荒野T0b2d2a推进资源与控制桥测试",
+      "function": "test_schedulable_resource_migrations",
+      "status": "PASS"
+    },
+    {
+      "module": "高天荒野T0b2d2a推进资源与控制桥测试",
+      "function": "test_exact_scene_actuator_bindings",
+      "status": "FAIL",
+      "error": "AssertionError('conventional_crewed 保存的完好实例不再等于规范输入初始化结果')"
+    },
+    {
+      "module": "高天荒野T0b2d2a推进资源与控制桥测试",
+      "function": "test_discrete_control_contract_and_migration",
+      "status": "FAIL",
+      "error": "AssertionError('conventional_crewed 保存的完好实例不再等于规范输入初始化结果')"
+    },
+    {
+      "module": "高天荒野T0b2d2a推进资源与控制桥测试",
+      "function": "test_step_result_and_propulsion_event_contract",
+      "status": "FAIL",
+      "error": "AssertionError('conventional_crewed 保存的完好实例不再等于规范输入初始化结果')"
+    },
+    {
+      "module": "高天荒野T0b2d2a推进资源与控制桥测试",
+      "function": "test_existing_authority_isolation",
+      "status": "FAIL",
+      "error": "AssertionError('conventional_crewed 保存的完好实例不再等于规范输入初始化结果')"
+    },
+    {
+      "module": "高天荒野T0b2d2b3实际推进聚合与积分测试",
+      "function": "collect_evidence",
+      "status": "FAIL",
+      "error": "AssertionError('conventional_crewed 保存的完好实例不再等于规范输入初始化结果')"
+    },
+    {
+      "module": "高天荒野T0b2d3a受控时间边界测试",
+      "function": "collect_evidence",
+      "status": "PASS"
+    }
+  ]
+}

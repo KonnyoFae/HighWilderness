@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": "Current E1 independent flight path vs frozen E0; not full E1 or real-time acceptance",
+  "evidence_sha256": {
+    "comparison.json": "597417ac6007dd369bb5e93b8956a252003b086843c93c729fd79569d4b12124",
+    "manifest.json": "7b50c3a6b6c4f48bbe48064c1da9f3ddbf830e0ac498dfb41587959f69ff2682",
+    "mechanisms.json": "c4d7ea1987de084589e2f5045cca59590ff88c987c296d27df34cda4eab94658",
+    "source-resources.zip": "b9887b44013186cd68c4a87eab150986ed2b7339e52d8c052da36a2ae1572adb",
+    "timing.json": "d86c270b4b755b7fff70fc4682bbc5afb09acb132441d495bd41790ec6726e54",
+    "tracked-python.patch": "43535a9ffa8b64868abecf3712cc4c180b06e173a9998c0f5469e9f185459aa8"
+  },
+  "reference": "G:\\高天荒野\\artifacts\\t3a-realtime-experiment\\e0-20260908-baseline",
+  "not_covered": [
+    "compact dynamic layout",
+    "internal parse/replay elimination",
+    "damage matrix",
+    "scheduler/long run",
+    "combat",
+    "UI integration"
+  ]
+}

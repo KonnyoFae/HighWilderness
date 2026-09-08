@@ -1,4 +1,4 @@
-import { Application, Graphics } from "pixi.js";
+import { Application, Graphics } from "../rendering/pixi";
 import { useEffect, useRef, useState } from "react";
 import { HullInspector } from "./HullInspector";
 import { currentEdgeSpace } from "./edgeSpace";
@@ -9,8 +9,8 @@ import type { HullCommand, HullRegion, MaterialOption, SessionSnapshot } from ".
 import { fit, gridLines, lowerDeck, pick, screen, snap, world, zoom } from "./viewport";
 import type { Camera, Point, Selection } from "./viewport";
 
-export function HullViewport({ session, busy, materials, onCommand, onLocalDraft }: {
-  session: SessionSnapshot; busy: boolean; materials: MaterialOption[]; onCommand: HullCommand; onLocalDraft: (busy: boolean) => void;
+export function HullViewport({ session, busy, materials, onCommand, onLocalDraft, active = true }: {
+  session: SessionSnapshot; busy: boolean; materials: MaterialOption[]; onCommand: HullCommand; onLocalDraft: (busy: boolean) => void; active?: boolean;
 }) {
   const [deckId, setDeckId] = useState((session.draft.decks ?? [])[0]?.id ?? "");
   const deck = (session.draft.decks ?? []).find(d => d.id === deckId) ?? (session.draft.decks ?? [])[0];
@@ -114,7 +114,8 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
       const g = new Graphics(); graphics.current = g; app.stage.addChild(g);
       host.appendChild(app.canvas);
       resize = () => {
-        const width = Math.max(1, host.clientWidth), height = host.clientHeight;
+        const width = host.clientWidth, height = host.clientHeight;
+        if (!width || !height) return;
         app.renderer.resolution = window.devicePixelRatio || 1;
         app.renderer.resize(width, height); setSize({ width, height });
         app.render();
@@ -150,7 +151,7 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
 
   useEffect(() => {
     const g = graphics.current, app = renderer.current;
-    if (!g || !app) return;
+    if (!active || !g || !app) return;
     g.clear();
     const lo = world({ x: 0, y: size.height }, camera), hi = world({ x: size.width, y: 0 }, camera);
     for (const line of gridLines(lo.x, hi.x, camera.scale)) {
@@ -225,7 +226,7 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
       g.moveTo(p.x - 7, p.y).lineTo(p.x + 7, p.y).moveTo(p.x, p.y - 7).lineTo(p.x, p.y + 7).stroke({ color: 0xffd58b, width: 1.5 });
     }
     app.render();
-  }, [camera, deck, below, selected, hover, cursor, size, ready, session.preview, showSpace, showEdgeSpace, edgeSpace, localDraft, drawing, drawPoints, moving, symmetric, symmetryPreview]);
+  }, [active, camera, deck, below, selected, hover, cursor, size, ready, session.preview, showSpace, showEdgeSpace, edgeSpace, localDraft, drawing, drawPoints, moving, symmetric, symmetryPreview]);
 
   function locate(path: string) {
     if (localDraft || locked) return;

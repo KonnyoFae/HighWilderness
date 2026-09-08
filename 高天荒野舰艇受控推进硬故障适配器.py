@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from 高天荒野舰艇内部步骤证明 import validate_internal_record
+
 from dataclasses import dataclass, replace
 from typing import Any
 
@@ -196,7 +198,7 @@ def _current_engine(value: Any, path: str) -> EngineRuntimeState:
         path,
         "必须提供当前 v2 发动机状态",
     )
-    EngineRuntimeState.parse(value.to_dict(), path)
+    validate_internal_record(value, EngineRuntimeState, path)
     return value
 
 
@@ -435,7 +437,7 @@ class GovernedPropulsionHardFaultOpening:
             raise ValueError("紧急断推结果必须是严格不可变序列")
         if not isinstance(self.state, TacticalPropulsionState):
             raise ValueError("结果推进状态非法")
-        TacticalPropulsionState.parse(self.state.to_dict(), "$.state")
+        validate_internal_record(self.state, TacticalPropulsionState, "$.state")
         if self.state.interface_id != DIRECTIONAL_STATE_INTERFACE_ID:
             raise ValueError("结果必须保留当前定向推进状态")
         ids = tuple(
@@ -629,7 +631,7 @@ def commit_governed_propulsion_hard_fault_opening(
         "$.command",
         "必须提供严格硬故障命令",
     )
-    GovernedPropulsionHardFaultCommand.parse(command.to_dict(), "$.command")
+    validate_internal_record(command, GovernedPropulsionHardFaultCommand, "$.command")
     projection = project_runtime_propulsion_hard_facts(
         context, runtime, state, step
     )

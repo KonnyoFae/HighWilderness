@@ -1,0 +1,67 @@
+// Bounded trial on a freshly rebuilt desktop. Leave the test scene paused.
+import assert from "node:assert/strict";
+import { createRequire } from "node:module";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
+const require = createRequire(path.join(process.env.HW_BROWSER_MODULES, "package.json"));
+const { chromium } = require("playwright");
+const browser = await chromium.connectOverCDP(process.env.HW_TACTICAL_CDP);
+const page = browser.contexts().flatMap(c => c.pages()).find(p => p.url().includes("tauri.localhost"));
+assert(page);
+const output = path.resolve("artifacts/t3a-preview"); await mkdir(output, { recursive: true });
+const button = name => page.getByRole("button", { name, exact: true });
+const checks = [], errors = []; page.on("pageerror", e => errors.push(e.message));
+try {
+  await page.getByTestId("bridge-state").filter({ hasText: "READY" }).waitFor();
+  assert.equal(await page.locator('input[aria-label="舰体名称"]').count(), 0, "Do not touch an open editor session");
+  assert.equal(await page.locator('.tactical-controls').count(), 0, "Do not switch mode or stop a user's existing trial");
+  await button("战术视角").click();
+  assert(await button("建立两舰场景").isEnabled(), "Do not overwrite an existing scene");
+  await button("建立两舰场景").click();
+  await page.locator(".tactical-canvas canvas").waitFor();
+  await page.getByLabel("车钟", { exact: true }).selectOption("full");
+  await button("聚焦所选舰").click();
+  const started = Date.now();
+  await button("推进 5 秒").click();
+  await button("停止推进").waitFor();
+  assert(await button("单步推进").isDisabled());
+  await page.getByRole("status").filter({ hasText: "推进完成：5.00 / 5 秒" }).waitFor({ timeout: 120000 });
+  const wallSeconds = (Date.now() - started) / 1000;
+  assert.match(await page.locator(".tactical-panel > .editor-summary").innerText(), /已暂停 · 第 300 步 · 5.000 秒/);
+  const stat = name => page.locator(".tactical-stats dt").filter({ hasText: new RegExp(`^${name}$`) }).locator("xpath=following-sibling::dd[1]").innerText();
+  const speed = parseFloat(await stat("速度"));
+  const position = (await stat("位置 X / Y")).split(" / ").map(parseFloat);
+  assert(speed > 10, "Trial tuning should produce visible acceleration");
+  assert(position[1] > -270, "Move at least 30 m in 5 simulated seconds");
+  assert.match(await page.locator(".tactical-controls .editor-summary").innerText(), /燃料：800.0（战术推进不消耗）/);
+  checks.push("five-second preview completes exactly 300 full-safety steps, visible displacement and unchanged fuel");
+  await page.getByLabel("推进时长", { exact: true }).selectOption("1");
+  await button("左转 1 秒").click();
+  await page.getByRole("status").filter({ hasText: "推进完成：1.00 / 1 秒" }).waitFor({ timeout: 60000 });
+  assert(parseFloat(await stat("朝向")) > 0);
+  checks.push("one-second turn uses real angular motion and stops at the duration boundary");
+  await page.getByLabel("推进时长", { exact: true }).selectOption("10");
+  await button("推进 10 秒").click();
+  await button("停止推进").waitFor();
+  await button("停止推进").click();
+  await page.getByRole("status").filter({ hasText: "已停止推进" }).waitFor();
+  const paused = await page.locator(".tactical-panel > .editor-summary").innerText();
+  await button("读取场景状态").click();
+  await button("读取场景状态").waitFor({ state: "visible" });
+  assert.equal(await page.locator(".tactical-panel > .editor-summary").innerText(), paused);
+  checks.push("stop interrupts before full duration and paused reads do not advance time");
+  await button("推进 10 秒").click();
+  await button("停止推进").waitFor();
+  await button("舰艇编辑").click(); await button("战术视角").click();
+  await page.getByRole("status").filter({ hasText: "已停止推进" }).waitFor();
+  assert.match(await page.locator(".tactical-panel > .editor-summary").innerText(), /已暂停/);
+  assert.equal(await page.getByLabel("车钟", { exact: true }).inputValue(), "full");
+  assert.match(await page.locator(".tactical-controls .editor-summary").innerText(), /燃料：800.0/);
+  checks.push("returning to editor stops authority advancement, preserves helm selection and fuel");
+  assert.deepEqual(errors, []);
+  await page.locator(".tactical-panel").screenshot({ path: path.join(output, "native-preview.png") });
+  await writeFile(path.join(output, "native-verification.json"), JSON.stringify({ status: "PASS", scope: "real Tauri/Rust/Python bounded preview; not realtime performance acceptance", checks,
+    five_second_trial: { wall_seconds: wallSeconds, final_speed_mps: speed, final_position_m: position }, page_errors: errors }, null, 2) + "\n");
+  console.log(JSON.stringify({ status: "PASS", checks, wallSeconds, speed, position }));
+} catch (e) { await page.screenshot({ path: path.join(output, "native-failure.png"), fullPage: true }); console.error(await page.locator("body").innerText()); throw e; }
+finally { await browser.close(); }

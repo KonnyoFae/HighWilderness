@@ -1,0 +1,1507 @@
+{
+  "interface": "gaotian.tactical-render-snapshot/v1alpha1",
+  "backend_instance_id": "fixture.1",
+  "scene_id": "scene.fixture",
+  "authority_interface": "gaotian.tactical-scene-timeline/v7alpha1",
+  "paused": true,
+  "fixed_step": 0,
+  "fixed_step_s": 0.016666666666666666,
+  "time_s": 0.0,
+  "static_sha256": "c515200daa3aa4a16d35b9159fb602ebf96f6fcab17f47043a50b8b1909b2c2e",
+  "static": {
+    "interface": "gaotian.tactical-render-static/v1alpha1",
+    "scenario_id": "gtw.sample.web.two_ship.v1",
+    "resources": {
+      "interface": "gaotian.web-two-ship-resources/v1alpha1",
+      "scenario_id": "gtw.sample.web.two_ship.v1",
+      "tactical_fuel": {
+        "policy": "gaotian.tactical-fuel/no-propulsion-burn/v1",
+        "source_catalog_sha256": "7c5eba7a9fed2eed72f8fb05d23290461fa665a80063b67544ddcbfef3c3a2ea",
+        "source_outfit_sha256": "0b43256e0221213f4953df3ad6692dd69bb45d970488ef0f75c905d0622b23d3",
+        "catalog_sha256": "f3a9511c5904279423cfbdf84e854761225eeca234aeeafc04fe42f4639d38b8",
+        "outfit_sha256": "af9fb6ad462369344899757d5f294dabda2dd5c10097631179b37df694d68edc"
+      },
+      "trial_propulsion": {
+        "policy": "gaotian.web-two-ship/visible-maneuver-trial/v1",
+        "thrust_multiplier": 50.0,
+        "source_catalog_sha256": "f3a9511c5904279423cfbdf84e854761225eeca234aeeafc04fe42f4639d38b8",
+        "source_outfit_sha256": "af9fb6ad462369344899757d5f294dabda2dd5c10097631179b37df694d68edc",
+        "catalog_sha256": "3cd9ff0fed057dbe9177c78a9a45396a0936e1233b2344882285aa239d5ce982",
+        "outfit_sha256": "d47b4cb6b94bc4ff32568e2f8042164b8e2515587a8e9fd3e7534345e20c4a0c"
+      },
+      "source_outfit_sha256": "cb8862db2ea80727bfc85a53a0520a1f4c1e2730a49dce87531c86c829765570",
+      "source_catalog_sha256": [
+        "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a",
+        "1740797702b3de4a7e3c5919a3f59f9d12cfb92f69e338666e1a05639e018ab1"
+      ],
+      "module_catalog_sha256": "3cd9ff0fed057dbe9177c78a9a45396a0936e1233b2344882285aa239d5ce982",
+      "hull_sha256": "2c6344986c45af918826f6f2db052a3f11fa7a9b99c728a197c72e5bcaee8e3a",
+      "coating_catalog_sha256": "2b8bb38311a02406a491b685aad160f9b051049ab9b35e25f95f3c1c66de7fa5",
+      "material_catalogs_sha256": "fa8d465ca3a38a549b06e8217595ad3e9966a38ea75fe80547ee98c6e133f521",
+      "derived_snapshot_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+      "sortie_configuration": {
+        "active_remote_core_instance_id": null,
+        "bulk_cargo": [],
+        "control_mode": "crewed",
+        "crew": [
+          {
+            "count": 2,
+            "crew_type": "officer"
+          },
+          {
+            "count": 10,
+            "crew_type": "ordinary"
+          },
+          {
+            "count": 4,
+            "crew_type": "technical_officer"
+          },
+          {
+            "count": 2,
+            "crew_type": "veteran_damage_control"
+          }
+        ],
+        "fixture_level": "contract_fixture",
+        "fuel_units": 800.0,
+        "height_layer": "upper",
+        "id": "gtw.sortie.web.two_ship.conventional",
+        "kind": "SortieConfiguration",
+        "name": "两舰试航技术出航预设",
+        "outfit_plan": {
+          "id": "gtw.outfit.fixture.stage_f.conventional_crewed.tactical_no_burn.web_trial",
+          "version": 2
+        },
+        "schema": "gaotian.ship/v1alpha1",
+        "version": 1,
+        "ammunition_loadout": {
+          "magazines": [
+            {
+              "instance_id": "ammunition_magazine",
+              "inventory": [
+                {
+                  "munition_id": "gtw.munition.fixture.76mm.standard",
+                  "units": 20
+                }
+              ]
+            }
+          ],
+          "weapons": [
+            {
+              "instance_id": "weapon_upper_port",
+              "munition_id": "gtw.munition.fixture.76mm.standard",
+              "ready_rounds": 1
+            }
+          ]
+        }
+      },
+      "sortie_sha256": "be5c6761966db21f4678dd4f7ec110488b4f0e64ff31d87c389fb16f1dd653cf",
+      "timing_sha256": "d463c1cd824b63c3b65c57a1e33f6f44a6f0b94841946a665e27e7cbea98042d",
+      "projectile_sha256": "b3bd4f0fe251f3173ea2252456f484c1d14d04965bf8c6de438216f91f109d63",
+      "continuous_damage_sha256": "b5a70251299f88ef8cc910933d041bc0728644f12cd860533eb2de58c0adb4b2",
+      "safety_sha256": "a67f71517c39243d54dc01bf84f3981ca73e59551fc85787ce8da7e336ea5d6f",
+      "initial_scene_sha256": "322b611c0a3d2a5a3959e43814c73fd6f5100133761c5f3bbfca89acb7ce6466"
+    },
+    "ships": [
+      {
+        "id": "ship.web.blue",
+        "side_id": "side.blue",
+        "fleet_id": "fleet.blue",
+        "name": "蓝方测试舰",
+        "derived_snapshot_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+        "decks": [
+          {
+            "id": "deck.0",
+            "level": 0,
+            "regions": [
+              {
+                "id": "deck.0.region.0",
+                "vertices_m": [
+                  [
+                    -10.0,
+                    -45.0
+                  ],
+                  [
+                    -5.0,
+                    -75.0
+                  ],
+                  [
+                    5.0,
+                    -75.0
+                  ],
+                  [
+                    10.0,
+                    -45.0
+                  ],
+                  [
+                    10.0,
+                    50.0
+                  ],
+                  [
+                    0.0,
+                    80.0
+                  ],
+                  [
+                    -10.0,
+                    50.0
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "id": "deck.1",
+            "level": 1,
+            "regions": [
+              {
+                "id": "deck.1.region.port",
+                "vertices_m": [
+                  [
+                    -7.5,
+                    -20.0
+                  ],
+                  [
+                    -2.5,
+                    -20.0
+                  ],
+                  [
+                    -2.5,
+                    20.0
+                  ],
+                  [
+                    -7.5,
+                    20.0
+                  ]
+                ]
+              },
+              {
+                "id": "deck.1.region.starboard",
+                "vertices_m": [
+                  [
+                    2.5,
+                    -20.0
+                  ],
+                  [
+                    7.5,
+                    -20.0
+                  ],
+                  [
+                    7.5,
+                    20.0
+                  ],
+                  [
+                    2.5,
+                    20.0
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "modules": [
+          {
+            "id": "ammunition_magazine",
+            "name": "契约夹具弹药库",
+            "category": "ammunition_magazine",
+            "anchor_m": [
+              0.0,
+              30.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                0,
+                6
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                0.0,
+                30.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "cargo_hold",
+            "name": "契约夹具货仓",
+            "category": "cargo_hold",
+            "anchor_m": [
+              5.0,
+              10.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                1,
+                2
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                5.0,
+                10.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "cic",
+            "name": "契约夹具CIC",
+            "category": "cic",
+            "anchor_m": [
+              0.0,
+              0.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                0.0,
+                0.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "crew_quarters_base",
+            "name": "契约夹具人员舱",
+            "category": "crew_quarters",
+            "anchor_m": [
+              -5.0,
+              0.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                -1,
+                0
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -5.0,
+                0.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "crew_quarters_upper",
+            "name": "契约夹具人员舱",
+            "category": "crew_quarters",
+            "anchor_m": [
+              -5.0,
+              0.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 1,
+            "internal_cells": [
+              [
+                1,
+                -1,
+                0
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                1,
+                -5.0,
+                0.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "damage_control",
+            "name": "契约夹具损管设备",
+            "category": "damage_control",
+            "anchor_m": [
+              5.0,
+              0.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                5.0,
+                0.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "fire_control",
+            "name": "契约夹具火控系统",
+            "category": "fire_control",
+            "anchor_m": [
+              -5.0,
+              40.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                -1,
+                8
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -5.0,
+                40.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "generator",
+            "name": "契约夹具发电设备",
+            "category": "generator",
+            "anchor_m": [
+              -5.0,
+              10.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                -1,
+                2
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -5.0,
+                10.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "lift_tank",
+            "name": "契约夹具灵烷贮槽",
+            "category": "lift_fuel_tank",
+            "anchor_m": [
+              0.0,
+              10.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                0,
+                2
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                0.0,
+                10.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "main_engine_port",
+            "name": "契约夹具主发动机",
+            "category": "main_engine",
+            "anchor_m": [
+              -5.0,
+              -50.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                -1,
+                -10
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -5.0,
+                -50.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "main_engine_starboard",
+            "name": "契约夹具主发动机",
+            "category": "main_engine",
+            "anchor_m": [
+              5.0,
+              -50.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                1,
+                -10
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                5.0,
+                -50.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "remote_core",
+            "name": "契约夹具遥控核心舱",
+            "category": "remote_core",
+            "anchor_m": [
+              0.0,
+              0.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [],
+            "top_cells": [],
+            "body_points": [],
+            "max_durability": 100.0
+          },
+          {
+            "id": "sensor_upper_starboard",
+            "name": "契约夹具搜索雷达",
+            "category": "sensor",
+            "anchor_m": [
+              5.0,
+              10.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 1,
+            "internal_cells": [],
+            "top_cells": [
+              [
+                1,
+                1,
+                2
+              ]
+            ],
+            "body_points": [
+              [
+                2,
+                5.0,
+                10.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "thruster_port_aft",
+            "name": "契约夹具转向发动机",
+            "category": "maneuver_thruster",
+            "anchor_m": [
+              -10.0,
+              -27.5
+            ],
+            "rotation_deg": 180,
+            "deck_level": 0,
+            "internal_cells": [],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -10.0,
+                -27.5
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "thruster_port_fore",
+            "name": "契约夹具转向发动机",
+            "category": "maneuver_thruster",
+            "anchor_m": [
+              -10.0,
+              22.5
+            ],
+            "rotation_deg": 180,
+            "deck_level": 0,
+            "internal_cells": [],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -10.0,
+                22.5
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "thruster_starboard_aft",
+            "name": "契约夹具转向发动机",
+            "category": "maneuver_thruster",
+            "anchor_m": [
+              10.0,
+              -22.5
+            ],
+            "rotation_deg": 180,
+            "deck_level": 0,
+            "internal_cells": [],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                10.0,
+                -22.5
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "thruster_starboard_fore",
+            "name": "契约夹具转向发动机",
+            "category": "maneuver_thruster",
+            "anchor_m": [
+              10.0,
+              27.5
+            ],
+            "rotation_deg": 180,
+            "deck_level": 0,
+            "internal_cells": [],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                10.0,
+                27.5
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "weapon_upper_port",
+            "name": "契约夹具自动炮塔",
+            "category": "weapon",
+            "anchor_m": [
+              -5.0,
+              -10.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 1,
+            "internal_cells": [
+              [
+                1,
+                -1,
+                -2
+              ]
+            ],
+            "top_cells": [
+              [
+                1,
+                -1,
+                -2
+              ]
+            ],
+            "body_points": [
+              [
+                1,
+                -5.0,
+                -10.0
+              ],
+              [
+                2,
+                -5.0,
+                -10.0
+              ]
+            ],
+            "max_durability": 100.0
+          }
+        ]
+      },
+      {
+        "id": "ship.web.red",
+        "side_id": "side.red",
+        "fleet_id": "fleet.red",
+        "name": "红方测试舰",
+        "derived_snapshot_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+        "decks": [
+          {
+            "id": "deck.0",
+            "level": 0,
+            "regions": [
+              {
+                "id": "deck.0.region.0",
+                "vertices_m": [
+                  [
+                    -10.0,
+                    -45.0
+                  ],
+                  [
+                    -5.0,
+                    -75.0
+                  ],
+                  [
+                    5.0,
+                    -75.0
+                  ],
+                  [
+                    10.0,
+                    -45.0
+                  ],
+                  [
+                    10.0,
+                    50.0
+                  ],
+                  [
+                    0.0,
+                    80.0
+                  ],
+                  [
+                    -10.0,
+                    50.0
+                  ]
+                ]
+              }
+            ]
+          },
+          {
+            "id": "deck.1",
+            "level": 1,
+            "regions": [
+              {
+                "id": "deck.1.region.port",
+                "vertices_m": [
+                  [
+                    -7.5,
+                    -20.0
+                  ],
+                  [
+                    -2.5,
+                    -20.0
+                  ],
+                  [
+                    -2.5,
+                    20.0
+                  ],
+                  [
+                    -7.5,
+                    20.0
+                  ]
+                ]
+              },
+              {
+                "id": "deck.1.region.starboard",
+                "vertices_m": [
+                  [
+                    2.5,
+                    -20.0
+                  ],
+                  [
+                    7.5,
+                    -20.0
+                  ],
+                  [
+                    7.5,
+                    20.0
+                  ],
+                  [
+                    2.5,
+                    20.0
+                  ]
+                ]
+              }
+            ]
+          }
+        ],
+        "modules": [
+          {
+            "id": "ammunition_magazine",
+            "name": "契约夹具弹药库",
+            "category": "ammunition_magazine",
+            "anchor_m": [
+              0.0,
+              30.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                0,
+                6
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                0.0,
+                30.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "cargo_hold",
+            "name": "契约夹具货仓",
+            "category": "cargo_hold",
+            "anchor_m": [
+              5.0,
+              10.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                1,
+                2
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                5.0,
+                10.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "cic",
+            "name": "契约夹具CIC",
+            "category": "cic",
+            "anchor_m": [
+              0.0,
+              0.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                0,
+                0
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                0.0,
+                0.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "crew_quarters_base",
+            "name": "契约夹具人员舱",
+            "category": "crew_quarters",
+            "anchor_m": [
+              -5.0,
+              0.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                -1,
+                0
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -5.0,
+                0.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "crew_quarters_upper",
+            "name": "契约夹具人员舱",
+            "category": "crew_quarters",
+            "anchor_m": [
+              -5.0,
+              0.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 1,
+            "internal_cells": [
+              [
+                1,
+                -1,
+                0
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                1,
+                -5.0,
+                0.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "damage_control",
+            "name": "契约夹具损管设备",
+            "category": "damage_control",
+            "anchor_m": [
+              5.0,
+              0.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                1,
+                0
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                5.0,
+                0.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "fire_control",
+            "name": "契约夹具火控系统",
+            "category": "fire_control",
+            "anchor_m": [
+              -5.0,
+              40.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                -1,
+                8
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -5.0,
+                40.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "generator",
+            "name": "契约夹具发电设备",
+            "category": "generator",
+            "anchor_m": [
+              -5.0,
+              10.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                -1,
+                2
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -5.0,
+                10.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "lift_tank",
+            "name": "契约夹具灵烷贮槽",
+            "category": "lift_fuel_tank",
+            "anchor_m": [
+              0.0,
+              10.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                0,
+                2
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                0.0,
+                10.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "main_engine_port",
+            "name": "契约夹具主发动机",
+            "category": "main_engine",
+            "anchor_m": [
+              -5.0,
+              -50.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                -1,
+                -10
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -5.0,
+                -50.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "main_engine_starboard",
+            "name": "契约夹具主发动机",
+            "category": "main_engine",
+            "anchor_m": [
+              5.0,
+              -50.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [
+              [
+                0,
+                1,
+                -10
+              ]
+            ],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                5.0,
+                -50.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "remote_core",
+            "name": "契约夹具遥控核心舱",
+            "category": "remote_core",
+            "anchor_m": [
+              0.0,
+              0.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 0,
+            "internal_cells": [],
+            "top_cells": [],
+            "body_points": [],
+            "max_durability": 100.0
+          },
+          {
+            "id": "sensor_upper_starboard",
+            "name": "契约夹具搜索雷达",
+            "category": "sensor",
+            "anchor_m": [
+              5.0,
+              10.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 1,
+            "internal_cells": [],
+            "top_cells": [
+              [
+                1,
+                1,
+                2
+              ]
+            ],
+            "body_points": [
+              [
+                2,
+                5.0,
+                10.0
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "thruster_port_aft",
+            "name": "契约夹具转向发动机",
+            "category": "maneuver_thruster",
+            "anchor_m": [
+              -10.0,
+              -27.5
+            ],
+            "rotation_deg": 180,
+            "deck_level": 0,
+            "internal_cells": [],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -10.0,
+                -27.5
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "thruster_port_fore",
+            "name": "契约夹具转向发动机",
+            "category": "maneuver_thruster",
+            "anchor_m": [
+              -10.0,
+              22.5
+            ],
+            "rotation_deg": 180,
+            "deck_level": 0,
+            "internal_cells": [],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                -10.0,
+                22.5
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "thruster_starboard_aft",
+            "name": "契约夹具转向发动机",
+            "category": "maneuver_thruster",
+            "anchor_m": [
+              10.0,
+              -22.5
+            ],
+            "rotation_deg": 180,
+            "deck_level": 0,
+            "internal_cells": [],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                10.0,
+                -22.5
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "thruster_starboard_fore",
+            "name": "契约夹具转向发动机",
+            "category": "maneuver_thruster",
+            "anchor_m": [
+              10.0,
+              27.5
+            ],
+            "rotation_deg": 180,
+            "deck_level": 0,
+            "internal_cells": [],
+            "top_cells": [],
+            "body_points": [
+              [
+                0,
+                10.0,
+                27.5
+              ]
+            ],
+            "max_durability": 100.0
+          },
+          {
+            "id": "weapon_upper_port",
+            "name": "契约夹具自动炮塔",
+            "category": "weapon",
+            "anchor_m": [
+              -5.0,
+              -10.0
+            ],
+            "rotation_deg": 0,
+            "deck_level": 1,
+            "internal_cells": [
+              [
+                1,
+                -1,
+                -2
+              ]
+            ],
+            "top_cells": [
+              [
+                1,
+                -1,
+                -2
+              ]
+            ],
+            "body_points": [
+              [
+                1,
+                -5.0,
+                -10.0
+              ],
+              [
+                2,
+                -5.0,
+                -10.0
+              ]
+            ],
+            "max_durability": 100.0
+          }
+        ]
+      }
+    ]
+  },
+  "ships": [
+    {
+      "id": "ship.web.blue",
+      "position_m": [
+        0.0,
+        -300.0
+      ],
+      "heading_rad": 0.0,
+      "velocity_mps": [
+        0.0,
+        0.0
+      ],
+      "speed_mps": 0.0,
+      "yaw_rate_radps": 0.0,
+      "height_layer": "upper",
+      "hull_integrity": 1.0,
+      "physical_status": "operational",
+      "command_status": "scene_command",
+      "modules": [
+        {
+          "id": "ammunition_magazine",
+          "durability": 100.0
+        },
+        {
+          "id": "cargo_hold",
+          "durability": 100.0
+        },
+        {
+          "id": "cic",
+          "durability": 100.0
+        },
+        {
+          "id": "crew_quarters_base",
+          "durability": 100.0
+        },
+        {
+          "id": "crew_quarters_upper",
+          "durability": 100.0
+        },
+        {
+          "id": "damage_control",
+          "durability": 100.0
+        },
+        {
+          "id": "fire_control",
+          "durability": 100.0
+        },
+        {
+          "id": "generator",
+          "durability": 100.0
+        },
+        {
+          "id": "lift_tank",
+          "durability": 100.0
+        },
+        {
+          "id": "main_engine_port",
+          "durability": 100.0
+        },
+        {
+          "id": "main_engine_starboard",
+          "durability": 100.0
+        },
+        {
+          "id": "remote_core",
+          "durability": 100.0
+        },
+        {
+          "id": "sensor_upper_starboard",
+          "durability": 100.0
+        },
+        {
+          "id": "thruster_port_aft",
+          "durability": 100.0
+        },
+        {
+          "id": "thruster_port_fore",
+          "durability": 100.0
+        },
+        {
+          "id": "thruster_starboard_aft",
+          "durability": 100.0
+        },
+        {
+          "id": "thruster_starboard_fore",
+          "durability": 100.0
+        },
+        {
+          "id": "weapon_upper_port",
+          "durability": 100.0
+        }
+      ]
+    },
+    {
+      "id": "ship.web.red",
+      "position_m": [
+        0.0,
+        300.0
+      ],
+      "heading_rad": 3.141592653589793,
+      "velocity_mps": [
+        0.0,
+        0.0
+      ],
+      "speed_mps": 0.0,
+      "yaw_rate_radps": 0.0,
+      "height_layer": "upper",
+      "hull_integrity": 1.0,
+      "physical_status": "operational",
+      "command_status": "scene_command",
+      "modules": [
+        {
+          "id": "ammunition_magazine",
+          "durability": 100.0
+        },
+        {
+          "id": "cargo_hold",
+          "durability": 100.0
+        },
+        {
+          "id": "cic",
+          "durability": 100.0
+        },
+        {
+          "id": "crew_quarters_base",
+          "durability": 100.0
+        },
+        {
+          "id": "crew_quarters_upper",
+          "durability": 100.0
+        },
+        {
+          "id": "damage_control",
+          "durability": 100.0
+        },
+        {
+          "id": "fire_control",
+          "durability": 100.0
+        },
+        {
+          "id": "generator",
+          "durability": 100.0
+        },
+        {
+          "id": "lift_tank",
+          "durability": 100.0
+        },
+        {
+          "id": "main_engine_port",
+          "durability": 100.0
+        },
+        {
+          "id": "main_engine_starboard",
+          "durability": 100.0
+        },
+        {
+          "id": "remote_core",
+          "durability": 100.0
+        },
+        {
+          "id": "sensor_upper_starboard",
+          "durability": 100.0
+        },
+        {
+          "id": "thruster_port_aft",
+          "durability": 100.0
+        },
+        {
+          "id": "thruster_port_fore",
+          "durability": 100.0
+        },
+        {
+          "id": "thruster_starboard_aft",
+          "durability": 100.0
+        },
+        {
+          "id": "thruster_starboard_fore",
+          "durability": 100.0
+        },
+        {
+          "id": "weapon_upper_port",
+          "durability": 100.0
+        }
+      ]
+    }
+  ],
+  "events": [],
+  "advance_state": null,
+  "control_state": {
+    "interface": "gaotian.tactical-paused-control-state/v1alpha1",
+    "adapter_interface": "gaotian.directional-direct-command-step/v1alpha1",
+    "direct_ship_id": "ship.web.blue",
+    "available": true,
+    "unavailable_reason": null,
+    "last_input_seq": 0,
+    "last_input_sha256": null,
+    "last_executed_step": null,
+    "requested_control": null,
+    "delivery_status": null,
+    "missing_channels": [],
+    "command_state_sha256": "781c69337da2569850d4469e6548920a025bcaabc0ff20ba7228c60e1b5a32ae",
+    "tuning_sha256": "67d455f96ab06dc7955e202b6376f4ffdc1edc3adb963ba75a5272efbe381da7",
+    "channels": [
+      {
+        "channel": "translation.forward",
+        "requested_percent": 0,
+        "safety_ceiling_percent": 100,
+        "safety_reasons": []
+      },
+      {
+        "channel": "translation.reverse",
+        "requested_percent": 0,
+        "safety_ceiling_percent": 100,
+        "safety_reasons": []
+      },
+      {
+        "channel": "translation.left",
+        "requested_percent": 0,
+        "safety_ceiling_percent": 100,
+        "safety_reasons": []
+      },
+      {
+        "channel": "translation.right",
+        "requested_percent": 0,
+        "safety_ceiling_percent": 100,
+        "safety_reasons": []
+      },
+      {
+        "channel": "yaw.counterclockwise",
+        "requested_percent": 0,
+        "safety_ceiling_percent": 100,
+        "safety_reasons": []
+      },
+      {
+        "channel": "yaw.clockwise",
+        "requested_percent": 0,
+        "safety_ceiling_percent": 100,
+        "safety_reasons": []
+      }
+    ],
+    "engines": [
+      {
+        "id": "main_engine_port",
+        "actual_percent": 0,
+        "target_percent": 0,
+        "phase": "ready"
+      },
+      {
+        "id": "main_engine_starboard",
+        "actual_percent": 0,
+        "target_percent": 0,
+        "phase": "ready"
+      },
+      {
+        "id": "thruster_port_aft",
+        "actual_percent": 0,
+        "target_percent": 0,
+        "phase": "ready"
+      },
+      {
+        "id": "thruster_port_fore",
+        "actual_percent": 0,
+        "target_percent": 0,
+        "phase": "ready"
+      },
+      {
+        "id": "thruster_starboard_aft",
+        "actual_percent": 0,
+        "target_percent": 0,
+        "phase": "ready"
+      },
+      {
+        "id": "thruster_starboard_fore",
+        "actual_percent": 0,
+        "target_percent": 0,
+        "phase": "ready"
+      }
+    ],
+    "fuel_units": 800.0,
+    "fuel_policy": "gaotian.tactical-fuel/no-propulsion-burn/v1",
+    "last_arbitration": null
+  }
+}

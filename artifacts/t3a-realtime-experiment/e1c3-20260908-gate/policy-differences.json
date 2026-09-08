@@ -1,0 +1,61 @@
+{
+  "scope": "Hand-checkable design/available-contribution policy differences, not old full-scene replay; partial health uses the existing sample's known 0.75 efficiency",
+  "cases": [
+    {
+      "case": "unequal_main_intact",
+      "old_force_y_n": 90.0,
+      "old_torque_nm": 0.0,
+      "new_force_y_n": 100.0,
+      "new_torque_nm": 0.0,
+      "expected": [
+        90,
+        0,
+        100,
+        0
+      ],
+      "status": "PASS"
+    },
+    {
+      "case": "one_side_destroyed",
+      "old_force_y_n": 30.0,
+      "old_torque_nm": 0.0,
+      "new_force_y_n": 70.0,
+      "new_torque_nm": 0.0,
+      "expected": [
+        30,
+        0,
+        70,
+        0
+      ],
+      "status": "PASS"
+    },
+    {
+      "case": "partial_health_old_75_percent",
+      "old_force_y_n": 75.0,
+      "old_torque_nm": 0.0,
+      "new_force_y_n": 100.0,
+      "new_torque_nm": 0.0,
+      "expected": [
+        75,
+        0,
+        100,
+        0
+      ],
+      "status": "PASS"
+    },
+    {
+      "case": "turning_residual_translation",
+      "old_force_y_n": -2.0,
+      "old_torque_nm": 26.0,
+      "new_force_y_n": 0.0,
+      "new_torque_nm": 26.0,
+      "expected": [
+        -2,
+        26,
+        0,
+        26
+      ],
+      "status": "PASS"
+    }
+  ]
+}

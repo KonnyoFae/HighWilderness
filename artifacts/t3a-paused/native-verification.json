@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "scope": "built Tauri WebView2, real Rust/Python v7 paused controls",
+  "checks": [
+    "real native step advances exactly 1/60 second and paused read does not advance",
+    "real engine response progresses toward full telegraph under v7 safety",
+    "blue direct control remains fixed while inspecting red; normal step clears requested yaw",
+    "automatic brake and return from editing retain paused clock and telegraph selection"
+  ],
+  "page_errors": [],
+  "final_fixed_step": 13
+}

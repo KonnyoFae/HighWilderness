@@ -1,0 +1,62 @@
+// T3a presentation/receipt tests replay four real Python snapshots; no simulated physics here.
+import assert from "node:assert/strict";
+import { createRequire } from "node:module";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
+const require = createRequire(process.env.HW_BROWSER_MODULES ? path.join(process.env.HW_BROWSER_MODULES, "package.json") : import.meta.url);
+const { chromium } = require("playwright");
+const output = path.resolve("artifacts/t3a-paused"); await mkdir(output, { recursive: true });
+const browser = await chromium.launch({ channel: "msedge", headless: true });
+const page = await browser.newPage({ viewport: { width: 1440, height: 1100 } });
+const errors = [], checks = [];
+page.on("pageerror", e => errors.push(e.message));
+const button = name => page.getByRole("button", { name, exact: true });
+const stepLabel = () => page.locator(".tactical-panel > .editor-summary");
+try {
+  await page.route("**/t2a-test.html", async route => {
+    const response = await route.fetch();
+    await route.fulfill({ response, headers: { ...response.headers(), "content-security-policy": "default-src 'self'; connect-src 'self' ws://127.0.0.1:1420; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'" } });
+  });
+  await page.goto("http://127.0.0.1:1420/t2a-test.html");
+  await button("战术视角").click(); await button("建立两舰场景").click();
+  await page.locator(".tactical-canvas canvas").waitFor();
+  await page.getByLabel("车钟", { exact: true }).selectOption("full");
+  await button("红方测试舰").click();
+  await page.locator("#lose-step-ack").check();
+  await button("单步推进").click();
+  await page.getByRole("alert").filter({ hasText: "单步已执行，但确认丢失" }).waitFor();
+  assert(await button("单步推进").isDisabled());
+  assert(await button("左转单步").isDisabled());
+  assert.match(await stepLabel().innerText(), /第 0 步/);
+  await button("读取场景状态").click();
+  await page.getByRole("status").filter({ hasText: "执行过一次，无需重发" }).waitFor();
+  assert.match(await stepLabel().innerText(), /第 1 步/);
+  assert(!(await button("单步推进").isDisabled()));
+  assert.equal(await button("红方测试舰").getAttribute("aria-pressed"), "true");
+  checks.push("lost reply locks stepping until read confirms exactly one execution; inspecting red does not change blue control");
+  await button("左转单步").click();
+  await page.getByRole("status").filter({ hasText: "输入 2 已执行" }).waitFor();
+  assert.match(await stepLabel().innerText(), /第 2 步/);
+  await page.getByLabel("自动线性制动").check();
+  assert(await button("右转单步").isDisabled());
+  assert(await page.getByLabel("车钟", { exact: true }).isDisabled());
+  await button("单步推进").click();
+  await page.getByRole("status").filter({ hasText: "输入 3 已执行" }).waitFor();
+  await page.getByLabel("自动线性制动").uncheck();
+  checks.push("left turn and automatic brake follow recorded v7 input shapes, with incompatible controls disabled");
+  await button("舰艇编辑").click(); await button("战术视角").click();
+  assert.equal(await page.getByLabel("车钟", { exact: true }).inputValue(), "full");
+  await button("单步推进").click();
+  await page.getByRole("status").filter({ hasText: "输入 4 已执行" }).waitFor();
+  await page.getByText("推进响应与安全限制", { exact: true }).click();
+  const yaw = page.locator(".propulsion-tables table").first().locator("tr").filter({ hasText: "左转" });
+  assert.equal(await yaw.locator("td").nth(1).innerText(), "0%");
+  await page.locator(".tactical-controls").screenshot({ path: path.join(output, "control-panel.png") });
+  checks.push("mode switch retains telegraph settings but normal step sends neutral yaw; requested and actual output displayed separately");
+  assert.deepEqual(errors, []);
+  await writeFile(path.join(output, "browser-verification.json"), JSON.stringify({ status: "PASS", scope: "no-eval browser UI with recorded Python snapshots; not native IPC", checks, page_errors: errors }, null, 2) + "\n");
+  console.log(JSON.stringify({ status: "PASS", checks }, null, 2));
+} catch (error) {
+  await page.screenshot({ path: path.join(output, "failure.png"), fullPage: true });
+  console.error(await page.locator("body").innerText()); throw error;
+} finally { await browser.close(); }

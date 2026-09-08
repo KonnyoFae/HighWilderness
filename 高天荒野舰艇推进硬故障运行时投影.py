@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from 高天荒野舰艇内部步骤证明 import validate_internal_record
+
 from dataclasses import dataclass
 from typing import Any, Mapping
 
@@ -357,7 +359,7 @@ def _validate_runtime_source(
 
 
 def _validate_engine_boundary(engine: EngineRuntimeState, step: int, path: str) -> None:
-    EngineRuntimeState.parse(engine.to_dict(), path)
+    validate_internal_record(engine, EngineRuntimeState, path)
     _require(
         engine.interface_id == ENGINE_RUNTIME_STATE_INTERFACE_ID,
         "hard_fact.engine_interface",
@@ -435,7 +437,7 @@ def project_runtime_propulsion_hard_facts(
         "$.propulsion_state",
         "必须提供严格推进状态",
     )
-    TacticalPropulsionState.parse(state.to_dict(), "$.propulsion_state")
+    validate_internal_record(state, TacticalPropulsionState, "$.propulsion_state")
     _require(
         state.interface_id == DIRECTIONAL_STATE_INTERFACE_ID,
         "hard_fact.state_interface",
@@ -579,7 +581,7 @@ def validate_runtime_propulsion_hard_fact_projection(
         "$.result",
         "必须提供严格运行时硬故障投影",
     )
-    RuntimePropulsionHardFactProjection.parse(result.to_dict())
+    validate_internal_record(result, RuntimePropulsionHardFactProjection, "$")
     expected = project_runtime_propulsion_hard_facts(
         context, runtime, state, result.fixed_step_index
     )

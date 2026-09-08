@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 from typing import Any
+from 高天荒野舰艇内部步骤证明 import validate_internal_record, register_internal_result
 
 from 高天荒野舰艇数据契约 import ContractError, SHA256_PATTERN, canonical_sha256
 from 高天荒野舰艇实际推进聚合器 import (
@@ -142,16 +143,14 @@ def _validate_state(
         "$.propulsion_state",
         "必须提供定向推进状态",
     )
-    TacticalPropulsionState.parse(state.to_dict(), "$.propulsion_state")
+    validate_internal_record(state, TacticalPropulsionState, "$.propulsion_state")
     _require(
         isinstance(control, DirectionalPropulsionControlInput),
         "control",
         "$.propulsion_control",
         "必须提供严格定向控制",
     )
-    DirectionalPropulsionControlInput.parse(
-        control.to_dict(), "$.propulsion_control"
-    )
+    validate_internal_record(control, DirectionalPropulsionControlInput, "$.propulsion_control")
     bindings, capabilities = _binding_maps(context)
     engines = {item.actuator_instance_id: item for item in state.engines}
     _require(
@@ -533,7 +532,7 @@ def commit_fully_governed_propulsion_opening(
         governor_clock=n,
         engine_boundary=n,
     )
-    return FullyGovernedPropulsionOpening(
+    return register_internal_result(FullyGovernedPropulsionOpening(
         n,
         canonical_sha256(source_state),
         canonical_sha256(state),
@@ -543,7 +542,7 @@ def commit_fully_governed_propulsion_opening(
         interlock,
         tuple(time_results),
         state,
-    )
+    ))
 
 
 def validate_fully_governed_propulsion_opening(
@@ -593,7 +592,7 @@ def integrate_fully_governed_propulsion_interval(
         "$.opening",
         "必须提供严格完整受控开边界",
     )
-    FullyGovernedPropulsionOpening.parse(opening.to_dict(), "$.opening")
+    validate_internal_record(opening, FullyGovernedPropulsionOpening, "$.opening")
     _require(
         isinstance(runtime, RuntimeShipParameters)
         and runtime.source_sha256
@@ -899,7 +898,7 @@ def evaluate_fully_governed_propulsion_closing(
         "$.opening",
         "收边界必须紧接完整开边界",
     )
-    FullyGovernedPropulsionOpening.parse(opening.to_dict(), "$.opening")
+    validate_internal_record(opening, FullyGovernedPropulsionOpening, "$.opening")
     _require(
         isinstance(final_runtime, RuntimeShipParameters)
         and isinstance(final_model, dynamics.TacticalShipModel)

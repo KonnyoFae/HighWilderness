@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from 高天荒野舰艇内部步骤证明 import validate_internal_record
+
 from dataclasses import dataclass
 from typing import Any
 
@@ -271,12 +273,8 @@ class GovernedPropulsionDirectionInterlockBoundary:
             or not isinstance(self.effective_control, DirectionalPropulsionControlInput)
         ):
             raise ValueError("方向互锁必须保存严格请求与有效控制")
-        DirectionalPropulsionControlInput.parse(
-            self.requested_control.to_dict(), "$.requested_control"
-        )
-        DirectionalPropulsionControlInput.parse(
-            self.effective_control.to_dict(), "$.effective_control"
-        )
+        validate_internal_record(self.requested_control, DirectionalPropulsionControlInput, "$.requested_control")
+        validate_internal_record(self.effective_control, DirectionalPropulsionControlInput, "$.effective_control")
         if (
             canonical_sha256(self.requested_control)
             != self.requested_control_sha256
@@ -455,9 +453,7 @@ def resolve_governed_propulsion_direction_interlock(
         "$.hard_fault_opening",
         "必须提供严格硬故障开边界",
     )
-    GovernedPropulsionHardFaultOpening.parse(
-        hard_fault_opening.to_dict(), "$.hard_fault_opening"
-    )
+    validate_internal_record(hard_fault_opening, GovernedPropulsionHardFaultOpening, "$.hard_fault_opening")
     _require(
         hard_fault_opening.fixed_step_index == n,
         "hard_fault_step",
@@ -480,9 +476,7 @@ def resolve_governed_propulsion_direction_interlock(
         "$.requested_control",
         "必须提供严格原始控制",
     )
-    DirectionalPropulsionControlInput.parse(
-        requested_control.to_dict(), "$.requested_control"
-    )
+    validate_internal_record(requested_control, DirectionalPropulsionControlInput, "$.requested_control")
     bindings = {
         item.actuator_instance_id: item for item in context.bindings
     }

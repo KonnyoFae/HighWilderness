@@ -1,0 +1,753 @@
+diff --git a/backend/high_wilderness_sidecar/server.py b/backend/high_wilderness_sidecar/server.py
+index 5d964d5..b0896a8 100644
+--- a/backend/high_wilderness_sidecar/server.py
++++ b/backend/high_wilderness_sidecar/server.py
+@@ -3,7 +3,7 @@
+ from __future__ import annotations
+ 
+ import json
+-from queue import Queue, Full
++from queue import Queue, Full, Empty
+ from threading import Thread
+ 
+ from .sessions import EditorService, EDITOR_CAPABILITIES
+@@ -158,6 +158,10 @@ class SidecarServer:
+ 
+         if method in (*EDITOR_CAPABILITIES, "editor.bind_file"):
+             try:
++                if self.tactical.mode != "editor" and method not in {
++                    "resource.list", "editor.inspect", "editor.preview", "editor.recovery_list",
++                }:
++                    raise ContractError("tactical.editor_locked", "$.method", "请先返回编辑视图，再修改设计或保存文件")
+                 result, revision = self.editor.dispatch(message)
+                 return (response_for(message, result=result, revision=revision),), False
+             except ContractError as error:
+@@ -191,7 +195,13 @@ class SidecarServer:
+ 
+         def work() -> None:
+             while True:
+-                message = jobs.get()
++                try:
++                    message = jobs.get(timeout=0 if self.tactical.advancing else None)
++                except Empty:
++                    # Bounded preview advances on the authority thread; renders/reads
++                    # do not drive simulation. Check pause and other jobs every step.
++                    self.tactical.advance_one()
++                    continue
+                 try:
+                     if message is None:
+                         return
+@@ -227,9 +237,11 @@ class SidecarServer:
+                             error = _bridge_error("busy", "$.method", "操作队列已满，请稍后重新读取")
+                             outgoing.put((response_for(message, error=_error_payload(error)),))
+                         continue
+-                    # Shutdown is acknowledged only after accepted editor work drains.
++                    # Shutdown stops background advancement on its authority thread.
+                     if message["method"] == "system.shutdown":
++                        jobs.put(None)
+                         jobs.join()
++                        worker.join()
+                     try:
+                         outputs, should_stop = self.execute(message)
+                     except FatalProtocolError:
+@@ -244,8 +256,9 @@ class SidecarServer:
+             write_failure_log(error)
+             exit_code = 2
+         finally:
+-            jobs.put(None)
+-            worker.join()
++            if worker.is_alive():
++                jobs.put(None)
++                worker.join()
+             outgoing.put(None)
+             writer.join()
+         return 2 if writer_errors else exit_code
+diff --git a/backend/high_wilderness_sidecar/tactical.py b/backend/high_wilderness_sidecar/tactical.py
+index 78d9379..3d2b378 100644
+--- a/backend/high_wilderness_sidecar/tactical.py
++++ b/backend/high_wilderness_sidecar/tactical.py
+@@ -1,5 +1,6 @@
+-"""T1a bounded scene ownership and read-only render projection."""
++"""Bounded scene ownership, render projection and atomic T3a paused control steps."""
+ from copy import deepcopy
++from dataclasses import replace
+ from math import hypot
+ from pathlib import Path
+ from uuid import uuid4
+@@ -7,8 +8,16 @@ from uuid import uuid4
+ from 高天荒野舰艇数据契约 import ContractError, canonical_sha256
+ from 高天荒野舰艇定向推进控制桥 import DirectionalPropulsionControlInput
+ from .tactical_scenario import SCENARIO_ID, build_two_ship_scenario
+-
+-TACTICAL_CAPABILITIES = ("tactical.create", "tactical.inspect", "tactical.close")
++from .tactical_control import DIRECT_SHIP_ID, render_control_state
++from 高天荒野舰艇战术舰队指挥 import (
++    TacticalShipRoleAssignment, initialize_tactical_fleet_command_state, load_tactical_command_tuning_profile,
++)
++from 高天荒野舰艇定向直控仲裁 import advance_directional_direct_scene_step
++from 高天荒野舰艇定向直控仲裁 import prepare_directional_direct_command
++from 高天荒野舰艇实际推进聚合器 import propulsion_step_validation_scope
++
++TACTICAL_CAPABILITIES = ("tactical.create", "tactical.inspect", "tactical.close", "tactical.set_mode", "tactical.step", "tactical.advance", "tactical.pause")
++ADVANCE_INTERFACE = "gaotian.tactical-bounded-advance/v1alpha1"
+ RENDER_INTERFACE = "gaotian.tactical-render-snapshot/v1alpha1"
+ STATIC_INTERFACE = "gaotian.tactical-render-static/v1alpha1"
+ INPUT_INTERFACE = "gaotian.tactical-input/v1alpha1"
+@@ -25,7 +34,7 @@ def exact(value, keys):
+ 
+ 
+ def validate_control_input(value, *, scene_id, current_step, last_input_seq, ship_ids):
+-    """Frozen opening-boundary contract for T3a; no input endpoint is exposed yet."""
++    """Opening-boundary v1 contract; T3a paused step executes exactly this boundary."""
+     exact(value, {"interface", "scene_id", "input_seq", "target_step", "command", "arguments"})
+     if value["interface"] != INPUT_INTERFACE or value["command"] != "control":
+         fail("input_version", "$.interface", "不支持的战术输入版本或命令")
+@@ -80,19 +89,77 @@ class TacticalService:
+         self.scene_id = None
+         self.static = None
+         self.static_sha256 = None
++        self.mode = "editor"
++        self.command_state = self.command_tuning = self.last_input = self.last_resolution = None
++        self.last_input_seq = 0
++        self.advance_state = None
++        self.advance_input = None
++
++    @property
++    def advancing(self):
++        return self.advance_state is not None and self.advance_state["status"] == "running"
++
++    def pause(self):
++        if self.advancing:
++            self.advance_state = dict(self.advance_state, status="stopped")
++
++    def advance_one(self):
++        """One fixed step on the same authority worker, independent of UI polling.
++
++        Jobs take priority between steps. A stopped/failed preview preserves exactly
++        the successfully published prefix and its receipt, never retries a step.
++        """
++        if not self.advancing:
++            return
++        try:
++            control = DirectionalPropulsionControlInput.parse(self.advance_input["arguments"]["control"])
++            result, candidate = self._integrate(self.advance_input, control)
++            progress = dict(self.advance_state, executed_steps=self.advance_state["executed_steps"] + 1)
++            if progress["executed_steps"] == progress["step_count"]:
++                progress["status"] = "completed"
++            self._snapshot(candidate, result.resulting_command_state, self.advance_input["input_seq"],
++                self.advance_input, result, self.static_sha256)
++            self.scenario, self.command_state = candidate, result.resulting_command_state
++            self.last_input_seq, self.last_input, self.last_resolution = self.advance_input["input_seq"], deepcopy(self.advance_input), result
++            self.advance_state = progress
++        except Exception as error:
++            reason = error.message if isinstance(error, ContractError) else "推进失败；已保留完成的步数，请读取状态"
++            self.advance_state = dict(self.advance_state, status="failed", error=reason)
++
++    def _integrate(self, value, control):
++        with propulsion_step_validation_scope():
++            result = advance_directional_direct_scene_step(self.scenario.scene, self.command_state, self.scenario.bindings,
++                self.scenario.timing_catalog, self.scenario.projectile_catalog, self.scenario.material_registry, self.command_tuning,
++                ship_id=value["arguments"]["ship_id"], control=control, propulsion_context=self.scenario.propulsion_context,
++                continuous_damage_profile=self.scenario.continuous_damage_profile)
++        return result, replace(self.scenario, scene=result.scene_resolution.resulting_scene)
+ 
+     def snapshot(self, known_static_sha256=None):
+-        scene = self.scenario.scene
++        return self._snapshot(self.scenario, self.command_state, self.last_input_seq,
++            self.last_input, self.last_resolution, known_static_sha256)
++
++    def _snapshot(self, scenario, command_state, last_input_seq, last_input, last_resolution, known_static_sha256):
++        scene = scenario.scene
+         return dict(interface=RENDER_INTERFACE, backend_instance_id=self.instance_id, scene_id=self.scene_id,
+-                    authority_interface=scene.to_dict()["interface"], paused=True, fixed_step=scene.fixed_step_index,
++                    authority_interface=scene.to_dict()["interface"], paused=not self.advancing, fixed_step=scene.fixed_step_index,
+                     fixed_step_s=scene.fixed_step_s, time_s=scene.tactical_time_s, static_sha256=self.static_sha256,
+                     static=None if known_static_sha256 == self.static_sha256 else deepcopy(self.static),
+-                    ships=render_dynamic(self.scenario), events=[])
++                    ships=render_dynamic(scenario), events=[], advance_state=deepcopy(self.advance_state),
++                    control_state=render_control_state(scenario, command_state, self.command_tuning,
++                        last_input_seq, last_input, last_resolution))
+ 
+     def dispatch(self, request):
+         method, params = request["method"], request["params"]
+         if request.get("session_id") is not None or request.get("expected_revision") is not None:
+             fail("invalid_scope", "$.session_id", "战术使用独立场景身份，不使用编辑会话")
++        if method == "tactical.set_mode":
++            exact(params, {"mode"})
++            if params["mode"] not in ("editor", "tactical"):
++                fail("invalid_mode", "$.params.mode", "仅支持编辑或战术视图")
++            # Pause on the authority worker before releasing editor ownership.
++            self.pause()
++            self.mode = params["mode"]
++            return dict(mode=self.mode, paused=True, scene_id=self.scene_id)
+         if method == "tactical.create":
+             exact(params, {"scenario_id"})
+             if params["scenario_id"] != SCENARIO_ID:
+@@ -100,20 +167,66 @@ class TacticalService:
+             if self.scenario is not None:
+                 fail("scene_active", "$.scene_id", "已有测试场景，请先释放")
+             candidate = build_two_ship_scenario(self.root)
++            tuning = load_tactical_command_tuning_profile(self.root / "舰艇数据/标定/阶段I舰队指挥技术替身配置.v1.json")
++            command_state = initialize_tactical_fleet_command_state(candidate.scene, tuning=tuning,
++                player_side_id="side.blue", assignments=(TacticalShipRoleAssignment(DIRECT_SHIP_ID, "main_flagship"),),
++                direct_control_ship_id=DIRECT_SHIP_ID)
+             static = render_static(candidate)
+             digest = canonical_sha256(static)
+             self.scenario, self.static, self.static_sha256 = candidate, static, digest
++            self.command_state, self.command_tuning = command_state, tuning
++            self.last_input_seq, self.last_input, self.last_resolution = 0, None, None
++            self.advance_state = self.advance_input = None
+             self.scene_id = "scene." + uuid4().hex
+             return self.snapshot()
+         if method not in TACTICAL_CAPABILITIES:
+             fail("method_not_supported", "$.method", "尚未启用该战术操作")
+-        exact(params, {"scene_id", "known_static_sha256"} if method == "tactical.inspect" else {"scene_id"})
++        exact(params, {"scene_id", "known_static_sha256"} if method == "tactical.inspect" else
++            {"scene_id", "input"} if method == "tactical.step" else
++            {"scene_id", "input", "step_count"} if method == "tactical.advance" else {"scene_id"})
+         discovering = method == "tactical.inspect" and params["scene_id"] is None
+         if self.scenario is None or (not discovering and params["scene_id"] != self.scene_id):
+             fail("scene_missing", "$.params.scene_id", "场景已释放、后台已重启或场景身份不匹配")
++        if method == "tactical.pause":
++            self.pause()
++            return self.snapshot(self.static_sha256)
++        if method in ("tactical.step", "tactical.advance"):
++            if self.mode != "tactical":
++                fail("mode_required", "$.mode", "请先进入战术视角再执行单步")
++            if self.advancing:
++                fail("advance_active", "$.scene_id", "正在推进，请先停止再修改操纵")
++            value = params["input"]
++            control = validate_control_input(value, scene_id=self.scene_id, current_step=self.scenario.scene.fixed_step_index,
++                last_input_seq=self.last_input_seq, ship_ids=tuple(s.ship_id for s in self.scenario.scene.ships))
++            if method == "tactical.advance":
++                count = params["step_count"]
++                if type(count) is not int or count not in (60, 300, 600):
++                    fail("advance_count", "$.step_count", "仅支持推进 1、5 或 10 秒")
++                if value["target_step"] + count >= 2**53:
++                    fail("advance_count", "$.step_count", "推进后的步号超过安全整数范围")
++                prepare_directional_direct_command(self.scenario.scene, self.command_state, self.command_tuning, value["arguments"]["ship_id"])
++                # No step has executed yet; accepting another command is blocked until stopped.
++                progress = dict(interface=ADVANCE_INTERFACE, status="running", input_seq=value["input_seq"],
++                    input_sha256=canonical_sha256(value), start_step=value["target_step"], step_count=count, executed_steps=0, error=None)
++                snapshot = self.snapshot(self.static_sha256)
++                snapshot.update(paused=False, advance_state=deepcopy(progress))
++                self.advance_state, self.advance_input = progress, deepcopy(value)
++                return snapshot
++            result, candidate = self._integrate(value, control)
++            accepted = deepcopy(value)
++            # Build the response before publishing: projection failure cannot consume a step/sequence.
++            snapshot = self._snapshot(candidate, result.resulting_command_state, value["input_seq"], accepted, result, self.static_sha256)
++            snapshot["advance_state"] = None
++            self.scenario, self.command_state = candidate, result.resulting_command_state
++            self.last_input_seq, self.last_input, self.last_resolution = value["input_seq"], accepted, result
++            self.advance_state = self.advance_input = None
++            return snapshot
+         if method == "tactical.close":
+             closed = self.scene_id
+             self.scenario = self.scene_id = self.static = self.static_sha256 = None
++            self.command_state = self.command_tuning = self.last_input = self.last_resolution = None
++            self.last_input_seq = 0
++            self.advance_state = self.advance_input = None
+             return dict(closed=True, scene_id=closed)
+         known = params["known_static_sha256"]
+         if known is not None and (not isinstance(known, str) or len(known) != 64 or any(c not in "0123456789abcdef" for c in known)):
+diff --git a/backend/high_wilderness_sidecar/tactical_scenario.py b/backend/high_wilderness_sidecar/tactical_scenario.py
+index c9443cc..da807b5 100644
+--- a/backend/high_wilderness_sidecar/tactical_scenario.py
++++ b/backend/high_wilderness_sidecar/tactical_scenario.py
+@@ -34,6 +34,7 @@ from 高天荒野舰艇推进固定步接线 import ActualPropulsionExecution, A
+ from 高天荒野舰艇受控推进无场景适配器 import initialize_governed_propulsion_state
+ from 高天荒野舰艇完整受控推进场景版本 import FullyGovernedPropulsionExecutionPolicy
+ from 高天荒野舰艇完整受控推进场景 import validate_fully_governed_scene_context
++from .tactical_resources import compile_tactical_fuel_resources, compile_trial_propulsion_catalog
+ 
+ SCENARIO_ID = "gtw.sample.web.two_ship.v1"
+ PRESET_ID = "gtw.sortie.web.two_ship.conventional"
+@@ -73,6 +74,8 @@ def build_two_ship_scenario(root: Path) -> TwoShipScenario:
+     catalog = migrate_known_scene_catalog_v2_to_v3(compose_known_scene_catalog_v2("conventional_crewed", components))
+     source_plan = load_outfit_plan(root / "舰艇数据/舾装方案夹具/阶段F常规有人战舰舾装.v1.json")
+     plan = migrate_known_scene_outfit_v1_to_d2a(source_plan)
++    catalog, plan, fuel_policy = compile_tactical_fuel_resources(catalog, plan)
++    catalog, plan, trial_policy = compile_trial_propulsion_catalog(catalog, plan)
+     hull = compile_hull(load_hull_blueprint(root / "舰艇数据/船壳蓝图夹具/阶段F常规有人战舰船壳.v1.json"), materials)
+     snapshot = build_derived_ship_snapshot(hull, compile_outfit(plan, hull, catalog, coatings))
+     loadout = ShipAmmunitionStateInput(
+@@ -107,6 +110,8 @@ def build_two_ship_scenario(root: Path) -> TwoShipScenario:
+     scene = initialize_tactical_scene(bindings, projectiles, timing, initial_motion_states=motion,
+                                      initial_combat_states=combat, continuous_damage_profile=damage)
+     manifest = dict(interface="gaotian.web-two-ship-resources/v1alpha1", scenario_id=SCENARIO_ID,
++                    tactical_fuel=fuel_policy,
++                    trial_propulsion=trial_policy,
+                     source_outfit_sha256=canonical_sha256(source_plan), source_catalog_sha256=[canonical_sha256(c) for c in components],
+                     module_catalog_sha256=canonical_sha256(catalog), hull_sha256=hull.source_sha256,
+                     coating_catalog_sha256=canonical_sha256(coatings), material_catalogs_sha256=canonical_sha256([
+diff --git a/高天荒野WebT1a战术场景测试.py b/高天荒野WebT1a战术场景测试.py
+index 912c78a..7f1ba47 100644
+--- a/高天荒野WebT1a战术场景测试.py
++++ b/高天荒野WebT1a战术场景测试.py
+@@ -137,7 +137,7 @@ class TacticalTests(unittest.TestCase):
+         self.assertIsNone(created["revision"])
+         self.assertLess(len(encode_message(created)), 128 * 1024)
+         self.assertTrue(call(3, "system.ping", {"nonce": "test.ping"})["ok"])
+-        self.assertEqual(call(4, "tactical.step", {})["error"]["code"], "bridge.method_not_supported")
++        self.assertEqual(call(4, "tactical.step", {})["error"]["code"], "tactical.invalid_arguments")
+ 
+     def test_tactical_work_shares_bounded_queue_without_blocking_heartbeat(self):
+         from 高天荒野WebSidecar生命周期测试 import hello, request, INSTANCE_ID
+diff --git a/高天荒野舰艇受控推进完整安全适配器.py b/高天荒野舰艇受控推进完整安全适配器.py
+index 0d769e5..eddca87 100644
+--- a/高天荒野舰艇受控推进完整安全适配器.py
++++ b/高天荒野舰艇受控推进完整安全适配器.py
+@@ -4,6 +4,7 @@ from __future__ import annotations
+ 
+ from dataclasses import dataclass, replace
+ from typing import Any
++from 高天荒野舰艇内部步骤证明 import validate_internal_record
+ 
+ from 高天荒野舰艇数据契约 import ContractError, SHA256_PATTERN, canonical_sha256
+ from 高天荒野舰艇实际推进聚合器 import (
+@@ -142,16 +143,14 @@ def _validate_state(
+         "$.propulsion_state",
+         "必须提供定向推进状态",
+     )
+-    TacticalPropulsionState.parse(state.to_dict(), "$.propulsion_state")
++    validate_internal_record(state, TacticalPropulsionState, "$.propulsion_state")
+     _require(
+         isinstance(control, DirectionalPropulsionControlInput),
+         "control",
+         "$.propulsion_control",
+         "必须提供严格定向控制",
+     )
+-    DirectionalPropulsionControlInput.parse(
+-        control.to_dict(), "$.propulsion_control"
+-    )
++    validate_internal_record(control, DirectionalPropulsionControlInput, "$.propulsion_control")
+     bindings, capabilities = _binding_maps(context)
+     engines = {item.actuator_instance_id: item for item in state.engines}
+     _require(
+@@ -593,7 +592,7 @@ def integrate_fully_governed_propulsion_interval(
+         "$.opening",
+         "必须提供严格完整受控开边界",
+     )
+-    FullyGovernedPropulsionOpening.parse(opening.to_dict(), "$.opening")
++    validate_internal_record(opening, FullyGovernedPropulsionOpening, "$.opening")
+     _require(
+         isinstance(runtime, RuntimeShipParameters)
+         and runtime.source_sha256
+@@ -899,7 +898,7 @@ def evaluate_fully_governed_propulsion_closing(
+         "$.opening",
+         "收边界必须紧接完整开边界",
+     )
+-    FullyGovernedPropulsionOpening.parse(opening.to_dict(), "$.opening")
++    validate_internal_record(opening, FullyGovernedPropulsionOpening, "$.opening")
+     _require(
+         isinstance(final_runtime, RuntimeShipParameters)
+         and isinstance(final_model, dynamics.TacticalShipModel)
+diff --git a/高天荒野舰艇受控推进时间边界.py b/高天荒野舰艇受控推进时间边界.py
+index fc5687f..fe9429c 100644
+--- a/高天荒野舰艇受控推进时间边界.py
++++ b/高天荒野舰艇受控推进时间边界.py
+@@ -9,6 +9,7 @@ from __future__ import annotations
+ from dataclasses import dataclass
+ import re
+ from typing import Any
++from 高天荒野舰艇内部步骤证明 import validate_internal_record, register_time_preview, has_generated_time_preview
+ 
+ from 高天荒野舰艇数据契约 import ContractError, ModuleCapability, canonical_sha256
+ from 高天荒野舰艇推进安全判定器 import (
+@@ -19,7 +20,7 @@ from 高天荒野舰艇推进状态合同 import (
+ )
+ from 高天荒野舰艇推进时间内核 import (
+     PropulsionTimeBoundaryResult, PropulsionTimeCommand,
+-    _apply_command, _commit_due_transition, _parse_exact_timing_capability,
++    _apply_command, _commit_due_transition, _resolve_timing_capability,
+     validate_committed_propulsion_time_state,
+ )
+ from 高天荒野舰艇推进通道合同 import exact_object, strict_stage
+@@ -39,7 +40,7 @@ def _step(value: Any) -> int:
+ def _engine(value: Any, path: str) -> EngineRuntimeState:
+     if not isinstance(value, EngineRuntimeState):
+         raise ContractError("governed_time.state_type", path, "必须是 engine v2 状态")
+-    parsed = EngineRuntimeState.parse(value.to_dict(), path)
++    parsed = validate_internal_record(value, EngineRuntimeState, path)
+     if parsed.interface_id != ENGINE_RUNTIME_STATE_INTERFACE_ID:
+         raise ContractError("governed_time.state_interface", path, "不得隐式使用 c2b engine 状态")
+     if parsed.actuator_category == "main_engine" and (
+@@ -208,13 +209,13 @@ def preview_governed_propulsion_time_boundary(state: EngineRuntimeState, capabil
+     if not isinstance(command, PropulsionTimeCommand):
+         raise ContractError("governed_time.command_type", "$.command", "必须提供原命令")
+     command.target_for(state.actuator_category)
+-    timing = _parse_exact_timing_capability(capability, state.actuator_category)
++    timing = _resolve_timing_capability(capability, state.actuator_category)
+     # 允许当前边界恰好到期，不允许漏过期或伪造精确排程。
+     validation_boundary = boundary - 1 if state.next_transition_step == boundary and boundary > 0 else boundary
+     validate_committed_propulsion_time_state(state, capability, validation_boundary)
+     candidate, events = _commit_due_transition(state, timing, boundary)
+-    return GovernedPropulsionTimePreview(boundary, canonical_sha256(capability), state, command,
+-        candidate, tuple(sorted(events, key=lambda event: event.sort_key)))
++    return register_time_preview(GovernedPropulsionTimePreview(boundary, canonical_sha256(capability), state, command,
++        candidate, tuple(sorted(events, key=lambda event: event.sort_key))), capability)
+ 
+ 
+ def commit_governed_propulsion_time_boundary(preview: GovernedPropulsionTimePreview,
+@@ -226,11 +227,12 @@ def commit_governed_propulsion_time_boundary(preview: GovernedPropulsionTimePrev
+         raise ContractError("governed_time.preview_type", "$.preview", "必须提供严格预览")
+     if _step(fixed_step_index) != preview.fixed_step_index or _engine(current_state, "$.current_state") != preview.source_state:
+         raise ContractError("governed_time.stale_preview", "$.preview", "当前状态或当前边界已改变")
+-    expected = preview_governed_propulsion_time_boundary(current_state, capability, fixed_step_index, preview.command)
+-    if expected != preview:
+-        raise ContractError("governed_time.preview_replay", "$.preview", "能力指纹或候选与精确重放不一致")
++    if not has_generated_time_preview(preview, capability):
++        expected = preview_governed_propulsion_time_boundary(current_state, capability, fixed_step_index, preview.command)
++        if expected != preview:
++            raise ContractError("governed_time.preview_replay", "$.preview", "能力指纹或候选与精确重放不一致")
+     _validate_authorization(preview, effective_target_percent, allow_upstage)
+-    timing = _parse_exact_timing_capability(capability, current_state.actuator_category)
++    timing = _resolve_timing_capability(capability, current_state.actuator_category)
+     committed = preview.candidate_state if allow_upstage else preview.source_state
+     events = list(preview.candidate_events) if allow_upstage else []
+     notch, _ = preview.command.target_for(current_state.actuator_category)
+diff --git a/高天荒野舰艇受控推进硬故障适配器.py b/高天荒野舰艇受控推进硬故障适配器.py
+index 7c11c20..a2842fe 100644
+--- a/高天荒野舰艇受控推进硬故障适配器.py
++++ b/高天荒野舰艇受控推进硬故障适配器.py
+@@ -2,6 +2,8 @@
+ 
+ from __future__ import annotations
+ 
++from 高天荒野舰艇内部步骤证明 import validate_internal_record
++
+ from dataclasses import dataclass, replace
+ from typing import Any
+ 
+@@ -196,7 +198,7 @@ def _current_engine(value: Any, path: str) -> EngineRuntimeState:
+         path,
+         "必须提供当前 v2 发动机状态",
+     )
+-    EngineRuntimeState.parse(value.to_dict(), path)
++    validate_internal_record(value, EngineRuntimeState, path)
+     return value
+ 
+ 
+@@ -435,7 +437,7 @@ class GovernedPropulsionHardFaultOpening:
+             raise ValueError("紧急断推结果必须是严格不可变序列")
+         if not isinstance(self.state, TacticalPropulsionState):
+             raise ValueError("结果推进状态非法")
+-        TacticalPropulsionState.parse(self.state.to_dict(), "$.state")
++        validate_internal_record(self.state, TacticalPropulsionState, "$.state")
+         if self.state.interface_id != DIRECTIONAL_STATE_INTERFACE_ID:
+             raise ValueError("结果必须保留当前定向推进状态")
+         ids = tuple(
+@@ -629,7 +631,7 @@ def commit_governed_propulsion_hard_fault_opening(
+         "$.command",
+         "必须提供严格硬故障命令",
+     )
+-    GovernedPropulsionHardFaultCommand.parse(command.to_dict(), "$.command")
++    validate_internal_record(command, GovernedPropulsionHardFaultCommand, "$.command")
+     projection = project_runtime_propulsion_hard_facts(
+         context, runtime, state, step
+     )
+diff --git a/高天荒野舰艇实际推进聚合器.py b/高天荒野舰艇实际推进聚合器.py
+index 48ffcc8..6026e02 100644
+--- a/高天荒野舰艇实际推进聚合器.py
++++ b/高天荒野舰艇实际推进聚合器.py
+@@ -5,6 +5,10 @@ from __future__ import annotations
+ from dataclasses import dataclass
+ from math import fsum, isclose
+ from typing import Any, Iterable
++from contextlib import contextmanager
++from contextvars import ContextVar
++from 高天荒野舰艇只读资源验证 import require_deeply_immutable
++from 高天荒野舰艇内部步骤证明 import validate_internal_record
+ 
+ from 高天荒野舰艇数据契约 import ContractError, ModulePrototypeCatalog, canonical_sha256
+ from 高天荒野舰艇实际推进合同 import ActualActuationRequest, finite_number, fixed_step_index
+@@ -17,6 +21,19 @@ from 高天荒野舰艇推进通道合同 import OPPOSING_CHANNEL_PAIRS
+ ACTUAL_AGGREGATION_INTERFACE_ID = "gaotian.actual-propulsion-aggregation/v1alpha1"
+ ACTUAL_AGGREGATION_POLICY_ID = "gaotian.propulsion/runtime-use-then-actual-output/v1"
+ 
++# Only share static validation inside one serialized, resource-read-only step.
++# Never reuse across steps: a modified resource must fail at the next boundary.
++_step_validated_contexts = ContextVar("actual_propulsion_step_validated_contexts", default=None)
++
++
++@contextmanager
++def propulsion_step_validation_scope():
++    token = _step_validated_contexts.set({})
++    try:
++        yield
++    finally:
++        _step_validated_contexts.reset(token)
++
+ 
+ def _equal(actual: Any, expected: Any, path: str) -> None:
+     if canonical_sha256(actual) != canonical_sha256(expected):
+@@ -32,12 +49,17 @@ class ActualPropulsionContext:
+     bindings: tuple[DirectionalPropulsionActuatorBinding, ...]
+ 
+     def __post_init__(self) -> None:
++        validated = _step_validated_contexts.get()
++        if validated is not None and validated.get(id(self)) is self:
++            return
+         verify_derived_ship_snapshot_fingerprint(self.snapshot)
+         expected = bind_directional_outfit_propulsion(
+             self.scene_id, self.ship_id, self.snapshot.outfit, self.catalog)
+         _equal([b.to_dict() for b in self.bindings], [b.to_dict() for b in expected], "$.bindings")
+         if any(len(b.command_channels) != 1 for b in self.bindings):
+             raise ContractError("actual_propulsion.ambiguous_intent", "$.bindings", "本版本要求每执行器唯一物理意图")
++        if validated is not None:
++            validated[id(self)] = self
+ 
+ 
+ def compile_actual_propulsion_context(
+@@ -49,6 +71,32 @@ def compile_actual_propulsion_context(
+         tuple(sorted(bindings, key=lambda b: b.actuator_instance_id)))
+ 
+ 
++@dataclass(frozen=True, init=False)
++class CompiledActualPropulsionContexts:
++    """Strict proof retained only for deeply immutable, exact context objects."""
++    _contexts: tuple
++
++    def __init__(self, contexts):
++        contexts = tuple(contexts)
++        # Reset any outer step proof while compiling this independent resource set.
++        with propulsion_step_validation_scope():
++            for context in contexts:
++                require_deeply_immutable(context)
++                context.__post_init__()
++        object.__setattr__(self, "_contexts", contexts)
++
++
++@contextmanager
++def compiled_actual_propulsion_scope(compiled):
++    if not isinstance(compiled, CompiledActualPropulsionContexts):
++        raise TypeError("Expected compiled immutable propulsion contexts")
++    token = _step_validated_contexts.set({id(c): c for c in compiled._contexts})
++    try:
++        yield
++    finally:
++        _step_validated_contexts.reset(token)
++
++
+ @dataclass(frozen=True)
+ class ActualActuatorContribution:
+     actuator_instance_id: str
+@@ -112,7 +160,7 @@ def aggregate_actual_propulsion(
+         raise ContractError("actual_propulsion.engine_set", "$.engines", "必须保留全部静态执行器且各出现一次")
+     active_channels = set()
+     for key, engine in by_id.items():
+-        EngineRuntimeState.parse(engine.to_dict(), f"$.engines.{key}")
++        validate_internal_record(engine, EngineRuntimeState, f"$.engines.{key}")
+         if engine.interface_id != ENGINE_RUNTIME_STATE_INTERFACE_ID or engine.actuator_category != binding_by_id[key].actuator_category:
+             raise ContractError("actual_propulsion.engine_binding", "$.engines", "执行器版本或类别与绑定不一致")
+         if (engine.phase in {"ready", "running", "stopping"} and engine.ready_at_fixed_step > step) or (
+diff --git a/高天荒野舰艇推进方向互锁边界.py b/高天荒野舰艇推进方向互锁边界.py
+index b2e3467..6d2f5a0 100644
+--- a/高天荒野舰艇推进方向互锁边界.py
++++ b/高天荒野舰艇推进方向互锁边界.py
+@@ -2,6 +2,8 @@
+ 
+ from __future__ import annotations
+ 
++from 高天荒野舰艇内部步骤证明 import validate_internal_record
++
+ from dataclasses import dataclass
+ from typing import Any
+ 
+@@ -271,12 +273,8 @@ class GovernedPropulsionDirectionInterlockBoundary:
+             or not isinstance(self.effective_control, DirectionalPropulsionControlInput)
+         ):
+             raise ValueError("方向互锁必须保存严格请求与有效控制")
+-        DirectionalPropulsionControlInput.parse(
+-            self.requested_control.to_dict(), "$.requested_control"
+-        )
+-        DirectionalPropulsionControlInput.parse(
+-            self.effective_control.to_dict(), "$.effective_control"
+-        )
++        validate_internal_record(self.requested_control, DirectionalPropulsionControlInput, "$.requested_control")
++        validate_internal_record(self.effective_control, DirectionalPropulsionControlInput, "$.effective_control")
+         if (
+             canonical_sha256(self.requested_control)
+             != self.requested_control_sha256
+@@ -455,9 +453,7 @@ def resolve_governed_propulsion_direction_interlock(
+         "$.hard_fault_opening",
+         "必须提供严格硬故障开边界",
+     )
+-    GovernedPropulsionHardFaultOpening.parse(
+-        hard_fault_opening.to_dict(), "$.hard_fault_opening"
+-    )
++    validate_internal_record(hard_fault_opening, GovernedPropulsionHardFaultOpening, "$.hard_fault_opening")
+     _require(
+         hard_fault_opening.fixed_step_index == n,
+         "hard_fault_step",
+@@ -480,9 +476,7 @@ def resolve_governed_propulsion_direction_interlock(
+         "$.requested_control",
+         "必须提供严格原始控制",
+     )
+-    DirectionalPropulsionControlInput.parse(
+-        requested_control.to_dict(), "$.requested_control"
+-    )
++    validate_internal_record(requested_control, DirectionalPropulsionControlInput, "$.requested_control")
+     bindings = {
+         item.actuator_instance_id: item for item in context.bindings
+     }
+diff --git a/高天荒野舰艇推进时间内核.py b/高天荒野舰艇推进时间内核.py
+index 0d9c877..4648de6 100644
+--- a/高天荒野舰艇推进时间内核.py
++++ b/高天荒野舰艇推进时间内核.py
+@@ -9,6 +9,11 @@ from __future__ import annotations
+ from dataclasses import dataclass, replace
+ from decimal import Decimal, InvalidOperation, ROUND_CEILING
+ from typing import Any
++from contextlib import contextmanager
++from contextvars import ContextVar
++from types import MappingProxyType
++from 高天荒野舰艇只读资源验证 import require_deeply_immutable
++from 高天荒野舰艇内部步骤证明 import validate_internal_record
+ 
+ from 高天荒野舰艇数据契约 import ContractError, ModuleCapability
+ from 高天荒野舰艇推进安全判定器 import (
+@@ -226,6 +231,50 @@ def _parse_exact_timing_capability(
+     )
+ 
+ 
++_compiled_timing = ContextVar("compiled_propulsion_timing", default=None)
++
++
++@dataclass(frozen=True, init=False)
++class CompiledPropulsionTiming:
++    """Strictly compile an immutable capability set once, owned by a session."""
++    _entries: object
++
++    def __init__(self, capabilities):
++        entries = {}
++        for capability, category in capabilities:
++            require_deeply_immutable(capability)
++            key = (capability, category)
++            if key not in entries:
++                entries[key] = _parse_exact_timing_capability(capability, category)
++        object.__setattr__(self, "_entries", MappingProxyType(entries))
++
++    @property
++    def capability_count(self):
++        return len(self._entries)
++
++
++@contextmanager
++def compiled_propulsion_timing_scope(compiled):
++    if not isinstance(compiled, CompiledPropulsionTiming):
++        raise TypeError("Expected compiled timing resources")
++    token = _compiled_timing.set(compiled._entries)
++    try:
++        yield
++    finally:
++        _compiled_timing.reset(token)
++
++
++def _resolve_timing_capability(capability, category):
++    compiled = _compiled_timing.get()
++    if compiled is None:
++        return _parse_exact_timing_capability(capability, category)
++    try:
++        return compiled[(capability, category)]
++    except (KeyError, TypeError):
++        raise ContractError("propulsion_time.uncompiled_capability", "$.capability",
++                            "当前会话未编译此能力；必须在资源边界重建") from None
++
++
+ def validate_propulsion_timing_capability(
+     capability: ModuleCapability,
+     actuator_category: str,
+@@ -241,10 +290,10 @@ def validate_committed_propulsion_time_state(
+ ) -> None:
+     """校验存档/场景边界的精确排程锚点；不提交事件、不改变既有内核行为。"""
+     boundary = _nonnegative_integer(fixed_step_index, "$.fixed_step_index")
+-    EngineRuntimeState.parse(state.to_dict(), "$.state")
++    validate_internal_record(state, EngineRuntimeState, "$.state")
+     if state.interface_id != ENGINE_RUNTIME_STATE_INTERFACE_ID:
+         raise ContractError("propulsion_time.state_interface", "$.state", "只接受 d1 时间状态")
+-    timing = _parse_exact_timing_capability(capability, state.actuator_category)
++    timing = _resolve_timing_capability(capability, state.actuator_category)
+     if state.phase == "starting":
+         if not boundary < state.ready_at_fixed_step <= boundary + timing.startup_steps or state.ready_at_fixed_step < timing.startup_steps:
+             raise ContractError("propulsion_time.committed_start", "$.state", "启动完成时间不属于当前精确能力")
+@@ -720,7 +769,7 @@ def advance_propulsion_time_boundary(
+             "$.command",
+             "必须传入 PropulsionTimeCommand",
+         )
+-    timing = _parse_exact_timing_capability(capability, state.actuator_category)
++    timing = _resolve_timing_capability(capability, state.actuator_category)
+     commanded_notch, target = command.target_for(state.actuator_category)
+     committed, events = _commit_due_transition(state, timing, boundary)
+     resulting, command_events = _apply_command(
+diff --git a/高天荒野舰艇推进硬故障运行时投影.py b/高天荒野舰艇推进硬故障运行时投影.py
+index b6d6724..9806353 100644
+--- a/高天荒野舰艇推进硬故障运行时投影.py
++++ b/高天荒野舰艇推进硬故障运行时投影.py
+@@ -2,6 +2,8 @@
+ 
+ from __future__ import annotations
+ 
++from 高天荒野舰艇内部步骤证明 import validate_internal_record
++
+ from dataclasses import dataclass
+ from typing import Any, Mapping
+ 
+@@ -357,7 +359,7 @@ def _validate_runtime_source(
+ 
+ 
+ def _validate_engine_boundary(engine: EngineRuntimeState, step: int, path: str) -> None:
+-    EngineRuntimeState.parse(engine.to_dict(), path)
++    validate_internal_record(engine, EngineRuntimeState, path)
+     _require(
+         engine.interface_id == ENGINE_RUNTIME_STATE_INTERFACE_ID,
+         "hard_fact.engine_interface",
+@@ -435,7 +437,7 @@ def project_runtime_propulsion_hard_facts(
+         "$.propulsion_state",
+         "必须提供严格推进状态",
+     )
+-    TacticalPropulsionState.parse(state.to_dict(), "$.propulsion_state")
++    validate_internal_record(state, TacticalPropulsionState, "$.propulsion_state")
+     _require(
+         state.interface_id == DIRECTIONAL_STATE_INTERFACE_ID,
+         "hard_fact.state_interface",
+@@ -579,7 +581,7 @@ def validate_runtime_propulsion_hard_fact_projection(
+         "$.result",
+         "必须提供严格运行时硬故障投影",
+     )
+-    RuntimePropulsionHardFactProjection.parse(result.to_dict())
++    validate_internal_record(result, RuntimePropulsionHardFactProjection, "$")
+     expected = project_runtime_propulsion_hard_facts(
+         context, runtime, state, result.fixed_step_index
+     )
+diff --git a/高天荒野舰艇整舰推进安全判定.py b/高天荒野舰艇整舰推进安全判定.py
+index 4473944..7e6e821 100644
+--- a/高天荒野舰艇整舰推进安全判定.py
++++ b/高天荒野舰艇整舰推进安全判定.py
+@@ -2,6 +2,8 @@
+ 
+ from __future__ import annotations
+ 
++from 高天荒野舰艇内部步骤证明 import validate_internal_record
++
+ from dataclasses import dataclass, replace
+ import re
+ from typing import Any, Callable
+@@ -288,14 +290,14 @@ def evaluate_whole_ship_propulsion_safety(profile: PropulsionSafetyProfile,
+         "profile", "必须提供精确安全配置")
+     _require(isinstance(controls, DirectionalPropulsionControlInput) and type(crew_safety_lock_enabled) is bool
+         and callable(load_evaluator), "input", "控制、乘员锁或采样器非法")
+-    DirectionalPropulsionControlInput.parse(controls.to_dict())
++    validate_internal_record(controls, DirectionalPropulsionControlInput, "$")
+     _require(isinstance(previous_governors, tuple) and all(isinstance(g, DirectionalPropulsionGovernorState) for g in previous_governors)
+         and tuple(g.command_channel for g in previous_governors) == DIRECTIONAL_CHANNELS, "governors", "需按序提供六通道历史")
+     previous = {g.command_channel: g for g in previous_governors}
+     clocks = {g.last_evaluated_step_index for g in previous_governors}
+     _require(len(clocks) == 1, "history_clock", "通道历史必须属于同一权威边界")
+     for g in previous_governors:
+-        DirectionalPropulsionGovernorState.parse(g.to_dict(), "$.governors")
++        validate_internal_record(g, DirectionalPropulsionGovernorState, "$.governors")
+         if g.last_evaluated_step_index is None:
+             _require(replace(g, command=DirectionalPropulsionGovernorState.initial(g.command_channel).command)
+                 == DirectionalPropulsionGovernorState.initial(g.command_channel), "history_initial", "未求值状态不得携带限制历史")

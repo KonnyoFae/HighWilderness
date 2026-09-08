@@ -6,8 +6,8 @@ export type Selection = { region: string; vertex: number | null };
 export const screen = (p: Point, c: Camera): Point => ({ x: c.x + p.x * c.scale, y: c.y - p.y * c.scale });
 export const world = (p: Point, c: Camera): Point => ({ x: (p.x - c.x) / c.scale, y: (c.y - p.y) / c.scale });
 export const snap = (p: Point): Point => ({ x: Math.round(p.x / 2.5) * 2.5, y: Math.round(p.y / 2.5) * 2.5 });
-export function zoom(c: Camera, anchor: Point, factor: number): Camera {
-  const p = world(anchor, c), scale = Math.max(0.5, Math.min(64, c.scale * factor));
+export function zoom(c: Camera, anchor: Point, factor: number, minScale = 0.5, maxScale = 64): Camera {
+  const p = world(anchor, c), scale = Math.max(minScale, Math.min(maxScale, c.scale * factor));
   return { scale, x: anchor.x - p.x * scale, y: anchor.y + p.y * scale };
 }
 export function fit(regions: HullRegion[], width: number, height: number): Camera {

@@ -2,18 +2,23 @@ import { isTauri } from "@tauri-apps/api/core";
 import { OutfitPanel } from "./OutfitPanel";
 import { HullViewport } from "./HullViewport";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { BridgeTransport } from "../bridge/transport";
 import { normalizeHostFailure } from "../bridge/model";
 import { editorReducer, initialEditorModel } from "./model";
 import type { ResourceIndex, SessionSnapshot } from "./model";
 
-export function EditorPanel({ transport, instance }: { transport: BridgeTransport; instance: string }) {
+export function EditorPanel({ transport, instance, active = true, onSwitchBlocked }: {
+  transport: BridgeTransport; instance: string; active?: boolean; onSwitchBlocked?: (blocked: boolean) => void;
+}) {
   const [model, dispatch] = useReducer(editorReducer, instance, initialEditorModel);
   const [index, setIndex] = useState<ResourceIndex | null>(null);
   const [selected, setSelected] = useState("");
   const [name, setName] = useState("");
   const [localDraftBusy, setLocalDraftBusy] = useState(false);
+  const [interactionBusy, setInteractionBusy] = useState(false);
+  const hullLocalDraft = useCallback((value: boolean) => { setLocalDraftBusy(value); setInteractionBusy(value); }, []);
   const [newName, setNewName] = useState("新建船壳");
   const [newOutfitName, setNewOutfitName] = useState("新建舾装");
   const [notice, setNotice] = useState("");
@@ -25,6 +30,7 @@ export function EditorPanel({ transport, instance }: { transport: BridgeTranspor
   const inFlight = useRef(false);
   const session = model.session;
   const outfit = session?.resource.kind === "OutfitPlan";
+  useEffect(() => { onSwitchBlocked?.(model.pending !== null || interactionBusy || closeChoice !== null); }, [model.pending, interactionBusy, closeChoice, onSwitchBlocked]);
 
   useEffect(() => {
     let active = true;
@@ -58,7 +64,7 @@ export function EditorPanel({ transport, instance }: { transport: BridgeTranspor
   }, [session, name, localDraftBusy]);
 
   async function run(method: string, params: Record<string, unknown> = {}) {
-    if (inFlight.current) return false;
+    if (inFlight.current || !active) return false;
     inFlight.current = true;
     const ticket = ++counter.current;
     dispatch({ type: "begin", ticket });
@@ -149,9 +155,9 @@ export function EditorPanel({ transport, instance }: { transport: BridgeTranspor
         {session.recovered && <span>已恢复草稿，请选择另存位置</span>}
         <span>最近合法预览：修订 {session.last_valid_revision ?? "—"}</span>
       </div>
-      {outfit ? <OutfitPanel key={session.session_id} session={session} options={index?.module_options ?? []} busy={model.pending !== null} operationError={model.error?.message}
-        onLocalDraft={setLocalDraftBusy} onCommand={(command, args) => run("editor.command", { command, arguments: args })} /> : <HullViewport key={session.session_id} session={session} busy={model.pending !== null}
-        materials={index?.material_options ?? []} onLocalDraft={setLocalDraftBusy}
+      {outfit ? <OutfitPanel key={session.session_id} session={session} options={index?.module_options ?? []} busy={model.pending !== null || !active} operationError={model.error?.message}
+        onLocalDraft={setLocalDraftBusy} onInteractionBusy={setInteractionBusy} onCommand={(command, args) => run("editor.command", { command, arguments: args })} /> : <HullViewport key={session.session_id} session={session} busy={model.pending !== null || !active} active={active}
+        materials={index?.material_options ?? []} onLocalDraft={hullLocalDraft}
         onCommand={(command, args) => run("editor.command", { command, arguments: args })} />}
       <div className="editor-summary" role="status">
         <strong>{session.recovery_warning ? session.recovery_warning : !session.recovery_available ? "当前后台未启用草稿恢复" : session.dirty ? `恢复草稿已记录：修订 ${session.revision}` : "当前与保存或打开时一致，无待恢复修改"}</strong>
@@ -164,7 +170,7 @@ export function EditorPanel({ transport, instance }: { transport: BridgeTranspor
         <pre>{JSON.stringify(session.preview.model, null, 2)}</pre>
       </details>
     </>}
-    {closeChoice && <div className="editor-error" role="dialog" aria-label="未保存修改">
+    {closeChoice && createPortal(<div className="editor-panel editor-error close-choice" role="dialog" aria-modal="true" aria-label="未保存修改">
       <strong>当前存在未保存修改或待处理操作</strong>
       <p>取消可继续编辑或保存。退出时保留已应用的恢复草稿；尚未提交的绘图、拖动和名称输入不会自动保存。</p>
       <div className="editor-row">
@@ -181,7 +187,7 @@ export function EditorPanel({ transport, instance }: { transport: BridgeTranspor
             })().catch(error => { allowWindowClose.current = false; setNotice(normalizeHostFailure(error).message); });
           }}>保留恢复草稿并退出</button>}
       </div>
-    </div>}
+    </div>, document.body)}
     {busy && <p role="status">正在处理编辑操作…</p>}
   </section>;
 }

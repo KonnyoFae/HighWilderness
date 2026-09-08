@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "scope": "built Tauri WebView2 + real Rust/Python IPC; paused T2a only",
+  "checks": [
+    "built desktop/Rust/Python handshake, set_mode and real v7 two-ship scene render",
+    "selection, focus and native re-read retain paused step zero",
+    "native switch preserves editor form/scene and destroys hidden tactical renderer",
+    "scene release, clean editor close and owned backend stop; no design writes"
+  ],
+  "page_errors": []
+}

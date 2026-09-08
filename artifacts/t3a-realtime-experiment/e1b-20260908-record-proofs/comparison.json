@@ -1,0 +1,26 @@
+[
+  {
+    "backend": "legacy",
+    "status": "PASS",
+    "case": "mixed72",
+    "boundaries": 73
+  },
+  {
+    "backend": "legacy",
+    "status": "PASS",
+    "case": "transitions120",
+    "boundaries": 121
+  },
+  {
+    "backend": "flight",
+    "status": "PASS",
+    "case": "mixed72",
+    "boundaries": 73
+  },
+  {
+    "backend": "flight",
+    "status": "PASS",
+    "case": "transitions120",
+    "boundaries": 121
+  }
+]

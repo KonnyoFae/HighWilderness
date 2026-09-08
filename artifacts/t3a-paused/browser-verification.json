@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "scope": "no-eval browser UI with recorded Python snapshots; not native IPC",
+  "checks": [
+    "lost reply locks stepping until read confirms exactly one execution; inspecting red does not change blue control",
+    "left turn and automatic brake follow recorded v7 input shapes, with incompatible controls disabled",
+    "mode switch retains telegraph settings but normal step sends neutral yaw; requested and actual output displayed separately"
+  ],
+  "page_errors": []
+}

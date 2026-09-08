@@ -20,8 +20,8 @@ function Fields({ value }: { value: Record<string, unknown> }) {
   return <dl>{Object.entries(value).map(([key, v]) => <div key={key}><dt>{labels[key] ?? key}</dt><dd>{v === null ? "无" : typeof v === "object" ? JSON.stringify(v) : String(v)}</dd></div>)}</dl>;
 }
 
-export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, operationError }: {
-  session: SessionSnapshot; options: ModuleOption[]; busy: boolean; onCommand: HullCommand; onLocalDraft: (value: boolean) => void; operationError?: string;
+export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, operationError, onInteractionBusy }: {
+  session: SessionSnapshot; options: ModuleOption[]; busy: boolean; onCommand: HullCommand; onLocalDraft: (value: boolean) => void; operationError?: string; onInteractionBusy?: (value: boolean) => void;
 }) {
   const modules = session.draft.modules ?? [];
   const [category, setCategory] = useState("");
@@ -45,6 +45,7 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
   useEffect(() => { setFields(resetFields()); setDirty(false); setError(""); }, [session.revision, selected]);
   useEffect(() => { if (!instance && !dirty) setFields(f => ({ ...f, rotation: String(defaultRotation(option)) })); }, [option?.sha256]);
   useEffect(() => { onLocalDraft(dirty || canvasDraft || groupDraft); return () => onLocalDraft(false); }, [dirty, canvasDraft, groupDraft, onLocalDraft]);
+  useEffect(() => { onInteractionBusy?.(canvasDraft); return () => onInteractionBusy?.(false); }, [canvasDraft, onInteractionBusy]);
   function edit(key: keyof OutfitFields, value: string) { setFields(f => ({ ...f, [key]: value })); setDirty(true); }
   async function apply(action: "place" | "move" | "rotate" | "remove") {
     try {

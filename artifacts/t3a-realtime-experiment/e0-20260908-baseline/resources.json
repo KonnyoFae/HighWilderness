@@ -1,0 +1,105 @@
+{
+  "manifest": {
+    "interface": "gaotian.web-two-ship-resources/v1alpha1",
+    "scenario_id": "gtw.sample.web.two_ship.v1",
+    "tactical_fuel": {
+      "policy": "gaotian.tactical-fuel/no-propulsion-burn/v1",
+      "source_catalog_sha256": "7c5eba7a9fed2eed72f8fb05d23290461fa665a80063b67544ddcbfef3c3a2ea",
+      "source_outfit_sha256": "0b43256e0221213f4953df3ad6692dd69bb45d970488ef0f75c905d0622b23d3",
+      "catalog_sha256": "f3a9511c5904279423cfbdf84e854761225eeca234aeeafc04fe42f4639d38b8",
+      "outfit_sha256": "af9fb6ad462369344899757d5f294dabda2dd5c10097631179b37df694d68edc"
+    },
+    "trial_propulsion": {
+      "policy": "gaotian.web-two-ship/visible-maneuver-trial/v1",
+      "thrust_multiplier": 50.0,
+      "source_catalog_sha256": "f3a9511c5904279423cfbdf84e854761225eeca234aeeafc04fe42f4639d38b8",
+      "source_outfit_sha256": "af9fb6ad462369344899757d5f294dabda2dd5c10097631179b37df694d68edc",
+      "catalog_sha256": "3cd9ff0fed057dbe9177c78a9a45396a0936e1233b2344882285aa239d5ce982",
+      "outfit_sha256": "d47b4cb6b94bc4ff32568e2f8042164b8e2515587a8e9fd3e7534345e20c4a0c"
+    },
+    "source_outfit_sha256": "cb8862db2ea80727bfc85a53a0520a1f4c1e2730a49dce87531c86c829765570",
+    "source_catalog_sha256": [
+      "94e027d95064a2e5ab90899544ec4f27b1f7042915767d7b4c78afd4647f5a7a",
+      "1740797702b3de4a7e3c5919a3f59f9d12cfb92f69e338666e1a05639e018ab1"
+    ],
+    "module_catalog_sha256": "3cd9ff0fed057dbe9177c78a9a45396a0936e1233b2344882285aa239d5ce982",
+    "hull_sha256": "2c6344986c45af918826f6f2db052a3f11fa7a9b99c728a197c72e5bcaee8e3a",
+    "coating_catalog_sha256": "2b8bb38311a02406a491b685aad160f9b051049ab9b35e25f95f3c1c66de7fa5",
+    "material_catalogs_sha256": "fa8d465ca3a38a549b06e8217595ad3e9966a38ea75fe80547ee98c6e133f521",
+    "derived_snapshot_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+    "sortie_configuration": {
+      "active_remote_core_instance_id": null,
+      "bulk_cargo": [],
+      "control_mode": "crewed",
+      "crew": [
+        {
+          "count": 2,
+          "crew_type": "officer"
+        },
+        {
+          "count": 10,
+          "crew_type": "ordinary"
+        },
+        {
+          "count": 4,
+          "crew_type": "technical_officer"
+        },
+        {
+          "count": 2,
+          "crew_type": "veteran_damage_control"
+        }
+      ],
+      "fixture_level": "contract_fixture",
+      "fuel_units": 800.0,
+      "height_layer": "upper",
+      "id": "gtw.sortie.web.two_ship.conventional",
+      "kind": "SortieConfiguration",
+      "name": "两舰试航技术出航预设",
+      "outfit_plan": {
+        "id": "gtw.outfit.fixture.stage_f.conventional_crewed.tactical_no_burn.web_trial",
+        "version": 2
+      },
+      "schema": "gaotian.ship/v1alpha1",
+      "version": 1,
+      "ammunition_loadout": {
+        "magazines": [
+          {
+            "instance_id": "ammunition_magazine",
+            "inventory": [
+              {
+                "munition_id": "gtw.munition.fixture.76mm.standard",
+                "units": 20
+              }
+            ]
+          }
+        ],
+        "weapons": [
+          {
+            "instance_id": "weapon_upper_port",
+            "munition_id": "gtw.munition.fixture.76mm.standard",
+            "ready_rounds": 1
+          }
+        ]
+      }
+    },
+    "sortie_sha256": "be5c6761966db21f4678dd4f7ec110488b4f0e64ff31d87c389fb16f1dd653cf",
+    "timing_sha256": "d463c1cd824b63c3b65c57a1e33f6f44a6f0b94841946a665e27e7cbea98042d",
+    "projectile_sha256": "b3bd4f0fe251f3173ea2252456f484c1d14d04965bf8c6de438216f91f109d63",
+    "continuous_damage_sha256": "b5a70251299f88ef8cc910933d041bc0728644f12cd860533eb2de58c0adb4b2",
+    "safety_sha256": "a67f71517c39243d54dc01bf84f3981ca73e59551fc85787ce8da7e336ea5d6f",
+    "initial_scene_sha256": "322b611c0a3d2a5a3959e43814c73fd6f5100133761c5f3bbfca89acb7ce6466"
+  },
+  "command_tuning": {
+    "fixture_level": "prototype_unbalanced",
+    "heading_full_wheel_error_deg": 30.0,
+    "id": "gtw.tactical_command_tuning.prototype.stage_i9",
+    "kind": "TacticalCommandTuningProfile",
+    "name": "阶段I9舰队指挥技术替身配置",
+    "schema": "gaotian.tactical-command-tuning/v1alpha1",
+    "velocity_error_full_command_mps": 50.0,
+    "version": 1,
+    "waypoint_tolerance_m": 25.0
+  },
+  "static_sha256": "c515200daa3aa4a16d35b9159fb602ebf96f6fcab17f47043a50b8b1909b2c2e",
+  "initial_scene_sha256": "b250819c5f4f225c7cf355a8734be50e3a3584f50817d32c477ea66cbf427766"
+}

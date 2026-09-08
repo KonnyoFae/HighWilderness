@@ -9,6 +9,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import re
 from typing import Any
+from 高天荒野舰艇内部步骤证明 import validate_internal_record, register_time_preview, has_generated_time_preview
 
 from 高天荒野舰艇数据契约 import ContractError, ModuleCapability, canonical_sha256
 from 高天荒野舰艇推进安全判定器 import (
@@ -19,7 +20,7 @@ from 高天荒野舰艇推进状态合同 import (
 )
 from 高天荒野舰艇推进时间内核 import (
     PropulsionTimeBoundaryResult, PropulsionTimeCommand,
-    _apply_command, _commit_due_transition, _parse_exact_timing_capability,
+    _apply_command, _commit_due_transition, _resolve_timing_capability,
     validate_committed_propulsion_time_state,
 )
 from 高天荒野舰艇推进通道合同 import exact_object, strict_stage
@@ -39,7 +40,7 @@ def _step(value: Any) -> int:
 def _engine(value: Any, path: str) -> EngineRuntimeState:
     if not isinstance(value, EngineRuntimeState):
         raise ContractError("governed_time.state_type", path, "必须是 engine v2 状态")
-    parsed = EngineRuntimeState.parse(value.to_dict(), path)
+    parsed = validate_internal_record(value, EngineRuntimeState, path)
     if parsed.interface_id != ENGINE_RUNTIME_STATE_INTERFACE_ID:
         raise ContractError("governed_time.state_interface", path, "不得隐式使用 c2b engine 状态")
     if parsed.actuator_category == "main_engine" and (
@@ -208,13 +209,13 @@ def preview_governed_propulsion_time_boundary(state: EngineRuntimeState, capabil
     if not isinstance(command, PropulsionTimeCommand):
         raise ContractError("governed_time.command_type", "$.command", "必须提供原命令")
     command.target_for(state.actuator_category)
-    timing = _parse_exact_timing_capability(capability, state.actuator_category)
+    timing = _resolve_timing_capability(capability, state.actuator_category)
     # 允许当前边界恰好到期，不允许漏过期或伪造精确排程。
     validation_boundary = boundary - 1 if state.next_transition_step == boundary and boundary > 0 else boundary
     validate_committed_propulsion_time_state(state, capability, validation_boundary)
     candidate, events = _commit_due_transition(state, timing, boundary)
-    return GovernedPropulsionTimePreview(boundary, canonical_sha256(capability), state, command,
-        candidate, tuple(sorted(events, key=lambda event: event.sort_key)))
+    return register_time_preview(GovernedPropulsionTimePreview(boundary, canonical_sha256(capability), state, command,
+        candidate, tuple(sorted(events, key=lambda event: event.sort_key))), capability)
 
 
 def commit_governed_propulsion_time_boundary(preview: GovernedPropulsionTimePreview,
@@ -226,11 +227,12 @@ def commit_governed_propulsion_time_boundary(preview: GovernedPropulsionTimePrev
         raise ContractError("governed_time.preview_type", "$.preview", "必须提供严格预览")
     if _step(fixed_step_index) != preview.fixed_step_index or _engine(current_state, "$.current_state") != preview.source_state:
         raise ContractError("governed_time.stale_preview", "$.preview", "当前状态或当前边界已改变")
-    expected = preview_governed_propulsion_time_boundary(current_state, capability, fixed_step_index, preview.command)
-    if expected != preview:
-        raise ContractError("governed_time.preview_replay", "$.preview", "能力指纹或候选与精确重放不一致")
+    if not has_generated_time_preview(preview, capability):
+        expected = preview_governed_propulsion_time_boundary(current_state, capability, fixed_step_index, preview.command)
+        if expected != preview:
+            raise ContractError("governed_time.preview_replay", "$.preview", "能力指纹或候选与精确重放不一致")
     _validate_authorization(preview, effective_target_percent, allow_upstage)
-    timing = _parse_exact_timing_capability(capability, current_state.actuator_category)
+    timing = _resolve_timing_capability(capability, current_state.actuator_category)
     committed = preview.candidate_state if allow_upstage else preview.source_state
     events = list(preview.candidate_events) if allow_upstage else []
     notch, _ = preview.command.target_for(current_state.actuator_category)

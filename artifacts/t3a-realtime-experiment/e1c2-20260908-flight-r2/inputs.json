@@ -1,0 +1,144 @@
+{
+  "interface": "gaotian.simplified-flight-offline-tape/v1",
+  "steps": 360,
+  "controls": [
+    {
+      "step": 0,
+      "value": {
+        "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+        "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+        "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+        "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+        "channel_commands": [
+          {
+            "command_channel": "translation.forward",
+            "commanded_notch": "full",
+            "target_output_percent": null
+          },
+          {
+            "command_channel": "translation.reverse",
+            "commanded_notch": "stop",
+            "target_output_percent": null
+          },
+          {
+            "command_channel": "translation.left",
+            "commanded_notch": "stop",
+            "target_output_percent": null
+          },
+          {
+            "command_channel": "translation.right",
+            "commanded_notch": "stop",
+            "target_output_percent": null
+          },
+          {
+            "command_channel": "yaw.counterclockwise",
+            "commanded_notch": null,
+            "target_output_percent": 25
+          },
+          {
+            "command_channel": "yaw.clockwise",
+            "commanded_notch": null,
+            "target_output_percent": 0
+          }
+        ],
+        "automatic_brake": false,
+        "overg_requested": false,
+        "source_migration_id": null
+      }
+    },
+    {
+      "step": 240,
+      "value": {
+        "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+        "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+        "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+        "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+        "channel_commands": [
+          {
+            "command_channel": "translation.forward",
+            "commanded_notch": "stop",
+            "target_output_percent": null
+          },
+          {
+            "command_channel": "translation.reverse",
+            "commanded_notch": "stop",
+            "target_output_percent": null
+          },
+          {
+            "command_channel": "translation.left",
+            "commanded_notch": "stop",
+            "target_output_percent": null
+          },
+          {
+            "command_channel": "translation.right",
+            "commanded_notch": "stop",
+            "target_output_percent": null
+          },
+          {
+            "command_channel": "yaw.counterclockwise",
+            "commanded_notch": null,
+            "target_output_percent": 0
+          },
+          {
+            "command_channel": "yaw.clockwise",
+            "commanded_notch": null,
+            "target_output_percent": 0
+          }
+        ],
+        "automatic_brake": false,
+        "overg_requested": false,
+        "source_migration_id": null
+      }
+    }
+  ],
+  "availability": [
+    {
+      "step": 90,
+      "phase": "closing",
+      "engine_id": "main_engine_port",
+      "reason": "actuator_destroyed",
+      "active": true,
+      "version": 1
+    },
+    {
+      "step": 120,
+      "phase": "opening",
+      "engine_id": "main_engine_port",
+      "reason": "actuator_destroyed",
+      "active": false,
+      "version": 2
+    },
+    {
+      "step": 120,
+      "phase": "opening",
+      "engine_id": "main_engine_port",
+      "reason": "power_unavailable",
+      "active": true,
+      "version": 1
+    },
+    {
+      "step": 150,
+      "phase": "closing",
+      "engine_id": "thruster_port_fore",
+      "reason": "actuator_destroyed",
+      "active": true,
+      "version": 1
+    },
+    {
+      "step": 180,
+      "phase": "opening",
+      "engine_id": "main_engine_port",
+      "reason": "power_unavailable",
+      "active": false,
+      "version": 2
+    },
+    {
+      "step": 210,
+      "phase": "closing",
+      "engine_id": "thruster_port_fore",
+      "reason": "actuator_destroyed",
+      "active": false,
+      "version": 2
+    }
+  ]
+}

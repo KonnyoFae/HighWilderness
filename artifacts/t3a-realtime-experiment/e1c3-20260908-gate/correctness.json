@@ -1,0 +1,32 @@
+[
+  {
+    "case": "steady",
+    "status": "PASS",
+    "compared_boundaries": 4201,
+    "independent_ledger_boundaries": 4201,
+    "peak_live_deadlines": 2,
+    "active_blue_steps": 3600,
+    "total_ships": 2,
+    "controlled_ships": 1
+  },
+  {
+    "case": "maneuvers",
+    "status": "PASS",
+    "compared_boundaries": 4201,
+    "independent_ledger_boundaries": 4201,
+    "peak_live_deadlines": 4,
+    "active_blue_steps": 2778,
+    "total_ships": 2,
+    "controlled_ships": 1
+  },
+  {
+    "case": "damage_bursts",
+    "status": "PASS",
+    "compared_boundaries": 4201,
+    "independent_ledger_boundaries": 4201,
+    "peak_live_deadlines": 4,
+    "active_blue_steps": 2496,
+    "total_ships": 2,
+    "controlled_ships": 1
+  }
+]

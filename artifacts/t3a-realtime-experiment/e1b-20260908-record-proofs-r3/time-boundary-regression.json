@@ -1,0 +1,29 @@
+{
+  "scope": "Existing functional checks in strict and internal-proof scopes; no historical source hash wrapper/golden updates",
+  "rows": [
+    {
+      "module": "高天荒野T0b2d1推进时间内核测试",
+      "function": "test_boundary_contract_and_capability_gate",
+      "status": "PASS",
+      "strict_and_internal_equal": true
+    },
+    {
+      "module": "高天荒野T0b2d1推进时间内核测试",
+      "function": "test_cold_start_and_adjacent_response",
+      "status": "PASS",
+      "strict_and_internal_equal": true
+    },
+    {
+      "module": "高天荒野T0b2d1推进时间内核测试",
+      "function": "test_mid_command_and_stop",
+      "status": "PASS",
+      "strict_and_internal_equal": true
+    },
+    {
+      "module": "高天荒野T0b2d3a受控时间边界测试",
+      "function": "collect_evidence",
+      "status": "PASS",
+      "strict_and_internal_equal": true
+    }
+  ]
+}

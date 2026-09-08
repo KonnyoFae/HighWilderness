@@ -1,0 +1,428 @@
+[
+  {
+    "interface": "gaotian.compiled-propulsion-contributions/v1alpha1",
+    "policy": "gaotian.tactical-propulsion/fixed-direction-contributions/v1alpha1",
+    "numeric_policy": "gaotian.propulsion/exact-decimal-common-integer-unit/v1",
+    "ship_id": "ship.web.blue",
+    "snapshot_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+    "catalog_sha256": "3cd9ff0fed057dbe9177c78a9a45396a0936e1233b2344882285aa239d5ce982",
+    "source_sha256": "005ce8f82bdc7e8d0769c89da2a19ec827f6046b393ed391d80fb273cb60702e",
+    "channels": [
+      "translation.forward",
+      "translation.reverse",
+      "translation.left",
+      "translation.right",
+      "yaw.counterclockwise",
+      "yaw.clockwise"
+    ],
+    "units": [
+      "N",
+      "N",
+      "N",
+      "N",
+      "N*m",
+      "N*m"
+    ],
+    "unit_denominator": 1,
+    "torque_reference": "design.cic_origin",
+    "design_mass_kg": [
+      2226780,
+      1
+    ],
+    "design_inertia_kg_m2": [
+      3311140750,
+      1
+    ],
+    "intact_totals_units": [
+      10000000,
+      0,
+      0,
+      0,
+      27500000,
+      22500000
+    ],
+    "engines": [
+      {
+        "index": 0,
+        "instance_id": "main_engine_port",
+        "prototype": {
+          "id": "gtw.module.fixture.main_engine.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "main_engine",
+        "contribution_units": [
+          5000000,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "startup_steps": 60,
+        "response_steps": 60,
+        "startup_seconds": [
+          1,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      },
+      {
+        "index": 1,
+        "instance_id": "main_engine_starboard",
+        "prototype": {
+          "id": "gtw.module.fixture.main_engine.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "main_engine",
+        "contribution_units": [
+          5000000,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "startup_steps": 60,
+        "response_steps": 60,
+        "startup_seconds": [
+          1,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      },
+      {
+        "index": 2,
+        "instance_id": "thruster_port_aft",
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "maneuver_thruster",
+        "contribution_units": [
+          0,
+          0,
+          0,
+          0,
+          13750000,
+          0
+        ],
+        "startup_steps": 0,
+        "response_steps": 60,
+        "startup_seconds": [
+          0,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      },
+      {
+        "index": 3,
+        "instance_id": "thruster_port_fore",
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "maneuver_thruster",
+        "contribution_units": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          11250000
+        ],
+        "startup_steps": 0,
+        "response_steps": 60,
+        "startup_seconds": [
+          0,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      },
+      {
+        "index": 4,
+        "instance_id": "thruster_starboard_aft",
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "maneuver_thruster",
+        "contribution_units": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          11250000
+        ],
+        "startup_steps": 0,
+        "response_steps": 60,
+        "startup_seconds": [
+          0,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      },
+      {
+        "index": 5,
+        "instance_id": "thruster_starboard_fore",
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "maneuver_thruster",
+        "contribution_units": [
+          0,
+          0,
+          0,
+          0,
+          13750000,
+          0
+        ],
+        "startup_steps": 0,
+        "response_steps": 60,
+        "startup_seconds": [
+          0,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      }
+    ]
+  },
+  {
+    "interface": "gaotian.compiled-propulsion-contributions/v1alpha1",
+    "policy": "gaotian.tactical-propulsion/fixed-direction-contributions/v1alpha1",
+    "numeric_policy": "gaotian.propulsion/exact-decimal-common-integer-unit/v1",
+    "ship_id": "ship.web.red",
+    "snapshot_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+    "catalog_sha256": "3cd9ff0fed057dbe9177c78a9a45396a0936e1233b2344882285aa239d5ce982",
+    "source_sha256": "e4b3912d36ba32a06b70f1448698e8dd9f23a8a1b85c349deeca08c4ca8563ad",
+    "channels": [
+      "translation.forward",
+      "translation.reverse",
+      "translation.left",
+      "translation.right",
+      "yaw.counterclockwise",
+      "yaw.clockwise"
+    ],
+    "units": [
+      "N",
+      "N",
+      "N",
+      "N",
+      "N*m",
+      "N*m"
+    ],
+    "unit_denominator": 1,
+    "torque_reference": "design.cic_origin",
+    "design_mass_kg": [
+      2226780,
+      1
+    ],
+    "design_inertia_kg_m2": [
+      3311140750,
+      1
+    ],
+    "intact_totals_units": [
+      10000000,
+      0,
+      0,
+      0,
+      27500000,
+      22500000
+    ],
+    "engines": [
+      {
+        "index": 0,
+        "instance_id": "main_engine_port",
+        "prototype": {
+          "id": "gtw.module.fixture.main_engine.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "main_engine",
+        "contribution_units": [
+          5000000,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "startup_steps": 60,
+        "response_steps": 60,
+        "startup_seconds": [
+          1,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      },
+      {
+        "index": 1,
+        "instance_id": "main_engine_starboard",
+        "prototype": {
+          "id": "gtw.module.fixture.main_engine.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "main_engine",
+        "contribution_units": [
+          5000000,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "startup_steps": 60,
+        "response_steps": 60,
+        "startup_seconds": [
+          1,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      },
+      {
+        "index": 2,
+        "instance_id": "thruster_port_aft",
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "maneuver_thruster",
+        "contribution_units": [
+          0,
+          0,
+          0,
+          0,
+          13750000,
+          0
+        ],
+        "startup_steps": 0,
+        "response_steps": 60,
+        "startup_seconds": [
+          0,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      },
+      {
+        "index": 3,
+        "instance_id": "thruster_port_fore",
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "maneuver_thruster",
+        "contribution_units": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          11250000
+        ],
+        "startup_steps": 0,
+        "response_steps": 60,
+        "startup_seconds": [
+          0,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      },
+      {
+        "index": 4,
+        "instance_id": "thruster_starboard_aft",
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "maneuver_thruster",
+        "contribution_units": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          11250000
+        ],
+        "startup_steps": 0,
+        "response_steps": 60,
+        "startup_seconds": [
+          0,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      },
+      {
+        "index": 5,
+        "instance_id": "thruster_starboard_fore",
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster.tactical_no_burn.web_trial",
+          "version": 3
+        },
+        "category": "maneuver_thruster",
+        "contribution_units": [
+          0,
+          0,
+          0,
+          0,
+          13750000,
+          0
+        ],
+        "startup_steps": 0,
+        "response_steps": 60,
+        "startup_seconds": [
+          0,
+          1
+        ],
+        "response_seconds": [
+          1,
+          1
+        ],
+        "host_instance_id": null
+      }
+    ]
+  }
+]

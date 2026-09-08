@@ -10,3 +10,7 @@
 *.jpg binary
 *.png binary
 *.docx binary
+
+# Frozen experiment evidence is hashed byte-for-byte, including line endings.
+artifacts/t3a-realtime-experiment/** -text !eol whitespace=cr-at-eol
+artifacts/t3a-realtime-experiment/**/tracked-python.patch -diff -whitespace

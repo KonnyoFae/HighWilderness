@@ -1,0 +1,26 @@
+{
+  "status": "PASS",
+  "scope": "E1c.2 offline flight and internal event seam",
+  "deterministic_boundaries": 361,
+  "full_sum_boundaries": 722,
+  "not_covered": [
+    "actual damage/power/crew/host event producers",
+    "complete I9 lifecycle projection",
+    "explicit trip/reset authorization",
+    "new-policy saves",
+    "3600-step throughput gate",
+    "long run",
+    "UI/IPC/scheduler",
+    "combat"
+  ],
+  "evidence_sha256": {
+    "flight.jsonl.gz": "6c507fbebd49e1c2ec31ada4dbbd70f6a30722c18439cbf3a4ee5f70560fd5ca",
+    "inputs.json": "2ffcfad25cede0145e5a1e0503ab5728b8e6ce07219c865c03ab6dca799f550e",
+    "manifest.json": "0235d85827378928645e0b79d28c17e4abf3fed4ec632d82c4489a3756996b39",
+    "mechanisms.json": "8839fce17c3ad0d0da422918bb5d67d89ebb470e408030e8a45c5c6d40e03bbf",
+    "resources.json": "5e96a0a6e0e62b2a4d60bc5fdce915db21863db9a2daf7fd21e271015f489390",
+    "source-resources.zip": "934c652e6924064d6604f930b16221fa8a97c678cea888631c1f7b9ed08e5180",
+    "timing.json": "ff824675c3ccaf3f74c4681f7e13de5f97f67f2a0eaf42ff4d24b2fae6d32e4b",
+    "tracked-python.patch": "dfa210f9a5da43c4cf3f1f72d6f8bc76b8665a9714ead362c35780c3faa4f12d"
+  }
+}

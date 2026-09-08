@@ -940,7 +940,7 @@ impl BackendSupervisor {
     }
 
     pub fn tactical_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
-        if !matches!(request.method.as_str(), "tactical.create" | "tactical.inspect" | "tactical.close") {
+        if !matches!(request.method.as_str(), "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause") {
             return Err(HostFailure::host("method_not_supported", "tactical method not enabled"));
         }
         if request.session_id.is_some() || request.expected_revision.is_some() {
@@ -1284,6 +1284,70 @@ mod tests {
     }
 
     #[test]
+    fn real_tactical_preview_advances_without_polling_and_pause_stops_worker() {
+        let supervisor = BackendSupervisor::new(repo_root());
+        let (events, _) = sink();
+        let status = supervisor.start(events).unwrap();
+        assert!(status.capabilities.contains(&"tactical.advance".into()));
+        let instance = status.backend_instance_id.unwrap();
+        let request = |method: &str, params: Value| EditorRequest {
+            backend_instance_id: instance.clone(), method: method.into(), params,
+            session_id: None, expected_revision: None,
+        };
+        let created = supervisor.tactical_request(request("tactical.create", json!({"scenario_id":"gtw.sample.web.two_ship.v1"}))).unwrap();
+        supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"tactical"}))).unwrap();
+        let frames: Value = serde_json::from_str(include_str!("../../../src/tactical/testing/step.fixture.json")).unwrap();
+        let mut input = frames[0]["input"].clone(); input["scene_id"] = created["scene_id"].clone();
+        let accepted = supervisor.tactical_request(request("tactical.advance", json!({"scene_id":created["scene_id"], "input":input, "step_count":600}))).unwrap();
+        assert_eq!(accepted["advance_state"]["executed_steps"], 0);
+        assert_eq!(accepted["paused"], false);
+        std::thread::sleep(Duration::from_millis(450)); // no render or inspect drives these steps
+        let stopped = supervisor.tactical_request(request("tactical.pause", json!({"scene_id":created["scene_id"]}))).unwrap();
+        let completed = stopped["fixed_step"].as_u64().unwrap();
+        assert!(completed > 0 && completed < 600);
+        assert_eq!(stopped["paused"], true);
+        assert_eq!(stopped["advance_state"]["status"], "stopped");
+        assert_eq!(stopped["control_state"]["fuel_units"], 800.0);
+        std::thread::sleep(Duration::from_millis(100));
+        let read = supervisor.tactical_request(request("tactical.inspect", json!({"scene_id":created["scene_id"], "known_static_sha256":created["static_sha256"]}))).unwrap();
+        assert_eq!(read, stopped);
+        supervisor.stop("user_exit").unwrap();
+    }
+
+    #[test]
+    fn real_paused_tactical_step_receipt_duplicates_and_permissions() {
+        let supervisor = BackendSupervisor::new(repo_root());
+        let (events, _) = sink();
+        let status = supervisor.start(events).unwrap();
+        assert!(status.capabilities.contains(&"tactical.step".into()));
+        let instance = status.backend_instance_id.unwrap();
+        let request = |method: &str, params: Value| EditorRequest {
+            backend_instance_id: instance.clone(), method: method.into(), params,
+            session_id: None, expected_revision: None,
+        };
+        let created = supervisor.tactical_request(request("tactical.create", json!({"scenario_id":"gtw.sample.web.two_ship.v1"}))).unwrap();
+        let frames: Value = serde_json::from_str(include_str!("../../../src/tactical/testing/step.fixture.json")).unwrap();
+        let mut input = frames[0]["input"].clone();
+        input["scene_id"] = created["scene_id"].clone();
+        let step = || request("tactical.step", json!({"scene_id": created["scene_id"], "input": input}));
+        assert_eq!(supervisor.tactical_request(step()).unwrap_err().code, "tactical.mode_required");
+        supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"tactical"}))).unwrap();
+        let first = supervisor.tactical_request(step()).unwrap();
+        assert_eq!(first["fixed_step"], 1);
+        assert_eq!(first["paused"], true);
+        assert_eq!(first["control_state"]["last_input_seq"], 1);
+        assert_eq!(first["control_state"]["last_arbitration"]["source"], "player_direct");
+        assert_eq!(supervisor.tactical_request(step()).unwrap_err().code, "tactical.input_duplicate");
+        let read = supervisor.tactical_request(request("tactical.inspect", json!({"scene_id": created["scene_id"], "known_static_sha256": created["static_sha256"]}))).unwrap();
+        assert_eq!(read, first);
+        let mut red = input.clone(); red["input_seq"] = json!(2); red["target_step"] = json!(1);
+        red["arguments"]["ship_id"] = json!("ship.web.red");
+        assert_eq!(supervisor.tactical_request(request("tactical.step", json!({"scene_id": created["scene_id"], "input": red}))).unwrap_err().code, "tactical_command.direct_ship_mismatch");
+        supervisor.tactical_request(request("tactical.close", json!({"scene_id":created["scene_id"]}))).unwrap();
+        supervisor.stop("user_exit").unwrap();
+    }
+
+    #[test]
     fn real_tactical_scene_roundtrip_and_scope_rejection() {
         let supervisor = BackendSupervisor::new(repo_root());
         let (events, _) = sink();
@@ -1302,6 +1366,17 @@ mod tests {
         let read = supervisor.tactical_request(inspect()).unwrap();
         assert_eq!(read["static"], Value::Null);
         assert_eq!(read["ships"], created["ships"]);
+        assert_eq!(read, supervisor.tactical_request(inspect()).unwrap());
+        assert!(status.capabilities.contains(&"tactical.set_mode".into()));
+        let mode = supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"tactical"}))).unwrap();
+        assert_eq!(mode["mode"], "tactical");
+        assert_eq!(mode["paused"], true);
+        assert_eq!(mode["scene_id"], created["scene_id"]);
+        assert_eq!(supervisor.editor_request(request("editor.create", json!({}))).unwrap_err().code, "tactical.editor_locked");
+        assert!(supervisor.editor_request(request("resource.list", json!({}))).is_ok());
+        assert_eq!(supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"invalid"}))).unwrap_err().code, "tactical.invalid_mode");
+        let back = supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"editor"}))).unwrap();
+        assert_eq!(back["mode"], "editor");
         assert_eq!(read, supervisor.tactical_request(inspect()).unwrap());
         assert_eq!(supervisor.tactical_request(request("editor.save", json!({}))).unwrap_err().code, "host.method_not_supported");
         let mut scoped = inspect(); scoped.session_id = Some("editor.1".into()); scoped.expected_revision = Some(0);

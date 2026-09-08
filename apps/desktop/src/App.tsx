@@ -1,5 +1,4 @@
-import { EditorPanel } from "./editor/EditorPanel";
-import { TacticalPanel } from "./tactical/TacticalPanel";
+import { Workspace } from "./Workspace";
 import { useEffect, useMemo, useReducer } from "react";
 
 import {
@@ -66,9 +65,9 @@ export function App() {
     <main className="app-shell">
       <header className="hero">
         <div>
-          <p className="eyebrow">HIGH WILDERNESS · H2/H3</p>
-          <h1>舰艇编辑工作台</h1>
-          <p className="lede">Tauri 进程监管 · Python 权威规则进程 · UTF-8 JSON Lines</p>
+          <p className="eyebrow">HIGH WILDERNESS</p>
+          <h1>舰艇工作台</h1>
+          <p className="lede">设计舰体与舾装，查看两舰战术场景。</p>
         </div>
         <div
           className={`state-pill state-${status.state.toLowerCase()}`}
@@ -80,10 +79,8 @@ export function App() {
       </header>
 
       {status.state === "READY" && status.backend_instance_id && (
-        <EditorPanel key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport} />
-      )}
-      {status.state === "READY" && status.backend_instance_id && status.capabilities.includes("tactical.create") && (
-        <TacticalPanel key={`tactical.${status.backend_instance_id}`} instance={status.backend_instance_id} transport={transport} />
+        <Workspace key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport}
+          tacticalAvailable={status.capabilities.includes("tactical.create") && status.capabilities.includes("tactical.set_mode")} />
       )}
 
       <section className="status-grid" aria-label="桥接状态">

@@ -1,0 +1,13 @@
+{
+  "status": "SKIPPED_USER_SCENE",
+  "scope": "New bounded-preview native automation stopped when an existing user trial was detected; not a full automated pass",
+  "read_only_observation": {
+    "paused": true,
+    "fixed_step": 314,
+    "simulation_time_s": 5.233,
+    "speed_mps_display": 21.13,
+    "position_y_m_display": -249.9,
+    "fuel_units_display": 800.0
+  },
+  "real_ipc_validation": "Rust test verifies advancement without UI polling and pause; Python tests verify exact bounded results and fuel policy"
+}

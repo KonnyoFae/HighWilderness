@@ -5,6 +5,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from math import fsum, isclose
 from typing import Any, Iterable
+from contextlib import contextmanager
+from contextvars import ContextVar
+from 高天荒野舰艇只读资源验证 import require_deeply_immutable
+from 高天荒野舰艇内部步骤证明 import validate_internal_record
 
 from 高天荒野舰艇数据契约 import ContractError, ModulePrototypeCatalog, canonical_sha256
 from 高天荒野舰艇实际推进合同 import ActualActuationRequest, finite_number, fixed_step_index
@@ -16,6 +20,19 @@ from 高天荒野舰艇推进通道合同 import OPPOSING_CHANNEL_PAIRS
 
 ACTUAL_AGGREGATION_INTERFACE_ID = "gaotian.actual-propulsion-aggregation/v1alpha1"
 ACTUAL_AGGREGATION_POLICY_ID = "gaotian.propulsion/runtime-use-then-actual-output/v1"
+
+# Only share static validation inside one serialized, resource-read-only step.
+# Never reuse across steps: a modified resource must fail at the next boundary.
+_step_validated_contexts = ContextVar("actual_propulsion_step_validated_contexts", default=None)
+
+
+@contextmanager
+def propulsion_step_validation_scope():
+    token = _step_validated_contexts.set({})
+    try:
+        yield
+    finally:
+        _step_validated_contexts.reset(token)
 
 
 def _equal(actual: Any, expected: Any, path: str) -> None:
@@ -32,12 +49,17 @@ class ActualPropulsionContext:
     bindings: tuple[DirectionalPropulsionActuatorBinding, ...]
 
     def __post_init__(self) -> None:
+        validated = _step_validated_contexts.get()
+        if validated is not None and validated.get(id(self)) is self:
+            return
         verify_derived_ship_snapshot_fingerprint(self.snapshot)
         expected = bind_directional_outfit_propulsion(
             self.scene_id, self.ship_id, self.snapshot.outfit, self.catalog)
         _equal([b.to_dict() for b in self.bindings], [b.to_dict() for b in expected], "$.bindings")
         if any(len(b.command_channels) != 1 for b in self.bindings):
             raise ContractError("actual_propulsion.ambiguous_intent", "$.bindings", "本版本要求每执行器唯一物理意图")
+        if validated is not None:
+            validated[id(self)] = self
 
 
 def compile_actual_propulsion_context(
@@ -47,6 +69,32 @@ def compile_actual_propulsion_context(
     """在静态边界验证精确身份；不让资源构建器或场景成为聚合器依赖。"""
     return ActualPropulsionContext(scene_id, ship_id, snapshot, catalog,
         tuple(sorted(bindings, key=lambda b: b.actuator_instance_id)))
+
+
+@dataclass(frozen=True, init=False)
+class CompiledActualPropulsionContexts:
+    """Strict proof retained only for deeply immutable, exact context objects."""
+    _contexts: tuple
+
+    def __init__(self, contexts):
+        contexts = tuple(contexts)
+        # Reset any outer step proof while compiling this independent resource set.
+        with propulsion_step_validation_scope():
+            for context in contexts:
+                require_deeply_immutable(context)
+                context.__post_init__()
+        object.__setattr__(self, "_contexts", contexts)
+
+
+@contextmanager
+def compiled_actual_propulsion_scope(compiled):
+    if not isinstance(compiled, CompiledActualPropulsionContexts):
+        raise TypeError("Expected compiled immutable propulsion contexts")
+    token = _step_validated_contexts.set({id(c): c for c in compiled._contexts})
+    try:
+        yield
+    finally:
+        _step_validated_contexts.reset(token)
 
 
 @dataclass(frozen=True)
@@ -112,7 +160,7 @@ def aggregate_actual_propulsion(
         raise ContractError("actual_propulsion.engine_set", "$.engines", "必须保留全部静态执行器且各出现一次")
     active_channels = set()
     for key, engine in by_id.items():
-        EngineRuntimeState.parse(engine.to_dict(), f"$.engines.{key}")
+        validate_internal_record(engine, EngineRuntimeState, f"$.engines.{key}")
         if engine.interface_id != ENGINE_RUNTIME_STATE_INTERFACE_ID or engine.actuator_category != binding_by_id[key].actuator_category:
             raise ContractError("actual_propulsion.engine_binding", "$.engines", "执行器版本或类别与绑定不一致")
         if (engine.phase in {"ready", "running", "stopping"} and engine.ready_at_fixed_step > step) or (

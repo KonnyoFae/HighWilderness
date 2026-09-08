@@ -1,0 +1,28 @@
+{
+  "interface": "gaotian.realtime-baseline/v1",
+  "status": "PASS",
+  "source_unchanged": true,
+  "evidence_sha256": {
+    "inputs.json": "76034d98dfdebeb2e8c9099fde8a2b14b3f18b914c8d020f4853b2237aa40457",
+    "manifest.json": "64aad386e9376b625c9e2afac5b65daa2825f9f104a1a3e4af8fa4dfe98e91bd",
+    "mechanisms.json": "0fd9bd0a0d14733dc3ed1c4fb8acd8f3b3b80580cb4d6888074f4c5044936b0d",
+    "mixed72.jsonl.gz": "a643565e68f546862458d30ad983aaa813e0f19c4ac86810f653c97448cb36d2",
+    "replay.json": "9ef0e285c17986e3e7168a020e0263ea8711419d6df17ab0be949a73338fed04",
+    "resources.json": "f63729e55ece5f92b0461b198007e66ea9a46af955e1cf55b72d1f4f39c500cb",
+    "source-resources.zip": "3bd3afeab7af3d602905f894b1044804a938cfbe87e48fbc54f0580d6a886164",
+    "timing.json": "f2b09ec582f05caaf6cca2558d8588c6586a71115df6b905818b38c29469c409",
+    "tracked-python.patch": "8daf777a22608457211bf768eeeade3f480fe05d30c5a4f109ac4cedceeb3732",
+    "transitions120.jsonl.gz": "af4285c463ec340eed94ca3cf4ad0ebcb4f0d02c20a018e2909485e81f5bb8bd"
+  },
+  "scope": "E0 baseline replay and short measurements only",
+  "new_kernel": "NOT_IMPLEMENTED",
+  "not_covered": [
+    "damage injection",
+    "combat",
+    "60-second throughput",
+    "long run",
+    "UI/IPC",
+    "save/reload",
+    "large fleets"
+  ]
+}

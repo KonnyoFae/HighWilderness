@@ -9,6 +9,11 @@ from __future__ import annotations
 from dataclasses import dataclass, replace
 from decimal import Decimal, InvalidOperation, ROUND_CEILING
 from typing import Any
+from contextlib import contextmanager
+from contextvars import ContextVar
+from types import MappingProxyType
+from 高天荒野舰艇只读资源验证 import require_deeply_immutable
+from 高天荒野舰艇内部步骤证明 import validate_internal_record
 
 from 高天荒野舰艇数据契约 import ContractError, ModuleCapability
 from 高天荒野舰艇推进安全判定器 import (
@@ -226,6 +231,50 @@ def _parse_exact_timing_capability(
     )
 
 
+_compiled_timing = ContextVar("compiled_propulsion_timing", default=None)
+
+
+@dataclass(frozen=True, init=False)
+class CompiledPropulsionTiming:
+    """Strictly compile an immutable capability set once, owned by a session."""
+    _entries: object
+
+    def __init__(self, capabilities):
+        entries = {}
+        for capability, category in capabilities:
+            require_deeply_immutable(capability)
+            key = (capability, category)
+            if key not in entries:
+                entries[key] = _parse_exact_timing_capability(capability, category)
+        object.__setattr__(self, "_entries", MappingProxyType(entries))
+
+    @property
+    def capability_count(self):
+        return len(self._entries)
+
+
+@contextmanager
+def compiled_propulsion_timing_scope(compiled):
+    if not isinstance(compiled, CompiledPropulsionTiming):
+        raise TypeError("Expected compiled timing resources")
+    token = _compiled_timing.set(compiled._entries)
+    try:
+        yield
+    finally:
+        _compiled_timing.reset(token)
+
+
+def _resolve_timing_capability(capability, category):
+    compiled = _compiled_timing.get()
+    if compiled is None:
+        return _parse_exact_timing_capability(capability, category)
+    try:
+        return compiled[(capability, category)]
+    except (KeyError, TypeError):
+        raise ContractError("propulsion_time.uncompiled_capability", "$.capability",
+                            "当前会话未编译此能力；必须在资源边界重建") from None
+
+
 def validate_propulsion_timing_capability(
     capability: ModuleCapability,
     actuator_category: str,
@@ -241,10 +290,10 @@ def validate_committed_propulsion_time_state(
 ) -> None:
     """校验存档/场景边界的精确排程锚点；不提交事件、不改变既有内核行为。"""
     boundary = _nonnegative_integer(fixed_step_index, "$.fixed_step_index")
-    EngineRuntimeState.parse(state.to_dict(), "$.state")
+    validate_internal_record(state, EngineRuntimeState, "$.state")
     if state.interface_id != ENGINE_RUNTIME_STATE_INTERFACE_ID:
         raise ContractError("propulsion_time.state_interface", "$.state", "只接受 d1 时间状态")
-    timing = _parse_exact_timing_capability(capability, state.actuator_category)
+    timing = _resolve_timing_capability(capability, state.actuator_category)
     if state.phase == "starting":
         if not boundary < state.ready_at_fixed_step <= boundary + timing.startup_steps or state.ready_at_fixed_step < timing.startup_steps:
             raise ContractError("propulsion_time.committed_start", "$.state", "启动完成时间不属于当前精确能力")
@@ -720,7 +769,7 @@ def advance_propulsion_time_boundary(
             "$.command",
             "必须传入 PropulsionTimeCommand",
         )
-    timing = _parse_exact_timing_capability(capability, state.actuator_category)
+    timing = _resolve_timing_capability(capability, state.actuator_category)
     commanded_notch, target = command.target_for(state.actuator_category)
     committed, events = _commit_due_transition(state, timing, boundary)
     resulting, command_events = _apply_command(

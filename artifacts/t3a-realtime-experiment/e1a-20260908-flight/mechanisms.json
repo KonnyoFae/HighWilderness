@@ -1,0 +1,10 @@
+{
+  "measured_steps": 60,
+  "calls": {
+    "verify_derived_ship_snapshot_fingerprint": 0,
+    "_validate_state": 960,
+    "canonical_sha256": 19560,
+    "_parse_exact_timing_capability": 5760
+  },
+  "timing_not_comparable": true
+}

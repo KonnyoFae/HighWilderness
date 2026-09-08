@@ -1,0 +1,54 @@
+{
+  "scope": "Separate cProfile count run; its time is not performance evidence",
+  "measured_steps": 60,
+  "rows": [
+    {
+      "file": "高天荒野舰艇战术舰队指挥.py",
+      "line": 882,
+      "function": "_synchronize_state_to_scene",
+      "calls": 180
+    },
+    {
+      "file": "高天荒野舰艇持续毁伤.py",
+      "line": 316,
+      "function": "validate_continuous_damage_state",
+      "calls": 600
+    },
+    {
+      "file": "高天荒野舰艇统一战术场景.py",
+      "line": 1567,
+      "function": "_validate_internal_state",
+      "calls": 180
+    },
+    {
+      "file": "高天荒野舰艇数据契约.py",
+      "line": 3887,
+      "function": "canonical_json",
+      "calls": 20820
+    },
+    {
+      "file": "高天荒野舰艇数据契约.py",
+      "line": 3893,
+      "function": "canonical_sha256",
+      "calls": 20820
+    },
+    {
+      "file": "高天荒野舰艇无界面舾装编译器.py",
+      "line": 693,
+      "function": "verify_derived_ship_snapshot_fingerprint",
+      "calls": 180
+    },
+    {
+      "file": "高天荒野舰艇运行时参数编译器.py",
+      "line": 784,
+      "function": "_validate_runtime_cache_hit",
+      "calls": 360
+    },
+    {
+      "file": "高天荒野舰艇推进时间内核.py",
+      "line": 136,
+      "function": "_parse_exact_timing_capability",
+      "calls": 18000
+    }
+  ]
+}

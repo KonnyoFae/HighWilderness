@@ -15,6 +15,7 @@ describe("tactical presentation", () => {
     const first = acceptSnapshot(null, snapshot(), "backend.1");
     const next = acceptSnapshot(first, {...snapshot(), static: null}, "backend.1");
     expect(next.geometry).toBe(first.geometry);
+    expect(acceptSnapshot(first, snapshot(), "backend.1").geometry).toBe(first.geometry);
     expect(() => acceptSnapshot(first, {...snapshot(), static: null, static_sha256: "b".repeat(64)}, "backend.1")).toThrow();
     expect(() => acceptSnapshot(null, {...snapshot(), static: null}, "backend.1")).toThrow();
   });

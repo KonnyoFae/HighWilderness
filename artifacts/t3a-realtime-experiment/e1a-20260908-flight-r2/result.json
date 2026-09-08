@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "scope": "E1a independent session/static compilation; not full E1 or real-time acceptance",
+  "evidence_sha256": {
+    "comparison.json": "597417ac6007dd369bb5e93b8956a252003b086843c93c729fd79569d4b12124",
+    "manifest.json": "a5d193532d7ccf7c49644aeccd480cadebab27aa30e4f51d28dc80f7713475d1",
+    "mechanisms.json": "92da2ab3a19aebd15093647aec47415b0b7a4366c45865dfe7e4bbbf73b40cdf",
+    "source-resources.zip": "44efe7633c049acc044750427f1fe84ef947d12fb0439ea15ee6ae50ae463565",
+    "timing.json": "659a605c96d45f0744c0cbf85f18d9c137207ed609c19506f3d00a276ad4337b",
+    "tracked-python.patch": "e4aab0fe5199645d12d9312681b3023ebb03d70538d4a04e7f5750f61d6409c9"
+  },
+  "reference": "G:\\高天荒野\\artifacts\\t3a-realtime-experiment\\e0-20260908-baseline",
+  "not_covered": [
+    "compact dynamic layout",
+    "internal parse/replay elimination",
+    "damage matrix",
+    "scheduler/long run",
+    "combat",
+    "UI integration"
+  ]
+}

@@ -1,0 +1,58 @@
+// Connect only to a separately launched test desktop's WebView2 debugging port.
+import assert from "node:assert/strict";
+import { createRequire } from "node:module";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
+const require = createRequire(process.env.HW_BROWSER_MODULES ? path.join(process.env.HW_BROWSER_MODULES, "package.json") : import.meta.url);
+const { chromium } = require("playwright");
+if (!process.env.HW_TACTICAL_CDP) throw new Error("Set HW_TACTICAL_CDP to the separately launched test desktop's local CDP endpoint.");
+const browser = await chromium.connectOverCDP(process.env.HW_TACTICAL_CDP);
+const pages = browser.contexts().flatMap(context => context.pages());
+const page = pages.find(page => page.url().includes("tauri.localhost")) ?? pages.find(page => page.url().startsWith("tauri:"));
+assert(page, "No built Tauri application page at this endpoint");
+const output = path.resolve("artifacts/t2a"); await mkdir(output, { recursive: true });
+const errors = []; page.on("pageerror", error => errors.push(error.message));
+const button = name => page.getByRole("button", { name, exact: true });
+const checks = [];
+try {
+  await page.getByTestId("bridge-state").filter({ hasText: "READY" }).waitFor();
+  await button("打开设计").click();
+  const field = page.getByLabel("舰体名称", { exact: true });
+  const initialName = await field.inputValue();
+  await field.fill("桌面切换保留的未提交名称");
+  await button("战术视角").click();
+  await button("建立两舰场景").click();
+  const viewport = page.locator(".tactical-canvas");
+  await viewport.locator("canvas").waitFor();
+  await page.locator(".tactical-scale").waitFor();
+  assert.match(await page.locator(".tactical-stats").innerText(), /2 层 · 18 个部件/);
+  assert.equal(await viewport.locator(".tactical-ship-label").count(), 2);
+  assert.equal(await button("蓝方测试舰").getAttribute("aria-pressed"), "true");
+  checks.push("built desktop/Rust/Python handshake, set_mode and real v7 two-ship scene render");
+  await page.locator(".tactical-panel").screenshot({ path: path.join(output, "native-two-ship-overview.png") });
+  await button("红方测试舰").click(); await button("聚焦所选舰").click();
+  await viewport.screenshot({ path: path.join(output, "native-red-ship-detail.png") });
+  await button("读取场景状态").click();
+  assert.match(await page.locator(".tactical-panel .editor-summary").innerText(), /已暂停 · 第 0 步/);
+  checks.push("selection, focus and native re-read retain paused step zero");
+  await button("舰艇编辑").click();
+  assert.equal(await field.inputValue(), "桌面切换保留的未提交名称");
+  assert.equal(await page.locator(".tactical-canvas canvas").count(), 0);
+  await button("战术视角").click();
+  await viewport.locator("canvas").waitFor();
+  assert.equal(await button("红方测试舰").getAttribute("aria-pressed"), "true");
+  checks.push("native switch preserves editor form/scene and destroys hidden tactical renderer");
+  await button("释放测试场景").click();
+  assert.equal(await page.locator(".tactical-canvas canvas").count(), 0);
+  await button("舰艇编辑").click();
+  await field.fill(initialName); await button("关闭会话").click();
+  await button("停止").click();
+  await page.getByTestId("bridge-state").filter({ hasText: "STOPPED" }).waitFor();
+  checks.push("scene release, clean editor close and owned backend stop; no design writes");
+  assert.deepEqual(errors, []);
+  await writeFile(path.join(output, "native-verification.json"), JSON.stringify({ status: "PASS", scope: "built Tauri WebView2 + real Rust/Python IPC; paused T2a only", checks, page_errors: errors }, null, 2) + "\n");
+  console.log(JSON.stringify({ status: "PASS", checks }, null, 2));
+} catch (error) {
+  await page.screenshot({ path: path.join(output, "native-failure.png"), fullPage: true });
+  console.error(await page.locator("body").innerText()); throw error;
+} finally { await browser.close(); }

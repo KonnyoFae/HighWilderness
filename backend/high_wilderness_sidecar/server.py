@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from queue import Queue, Full
+from queue import Queue, Full, Empty
 from threading import Thread
 
 from .sessions import EditorService, EDITOR_CAPABILITIES
@@ -158,6 +158,10 @@ class SidecarServer:
 
         if method in (*EDITOR_CAPABILITIES, "editor.bind_file"):
             try:
+                if self.tactical.mode != "editor" and method not in {
+                    "resource.list", "editor.inspect", "editor.preview", "editor.recovery_list",
+                }:
+                    raise ContractError("tactical.editor_locked", "$.method", "请先返回编辑视图，再修改设计或保存文件")
                 result, revision = self.editor.dispatch(message)
                 return (response_for(message, result=result, revision=revision),), False
             except ContractError as error:
@@ -191,7 +195,13 @@ class SidecarServer:
 
         def work() -> None:
             while True:
-                message = jobs.get()
+                try:
+                    message = jobs.get(timeout=0 if self.tactical.advancing else None)
+                except Empty:
+                    # Bounded preview advances on the authority thread; renders/reads
+                    # do not drive simulation. Check pause and other jobs every step.
+                    self.tactical.advance_one()
+                    continue
                 try:
                     if message is None:
                         return
@@ -227,9 +237,11 @@ class SidecarServer:
                             error = _bridge_error("busy", "$.method", "操作队列已满，请稍后重新读取")
                             outgoing.put((response_for(message, error=_error_payload(error)),))
                         continue
-                    # Shutdown is acknowledged only after accepted editor work drains.
+                    # Shutdown stops background advancement on its authority thread.
                     if message["method"] == "system.shutdown":
+                        jobs.put(None)
                         jobs.join()
+                        worker.join()
                     try:
                         outputs, should_stop = self.execute(message)
                     except FatalProtocolError:
@@ -244,8 +256,9 @@ class SidecarServer:
             write_failure_log(error)
             exit_code = 2
         finally:
-            jobs.put(None)
-            worker.join()
+            if worker.is_alive():
+                jobs.put(None)
+                worker.join()
             outgoing.put(None)
             writer.join()
         return 2 if writer_errors else exit_code

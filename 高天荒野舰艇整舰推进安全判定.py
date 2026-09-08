@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from 高天荒野舰艇内部步骤证明 import validate_internal_record
+
 from dataclasses import dataclass, replace
 import re
 from typing import Any, Callable
@@ -288,14 +290,14 @@ def evaluate_whole_ship_propulsion_safety(profile: PropulsionSafetyProfile,
         "profile", "必须提供精确安全配置")
     _require(isinstance(controls, DirectionalPropulsionControlInput) and type(crew_safety_lock_enabled) is bool
         and callable(load_evaluator), "input", "控制、乘员锁或采样器非法")
-    DirectionalPropulsionControlInput.parse(controls.to_dict())
+    validate_internal_record(controls, DirectionalPropulsionControlInput, "$")
     _require(isinstance(previous_governors, tuple) and all(isinstance(g, DirectionalPropulsionGovernorState) for g in previous_governors)
         and tuple(g.command_channel for g in previous_governors) == DIRECTIONAL_CHANNELS, "governors", "需按序提供六通道历史")
     previous = {g.command_channel: g for g in previous_governors}
     clocks = {g.last_evaluated_step_index for g in previous_governors}
     _require(len(clocks) == 1, "history_clock", "通道历史必须属于同一权威边界")
     for g in previous_governors:
-        DirectionalPropulsionGovernorState.parse(g.to_dict(), "$.governors")
+        validate_internal_record(g, DirectionalPropulsionGovernorState, "$.governors")
         if g.last_evaluated_step_index is None:
             _require(replace(g, command=DirectionalPropulsionGovernorState.initial(g.command_channel).command)
                 == DirectionalPropulsionGovernorState.initial(g.command_channel), "history_initial", "未求值状态不得携带限制历史")

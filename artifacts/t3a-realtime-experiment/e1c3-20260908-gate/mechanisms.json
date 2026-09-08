@@ -1,0 +1,504 @@
+[
+  {
+    "case": "steady",
+    "measured_steps": 3600,
+    "forbidden_calls": {
+      "_parse_exact_timing_capability": 0,
+      "aggregate_actuators": 0,
+      "canonical_sha256": 0,
+      "verify_derived_ship_snapshot_fingerprint": 0,
+      "compile_runtime_ship_parameters": 0
+    },
+    "unexpected_parses": [],
+    "external_control_parses": [],
+    "hotspots": [
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 707,
+        "name": "structure_ratio",
+        "calls": 28800,
+        "own_s": 0.1540263,
+        "cumulative_s": 0.2171246
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 174,
+        "name": "boundary",
+        "calls": 14400,
+        "own_s": 0.1276233,
+        "cumulative_s": 0.6294356
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 409,
+        "name": "step",
+        "calls": 3600,
+        "own_s": 0.1068183,
+        "cumulative_s": 1.6185919000000002
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 733,
+        "name": "_load_metrics",
+        "calls": 28800,
+        "own_s": 0.0715544,
+        "cumulative_s": 0.43411340000000004
+      },
+      {
+        "file": "高天荒野舰艇气动缓存.py",
+        "line": 358,
+        "name": "calculate_drag",
+        "calls": 14400,
+        "own_s": 0.07134470000000001,
+        "cumulative_s": 0.1810931
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 352,
+        "name": "actuation",
+        "calls": 36000,
+        "own_s": 0.0367836,
+        "cumulative_s": 0.07061200000000001
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 518,
+        "name": "calculate_tactical_drag",
+        "calls": 14400,
+        "own_s": 0.0362523,
+        "cumulative_s": 0.291644
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 856,
+        "name": "_integrate_delivered_actuation",
+        "calls": 7200,
+        "own_s": 0.0348173,
+        "cumulative_s": 0.0887069
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 457,
+        "name": "load",
+        "calls": 28800,
+        "own_s": 0.0330074,
+        "cumulative_s": 0.5298249
+      },
+      {
+        "file": "高天荒野舰艇定向推进控制桥.py",
+        "line": 46,
+        "name": "__post_init__",
+        "calls": 7200,
+        "own_s": 0.031128600000000003,
+        "cumulative_s": 0.061774800000000005
+      },
+      {
+        "file": "高天荒野舰艇气动缓存.py",
+        "line": 300,
+        "name": "interpolate_direction",
+        "calls": 14400,
+        "own_s": 0.0297497,
+        "cumulative_s": 0.046803700000000004
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 74,
+        "name": "world_to_body",
+        "calls": 43200,
+        "own_s": 0.025413300000000003,
+        "cumulative_s": 0.043718
+      },
+      {
+        "file": "高天荒野舰艇气动缓存.py",
+        "line": 380,
+        "name": "<genexpr>",
+        "calls": 158400,
+        "own_s": 0.0241314,
+        "cumulative_s": 0.0336664
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 46,
+        "name": "__add__",
+        "calls": 86400,
+        "own_s": 0.024113700000000002,
+        "cumulative_s": 0.0406358
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 68,
+        "name": "body_to_world",
+        "calls": 36000,
+        "own_s": 0.0207438,
+        "cumulative_s": 0.0360364
+      },
+      {
+        "file": "高天荒野舰艇定向推进控制桥.py",
+        "line": 89,
+        "name": "directional_control",
+        "calls": 7200,
+        "own_s": 0.0196448,
+        "cumulative_s": 0.158927
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 327,
+        "name": "<genexpr>",
+        "calls": 100800,
+        "own_s": 0.0183854,
+        "cumulative_s": 0.0255762
+      },
+      {
+        "file": "高天荒野舰艇定向推进控制桥.py",
+        "line": 100,
+        "name": "<genexpr>",
+        "calls": 50400,
+        "own_s": 0.0179372,
+        "cumulative_s": 0.06943550000000001
+      }
+    ],
+    "scope": "Profiled separately; explicit new control decoding is permitted, internal engine/ship decoding is not"
+  },
+  {
+    "case": "maneuvers",
+    "measured_steps": 3600,
+    "forbidden_calls": {
+      "_parse_exact_timing_capability": 0,
+      "aggregate_actuators": 0,
+      "canonical_sha256": 0,
+      "verify_derived_ship_snapshot_fingerprint": 0,
+      "compile_runtime_ship_parameters": 0
+    },
+    "unexpected_parses": [],
+    "external_control_parses": [
+      {
+        "file": "高天荒野舰艇定向推进控制桥.py",
+        "line": 63,
+        "calls": 20
+      },
+      {
+        "file": "高天荒野舰艇推进通道合同.py",
+        "line": 65,
+        "calls": 120
+      }
+    ],
+    "hotspots": [
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 707,
+        "name": "structure_ratio",
+        "calls": 28800,
+        "own_s": 0.16077170000000002,
+        "cumulative_s": 0.22553540000000002
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 174,
+        "name": "boundary",
+        "calls": 14400,
+        "own_s": 0.1314414,
+        "cumulative_s": 0.6668354000000001
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 409,
+        "name": "step",
+        "calls": 3600,
+        "own_s": 0.1064819,
+        "cumulative_s": 1.6945923
+      },
+      {
+        "file": "高天荒野舰艇气动缓存.py",
+        "line": 358,
+        "name": "calculate_drag",
+        "calls": 14400,
+        "own_s": 0.0712517,
+        "cumulative_s": 0.180896
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 733,
+        "name": "_load_metrics",
+        "calls": 28800,
+        "own_s": 0.07045810000000001,
+        "cumulative_s": 0.44236990000000004
+      },
+      {
+        "file": "高天荒野舰艇定向推进控制桥.py",
+        "line": 46,
+        "name": "__post_init__",
+        "calls": 8300,
+        "own_s": 0.0375454,
+        "cumulative_s": 0.0742541
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 352,
+        "name": "actuation",
+        "calls": 36000,
+        "own_s": 0.0371924,
+        "cumulative_s": 0.0712045
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 518,
+        "name": "calculate_tactical_drag",
+        "calls": 14400,
+        "own_s": 0.0362856,
+        "cumulative_s": 0.2913351
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 856,
+        "name": "_integrate_delivered_actuation",
+        "calls": 7200,
+        "own_s": 0.034868800000000005,
+        "cumulative_s": 0.08906410000000001
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 457,
+        "name": "load",
+        "calls": 28800,
+        "own_s": 0.0332447,
+        "cumulative_s": 0.5383655
+      },
+      {
+        "file": "高天荒野舰艇气动缓存.py",
+        "line": 300,
+        "name": "interpolate_direction",
+        "calls": 14400,
+        "own_s": 0.0297426,
+        "cumulative_s": 0.046521200000000006
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 74,
+        "name": "world_to_body",
+        "calls": 44280,
+        "own_s": 0.026001800000000002,
+        "cumulative_s": 0.0452067
+      },
+      {
+        "file": "高天荒野舰艇气动缓存.py",
+        "line": 380,
+        "name": "<genexpr>",
+        "calls": 158400,
+        "own_s": 0.024326300000000002,
+        "cumulative_s": 0.0341515
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 46,
+        "name": "__add__",
+        "calls": 86400,
+        "own_s": 0.024125900000000002,
+        "cumulative_s": 0.04098
+      },
+      {
+        "file": "高天荒野舰艇定向推进控制桥.py",
+        "line": 89,
+        "name": "directional_control",
+        "calls": 8280,
+        "own_s": 0.022377,
+        "cumulative_s": 0.18483750000000002
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 68,
+        "name": "body_to_world",
+        "calls": 36000,
+        "own_s": 0.0208173,
+        "cumulative_s": 0.0364876
+      },
+      {
+        "file": "高天荒野舰艇定向推进控制桥.py",
+        "line": 100,
+        "name": "<genexpr>",
+        "calls": 57960,
+        "own_s": 0.0204229,
+        "cumulative_s": 0.0787361
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 327,
+        "name": "<genexpr>",
+        "calls": 100800,
+        "own_s": 0.018022700000000003,
+        "cumulative_s": 0.0248539
+      }
+    ],
+    "scope": "Profiled separately; explicit new control decoding is permitted, internal engine/ship decoding is not"
+  },
+  {
+    "case": "damage_bursts",
+    "measured_steps": 3600,
+    "forbidden_calls": {
+      "_parse_exact_timing_capability": 0,
+      "aggregate_actuators": 0,
+      "canonical_sha256": 0,
+      "verify_derived_ship_snapshot_fingerprint": 0,
+      "compile_runtime_ship_parameters": 0
+    },
+    "unexpected_parses": [],
+    "external_control_parses": [
+      {
+        "file": "高天荒野舰艇定向推进控制桥.py",
+        "line": 63,
+        "calls": 12
+      },
+      {
+        "file": "高天荒野舰艇推进通道合同.py",
+        "line": 65,
+        "calls": 72
+      }
+    ],
+    "hotspots": [
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 707,
+        "name": "structure_ratio",
+        "calls": 28800,
+        "own_s": 0.1623168,
+        "cumulative_s": 0.2259159
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 174,
+        "name": "boundary",
+        "calls": 14400,
+        "own_s": 0.1361767,
+        "cumulative_s": 0.6930524
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 409,
+        "name": "step",
+        "calls": 3600,
+        "own_s": 0.10754910000000001,
+        "cumulative_s": 1.6874223000000002
+      },
+      {
+        "file": "高天荒野舰艇气动缓存.py",
+        "line": 358,
+        "name": "calculate_drag",
+        "calls": 14400,
+        "own_s": 0.07181620000000001,
+        "cumulative_s": 0.181263
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 733,
+        "name": "_load_metrics",
+        "calls": 28800,
+        "own_s": 0.0715839,
+        "cumulative_s": 0.4448261
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 352,
+        "name": "actuation",
+        "calls": 36000,
+        "own_s": 0.0378377,
+        "cumulative_s": 0.0716885
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 518,
+        "name": "calculate_tactical_drag",
+        "calls": 14400,
+        "own_s": 0.0361865,
+        "cumulative_s": 0.2919142
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 856,
+        "name": "_integrate_delivered_actuation",
+        "calls": 7200,
+        "own_s": 0.0361526,
+        "cumulative_s": 0.09052940000000001
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 457,
+        "name": "load",
+        "calls": 28800,
+        "own_s": 0.033076100000000004,
+        "cumulative_s": 0.5411022000000001
+      },
+      {
+        "file": "高天荒野舰艇定向推进控制桥.py",
+        "line": 46,
+        "name": "__post_init__",
+        "calls": 7212,
+        "own_s": 0.0314382,
+        "cumulative_s": 0.06278070000000001
+      },
+      {
+        "file": "高天荒野舰艇气动缓存.py",
+        "line": 300,
+        "name": "interpolate_direction",
+        "calls": 14400,
+        "own_s": 0.0298016,
+        "cumulative_s": 0.0467296
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 74,
+        "name": "world_to_body",
+        "calls": 43200,
+        "own_s": 0.025583,
+        "cumulative_s": 0.043682000000000006
+      },
+      {
+        "file": "高天荒野舰艇气动缓存.py",
+        "line": 380,
+        "name": "<genexpr>",
+        "calls": 158400,
+        "own_s": 0.0242408,
+        "cumulative_s": 0.03392
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 46,
+        "name": "__add__",
+        "calls": 86400,
+        "own_s": 0.0236154,
+        "cumulative_s": 0.040747700000000005
+      },
+      {
+        "file": "高天荒野舰艇战术机动求解器.py",
+        "line": 68,
+        "name": "body_to_world",
+        "calls": 36000,
+        "own_s": 0.020948500000000002,
+        "cumulative_s": 0.0369987
+      },
+      {
+        "file": "高天荒野舰艇定向推进控制桥.py",
+        "line": 89,
+        "name": "directional_control",
+        "calls": 7200,
+        "own_s": 0.0193977,
+        "cumulative_s": 0.1609621
+      },
+      {
+        "file": "高天荒野舰艇定向推进控制桥.py",
+        "line": 100,
+        "name": "<genexpr>",
+        "calls": 50400,
+        "own_s": 0.018035100000000002,
+        "cumulative_s": 0.0708922
+      },
+      {
+        "file": "simplified_flight.py",
+        "line": 327,
+        "name": "<genexpr>",
+        "calls": 100800,
+        "own_s": 0.0179686,
+        "cumulative_s": 0.0247464
+      }
+    ],
+    "scope": "Profiled separately; explicit new control decoding is permitted, internal engine/ship decoding is not"
+  }
+]

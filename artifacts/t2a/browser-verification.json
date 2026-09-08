@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "scope": "browser presentation fixture; no native IPC or live simulation",
+  "checks": [
+    "active drawing and unsaved-close decision block mode switching until finished or cancelled",
+    "actual two-ship static projection renders in WebGL under a no-eval CSP with deck/module counts",
+    "matching static hash refresh retains renderer",
+    "canvas hit testing, focus, drag without selecting and keyboard/button camera controls",
+    "mode switch preserves unsubmitted form, camera and selection; hidden renderer destroyed",
+    "release/recreate resets scene selection and geometry",
+    "unknown mode acknowledgement locks editor until idempotent confirmation recovers",
+    "compact viewport resizes without horizontal overflow"
+  ],
+  "page_errors": []
+}
