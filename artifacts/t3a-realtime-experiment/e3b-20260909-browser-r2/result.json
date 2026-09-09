@@ -1,0 +1,482 @@
+{
+  "status": "PASS",
+  "scope": "Real Python stdio worker + React/Pixi headless Edge; excludes native Rust/WebView embedding and long runs",
+  "checks": [
+    "real background flight advances at wall-clock rate with positive speed and actual Pixi geometry",
+    "turning works; dropped control reply is reconciled without automatic resubmission",
+    "pause and return-to-editor preserve the committed step and cancel held control",
+    "loss of view polling pauses the worker through its two-second lease"
+  ],
+  "observations": [
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": true,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": true,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 1,
+      "view_step": 0,
+      "running": true,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 1,
+      "view_step": 0,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 4,
+      "view_step": 4,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 8,
+      "view_step": 4,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 12,
+      "view_step": 9,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 16,
+      "view_step": 13,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 20,
+      "view_step": 17,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 24,
+      "view_step": 22,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 28,
+      "view_step": 26,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 33,
+      "view_step": 31,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 36,
+      "view_step": 35,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 40,
+      "view_step": 40,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 45,
+      "view_step": 45,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 48,
+      "view_step": 45,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 52,
+      "view_step": 49,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 57,
+      "view_step": 54,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 60,
+      "view_step": 59,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 64,
+      "view_step": 63,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 69,
+      "view_step": 68,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 72,
+      "view_step": 72,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 76,
+      "view_step": 72,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 81,
+      "view_step": 77,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 84,
+      "view_step": 82,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 89,
+      "view_step": 86,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 93,
+      "view_step": 91,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 96,
+      "view_step": 95,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 101,
+      "view_step": 100,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 105,
+      "view_step": 105,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 109,
+      "view_step": 105,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 112,
+      "view_step": 109,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 115,
+      "view_step": 113,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 116,
+      "view_step": 113,
+      "running": true,
+      "generation": 0,
+      "input": 2
+    },
+    {
+      "step": 117,
+      "view_step": 113,
+      "running": true,
+      "generation": 0,
+      "input": 2
+    },
+    {
+      "step": 121,
+      "view_step": 118,
+      "running": true,
+      "generation": 0,
+      "input": 2
+    },
+    {
+      "step": 125,
+      "view_step": 123,
+      "running": true,
+      "generation": 0,
+      "input": 2
+    },
+    {
+      "step": 129,
+      "view_step": 127,
+      "running": true,
+      "generation": 0,
+      "input": 2
+    },
+    {
+      "step": 133,
+      "view_step": 132,
+      "running": true,
+      "generation": 0,
+      "input": 2
+    },
+    {
+      "step": 137,
+      "view_step": 137,
+      "running": true,
+      "generation": 0,
+      "input": 2
+    },
+    {
+      "step": 141,
+      "view_step": 141,
+      "running": true,
+      "generation": 0,
+      "input": 2
+    },
+    {
+      "step": 145,
+      "view_step": 141,
+      "running": true,
+      "generation": 0,
+      "input": 2
+    },
+    {
+      "step": 149,
+      "view_step": 145,
+      "running": true,
+      "generation": 0,
+      "input": 2
+    },
+    {
+      "step": 151,
+      "view_step": 150,
+      "running": true,
+      "generation": 0,
+      "input": 2
+    },
+    {
+      "step": 153,
+      "view_step": 150,
+      "running": true,
+      "generation": 0,
+      "input": 3
+    },
+    {
+      "step": 157,
+      "view_step": 154,
+      "running": true,
+      "generation": 0,
+      "input": 3
+    },
+    {
+      "step": 161,
+      "view_step": 159,
+      "running": true,
+      "generation": 0,
+      "input": 3
+    },
+    {
+      "step": 163,
+      "view_step": 163,
+      "running": false,
+      "generation": 1,
+      "input": 3
+    },
+    {
+      "step": 163,
+      "view_step": 163,
+      "running": false,
+      "generation": 1,
+      "input": 3
+    },
+    {
+      "step": 163,
+      "view_step": 163,
+      "running": false,
+      "generation": 1,
+      "input": 3
+    },
+    {
+      "step": 163,
+      "view_step": 163,
+      "running": false,
+      "generation": 1,
+      "input": 3
+    },
+    {
+      "step": 163,
+      "view_step": 163,
+      "running": false,
+      "generation": 1,
+      "input": 3
+    },
+    {
+      "step": 163,
+      "view_step": 163,
+      "running": true,
+      "generation": 1,
+      "input": 3
+    },
+    {
+      "step": 164,
+      "view_step": 163,
+      "running": true,
+      "generation": 1,
+      "input": 3
+    },
+    {
+      "step": 165,
+      "view_step": 165,
+      "running": false,
+      "generation": 2,
+      "input": 3
+    },
+    {
+      "step": 165,
+      "view_step": 165,
+      "running": false,
+      "generation": 2,
+      "input": 3
+    },
+    {
+      "step": 165,
+      "view_step": 165,
+      "running": false,
+      "generation": 2,
+      "input": 3
+    },
+    {
+      "step": 165,
+      "view_step": 165,
+      "running": false,
+      "generation": 2,
+      "input": 3
+    },
+    {
+      "step": 165,
+      "view_step": 165,
+      "running": false,
+      "generation": 2,
+      "input": 3
+    },
+    {
+      "step": 165,
+      "view_step": 165,
+      "running": true,
+      "generation": 2,
+      "input": 3
+    }
+  ],
+  "errors": []
+}

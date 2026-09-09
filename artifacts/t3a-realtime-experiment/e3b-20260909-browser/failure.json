@@ -1,0 +1,90 @@
+{
+  "error": "AssertionError [ERR_ASSERTION]: [object Object]",
+  "errors": [],
+  "observations": [
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": false,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": true,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": true,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 0,
+      "view_step": 0,
+      "running": true,
+      "generation": 0,
+      "input": 0
+    },
+    {
+      "step": 2,
+      "view_step": 0,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    },
+    {
+      "step": 3,
+      "view_step": 0,
+      "running": true,
+      "generation": 0,
+      "input": 1
+    }
+  ]
+}

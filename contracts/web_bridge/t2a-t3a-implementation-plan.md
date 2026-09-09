@@ -1,12 +1,12 @@
 # T2a/T3a 战术画布与直控实施准备（2026-09-08）
 
-状态：`T2a_IMPLEMENTED / T3a_PAUSED_IMPLEMENTED / REALTIME_E1_IN_PROGRESS`。核对基线 `293fc48`。2026-09-08 已完成下述第 1、2 步及桌面 CSP 修复，浏览器和原生桌面验证通过；第 3 步仍待实施。实际合同、测试范围与证据见 `t2a-tactical-viewport.md`、`t3a-paused-control.md`。
+状态：`T2a_IMPLEMENTED / T3a_PAUSED_IMPLEMENTED / REALTIME_E3B_IMPLEMENTED / E3C_PENDING`。核对基线 `293fc48`。2026-09-08 已完成下述第 1、2 步及桌面 CSP 修复，浏览器和原生桌面验证通过；第 3 步仍待实施。实际合同、测试范围与证据见 `t2a-tactical-viewport.md`、`t3a-paused-control.md`。
 
-2026-09-08 接续：[E1c.3 验证报告](./t3a-realtime-e1c3-validation.md)已完成：62 项相关测试、12603 个边界核对通过；三种负载各预热 600 步、测量 3600 步、重复三次，最差平均 0.177 ms/步、P99 0.342 ms。仅为两舰（单舰主动控制）飞行内核吞吐，未含真实领域事件生产、完整表现/通信与长跑；产品实时仍未验收。下一项 E2.1 接真实设备状态事件，E1d 来源/诊断泛化优化暂缓。
+2026-09-09 最新进展：[E3b 快照发布与实验画布联调](./t3a-realtime-e3b-view.md)已实现。战术视角新增可选「实时试航（实验）」入口，后台按 60 Hz 独立推进，画面约 15 Hz 更新；接通操纵回执、暂停、返回编辑和断连暂停。相关 Python 回归 133 项、最终接线专项 9 项、前端 76 项和 Rust 23 项通过，真实后台与浏览器画布联调及桌面构建通过。下一片 E3c 长跑准备与验证；默认桌面路径未迁移，完整 E3 和长期稳定性仍待验收。
 
 后续用户反馈修正已交付：战术推进不耗油、独立可视试航推力参数、可中断的按秒推进。见 `t3a-bounded-preview.md`。有限试航不等于第 3 步连续实时运行；实测推进吞吐仍不足，下一步先处理两舰实际耗时，不仅接调度按钮。
 
-最新路线：先保留编辑框架并建立独立战术运行实验，验证资源预编译、按变化更新、具名政策正确性和长跑，再接产品连续运行。[E0 基线准备](./t3a-realtime-e0-baseline.md)已完成；[E1a 独立飞行会话](./t3a-realtime-e1a-flight.md)已实现，[E1b 步内证明复用](./t3a-realtime-e1b-record-proofs.md)也已完成，随后实施 [E1c 固定贡献与简化推进](./t3a-realtime-simplified-propulsion-plan.md)，原来源指纹与诊断拆分后移为 E1d。[E1c.1 贡献编译](./t3a-realtime-e1c1-contributions.md)已实现，[E1c.2 原型](./t3a-realtime-e1c2-flight.md)已让独立飞行内核运行新政策，E1c.3 范围内吞吐门已通过，下一项 E2.1 真实设备状态事件；真实领域事件生产者和桌面接线仍待实施。E1/E2 验证内核，E3 承接下述第 3 步，E4 承接普通弹与毁伤。旧规则实验路径短测约 20.4 ms/步，尚未实时，当前默认运行路径不变。
+最新路线：先保留编辑框架并建立独立战术运行实验，验证资源预编译、按变化更新、具名政策正确性和长跑，再接产品连续运行。[E0 基线准备](./t3a-realtime-e0-baseline.md)已完成；[E1a 独立飞行会话](./t3a-realtime-e1a-flight.md)已实现，[E1b 步内证明复用](./t3a-realtime-e1b-record-proofs.md)也已完成，随后实施 [E1c 固定贡献与简化推进](./t3a-realtime-simplified-propulsion-plan.md)，原来源指纹与诊断拆分后移为 E1d。[E1c.1 贡献编译](./t3a-realtime-e1c1-contributions.md)已实现，[E1c.2 原型](./t3a-realtime-e1c2-flight.md)已让独立飞行内核运行新政策，E1c.3 范围内吞吐门已通过，下一项 E3c 长跑准备与验证；实验画布已接通，实际战斗等剩余生产者及默认桌面迁移仍待实施。E1/E2 验证内核，E3 承接下述第 3 步，E4 承接普通弹与毁伤。旧规则实验路径短测约 20.4 ms/步，尚未实时，当前默认运行路径不变。
 
 ## 交付目标
 

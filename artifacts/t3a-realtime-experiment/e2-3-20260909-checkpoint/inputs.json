@@ -1,0 +1,1214 @@
+[
+  {
+    "name": "steady",
+    "controls": [
+      {
+        "step": 0,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      }
+    ],
+    "resources": [],
+    "devices": []
+  },
+  {
+    "name": "resource_bursts",
+    "controls": [
+      {
+        "step": 0,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      }
+    ],
+    "resources": [
+      {
+        "step": 630,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 1
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 1
+      },
+      {
+        "step": 690,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 2
+      },
+      {
+        "step": 720,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 3
+      },
+      {
+        "step": 720,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 4
+      },
+      {
+        "step": 720,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "thruster_port_aft",
+        "value": null,
+        "sequence": 5
+      },
+      {
+        "step": 720,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "thruster_port_fore",
+        "value": null,
+        "sequence": 6
+      },
+      {
+        "step": 720,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "thruster_starboard_aft",
+        "value": null,
+        "sequence": 7
+      },
+      {
+        "step": 720,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "thruster_starboard_fore",
+        "value": null,
+        "sequence": 8
+      },
+      {
+        "step": 750,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 9
+      },
+      {
+        "step": 780,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 10
+      },
+      {
+        "step": 810,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 11
+      },
+      {
+        "step": 810,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 12
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 13
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 13
+      },
+      {
+        "step": 990,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 14
+      },
+      {
+        "step": 1020,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 15
+      },
+      {
+        "step": 1020,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 16
+      },
+      {
+        "step": 1050,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 17
+      },
+      {
+        "step": 1080,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 18
+      },
+      {
+        "step": 1110,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 19
+      },
+      {
+        "step": 1110,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 20
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 21
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 21
+      },
+      {
+        "step": 1290,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 22
+      },
+      {
+        "step": 1320,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 23
+      },
+      {
+        "step": 1320,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 24
+      },
+      {
+        "step": 1350,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 25
+      },
+      {
+        "step": 1380,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 26
+      },
+      {
+        "step": 1410,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 27
+      },
+      {
+        "step": 1410,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 28
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 29
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 29
+      },
+      {
+        "step": 1590,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 30
+      },
+      {
+        "step": 1620,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 31
+      },
+      {
+        "step": 1620,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 32
+      },
+      {
+        "step": 1650,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 33
+      },
+      {
+        "step": 1680,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 34
+      },
+      {
+        "step": 1710,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 35
+      },
+      {
+        "step": 1710,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 36
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 37
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 37
+      },
+      {
+        "step": 1890,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 38
+      },
+      {
+        "step": 1920,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 39
+      },
+      {
+        "step": 1920,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 40
+      },
+      {
+        "step": 1950,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 41
+      },
+      {
+        "step": 1980,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 42
+      },
+      {
+        "step": 2010,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 43
+      },
+      {
+        "step": 2010,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 44
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 45
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 45
+      },
+      {
+        "step": 2190,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 46
+      },
+      {
+        "step": 2220,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 47
+      },
+      {
+        "step": 2220,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 48
+      },
+      {
+        "step": 2250,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 49
+      },
+      {
+        "step": 2280,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 50
+      },
+      {
+        "step": 2310,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 51
+      },
+      {
+        "step": 2310,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 52
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 53
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 53
+      },
+      {
+        "step": 2490,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 54
+      },
+      {
+        "step": 2520,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 55
+      },
+      {
+        "step": 2520,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 56
+      },
+      {
+        "step": 2550,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 57
+      },
+      {
+        "step": 2580,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 58
+      },
+      {
+        "step": 2610,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 59
+      },
+      {
+        "step": 2610,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 60
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 61
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 61
+      },
+      {
+        "step": 2790,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 62
+      },
+      {
+        "step": 2820,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 63
+      },
+      {
+        "step": 2820,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 64
+      },
+      {
+        "step": 2850,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 65
+      },
+      {
+        "step": 2880,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 66
+      },
+      {
+        "step": 2910,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 67
+      },
+      {
+        "step": 2910,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 68
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 69
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 69
+      },
+      {
+        "step": 3090,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 70
+      },
+      {
+        "step": 3120,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 71
+      },
+      {
+        "step": 3120,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 72
+      },
+      {
+        "step": 3150,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 73
+      },
+      {
+        "step": 3180,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 74
+      },
+      {
+        "step": 3210,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 75
+      },
+      {
+        "step": 3210,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 76
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 77
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 77
+      },
+      {
+        "step": 3390,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 78
+      },
+      {
+        "step": 3420,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 79
+      },
+      {
+        "step": 3420,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 80
+      },
+      {
+        "step": 3450,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 81
+      },
+      {
+        "step": 3480,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 82
+      },
+      {
+        "step": 3510,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 83
+      },
+      {
+        "step": 3510,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 84
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 85
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 85
+      },
+      {
+        "step": 3690,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 86
+      },
+      {
+        "step": 3720,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 87
+      },
+      {
+        "step": 3720,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 88
+      },
+      {
+        "step": 3750,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 89
+      },
+      {
+        "step": 3780,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 90
+      },
+      {
+        "step": 3810,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 91
+      },
+      {
+        "step": 3810,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 92
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 93
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 0,
+        "sequence": 93
+      },
+      {
+        "step": 3990,
+        "phase": "opening",
+        "kind": "crew",
+        "target": "ordinary",
+        "value": 10,
+        "sequence": 94
+      },
+      {
+        "step": 4020,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 95
+      },
+      {
+        "step": 4020,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 96
+      },
+      {
+        "step": 4050,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "generator",
+        "value": "off",
+        "sequence": 97
+      },
+      {
+        "step": 4080,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "generator",
+        "value": "active",
+        "sequence": 98
+      },
+      {
+        "step": 4110,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_port",
+        "value": null,
+        "sequence": 99
+      },
+      {
+        "step": 4110,
+        "phase": "opening",
+        "kind": "reset",
+        "target": "main_engine_starboard",
+        "value": null,
+        "sequence": 100
+      }
+    ],
+    "devices": [
+      {
+        "step": 840,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 1
+      },
+      {
+        "step": 870,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 2
+      },
+      {
+        "step": 1140,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 3
+      },
+      {
+        "step": 1170,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 4
+      },
+      {
+        "step": 1440,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 5
+      },
+      {
+        "step": 1470,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 6
+      },
+      {
+        "step": 1740,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 7
+      },
+      {
+        "step": 1770,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 8
+      },
+      {
+        "step": 2040,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 9
+      },
+      {
+        "step": 2070,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 10
+      },
+      {
+        "step": 2340,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 11
+      },
+      {
+        "step": 2370,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 12
+      },
+      {
+        "step": 2640,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 13
+      },
+      {
+        "step": 2670,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 14
+      },
+      {
+        "step": 2940,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 15
+      },
+      {
+        "step": 2970,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 16
+      },
+      {
+        "step": 3240,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 17
+      },
+      {
+        "step": 3270,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 18
+      },
+      {
+        "step": 3540,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 19
+      },
+      {
+        "step": 3570,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 20
+      },
+      {
+        "step": 3840,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 21
+      },
+      {
+        "step": 3870,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 22
+      },
+      {
+        "step": 4140,
+        "kind": "damage",
+        "amount": 25.0,
+        "sequence": 23
+      },
+      {
+        "step": 4170,
+        "kind": "test_rebuild",
+        "amount": 0,
+        "sequence": 24
+      }
+    ]
+  },
+  {
+    "name": "command_loss",
+    "controls": [
+      {
+        "step": 0,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      }
+    ],
+    "resources": [
+      {
+        "step": 2100,
+        "phase": "closing",
+        "kind": "mode",
+        "target": "cic",
+        "value": "off",
+        "sequence": 1
+      },
+      {
+        "step": 2160,
+        "phase": "opening",
+        "kind": "mode",
+        "target": "cic",
+        "value": "active",
+        "sequence": 2
+      }
+    ],
+    "devices": []
+  }
+]

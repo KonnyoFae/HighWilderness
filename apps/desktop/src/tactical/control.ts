@@ -6,15 +6,10 @@ export type Notch = keyof typeof NOTCHES;
 export type HelmDraft = { notch: Notch; direction: "forward" | "reverse"; brake: boolean };
 export type StepTicket = { input: TacticalControlInput; sha256: string; stepCount?: number };
 
-export function makeStepInput(snapshot: TacticalSnapshot, draft: HelmDraft, turn: -1 | 0 | 1 = 0, turnPercent = 25): TacticalControlInput {
-  const state = snapshot.control_state;
-  if (!snapshot.paused || state?.interface !== "gaotian.tactical-paused-control-state/v1alpha1" || !state.available || state.direct_ship_id !== "ship.web.blue")
-    throw new Error(state?.unavailable_reason ?? "当前场景没有可用的单步直控入口。");
+export function makeHelmControl(draft: HelmDraft, turn: -1 | 0 | 1 = 0, turnPercent = 25): TacticalControlInput["arguments"]["control"] {
   if (!(draft.notch in NOTCHES) || !["forward", "reverse"].includes(draft.direction) || ![-1, 0, 1].includes(turn) ||
     !Number.isInteger(turnPercent) || !(turnPercent === 2 || turnPercent >= 0 && turnPercent <= 100 && turnPercent % 5 === 0)) throw new Error("不支持的车钟或转向档位。");
-  if (!Number.isSafeInteger(state.last_input_seq) || !Number.isSafeInteger(snapshot.fixed_step) || state.last_input_seq < 0 || snapshot.fixed_step < 0 || !Number.isSafeInteger(state.last_input_seq + 1))
-    throw new Error("场景序号无效，请重新建立场景。");
-  const control: TacticalControlInput["arguments"]["control"] = {
+  return {
     interface: "gaotian.tactical-propulsion-control/v2alpha1",
     automatic_brake_policy: "gaotian.propulsion-control/translation-only-quarter-brake/v2",
     main_engine_quantization_policy: "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
@@ -25,6 +20,15 @@ export function makeStepInput(snapshot: TacticalSnapshot, draft: HelmDraft, turn
     })),
     automatic_brake: draft.brake, overg_requested: false, source_migration_id: null,
   };
+}
+
+export function makeStepInput(snapshot: TacticalSnapshot, draft: HelmDraft, turn: -1 | 0 | 1 = 0, turnPercent = 25): TacticalControlInput {
+  const state = snapshot.control_state;
+  if (!snapshot.paused || state?.interface !== "gaotian.tactical-paused-control-state/v1alpha1" || !state.available || state.direct_ship_id !== "ship.web.blue")
+    throw new Error(state?.unavailable_reason ?? "当前场景没有可用的单步直控入口。");
+  if (!Number.isSafeInteger(state.last_input_seq) || !Number.isSafeInteger(snapshot.fixed_step) || state.last_input_seq < 0 || snapshot.fixed_step < 0 || !Number.isSafeInteger(state.last_input_seq + 1))
+    throw new Error("场景序号无效，请重新建立场景。");
+  const control = makeHelmControl(draft, turn, turnPercent);
   return { interface: "gaotian.tactical-input/v1alpha1", scene_id: snapshot.scene_id, input_seq: state.last_input_seq + 1,
     target_step: snapshot.fixed_step, command: "control", arguments: { ship_id: state.direct_ship_id, control } };
 }

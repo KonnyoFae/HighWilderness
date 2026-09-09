@@ -1,0 +1,9 @@
+{
+  "canonical_sha256": 0,
+  "compile_runtime_ship_parameters": 0,
+  "aggregate_actuators": 0,
+  "verify_derived_ship_snapshot_fingerprint": 0,
+  "_parse_exact_timing_capability": 0,
+  "_allocate_power": 3,
+  "_manual_staffing": 3
+}

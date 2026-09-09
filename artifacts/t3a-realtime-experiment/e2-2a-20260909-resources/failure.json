@@ -1,0 +1,4 @@
+{
+  "status": "FAIL",
+  "error": "ContractError('[tactical_devices.boundary] $: Reset requires cleared external faults')"
+}

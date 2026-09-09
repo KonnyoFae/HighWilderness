@@ -1,0 +1,18 @@
+{
+  "forbidden_calls": {
+    "canonical_sha256": 0,
+    "aggregate_actuators": 0,
+    "compile_runtime_ship_parameters": 0,
+    "verify_derived_ship_snapshot_fingerprint": 0,
+    "_parse_exact_timing_capability": 0
+  },
+  "device_calls": [
+    {
+      "name": "boundary",
+      "line": 126,
+      "calls": 14400,
+      "own_s": 0.0022397000000000003,
+      "cumulative_s": 0.0022397000000000003
+    }
+  ]
+}

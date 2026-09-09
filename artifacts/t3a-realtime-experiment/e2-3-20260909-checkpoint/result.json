@@ -1,0 +1,481 @@
+{
+  "status": "PASS",
+  "stage": "E2.3",
+  "implemented_E2_scope": "PASS",
+  "full_E2": "NOT_PASSED",
+  "product_realtime": "NOT_PASSED",
+  "warmup_steps": 600,
+  "measured_steps": 3600,
+  "repeats": 3,
+  "continuation": [
+    {
+      "case": "steady",
+      "compared_boundaries": 4201,
+      "checkpoints": [
+        {
+          "boundary": 0,
+          "save_ms": 5.334200046490878,
+          "load_ms": 11.361900018528104,
+          "bytes": 13528
+        },
+        {
+          "boundary": 1,
+          "save_ms": 4.927599977236241,
+          "load_ms": 9.03339998330921,
+          "bytes": 13521
+        },
+        {
+          "boundary": 16,
+          "save_ms": 5.227700050454587,
+          "load_ms": 8.821700001135468,
+          "bytes": 13556
+        },
+        {
+          "boundary": 59,
+          "save_ms": 4.969100002199411,
+          "load_ms": 8.020100009161979,
+          "bytes": 13555
+        },
+        {
+          "boundary": 60,
+          "save_ms": 4.42549999570474,
+          "load_ms": 8.008599979802966,
+          "bytes": 13571
+        },
+        {
+          "boundary": 119,
+          "save_ms": 5.05530001828447,
+          "load_ms": 7.920800009742379,
+          "bytes": 13575
+        },
+        {
+          "boundary": 600,
+          "save_ms": 5.107700009830296,
+          "load_ms": 7.749799988232553,
+          "bytes": 13575
+        },
+        {
+          "boundary": 631,
+          "save_ms": 5.470700038131326,
+          "load_ms": 8.031899982597679,
+          "bytes": 13575
+        },
+        {
+          "boundary": 690,
+          "save_ms": 4.761099989991635,
+          "load_ms": 7.889000000432134,
+          "bytes": 13576
+        },
+        {
+          "boundary": 721,
+          "save_ms": 5.096000037156045,
+          "load_ms": 8.837100001983345,
+          "bytes": 13575
+        },
+        {
+          "boundary": 751,
+          "save_ms": 4.852399986702949,
+          "load_ms": 8.311000012326986,
+          "bytes": 13574
+        },
+        {
+          "boundary": 781,
+          "save_ms": 6.794199987780303,
+          "load_ms": 8.934499986935407,
+          "bytes": 13576
+        },
+        {
+          "boundary": 811,
+          "save_ms": 5.014299997128546,
+          "load_ms": 7.998400018550456,
+          "bytes": 13573
+        },
+        {
+          "boundary": 841,
+          "save_ms": 4.811899969354272,
+          "load_ms": 8.91189998947084,
+          "bytes": 13575
+        },
+        {
+          "boundary": 871,
+          "save_ms": 5.004099977668375,
+          "load_ms": 8.120300015434623,
+          "bytes": 13575
+        },
+        {
+          "boundary": 2101,
+          "save_ms": 4.980199970304966,
+          "load_ms": 8.299700042698532,
+          "bytes": 13579
+        },
+        {
+          "boundary": 2161,
+          "save_ms": 5.657000001519918,
+          "load_ms": 9.294399991631508,
+          "bytes": 13578
+        },
+        {
+          "boundary": 4200,
+          "save_ms": 6.468900013715029,
+          "load_ms": 11.037799995392561,
+          "bytes": 13578
+        }
+      ]
+    },
+    {
+      "case": "resource_bursts",
+      "compared_boundaries": 4201,
+      "checkpoints": [
+        {
+          "boundary": 0,
+          "save_ms": 5.737599974963814,
+          "load_ms": 13.311800023075193,
+          "bytes": 13528
+        },
+        {
+          "boundary": 1,
+          "save_ms": 5.552700022235513,
+          "load_ms": 9.564300009515136,
+          "bytes": 13521
+        },
+        {
+          "boundary": 16,
+          "save_ms": 5.65379997715354,
+          "load_ms": 9.658000024501234,
+          "bytes": 13556
+        },
+        {
+          "boundary": 59,
+          "save_ms": 6.731499976012856,
+          "load_ms": 10.22609998472035,
+          "bytes": 13555
+        },
+        {
+          "boundary": 60,
+          "save_ms": 5.126799980644137,
+          "load_ms": 7.841999991796911,
+          "bytes": 13571
+        },
+        {
+          "boundary": 119,
+          "save_ms": 4.732800007332116,
+          "load_ms": 7.235299970488995,
+          "bytes": 13575
+        },
+        {
+          "boundary": 600,
+          "save_ms": 4.860199987888336,
+          "load_ms": 7.463600020855665,
+          "bytes": 13575
+        },
+        {
+          "boundary": 631,
+          "save_ms": 4.631299991160631,
+          "load_ms": 10.434800002258271,
+          "bytes": 13613
+        },
+        {
+          "boundary": 690,
+          "save_ms": 5.133000027853996,
+          "load_ms": 9.824300010222942,
+          "bytes": 13614
+        },
+        {
+          "boundary": 721,
+          "save_ms": 4.8251000116579235,
+          "load_ms": 7.389799982775003,
+          "bytes": 13633
+        },
+        {
+          "boundary": 751,
+          "save_ms": 5.656499997712672,
+          "load_ms": 9.01259999955073,
+          "bytes": 13610
+        },
+        {
+          "boundary": 781,
+          "save_ms": 5.593799985945225,
+          "load_ms": 9.017599979415536,
+          "bytes": 13620
+        },
+        {
+          "boundary": 811,
+          "save_ms": 5.39299997035414,
+          "load_ms": 9.891499998047948,
+          "bytes": 13639
+        },
+        {
+          "boundary": 841,
+          "save_ms": 5.413400009274483,
+          "load_ms": 11.615600029472262,
+          "bytes": 13664
+        },
+        {
+          "boundary": 871,
+          "save_ms": 6.972000002861023,
+          "load_ms": 12.84250000026077,
+          "bytes": 13658
+        },
+        {
+          "boundary": 2101,
+          "save_ms": 7.120400026906282,
+          "load_ms": 9.818100021220744,
+          "bytes": 13678
+        },
+        {
+          "boundary": 2161,
+          "save_ms": 5.933100008405745,
+          "load_ms": 9.469199983868748,
+          "bytes": 13656
+        },
+        {
+          "boundary": 4200,
+          "save_ms": 6.158699980005622,
+          "load_ms": 10.644299967680126,
+          "bytes": 13690
+        }
+      ]
+    },
+    {
+      "case": "command_loss",
+      "compared_boundaries": 4201,
+      "checkpoints": [
+        {
+          "boundary": 0,
+          "save_ms": 5.8642000076361,
+          "load_ms": 13.02179996855557,
+          "bytes": 13528
+        },
+        {
+          "boundary": 1,
+          "save_ms": 5.198300001211464,
+          "load_ms": 9.090000006835908,
+          "bytes": 13521
+        },
+        {
+          "boundary": 16,
+          "save_ms": 5.900199990719557,
+          "load_ms": 9.590300032868981,
+          "bytes": 13556
+        },
+        {
+          "boundary": 59,
+          "save_ms": 5.921000032685697,
+          "load_ms": 10.455099982209504,
+          "bytes": 13555
+        },
+        {
+          "boundary": 60,
+          "save_ms": 6.230900005903095,
+          "load_ms": 8.961300016380847,
+          "bytes": 13571
+        },
+        {
+          "boundary": 119,
+          "save_ms": 6.7402999848127365,
+          "load_ms": 10.13569999486208,
+          "bytes": 13575
+        },
+        {
+          "boundary": 600,
+          "save_ms": 5.855700001120567,
+          "load_ms": 10.222900018561631,
+          "bytes": 13575
+        },
+        {
+          "boundary": 631,
+          "save_ms": 6.023599999025464,
+          "load_ms": 11.092100001405925,
+          "bytes": 13575
+        },
+        {
+          "boundary": 690,
+          "save_ms": 6.4273999887518585,
+          "load_ms": 9.632200002670288,
+          "bytes": 13576
+        },
+        {
+          "boundary": 721,
+          "save_ms": 5.638799979351461,
+          "load_ms": 11.790799966547638,
+          "bytes": 13575
+        },
+        {
+          "boundary": 751,
+          "save_ms": 6.760199961718172,
+          "load_ms": 9.788800030946732,
+          "bytes": 13574
+        },
+        {
+          "boundary": 781,
+          "save_ms": 6.727200001478195,
+          "load_ms": 8.297399966977537,
+          "bytes": 13576
+        },
+        {
+          "boundary": 811,
+          "save_ms": 5.9442000347189605,
+          "load_ms": 10.293899977114052,
+          "bytes": 13573
+        },
+        {
+          "boundary": 841,
+          "save_ms": 6.477299961261451,
+          "load_ms": 10.308400029316545,
+          "bytes": 13575
+        },
+        {
+          "boundary": 871,
+          "save_ms": 5.755699996370822,
+          "load_ms": 10.670299991033971,
+          "bytes": 13575
+        },
+        {
+          "boundary": 2101,
+          "save_ms": 5.188799987081438,
+          "load_ms": 7.726199983153492,
+          "bytes": 13663
+        },
+        {
+          "boundary": 2161,
+          "save_ms": 6.180999975185841,
+          "load_ms": 8.41710000531748,
+          "bytes": 13645
+        },
+        {
+          "boundary": 4200,
+          "save_ms": 5.719400011003017,
+          "load_ms": 9.537699981592596,
+          "bytes": 13643
+        }
+      ]
+    }
+  ],
+  "workloads": [
+    {
+      "case": "steady",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 3600,
+      "worst_mean_ms": 0.2867126385454968,
+      "worst_p95_ms": 0.3755000070668757,
+      "worst_p99_ms": 0.5032999906688929,
+      "maximum_ms": 1.3000000035390258,
+      "mechanisms": {
+        "canonical_sha256": 0,
+        "aggregate_actuators": 0,
+        "compile_runtime_ship_parameters": 0,
+        "verify_derived_ship_snapshot_fingerprint": 0,
+        "_parse_exact_timing_capability": 0,
+        "_allocate_power": 0,
+        "_manual_staffing": 0
+      }
+    },
+    {
+      "case": "resource_bursts",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 708,
+      "worst_mean_ms": 0.3220958888414316,
+      "worst_p95_ms": 0.501300033647567,
+      "worst_p99_ms": 0.8448000298812985,
+      "maximum_ms": 2.099800040014088,
+      "mechanisms": {
+        "canonical_sha256": 0,
+        "aggregate_actuators": 0,
+        "compile_runtime_ship_parameters": 0,
+        "verify_derived_ship_snapshot_fingerprint": 0,
+        "_parse_exact_timing_capability": 0,
+        "_allocate_power": 156,
+        "_manual_staffing": 156
+      }
+    },
+    {
+      "case": "command_loss",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 1500,
+      "worst_mean_ms": 0.329045499739651,
+      "worst_p95_ms": 0.47530001029372215,
+      "worst_p99_ms": 0.6161999772302806,
+      "maximum_ms": 1.7642999882809818,
+      "mechanisms": {
+        "canonical_sha256": 0,
+        "aggregate_actuators": 0,
+        "compile_runtime_ship_parameters": 0,
+        "verify_derived_ship_snapshot_fingerprint": 0,
+        "_parse_exact_timing_capability": 0,
+        "_allocate_power": 3,
+        "_manual_staffing": 3
+      }
+    }
+  ],
+  "scope": "Two ships; checkpoint continuation compared to uninterrupted flight. Post-load fixed-step timing excludes save/load/setup/oracle/profile. No product file IO, actual combat/repair, fuel producer, RTS, scheduler/UI or long run.",
+  "evidence_sha256": {
+    "command_loss-checkpoint-0.json": "f0e39a12f01362bf777865d17cefecdc686ba67e1964ee66ea55674f4fe1682f",
+    "command_loss-checkpoint-1.json": "a3fabb7f5bfa81f379520437de5271747facf1e91f445cc14bc0200a2bed1416",
+    "command_loss-checkpoint-119.json": "d00f3b184c9478e78c94e162263bbaa8d427537b9054b0fb1a42b335516dd222",
+    "command_loss-checkpoint-16.json": "5d42a2d7e3b05b1984b515a29f19e8dc7940039ace19a702dc1ecac435ca5d40",
+    "command_loss-checkpoint-2101.json": "c700cbc2a96ca254ea4fc781133d8f02fc4f9069af9b8b4e18685bddc939737a",
+    "command_loss-checkpoint-2161.json": "5bb2afe735434ba4da24ceb79be7483a8d93013cf3a95ee352d23d7a4ae0d333",
+    "command_loss-checkpoint-4200.json": "65da35b44e50690d25c66b06ec40da0a4680243b7b0169a7f8bd6677c2263c1d",
+    "command_loss-checkpoint-59.json": "9715195a1aaa04ab6667724e68678dca11007f78e93f151cf52ec1f6e3ba15e4",
+    "command_loss-checkpoint-60.json": "de718136258599d47390aadaf8497094c51bf7d3079f9a02371665d8032bd3b8",
+    "command_loss-checkpoint-600.json": "270b9f7f9af0521b1f5b7c0c18c253053bd17e87d4ed22ea3e9f24e84aa57f09",
+    "command_loss-checkpoint-631.json": "42f851970c95d5908e32fdeadcbdac1518780b598ee78e54c09e699fb28e57c0",
+    "command_loss-checkpoint-690.json": "3b308fd7983186b250597f379dd24e2abdaca80fca3e5e26c23b238d3221edc8",
+    "command_loss-checkpoint-721.json": "d6c2b1a40bf019c78e5db4496c2ef0ecb77a8f6ece80fdb928ca5b7ab0f476f1",
+    "command_loss-checkpoint-751.json": "80a4620dc99dfa07b91c8de695bdfced6bcff5edce760cf994d02a16b863dfd8",
+    "command_loss-checkpoint-781.json": "4ee1b2f7922ba17ba93f0faf581c6386dda846a1f1703c00f587cb49f3162336",
+    "command_loss-checkpoint-811.json": "80c35df6c7a383fa66299f395adc23e98adad3adf5d2f4d790935d21162ebe0f",
+    "command_loss-checkpoint-841.json": "f2d0115058902a2b004db3a08b88ce4783b919f0c0efe78aea3f9967f517b3d7",
+    "command_loss-checkpoint-871.json": "89a566770eb42b40df4717d41aac051043afc40e7d9af9a7661a620f8721d052",
+    "command_loss-final.json": "9671a017081e787ef350b0351c0d610d32e9a90ae97fdd5c21d120aed3525ad3",
+    "command_loss-mechanisms.json": "cda984a9ef7b84b9542470a40eb2bf7615b7ba565510a97f228c088a0641fa7d",
+    "command_loss-timing.json": "a160ac19c20eddf04b79a19a896fa0b5c360031b80209568abf89846b17b3c2b",
+    "inputs.json": "70af16dd51a494701e06b2ab951311661492cf6197f013f41fcc936294d995db",
+    "manifest.json": "f618644f6ba26bad5a52d41be87d09fe4285334dfebee92722e784131f45512b",
+    "resources.json": "3b140cb17d473e270edb9c790ea01b0083c875b56a5e26c0c0110943b975479b",
+    "resource_bursts-checkpoint-0.json": "f0e39a12f01362bf777865d17cefecdc686ba67e1964ee66ea55674f4fe1682f",
+    "resource_bursts-checkpoint-1.json": "a3fabb7f5bfa81f379520437de5271747facf1e91f445cc14bc0200a2bed1416",
+    "resource_bursts-checkpoint-119.json": "d00f3b184c9478e78c94e162263bbaa8d427537b9054b0fb1a42b335516dd222",
+    "resource_bursts-checkpoint-16.json": "5d42a2d7e3b05b1984b515a29f19e8dc7940039ace19a702dc1ecac435ca5d40",
+    "resource_bursts-checkpoint-2101.json": "a26f2f315b7832f42212020d202ec3c650f883dd210111dfe9eeee2741e50372",
+    "resource_bursts-checkpoint-2161.json": "5b3f73f1cbc2e9dce5bf66f88686b757d7eb5a27c4fa70f065e153ee67f12b12",
+    "resource_bursts-checkpoint-4200.json": "66516847e728a3787370b296f7cda28418c3c2fd903ad92825e8e4968673fb96",
+    "resource_bursts-checkpoint-59.json": "9715195a1aaa04ab6667724e68678dca11007f78e93f151cf52ec1f6e3ba15e4",
+    "resource_bursts-checkpoint-60.json": "de718136258599d47390aadaf8497094c51bf7d3079f9a02371665d8032bd3b8",
+    "resource_bursts-checkpoint-600.json": "270b9f7f9af0521b1f5b7c0c18c253053bd17e87d4ed22ea3e9f24e84aa57f09",
+    "resource_bursts-checkpoint-631.json": "0f25ae2eb4c260a29c9399db1343427cfc7c08594c575ea64657f9047055d504",
+    "resource_bursts-checkpoint-690.json": "a4d8d5571430899be3e849109d7d506b359be2a0d097feebafbf56e34afe2e16",
+    "resource_bursts-checkpoint-721.json": "d9227b98d8155648a00335db503e8aec24dee3e59ddb47288088d08a43496bee",
+    "resource_bursts-checkpoint-751.json": "d6f8e7cc46fc5d5b195efa89d7d9d7d1cc6154a508c0266c129c370cd8d580d2",
+    "resource_bursts-checkpoint-781.json": "b2af6e4ad6566701c01da84b6c55a64608d41c216ee2782068236b59ef84d939",
+    "resource_bursts-checkpoint-811.json": "db540192040b5a54ad303011af9c6c3c04b098b99c621ebddf9de3a92b1a062f",
+    "resource_bursts-checkpoint-841.json": "a8c94c7b6c926a1e6d97aace3ac6f135439e6376e4ba57f13fa5f6c46f7f4415",
+    "resource_bursts-checkpoint-871.json": "9ef03851e134dc8dfba3ced5fa1bfeaa0ef4c5f48328a13e929dab7c0a1fc4a3",
+    "resource_bursts-final.json": "e482a111b3415f111e598ba599e218301127b6135f2da917aa4f26c6e2c2e551",
+    "resource_bursts-mechanisms.json": "4b99ee0d2909d3231f95d62507d4e8f541cc4f95d164fb2139607ee56a3aa998",
+    "resource_bursts-timing.json": "03a6c8a59dde3b65eb17eb9fb888966ac3d33704a61fd0785045a09f946096ae",
+    "source-resources.zip": "1dcbd4df8315ca67d8effe0a4029399abc72c96f3d1c6517a862c78e64c2ce2b",
+    "steady-checkpoint-0.json": "f0e39a12f01362bf777865d17cefecdc686ba67e1964ee66ea55674f4fe1682f",
+    "steady-checkpoint-1.json": "a3fabb7f5bfa81f379520437de5271747facf1e91f445cc14bc0200a2bed1416",
+    "steady-checkpoint-119.json": "d00f3b184c9478e78c94e162263bbaa8d427537b9054b0fb1a42b335516dd222",
+    "steady-checkpoint-16.json": "5d42a2d7e3b05b1984b515a29f19e8dc7940039ace19a702dc1ecac435ca5d40",
+    "steady-checkpoint-2101.json": "848160ce7f0f8fbabe812c9efdb0c3c1a3f456f53e621e737bd9ff455d57019a",
+    "steady-checkpoint-2161.json": "7662ce506e74b150c4b82522eb93ce84944b470214a1bb49680973f242c50b47",
+    "steady-checkpoint-4200.json": "d5dcd0f702df1d2df7542aeeae67c4d4c511444ffa0fbfe45011279d3a5bb91d",
+    "steady-checkpoint-59.json": "9715195a1aaa04ab6667724e68678dca11007f78e93f151cf52ec1f6e3ba15e4",
+    "steady-checkpoint-60.json": "de718136258599d47390aadaf8497094c51bf7d3079f9a02371665d8032bd3b8",
+    "steady-checkpoint-600.json": "270b9f7f9af0521b1f5b7c0c18c253053bd17e87d4ed22ea3e9f24e84aa57f09",
+    "steady-checkpoint-631.json": "42f851970c95d5908e32fdeadcbdac1518780b598ee78e54c09e699fb28e57c0",
+    "steady-checkpoint-690.json": "3b308fd7983186b250597f379dd24e2abdaca80fca3e5e26c23b238d3221edc8",
+    "steady-checkpoint-721.json": "d6c2b1a40bf019c78e5db4496c2ef0ecb77a8f6ece80fdb928ca5b7ab0f476f1",
+    "steady-checkpoint-751.json": "80a4620dc99dfa07b91c8de695bdfced6bcff5edce760cf994d02a16b863dfd8",
+    "steady-checkpoint-781.json": "4ee1b2f7922ba17ba93f0faf581c6386dda846a1f1703c00f587cb49f3162336",
+    "steady-checkpoint-811.json": "80c35df6c7a383fa66299f395adc23e98adad3adf5d2f4d790935d21162ebe0f",
+    "steady-checkpoint-841.json": "f2d0115058902a2b004db3a08b88ce4783b919f0c0efe78aea3f9967f517b3d7",
+    "steady-checkpoint-871.json": "89a566770eb42b40df4717d41aac051043afc40e7d9af9a7661a620f8721d052",
+    "steady-final.json": "b03831076441e681278e0dfd30ee39c905685b6be37beb77a202d937141d8928",
+    "steady-mechanisms.json": "69c1a830f198fae17fcc4359f00730d0c292e28cf4ee4398abc4497d061c51ed",
+    "steady-timing.json": "8c7c46571cca0e746bb6e6e3d0ea259edee9e3033cf386732f0cf569e76bcb0d",
+    "tracked-python.patch": "93a9de4e0773d803d8e9c92760bef6d43e30348e79cdbdb39189b61c332fa167"
+  }
+}

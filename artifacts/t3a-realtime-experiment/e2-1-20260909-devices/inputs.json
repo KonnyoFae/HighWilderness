@@ -1,0 +1,5785 @@
+[
+  {
+    "name": "steady",
+    "warmup_steps": 600,
+    "measured_steps": 3600,
+    "controls": [
+      {
+        "step": 0,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      }
+    ],
+    "availability": [],
+    "scope": "E2.1 two technical ships, one controlled; durability producer enabled, other domains pending",
+    "device_operations": []
+  },
+  {
+    "name": "maneuvers",
+    "warmup_steps": 600,
+    "measured_steps": 3600,
+    "controls": [
+      {
+        "step": 0,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 600,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 780,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 960,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "half",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 1140,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 1320,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 1500,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": true,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 1680,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 1860,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 2040,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "half",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 2220,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 2400,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 2580,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": true,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 2760,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 2940,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 3120,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "half",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 3300,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 3480,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 3660,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": true,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 3840,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 4020,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      }
+    ],
+    "availability": [],
+    "scope": "E2.1 two technical ships, one controlled; durability producer enabled, other domains pending",
+    "device_operations": []
+  },
+  {
+    "name": "damage_bursts",
+    "warmup_steps": 600,
+    "measured_steps": 3600,
+    "controls": [
+      {
+        "step": 0,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 600,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 900,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 1200,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 1500,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 1800,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 2100,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 2400,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 2700,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 3000,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 3300,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 3600,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      },
+      {
+        "step": 3900,
+        "value": {
+          "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+          "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+          "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+          "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+          "channel_commands": [
+            {
+              "command_channel": "translation.forward",
+              "commanded_notch": "full",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.reverse",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.left",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "translation.right",
+              "commanded_notch": "stop",
+              "target_output_percent": null
+            },
+            {
+              "command_channel": "yaw.counterclockwise",
+              "commanded_notch": null,
+              "target_output_percent": 0
+            },
+            {
+              "command_channel": "yaw.clockwise",
+              "commanded_notch": null,
+              "target_output_percent": 25
+            }
+          ],
+          "automatic_brake": false,
+          "overg_requested": false,
+          "source_migration_id": null
+        }
+      }
+    ],
+    "availability": [],
+    "scope": "E2.1 two technical ships, one controlled; durability producer enabled, other domains pending",
+    "device_operations": [
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 1,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 2,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 3,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 4,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 5,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 6,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1230,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 7,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1290,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 8,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1350,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 9,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1530,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 10,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1590,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 11,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1650,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 12,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1830,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 13,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1890,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 14,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 1950,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 15,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2130,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 16,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2190,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 17,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2250,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 18,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2430,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 19,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2490,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 20,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2550,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 21,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2730,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 22,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2790,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 23,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 2850,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 24,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3030,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 25,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3090,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 26,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3150,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 27,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3330,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 28,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3390,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 29,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3450,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 30,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3630,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 31,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3690,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 32,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3750,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 33,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3930,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 34,
+        "kind": "damage",
+        "amount": 25.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 3990,
+        "phase": "closing",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 35,
+        "kind": "damage",
+        "amount": 100.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_starboard",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_aft",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_port_fore",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_port",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "main_engine_starboard",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_aft",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_port_fore",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_aft",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.red",
+        "module_id": "thruster_starboard_fore",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      },
+      {
+        "step": 4050,
+        "phase": "opening",
+        "ship_id": "ship.web.blue",
+        "module_id": "main_engine_port",
+        "sequence": 36,
+        "kind": "test_rebuild",
+        "amount": 0.0
+      }
+    ]
+  }
+]

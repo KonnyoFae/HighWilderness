@@ -8,6 +8,7 @@ from threading import Thread
 
 from .sessions import EditorService, EDITOR_CAPABILITIES
 from .tactical import TacticalService, TACTICAL_CAPABILITIES
+from .realtime_view import RealtimeViewService, CAPABILITIES as REALTIME_CAPABILITIES
 from typing import Any, BinaryIO
 
 from 高天荒野舰艇数据契约 import ContractError
@@ -68,6 +69,7 @@ class SidecarServer:
             raise _bridge_error("invalid_instance_id", "$.backend_instance_id", "实例 ID 非法")
         self.editor = EditorService(instance_id, recovery_dir=recovery_dir)
         self.tactical = TacticalService(instance_id)
+        self.realtime = RealtimeViewService(instance_id)
         self.instance_id = instance_id
         self.handshake_complete = False
         self.last_request_number = 0
@@ -121,7 +123,7 @@ class SidecarServer:
                 error = _bridge_error("handshake_required", "$.method", "首条请求必须是 system.hello")
                 return (response_for(message, error=_error_payload(error)),), True
             try:
-                result = hello_result(message, ("system.hello", "system.ping", "system.shutdown", *EDITOR_CAPABILITIES, *TACTICAL_CAPABILITIES))
+                result = hello_result(message, ("system.hello", "system.ping", "system.shutdown", *EDITOR_CAPABILITIES, *TACTICAL_CAPABILITIES, *REALTIME_CAPABILITIES))
             except ContractError as error:
                 return (response_for(message, error=_error_payload(error)),), True
             self.handshake_complete = True
@@ -150,8 +152,21 @@ class SidecarServer:
                 raise _bridge_error("invalid_message", "$.params.reason", "未知关闭原因")
             return (response_for(message, result={"accepted": True}),), True
 
+        if method in REALTIME_CAPABILITIES:
+            try:
+                if method == 'tactical.realtime.create':
+                    if self.tactical.scenario is not None:
+                        raise ContractError('tactical.realtime.scene_active', '$', '请先释放原试航场景')
+                return (response_for(message, result=self.realtime.dispatch(message, mode=self.tactical.mode)),), False
+            except ContractError as error:
+                return (response_for(message, error=_error_payload(error)),), False
+
         if method in TACTICAL_CAPABILITIES:
             try:
+                if method == 'tactical.set_mode':
+                    self.realtime.pause('mode_exit')
+                if method == 'tactical.create' and self.realtime.scheduler is not None:
+                    raise ContractError('tactical.realtime.scene_active', '$', '请先释放实时试航场景')
                 return (response_for(message, result=self.tactical.dispatch(message)),), False
             except ContractError as error:
                 return (response_for(message, error=_error_payload(error)),), False
@@ -195,8 +210,9 @@ class SidecarServer:
 
         def work() -> None:
             while True:
+                self.realtime.tick()
                 try:
-                    message = jobs.get(timeout=0 if self.tactical.advancing else None)
+                    message = jobs.get(timeout=.002 if self.realtime.running else 0 if self.tactical.advancing else None)
                 except Empty:
                     # Bounded preview advances on the authority thread; renders/reads
                     # do not drive simulation. Check pause and other jobs every step.
@@ -204,6 +220,7 @@ class SidecarServer:
                     continue
                 try:
                     if message is None:
+                        self.realtime.pause('disconnected')
                         return
                     try:
                         outputs, _ = self.execute(message)
@@ -212,7 +229,12 @@ class SidecarServer:
                         failure = _bridge_error("domain_worker_failed", "$", "操作失败，请重新读取当前会话或场景")
                         write_failure_log(failure)
                         outputs = (response_for(message, error=_error_payload(failure)),)
-                    outgoing.put(outputs)
+                    while True:
+                        try:
+                            outgoing.put(outputs, timeout=.01)
+                            break
+                        except Full:
+                            self.realtime.pause('disconnected')
                 finally:
                     jobs.task_done()
 
@@ -230,7 +252,7 @@ class SidecarServer:
                     break
                 for raw in decoder.feed(chunk):
                     message = self.accept(raw)
-                    if self.handshake_complete and message["method"] in (*EDITOR_CAPABILITIES, "editor.bind_file", *TACTICAL_CAPABILITIES):
+                    if self.handshake_complete and message["method"] in (*EDITOR_CAPABILITIES, "editor.bind_file", *TACTICAL_CAPABILITIES, *REALTIME_CAPABILITIES):
                         try:
                             jobs.put_nowait(message)
                         except Full:

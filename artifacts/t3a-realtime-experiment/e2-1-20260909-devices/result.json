@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "stage": "E2.1",
+  "full_E2": "NOT_PASSED",
+  "product_realtime": "NOT_PASSED",
+  "workloads": [
+    {
+      "case": "steady",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 3600,
+      "operation_count": 0,
+      "worst_mean_ms": 0.1733112499803408,
+      "worst_p95_ms": 0.2297000028192997,
+      "worst_p99_ms": 0.28619999648071826,
+      "maximum_ms": 1.1912999907508492
+    },
+    {
+      "case": "maneuvers",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 2778,
+      "operation_count": 0,
+      "worst_mean_ms": 0.18553200008884435,
+      "worst_p95_ms": 0.25270000332966447,
+      "worst_p99_ms": 0.3234000178053975,
+      "maximum_ms": 0.8951999770943075
+    },
+    {
+      "case": "damage_bursts",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 2868,
+      "operation_count": 468,
+      "worst_mean_ms": 0.186517055537681,
+      "worst_p95_ms": 0.2578000130597502,
+      "worst_p99_ms": 0.3462999884504825,
+      "maximum_ms": 0.9820999985095114
+    }
+  ],
+  "warmup_steps": 600,
+  "measured_steps": 3600,
+  "repeats": 3,
+  "scope": "Includes operation validation, durability writes, dependency events and flight. Excludes tape construction, oracle, profile, actual projectile/repair, power/crew/command producers, save/UI/long run.",
+  "evidence_sha256": {
+    "damage_bursts-checkpoints.jsonl.gz": "f70f0e2d23cda2fd0d4d5930ead2743fafef6935e7712fcc65ba57f62a0d107b",
+    "damage_bursts-mechanisms.json": "2c34867d0b77ff73b0f938a2e08fe8611a4ce5d9ee67a20f7382a85ba91e6a6d",
+    "damage_bursts-resources.json": "7bc762ab1a6644d84fad7c58c6312d90e7434dacccb2ffb280d12e2753b5fddc",
+    "damage_bursts-timing.json": "9257f1cdb554b98a24cf292c02ef7ffe37c0efc628312788e91265d04633b6f8",
+    "inputs.json": "0ea17c8144600e5e4fc94d5d0e17e6f0df9f255ccf8a3e8cf380c1c488d4ac6d",
+    "maneuvers-checkpoints.jsonl.gz": "b41735dab2a8a75e53f3821dd2b721527911991e5bfaf98ab15eabf690655404",
+    "maneuvers-mechanisms.json": "07f023ba21f017d609c4b4167f8caa7c6fc8921a1ae8b5f370226b1fc414a893",
+    "maneuvers-resources.json": "7bc762ab1a6644d84fad7c58c6312d90e7434dacccb2ffb280d12e2753b5fddc",
+    "maneuvers-timing.json": "07ba6147b49c64f9ff70216da0b60fc1e8dc753fa093667053655cf9519cae5a",
+    "manifest.json": "d376a94517d4e1fb1c268db49b933ed8ed726060ffc8c61b78ee060ace503a99",
+    "source-resources.zip": "ac40e59020cb76e13710322047b1b397e25d47cd5ceba1228dcf71ac2fb53425",
+    "steady-checkpoints.jsonl.gz": "6e2158fbc8f8b97c9d8470dd2f920e33c59d46b4b256e26ac8fbc49d9a90f26a",
+    "steady-mechanisms.json": "79327a4dd2def7efca89df453b4e037647e1b8f2b8d5e128cb24256260de4a1c",
+    "steady-resources.json": "7bc762ab1a6644d84fad7c58c6312d90e7434dacccb2ffb280d12e2753b5fddc",
+    "steady-timing.json": "efd1688636313e4c381492acd4fc60e7662ae505b345968f4d42e73056ca0dbe",
+    "tracked-python.patch": "e4be8f6c1d887a46e4f31680f59bbe02019d0b514a6354eb073aaa32ad778255"
+  }
+}

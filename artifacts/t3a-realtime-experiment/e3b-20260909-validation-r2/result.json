@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "stage": "E3b",
+  "full_E3": "NOT_PASSED",
+  "default_backend_migrated": false,
+  "python_regression_tests": 133,
+  "python_view_tests_final": 9,
+  "frontend_tests": 76,
+  "rust_tests": 23,
+  "rust_enhanced_control_test": "PASS",
+  "frontend_build": "PASS",
+  "desktop_debug_build": "PASS",
+  "browser_evidence": {
+    "artifacts/t3a-realtime-experiment/e3b-20260909-browser-r4/realtime-view.png": "0a406e6a21dbe83f853ee23092d58218733b42e295484b1fb3f67bbbd36ba354",
+    "artifacts/t3a-realtime-experiment/e3b-20260909-browser-r4/result.json": "91e7b47a5ad6d112b4fc3a1eed60aae17d9ff196cf1a0d6801f9044b029814b1"
+  },
+  "scope": "Real Python stdio authority + React/Pixi in headless Edge under no-eval CSP; separate real Rust supervisor IPC tests. No native WebView interaction or 30-minute/2-hour long-run claim.",
+  "evidence_sha256": {
+    "frontend-source.zip": "7b40f7304729be9bb612fce3ce7df62e1158c767f589ce688ae852102bd34a30",
+    "manifest.json": "f69e06410dbd6b147a63ed428c3e8f8459f318e6227cfdfd546a1ac90b308a98",
+    "source-resources.zip": "c13f6bbaeb73ee2e3572a17c9477ed28e4c5c5650564c14eaaa692b0dcbbe8f8",
+    "tracked-python.patch": "4d839265ba553fd478008cd39d9767630b0552a65d5147c712a55b5000790a21"
+  }
+}

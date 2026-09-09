@@ -1,7 +1,8 @@
 export const SCENARIO_ID = "gtw.sample.web.two_ship.v1";
 export interface TacticalRequest {
   backend_instance_id: string;
-  method: "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause";
+  method: "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
+    | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.close";
   params: Record<string, unknown>;
   session_id: null;
   expected_revision: null;

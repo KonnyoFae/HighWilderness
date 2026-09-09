@@ -1,0 +1,82 @@
+{
+  "status": "PASS",
+  "stage": "E2.2a",
+  "full_E2": "NOT_PASSED",
+  "product_realtime": "NOT_PASSED",
+  "workloads": [
+    {
+      "case": "steady",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 3600,
+      "worst_mean_ms": 0.20653555558561087,
+      "worst_p95_ms": 0.2770000137388706,
+      "worst_p99_ms": 0.34890000824816525,
+      "maximum_ms": 1.1173999810125679,
+      "mechanisms": {
+        "canonical_sha256": 0,
+        "aggregate_actuators": 0,
+        "compile_runtime_ship_parameters": 0,
+        "verify_derived_ship_snapshot_fingerprint": 0,
+        "_parse_exact_timing_capability": 0,
+        "_allocate_power": 0,
+        "_manual_staffing": 0
+      }
+    },
+    {
+      "case": "maneuvers",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 2778,
+      "worst_mean_ms": 0.23273377769833636,
+      "worst_p95_ms": 0.3513999981805682,
+      "worst_p99_ms": 0.5218000151216984,
+      "maximum_ms": 1.4017999928910285,
+      "mechanisms": {
+        "canonical_sha256": 0,
+        "aggregate_actuators": 0,
+        "compile_runtime_ship_parameters": 0,
+        "verify_derived_ship_snapshot_fingerprint": 0,
+        "_parse_exact_timing_capability": 0,
+        "_allocate_power": 37,
+        "_manual_staffing": 37
+      }
+    },
+    {
+      "case": "resource_bursts",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 708,
+      "worst_mean_ms": 0.24210519448388368,
+      "worst_p95_ms": 0.4034999874420464,
+      "worst_p99_ms": 0.6067999929655343,
+      "maximum_ms": 1.279199990676716,
+      "mechanisms": {
+        "canonical_sha256": 0,
+        "aggregate_actuators": 0,
+        "compile_runtime_ship_parameters": 0,
+        "verify_derived_ship_snapshot_fingerprint": 0,
+        "_parse_exact_timing_capability": 0,
+        "_allocate_power": 156,
+        "_manual_staffing": 156
+      }
+    }
+  ],
+  "warmup_steps": 600,
+  "measured_steps": 3600,
+  "repeats": 3,
+  "scope": "Two ships, synthetic manual/electric blue ship. Includes domain operations, phase allocation, latching/reset and flight. Excludes oracle/profile/setup, actual CIC/remote/lifecycle, repair, combat, UI, saves and long run.",
+  "evidence_sha256": {
+    "inputs.json": "759b9305a5d222b9ced6c080f2d22dc35c54bc9e1726dce924c8d2a4f4694c87",
+    "maneuvers-final.json": "9c8534c506b74df05508defd8e7eb37e65872beeed1cb1ff8638a75205289c2c",
+    "maneuvers-mechanisms.json": "4664bc9ad67d4a987f0cc95c05fecb404117dfc44601c0fea252df32c8b33421",
+    "maneuvers-timing.json": "b6f76402dd35764467d6ee3b2907d664562cef4c128e9a1e521aec1d119db2dd",
+    "manifest.json": "d44261165e604ffff4c02615c6573d6d610fd4b84d80765f82012daa8aa9491d",
+    "resources.json": "1250a7ffb38be97daa330ca1c4201a8f37ecdfd59f74048b1c5d2d6a39ca7f19",
+    "resource_bursts-final.json": "dcbe03fe5e9fd9c03bec3e227c2380aabb3f4a5577f9b88ee38b720c2df2aa9d",
+    "resource_bursts-mechanisms.json": "4b99ee0d2909d3231f95d62507d4e8f541cc4f95d164fb2139607ee56a3aa998",
+    "resource_bursts-timing.json": "d75bf544833788a100d498f9646e1758646c66cd064dc638d9954d9b95b3b975",
+    "source-resources.zip": "f27a700cbe83c1bb5b457988dbdd39e7e18c96dbf1c49293012a0b6ce0b1fd36",
+    "steady-final.json": "e41edcdb47d3433e9684e47a68ef4b386eb5979f5a6888b5ecc1d78e55ef93f6",
+    "steady-mechanisms.json": "69c1a830f198fae17fcc4359f00730d0c292e28cf4ee4398abc4497d061c51ed",
+    "steady-timing.json": "86d493a9f79730092ea1632fd685ab8e1141c4a885ceb3d2706477c373211918",
+    "tracked-python.patch": "421f8f72f7efd345a523811cf93a79c9eeed1ef6460bb9028426f198aa9bb5f7"
+  }
+}

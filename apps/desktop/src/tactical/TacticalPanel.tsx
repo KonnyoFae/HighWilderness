@@ -2,9 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import type { BridgeTransport } from "../bridge/transport";
 import { normalizeHostFailure } from "../bridge/model";
 import { acceptSnapshot, SCENARIO_ID } from "./model";
-import type { TacticalControlInput, TacticalRequest, TacticalSnapshot, TacticalView } from "./model";
+import type { TacticalControlInput, TacticalSnapshot, TacticalView } from "./model";
 import { TacticalViewport } from "./TacticalViewport";
 import { TacticalControls } from "./TacticalControls";
+import { RealtimePanel } from "./RealtimePanel";
 import { reconcileAdvance, reconcileStep, stepTicket } from "./control";
 import type { StepTicket } from "./control";
 
@@ -12,6 +13,7 @@ export function TacticalPanel({ transport, instance, active = true, onBusy }: {
   transport: BridgeTransport; instance: string; active?: boolean; onBusy?: (busy: boolean) => void;
 }) {
   const [view, setView] = useState<TacticalView | null>(null);
+  const [experimental, setExperimental] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
@@ -20,7 +22,7 @@ export function TacticalPanel({ transport, instance, active = true, onBusy }: {
   const pending = useRef(false), mounted = useRef(true);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   useEffect(() => { onBusy?.(busy); return () => onBusy?.(false); }, [busy, onBusy]);
-  async function run(method: Exclude<TacticalRequest["method"], "tactical.set_mode">, input?: TacticalControlInput, stepCount = 1) {
+  async function run(method: "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.step" | "tactical.advance" | "tactical.pause", input?: TacticalControlInput, stepCount = 1) {
     const advancing = method === "tactical.advance", controlling = method === "tactical.step" || advancing;
     if (pending.current || !active || controlling && (uncertain || !input)) return;
     pending.current = true; setBusy(true); setError("");
@@ -79,10 +81,12 @@ export function TacticalPanel({ transport, instance, active = true, onBusy }: {
   }, [active]);
   const ship = view?.geometry.ships.find(s => s.id === selected);
   const pose = view?.snapshot.ships.find(s => s.id === selected);
+  if (experimental) return <RealtimePanel transport={transport} instance={instance} active={active} onBusy={onBusy} onClose={() => setExperimental(false)} />;
   return <section className="panel tactical-panel" aria-label="两舰战术视角">
     <h2>两舰试航场景</h2>
     <p className="editor-note">选择车钟后按秒试航，观察蓝方旗舰加速与转向；到达指定时长后自动暂停。</p>
     <div className="editor-row">
+      <button disabled={busy || view !== null || !active} onClick={() => setExperimental(true)}>实时试航（实验）</button>
       <button disabled={busy || view !== null} onClick={() => void run("tactical.create")}>建立两舰场景</button>
       <button disabled={busy} onClick={() => void run("tactical.inspect")}>读取场景状态</button>
       <button disabled={busy || !view} onClick={() => void run("tactical.close")}>释放测试场景</button>

@@ -940,7 +940,8 @@ impl BackendSupervisor {
     }
 
     pub fn tactical_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
-        if !matches!(request.method.as_str(), "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause") {
+        if !matches!(request.method.as_str(), "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
+            | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.close") {
             return Err(HostFailure::host("method_not_supported", "tactical method not enabled"));
         }
         if request.session_id.is_some() || request.expected_revision.is_some() {
@@ -1344,6 +1345,43 @@ mod tests {
         red["arguments"]["ship_id"] = json!("ship.web.red");
         assert_eq!(supervisor.tactical_request(request("tactical.step", json!({"scene_id": created["scene_id"], "input": red}))).unwrap_err().code, "tactical_command.direct_ship_mismatch");
         supervisor.tactical_request(request("tactical.close", json!({"scene_id":created["scene_id"]}))).unwrap();
+        supervisor.stop("user_exit").unwrap();
+    }
+
+    #[test]
+    fn real_realtime_view_controls_and_editor_pause() {
+        let supervisor = BackendSupervisor::new(repo_root());
+        let (events, _) = sink();
+        let status = supervisor.start(events).unwrap();
+        assert!(status.capabilities.contains(&"tactical.realtime.create".into()));
+        let instance = status.backend_instance_id.unwrap();
+        let request = |method: &str, params: Value| EditorRequest {
+            backend_instance_id: instance.clone(), method: method.into(), params,
+            session_id: None, expected_revision: None,
+        };
+        supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"tactical"}))).unwrap();
+        let created = supervisor.tactical_request(request("tactical.realtime.create", json!({"scenario_id":"gtw.sample.web.two_ship.v1"}))).unwrap();
+        let scene = created["status"]["epoch"].clone();
+        supervisor.tactical_request(request("tactical.realtime.resume", json!({"scene_id":scene}))).unwrap();
+        let frames: Value = serde_json::from_str(include_str!("../../../src/tactical/testing/step.fixture.json")).unwrap();
+        let accepted = supervisor.tactical_request(request("tactical.realtime.control", json!({"scene_id":scene,
+            "input":{"interface":"gaotian.tactical-scheduled-control/e3a-v1alpha1","epoch":scene,"generation":0,
+                "sequence":1,"ship_id":"ship.web.blue","target_step":6,"control":frames[0]["input"]["arguments"]["control"]}}))).unwrap();
+        assert_eq!(accepted["status"], "accepted");
+        std::thread::sleep(std::time::Duration::from_millis(150));
+        let paused = supervisor.tactical_request(request("tactical.realtime.pause", json!({"scene_id":scene}))).unwrap();
+        assert!(paused["status"]["fixed_step"].as_u64().unwrap() > 0);
+        assert_eq!(paused["status"]["running"], false);
+        assert_eq!(paused["receipts"][0]["status"], "executed");
+        let read = || request("tactical.realtime.read", json!({"scene_id":scene,
+            "known_static_sha256":created["view"]["static_sha256"],"ack_inputs":[],"ack_events":0}));
+        let a = supervisor.tactical_request(read()).unwrap();
+        assert_eq!(a["view"]["static"], Value::Null);
+        assert_eq!(a["status"]["fixed_step"], paused["status"]["fixed_step"]);
+        supervisor.tactical_request(request("tactical.realtime.resume", json!({"scene_id":scene}))).unwrap();
+        supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"editor"}))).unwrap();
+        assert_eq!(supervisor.tactical_request(read()).unwrap()["status"]["running"], false);
+        supervisor.tactical_request(request("tactical.realtime.close", json!({"scene_id":scene}))).unwrap();
         supervisor.stop("user_exit").unwrap();
     }
 

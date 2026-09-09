@@ -1,0 +1,53 @@
+{
+  "forbidden_calls": {
+    "canonical_sha256": 0,
+    "aggregate_actuators": 0,
+    "compile_runtime_ship_parameters": 0,
+    "verify_derived_ship_snapshot_fingerprint": 0,
+    "_parse_exact_timing_capability": 0
+  },
+  "device_calls": [
+    {
+      "name": "boundary",
+      "line": 126,
+      "calls": 14400,
+      "own_s": 0.0035808000000000003,
+      "cumulative_s": 0.004355
+    },
+    {
+      "name": "validate_operation",
+      "line": 115,
+      "calls": 468,
+      "own_s": 0.0008076,
+      "cumulative_s": 0.0011848000000000002
+    },
+    {
+      "name": "reasons",
+      "line": 107,
+      "calls": 576,
+      "own_s": 0.00022030000000000002,
+      "cumulative_s": 0.0002608
+    },
+    {
+      "name": "require",
+      "line": 17,
+      "calls": 3276,
+      "own_s": 0.0002134,
+      "cumulative_s": 0.0002134
+    },
+    {
+      "name": "number",
+      "line": 22,
+      "calls": 468,
+      "own_s": 0.00017150000000000002,
+      "cumulative_s": 0.0001997
+    },
+    {
+      "name": "<genexpr>",
+      "line": 109,
+      "calls": 576,
+      "own_s": 4.05e-05,
+      "cumulative_s": 4.05e-05
+    }
+  ]
+}

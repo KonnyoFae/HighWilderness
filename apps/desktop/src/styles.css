@@ -268,6 +268,11 @@ h2 { margin: 7px 0 0; font-size: 19px; }
 .tactical-controls h3 { margin-top: 0; }
 .tactical-controls fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
 .tactical-controls select { width: 100%; }
+.realtime-helm { min-width: 0; border: 1px solid #35585b; border-radius: 10px; padding: 18px; margin: 16px 0; }
+.realtime-helm .editor-row { align-items: center; gap: 16px; }
+.realtime-helm .editor-row label { display: flex; flex: 0 0 auto; min-width: 0; gap: 10px; align-items: center; white-space: nowrap; }
+.realtime-helm .editor-row input[type="checkbox"] { width: auto; }
+.realtime-helm .editor-row select { width: 180px; padding: 8px; border: 1px solid #54747a; border-radius: 6px; color: #d9e9e3; background: #102b31; }
 .tactical-brake { display: flex; gap: 8px; align-items: center; }
 .propulsion-tables { display: flex; gap: 24px; flex-wrap: wrap; overflow-x: auto; }
 .propulsion-tables table { border-collapse: collapse; flex: 1; font-size: 13px; font-variant-numeric: tabular-nums; }

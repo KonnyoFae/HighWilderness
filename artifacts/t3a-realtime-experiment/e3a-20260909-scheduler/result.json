@@ -1,0 +1,118 @@
+{
+  "status": "PASS",
+  "stage": "E3a",
+  "full_E3": "NOT_PASSED",
+  "product_realtime": "NOT_PASSED",
+  "workloads": [
+    {
+      "case": "steady",
+      "replay": {
+        "compared_boundaries": 4201,
+        "jitter_pumps": 4269,
+        "executed_inputs": 1,
+        "peak_pending": 1,
+        "peak_receipts": 1,
+        "peak_events": 1
+      },
+      "timing": {
+        "worst_mean_ms": 0.30928072238263365,
+        "worst_p95_ms": 0.4084000247530639,
+        "worst_p99_ms": 0.5679000169038773,
+        "maximum_ms": 1.9038000027649105,
+        "mechanisms": {
+          "canonical_sha256": 0,
+          "compile_runtime_ship_parameters": 0,
+          "aggregate_actuators": 0,
+          "verify_derived_ship_snapshot_fingerprint": 0,
+          "_parse_exact_timing_capability": 0,
+          "_allocate_power": 0,
+          "_manual_staffing": 0
+        }
+      }
+    },
+    {
+      "case": "resource_bursts",
+      "replay": {
+        "compared_boundaries": 4201,
+        "jitter_pumps": 4269,
+        "executed_inputs": 1,
+        "peak_pending": 1,
+        "peak_receipts": 1,
+        "peak_events": 2
+      },
+      "timing": {
+        "worst_mean_ms": 0.32955180536696893,
+        "worst_p95_ms": 0.5404000403359532,
+        "worst_p99_ms": 0.852899975143373,
+        "maximum_ms": 2.995199989527464,
+        "mechanisms": {
+          "canonical_sha256": 0,
+          "compile_runtime_ship_parameters": 0,
+          "aggregate_actuators": 0,
+          "verify_derived_ship_snapshot_fingerprint": 0,
+          "_parse_exact_timing_capability": 0,
+          "_allocate_power": 156,
+          "_manual_staffing": 156
+        }
+      }
+    },
+    {
+      "case": "command_loss",
+      "replay": {
+        "compared_boundaries": 4201,
+        "jitter_pumps": 4269,
+        "executed_inputs": 1,
+        "peak_pending": 1,
+        "peak_receipts": 1,
+        "peak_events": 1
+      },
+      "timing": {
+        "worst_mean_ms": 0.34232580557323267,
+        "worst_p95_ms": 0.4684000159613788,
+        "worst_p99_ms": 0.5995000246912241,
+        "maximum_ms": 1.7271999968215823,
+        "mechanisms": {
+          "canonical_sha256": 0,
+          "compile_runtime_ship_parameters": 0,
+          "aggregate_actuators": 0,
+          "verify_derived_ship_snapshot_fingerprint": 0,
+          "_parse_exact_timing_capability": 0,
+          "_allocate_power": 3,
+          "_manual_staffing": 3
+        }
+      }
+    }
+  ],
+  "wall_probe": {
+    "wall_seconds": 10.0013357,
+    "completed_steps": 599,
+    "simulated_seconds": 9.983333333333333,
+    "simulation_lag_ms": 18.00236666666777,
+    "maximum_observed_debt_steps": 0.999866,
+    "pause_call_ms": 0.056,
+    "final_matches_direct_reference": true,
+    "scope": "Short local host pump with 1 ms sleeps and actual monotonic clock; no IPC/UI or long-run memory claim"
+  },
+  "warmup_steps": 600,
+  "measured_steps": 3600,
+  "repeats": 3,
+  "scope": "Deterministic jitter replay includes every committed ship state/StepResult and reliable event delivery. Timed fake-clock host ticks include queue submission, pump, receipt queries/acks and event reads/acks. Setup, oracle, profile and real-clock throttling excluded from throughput.",
+  "evidence_sha256": {
+    "command_loss-final.json": "9671a017081e787ef350b0351c0d610d32e9a90ae97fdd5c21d120aed3525ad3",
+    "command_loss-mechanisms.json": "9ab0f0776f90680d0413f0f4dc62a2ae9124c8a9f70b5f8d380c68535388dac4",
+    "command_loss-timing.json": "d422dafa9ae564ee061a2c85faa8bb8be750411c9cccbe5a2ab084e79ea47d5f",
+    "inputs.json": "70af16dd51a494701e06b2ab951311661492cf6197f013f41fcc936294d995db",
+    "manifest.json": "030bdd44b26dfcbe5691715dbf2b27f7b444b64cbeca35e9ad91d63111f0f9fd",
+    "resources.json": "3b140cb17d473e270edb9c790ea01b0083c875b56a5e26c0c0110943b975479b",
+    "resource_bursts-final.json": "e482a111b3415f111e598ba599e218301127b6135f2da917aa4f26c6e2c2e551",
+    "resource_bursts-mechanisms.json": "3be03b024c42e317592750cbd2007f180fb7d3cda24871fab7ed75afbe683022",
+    "resource_bursts-timing.json": "03ea66cd083b1fb8c8c3c41f29c08046ac49cae0932baa1b25f0a28b6b62674b",
+    "source-resources.zip": "08031b345d1fea71a1e4d25c84f67f1210d6591304b7372a4fb895681609383e",
+    "steady-final.json": "b03831076441e681278e0dfd30ee39c905685b6be37beb77a202d937141d8928",
+    "steady-mechanisms.json": "c0b445b01a27531243dbab6d39f701108e5ae9447b74f4ac3cc39a9437baebe2",
+    "steady-timing.json": "cef94be3d2fe0eb8a3185a843f8b4915e71d015984079fb83df5dac162439d72",
+    "tracked-python.patch": "93a9de4e0773d803d8e9c92760bef6d43e30348e79cdbdb39189b61c332fa167",
+    "wall-clock-inputs.json": "f57102de772e17478148629d4414ec0fb1eb641fc9eee08463a5130307cb5080",
+    "wall-clock-samples.json": "e669cec8519dbebf5c673ba5075256bb55b21dd3b556263fa1adb9d789f33ba4"
+  }
+}

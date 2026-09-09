@@ -2,12 +2,12 @@
 
 > 建立日期：2026 年 8 月 27 日
 > 更新日期：2026 年 9 月 8 日
-2026-09-08 接续：[E1c.3 验证报告](./contracts/web_bridge/t3a-realtime-e1c3-validation.md)已完成：62 项相关测试、12603 个边界核对通过；三种负载各预热 600 步、测量 3600 步、重复三次，最差平均 0.177 ms/步、P99 0.342 ms。仅为两舰（单舰主动控制）飞行内核吞吐，未含真实领域事件生产、完整表现/通信与长跑；产品实时仍未验收。下一项 E2.1 接真实设备状态事件，E1d 来源/诊断泛化优化暂缓。
+2026-09-09 最新进展：[E3b 快照发布与实验画布联调](./contracts/web_bridge/t3a-realtime-e3b-view.md)已实现。战术视角新增可选「实时试航（实验）」入口，后台按 60 Hz 独立推进，画面约 15 Hz 更新；接通操纵回执、暂停、返回编辑和断连暂停。相关 Python 回归 133 项、最终接线专项 9 项、前端 76 项和 Rust 23 项通过，真实后台与浏览器画布联调及桌面构建通过。下一片 E3c 长跑准备与验证；默认桌面路径未迁移，完整 E3 和长期稳定性仍待验收。
 
 > 已推送基线：`293fc48`；包含 H4/H5a、舾装与验收修复、T1a 及对应计划和证据。d4h 曾通过退出门，当前改动后的历史全量门禁未复跑。
-> 当前主线：`T3a_paused_completed / E0_baseline_pass / E1b_implemented / E1_in_progress / O4_formal_evidence_pending`；两舰 v7 场景、战术画布、模式切换和单步操纵已完成并通过原生验证。独立实时路线 E1a 会话与静态编译已实现，E1b 步内证明复用也已完成，E1c.1 固定贡献编译已实现，E1c.2 独立飞行原型也已完成，E1c.3 新规则验证与范围内吞吐门已通过，下一步 E2.1 真实设备状态事件，原指纹/诊断工作后移为 E1d。舾装经用户复测已无已知功能阻塞，O4 三舰规范实机留档仍待补齐，不冒充正式 M3/O4 全项 PASS；历史指纹与全量结果单独保留。
+> 当前主线：`T3a_paused_completed / E0_baseline_pass / E1b_implemented / E3b_implemented / E3c_pending / O4_formal_evidence_pending`；两舰 v7 场景、战术画布、模式切换和单步操纵已完成并通过原生验证。独立实时路线 E1a 会话与静态编译已实现，E1b 步内证明复用也已完成，E1c.1 固定贡献编译已实现，E1c.2 独立飞行原型也已完成，E1c.3 新规则验证与范围内吞吐门已通过，下一步 E3c 长跑准备与验证，原指纹/诊断工作后移为 E1d。舾装经用户复测已无已知功能阻塞，O4 三舰规范实机留档仍待补齐，不冒充正式 M3/O4 全项 PASS；历史指纹与全量结果单独保留。
 
-> 最新反馈修正：已加入按秒有限试航，并明确战术推进不扣燃料；独立试航样例提高推力便于观察，玩家设计不套用该倍数。保留编辑框架，独立探索“进入场景严格编译、运行中按变化更新、持续过程按时间推进”，共享计算规则。[E0 基线](./contracts/web_bridge/t3a-realtime-e0-baseline.md)完成两组 192 步重放和三次短测（46.66—49.03 ms/步），仍不满足实时。[E1a 实现](./contracts/web_bridge/t3a-realtime-e1a-flight.md)已通过完整对照，交替短测新路径约 24 ms/步、旧路径约 45 ms/步，耗时减少约 47%；仍未实时。[E1b 步内证明复用](./contracts/web_bridge/t3a-realtime-e1b-record-proofs.md)已接续完成，新路径约 20.4 ms/步，完整对照通过；随后 E1c 已改为固定贡献与简化推进，详见[新政策规划](./contracts/web_bridge/t3a-realtime-simplified-propulsion-plan.md)：取消实时配平，战损事件更新各方向能力，血量独立。[E1c.1 贡献编译](./contracts/web_bridge/t3a-realtime-e1c1-contributions.md)已完成，39 项相关测试及旧路径 192 步回放通过；[E1c.2 飞行原型](./contracts/web_bridge/t3a-realtime-e1c2-flight.md)已实现，56 项相关测试和两次 360 步回放通过，E1c.3 范围内吞吐门已通过，下一项 E2.1 真实设备状态事件。新内核约 0.15—0.17 ms/步仅为两舰无交火飞行短测，不与含旧完整场景/表现的 20.4 ms 混比；真实领域事件生产、长跑和界面接线仍待验收；桌面尚未切换新后端。当前产品合同仍见 `contracts/web_bridge/t3a-bounded-preview.md`。
+> 最新反馈修正：已加入按秒有限试航，并明确战术推进不扣燃料；独立试航样例提高推力便于观察，玩家设计不套用该倍数。保留编辑框架，独立探索“进入场景严格编译、运行中按变化更新、持续过程按时间推进”，共享计算规则。[E0 基线](./contracts/web_bridge/t3a-realtime-e0-baseline.md)完成两组 192 步重放和三次短测（46.66—49.03 ms/步），仍不满足实时。[E1a 实现](./contracts/web_bridge/t3a-realtime-e1a-flight.md)已通过完整对照，交替短测新路径约 24 ms/步、旧路径约 45 ms/步，耗时减少约 47%；仍未实时。[E1b 步内证明复用](./contracts/web_bridge/t3a-realtime-e1b-record-proofs.md)已接续完成，新路径约 20.4 ms/步，完整对照通过；随后 E1c 已改为固定贡献与简化推进，详见[新政策规划](./contracts/web_bridge/t3a-realtime-simplified-propulsion-plan.md)：取消实时配平，战损事件更新各方向能力，血量独立。[E1c.1 贡献编译](./contracts/web_bridge/t3a-realtime-e1c1-contributions.md)已完成，39 项相关测试及旧路径 192 步回放通过；[E1c.2 飞行原型](./contracts/web_bridge/t3a-realtime-e1c2-flight.md)已实现，56 项相关测试和两次 360 步回放通过，E1c.3 范围内吞吐门已通过，下一项 E3c 长跑准备与验证。新内核约 0.15—0.17 ms/步仅为两舰无交火飞行短测，不与含旧完整场景/表现的 20.4 ms 混比；已接范围的领域事件与实验界面验证通过，实际战斗生产、长跑和默认迁移仍待验收；桌面尚未切换新后端。当前产品合同仍见 `contracts/web_bridge/t3a-bounded-preview.md`。
 > 调整依据：用户确认侧挂修复，保存疑问源于首次需“另存为”，当前未发现其他问题，并要求复盘后准备后续实施。
 > 适用顺序：第零至十三章为现行产品计划；第十四章起为历史实施记录，其中旧“唯一下一项”和性能阻塞 UI 的调度结论已由本次重排替代。历史验收事实、权威规则与黄金保持有效。
 
@@ -80,7 +80,7 @@ H5a 已完成边缘片区、面积和毛体积的权威预览与分层叠加；�
 
 M1/M2 已完成；M3 已可用并获得用户功能复测认可，O4 规范三舰实机留档作为非阻塞收尾项保留。现有 13 项 O4 服务测试、60 项前端测试及构建等记录仅代表各自已执行范围，本次复盘不重跑或扩大这些结论。进入 T1a 符合既有 W2a 后可开展协议准备的依赖关系，不修改 X1a 最终需要 H4/O4 与 T4a 的退出条件。
 
-本次复盘后已完成 **T1a：两舰测试场景与最小表现协议**、**T2a：战术画布与模式切换**及 **T3a 前段：暂停单步与直控**，并补有限试航。独立实时路线 E0 和 E1a 已完成，E1b 也已完成，E1c.1 贡献编译已完成，E1c.2 独立飞行原型也已完成，E1c.3 范围内吞吐门已通过，下一交付 E2.1 真实设备状态事件；E1d 再按需拆分指纹/诊断，E2 验证战损失效，E3 承接连续运行。实际已实现合同见 `contracts/web_bridge/t1a-tactical-protocol.md`、`contracts/web_bridge/t2a-tactical-viewport.md`、`contracts/web_bridge/t3a-bounded-preview.md`。T4a 普通炮弹与命中战损由 E4 衔接，X1a 用户设计出航及续跑由迁移阶段 E5 补齐。填充材料效果、高级批量编辑、独立回放、正式 RCS 标定和大规模性能工作继续按触发条件后移。
+本次复盘后已完成 **T1a：两舰测试场景与最小表现协议**、**T2a：战术画布与模式切换**及 **T3a 前段：暂停单步与直控**，并补有限试航。独立实时路线 E0 和 E1a 已完成，E1b 也已完成，E1c.1 贡献编译已完成，E1c.2 独立飞行原型也已完成，E1c.3 范围内吞吐门已通过，下一交付 E3c 长跑准备与验证；E1d 再按需拆分指纹/诊断，E2 验证战损失效，E3 承接连续运行。实际已实现合同见 `contracts/web_bridge/t1a-tactical-protocol.md`、`contracts/web_bridge/t2a-tactical-viewport.md`、`contracts/web_bridge/t3a-bounded-preview.md`。T4a 普通炮弹与命中战损由 E4 衔接，X1a 用户设计出航及续跑由迁移阶段 E5 补齐。填充材料效果、高级批量编辑、独立回放、正式 RCS 标定和大规模性能工作继续按触发条件后移。
 
 ## 一、目标与顺序修正
 

@@ -1,0 +1,82 @@
+{
+  "status": "PASS",
+  "stage": "E2.2b",
+  "full_E2": "NOT_PASSED",
+  "product_realtime": "NOT_PASSED",
+  "warmup_steps": 600,
+  "measured_steps": 3600,
+  "repeats": 3,
+  "workloads": [
+    {
+      "case": "steady",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 3600,
+      "worst_mean_ms": 0.3212481108817479,
+      "worst_p95_ms": 0.5057999514974654,
+      "worst_p99_ms": 0.7152999751269817,
+      "maximum_ms": 1.7574999947100878,
+      "mechanisms": {
+        "canonical_sha256": 0,
+        "aggregate_actuators": 0,
+        "compile_runtime_ship_parameters": 0,
+        "verify_derived_ship_snapshot_fingerprint": 0,
+        "_parse_exact_timing_capability": 0,
+        "_allocate_power": 0,
+        "_manual_staffing": 0
+      }
+    },
+    {
+      "case": "resource_bursts",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 708,
+      "worst_mean_ms": 0.2983369998401031,
+      "worst_p95_ms": 0.4482000367715955,
+      "worst_p99_ms": 0.7678000256419182,
+      "maximum_ms": 3.278499993029982,
+      "mechanisms": {
+        "canonical_sha256": 0,
+        "aggregate_actuators": 0,
+        "compile_runtime_ship_parameters": 0,
+        "verify_derived_ship_snapshot_fingerprint": 0,
+        "_parse_exact_timing_capability": 0,
+        "_allocate_power": 156,
+        "_manual_staffing": 156
+      }
+    },
+    {
+      "case": "command_loss",
+      "compared_boundaries": 4201,
+      "active_blue_steps": 1500,
+      "worst_mean_ms": 0.42871763865049517,
+      "worst_p95_ms": 0.712399953044951,
+      "worst_p99_ms": 0.8937999955378473,
+      "maximum_ms": 1.7968000029213727,
+      "mechanisms": {
+        "canonical_sha256": 0,
+        "aggregate_actuators": 0,
+        "compile_runtime_ship_parameters": 0,
+        "verify_derived_ship_snapshot_fingerprint": 0,
+        "_parse_exact_timing_capability": 0,
+        "_allocate_power": 3,
+        "_manual_staffing": 3
+      }
+    }
+  ],
+  "scope": "Two ships, single flagship, crewed synthetic manual/electric fixture. Includes device, phase allocation, command and lifecycle producers. Other remote/exit cases covered by unit tests. Excludes setup, oracle/profile, RTS, distance/radio models, actual combat/repair, save/UI/long run.",
+  "evidence_sha256": {
+    "command_loss-final.json": "9671a017081e787ef350b0351c0d610d32e9a90ae97fdd5c21d120aed3525ad3",
+    "command_loss-mechanisms.json": "cda984a9ef7b84b9542470a40eb2bf7615b7ba565510a97f228c088a0641fa7d",
+    "command_loss-timing.json": "0a4df0b2380a14e8970f554b6b003bc3b2a18228370750f1e300ff58b3585426",
+    "inputs.json": "70af16dd51a494701e06b2ab951311661492cf6197f013f41fcc936294d995db",
+    "manifest.json": "5c856ab9d26e15104abc02a63b13cd029d1ee1f1513827b4d3da30e7e865d7c3",
+    "resources.json": "3b140cb17d473e270edb9c790ea01b0083c875b56a5e26c0c0110943b975479b",
+    "resource_bursts-final.json": "e482a111b3415f111e598ba599e218301127b6135f2da917aa4f26c6e2c2e551",
+    "resource_bursts-mechanisms.json": "4b99ee0d2909d3231f95d62507d4e8f541cc4f95d164fb2139607ee56a3aa998",
+    "resource_bursts-timing.json": "75739d99e451a21921a599a5eca5662f623d1b06251170fd48033bf5d62ee138",
+    "source-resources.zip": "872e9c1af1f95545d23ae03139a4996ddc677122bd2024b81a8d2ac6c40c268b",
+    "steady-final.json": "b03831076441e681278e0dfd30ee39c905685b6be37beb77a202d937141d8928",
+    "steady-mechanisms.json": "69c1a830f198fae17fcc4359f00730d0c292e28cf4ee4398abc4497d061c51ed",
+    "steady-timing.json": "72953b527fb54be6591b35c6c326cbee8f87497a9d7fcd4fde35c1c066d5b654",
+    "tracked-python.patch": "93a9de4e0773d803d8e9c92760bef6d43e30348e79cdbdb39189b61c332fa167"
+  }
+}
