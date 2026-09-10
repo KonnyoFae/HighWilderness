@@ -1,8 +1,8 @@
 # E2 设备领域接线与失效验证实施准备
 
-日期：2026-09-09。核对代码基线：`4bef488`。状态：`E2_1_IMPLEMENTED / E2_2A_IMPLEMENTED / E2_2B_IMPLEMENTED / E2_3_IMPLEMENTED / IMPLEMENTED_E2_SCOPE_PASS / E3A_IMPLEMENTED / E3B_IMPLEMENTED / E3C_NEXT / FULL_E2_NOT_PASSED`。
+日期：2026-09-09。核对代码基线：`4bef488`。状态：`E2_1_IMPLEMENTED / E2_2A_IMPLEMENTED / E2_2B_IMPLEMENTED / E2_3_IMPLEMENTED / IMPLEMENTED_E2_SCOPE_PASS / E3A_IMPLEMENTED / E3B_IMPLEMENTED / E3C_STDIO_30MIN_PASS / E4A_NEXT / FULL_E2_NOT_PASSED`。
 
-本文件细化[实时实验主计划](./t3a-realtime-experiment-plan.md)的 E2。[E1c.3](./t3a-realtime-e1c3-validation.md)已通过范围内独立验证和吞吐门，可以进入领域接线。E2.1 已完成部件耐久与宿主失效接线，见 [实现及验证报告](./t3a-realtime-e2-1-devices.md)：73 项相关测试、12603 个边界核对及三类负载各三轮吞吐通过。E2.2a 供电/人员/模式及跳闸复位也已实现，见 [实现报告](./t3a-realtime-e2-2a-resources.md)，82 项相关测试及三类负载各三轮吞吐通过；E2.2b 单旗舰指挥/生命周期也已接入，见 [实现报告](./t3a-realtime-e2-2b-command.md)，93 项相关测试与范围内吞吐通过；E2.3 内部重建亦已完成，见 [保存重建与范围审计](./t3a-realtime-e2-3-save.md)；E3a 调度已实现，见 [调度报告](./t3a-realtime-e3a-scheduler.md)；E3b 实验画布已接通，见 [画布报告](./t3a-realtime-e3b-view.md)；下一片 E3c 长跑准备与验证；普通修复未实现，恢复只使用默认关闭的测试重建入口，桌面默认后端不变。
+本文件细化[实时实验主计划](./t3a-realtime-experiment-plan.md)的 E2。[E1c.3](./t3a-realtime-e1c3-validation.md)已通过范围内独立验证和吞吐门，可以进入领域接线。E2.1 已完成部件耐久与宿主失效接线，见 [实现及验证报告](./t3a-realtime-e2-1-devices.md)：73 项相关测试、12603 个边界核对及三类负载各三轮吞吐通过。E2.2a 供电/人员/模式及跳闸复位也已实现，见 [实现报告](./t3a-realtime-e2-2a-resources.md)，82 项相关测试及三类负载各三轮吞吐通过；E2.2b 单旗舰指挥/生命周期也已接入，见 [实现报告](./t3a-realtime-e2-2b-command.md)，93 项相关测试与范围内吞吐通过；E2.3 内部重建亦已完成，见 [保存重建与范围审计](./t3a-realtime-e2-3-save.md)；E3a 调度已实现，见 [调度报告](./t3a-realtime-e3a-scheduler.md)；E3b 实验画布已接通，见 [画布报告](./t3a-realtime-e3b-view.md)；[E3c 真实后台长跑](./t3a-realtime-e3c-longrun.md)已通过 30 分钟门；下一片 E4a 普通武器与命中毁伤接线准备；普通修复未实现，恢复只使用默认关闭的测试重建入口，桌面默认后端不变。
 
 ## 实施前核对基线（4bef488）
 
@@ -47,7 +47,7 @@ E2.2a 已完成供电/人员/模式变化及阶段触发、跳闸锁存与实验
 
 ### E2.3：重建、同口径性能与进入 E3 的门槛
 
-本片范围内已完成，见 [E2.3 实现及范围审计](./t3a-realtime-e2-3-save.md)。108 项相关测试、54 次保存重建和 12603 个续跑边界通过，读档后三负载各三轮吞吐通过。falling/跳闸/旗舰失权锁存与退出冻结均保留，未接生产者和旧完整场景状态不得静默导入。E3a 调度现已实现，下一实施项 E3c 长跑准备与验证；完整战斗/修复等领域覆盖仍不标为 PASS。
+本片范围内已完成，见 [E2.3 实现及范围审计](./t3a-realtime-e2-3-save.md)。108 项相关测试、54 次保存重建和 12603 个续跑边界通过，读档后三负载各三轮吞吐通过。falling/跳闸/旗舰失权锁存与退出冻结均保留，未接生产者和旧完整场景状态不得静默导入。E3a 调度现已实现，下一实施项 E4a 普通武器与命中毁伤接线准备；完整战斗/修复等领域覆盖仍不标为 PASS。
 
 建立内部状态导出/重建合同，持久化实际设备状态、版本、推进响应与排程、权限及必要过程状态；不保存内存证明。加载严格验证政策/资源，重算依赖与能力并核对，同输入续跑一致。E2 验证内部重建，E3 再接产品文件保存、可靠请求及 UI。
 

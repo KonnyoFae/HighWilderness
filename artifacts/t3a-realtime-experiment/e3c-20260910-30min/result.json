@@ -1,0 +1,380 @@
+{
+  "status": "PASS",
+  "scope": "Real Python sidecar stdio with test-only bounded observation; no Rust/WebView/GPU long-run coverage",
+  "full_E3": "NOT_PASSED",
+  "default_backend_migrated": false,
+  "flight": {
+    "wall_s": 1800.0146027999995,
+    "steps": 105981,
+    "submitted_inputs": 842,
+    "resolved_inputs": 842,
+    "events": 13481,
+    "faults": {
+      "disconnect": 30,
+      "pause": 30,
+      "mode": 30
+    },
+    "observed_input_ms": {
+      "p99": 506.5401000001657,
+      "maximum": 507.8018999993219
+    },
+    "max_view_lag_steps": 5,
+    "normal_measured_s": 1493.6592633000023,
+    "normal_simulation_ratio": 1.000094222761145,
+    "logical_view_bytes": 68709881,
+    "logical_reliable_bytes": 23919071
+  },
+  "memory": {
+    "minutes": 28,
+    "metrics": {
+      "rss_bytes": {
+        "status": "PASS",
+        "minute_medians_bytes": [
+          [
+            0,
+            39456768.0
+          ],
+          [
+            1,
+            39641088
+          ],
+          [
+            2,
+            39342080.0
+          ],
+          [
+            3,
+            39550976
+          ],
+          [
+            4,
+            39407616.0
+          ],
+          [
+            5,
+            39477248
+          ],
+          [
+            6,
+            39579648.0
+          ],
+          [
+            7,
+            39886848
+          ],
+          [
+            8,
+            39428096.0
+          ],
+          [
+            9,
+            39624704
+          ],
+          [
+            10,
+            39899136.0
+          ],
+          [
+            11,
+            40075264
+          ],
+          [
+            12,
+            39735296.0
+          ],
+          [
+            13,
+            40124416
+          ],
+          [
+            14,
+            39661568.0
+          ],
+          [
+            15,
+            39964672
+          ],
+          [
+            16,
+            39774208.0
+          ],
+          [
+            17,
+            39706624
+          ],
+          [
+            18,
+            40038400.0
+          ],
+          [
+            19,
+            40128512
+          ],
+          [
+            20,
+            40247296.0
+          ],
+          [
+            21,
+            39768064.0
+          ],
+          [
+            22,
+            39886848
+          ],
+          [
+            23,
+            39747584.0
+          ],
+          [
+            24,
+            40144896
+          ],
+          [
+            25,
+            39968768.0
+          ],
+          [
+            26,
+            40165376
+          ],
+          [
+            27,
+            39936000.0
+          ]
+        ],
+        "slope_mib_per_min": 0.02157577740147783,
+        "median_growth_bytes": 512000.0,
+        "peak_bytes": 40247296
+      },
+      "private_bytes": {
+        "status": "PASS",
+        "minute_medians_bytes": [
+          [
+            0,
+            28700672.0
+          ],
+          [
+            1,
+            28835840
+          ],
+          [
+            2,
+            28807168.0
+          ],
+          [
+            3,
+            29044736
+          ],
+          [
+            4,
+            28971008.0
+          ],
+          [
+            5,
+            28971008
+          ],
+          [
+            6,
+            28729344.0
+          ],
+          [
+            7,
+            29106176
+          ],
+          [
+            8,
+            28786688.0
+          ],
+          [
+            9,
+            29106176
+          ],
+          [
+            10,
+            29106176.0
+          ],
+          [
+            11,
+            29401088
+          ],
+          [
+            12,
+            28991488.0
+          ],
+          [
+            13,
+            29376512
+          ],
+          [
+            14,
+            29118464.0
+          ],
+          [
+            15,
+            29376512
+          ],
+          [
+            16,
+            29001728.0
+          ],
+          [
+            17,
+            28995584
+          ],
+          [
+            18,
+            29364224.0
+          ],
+          [
+            19,
+            29376512
+          ],
+          [
+            20,
+            29376512.0
+          ],
+          [
+            21,
+            29249536.0
+          ],
+          [
+            22,
+            29376512
+          ],
+          [
+            23,
+            28975104.0
+          ],
+          [
+            24,
+            29364224
+          ],
+          [
+            25,
+            29347840.0
+          ],
+          [
+            26,
+            29376512
+          ],
+          [
+            27,
+            29376512.0
+          ]
+        ],
+        "slope_mib_per_min": 0.019870668274493707,
+        "median_growth_bytes": 528384,
+        "peak_bytes": 29413376
+      }
+    },
+    "status": "PASS"
+  },
+  "probe_samples": 1786,
+  "probe_last": {
+    "elapsed_s": 1799.7604798000002,
+    "status": {
+      "epoch": "134dca2ca6754345abc88f76c0d1f850",
+      "fixed_step": 105943,
+      "running": true,
+      "generation": 90,
+      "pause_reason": null,
+      "debt_quanta": 328208000,
+      "pending_inputs": 0,
+      "retained_receipts": 0,
+      "reliable_events": 4,
+      "highest_input_sequence": 842,
+      "acknowledged_event_sequence": 13466
+    },
+    "peaks": {
+      "pending_inputs": 1,
+      "retained_receipts": 1,
+      "reliable_events": 22,
+      "debt_quanta": 1885330000
+    },
+    "queues": [
+      {
+        "capacity": 8,
+        "peak": 1,
+        "current": 0
+      },
+      {
+        "capacity": 16,
+        "peak": 1,
+        "current": 0
+      }
+    ],
+    "memory": {
+      "rss_bytes": 39940096,
+      "private_bytes": 29376512
+    },
+    "view_cache_entries": 1,
+    "view_step": 105940,
+    "tick_count": 134235,
+    "tick_total_ns": 63257969700,
+    "tick_max_ns": 2742200
+  },
+  "latencies_ms": {
+    "system.hello": {
+      "count": 1,
+      "p99": 257.29930000034074,
+      "maximum": 257.29930000034074
+    },
+    "tactical.set_mode": {
+      "count": 61,
+      "p99": 0.9195000002364395,
+      "maximum": 0.9195000002364395
+    },
+    "tactical.realtime.create": {
+      "count": 1,
+      "p99": 381.58400000020265,
+      "maximum": 381.58400000020265
+    },
+    "tactical.realtime.resume": {
+      "count": 91,
+      "p99": 3.691000000344502,
+      "maximum": 3.691000000344502
+    },
+    "tactical.realtime.read": {
+      "count": 23892,
+      "p99": 3.4969999996974366,
+      "maximum": 6.792900000164082
+    },
+    "tactical.realtime.control": {
+      "count": 842,
+      "p99": 1.262100000076316,
+      "maximum": 1.5732000001662527
+    },
+    "tactical.realtime.pause": {
+      "count": 31,
+      "p99": 2.6278000000274915,
+      "maximum": 2.6278000000274915
+    },
+    "tactical.realtime.close": {
+      "count": 1,
+      "p99": 0.36920000002282904,
+      "maximum": 0.36920000002282904
+    },
+    "system.shutdown": {
+      "count": 1,
+      "p99": 0.405700000555953,
+      "maximum": 0.405700000555953
+    }
+  },
+  "wire_bytes": {
+    "requests": 11080058,
+    "responses": 111986445
+  },
+  "gate": "E3C_30MIN_STDIO_PASS",
+  "evidence_sha256": {
+    "inputs.jsonl": "193a5911994ccbe0ef8fcf9fb56686549e9d314a1c2f290e5c91f1475ab24f06",
+    "manifest.json": "94137f9a06bd8bbb42e02c7851c1c1f234f9f5959287b9d0f14718de899785e3",
+    "observations.jsonl": "97e4d57e00a70e9a725595ff826b0e7553572e70c90cde6e9b2e0b9eb43084b2",
+    "probe.jsonl": "87e969b46bd3e1643e94c17c374bc57bfe3593d6f9c25d455a180c473d7af585",
+    "requests.jsonl": "7525f60d46ca10bdb89808fafb708e62c2c825053c523c26a08add39b7a1e1d5",
+    "rules.json": "f29421230a8c196a6d89adbeaca375b54af086186cc19c74f18d2e2e4a2fa475",
+    "source-resources.zip": "dcf1ab06ba0ddbc13685aa47992badb2eed4ee893fc6142f34fd02605c22eb18",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked-python.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

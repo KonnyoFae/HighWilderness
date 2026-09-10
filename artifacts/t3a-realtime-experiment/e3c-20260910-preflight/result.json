@@ -1,0 +1,146 @@
+{
+  "status": "PREFLIGHT_PASS",
+  "scope": "Real Python sidecar stdio with test-only bounded observation; no Rust/WebView/GPU long-run coverage",
+  "full_E3": "NOT_PASSED",
+  "default_backend_migrated": false,
+  "flight": {
+    "wall_s": 60.008850699999584,
+    "steps": 3532,
+    "submitted_inputs": 29,
+    "resolved_inputs": 29,
+    "events": 486,
+    "faults": {
+      "disconnect": 1,
+      "pause": 1,
+      "mode": 1
+    },
+    "observed_input_ms": {
+      "p99": 505.01119999989896,
+      "maximum": 505.01119999989896
+    },
+    "max_view_lag_steps": 5,
+    "normal_measured_s": 49.66047260000005,
+    "normal_simulation_ratio": 0.9984466666822113,
+    "logical_view_bytes": 2320241,
+    "logical_reliable_bytes": 855675
+  },
+  "memory": {
+    "minutes": 0,
+    "metrics": {
+      "rss_bytes": {
+        "status": "UNAVAILABLE"
+      },
+      "private_bytes": {
+        "status": "UNAVAILABLE"
+      }
+    },
+    "status": "INSUFFICIENT_DURATION"
+  },
+  "probe_samples": 60,
+  "probe_last": {
+    "elapsed_s": 59.77563060000011,
+    "status": {
+      "epoch": "bd3f9b0f4f364fb2bca9d998b1a88307",
+      "fixed_step": 3496,
+      "running": true,
+      "generation": 3,
+      "pause_reason": null,
+      "debt_quanta": 480152000,
+      "pending_inputs": 0,
+      "retained_receipts": 0,
+      "reliable_events": 4,
+      "highest_input_sequence": 29,
+      "acknowledged_event_sequence": 472
+    },
+    "peaks": {
+      "pending_inputs": 1,
+      "retained_receipts": 1,
+      "reliable_events": 12,
+      "debt_quanta": 1684806000
+    },
+    "queues": [
+      {
+        "capacity": 8,
+        "peak": 1,
+        "current": 0
+      },
+      {
+        "capacity": 16,
+        "peak": 1,
+        "current": 0
+      }
+    ],
+    "memory": {
+      "rss_bytes": 39297024,
+      "private_bytes": 28704768
+    },
+    "view_cache_entries": 1,
+    "view_step": 3495,
+    "tick_count": 4435,
+    "tick_total_ns": 2011172300,
+    "tick_max_ns": 2180800
+  },
+  "latencies_ms": {
+    "system.hello": {
+      "count": 1,
+      "p99": 269.8062999998001,
+      "maximum": 269.8062999998001
+    },
+    "tactical.set_mode": {
+      "count": 3,
+      "p99": 0.6096000001889479,
+      "maximum": 0.6096000001889479
+    },
+    "tactical.realtime.create": {
+      "count": 1,
+      "p99": 381.19090000009237,
+      "maximum": 381.19090000009237
+    },
+    "tactical.realtime.resume": {
+      "count": 4,
+      "p99": 2.2587000003113644,
+      "maximum": 2.2587000003113644
+    },
+    "tactical.realtime.read": {
+      "count": 799,
+      "p99": 3.5764999997809355,
+      "maximum": 4.258099999788101
+    },
+    "tactical.realtime.control": {
+      "count": 29,
+      "p99": 1.2246999999661057,
+      "maximum": 1.2246999999661057
+    },
+    "tactical.realtime.pause": {
+      "count": 2,
+      "p99": 1.1509000000842207,
+      "maximum": 1.1509000000842207
+    },
+    "tactical.realtime.close": {
+      "count": 1,
+      "p99": 0.42500000017753337,
+      "maximum": 0.42500000017753337
+    },
+    "system.shutdown": {
+      "count": 1,
+      "p99": 0.3658999999061052,
+      "maximum": 0.3658999999061052
+    }
+  },
+  "wire_bytes": {
+    "requests": 371086,
+    "responses": 3816448
+  },
+  "gate": "LONGRUN_NOT_MEASURED",
+  "evidence_sha256": {
+    "inputs.jsonl": "1794aaa70b2d9df5e2bf4575efcca26b79fe7e7a3bbf99126dd5e19eb65cfb1b",
+    "manifest.json": "a3938925c61b63481345549e8cb6f8f2785266d7244a9e2b66d134b79a3f7851",
+    "observations.jsonl": "179b49809a7df644489a47e22358f9c886173999edeb67b70707514e663b7acf",
+    "probe.jsonl": "59da258541f09ad0e4f0f6d231e3c3d91226270162ae436c6e2ac4ca651cbfd0",
+    "requests.jsonl": "00a0e4c3c8517631014177c12e434352346f869ecee60620dd56c3578b91e50e",
+    "rules.json": "b8ae6f0d2f8b5f9bc1d962190c006861a3f3d2af96767df19cfe8c5d16f213f9",
+    "source-resources.zip": "dbd41e15a08378c5f0665271e66a11530a168b5456d80e99ee14c1a65d4c8287",
+    "stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "tracked-python.patch": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

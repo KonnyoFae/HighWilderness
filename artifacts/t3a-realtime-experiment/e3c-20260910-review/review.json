@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "source_and_evidence_sha256": "MATCH",
+  "related_tests": 31,
+  "terminal_receipts": {
+    "executed": 842
+  },
+  "input_observation_by_reading_rate": {
+    "normal": {
+      "count": 780,
+      "p95_ms": 70.91589999981807,
+      "p99_ms": 71.5992999998889,
+      "max_ms": 72.05149999981586
+    },
+    "slow": {
+      "count": 62,
+      "p95_ms": 506.7674999995688,
+      "p99_ms": 507.8018999993219,
+      "max_ms": 507.8018999993219
+    }
+  },
+  "last_status": {
+    "acknowledged_event_sequence": 13481,
+    "debt_quanta": 447558000,
+    "epoch": "134dca2ca6754345abc88f76c0d1f850",
+    "fixed_step": 105981,
+    "generation": 91,
+    "highest_input_sequence": 842,
+    "pause_reason": "manual",
+    "pending_inputs": 0,
+    "reliable_events": 0,
+    "retained_receipts": 0,
+    "running": false
+  },
+  "run_result_sha256": "e3b9085e4b3388d38c50f942dd329c7186178cde6f52b01237871160476f421d",
+  "note": "Post-run latency grouping is descriptive, not a changed acceptance threshold; slow means command sent at cycle seconds 40-45. Sources and raw evidence unchanged."
+}

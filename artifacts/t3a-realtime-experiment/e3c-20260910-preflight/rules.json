@@ -1,0 +1,31 @@
+{
+  "interface": "gaotian.realtime-longrun/e3c-v1alpha1",
+  "duration_s": 60.0,
+  "poll_s": 0.06666666666666667,
+  "slow_poll_s": 0.5,
+  "control_s": 2,
+  "cycle_s": 60,
+  "warmup_s": 120,
+  "slow_window_s": [
+    40,
+    45
+  ],
+  "disconnect_at_s": 46,
+  "disconnect_sleep_s": 2.3,
+  "pause_at_s": 50,
+  "mode_at_s": 53,
+  "pause_hold_s": 0.25,
+  "read_p99_ms": 100,
+  "read_max_ms": 500,
+  "pause_max_ms": 250,
+  "input_observed_max_ms": 750,
+  "view_lag_max_steps": 16,
+  "debt_max_steps": 15,
+  "normal_rate_min": 0.995,
+  "normal_rate_max": 1.005,
+  "memory_max_bytes": 268435456,
+  "memory_growth_bytes": 16777216,
+  "memory_slope_mib_per_min": 0.25,
+  "minimum_steady_minutes": 10,
+  "minimum_longrun_s": 1800
+}
