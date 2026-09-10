@@ -2,7 +2,7 @@ export const SCENARIO_ID = "gtw.sample.web.two_ship.v1";
 export interface TacticalRequest {
   backend_instance_id: string;
   method: "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
-    | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.close";
+    | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.withdraw" | "tactical.realtime.gun" | "tactical.realtime.close";
   params: Record<string, unknown>;
   session_id: null;
   expected_revision: null;
@@ -42,6 +42,7 @@ export interface TacticalSnapshot {
     speed_mps: number; yaw_rate_radps: number; height_layer: string; hull_integrity: number;
     physical_status: string; command_status: string; modules: { id: string; durability: number }[] }[];
   events: TacticalVisualEvent[];
+  gunnery?: GunneryView;
   control_state?: PausedControlState;
   advance_state?: { interface: "gaotian.tactical-bounded-advance/v1alpha1";
     status: "running" | "completed" | "stopped" | "failed"; input_seq: number; input_sha256: string;
@@ -59,6 +60,22 @@ export interface PausedControlState {
   delivery_status: string | null; missing_channels: string[]; last_arbitration: Record<string, unknown> | null;
 }
 export interface TacticalView { snapshot: TacticalSnapshot; geometry: TacticalStatic }
+export interface GunView {
+  ship_id: string; module_id: string; mode: "auto" | "manual"; angle_rad: number;
+  origin_m: number[]; direction: number[]; aim_point_m: number[] | null;
+  target_ship_id: string | null; target_module_id: string | null;
+  quality: "normal" | "degraded"; quality_reason: string; lock_sources: string[];
+  status: string; shots: number; ready_rounds: number; reload_steps: number; cooldown_steps: number;
+  deck_level?: number; ammo_resources: number; batch_cost: number; batch_rounds: number;
+}
+export interface GunneryView {
+  interface: "gaotian.gunnery-view/p2a-v1alpha1"; command_sequence: number;
+  weapons: GunView[]; projectiles: { id: number; ship_id: string; position_m: number[]; previous_m: number[]; velocity_mps: number[] }[];
+  policy_id: string; damage_enabled: boolean;
+  ending?: { reason: string; step: number; removed_projectiles: number; saved: boolean } | null;
+  damage?: { hits: number; expired: number; recent: { projectile_id: number; step: number; source_ship_id: string;
+    ship_id: string; position_m: number[]; deck_level: number; outcome: string; module_ids: string[]; module_damage: number }[] } | null;
+}
 export type WorkspaceMode = "editor" | "tactical";
 export interface ModeResult { mode: WorkspaceMode; paused: boolean; scene_id: string | null }
 

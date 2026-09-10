@@ -5,6 +5,7 @@ import type { HullCommand, ModuleOption, SessionSnapshot } from "./model";
 import { categories, filterModules, instanceFields, mounts, outfitCommand } from "./outfit";
 import type { OutfitFields } from "./outfit";
 import { defaultRotation, hostedDescendants } from "./outfitCanvas";
+import trialGun from "../../../../contracts/web_bridge/fixtures/p2a-gunnery.json";
 
 const labels: Record<string, string> = {
   active_load_kw: "工作耗电 / kW", standby_load_kw: "待机耗电 / kW", generation_kw: "发电 / kW", consumer_category: "用电类别",
@@ -15,6 +16,8 @@ const labels: Record<string, string> = {
   side_clearance_half_cells: "侧挂净空（半格坐标）", exhaust_clearance_half_cells: "排气净空（半格坐标）",
   side_mount_length_steps: "侧挂长度 / 5 m 槽", allowed_rotations_deg: "允许旋转 / °", host_slot: "需要宿主槽",
   provided_slots: "提供嵌入槽", deck_rule: "甲板要求", kind: "能力类型",
+  ready_round_capacity: "待发弹容量 / 发", weapon_class: "武器种类", minimum_range_m: "最小射程 / m",
+  maximum_range_m: "最大射程 / m", fire_control_requirement: "火控要求", compatible_munition_ids: "原型兼容弹种",
 };
 function Fields({ value }: { value: Record<string, unknown> }) {
   return <dl>{Object.entries(value).map(([key, v]) => <div key={key}><dt>{labels[key] ?? key}</dt><dd>{v === null ? "无" : typeof v === "object" ? JSON.stringify(v) : String(v)}</dd></div>)}</dl>;
@@ -79,6 +82,9 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
       <details><summary>功率、人员与自动化</summary><Fields value={option.prototype.power} />{option.prototype.crew.length ? option.prototype.crew.map((c, i) => <Fields key={i} value={c} />) : <p>无操作人员需求</p>}<Fields value={option.prototype.automation} /></details>
       <details><summary>安装外形、嵌入槽与净空</summary><Fields value={option.prototype.installation} /></details>
       <details><summary>模块能力</summary><Fields value={option.prototype.capability} /></details>
+      {option.prototype.category === "weapon" && <p>原型待发容量：{String(option.prototype.capability.ready_round_capacity ?? "未定义")} 发。
+        当前实时普通炮技术样例每批消耗 {trialGun.ammo_cost} 点弹药资源、装入 {trialGun.rounds} 发，装填 {trialGun.reload_steps/60} 秒。
+        此试射配方尚未绑定到玩家出航设计，原型兼容弹种不代表特殊弹效果已可用。</p>}
       <details><summary>资源版本与来源</summary><p>{option.prototype.id} · v{option.prototype.version}</p><p>模块指纹：{option.sha256}</p><p>{option.catalog.name} · v{option.catalog.version}</p><p>目录指纹：{option.catalog.sha256}</p></details>
     </div> : <p>没有符合筛选条件的模块；若目录为空，请更新后台并重新打开应用。</p>}
     <h3>已安装模块</h3>

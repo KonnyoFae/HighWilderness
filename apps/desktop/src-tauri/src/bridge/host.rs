@@ -193,9 +193,7 @@ impl BackendCommand {
     pub fn production(repo_root: &Path, instance_id: &str) -> Self {
         let program =
             std::env::var_os("HIGH_WILDERNESS_PYTHON").unwrap_or_else(|| OsString::from("python"));
-        Self {
-            program,
-            arguments: vec![
+        let mut arguments: Vec<OsString> = vec![
                 "-X".into(),
                 "utf8".into(),
                 "-u".into(),
@@ -203,9 +201,12 @@ impl BackendCommand {
                 "backend.high_wilderness_sidecar".into(),
                 "--instance-id".into(),
                 instance_id.into(),
-            ],
-            current_dir: repo_root.to_path_buf(),
+            ];
+        if cfg!(test) {
+            arguments.push("--settlement-dir".into());
+            arguments.push(repo_root.join("artifacts/p3-local-tests").join(instance_id).into_os_string());
         }
+        Self { program, arguments, current_dir: repo_root.to_path_buf() }
     }
 
     #[cfg(test)]
@@ -941,7 +942,7 @@ impl BackendSupervisor {
 
     pub fn tactical_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
         if !matches!(request.method.as_str(), "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
-            | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.close") {
+            | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.gun" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.withdraw" | "tactical.realtime.close") {
             return Err(HostFailure::host("method_not_supported", "tactical method not enabled"));
         }
         if request.session_id.is_some() || request.expected_revision.is_some() {
@@ -1368,11 +1369,18 @@ mod tests {
             "input":{"interface":"gaotian.tactical-scheduled-control/e3a-v1alpha1","epoch":scene,"generation":0,
                 "sequence":1,"ship_id":"ship.web.blue","target_step":6,"control":frames[0]["input"]["arguments"]["control"]}}))).unwrap();
         assert_eq!(accepted["status"], "accepted");
+        let gun_input = json!({"epoch":scene,"generation":0,"sequence":1,"weapon_id":"weapon_upper_port",
+            "kind":"target","arguments":{"ship_id":"ship.web.red","module_id":null}});
+        let gun = || request("tactical.realtime.gun", json!({"scene_id":scene,"input":gun_input}));
+        let targeted = supervisor.tactical_request(gun()).unwrap();
+        assert_eq!(targeted["view"]["gunnery"]["command_sequence"], 1);
+        assert_eq!(targeted["view"]["gunnery"]["weapons"][0]["target_ship_id"], "ship.web.red");
         std::thread::sleep(std::time::Duration::from_millis(150));
         let paused = supervisor.tactical_request(request("tactical.realtime.pause", json!({"scene_id":scene}))).unwrap();
         assert!(paused["status"]["fixed_step"].as_u64().unwrap() > 0);
         assert_eq!(paused["status"]["running"], false);
         assert_eq!(paused["receipts"][0]["status"], "executed");
+        assert_eq!(supervisor.tactical_request(gun()).unwrap()["view"]["gunnery"]["command_sequence"], 1);
         let read = || request("tactical.realtime.read", json!({"scene_id":scene,
             "known_static_sha256":created["view"]["static_sha256"],"ack_inputs":[],"ack_events":0}));
         let a = supervisor.tactical_request(read()).unwrap();
@@ -1381,6 +1389,15 @@ mod tests {
         supervisor.tactical_request(request("tactical.realtime.resume", json!({"scene_id":scene}))).unwrap();
         supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"editor"}))).unwrap();
         assert_eq!(supervisor.tactical_request(read()).unwrap()["status"]["running"], false);
+        supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"tactical"}))).unwrap();
+        let ended = supervisor.tactical_request(request("tactical.realtime.withdraw", json!({"scene_id":scene}))).unwrap();
+        assert_eq!(ended["view"]["gunnery"]["ending"]["reason"], "withdrawal");
+        assert_eq!(ended["view"]["gunnery"]["damage_enabled"], true);
+        assert!(supervisor.tactical_request(request("tactical.realtime.resume", json!({"scene_id":scene}))).is_err());
+        let identity = ended["settlement"]["result"]["settlement_id"].clone();
+        let saved = supervisor.tactical_request(request("tactical.realtime.save", json!({"settlement_id":identity}))).unwrap();
+        assert_eq!(saved["saved"], true);
+        assert_eq!(supervisor.tactical_request(request("tactical.realtime.save", json!({"settlement_id":identity}))).unwrap(), saved);
         supervisor.tactical_request(request("tactical.realtime.close", json!({"scene_id":scene}))).unwrap();
         supervisor.stop("user_exit").unwrap();
     }

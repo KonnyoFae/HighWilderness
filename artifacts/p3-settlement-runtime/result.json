@@ -1,0 +1,2933 @@
+{
+  "status": "PASS",
+  "interface": "gaotian.p3-verification/v1",
+  "tests_run": 21,
+  "battle_a": {
+    "fixed_step": 450,
+    "interface": "gaotian.battle-settlement/p3-v1",
+    "reason": "withdrawal",
+    "removed_projectiles": 2,
+    "scene_id": "c924cb70a0e74c029f876cef86ef53f9",
+    "settlement_id": "settlement.c924cb70a0e74c029f876cef86ef53f9",
+    "ships": [
+      {
+        "after": {
+          "armor": [
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 4,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 5,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 6,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.starboard"
+            }
+          ],
+          "design_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+          "interface": "gaotian.persistent-combat-ship/p3-v1",
+          "resources": {
+            "fire_control": {
+              "degraded": {
+                "direction_error_mdeg": 3000,
+                "position_error_mm": 12000,
+                "velocity_error_mmps": 2000
+              },
+              "normal": {
+                "direction_error_mdeg": 0,
+                "position_error_mm": 0,
+                "velocity_error_mmps": 0
+              }
+            },
+            "goods": [],
+            "holds": [
+              {
+                "capacity_cm3": 125000000,
+                "module_id": "cargo_hold"
+              }
+            ],
+            "id": "gtw.technical.p2a.ordinary",
+            "interface": "gaotian.persistent-ship-resources/p1a-v1alpha1",
+            "magazines": [
+              {
+                "capacity_resources": 100,
+                "module_id": "ammunition_magazine"
+              }
+            ],
+            "projectiles": [
+              {
+                "id": "projectile.p2a.ordinary",
+                "mass_g": 10000,
+                "speed_mmps": 500000,
+                "version": 1
+              }
+            ],
+            "recipes": [
+              {
+                "ammo_cost": 5,
+                "cargo_costs": [],
+                "id": "recipe.p2a.ordinary",
+                "projectile": {
+                  "id": "projectile.p2a.ordinary",
+                  "version": 1
+                },
+                "reload_steps": 120,
+                "rounds": 1,
+                "version": 1
+              }
+            ],
+            "source_seed_sha256": "c688dc90dc6f44317af82b408fc2f71ed11927e210edf449cc81b4681c8d8535",
+            "version": 1,
+            "weapons": [
+              {
+                "module_id": "weapon_upper_port",
+                "ready_capacity": 1,
+                "recipe_ids": [
+                  "recipe.p2a.ordinary"
+                ],
+                "turret": {
+                  "maximum_mdeg": 90000,
+                  "minimum_mdeg": -90000,
+                  "slew_mdeg_per_s": 30000
+                }
+              }
+            ]
+          },
+          "ship_id": "ship.web.blue",
+          "state": {
+            "cargo": [],
+            "crew": [
+              {
+                "count": 2,
+                "crew_type": "officer"
+              },
+              {
+                "count": 10,
+                "crew_type": "ordinary"
+              },
+              {
+                "count": 4,
+                "crew_type": "technical_officer"
+              },
+              {
+                "count": 2,
+                "crew_type": "veteran_damage_control"
+              }
+            ],
+            "engine_latches": [],
+            "fuel_units": 800.0,
+            "hull_integrity_fraction": 0.98,
+            "instance_id": "instance.p3.a6565591ed5a4a8f8b557597e7004111.0",
+            "interface": "gaotian.persistent-ship/p1a-v1alpha1",
+            "magazines": [
+              {
+                "module_id": "ammunition_magazine",
+                "quantity": 60
+              }
+            ],
+            "modules": [
+              {
+                "durability_points": 60.0,
+                "module_id": "ammunition_magazine",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cargo_hold",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cic",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_base",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_upper",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "damage_control",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "fire_control",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "generator",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "lift_tank",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_port",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "remote_core",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "sensor_upper_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "weapon_upper_port",
+                "operating_mode": "active"
+              }
+            ],
+            "power_policy": {
+              "allocation_mode": "strict_categories",
+              "category_order": [
+                "damage_control",
+                "weapons_and_active_defense",
+                "fire_control",
+                "sensors"
+              ],
+              "disabled_categories": []
+            },
+            "resources_sha256": "bd7fa27439241e42d600b3a38dc112716da08d0eaebd34fd791e42501de50653",
+            "revision": 1,
+            "service": {
+              "reasons": [],
+              "status": "available"
+            },
+            "weapons": [
+              {
+                "cooldown_steps": 0,
+                "module_id": "weapon_upper_port",
+                "ready_rounds": 1,
+                "recipe_id": "recipe.p2a.ordinary",
+                "reload": null
+              }
+            ],
+            "wounded_aboard": 0
+          }
+        },
+        "before": {
+          "armor": [
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 4,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 5,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 6,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.starboard"
+            }
+          ],
+          "design_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+          "interface": "gaotian.persistent-combat-ship/p3-v1",
+          "resources": {
+            "fire_control": {
+              "degraded": {
+                "direction_error_mdeg": 3000,
+                "position_error_mm": 12000,
+                "velocity_error_mmps": 2000
+              },
+              "normal": {
+                "direction_error_mdeg": 0,
+                "position_error_mm": 0,
+                "velocity_error_mmps": 0
+              }
+            },
+            "goods": [],
+            "holds": [
+              {
+                "capacity_cm3": 125000000,
+                "module_id": "cargo_hold"
+              }
+            ],
+            "id": "gtw.technical.p2a.ordinary",
+            "interface": "gaotian.persistent-ship-resources/p1a-v1alpha1",
+            "magazines": [
+              {
+                "capacity_resources": 100,
+                "module_id": "ammunition_magazine"
+              }
+            ],
+            "projectiles": [
+              {
+                "id": "projectile.p2a.ordinary",
+                "mass_g": 10000,
+                "speed_mmps": 500000,
+                "version": 1
+              }
+            ],
+            "recipes": [
+              {
+                "ammo_cost": 5,
+                "cargo_costs": [],
+                "id": "recipe.p2a.ordinary",
+                "projectile": {
+                  "id": "projectile.p2a.ordinary",
+                  "version": 1
+                },
+                "reload_steps": 120,
+                "rounds": 1,
+                "version": 1
+              }
+            ],
+            "source_seed_sha256": "c688dc90dc6f44317af82b408fc2f71ed11927e210edf449cc81b4681c8d8535",
+            "version": 1,
+            "weapons": [
+              {
+                "module_id": "weapon_upper_port",
+                "ready_capacity": 1,
+                "recipe_ids": [
+                  "recipe.p2a.ordinary"
+                ],
+                "turret": {
+                  "maximum_mdeg": 90000,
+                  "minimum_mdeg": -90000,
+                  "slew_mdeg_per_s": 30000
+                }
+              }
+            ]
+          },
+          "ship_id": "ship.web.blue",
+          "state": {
+            "cargo": [],
+            "crew": [
+              {
+                "count": 2,
+                "crew_type": "officer"
+              },
+              {
+                "count": 10,
+                "crew_type": "ordinary"
+              },
+              {
+                "count": 4,
+                "crew_type": "technical_officer"
+              },
+              {
+                "count": 2,
+                "crew_type": "veteran_damage_control"
+              }
+            ],
+            "engine_latches": [],
+            "fuel_units": 800.0,
+            "hull_integrity_fraction": 1.0,
+            "instance_id": "instance.p3.a6565591ed5a4a8f8b557597e7004111.0",
+            "interface": "gaotian.persistent-ship/p1a-v1alpha1",
+            "magazines": [
+              {
+                "module_id": "ammunition_magazine",
+                "quantity": 80
+              }
+            ],
+            "modules": [
+              {
+                "durability_points": 100.0,
+                "module_id": "ammunition_magazine",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cargo_hold",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cic",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_base",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_upper",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "damage_control",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "fire_control",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "generator",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "lift_tank",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_port",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "remote_core",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "sensor_upper_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "weapon_upper_port",
+                "operating_mode": "active"
+              }
+            ],
+            "power_policy": {
+              "allocation_mode": "strict_categories",
+              "category_order": [
+                "damage_control",
+                "weapons_and_active_defense",
+                "fire_control",
+                "sensors"
+              ],
+              "disabled_categories": []
+            },
+            "resources_sha256": "bd7fa27439241e42d600b3a38dc112716da08d0eaebd34fd791e42501de50653",
+            "revision": 0,
+            "service": {
+              "reasons": [],
+              "status": "available"
+            },
+            "weapons": [
+              {
+                "cooldown_steps": 0,
+                "module_id": "weapon_upper_port",
+                "ready_rounds": 1,
+                "recipe_id": "recipe.p2a.ordinary",
+                "reload": null
+              }
+            ],
+            "wounded_aboard": 0
+          }
+        },
+        "capacity_after": {
+          "capacity_cm3": 125000000,
+          "cargo_mass_g": 0,
+          "free_volume_cm3": 125000000,
+          "over_capacity": false,
+          "reserved_ammunition": {
+            "ammunition_magazine": 0
+          },
+          "reserved_cargo": {},
+          "used_volume_cm3": 0
+        },
+        "capacity_before": {
+          "capacity_cm3": 125000000,
+          "cargo_mass_g": 0,
+          "free_volume_cm3": 125000000,
+          "over_capacity": false,
+          "reserved_ammunition": {
+            "ammunition_magazine": 0
+          },
+          "reserved_cargo": {},
+          "used_volume_cm3": 0
+        },
+        "changes": [
+          {
+            "delta": -20,
+            "reason": "reload",
+            "resource": "ammunition"
+          },
+          {
+            "delta": -4,
+            "reason": "discharge",
+            "resource": "ready:weapon_upper_port"
+          },
+          {
+            "delta": 4,
+            "reason": "reload",
+            "resource": "ready:weapon_upper_port"
+          }
+        ],
+        "module_names": {
+          "ammunition_magazine": "契约夹具弹药库",
+          "cargo_hold": "契约夹具货仓",
+          "cic": "契约夹具CIC",
+          "crew_quarters_base": "契约夹具人员舱",
+          "crew_quarters_upper": "契约夹具人员舱",
+          "damage_control": "契约夹具损管设备",
+          "fire_control": "契约夹具火控系统",
+          "generator": "契约夹具发电设备",
+          "lift_tank": "契约夹具灵烷贮槽",
+          "main_engine_port": "契约夹具主发动机",
+          "main_engine_starboard": "契约夹具主发动机",
+          "remote_core": "契约夹具遥控核心舱",
+          "sensor_upper_starboard": "契约夹具搜索雷达",
+          "thruster_port_aft": "契约夹具转向发动机",
+          "thruster_port_fore": "契约夹具转向发动机",
+          "thruster_starboard_aft": "契约夹具转向发动机",
+          "thruster_starboard_fore": "契约夹具转向发动机",
+          "weapon_upper_port": "契约夹具自动炮塔"
+        }
+      },
+      {
+        "after": {
+          "armor": [
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 4,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 5,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 6,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.starboard"
+            }
+          ],
+          "design_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+          "interface": "gaotian.persistent-combat-ship/p3-v1",
+          "resources": {
+            "fire_control": {
+              "degraded": {
+                "direction_error_mdeg": 3000,
+                "position_error_mm": 12000,
+                "velocity_error_mmps": 2000
+              },
+              "normal": {
+                "direction_error_mdeg": 0,
+                "position_error_mm": 0,
+                "velocity_error_mmps": 0
+              }
+            },
+            "goods": [],
+            "holds": [
+              {
+                "capacity_cm3": 125000000,
+                "module_id": "cargo_hold"
+              }
+            ],
+            "id": "gtw.technical.p2a.ordinary",
+            "interface": "gaotian.persistent-ship-resources/p1a-v1alpha1",
+            "magazines": [
+              {
+                "capacity_resources": 100,
+                "module_id": "ammunition_magazine"
+              }
+            ],
+            "projectiles": [
+              {
+                "id": "projectile.p2a.ordinary",
+                "mass_g": 10000,
+                "speed_mmps": 500000,
+                "version": 1
+              }
+            ],
+            "recipes": [
+              {
+                "ammo_cost": 5,
+                "cargo_costs": [],
+                "id": "recipe.p2a.ordinary",
+                "projectile": {
+                  "id": "projectile.p2a.ordinary",
+                  "version": 1
+                },
+                "reload_steps": 120,
+                "rounds": 1,
+                "version": 1
+              }
+            ],
+            "source_seed_sha256": "4a172e6e47185b6e165712aa290571043cffaf06941dd78ad914507f2dd200e9",
+            "version": 1,
+            "weapons": [
+              {
+                "module_id": "weapon_upper_port",
+                "ready_capacity": 1,
+                "recipe_ids": [
+                  "recipe.p2a.ordinary"
+                ],
+                "turret": {
+                  "maximum_mdeg": 90000,
+                  "minimum_mdeg": -90000,
+                  "slew_mdeg_per_s": 30000
+                }
+              }
+            ]
+          },
+          "ship_id": "ship.web.red",
+          "state": {
+            "cargo": [],
+            "crew": [
+              {
+                "count": 2,
+                "crew_type": "officer"
+              },
+              {
+                "count": 10,
+                "crew_type": "ordinary"
+              },
+              {
+                "count": 4,
+                "crew_type": "technical_officer"
+              },
+              {
+                "count": 2,
+                "crew_type": "veteran_damage_control"
+              }
+            ],
+            "engine_latches": [],
+            "fuel_units": 800.0,
+            "hull_integrity_fraction": 0.94,
+            "instance_id": "instance.p3.a6565591ed5a4a8f8b557597e7004111.1",
+            "interface": "gaotian.persistent-ship/p1a-v1alpha1",
+            "magazines": [
+              {
+                "module_id": "ammunition_magazine",
+                "quantity": 75
+              }
+            ],
+            "modules": [
+              {
+                "durability_points": 0.0,
+                "module_id": "ammunition_magazine",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cargo_hold",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cic",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_base",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_upper",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "damage_control",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "fire_control",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "generator",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "lift_tank",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_port",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "remote_core",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "sensor_upper_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "weapon_upper_port",
+                "operating_mode": "active"
+              }
+            ],
+            "power_policy": {
+              "allocation_mode": "strict_categories",
+              "category_order": [
+                "damage_control",
+                "weapons_and_active_defense",
+                "fire_control",
+                "sensors"
+              ],
+              "disabled_categories": []
+            },
+            "resources_sha256": "b46ab8795b403d5cba7fcea8ce913a704f614a004b4be0ab6afbc3049e7e3d8c",
+            "revision": 1,
+            "service": {
+              "reasons": [],
+              "status": "available"
+            },
+            "weapons": [
+              {
+                "cooldown_steps": 0,
+                "module_id": "weapon_upper_port",
+                "ready_rounds": 0,
+                "recipe_id": "recipe.p2a.ordinary",
+                "reload": null
+              }
+            ],
+            "wounded_aboard": 0
+          }
+        },
+        "before": {
+          "armor": [
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 4,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 5,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 6,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.starboard"
+            }
+          ],
+          "design_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+          "interface": "gaotian.persistent-combat-ship/p3-v1",
+          "resources": {
+            "fire_control": {
+              "degraded": {
+                "direction_error_mdeg": 3000,
+                "position_error_mm": 12000,
+                "velocity_error_mmps": 2000
+              },
+              "normal": {
+                "direction_error_mdeg": 0,
+                "position_error_mm": 0,
+                "velocity_error_mmps": 0
+              }
+            },
+            "goods": [],
+            "holds": [
+              {
+                "capacity_cm3": 125000000,
+                "module_id": "cargo_hold"
+              }
+            ],
+            "id": "gtw.technical.p2a.ordinary",
+            "interface": "gaotian.persistent-ship-resources/p1a-v1alpha1",
+            "magazines": [
+              {
+                "capacity_resources": 100,
+                "module_id": "ammunition_magazine"
+              }
+            ],
+            "projectiles": [
+              {
+                "id": "projectile.p2a.ordinary",
+                "mass_g": 10000,
+                "speed_mmps": 500000,
+                "version": 1
+              }
+            ],
+            "recipes": [
+              {
+                "ammo_cost": 5,
+                "cargo_costs": [],
+                "id": "recipe.p2a.ordinary",
+                "projectile": {
+                  "id": "projectile.p2a.ordinary",
+                  "version": 1
+                },
+                "reload_steps": 120,
+                "rounds": 1,
+                "version": 1
+              }
+            ],
+            "source_seed_sha256": "4a172e6e47185b6e165712aa290571043cffaf06941dd78ad914507f2dd200e9",
+            "version": 1,
+            "weapons": [
+              {
+                "module_id": "weapon_upper_port",
+                "ready_capacity": 1,
+                "recipe_ids": [
+                  "recipe.p2a.ordinary"
+                ],
+                "turret": {
+                  "maximum_mdeg": 90000,
+                  "minimum_mdeg": -90000,
+                  "slew_mdeg_per_s": 30000
+                }
+              }
+            ]
+          },
+          "ship_id": "ship.web.red",
+          "state": {
+            "cargo": [],
+            "crew": [
+              {
+                "count": 2,
+                "crew_type": "officer"
+              },
+              {
+                "count": 10,
+                "crew_type": "ordinary"
+              },
+              {
+                "count": 4,
+                "crew_type": "technical_officer"
+              },
+              {
+                "count": 2,
+                "crew_type": "veteran_damage_control"
+              }
+            ],
+            "engine_latches": [],
+            "fuel_units": 800.0,
+            "hull_integrity_fraction": 1.0,
+            "instance_id": "instance.p3.a6565591ed5a4a8f8b557597e7004111.1",
+            "interface": "gaotian.persistent-ship/p1a-v1alpha1",
+            "magazines": [
+              {
+                "module_id": "ammunition_magazine",
+                "quantity": 80
+              }
+            ],
+            "modules": [
+              {
+                "durability_points": 100.0,
+                "module_id": "ammunition_magazine",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cargo_hold",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cic",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_base",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_upper",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "damage_control",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "fire_control",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "generator",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "lift_tank",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_port",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "remote_core",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "sensor_upper_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "weapon_upper_port",
+                "operating_mode": "active"
+              }
+            ],
+            "power_policy": {
+              "allocation_mode": "strict_categories",
+              "category_order": [
+                "damage_control",
+                "weapons_and_active_defense",
+                "fire_control",
+                "sensors"
+              ],
+              "disabled_categories": []
+            },
+            "resources_sha256": "b46ab8795b403d5cba7fcea8ce913a704f614a004b4be0ab6afbc3049e7e3d8c",
+            "revision": 0,
+            "service": {
+              "reasons": [],
+              "status": "available"
+            },
+            "weapons": [
+              {
+                "cooldown_steps": 0,
+                "module_id": "weapon_upper_port",
+                "ready_rounds": 1,
+                "recipe_id": "recipe.p2a.ordinary",
+                "reload": null
+              }
+            ],
+            "wounded_aboard": 0
+          }
+        },
+        "capacity_after": {
+          "capacity_cm3": 125000000,
+          "cargo_mass_g": 0,
+          "free_volume_cm3": 125000000,
+          "over_capacity": false,
+          "reserved_ammunition": {
+            "ammunition_magazine": 0
+          },
+          "reserved_cargo": {},
+          "used_volume_cm3": 0
+        },
+        "capacity_before": {
+          "capacity_cm3": 125000000,
+          "cargo_mass_g": 0,
+          "free_volume_cm3": 125000000,
+          "over_capacity": false,
+          "reserved_ammunition": {
+            "ammunition_magazine": 0
+          },
+          "reserved_cargo": {},
+          "used_volume_cm3": 0
+        },
+        "changes": [
+          {
+            "delta": -5,
+            "reason": "reload",
+            "resource": "ammunition"
+          },
+          {
+            "delta": -2,
+            "reason": "discharge",
+            "resource": "ready:weapon_upper_port"
+          },
+          {
+            "delta": 1,
+            "reason": "reload",
+            "resource": "ready:weapon_upper_port"
+          }
+        ],
+        "module_names": {
+          "ammunition_magazine": "契约夹具弹药库",
+          "cargo_hold": "契约夹具货仓",
+          "cic": "契约夹具CIC",
+          "crew_quarters_base": "契约夹具人员舱",
+          "crew_quarters_upper": "契约夹具人员舱",
+          "damage_control": "契约夹具损管设备",
+          "fire_control": "契约夹具火控系统",
+          "generator": "契约夹具发电设备",
+          "lift_tank": "契约夹具灵烷贮槽",
+          "main_engine_port": "契约夹具主发动机",
+          "main_engine_starboard": "契约夹具主发动机",
+          "remote_core": "契约夹具遥控核心舱",
+          "sensor_upper_starboard": "契约夹具搜索雷达",
+          "thruster_port_aft": "契约夹具转向发动机",
+          "thruster_port_fore": "契约夹具转向发动机",
+          "thruster_starboard_aft": "契约夹具转向发动机",
+          "thruster_starboard_fore": "契约夹具转向发动机",
+          "weapon_upper_port": "契约夹具自动炮塔"
+        }
+      }
+    ]
+  },
+  "battle_b": {
+    "fixed_step": 120,
+    "interface": "gaotian.battle-settlement/p3-v1",
+    "reason": "withdrawal",
+    "removed_projectiles": 0,
+    "scene_id": "89be8f574a9d4f1c8a39d0a86d631790",
+    "settlement_id": "settlement.89be8f574a9d4f1c8a39d0a86d631790",
+    "ships": [
+      {
+        "after": {
+          "armor": [
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 4,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 5,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 6,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.starboard"
+            }
+          ],
+          "design_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+          "interface": "gaotian.persistent-combat-ship/p3-v1",
+          "resources": {
+            "fire_control": {
+              "degraded": {
+                "direction_error_mdeg": 3000,
+                "position_error_mm": 12000,
+                "velocity_error_mmps": 2000
+              },
+              "normal": {
+                "direction_error_mdeg": 0,
+                "position_error_mm": 0,
+                "velocity_error_mmps": 0
+              }
+            },
+            "goods": [],
+            "holds": [
+              {
+                "capacity_cm3": 125000000,
+                "module_id": "cargo_hold"
+              }
+            ],
+            "id": "gtw.technical.p2a.ordinary",
+            "interface": "gaotian.persistent-ship-resources/p1a-v1alpha1",
+            "magazines": [
+              {
+                "capacity_resources": 100,
+                "module_id": "ammunition_magazine"
+              }
+            ],
+            "projectiles": [
+              {
+                "id": "projectile.p2a.ordinary",
+                "mass_g": 10000,
+                "speed_mmps": 500000,
+                "version": 1
+              }
+            ],
+            "recipes": [
+              {
+                "ammo_cost": 5,
+                "cargo_costs": [],
+                "id": "recipe.p2a.ordinary",
+                "projectile": {
+                  "id": "projectile.p2a.ordinary",
+                  "version": 1
+                },
+                "reload_steps": 120,
+                "rounds": 1,
+                "version": 1
+              }
+            ],
+            "source_seed_sha256": "c688dc90dc6f44317af82b408fc2f71ed11927e210edf449cc81b4681c8d8535",
+            "version": 1,
+            "weapons": [
+              {
+                "module_id": "weapon_upper_port",
+                "ready_capacity": 1,
+                "recipe_ids": [
+                  "recipe.p2a.ordinary"
+                ],
+                "turret": {
+                  "maximum_mdeg": 90000,
+                  "minimum_mdeg": -90000,
+                  "slew_mdeg_per_s": 30000
+                }
+              }
+            ]
+          },
+          "ship_id": "ship.web.blue",
+          "state": {
+            "cargo": [],
+            "crew": [
+              {
+                "count": 2,
+                "crew_type": "officer"
+              },
+              {
+                "count": 10,
+                "crew_type": "ordinary"
+              },
+              {
+                "count": 4,
+                "crew_type": "technical_officer"
+              },
+              {
+                "count": 2,
+                "crew_type": "veteran_damage_control"
+              }
+            ],
+            "engine_latches": [],
+            "fuel_units": 800.0,
+            "hull_integrity_fraction": 0.98,
+            "instance_id": "instance.p3.a6565591ed5a4a8f8b557597e7004111.0",
+            "interface": "gaotian.persistent-ship/p1a-v1alpha1",
+            "magazines": [
+              {
+                "module_id": "ammunition_magazine",
+                "quantity": 60
+              }
+            ],
+            "modules": [
+              {
+                "durability_points": 60.0,
+                "module_id": "ammunition_magazine",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cargo_hold",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cic",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_base",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_upper",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "damage_control",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "fire_control",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "generator",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "lift_tank",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_port",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "remote_core",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "sensor_upper_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "weapon_upper_port",
+                "operating_mode": "active"
+              }
+            ],
+            "power_policy": {
+              "allocation_mode": "strict_categories",
+              "category_order": [
+                "damage_control",
+                "weapons_and_active_defense",
+                "fire_control",
+                "sensors"
+              ],
+              "disabled_categories": []
+            },
+            "resources_sha256": "bd7fa27439241e42d600b3a38dc112716da08d0eaebd34fd791e42501de50653",
+            "revision": 2,
+            "service": {
+              "reasons": [],
+              "status": "available"
+            },
+            "weapons": [
+              {
+                "cooldown_steps": 0,
+                "module_id": "weapon_upper_port",
+                "ready_rounds": 1,
+                "recipe_id": "recipe.p2a.ordinary",
+                "reload": null
+              }
+            ],
+            "wounded_aboard": 0
+          }
+        },
+        "before": {
+          "armor": [
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 4,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 5,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 6,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.starboard"
+            }
+          ],
+          "design_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+          "interface": "gaotian.persistent-combat-ship/p3-v1",
+          "resources": {
+            "fire_control": {
+              "degraded": {
+                "direction_error_mdeg": 3000,
+                "position_error_mm": 12000,
+                "velocity_error_mmps": 2000
+              },
+              "normal": {
+                "direction_error_mdeg": 0,
+                "position_error_mm": 0,
+                "velocity_error_mmps": 0
+              }
+            },
+            "goods": [],
+            "holds": [
+              {
+                "capacity_cm3": 125000000,
+                "module_id": "cargo_hold"
+              }
+            ],
+            "id": "gtw.technical.p2a.ordinary",
+            "interface": "gaotian.persistent-ship-resources/p1a-v1alpha1",
+            "magazines": [
+              {
+                "capacity_resources": 100,
+                "module_id": "ammunition_magazine"
+              }
+            ],
+            "projectiles": [
+              {
+                "id": "projectile.p2a.ordinary",
+                "mass_g": 10000,
+                "speed_mmps": 500000,
+                "version": 1
+              }
+            ],
+            "recipes": [
+              {
+                "ammo_cost": 5,
+                "cargo_costs": [],
+                "id": "recipe.p2a.ordinary",
+                "projectile": {
+                  "id": "projectile.p2a.ordinary",
+                  "version": 1
+                },
+                "reload_steps": 120,
+                "rounds": 1,
+                "version": 1
+              }
+            ],
+            "source_seed_sha256": "c688dc90dc6f44317af82b408fc2f71ed11927e210edf449cc81b4681c8d8535",
+            "version": 1,
+            "weapons": [
+              {
+                "module_id": "weapon_upper_port",
+                "ready_capacity": 1,
+                "recipe_ids": [
+                  "recipe.p2a.ordinary"
+                ],
+                "turret": {
+                  "maximum_mdeg": 90000,
+                  "minimum_mdeg": -90000,
+                  "slew_mdeg_per_s": 30000
+                }
+              }
+            ]
+          },
+          "ship_id": "ship.web.blue",
+          "state": {
+            "cargo": [],
+            "crew": [
+              {
+                "count": 2,
+                "crew_type": "officer"
+              },
+              {
+                "count": 10,
+                "crew_type": "ordinary"
+              },
+              {
+                "count": 4,
+                "crew_type": "technical_officer"
+              },
+              {
+                "count": 2,
+                "crew_type": "veteran_damage_control"
+              }
+            ],
+            "engine_latches": [],
+            "fuel_units": 800.0,
+            "hull_integrity_fraction": 0.98,
+            "instance_id": "instance.p3.a6565591ed5a4a8f8b557597e7004111.0",
+            "interface": "gaotian.persistent-ship/p1a-v1alpha1",
+            "magazines": [
+              {
+                "module_id": "ammunition_magazine",
+                "quantity": 60
+              }
+            ],
+            "modules": [
+              {
+                "durability_points": 60.0,
+                "module_id": "ammunition_magazine",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cargo_hold",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cic",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_base",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_upper",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "damage_control",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "fire_control",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "generator",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "lift_tank",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_port",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "remote_core",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "sensor_upper_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "weapon_upper_port",
+                "operating_mode": "active"
+              }
+            ],
+            "power_policy": {
+              "allocation_mode": "strict_categories",
+              "category_order": [
+                "damage_control",
+                "weapons_and_active_defense",
+                "fire_control",
+                "sensors"
+              ],
+              "disabled_categories": []
+            },
+            "resources_sha256": "bd7fa27439241e42d600b3a38dc112716da08d0eaebd34fd791e42501de50653",
+            "revision": 1,
+            "service": {
+              "reasons": [],
+              "status": "available"
+            },
+            "weapons": [
+              {
+                "cooldown_steps": 0,
+                "module_id": "weapon_upper_port",
+                "ready_rounds": 1,
+                "recipe_id": "recipe.p2a.ordinary",
+                "reload": null
+              }
+            ],
+            "wounded_aboard": 0
+          }
+        },
+        "capacity_after": {
+          "capacity_cm3": 125000000,
+          "cargo_mass_g": 0,
+          "free_volume_cm3": 125000000,
+          "over_capacity": false,
+          "reserved_ammunition": {
+            "ammunition_magazine": 0
+          },
+          "reserved_cargo": {},
+          "used_volume_cm3": 0
+        },
+        "capacity_before": {
+          "capacity_cm3": 125000000,
+          "cargo_mass_g": 0,
+          "free_volume_cm3": 125000000,
+          "over_capacity": false,
+          "reserved_ammunition": {
+            "ammunition_magazine": 0
+          },
+          "reserved_cargo": {},
+          "used_volume_cm3": 0
+        },
+        "changes": [],
+        "module_names": {
+          "ammunition_magazine": "契约夹具弹药库",
+          "cargo_hold": "契约夹具货仓",
+          "cic": "契约夹具CIC",
+          "crew_quarters_base": "契约夹具人员舱",
+          "crew_quarters_upper": "契约夹具人员舱",
+          "damage_control": "契约夹具损管设备",
+          "fire_control": "契约夹具火控系统",
+          "generator": "契约夹具发电设备",
+          "lift_tank": "契约夹具灵烷贮槽",
+          "main_engine_port": "契约夹具主发动机",
+          "main_engine_starboard": "契约夹具主发动机",
+          "remote_core": "契约夹具遥控核心舱",
+          "sensor_upper_starboard": "契约夹具搜索雷达",
+          "thruster_port_aft": "契约夹具转向发动机",
+          "thruster_port_fore": "契约夹具转向发动机",
+          "thruster_starboard_aft": "契约夹具转向发动机",
+          "thruster_starboard_fore": "契约夹具转向发动机",
+          "weapon_upper_port": "契约夹具自动炮塔"
+        }
+      },
+      {
+        "after": {
+          "armor": [
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 4,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 5,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 6,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.starboard"
+            }
+          ],
+          "design_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+          "interface": "gaotian.persistent-combat-ship/p3-v1",
+          "resources": {
+            "fire_control": {
+              "degraded": {
+                "direction_error_mdeg": 3000,
+                "position_error_mm": 12000,
+                "velocity_error_mmps": 2000
+              },
+              "normal": {
+                "direction_error_mdeg": 0,
+                "position_error_mm": 0,
+                "velocity_error_mmps": 0
+              }
+            },
+            "goods": [],
+            "holds": [
+              {
+                "capacity_cm3": 125000000,
+                "module_id": "cargo_hold"
+              }
+            ],
+            "id": "gtw.technical.p2a.ordinary",
+            "interface": "gaotian.persistent-ship-resources/p1a-v1alpha1",
+            "magazines": [
+              {
+                "capacity_resources": 100,
+                "module_id": "ammunition_magazine"
+              }
+            ],
+            "projectiles": [
+              {
+                "id": "projectile.p2a.ordinary",
+                "mass_g": 10000,
+                "speed_mmps": 500000,
+                "version": 1
+              }
+            ],
+            "recipes": [
+              {
+                "ammo_cost": 5,
+                "cargo_costs": [],
+                "id": "recipe.p2a.ordinary",
+                "projectile": {
+                  "id": "projectile.p2a.ordinary",
+                  "version": 1
+                },
+                "reload_steps": 120,
+                "rounds": 1,
+                "version": 1
+              }
+            ],
+            "source_seed_sha256": "4a172e6e47185b6e165712aa290571043cffaf06941dd78ad914507f2dd200e9",
+            "version": 1,
+            "weapons": [
+              {
+                "module_id": "weapon_upper_port",
+                "ready_capacity": 1,
+                "recipe_ids": [
+                  "recipe.p2a.ordinary"
+                ],
+                "turret": {
+                  "maximum_mdeg": 90000,
+                  "minimum_mdeg": -90000,
+                  "slew_mdeg_per_s": 30000
+                }
+              }
+            ]
+          },
+          "ship_id": "ship.web.red",
+          "state": {
+            "cargo": [],
+            "crew": [
+              {
+                "count": 2,
+                "crew_type": "officer"
+              },
+              {
+                "count": 10,
+                "crew_type": "ordinary"
+              },
+              {
+                "count": 4,
+                "crew_type": "technical_officer"
+              },
+              {
+                "count": 2,
+                "crew_type": "veteran_damage_control"
+              }
+            ],
+            "engine_latches": [],
+            "fuel_units": 800.0,
+            "hull_integrity_fraction": 1.0,
+            "instance_id": "instance.p3.50e8e8ba7eb04ef8af16deb963565749.1",
+            "interface": "gaotian.persistent-ship/p1a-v1alpha1",
+            "magazines": [
+              {
+                "module_id": "ammunition_magazine",
+                "quantity": 80
+              }
+            ],
+            "modules": [
+              {
+                "durability_points": 100.0,
+                "module_id": "ammunition_magazine",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cargo_hold",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cic",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_base",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_upper",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "damage_control",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "fire_control",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "generator",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "lift_tank",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_port",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "remote_core",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "sensor_upper_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "weapon_upper_port",
+                "operating_mode": "active"
+              }
+            ],
+            "power_policy": {
+              "allocation_mode": "strict_categories",
+              "category_order": [
+                "damage_control",
+                "weapons_and_active_defense",
+                "fire_control",
+                "sensors"
+              ],
+              "disabled_categories": []
+            },
+            "resources_sha256": "b46ab8795b403d5cba7fcea8ce913a704f614a004b4be0ab6afbc3049e7e3d8c",
+            "revision": 1,
+            "service": {
+              "reasons": [],
+              "status": "available"
+            },
+            "weapons": [
+              {
+                "cooldown_steps": 0,
+                "module_id": "weapon_upper_port",
+                "ready_rounds": 1,
+                "recipe_id": "recipe.p2a.ordinary",
+                "reload": null
+              }
+            ],
+            "wounded_aboard": 0
+          }
+        },
+        "before": {
+          "armor": [
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 4,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 5,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.0",
+              "deck_level": 0,
+              "durability": 0.0,
+              "edge_index": 6,
+              "region_id": "deck.0.region.0"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.port"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 0,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 1,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 2,
+              "region_id": "deck.1.region.starboard"
+            },
+            {
+              "deck_id": "deck.1",
+              "deck_level": 1,
+              "durability": 0.0,
+              "edge_index": 3,
+              "region_id": "deck.1.region.starboard"
+            }
+          ],
+          "design_sha256": "eac1d34ebff0f66c5bab00f5ab19eb7c3b81d2d65fc83584678e577587d0c230",
+          "interface": "gaotian.persistent-combat-ship/p3-v1",
+          "resources": {
+            "fire_control": {
+              "degraded": {
+                "direction_error_mdeg": 3000,
+                "position_error_mm": 12000,
+                "velocity_error_mmps": 2000
+              },
+              "normal": {
+                "direction_error_mdeg": 0,
+                "position_error_mm": 0,
+                "velocity_error_mmps": 0
+              }
+            },
+            "goods": [],
+            "holds": [
+              {
+                "capacity_cm3": 125000000,
+                "module_id": "cargo_hold"
+              }
+            ],
+            "id": "gtw.technical.p2a.ordinary",
+            "interface": "gaotian.persistent-ship-resources/p1a-v1alpha1",
+            "magazines": [
+              {
+                "capacity_resources": 100,
+                "module_id": "ammunition_magazine"
+              }
+            ],
+            "projectiles": [
+              {
+                "id": "projectile.p2a.ordinary",
+                "mass_g": 10000,
+                "speed_mmps": 500000,
+                "version": 1
+              }
+            ],
+            "recipes": [
+              {
+                "ammo_cost": 5,
+                "cargo_costs": [],
+                "id": "recipe.p2a.ordinary",
+                "projectile": {
+                  "id": "projectile.p2a.ordinary",
+                  "version": 1
+                },
+                "reload_steps": 120,
+                "rounds": 1,
+                "version": 1
+              }
+            ],
+            "source_seed_sha256": "4a172e6e47185b6e165712aa290571043cffaf06941dd78ad914507f2dd200e9",
+            "version": 1,
+            "weapons": [
+              {
+                "module_id": "weapon_upper_port",
+                "ready_capacity": 1,
+                "recipe_ids": [
+                  "recipe.p2a.ordinary"
+                ],
+                "turret": {
+                  "maximum_mdeg": 90000,
+                  "minimum_mdeg": -90000,
+                  "slew_mdeg_per_s": 30000
+                }
+              }
+            ]
+          },
+          "ship_id": "ship.web.red",
+          "state": {
+            "cargo": [],
+            "crew": [
+              {
+                "count": 2,
+                "crew_type": "officer"
+              },
+              {
+                "count": 10,
+                "crew_type": "ordinary"
+              },
+              {
+                "count": 4,
+                "crew_type": "technical_officer"
+              },
+              {
+                "count": 2,
+                "crew_type": "veteran_damage_control"
+              }
+            ],
+            "engine_latches": [],
+            "fuel_units": 800.0,
+            "hull_integrity_fraction": 1.0,
+            "instance_id": "instance.p3.50e8e8ba7eb04ef8af16deb963565749.1",
+            "interface": "gaotian.persistent-ship/p1a-v1alpha1",
+            "magazines": [
+              {
+                "module_id": "ammunition_magazine",
+                "quantity": 80
+              }
+            ],
+            "modules": [
+              {
+                "durability_points": 100.0,
+                "module_id": "ammunition_magazine",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cargo_hold",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "cic",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_base",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "crew_quarters_upper",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "damage_control",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "fire_control",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "generator",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "lift_tank",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_port",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "main_engine_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "remote_core",
+                "operating_mode": "standby"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "sensor_upper_starboard",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_port_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_aft",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "thruster_starboard_fore",
+                "operating_mode": "active"
+              },
+              {
+                "durability_points": 100.0,
+                "module_id": "weapon_upper_port",
+                "operating_mode": "active"
+              }
+            ],
+            "power_policy": {
+              "allocation_mode": "strict_categories",
+              "category_order": [
+                "damage_control",
+                "weapons_and_active_defense",
+                "fire_control",
+                "sensors"
+              ],
+              "disabled_categories": []
+            },
+            "resources_sha256": "b46ab8795b403d5cba7fcea8ce913a704f614a004b4be0ab6afbc3049e7e3d8c",
+            "revision": 0,
+            "service": {
+              "reasons": [],
+              "status": "available"
+            },
+            "weapons": [
+              {
+                "cooldown_steps": 0,
+                "module_id": "weapon_upper_port",
+                "ready_rounds": 1,
+                "recipe_id": "recipe.p2a.ordinary",
+                "reload": null
+              }
+            ],
+            "wounded_aboard": 0
+          }
+        },
+        "capacity_after": {
+          "capacity_cm3": 125000000,
+          "cargo_mass_g": 0,
+          "free_volume_cm3": 125000000,
+          "over_capacity": false,
+          "reserved_ammunition": {
+            "ammunition_magazine": 0
+          },
+          "reserved_cargo": {},
+          "used_volume_cm3": 0
+        },
+        "capacity_before": {
+          "capacity_cm3": 125000000,
+          "cargo_mass_g": 0,
+          "free_volume_cm3": 125000000,
+          "over_capacity": false,
+          "reserved_ammunition": {
+            "ammunition_magazine": 0
+          },
+          "reserved_cargo": {},
+          "used_volume_cm3": 0
+        },
+        "changes": [],
+        "module_names": {
+          "ammunition_magazine": "契约夹具弹药库",
+          "cargo_hold": "契约夹具货仓",
+          "cic": "契约夹具CIC",
+          "crew_quarters_base": "契约夹具人员舱",
+          "crew_quarters_upper": "契约夹具人员舱",
+          "damage_control": "契约夹具损管设备",
+          "fire_control": "契约夹具火控系统",
+          "generator": "契约夹具发电设备",
+          "lift_tank": "契约夹具灵烷贮槽",
+          "main_engine_port": "契约夹具主发动机",
+          "main_engine_starboard": "契约夹具主发动机",
+          "remote_core": "契约夹具遥控核心舱",
+          "sensor_upper_starboard": "契约夹具搜索雷达",
+          "thruster_port_aft": "契约夹具转向发动机",
+          "thruster_port_fore": "契约夹具转向发动机",
+          "thruster_starboard_aft": "契约夹具转向发动机",
+          "thruster_starboard_fore": "契约夹具转向发动机",
+          "weapon_upper_port": "契约夹具自动炮塔"
+        }
+      }
+    ]
+  },
+  "library": {
+    "results": [
+      {
+        "settlement_id": "settlement.89be8f574a9d4f1c8a39d0a86d631790",
+        "saved": true,
+        "reason": "withdrawal",
+        "fixed_step": 120
+      },
+      {
+        "settlement_id": "settlement.c924cb70a0e74c029f876cef86ef53f9",
+        "saved": true,
+        "reason": "withdrawal",
+        "fixed_step": 450
+      }
+    ],
+    "ships": [
+      {
+        "instance_id": "instance.p3.a6565591ed5a4a8f8b557597e7004111.0",
+        "revision": 2,
+        "hull_integrity": 0.98,
+        "service": {
+          "reasons": [],
+          "status": "available"
+        },
+        "can_deploy": true
+      }
+    ]
+  },
+  "timing": {
+    "scope": "450 in-process combat steps; excludes entry, storage, UI and IPC",
+    "median_ms": 0.3774,
+    "p95_ms": 0.6737,
+    "max_ms": 1.4718
+  },
+  "source_sha256": {
+    "backend/high_wilderness_sidecar/tactical_settlement.py": "ed8200baf8bb1afb14c61478dee942c8dca7840dc7bea43690a46abcb5714c56",
+    "backend/high_wilderness_sidecar/persistent_ship.py": "38d4cfd464886ac54d42bfc167eacf733c021d5016c0089edd0c5f33f46d110d",
+    "backend/high_wilderness_sidecar/tactical_inventory.py": "09b5aad28a070317fddc67348806dc3d98a2c2891b014a5265e03c84bcf3d7c0",
+    "backend/high_wilderness_sidecar/tactical_gunnery.py": "fa8a8e8159801bcf84a9075f300097c8e34824795996a84f3381482438740b4a",
+    "backend/high_wilderness_sidecar/simplified_flight.py": "909a6b70e92e05e34af9aceaf4fabed0446d06377b93aa4b898795c628188415",
+    "backend/high_wilderness_sidecar/tactical_damage.py": "cc0fda55cef1f17c7a67105e9eba5532859712519e13a10d234ef4dbf3e8de05",
+    "backend/high_wilderness_sidecar/realtime_view.py": "366eb8a88cbfbd7861afa309f7606e00a7de10de14ea474e002332cfab120193",
+    "backend/high_wilderness_sidecar/server.py": "8c457c2ed21342e17b0f53847073c5d4b8837c604f5cd0aae2f3f626d93f46a4",
+    "backend/high_wilderness_sidecar/__main__.py": "99125ca317d0b6caa06918ecb39f420b4589ec5dcc80745b1436f66bf0c58040",
+    "apps/desktop/src/tactical/SettlementPanel.tsx": "f1f653c70b949a90bdfa403a5a4c9e80628cc585966775a6985514c91a317e68",
+    "apps/desktop/src/tactical/settlement.ts": "d4cd8c0a38cdeae7f2487d8c4900cd24eee470b08a7db1e87a53ff1ba0d7265e",
+    "apps/desktop/src/tactical/settlement.test.ts": "daa2508dca1c22780c9ed5ceeef1553c7f48b8190ec19f1de556f9f00c628343",
+    "apps/desktop/src/tactical/RealtimePanel.tsx": "3708671a603ce52215d07aa08bff61f6b9449945206c138657fa53494c8797e2",
+    "apps/desktop/src/tactical/realtime.ts": "8bfce514c31d3c41d06d1434768d6667eae1c7be455f97bbde172760ab970f7d",
+    "apps/desktop/src/tactical/model.ts": "598b948bf3269026ca08ef397b4cdbdc9de43c822edf2977065a94ed478cc378",
+    "apps/desktop/src/styles.css": "68566506b150d24caccd5ac65d822dd7e1a566793e424761c4a7280a32b425b0",
+    "apps/desktop/src-tauri/src/bridge/host.rs": "deb3f2c7afa51388cbaa77f23e4fdd3b923deb5d94d78da6bce3cb4012ab64e0",
+    "tools/test_tactical_settlement.py": "a1118f9f91e803c1b1ffe29ed9f99aae9716e953bc557f150f238d08e056ad81",
+    "tools/verify_tactical_settlement.py": "142d09e7c7cd0fa7aef248fbc70657ab1deb704d5c40f0aea288b5a7c29a4246",
+    "tools/verify_settlement_view.mjs": "5b3fada86bdaebf53cd0367b1a5465e060b87b540f264b340e381e6bd9acfd56"
+  },
+  "not_covered": [
+    "arbitrary player design deployment",
+    "in-progress battle checkpoint",
+    "native WebView visual QA",
+    "special ammunition effects",
+    "cargo destruction",
+    "strategy mode"
+  ]
+}

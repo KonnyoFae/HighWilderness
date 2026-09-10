@@ -40,3 +40,7 @@ artifacts/w1-local/
 
 # Local T0 benchmark samples and resumable checkpoints
 artifacts/t0-local/
+
+# Local tactical instances and isolated bridge tests
+.local/
+artifacts/p3-local-tests/

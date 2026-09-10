@@ -277,3 +277,8 @@ h2 { margin: 7px 0 0; font-size: 19px; }
 .propulsion-tables { display: flex; gap: 24px; flex-wrap: wrap; overflow-x: auto; }
 .propulsion-tables table { border-collapse: collapse; flex: 1; font-size: 13px; font-variant-numeric: tabular-nums; }
 .propulsion-tables th, .propulsion-tables td { padding: 8px; border-bottom: 1px solid #35585b; text-align: left; }
+
+.settlement-panel { margin-block: 20px; padding: 18px; border: 1px solid #416452; border-radius: 10px; }
+.settlement-ships { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
+.settlement-ships article { min-width: 0; }
+.settlement-ships details { margin-block: 12px; }

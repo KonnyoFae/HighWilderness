@@ -16,6 +16,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--instance-id", required=True)
     parser.add_argument("--recovery-dir", type=Path)
+    parser.add_argument("--settlement-dir", type=Path)
     args = parser.parse_args()
     if not ID_PATTERN.fullmatch(args.instance_id):
         raise ContractError(
@@ -23,7 +24,7 @@ def main() -> None:
             "$.backend_instance_id",
             "sidecar 实例 ID 必须是合法小写 ASCII 标识",
         )
-    server = SidecarServer(args.instance_id, recovery_dir=args.recovery_dir)
+    server = SidecarServer(args.instance_id, recovery_dir=args.recovery_dir, settlement_dir=args.settlement_dir)
     raise SystemExit(server.serve(sys.stdin.buffer, sys.stdout.buffer))
 
 

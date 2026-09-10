@@ -3,8 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { screen, world } from "../editor/viewport";
 import type { Camera, Point } from "../editor/viewport";
 import type { TacticalView } from "./model";
-import { fitScene, gridSpacing, moduleFootprints, pickShip, shipPoints, zoomScene } from "./viewport";
+import { bodyToWorld, fitScene, gridSpacing, moduleFootprints, pickModules, pickShip, shipPoints, zoomScene } from "./viewport";
 import type { ShipGeometry } from "./viewport";
+import type { GunInteraction } from "./gunnery";
 
 type ShipObjects = { root: Container; selection: Graphics; modules: { id: string; max: number; graphic: Graphics }[] };
 function buildShip(ship: ShipGeometry): ShipObjects {
@@ -37,8 +38,9 @@ function buildShip(ship: ShipGeometry): ShipObjects {
   return { root, selection, modules };
 }
 
-export function TacticalViewport({ view, active, selected, onSelect }: {
+export function TacticalViewport({ view, active, selected, onSelect, gunControl }: {
   view: TacticalView; active: boolean; selected: string | null; onSelect: (id: string | null) => void;
+  gunControl?: GunInteraction;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const renderer = useRef<Application | null>(null);
@@ -47,6 +49,10 @@ export function TacticalViewport({ view, active, selected, onSelect }: {
   const objects = useRef(new Map<string, ShipObjects>());
   const [ready, setReady] = useState(false), [failure, setFailure] = useState("");
   const [size, setSize] = useState({ width: 800, height: 540 });
+  const [pickLevel, setPickLevel] = useState<string>("all");
+  const [candidates, setCandidates] = useState<{ shipId: string; moduleId: string; name: string; level: number }[]>([]);
+  const candidateMode = useRef<"weapon" | "target">("target");
+  useEffect(() => { setCandidates([]); }, [gunControl?.weaponId, gunControl?.mode]);
   const [camera, setCamera] = useState<Camera>(() => fitScene(view, 800, 540));
   const fitted = useRef(false);
   const latest = useRef({ view, camera }); latest.current = { view, camera };
@@ -126,9 +132,45 @@ export function TacticalViewport({ view, active, selected, onSelect }: {
           .moveTo(end.x, end.y).lineTo(end.x - 7 * Math.cos(a + .4), end.y - 7 * Math.sin(a + .4)).stroke({ color: 0xa3efb9, width: 1.5 });
       }
     }
+    for (const gun of view.snapshot.gunnery?.weapons ?? []) {
+      const origin = screen({ x: gun.origin_m[0], y: gun.origin_m[1] }, camera);
+      const controlled = gun.ship_id === gunControl?.ownShipId && gun.module_id === gunControl.weaponId;
+      const length = Math.max(16, 15*camera.scale);
+      const color = controlled ? 0xffdd81 : 0xeed0a2;
+      v.circle(origin.x, origin.y, controlled ? 7 : 4).stroke({ color, width: 2 });
+      v.moveTo(origin.x, origin.y).lineTo(origin.x+gun.direction[0]*length, origin.y-gun.direction[1]*length).stroke({ color, width: 3 });
+      if (controlled && gun.aim_point_m) {
+        const aim = screen({ x: gun.aim_point_m[0], y: gun.aim_point_m[1] }, camera);
+        const tint = gun.mode === "auto" && gun.quality === "degraded" ? 0xffa85c : 0x9dffbf;
+        v.moveTo(origin.x, origin.y).lineTo(aim.x, aim.y).stroke({ color: tint, width: 1, alpha: .3 });
+        v.circle(aim.x, aim.y, 8).moveTo(aim.x-12, aim.y).lineTo(aim.x+12, aim.y)
+          .moveTo(aim.x, aim.y-12).lineTo(aim.x, aim.y+12).stroke({ color: tint, width: 1.5 });
+      }
+      if (controlled && gun.target_ship_id && gun.target_module_id) {
+        const geometry = view.geometry.ships.find(s => s.id === gun.target_ship_id);
+        const pose = view.snapshot.ships.find(s => s.id === gun.target_ship_id);
+        const module = geometry?.modules.find(m => m.id === gun.target_module_id);
+        if (pose && module) {
+          const p = screen(bodyToWorld({ x: module.anchor_m[0], y: module.anchor_m[1] }, pose), camera);
+          v.rect(p.x-9, p.y-9, 18, 18).stroke({ color: 0xff947d, width: 2 });
+        }
+      }
+    }
+    for (const p of view.snapshot.gunnery?.projectiles ?? []) {
+      const at = screen({ x: p.position_m[0], y: p.position_m[1] }, camera);
+      const before = screen({ x: p.position_m[0]-p.velocity_mps[0]*.06, y: p.position_m[1]-p.velocity_mps[1]*.06 }, camera);
+      v.moveTo(before.x, before.y).lineTo(at.x, at.y).stroke({ color: 0xfff2b8, width: 2 });
+      v.circle(at.x, at.y, 2).fill(0xffffff);
+    }
+    for (const hit of view.snapshot.gunnery?.damage?.recent ?? []) {
+      const age = view.snapshot.fixed_step-hit.step;
+      if (age > 45) continue;
+      const at = screen({ x: hit.position_m[0], y: hit.position_m[1] }, camera);
+      v.circle(at.x, at.y, 5+age*.15).stroke({ color: hit.outcome === "penetrated" || hit.outcome === "module" ? 0xff7040 : 0xaadfff, width: 2, alpha: 1-age/46 });
+    }
     // No ticker: paused scenes and hidden workspaces consume no animation loop.
     app.render();
-  }, [active, ready, view, selected, camera, size]);
+  }, [active, ready, view, selected, camera, size, gunControl?.weaponId]);
 
   useEffect(() => {
     if (!active) return;
@@ -146,6 +188,12 @@ export function TacticalViewport({ view, active, selected, onSelect }: {
   };
   const fit = (id?: string) => setCamera(fitScene(view, size.width, size.height, id));
   const step = gridSpacing(camera.scale);
+  const selectCandidate = (candidate: typeof candidates[number]) => {
+    if (!gunControl?.enabled) return;
+    if (candidateMode.current === "weapon") gunControl.onWeapon(candidate.moduleId);
+    else gunControl.onTarget(candidate.shipId, candidate.moduleId);
+    setCandidates([]);
+  };
   return <div className="tactical-viewport">
     <div className="viewport-toolbar">
       <button onClick={() => fit()}>适应全场</button>
@@ -153,25 +201,61 @@ export function TacticalViewport({ view, active, selected, onSelect }: {
       <button aria-label="战术放大" onClick={() => setCamera(c => zoomScene(c, { x: size.width / 2, y: size.height / 2 }, 1.5))}>＋</button>
       <button aria-label="战术缩小" onClick={() => setCamera(c => zoomScene(c, { x: size.width / 2, y: size.height / 2 }, 1 / 1.5))}>−</button>
       <span className="muted">多层叠加 · 船艏箭头 · 绿色线表示 5 秒速度向量</span>
+      {gunControl && <label>模块点选层<select aria-label="模块点选层" value={pickLevel} onChange={e => { setPickLevel(e.target.value); setCandidates([]); }}>
+        <option value="all">全部层（重叠时选择）</option>
+        {[...new Set(view.geometry.ships.flatMap(s => s.decks.map(d => d.level)))].sort().map(level => <option key={level} value={level}>第 {level} 层</option>)}
+      </select></label>}
     </div>
-    <div ref={host} className="tactical-canvas" tabIndex={active ? 0 : -1} aria-label="战术画布，点击选舰，拖动平移，滚轮缩放" onContextMenu={e => e.preventDefault()}
+    {candidates.length > 0 && gunControl?.enabled && <div className="editor-row" aria-label="重叠模块候选">
+      <span>选择{candidateMode.current === "weapon" ? "火炮" : "目标模块"}：</span>
+      {candidates.map(c => <button key={c.shipId+c.moduleId} onClick={() => selectCandidate(c)}>{c.name} · 第 {c.level} 层 · {c.moduleId}</button>)}
+      {candidateMode.current === "target" && <button onClick={() => { gunControl.onTarget(candidates[0].shipId, null); setCandidates([]); }}>瞄准整舰</button>}
+      <button onClick={() => setCandidates([])}>取消选择</button>
+    </div>}
+    <div ref={host} className="tactical-canvas" tabIndex={active ? 0 : -1} aria-label={gunControl ? "战术画布，右键选炮，左键瞄准或射击，中键平移" : "战术画布，点击选舰，拖动平移，滚轮缩放"} onContextMenu={e => e.preventDefault()}
       onPointerDown={e => {
         if (![0, 1, 2].includes(e.button) || drag.current) return;
         e.preventDefault(); e.currentTarget.focus(); e.currentTarget.setPointerCapture(e.pointerId);
         drag.current = { pointer: e.pointerId, start: point(e), camera, moved: false, button: e.button };
       }}
       onPointerMove={e => {
-        const d = drag.current; if (!d || d.pointer !== e.pointerId) return;
+        const d = drag.current;
+        if (!d && gunControl?.enabled && gunControl.mode === "manual" && gunControl.weaponId) gunControl.onAim(world(point(e), camera));
+        if (!d || d.pointer !== e.pointerId) return;
         const p = point(e), dx = p.x - d.start.x, dy = p.y - d.start.y;
         d.moved ||= Math.hypot(dx, dy) > 4;
-        if (d.moved) setCamera({ ...d.camera, x: d.camera.x + dx, y: d.camera.y + dy });
+        if (d.moved && (!gunControl || d.button === 1)) setCamera({ ...d.camera, x: d.camera.x + dx, y: d.camera.y + dy });
       }}
       onPointerUp={e => {
         const d = drag.current; if (!d || d.pointer !== e.pointerId) return;
         drag.current = null; e.currentTarget.releasePointerCapture(e.pointerId);
-        if (!d.moved && d.button === 0) onSelect(pickShip(view, point(e), camera));
+        if (d.moved) return;
+        const released = point(e);
+        if (released.x < 0 || released.y < 0 || released.x > size.width || released.y > size.height) return;
+        if (gunControl && (d.button === 0 || d.button === 2)) {
+          if (!gunControl.enabled) return;
+          const p = point(e), level = pickLevel === "all" ? undefined : Number(pickLevel);
+          if (d.button === 2) {
+            const hits = pickModules(view, p, camera, gunControl.ownShipId, true, level);
+            candidateMode.current = "weapon";
+            if (hits.length === 1) { gunControl.onWeapon(hits[0].moduleId); setCandidates([]); }
+            else setCandidates(hits);
+          } else if (gunControl.weaponId && gunControl.mode === "manual") {
+            gunControl.onFire(world(p, camera));
+          } else if (gunControl.weaponId) {
+            const ship = pickShip(view, p, camera);
+            if (ship && ship !== gunControl.ownShipId) {
+              const hits = pickModules(view, p, camera, ship, false, level);
+              candidateMode.current = "target";
+              if (hits.length === 1) { gunControl.onTarget(ship, hits[0].moduleId); setCandidates([]); }
+              else if (hits.length) setCandidates(hits);
+              else { gunControl.onTarget(ship, null); setCandidates([]); }
+            } else onSelect(ship);
+          } else onSelect(pickShip(view, p, camera));
+        } else if (d.button === 0) onSelect(pickShip(view, point(e), camera));
       }}
-      onPointerCancel={() => { drag.current = null; }} onLostPointerCapture={() => { drag.current = null; }} onBlur={() => { drag.current = null; }}
+      onPointerLeave={() => gunControl?.onLeave()}
+      onPointerCancel={() => { drag.current = null; gunControl?.onLeave(); }} onLostPointerCapture={() => { drag.current = null; }} onBlur={() => { drag.current = null; gunControl?.onLeave(); }}
       onKeyDown={e => {
         if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
           e.preventDefault(); setCamera(c => ({ ...c, x: c.x + (e.key === "ArrowLeft" ? 50 : e.key === "ArrowRight" ? -50 : 0), y: c.y + (e.key === "ArrowUp" ? 50 : e.key === "ArrowDown" ? -50 : 0) }));
@@ -190,6 +274,6 @@ export function TacticalViewport({ view, active, selected, onSelect }: {
         </span>;
       })}
     </div>
-    <p className="viewport-help">点击舰体或右侧列表选舰；拖动平移，滚轮缩放。画布获得焦点后可用方向键平移、＋/− 缩放、Home 查看全场。</p>
+    <p className="viewport-help">{gunControl ? "右键本舰火炮选择；自动模式左键敌舰或模块指定目标，手动模式跟随鼠标、左键单发。中键拖动平移，滚轮缩放。黄色粗线是实际炮向，十字是瞄准点。" : "点击舰体或右侧列表选舰；拖动平移，滚轮缩放。"}画布获得焦点后可用方向键平移、＋/− 缩放、Home 查看全场。</p>
   </div>;
 }

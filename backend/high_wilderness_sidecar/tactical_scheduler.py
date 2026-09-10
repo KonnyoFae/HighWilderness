@@ -121,7 +121,7 @@ class SchedulerStatus:
 
 
 class TacticalScheduler:
-    def __init__(self, session, *, clock=monotonic_ns, limits=SchedulerLimits(), domain_inputs=None, project=None):
+    def __init__(self, session, *, clock=monotonic_ns, limits=SchedulerLimits(), domain_inputs=None, project=None, stepper=None, stop_when=None):
         require(type(session) is SimplifiedFlightSession and type(limits) is SchedulerLimits, 'Invalid scheduler resource')
         require(session._owner == get_ident() and not session._executing, 'Session must belong to idle current owner')
         require(all(s.command is not None for s in session.world.ships), 'Scheduler requires command lifecycle domain')
@@ -132,6 +132,9 @@ class TacticalScheduler:
         self._clock, self._limits = clock, limits
         self._clock_failed = False
         self._domains, self._project = domain_inputs, project
+        require(stepper is None or callable(stepper), 'Invalid integrated stepper')
+        self._stop_when = stop_when
+        self._stepper = session.step if stepper is None else stepper
         self._last_ns = clock()
         require(count(self._last_ns), 'Clock must return nonnegative integer nanoseconds')
         self._running, self._reason, self._generation = False, 'initial', 0
@@ -193,7 +196,8 @@ class TacticalScheduler:
 
     def pause(self, reason='manual'):
         self._guard()
-        require(reason in ('manual', 'mode_exit', 'disconnected'), 'Invalid public pause reason')
+        require(reason in ('manual', 'mode_exit', 'disconnected') or reason == 'battle_finished'
+            and self._stop_when is not None and self._stop_when(), 'Invalid public pause reason')
         self._sample()
         if self._running or self._pending or reason != self._reason:
             self._pause(reason)
@@ -201,6 +205,7 @@ class TacticalScheduler:
 
     def resume(self):
         self._guard()
+        require(self._stop_when is None or not self._stop_when(), 'Battle has ended')
         require(not self._clock_failed, 'Clock fault requires a new scheduler')
         self._sample()
         require(self._debt <= self.limits.overload_steps*QUANTA, 'Recover paused debt before resume')
@@ -278,7 +283,7 @@ class TacticalScheduler:
             batch = DomainBatch() if self._domains is None else self._domains(self._committed)
             require(type(batch) is DomainBatch and all(type(v) is tuple for v in (batch.device_operations,
                 batch.resource_operations, batch.exit_operations, batch.events, batch.authority_events)), 'Invalid internal domain batch')
-            result = self._session.step(control, device_operations=batch.device_operations,
+            result = self._stepper(control, device_operations=batch.device_operations,
                 resource_operations=batch.resource_operations, exit_operations=batch.exit_operations,
                 events=batch.events, authority_events=batch.authority_events, project=self._project)
         except Exception:
@@ -298,6 +303,8 @@ class TacticalScheduler:
             self._events.append(ReliableEvent(self._committed.epoch, self._event_sequence, result))
         if allowed and not self._allowed():
             self._invalidate('authority_lost')
+        if self._stop_when is not None and self._stop_when():
+            self._pause('battle_finished')
         return True
 
     def pump(self):
@@ -316,6 +323,8 @@ class TacticalScheduler:
         self._guard()
         require(not recover or not self._running, 'Debt recovery requires pause')
         require(not self._clock_failed, 'Clock fault requires a new scheduler')
+        if self._stop_when is not None and self._stop_when():
+            return 0
         start = self._sample()
         if not recover and not self._running:
             return 0
@@ -332,6 +341,8 @@ class TacticalScheduler:
                 if not self._step():
                     break
                 completed += 1
+                if self._stop_when is not None and self._stop_when():
+                    break
                 # Include compute time, even after the final permitted step.
                 self._sample()
             if not recover and self._running and self._debt > self.limits.overload_steps*QUANTA:

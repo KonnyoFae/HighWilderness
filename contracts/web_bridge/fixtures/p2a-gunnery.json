@@ -1,0 +1,31 @@
+{
+  "interface": "gaotian.technical-gunnery/p2a-v1alpha1",
+  "id": "gtw.technical.p2a.ordinary",
+  "version": 1,
+  "description": "普通炮技术值，未接命中毁伤；不是正式平衡参数",
+  "ammo_capacity": 100,
+  "initial_ammo": 80,
+  "ammo_cost": 5,
+  "rounds": 1,
+  "reload_steps": 120,
+  "cooldown_steps": 30,
+  "speed_mmps": 500000,
+  "mass_g": 10000,
+  "slew_mdeg_per_s": 30000,
+  "minimum_mdeg": -90000,
+  "maximum_mdeg": 90000,
+  "intrinsic_error_mdeg": 150,
+  "aligned_tolerance_mdeg": 750,
+  "visual_range_m": 5000,
+  "observation_period_steps": 12,
+  "observation_expiry_steps": 30,
+  "lock_acquisition_steps": 90,
+  "projectile_lifetime_steps": 1200,
+  "max_projectiles": 256,
+  "seed": 20260910,
+  "target_velocity_mps": [6, 0],
+  "fire_control": {
+    "normal": {"position_error_mm": 0, "velocity_error_mmps": 0, "direction_error_mdeg": 0},
+    "degraded": {"position_error_mm": 12000, "velocity_error_mmps": 2000, "direction_error_mdeg": 3000}
+  }
+}

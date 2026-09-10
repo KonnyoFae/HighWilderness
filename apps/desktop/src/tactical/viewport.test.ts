@@ -2,11 +2,23 @@ import { describe, expect, it } from "vitest";
 import { screen, world } from "../editor/viewport";
 import { acceptSnapshot } from "./model";
 import type { TacticalSnapshot } from "./model";
-import { bodyToWorld, fitScene, gridSpacing, moduleFootprints, pickShip, shipPoints, worldToBody, zoomScene } from "./viewport";
+import { bodyToWorld, fitScene, gridSpacing, moduleFootprints, pickModules, pickShip, shipPoints, worldToBody, zoomScene } from "./viewport";
 import snapshot from "./testing/snapshot.fixture.json";
 
 const view = acceptSnapshot(null, snapshot as TacticalSnapshot, "fixture.1");
 describe("tactical coordinates and camera", () => {
+  it("right-click candidates only include own weapons and resolve overlapping deck levels explicitly", () => {
+    const camera = fitScene(view, 740, 540), ship = view.geometry.ships[0], pose = view.snapshot.ships[0];
+    const gun = ship.modules.find(m => m.category === "weapon")!;
+    const p = screen(bodyToWorld({ x: gun.anchor_m[0], y: gun.anchor_m[1] }, pose), camera);
+    expect(pickModules(view, p, camera, ship.id, true).map(m => m.moduleId)).toContain(gun.id);
+    expect(pickModules(view, p, camera, view.geometry.ships[1].id, true)).toEqual([]);
+    const altered = structuredClone(view);
+    altered.geometry.ships[0].modules.push({ ...gun, id: "overlapping.other_deck", deck_level: gun.deck_level+1,
+      internal_cells: [], top_cells: [], body_points: [] });
+    expect(pickModules(altered, p, camera, ship.id, true).length).toBe(2);
+    expect(pickModules(altered, p, camera, ship.id, true, gun.deck_level).map(m => m.moduleId)).toEqual([gun.id]);
+  });
   it("faces +Y at zero and -X at a positive quarter turn; round-trips arbitrary headings", () => {
     const pose = { ...view.snapshot.ships[0], position_m: [10, -20], heading_rad: Math.PI / 2 };
     expect(bodyToWorld({ x: 0, y: 5 }, pose).x).toBeCloseTo(5);

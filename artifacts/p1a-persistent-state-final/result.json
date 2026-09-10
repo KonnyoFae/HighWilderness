@@ -1,0 +1,72 @@
+{
+  "interface": "gaotian.p1a-state-verification/v1",
+  "status": "PASS",
+  "scope": "technical-contract-and-flight-entry-only",
+  "entry_policy": "p1a/quiescent-redeployment/static-flight-model/v1",
+  "evidence": {
+    "identity_roundtrip": true,
+    "resources_roundtrip": true,
+    "same_inventory_after_hold_loss": true,
+    "engine_loss_preserved": true,
+    "damaged_hull_preserved": true,
+    "new_scene_epoch": true,
+    "continued_steps": 60
+  },
+  "damaged_inventory": {
+    "capacity_cm3": 0,
+    "used_volume_cm3": 100010000,
+    "cargo_mass_g": 2005000,
+    "over_capacity": true,
+    "free_volume_cm3": 0,
+    "reserved_cargo": {
+      "cargo.advanced_fuse": 0,
+      "cargo.special_alloy": 0
+    },
+    "reserved_ammunition": {
+      "ammunition_magazine": 0
+    }
+  },
+  "remaining_thrust_units": [
+    5000000,
+    0,
+    0,
+    0,
+    27500000,
+    22500000
+  ],
+  "intact_thrust_units": [
+    10000000,
+    0,
+    0,
+    0,
+    27500000,
+    22500000
+  ],
+  "source_sha256": {
+    "backend/high_wilderness_sidecar/persistent_ship.py": "38d4cfd464886ac54d42bfc167eacf733c021d5016c0089edd0c5f33f46d110d",
+    "backend/high_wilderness_sidecar/simplified_flight.py": "82028a7c542d81e36f762781a8e0cc4d17e54af035be49a3e2c8946cf475ca60",
+    "backend/high_wilderness_sidecar/tactical_devices.py": "0a5ebe05fd5959d28fd20b8fb7694edd26518cb4a3b04710d574375ff9f3e811",
+    "backend/high_wilderness_sidecar/tactical_resources_runtime.py": "f18d64165abfe9b331b4e0a684e850f1c07e7b4200d0d9e40444a9c726145274",
+    "backend/high_wilderness_sidecar/tactical_command_runtime.py": "4e9a9313ee4aded2c164571dcd1aa20ab10ded30e84946b90a8a6fec021710e0",
+    "tools/persistent_ship_fixture.py": "55caec9e2c75a755772a757ea794c36c5e26a4da3f3b765599d0075add089738",
+    "tools/test_persistent_ship.py": "ae7bb5171cd81fc545fdb1e80ac16c531fe9fde90ddf39eab2da4e99411d6f84",
+    "tools/verify_persistent_ship.py": "8c8b56cdb002bfce848130a13783ec0cd6826869a44016380463be9afc8caa1c"
+  },
+  "not_covered": [
+    "weapon firing and damage",
+    "resource consumption",
+    "settlement reload completion",
+    "product save UI",
+    "atomic multi-ship settlement",
+    "dynamic loadout mass",
+    "latched/disabled redeployment"
+  ],
+  "artifact_sha256": {
+    "resources-0.json": "6339e19112ef6b03434c4da60dca9534a88d5b0f0cbf32c763c3cdc2dc0c946f",
+    "initial-0.json": "96405a22be53d12d0fe6b0b5169947e5babfcbd290dfdb49e78e3aecfd36d0b1",
+    "restored-0.json": "8b42552c109bb5f89d4a90d8d0225b799913268be6879dae85d1e7777615db3e",
+    "resources-1.json": "7251ba4696068dba4067c3b3157206c7e8d6a36bbae528807a4b9aeb633f5405",
+    "initial-1.json": "661232f6dbadf1dcf8c69c55963872e846daf9e4f317e017cdf8470c63695ad2",
+    "restored-1.json": "661232f6dbadf1dcf8c69c55963872e846daf9e4f317e017cdf8470c63695ad2"
+  }
+}

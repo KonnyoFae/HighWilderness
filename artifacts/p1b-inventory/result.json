@@ -1,0 +1,115 @@
+{
+  "interface": "gaotian.p1b-inventory-verification/v1",
+  "status": "PASS",
+  "scope": "inventory-transactions-and-flight-commit-only",
+  "evidence": {
+    "active_domain_checkpoint_roundtrip": true,
+    "hold_loss_preserves_reservation": true,
+    "weapon_loss_releases_reservation": true,
+    "settlement_completes_only_active_valid_reload": true,
+    "settlement_retry_after_domain_restore_is_noop": true,
+    "overcapacity_redeployment": true,
+    "cooldown_preserved": true,
+    "static_flight_model_preserved": true,
+    "next_scene_steps": 60
+  },
+  "summaries": [
+    {
+      "capacity_cm3": 0,
+      "used_volume_cm3": 95008000,
+      "cargo_mass_g": 1904000,
+      "over_capacity": true,
+      "free_volume_cm3": 0,
+      "reserved_ammunition": {
+        "ammunition_magazine": 0
+      },
+      "reserved_cargo": {
+        "cargo.advanced_fuse": 0,
+        "cargo.special_alloy": 0
+      }
+    },
+    {
+      "capacity_cm3": 125000000,
+      "used_volume_cm3": 100010000,
+      "cargo_mass_g": 2005000,
+      "over_capacity": false,
+      "free_volume_cm3": 24990000,
+      "reserved_ammunition": {
+        "ammunition_magazine": 0
+      },
+      "reserved_cargo": {
+        "cargo.advanced_fuse": 0,
+        "cargo.special_alloy": 0
+      }
+    }
+  ],
+  "changes": [
+    [
+      {
+        "resource": "ammunition",
+        "reason": "reload",
+        "delta": -5
+      },
+      {
+        "resource": "cargo:cargo.advanced_fuse",
+        "reason": "reload",
+        "delta": -2
+      },
+      {
+        "resource": "cargo:cargo.special_alloy",
+        "reason": "reload",
+        "delta": -1
+      },
+      {
+        "resource": "ready:weapon_upper_port",
+        "reason": "discharge",
+        "delta": -1
+      },
+      {
+        "resource": "ready:weapon_upper_port",
+        "reason": "reload",
+        "delta": 1
+      }
+    ],
+    [
+      {
+        "resource": "ready:weapon_upper_port",
+        "reason": "discharge",
+        "delta": -1
+      }
+    ]
+  ],
+  "source_sha256": {
+    "backend/high_wilderness_sidecar/tactical_inventory.py": "a1863b549fec8cb48cf73c2602c92f662f096d821b3938036e3de9198ffcac61",
+    "backend/high_wilderness_sidecar/persistent_ship.py": "38d4cfd464886ac54d42bfc167eacf733c021d5016c0089edd0c5f33f46d110d",
+    "backend/high_wilderness_sidecar/simplified_flight.py": "82028a7c542d81e36f762781a8e0cc4d17e54af035be49a3e2c8946cf475ca60",
+    "backend/high_wilderness_sidecar/tactical_devices.py": "0a5ebe05fd5959d28fd20b8fb7694edd26518cb4a3b04710d574375ff9f3e811",
+    "tools/persistent_ship_fixture.py": "55caec9e2c75a755772a757ea794c36c5e26a4da3f3b765599d0075add089738",
+    "tools/test_tactical_inventory.py": "629cde20c15b1cea45e61e545c8af0b3b1d62c30d90c86254e9213f503538f03",
+    "tools/verify_tactical_inventory.py": "172d96d483c3348bae738bf3861c674c7043ac7129182140f3757a0c6d6838c3"
+  },
+  "not_covered": [
+    "gun aiming/firing/projectiles",
+    "real projectile damage",
+    "legal battle-end eligibility",
+    "durable multi-ship commit",
+    "product inventory/save UI",
+    "full battle checkpoint with inventory",
+    "resource-driven mass/inertia",
+    "special ammunition effects"
+  ],
+  "artifact_sha256": {
+    "resources-0.json": "6339e19112ef6b03434c4da60dca9534a88d5b0f0cbf32c763c3cdc2dc0c946f",
+    "initial-0.json": "96405a22be53d12d0fe6b0b5169947e5babfcbd290dfdb49e78e3aecfd36d0b1",
+    "active-inventory-0.json": "91177013ce945736ada1ca4124b20af1739ca8e1666854cc14b8bb790ab3d790",
+    "settled-inventory-0.json": "57d0f3374b869dd756b98cf721c489e14e07b4d8f0c81ebf3ca0006ea7ecbf3a",
+    "settled-ship-0.json": "f766516b284bcf89c7ff835307aac4ac26679fae4eb664317e543209f341f979",
+    "next-scene-0.json": "3963b3425cb8295dcb93c4d2c1ca0864ce1570202fe1cb19bd3a8446b3a788a3",
+    "resources-1.json": "7251ba4696068dba4067c3b3157206c7e8d6a36bbae528807a4b9aeb633f5405",
+    "initial-1.json": "661232f6dbadf1dcf8c69c55963872e846daf9e4f317e017cdf8470c63695ad2",
+    "active-inventory-1.json": "471da444d260377b4c14ba32297d170c4904672eb98524b5f808a43405109a59",
+    "settled-inventory-1.json": "04b04570c2b4d901b03337625e036b8ddc3c8ccb7e3acb4523137e0a83827818",
+    "settled-ship-1.json": "7334449cb8b7473091ceac1f7602c54a1d25d6a4e05f3577a4d632d099454dfb",
+    "next-scene-1.json": "a403e95223be6747fc3a0dda905f75e2fe0587c07fe98608c8922805cacdb85e"
+  }
+}

@@ -1,12 +1,12 @@
 # T2a/T3a 战术画布与直控实施准备（2026-09-08）
 
-状态：`T2a_IMPLEMENTED / T3a_PAUSED_IMPLEMENTED / REALTIME_E3B_IMPLEMENTED / E3C_STDIO_30MIN_PASS / E4A_NEXT`。核对基线 `293fc48`。2026-09-08 已完成下述第 1、2 步及桌面 CSP 修复，浏览器和原生桌面验证通过；第 3 步仍待实施。实际合同、测试范围与证据见 `t2a-tactical-viewport.md`、`t3a-paused-control.md`。
+状态：`T2a_IMPLEMENTED / T3a_PAUSED_IMPLEMENTED / REALTIME_E3B_IMPLEMENTED / E3C_STDIO_30MIN_PASS / P3_SCOPED_PASS / X1A_E5_NEXT`。原第 1、2 步核对基线 `293fc48`，含桌面 CSP 修复，浏览器和原生桌面验证通过；第 3 步的实验连续运行已由 E3a/b 接通，E3c 后台测量基线见独立报告，产品默认迁移仍待实施。原暂停模式合同见 `t2a-tactical-viewport.md`、`t3a-paused-control.md`。
 
-2026-09-10 最新进展：[E3c 长跑准备与真实后台验证](./t3a-realtime-e3c-longrun.md)已完成本片范围。31 项相关测试、60 秒预检和两舰 30 分钟真实后台长跑通过：105981 步、842 次操纵、三类恢复各 30 次，读取 p99 约 3.5 ms，内存平台满足冻结门槛。下一片 E4a 普通武器与命中毁伤接线准备；原生画布长期稳定性、迁移前 2 小时门与产品保存仍待补齐，完整 E3 和默认迁移不标为通过。
+2026-09-10 统一接续：以[编辑器与战术后续交付顺序](./editor-tactical-delivery-roadmap.md)为当前调度入口。P1a/P1b 状态与库存事务、P2a/P2b 普通炮及真实命中、P3 结算保存及跨场衔接已范围内完成，见[实现报告](./p3-settlement-redeployment.md)；下一项 X1a/E5 玩家设计出航及产品迁移。编辑器基本可用，O4 规范留档收尾；E3c 已通过两舰后台 30 分钟验证，技术舰的战后持久保存与下一场衔接已接通。统一弹药、特殊货物配方、共享容积货舱及超容保留规则见[状态规划](./tactical-persistent-ship-state-plan.md)。货物损毁与固定 2 小时门槛不进入本轮。战略模式仍是尚未实现的核心玩法；本轮为基础设施。P3 已接局部装甲/模块/船壳/库存的逐舰结算、原子保存与重启恢复；玩家自建设计进入此链路仍待 X1a/E5；合法结算默认完成已开始的装填，瞄准/目标不跨战斗保存。
 
-后续用户反馈修正已交付：战术推进不耗油、独立可视试航推力参数、可中断的按秒推进。见 `t3a-bounded-preview.md`。有限试航不等于第 3 步连续实时运行；实测推进吞吐仍不足，下一步先处理两舰实际耗时，不仅接调度按钮。
+历史有限试航已交付战术推进不耗油、独立可视试航推力参数、可中断的按秒推进，见 `t3a-bounded-preview.md`。当时吞吐不足推动了独立 E1—E3 路线；当前实验已可连续试航，不再重复安排同一轮飞行优化。
 
-最新路线：先保留编辑框架并建立独立战术运行实验，验证资源预编译、按变化更新、具名政策正确性和长跑，再接产品连续运行。[E0 基线准备](./t3a-realtime-e0-baseline.md)已完成；[E1a 独立飞行会话](./t3a-realtime-e1a-flight.md)已实现，[E1b 步内证明复用](./t3a-realtime-e1b-record-proofs.md)也已完成，随后实施 [E1c 固定贡献与简化推进](./t3a-realtime-simplified-propulsion-plan.md)，原来源指纹与诊断拆分后移为 E1d。[E1c.1 贡献编译](./t3a-realtime-e1c1-contributions.md)已实现，[E1c.2 原型](./t3a-realtime-e1c2-flight.md)已让独立飞行内核运行新政策，E1c.3 范围内吞吐门已通过，下一项 E4a 普通武器与命中毁伤接线准备；实验画布已接通，实际战斗等剩余生产者及默认桌面迁移仍待实施。E1/E2 验证内核，E3 承接下述第 3 步，E4 承接普通弹与毁伤。旧规则实验路径短测约 20.4 ms/步，尚未实时，当前默认运行路径不变。
+最新路线：先保留编辑框架并建立独立战术运行实验，验证资源预编译、按变化更新、具名政策正确性和长跑，再接产品连续运行。[E0 基线准备](./t3a-realtime-e0-baseline.md)已完成；[E1a 独立飞行会话](./t3a-realtime-e1a-flight.md)已实现，[E1b 步内证明复用](./t3a-realtime-e1b-record-proofs.md)也已完成，随后实施 [E1c 固定贡献与简化推进](./t3a-realtime-simplified-propulsion-plan.md)，原来源指纹与诊断拆分后移为 E1d。[E1c.1 贡献编译](./t3a-realtime-e1c1-contributions.md)已实现，[E1c.2 原型](./t3a-realtime-e1c2-flight.md)已让独立飞行内核运行新政策，E1c.3 范围内吞吐门已通过，下一项 P1 持久舰艇状态与出入战合同；实验画布已接通，实际战斗等剩余生产者及默认桌面迁移仍待实施。E1/E2 验证内核，E3 承接下述第 3 步，E4 承接普通弹与毁伤。旧规则实验路径短测约 20.4 ms/步，尚未实时，当前默认运行路径不变。
 
 ## 交付目标
 

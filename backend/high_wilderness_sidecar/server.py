@@ -64,12 +64,12 @@ def write_failure_log(error: ContractError) -> None:
 
 
 class SidecarServer:
-    def __init__(self, instance_id: str, recovery_dir=None):
+    def __init__(self, instance_id: str, recovery_dir=None, settlement_dir=None):
         if not ID_PATTERN.fullmatch(instance_id):
             raise _bridge_error("invalid_instance_id", "$.backend_instance_id", "实例 ID 非法")
         self.editor = EditorService(instance_id, recovery_dir=recovery_dir)
         self.tactical = TacticalService(instance_id)
-        self.realtime = RealtimeViewService(instance_id)
+        self.realtime = RealtimeViewService(instance_id, settlement_dir=settlement_dir)
         self.instance_id = instance_id
         self.handshake_complete = False
         self.last_request_number = 0
@@ -154,7 +154,7 @@ class SidecarServer:
 
         if method in REALTIME_CAPABILITIES:
             try:
-                if method == 'tactical.realtime.create':
+                if method in ('tactical.realtime.create', 'tactical.realtime.deploy'):
                     if self.tactical.scenario is not None:
                         raise ContractError('tactical.realtime.scene_active', '$', '请先释放原试航场景')
                 return (response_for(message, result=self.realtime.dispatch(message, mode=self.tactical.mode)),), False

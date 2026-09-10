@@ -1,0 +1,760 @@
+{
+  "status": "PASS",
+  "interface": "gaotian.p2b-verification/v1",
+  "timing": {
+    "scope": "900 in-process two-ship fixed steps; both guns enabled, includes real impacts; excludes setup/UI/IPC",
+    "steps": 900,
+    "median_ms": 0.34335,
+    "p95_ms": 0.5113,
+    "max_ms": 1.028,
+    "impact_steps": 7,
+    "impact_max_ms": 0.9276,
+    "budget_ms": 16.666666666666668
+  },
+  "before_end": {
+    "interface": "gaotian.gunnery-view/p2a-v1alpha1",
+    "command_sequence": 1,
+    "weapons": [
+      {
+        "ship_id": "ship.web.blue",
+        "module_id": "weapon_upper_port",
+        "mode": "auto",
+        "angle_rad": 0.16486343084822552,
+        "origin_m": [
+          -5.0,
+          -310.0
+        ],
+        "direction": [
+          0.16411761514106926,
+          0.9864407779488883
+        ],
+        "aim_point_m": [
+          96.4878414132627,
+          300.0000000000001
+        ],
+        "target_ship_id": "ship.web.red",
+        "target_module_id": "cic",
+        "deck_level": 0,
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "sensor_upper_starboard"
+        ],
+        "status": "reloading",
+        "shots": 8,
+        "ready_rounds": 0,
+        "reload_steps": 65,
+        "cooldown_steps": 0,
+        "ammo_resources": 45,
+        "batch_cost": 5,
+        "batch_rounds": 1
+      },
+      {
+        "ship_id": "ship.web.red",
+        "module_id": "weapon_upper_port",
+        "mode": "auto",
+        "angle_rad": 0.1648622386543912,
+        "origin_m": [
+          94.19783180376724,
+          310.0
+        ],
+        "direction": [
+          -0.1641164391123391,
+          -0.9864409736081962
+        ],
+        "aim_point_m": [
+          -7.289262241344758,
+          -300.0
+        ],
+        "target_ship_id": "ship.web.blue",
+        "target_module_id": "cic",
+        "deck_level": 0,
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "sensor_upper_starboard"
+        ],
+        "status": "no_ammunition",
+        "shots": 2,
+        "ready_rounds": 0,
+        "reload_steps": 0,
+        "cooldown_steps": 0,
+        "ammo_resources": 75,
+        "batch_cost": 5,
+        "batch_rounds": 1
+      }
+    ],
+    "projectiles": [
+      {
+        "id": 1,
+        "ship_id": "ship.web.blue",
+        "position_m": [
+          316.59140379880944,
+          7144.399645854386
+        ],
+        "previous_m": [
+          316.2322282674044,
+          7136.074056542987
+        ],
+        "velocity_mps": [
+          21.550531884301837,
+          499.5353586839511
+        ]
+      },
+      {
+        "id": 3,
+        "ship_id": "ship.web.red",
+        "position_m": [
+          -532.4412552073806,
+          -5567.972783776506
+        ],
+        "previous_m": [
+          -531.656789245859,
+          -5559.686479525101
+        ],
+        "velocity_mps": [
+          -47.0679576912905,
+          -497.1782550842874
+        ]
+      },
+      {
+        "id": 10,
+        "ship_id": "ship.web.blue",
+        "position_m": [
+          66.40957178251007,
+          145.77309870404062
+        ],
+        "previous_m": [
+          65.11965899742138,
+          137.54020313496474
+        ],
+        "velocity_mps": [
+          77.39476710532155,
+          493.97373414455257
+        ]
+      }
+    ],
+    "policy_id": "gtw.technical.p2a.ordinary",
+    "damage_enabled": true,
+    "ending": null,
+    "damage": {
+      "hits": 7,
+      "expired": 0,
+      "recent": [
+        {
+          "projectile_id": 2,
+          "step": 190,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            15.793399828316991,
+            229.3342190582384
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [
+            "ammunition_magazine"
+          ],
+          "module_damage": 40.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 4,
+          "step": 310,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            27.527505211863893,
+            229.99708715316882
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [
+            "ammunition_magazine"
+          ],
+          "module_damage": 40.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 5,
+          "step": 376,
+          "source_ship_id": "ship.web.red",
+          "ship_id": "ship.web.blue",
+          "position_m": [
+            3.8507676855329493,
+            -231.55230305659884
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [
+            "ammunition_magazine"
+          ],
+          "module_damage": 40.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 6,
+          "step": 430,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            39.32004569837019,
+            230.3988781731305
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [
+            "ammunition_magazine"
+          ],
+          "module_damage": 40.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 7,
+          "step": 551,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            48.697609289854796,
+            238.22373690267264
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [],
+          "module_damage": 0.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 8,
+          "step": 672,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            59.58713448235356,
+            241.26884247269308
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [],
+          "module_damage": 0.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 9,
+          "step": 792,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            71.97677851983534,
+            239.57662209320813
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [],
+          "module_damage": 0.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        }
+      ]
+    }
+  },
+  "final": {
+    "interface": "gaotian.gunnery-view/p2a-v1alpha1",
+    "command_sequence": 1,
+    "weapons": [
+      {
+        "ship_id": "ship.web.blue",
+        "module_id": "weapon_upper_port",
+        "mode": "auto",
+        "angle_rad": 0.16486343084822552,
+        "origin_m": [
+          -5.0,
+          -310.0
+        ],
+        "direction": [
+          0.16411761514106926,
+          0.9864407779488883
+        ],
+        "aim_point_m": null,
+        "target_ship_id": null,
+        "target_module_id": null,
+        "deck_level": 0,
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "sensor_upper_starboard"
+        ],
+        "status": "battle_finished",
+        "shots": 8,
+        "ready_rounds": 1,
+        "reload_steps": 0,
+        "cooldown_steps": 0,
+        "ammo_resources": 40,
+        "batch_cost": 5,
+        "batch_rounds": 1
+      },
+      {
+        "ship_id": "ship.web.red",
+        "module_id": "weapon_upper_port",
+        "mode": "auto",
+        "angle_rad": 0.1648622386543912,
+        "origin_m": [
+          94.19783180376724,
+          310.0
+        ],
+        "direction": [
+          -0.1641164391123391,
+          -0.9864409736081962
+        ],
+        "aim_point_m": null,
+        "target_ship_id": null,
+        "target_module_id": null,
+        "deck_level": 0,
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "sensor_upper_starboard"
+        ],
+        "status": "battle_finished",
+        "shots": 2,
+        "ready_rounds": 0,
+        "reload_steps": 0,
+        "cooldown_steps": 0,
+        "ammo_resources": 75,
+        "batch_cost": 5,
+        "batch_rounds": 1
+      }
+    ],
+    "projectiles": [],
+    "policy_id": "gtw.technical.p2a.ordinary",
+    "damage_enabled": true,
+    "ending": {
+      "reason": "withdrawal",
+      "step": 900,
+      "removed_projectiles": 3,
+      "saved": false
+    },
+    "damage": {
+      "hits": 7,
+      "expired": 0,
+      "recent": [
+        {
+          "projectile_id": 2,
+          "step": 190,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            15.793399828316991,
+            229.3342190582384
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [
+            "ammunition_magazine"
+          ],
+          "module_damage": 40.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 4,
+          "step": 310,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            27.527505211863893,
+            229.99708715316882
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [
+            "ammunition_magazine"
+          ],
+          "module_damage": 40.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 5,
+          "step": 376,
+          "source_ship_id": "ship.web.red",
+          "ship_id": "ship.web.blue",
+          "position_m": [
+            3.8507676855329493,
+            -231.55230305659884
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [
+            "ammunition_magazine"
+          ],
+          "module_damage": 40.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 6,
+          "step": 430,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            39.32004569837019,
+            230.3988781731305
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [
+            "ammunition_magazine"
+          ],
+          "module_damage": 40.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 7,
+          "step": 551,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            48.697609289854796,
+            238.22373690267264
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [],
+          "module_damage": 0.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 8,
+          "step": 672,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            59.58713448235356,
+            241.26884247269308
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [],
+          "module_damage": 0.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        },
+        {
+          "projectile_id": 9,
+          "step": 792,
+          "source_ship_id": "ship.web.blue",
+          "ship_id": "ship.web.red",
+          "position_m": [
+            71.97677851983534,
+            239.57662209320813
+          ],
+          "deck_level": 0,
+          "outcome": "penetrated",
+          "module_ids": [],
+          "module_damage": 0.0,
+          "armor_before": 0.0,
+          "armor_after": 0.0,
+          "residual_energy_ratio": 1.0
+        }
+      ]
+    }
+  },
+  "ships": [
+    {
+      "ship_id": "ship.web.blue",
+      "hull_integrity": 0.98,
+      "modules": [
+        {
+          "id": "ammunition_magazine",
+          "hp": 60.0
+        },
+        {
+          "id": "cargo_hold",
+          "hp": 100.0
+        },
+        {
+          "id": "cic",
+          "hp": 100.0
+        },
+        {
+          "id": "crew_quarters_base",
+          "hp": 100.0
+        },
+        {
+          "id": "crew_quarters_upper",
+          "hp": 100.0
+        },
+        {
+          "id": "damage_control",
+          "hp": 100.0
+        },
+        {
+          "id": "fire_control",
+          "hp": 100.0
+        },
+        {
+          "id": "generator",
+          "hp": 100.0
+        },
+        {
+          "id": "lift_tank",
+          "hp": 100.0
+        },
+        {
+          "id": "main_engine_port",
+          "hp": 100.0
+        },
+        {
+          "id": "main_engine_starboard",
+          "hp": 100.0
+        },
+        {
+          "id": "remote_core",
+          "hp": 100.0
+        },
+        {
+          "id": "sensor_upper_starboard",
+          "hp": 100.0
+        },
+        {
+          "id": "thruster_port_aft",
+          "hp": 100.0
+        },
+        {
+          "id": "thruster_port_fore",
+          "hp": 100.0
+        },
+        {
+          "id": "thruster_starboard_aft",
+          "hp": 100.0
+        },
+        {
+          "id": "thruster_starboard_fore",
+          "hp": 100.0
+        },
+        {
+          "id": "weapon_upper_port",
+          "hp": 100.0
+        }
+      ],
+      "armor": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "resources": {
+        "capacity_cm3": 125000000,
+        "used_volume_cm3": 0,
+        "cargo_mass_g": 0,
+        "over_capacity": false,
+        "free_volume_cm3": 125000000,
+        "reserved_ammunition": {
+          "ammunition_magazine": 0
+        },
+        "reserved_cargo": {}
+      },
+      "changes": [
+        {
+          "resource": "ammunition",
+          "reason": "reload",
+          "delta": -40
+        },
+        {
+          "resource": "ready:weapon_upper_port",
+          "reason": "discharge",
+          "delta": -8
+        },
+        {
+          "resource": "ready:weapon_upper_port",
+          "reason": "reload",
+          "delta": 8
+        }
+      ]
+    },
+    {
+      "ship_id": "ship.web.red",
+      "hull_integrity": 0.8799999999999999,
+      "modules": [
+        {
+          "id": "ammunition_magazine",
+          "hp": 0.0
+        },
+        {
+          "id": "cargo_hold",
+          "hp": 100.0
+        },
+        {
+          "id": "cic",
+          "hp": 100.0
+        },
+        {
+          "id": "crew_quarters_base",
+          "hp": 100.0
+        },
+        {
+          "id": "crew_quarters_upper",
+          "hp": 100.0
+        },
+        {
+          "id": "damage_control",
+          "hp": 100.0
+        },
+        {
+          "id": "fire_control",
+          "hp": 100.0
+        },
+        {
+          "id": "generator",
+          "hp": 100.0
+        },
+        {
+          "id": "lift_tank",
+          "hp": 100.0
+        },
+        {
+          "id": "main_engine_port",
+          "hp": 100.0
+        },
+        {
+          "id": "main_engine_starboard",
+          "hp": 100.0
+        },
+        {
+          "id": "remote_core",
+          "hp": 100.0
+        },
+        {
+          "id": "sensor_upper_starboard",
+          "hp": 100.0
+        },
+        {
+          "id": "thruster_port_aft",
+          "hp": 100.0
+        },
+        {
+          "id": "thruster_port_fore",
+          "hp": 100.0
+        },
+        {
+          "id": "thruster_starboard_aft",
+          "hp": 100.0
+        },
+        {
+          "id": "thruster_starboard_fore",
+          "hp": 100.0
+        },
+        {
+          "id": "weapon_upper_port",
+          "hp": 100.0
+        }
+      ],
+      "armor": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "resources": {
+        "capacity_cm3": 125000000,
+        "used_volume_cm3": 0,
+        "cargo_mass_g": 0,
+        "over_capacity": false,
+        "free_volume_cm3": 125000000,
+        "reserved_ammunition": {
+          "ammunition_magazine": 0
+        },
+        "reserved_cargo": {}
+      },
+      "changes": [
+        {
+          "resource": "ammunition",
+          "reason": "reload",
+          "delta": -5
+        },
+        {
+          "resource": "ready:weapon_upper_port",
+          "reason": "discharge",
+          "delta": -2
+        },
+        {
+          "resource": "ready:weapon_upper_port",
+          "reason": "reload",
+          "delta": 1
+        }
+      ]
+    }
+  ],
+  "source_sha256": {
+    "backend/high_wilderness_sidecar/tactical_damage.py": "cc0fda55cef1f17c7a67105e9eba5532859712519e13a10d234ef4dbf3e8de05",
+    "backend/high_wilderness_sidecar/tactical_gunnery.py": "31ad70f1438e020899953586c39ffe605c47353e750b56f3ba47e64711e2075c",
+    "backend/high_wilderness_sidecar/simplified_flight.py": "944e7384476121bfd19f8eea6146b00533ac6af2c9e84a8b26b460ecdbd6cb6e",
+    "backend/high_wilderness_sidecar/tactical_inventory.py": "09b5aad28a070317fddc67348806dc3d98a2c2891b014a5265e03c84bcf3d7c0",
+    "backend/high_wilderness_sidecar/tactical_scheduler.py": "d2f3542a94ef666d744c46122e2c4b11f042922212483c68bb62cd3b223e0a06",
+    "backend/high_wilderness_sidecar/realtime_view.py": "86a52f3d8300e2055d984841a959e787b30cb5ebfc3e45e1de543f3a467bd6c8",
+    "apps/desktop/src/tactical/RealtimePanel.tsx": "b8f180cc1402a977488b4dd2b2a3ec4562dc55c03f4b931da9d63f47057853c1",
+    "apps/desktop/src/tactical/TacticalViewport.tsx": "e9fe9355a3563d4caa182693f2214470acffaffa7cf8a9237d0ffce3168d894e",
+    "apps/desktop/src/tactical/model.ts": "fc3417dc816af020e326e7a56f4c6f60131e9a470aa5f6098419bb21de54a746",
+    "apps/desktop/src/tactical/gunnery.ts": "7291b39681641f461979477cd2857c92d66843edd095c3da0f883f6e39d480a7",
+    "apps/desktop/src/tactical/realtime.ts": "a52f8660a428cbffc21621d625465c8c99786949587ca888df63dd89f8e129d8",
+    "apps/desktop/src-tauri/src/bridge/host.rs": "343b614964bdff57d82461b0070e9334edfcf04ac8c926b16a4f07a87ac0a9da",
+    "contracts/web_bridge/fixtures/p2a-gunnery.json": "4bcff56e19078039e5d890f02db330113bf026b4936187906157fe813bceffe2",
+    "舰艇数据/标定/阶段I弹丸与损伤技术替身配置.v1.json": "0d31dd020c5e11268706b3d1fda680449a1678085839e3cdb8870fb66d8180f7",
+    "高天荒野舰艇炮弹与甲弹公式.py": "1fd720a312670bb0912d9d6f2f203e361a5d7ea9785d708a4aa23aab8b36901a",
+    "tools/test_tactical_damage.py": "413fb46b643e7391098293d37b6c5605a9b787f1a616f50dd10110e643da7459",
+    "tools/verify_tactical_damage.py": "6b4e14c67d2eab59f16e47f0b430baa75480ba61fc3aa0d2eab06ecedf954662",
+    "tools/verify_damage_view.mjs": "5a4067e3174c0d735e943493d3861b7fd2075ad9d31114538aad0359d5e15a67"
+  },
+  "not_covered": [
+    "persistent atomic settlement store and next battle",
+    "native WebView visual QA",
+    "arbitrary player design deployment",
+    "3D ballistics",
+    "special ammunition / fire / cargo destruction",
+    "armored demo ship (armor branches use separate compiled-kernel test fixtures)"
+  ]
+}

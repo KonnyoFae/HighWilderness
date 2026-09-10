@@ -5,14 +5,17 @@ import json
 from math import hypot
 from pathlib import Path
 from time import monotonic_ns
+from uuid import uuid4
+from . import tactical_settlement as settlement
 
 from 高天荒野舰艇数据契约 import canonical_sha256
 from .simplified_flight import build_sample_session
 from .tactical_scheduler import TacticalScheduler, ScheduledControl, require, count
 from .tactical import render_static, RENDER_INTERFACE
 from .tactical_scenario import build_two_ship_scenario, SCENARIO_ID
+from .tactical_gunnery import GunneryBattle, prepare_trial_session
 
-CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'close'))
+CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy'))
 INTERFACE = 'gaotian.realtime-view/e3b-v1alpha1'
 VIEW_PERIOD_NS = 66_666_667
 LEASE_NS = 2_000_000_000
@@ -20,15 +23,21 @@ MAX_RESPONSE_BYTES = 256*1024
 
 
 class RealtimeViewService:
-    def __init__(self, instance_id, root=None, *, clock=monotonic_ns):
+    def __init__(self, instance_id, root=None, *, clock=monotonic_ns, settlement_dir=None):
         self.instance_id = instance_id
         self.root = Path(root) if root else Path(__file__).resolve().parents[2]
         self.clock = clock
         self.scheduler = None
+        self.gunnery = None
         self.latest = self.geometry = self.digest = None
         self.last_publish = self.last_read = 0
         self.error = None
         self.last_closed = None
+        self.store = settlement.SettlementStore(settlement_dir or self.root/'.local/tactical')
+        self._result = None
+        self._result_saved = False
+        self._save_error = None
+        self._deployment_key = None
 
     @property
     def running(self):
@@ -38,6 +47,8 @@ class RealtimeViewService:
         if self.scheduler is not None:
             try:
                 self.scheduler.pause(reason)
+                if self.gunnery is not None:
+                    self.gunnery.suspend()
                 self.publish()
             except Exception:
                 self.error = '试航已暂停，显示状态需要重新读取。'
@@ -49,7 +60,9 @@ class RealtimeViewService:
             if self.running and self.clock()-self.last_read > LEASE_NS:
                 self.pause('disconnected')
             self.scheduler.pump()
-            if self.clock()-self.last_publish >= VIEW_PERIOD_NS:
+            if not self.running and self.gunnery is not None:
+                self.gunnery.suspend()
+            if self.gunnery.ending is not None and self._result is None or self.clock()-self.last_publish >= VIEW_PERIOD_NS:
                 self.publish()
         except Exception:
             # Authority steps may already have committed. Never replay them to
@@ -57,7 +70,44 @@ class RealtimeViewService:
             self.error = '试航已暂停，请重新读取状态；已完成的模拟步不会重放。'
             self.pause()
 
+    def _prepare_result(self):
+        if self.gunnery.ending is None or self._result is not None:
+            return
+        self._result = settlement.capture(self.gunnery)
+        try:
+            self.store.stage(self._result)
+        except settlement.ps.ContractError as exc:
+            self._save_error = exc.message
+
+    def _template(self):
+        session = build_sample_session(self.root, with_command=True)
+        scenario = build_two_ship_scenario(self.root)
+        geometry = render_static(scenario)
+        require(tuple(s['derived_snapshot_sha256'] for s in geometry['ships']) ==
+            tuple(s.contributions.snapshot_sha256 for s in session._seeds), 'View/authority design mismatch')
+        config = json.loads((self.root/'contracts/web_bridge/fixtures/p2a-gunnery.json').read_text(encoding='utf-8'))
+        session = prepare_trial_session(session, config)
+        battle = GunneryBattle(session, scenario, config, damage_enabled=True, instance_prefix='instance.p3.'+uuid4().hex+'.')
+        return battle, scenario, geometry
+
+    def _attach(self, battle, geometry, key=None):
+        scheduler = TacticalScheduler(battle.session, clock=self.clock, stepper=battle.step, stop_when=lambda: battle.ending is not None)
+        digest = canonical_sha256(geometry)
+        previous = dict(self.__dict__)
+        try:
+            self.gunnery, self.scheduler = battle, scheduler
+            self.geometry, self.digest = geometry, digest
+            self.error = self._result = self._save_error = None
+            self._result_saved, self._deployment_key = False, key
+            self.last_read = self.clock()
+            self.publish()
+            return self.read()
+        except Exception:
+            self.__dict__.update(previous)
+            raise
+
     def publish(self):
+        self._prepare_result()
         q = self.scheduler
         world = q.world
         ships = []
@@ -72,6 +122,8 @@ class RealtimeViewService:
             authority_interface='gaotian.simplified-flight-experiment/v1alpha1', paused=not q.status.running,
             fixed_step=world.fixed_step, fixed_step_s=1/60, time_s=world.fixed_step/60,
             static_sha256=self.digest, static=None, ships=ships, events=[])
+        if self.gunnery is not None:
+            view['gunnery'] = self.gunnery.view()
         self._size(view)
         self.latest, self.last_publish = view, self.clock()
 
@@ -92,7 +144,8 @@ class RealtimeViewService:
         result = dict(interface=INTERFACE, status=asdict(status), view=view, receipts=receipts, events=events,
             direct_ship_id=direct.ship_id, available=direct.authority_allowed, loss_reason=direct.command.loss_reason,
             engines=[dict(id=s.engine.actuator_instance_id, phase=s.engine.phase, target=s.engine.target_output_percent,
-                actual=s.engine.actual_output_percent) for s in direct.propulsion.engines], error=self.error)
+                actual=s.engine.actual_output_percent) for s in direct.propulsion.engines], error=self.error,
+            settlement=None if self._result is None else dict(result=self._result, saved=self._result_saved, error=self._save_error))
         self._size(result)
         # Domain records contain immutable tuples. The bridge deliberately accepts
         # only JSON arrays/objects; conversion occurs here, never in fixed steps.
@@ -108,32 +161,55 @@ class RealtimeViewService:
             # retried to discover the same scene, never resetting its authority.
             if self.scheduler is not None:
                 return self.read()
-            session = build_sample_session(self.root, with_command=True)
-            geometry = render_static(build_two_ship_scenario(self.root))
-            require(tuple(s['derived_snapshot_sha256'] for s in geometry['ships']) ==
-                tuple(s.contributions.snapshot_sha256 for s in session._seeds), 'View/authority design mismatch')
-            self.scheduler = TacticalScheduler(session, clock=self.clock)
-            self.geometry, self.digest = geometry, canonical_sha256(geometry)
-            self.error = None
-            self.last_read = self.clock()
-            try:
-                self.publish()
-                return self.read()
-            except Exception:
-                self.scheduler = self.latest = self.geometry = self.digest = None
-                raise
+            battle, scenario, geometry = self._template()
+            return self._attach(battle, geometry)
         require(method in CAPABILITIES, 'Unknown realtime method')
+        if method in ('tactical.realtime.settlements', 'tactical.realtime.settlement', 'tactical.realtime.save', 'tactical.realtime.deploy'):
+            require(mode == 'tactical', 'Enter tactical mode first')
+            if method == 'tactical.realtime.settlements':
+                require(not p, 'Unexpected library fields')
+                result = self.store.list(); self._size(result)
+                return result
+            if method in ('tactical.realtime.settlement', 'tactical.realtime.save'):
+                require(set(p) == {'settlement_id'}, 'Expected settlement identity')
+                identity = p['settlement_id']
+                if method == 'tactical.realtime.save':
+                    if self._result is not None and self._result['settlement_id'] == identity:
+                        self.store.stage(self._result)  # retry after initial staging failure
+                    result = self.store.save(identity)
+                    if self._result is not None and self._result['settlement_id'] == identity:
+                        self._result_saved, self._save_error = True, None
+                        self.gunnery.ending['saved'] = True
+                        self.publish()
+                else:
+                    result = self.store.read(identity)
+                self._size(result)
+                return result
+            require(set(p) == {'instance_id', 'revision', 'launch_id'}, 'Expected deployment identity')
+            settlement.ps.identifier(p['launch_id'], '$.launch_id')
+            settlement.ps.identifier(p['instance_id'], '$.instance_id')
+            settlement.ps.integer(p['revision'], '$.revision', 1)
+            key = (p['instance_id'], p['revision'], p['launch_id'])
+            if self.scheduler is not None and self._deployment_key == key:
+                return self.read()
+            require(self.scheduler is None or self.gunnery.ending is not None and self._result_saved,
+                    '请先结束并保存当前交战，再进入下一场')
+            record = self.store.load_ship(p['instance_id'], p['revision'])
+            template, scenario, geometry = self._template()
+            battle = settlement.redeploy(record, template, scenario)
+            return self._attach(battle, geometry, key)
         fields = {'scene_id', 'known_static_sha256', 'ack_inputs', 'ack_events'} if method == 'tactical.realtime.read' else \
-            {'scene_id', 'input'} if method == 'tactical.realtime.control' else {'scene_id'}
+            {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun') else {'scene_id'}
         require(set(p) == fields, 'Unknown or missing realtime fields')
         if method == 'tactical.realtime.close' and self.scheduler is None and p['scene_id'] == self.last_closed and self.last_closed is not None:
             return dict(closed=True)
         require(self.scheduler is not None and p['scene_id'] == self.scheduler.world.epoch, 'Realtime scene identity mismatch')
         q = self.scheduler
         if method == 'tactical.realtime.close':
+            require(self.gunnery.ending is None or self._result_saved, '请先保存战后结算；失败时可重试，重启后也可从结算列表恢复')
             q.pause('mode_exit')
             self.last_closed = p['scene_id']
-            self.scheduler = self.latest = self.geometry = self.digest = None
+            self.scheduler = self.gunnery = self.latest = self.geometry = self.digest = None
             return dict(closed=True)
         if method == 'tactical.realtime.read':
             require(type(p['ack_inputs']) is list and len(p['ack_inputs']) <= 256 and all(count(s,1) for s in p['ack_inputs']), 'Invalid receipt acknowledgements')
@@ -147,12 +223,27 @@ class RealtimeViewService:
                 self.error = None
             return self.read(p['known_static_sha256'])
         require(mode == 'tactical' or method == 'tactical.realtime.pause', 'Enter tactical mode first')
-        if method == 'tactical.realtime.resume':
+        if method == 'tactical.realtime.withdraw':
+            self.gunnery.withdraw()
+            q.pause('battle_finished')
+        elif method == 'tactical.realtime.resume':
+            require(self.gunnery.ending is None, 'Battle has ended; create a new scene')
             require(not self.error, 'Read the committed scene after a display failure')
             self.last_read = self.clock()
             q.resume()
         elif method == 'tactical.realtime.pause':
             q.pause()
+            self.gunnery.suspend()
+        elif method == 'tactical.realtime.gun':
+            value = p['input']
+            require(type(value) is dict, 'Invalid gun input')
+            # An exact already-committed retry may be queried after a pause; new
+            # commands must use the current running input generation.
+            retry = value == self.gunnery._last
+            require(retry or q.status.running and value.get('generation') == q.status.generation and
+                next(s for s in q.world.ships if s.ship_id == q._session._direct).authority_allowed,
+                'Gun command is paused, obsolete or lacks direct control')
+            self.gunnery.submit(value)
         elif method == 'tactical.realtime.control':
             value = p['input']
             # The transport supplies a current target from a read snapshot. No

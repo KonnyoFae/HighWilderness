@@ -1,3 +1,4 @@
+import type { SettlementEnvelope } from "./settlement";
 import { acceptSnapshot } from "./model";
 import type { TacticalSnapshot, TacticalView } from "./model";
 
@@ -11,6 +12,7 @@ export interface RealtimeEnvelope {
   direct_ship_id: string; available: boolean; loss_reason: string | null;
   engines: { id: string; phase: string; target: number; actual: number }[];
   error: string | null;
+  settlement?: SettlementEnvelope | null;
 }
 
 export function acceptRealtime(previous: RealtimeEnvelope | null, view: TacticalView | null, next: RealtimeEnvelope, instance: string) {
@@ -24,5 +26,6 @@ export function acceptRealtime(previous: RealtimeEnvelope | null, view: Tactical
 }
 
 export const receiptLabel: Record<string, string> = { accepted: "已接受，等待执行", executed: "已执行", cancelled: "已取消", failed: "执行失败" };
-export const pauseLabel: Record<string, string> = { initial: "等待开始", manual: "已暂停", mode_exit: "返回编辑后暂停",
+export const pauseLabel: Record<string, string> = {
+  battle_finished: "交战已结束", initial: "等待开始", manual: "已暂停", mode_exit: "返回编辑后暂停",
   disconnected: "连接中断后暂停", overload: "模拟落后，已暂停", output_backpressure: "输出积压，已暂停", step_failed: "模拟失败，已暂停", clock_error: "时钟异常，请重建场景" };

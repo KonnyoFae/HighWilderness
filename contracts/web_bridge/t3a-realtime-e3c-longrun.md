@@ -1,5 +1,7 @@
 # E3c 长跑准备与真实后台验证
 
+当前调度修正（2026-09-10）：用户确认战术为小规模交战，取消固定 2 小时迁移门槛，优先 [P1—P3 战后舰艇状态与跨战斗衔接](./tactical-persistent-ship-state-plan.md)。下文保留本次测量时的阈值、结果与当时接续安排；其中 2 小时必经门和 E4a 优先顺序已被本修正取代，原始测量证据不改写。
+
 日期：2026-09-10。基线：`400105f` 加本片测量工具。状态：`E3C_STDIO_30MIN_PASS / E4A_NEXT / FULL_E3_NOT_PASSED / DEFAULT_BACKEND_NOT_MIGRATED`。
 
 ## 本片范围

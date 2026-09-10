@@ -377,8 +377,15 @@ def validate_motion(motion):
 
 
 class SimplifiedFlightSession:
-    def __init__(self, seeds, safety_profile, *, direct_ship_id, allow_test_device_rebuild=False):
+    def __init__(self, seeds, safety_profile, *, direct_ship_id, allow_test_device_rebuild=False, initial_resource_latches=()):
         seeds = tuple(seeds)
+        require(type(initial_resource_latches) is tuple, 'Immutable initial latches required')
+        latch_map = dict(initial_resource_latches)
+        require(len(latch_map) == len(initial_resource_latches) and set(latch_map) <= {s.contributions.ship_id for s in seeds}, 'Invalid latch ship mapping')
+        for seed in seeds:
+            names = latch_map.get(seed.contributions.ship_id, ())
+            require(type(names) is tuple and len(set(names)) == len(names) and set(names) <= {e.instance_id for e in seed.contributions.engines}
+                and (not names or seed.resources is not None), 'Invalid persistent engine latches')
         require_deeply_immutable((seeds, safety_profile))
         require(seeds and len({s.contributions.ship_id for s in seeds}) == len(seeds), "Unique ships required")
         require(direct_ship_id in {s.contributions.ship_id for s in seeds}, "Unknown direct ship")
@@ -417,7 +424,8 @@ class SimplifiedFlightSession:
             resources=None
             if rk is not None:
                 require(not any(r in RESOURCE_REASONS for _,rs in blockers for r in rs), 'Resource-owned initial blockers')
-                resources,updates=rk.resolve(rk.initial(),devices,propulsion)
+                initial_resources = replace(rk.initial(), latched=tuple(e.instance_id in latch_map.get(seed.contributions.ship_id, ()) for e in seed.contributions.engines))
+                resources,updates=rk.resolve(initial_resources,devices,propulsion)
                 events=tuple(AvailabilityEvent('',seed.contributions.ship_id,*u,0,'opening') for u in updates)
                 if events:
                     propulsion,_=kernel.boundary(propulsion,0,(0,)*6,events)
@@ -456,7 +464,7 @@ class SimplifiedFlightSession:
             control = selection.control
         return tuple(c.requested_percent for c in control.channel_commands)
 
-    def step(self, control=None, *, ship_id=None, events=(), authority_events=(), device_operations=(), resource_operations=(), exit_operations=(), project=None):
+    def step(self, control=None, *, ship_id=None, events=(), authority_events=(), device_operations=(), resource_operations=(), exit_operations=(), impact_resolver=None, project=None):
         require(get_ident() == self._owner and not self._executing, "Single non-reentrant authority required")
         before = self._world
         ship_id = self._direct if ship_id is None else ship_id
@@ -634,6 +642,9 @@ class SimplifiedFlightSession:
                         diagnostics.append((ship.ship_id, diagnostic))
                 candidates.append(ship)
             candidate = FlightWorld(before.epoch, before.fixed_step + 1, tuple(candidates))
+            if impact_resolver is not None:
+                candidate, impact_events = self._impact_boundary(candidate, impact_resolver(before, candidate))
+                emitted.extend(impact_events)
             result = StepResult(candidate.fixed_step, tuple(emitted), tuple(diagnostics))
             if project is not None:
                 project(candidate, result)
@@ -641,6 +652,77 @@ class SimplifiedFlightSession:
             return result
         finally:
             self._executing = False
+
+    def _impact_boundary(self, world, batch):
+        """Post-motion damage, before publication; only changed ships settle again.
+
+        This repeats no integration and no safety-release timer. Device/resource/
+        command kernels remain the owners of availability and failure state.
+        """
+        require(type(batch) is ImpactBatch and type(batch.device_operations) is tuple and type(batch.hull_damage) is tuple,
+                'Invalid impact batch')
+        indexes = {s.ship_id: i for i, s in enumerate(world.ships)}
+        hull = {}
+        for ship_id, amount in batch.hull_damage:
+            require(ship_id in indexes and ship_id not in hull and type(amount) in (int, float)
+                    and isfinite(amount) and 0 <= amount <= 1, 'Invalid impact hull damage')
+            hull[ship_id] = amount
+        for op in batch.device_operations:
+            require(type(op) is DeviceOperation and op.ship_id in indexes and op.phase == 'closing' and op.kind == 'damage',
+                    'Invalid impact device operation')
+            dk = self._device_kernels[indexes[op.ship_id]]
+            require(dk is not None, 'Impacts require device domain')
+            dk.validate_operation(op, epoch=world.epoch, ship_id=op.ship_id, step=world.fixed_step-1, allow_rebuild=False)
+        affected = set(hull) | {op.ship_id for op in batch.device_operations}
+        if not affected:
+            return world, ()
+        ships, emitted = list(world.ships), []
+        n = world.fixed_step
+        for ship_id in sorted(affected):
+            i = indexes[ship_id]
+            ship, seed = ships[i], self._seeds[i]
+            dk, rk, ck, kernel = self._device_kernels[i], self._resource_kernels[i], self._command_kernels[i], self._kernels[i]
+            require(dk is not None and rk is not None and ck is not None and ship.command.lifecycle.physical_status != 'exited',
+                    'Impact requires present ship domains')
+            devices, updates, receipts, touched = dk.boundary(ship.devices, tuple(op for op in batch.device_operations if op.ship_id == ship_id))
+            fraction = max(0.0, ship.motion.hull_integrity_fraction-hull.get(ship_id, 0))
+            ship = replace(ship, devices=devices, motion=replace(ship.motion, hull_integrity_fraction=fraction))
+            if receipts or hull.get(ship_id, 0):
+                emitted.append((ship_id, 'impact', 'damage', receipts, hull.get(ship_id, 0)))
+            changes = tuple(AvailabilityEvent(world.epoch, ship_id, *u, n, 'closing') for u in updates)
+            for _ in range(len(seed.contributions.engines)+3):
+                resources, resource_updates = rk.resolve(ship.resources, ship.devices, ship.propulsion)
+                command = ck.resolve(ship.command, ship.devices, resources, ship.motion,
+                    mass=seed.model.runtime.current_mass_kg, step=n)
+                if (command.lifecycle, command.fleet_phase) != (ship.command.lifecycle, ship.command.fleet_phase):
+                    emitted.append((ship_id, 'impact', 'command', command.lifecycle, command.fleet_phase, command.loss_reason))
+                ship = replace(ship, resources=resources, command=command, authority_allowed=command.allowed, authority_version=command.revision)
+                changes += tuple(AvailabilityEvent(world.epoch, ship_id, *u, n, 'closing') for u in resource_updates)
+                cut = command.suppress or ck.direct and not command.allowed
+                reason = REASONS.index('command_unavailable')
+                changes += tuple(AvailabilityEvent(world.epoch, ship_id, e.instance_id, 'command_unavailable', cut,
+                    command.revision, n, 'closing') for e, slot in zip(seed.contributions.engines, ship.propulsion.engines) if slot.blocked[reason] != cut)
+                if fraction <= 0:
+                    changes += tuple(AvailabilityEvent(world.epoch, ship_id, e.instance_id, 'lifecycle_unavailable', True,
+                        slot.versions[-1]+1, n, 'closing') for e, slot in zip(seed.contributions.engines, ship.propulsion.engines) if not slot.blocked[-1])
+                if not command.allowed:
+                    ship = replace(ship, control=directional_control())
+                if not changes:
+                    break
+                propulsion, facts = kernel.boundary(ship.propulsion, n, self._requested(ship, ship.propulsion, ship.control), changes)
+                ship = replace(ship, propulsion=propulsion)
+                emitted.extend((ship_id, 'impact', fact) for fact in facts)
+                changes = ()
+            else:
+                require(False, 'Impact availability cascade did not settle')
+            ships[i] = ship
+        return replace(world, ships=tuple(ships)), tuple(emitted)
+
+
+@dataclass(frozen=True)
+class ImpactBatch:
+    device_operations: tuple = ()
+    hull_damage: tuple = ()
 
 
 def build_sample_session(root, *, with_devices=False, with_resources=False, with_command=False, allow_test_device_rebuild=False):

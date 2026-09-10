@@ -76,3 +76,18 @@ export function gridSpacing(scale: number): number {
   const base = 10 ** Math.floor(Math.log10(65 / scale));
   return [1, 2, 5, 10].map(n => n * base).find(n => n * scale >= 65)!;
 }
+
+export function pickModules(view: TacticalView, point: Point, camera: Camera, shipId?: string, weaponsOnly = false, level?: number) {
+  const p = world(point, camera);
+  return view.geometry.ships.filter(s => !shipId || s.id === shipId).flatMap(ship => {
+    const pose = view.snapshot.ships.find(s => s.id === ship.id);
+    if (!pose) return [];
+    const local = worldToBody(p, pose);
+    return ship.modules.filter(m => !weaponsOnly || m.category === "weapon").filter(m => {
+      const cells = moduleFootprints(m).filter(f => level === undefined || f.level === level);
+      if (cells.some(f => Math.abs(local.x-f.x) <= f.size/2 && Math.abs(local.y-f.y) <= f.size/2)) return true;
+      const anchor = screen(bodyToWorld({ x: m.anchor_m[0], y: m.anchor_m[1] }, pose), camera);
+      return (level === undefined || m.deck_level === level) && Math.hypot(anchor.x-point.x, anchor.y-point.y) <= 7;
+    }).map(m => ({ shipId: ship.id, moduleId: m.id, name: m.name, level: m.deck_level }));
+  }).sort((a, b) => b.level-a.level || a.moduleId.localeCompare(b.moduleId));
+}

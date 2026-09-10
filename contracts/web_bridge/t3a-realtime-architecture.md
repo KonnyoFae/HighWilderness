@@ -1,10 +1,10 @@
 # T3a 实时模拟架构提案（2026-09-08）
 
-状态：`PARTIALLY_IMPLEMENTED / E1b_COMPLETE / E1c2_PROTOTYPE_IMPLEMENTED / E1c3_SCOPED_GATE_PASS / REALTIME_NOT_PASSED`。承接 `t3a-performance-diagnosis.md`；[E1c.3 验证报告](./t3a-realtime-e1c3-validation.md)记录最新完成范围，本文件其余内容仍属提案，不表示完整内核或实时性能已经达标。
+状态：`PARTIALLY_IMPLEMENTED / E1c3_SCOPED_GATE_PASS / E2_3_IMPLEMENTED / E3B_IMPLEMENTED / E3C_STDIO_30MIN_PASS / P3_SCOPED_PASS / X1A_E5_NEXT / FULL_TACTICAL_NOT_PASSED`。承接 `t3a-performance-diagnosis.md`；E1—E3 已实现范围见各片报告，[E3c](./t3a-realtime-e3c-longrun.md)记录两舰后台工程测量，未实现的交战/保存/产品接线仍是提案。
 
-2026-09-10 最新进展：[E3c 长跑准备与真实后台验证](./t3a-realtime-e3c-longrun.md)已完成本片范围。31 项相关测试、60 秒预检和两舰 30 分钟真实后台长跑通过：105981 步、842 次操纵、三类恢复各 30 次，读取 p99 约 3.5 ms，内存平台满足冻结门槛。下一片 E4a 普通武器与命中毁伤接线准备；原生画布长期稳定性、迁移前 2 小时门与产品保存仍待补齐，完整 E3 和默认迁移不标为通过。
+2026-09-10 统一接续：以[编辑器与战术后续交付顺序](./editor-tactical-delivery-roadmap.md)为当前调度入口。P1a/P1b 状态与库存事务、P2a/P2b 普通炮及真实命中、P3 结算保存及跨场衔接已范围内完成，见[实现报告](./p3-settlement-redeployment.md)；下一项 X1a/E5 玩家设计出航及产品迁移。编辑器基本可用，O4 规范留档收尾；E3c 已通过两舰后台 30 分钟验证，技术舰的战后持久保存与下一场衔接已接通。统一弹药、特殊货物配方、共享容积货舱及超容保留规则见[状态规划](./tactical-persistent-ship-state-plan.md)。货物损毁与固定 2 小时门槛不进入本轮。战略模式仍是尚未实现的核心玩法；本轮为基础设施。P3 已接局部装甲/模块/船壳/库存的逐舰结算、原子保存与重启恢复；玩家自建设计进入此链路仍待 X1a/E5；合法结算默认完成已开始的装填，瞄准/目标不跨战斗保存。
 
-2026-09-08 路线调整：保留现有舰体/舾装编辑框架，先以独立战术运行原型验证本提案，再决定迁移；未变领域共享规则，战术推进按用户确认的新政策简化；旧推进保留历史参考。当前执行顺序和继续/停止门以[实时循环实验规划](./t3a-realtime-experiment-plan.md)的 E0—E5 为准。[E0 基线准备](./t3a-realtime-e0-baseline.md)已完成，E1a 独立飞行会话与静态编译已落地，E1b 步内证明复用也已完成，随后实施 [E1c 固定贡献与简化推进](./t3a-realtime-simplified-propulsion-plan.md)，原来源指纹与诊断拆分后移为 E1d。[E1c.1 贡献编译](./t3a-realtime-e1c1-contributions.md)已实现，[E1c.2 独立飞行原型](./t3a-realtime-e1c2-flight.md)已运行新政策，E1c.3 范围内吞吐门已通过，下一步 E4a 普通武器与命中毁伤接线准备。设备/资源/指挥生产和内部重建已接入；实际战斗生产者、产品保存与桌面迁移仍未接齐。本文件 R1—R5 保留为技术拆分，不再要求先在旧热循环中全部完成。
+2026-09-08 路线调整：保留现有舰体/舾装编辑框架，先以独立战术运行原型验证本提案，再决定迁移；未变领域共享规则，战术推进按用户确认的新政策简化；旧推进保留历史参考。当前执行顺序和继续/停止门以[实时循环实验规划](./t3a-realtime-experiment-plan.md)的 E0—E5 为准。[E0 基线准备](./t3a-realtime-e0-baseline.md)已完成，E1a 独立飞行会话与静态编译已落地，E1b 步内证明复用也已完成，随后实施 [E1c 固定贡献与简化推进](./t3a-realtime-simplified-propulsion-plan.md)，原来源指纹与诊断拆分后移为 E1d。[E1c.1 贡献编译](./t3a-realtime-e1c1-contributions.md)已实现，[E1c.2 独立飞行原型](./t3a-realtime-e1c2-flight.md)已运行新政策，E1c.3 范围内吞吐门已通过，下一步 P1 持久舰艇状态与出入战合同。设备/资源/指挥生产和内部重建已接入；实际战斗生产者、产品保存与桌面迁移仍未接齐。本文件 R1—R5 保留为技术拆分，不再要求先在旧热循环中全部完成。
 
 ## 1. 设计目标
 

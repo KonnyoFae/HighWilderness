@@ -1,0 +1,621 @@
+{
+  "status": "PASS",
+  "interface": "gaotian.p2a-verification/v1",
+  "evidence": {
+    "auto_module_target": true,
+    "degraded_then_normal": true,
+    "radar_loss_degrades": true,
+    "degraded_still_fires": true,
+    "manual_single_shot": true,
+    "batches_consume_resources": true
+  },
+  "timing": {
+    "scope": "360 in-process two-ship steps with one firing gun; excludes setup, UI and IPC",
+    "steps": 360,
+    "total_ms": 122.246,
+    "median_ms": 0.29435,
+    "p95_ms": 0.572,
+    "max_ms": 1.0249,
+    "fixed_step_budget_ms": 16.666666666666668
+  },
+  "checkpoints": {
+    "60": {
+      "interface": "gaotian.gunnery-view/p2a-v1alpha1",
+      "command_sequence": 1,
+      "weapons": [
+        {
+          "ship_id": "ship.web.blue",
+          "module_id": "weapon_upper_port",
+          "mode": "auto",
+          "angle_rad": 0.019320104151506978,
+          "origin_m": [
+            -5.0,
+            -310.0
+          ],
+          "direction": [
+            0.019318902249572653,
+            0.9998133725930413
+          ],
+          "aim_point_m": [
+            6.8203634134644595,
+            301.7406287902678
+          ],
+          "target_ship_id": "ship.web.red",
+          "target_module_id": "cic",
+          "quality": "degraded",
+          "quality_reason": "acquiring",
+          "lock_sources": [],
+          "status": "reloading",
+          "shots": 1,
+          "ready_rounds": 0,
+          "reload_steps": 65,
+          "cooldown_steps": 0,
+          "ammo_resources": 80,
+          "batch_cost": 5,
+          "batch_rounds": 1
+        },
+        {
+          "ship_id": "ship.web.red",
+          "module_id": "weapon_upper_port",
+          "mode": "auto",
+          "angle_rad": 0,
+          "origin_m": [
+            10.996339037938707,
+            310.0
+          ],
+          "direction": [
+            1.2246467991473532e-16,
+            -1.0
+          ],
+          "aim_point_m": null,
+          "target_ship_id": null,
+          "target_module_id": null,
+          "quality": "degraded",
+          "quality_reason": "manual",
+          "lock_sources": [],
+          "status": "control_unavailable",
+          "shots": 0,
+          "ready_rounds": 1,
+          "reload_steps": 0,
+          "cooldown_steps": 0,
+          "ammo_resources": 80,
+          "batch_cost": 5,
+          "batch_rounds": 1
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 1,
+          "ship_id": "ship.web.blue",
+          "position_m": [
+            14.883957418582497,
+            150.9046242790592
+          ],
+          "previous_m": [
+            14.524781887177467,
+            142.57903496766
+          ],
+          "velocity_mps": [
+            21.550531884301837,
+            499.5353586839511
+          ]
+        }
+      ],
+      "policy_id": "gtw.technical.p2a.ordinary",
+      "damage_enabled": false
+    },
+    "120": {
+      "interface": "gaotian.gunnery-view/p2a-v1alpha1",
+      "command_sequence": 1,
+      "weapons": [
+        {
+          "ship_id": "ship.web.blue",
+          "module_id": "weapon_upper_port",
+          "mode": "auto",
+          "angle_rad": 0.03980599846204269,
+          "origin_m": [
+            -5.0,
+            -310.0
+          ],
+          "direction": [
+            0.03979548707789955,
+            0.9992078458500177
+          ],
+          "aim_point_m": [
+            19.294492100257656,
+            300.0
+          ],
+          "target_ship_id": "ship.web.red",
+          "target_module_id": "cic",
+          "quality": "normal",
+          "quality_reason": "locked",
+          "lock_sources": [
+            "sensor_upper_starboard"
+          ],
+          "status": "reloading",
+          "shots": 1,
+          "ready_rounds": 0,
+          "reload_steps": 5,
+          "cooldown_steps": 0,
+          "ammo_resources": 80,
+          "batch_cost": 5,
+          "batch_rounds": 1
+        },
+        {
+          "ship_id": "ship.web.red",
+          "module_id": "weapon_upper_port",
+          "mode": "auto",
+          "angle_rad": 0,
+          "origin_m": [
+            16.985487757010283,
+            310.0
+          ],
+          "direction": [
+            1.2246467991473532e-16,
+            -1.0
+          ],
+          "aim_point_m": null,
+          "target_ship_id": null,
+          "target_module_id": null,
+          "quality": "degraded",
+          "quality_reason": "manual",
+          "lock_sources": [],
+          "status": "control_unavailable",
+          "shots": 0,
+          "ready_rounds": 1,
+          "reload_steps": 0,
+          "cooldown_steps": 0,
+          "ammo_resources": 80,
+          "batch_cost": 5,
+          "batch_rounds": 1
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 1,
+          "ship_id": "ship.web.blue",
+          "position_m": [
+            36.43448930288424,
+            650.4399829630111
+          ],
+          "previous_m": [
+            36.07531377147921,
+            642.1143936516119
+          ],
+          "velocity_mps": [
+            21.550531884301837,
+            499.5353586839511
+          ]
+        }
+      ],
+      "policy_id": "gtw.technical.p2a.ordinary",
+      "damage_enabled": false
+    },
+    "360": {
+      "interface": "gaotian.gunnery-view/p2a-v1alpha1",
+      "command_sequence": 1,
+      "weapons": [
+        {
+          "ship_id": "ship.web.blue",
+          "module_id": "weapon_upper_port",
+          "mode": "auto",
+          "angle_rad": 0.07878984921958532,
+          "origin_m": [
+            -5.0,
+            -310.0
+          ],
+          "direction": [
+            0.07870835538467227,
+            0.9968976852178162
+          ],
+          "aim_point_m": [
+            43.161508945784874,
+            300.0
+          ],
+          "target_ship_id": "ship.web.red",
+          "target_module_id": "cic",
+          "quality": "normal",
+          "quality_reason": "locked",
+          "lock_sources": [
+            "sensor_upper_starboard"
+          ],
+          "status": "reloading",
+          "shots": 3,
+          "ready_rounds": 0,
+          "reload_steps": 5,
+          "cooldown_steps": 0,
+          "ammo_resources": 70,
+          "batch_cost": 5,
+          "batch_rounds": 1
+        },
+        {
+          "ship_id": "ship.web.red",
+          "module_id": "weapon_upper_port",
+          "mode": "auto",
+          "angle_rad": 0,
+          "origin_m": [
+            40.87052193810499,
+            310.0
+          ],
+          "direction": [
+            1.2246467991473532e-16,
+            -1.0
+          ],
+          "aim_point_m": null,
+          "target_ship_id": null,
+          "target_module_id": null,
+          "quality": "degraded",
+          "quality_reason": "manual",
+          "lock_sources": [],
+          "status": "control_unavailable",
+          "shots": 0,
+          "ready_rounds": 1,
+          "reload_steps": 0,
+          "cooldown_steps": 0,
+          "ammo_resources": 80,
+          "batch_cost": 5,
+          "batch_rounds": 1
+        }
+      ],
+      "projectiles": [
+        {
+          "id": 1,
+          "ship_id": "ship.web.blue",
+          "position_m": [
+            122.63661684009118,
+            2648.5814176988188
+          ],
+          "previous_m": [
+            122.27744130868615,
+            2640.2558283874196
+          ],
+          "velocity_mps": [
+            21.550531884301837,
+            499.5353586839511
+          ]
+        },
+        {
+          "id": 2,
+          "ship_id": "ship.web.blue",
+          "position_m": [
+            70.5607761947979,
+            1649.8772955328805
+          ],
+          "previous_m": [
+            70.23973278812387,
+            1641.550148627999
+          ],
+          "velocity_mps": [
+            19.262604400441383,
+            499.6288142928829
+          ]
+        },
+        {
+          "id": 3,
+          "ship_id": "ship.web.blue",
+          "position_m": [
+            52.80253187120393,
+            649.5940001308143
+          ],
+          "previous_m": [
+            52.30146970172401,
+            641.2757442350894
+          ],
+          "velocity_mps": [
+            30.063730168795423,
+            499.09535374348843
+          ]
+        }
+      ],
+      "policy_id": "gtw.technical.p2a.ordinary",
+      "damage_enabled": false
+    }
+  },
+  "immediately_after_test_radar_damage": {
+    "interface": "gaotian.gunnery-view/p2a-v1alpha1",
+    "command_sequence": 1,
+    "weapons": [
+      {
+        "ship_id": "ship.web.blue",
+        "module_id": "weapon_upper_port",
+        "mode": "auto",
+        "angle_rad": 0.07006320295961367,
+        "origin_m": [
+          -5.0,
+          -310.0
+        ],
+        "direction": [
+          0.07000589537337504,
+          0.9975465776659114
+        ],
+        "aim_point_m": [
+          28.593082240729522,
+          307.34994071066274
+        ],
+        "target_ship_id": "ship.web.red",
+        "target_module_id": "cic",
+        "quality": "degraded",
+        "quality_reason": "radar_unavailable",
+        "lock_sources": [],
+        "status": "traversing",
+        "shots": 3,
+        "ready_rounds": 0,
+        "reload_steps": 4,
+        "cooldown_steps": 0,
+        "ammo_resources": 70,
+        "batch_cost": 5,
+        "batch_rounds": 1
+      },
+      {
+        "ship_id": "ship.web.red",
+        "module_id": "weapon_upper_port",
+        "mode": "auto",
+        "angle_rad": 0,
+        "origin_m": [
+          40.969804337686355,
+          310.0
+        ],
+        "direction": [
+          1.2246467991473532e-16,
+          -1.0
+        ],
+        "aim_point_m": null,
+        "target_ship_id": null,
+        "target_module_id": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "control_unavailable",
+        "shots": 0,
+        "ready_rounds": 1,
+        "reload_steps": 0,
+        "cooldown_steps": 0,
+        "ammo_resources": 80,
+        "batch_cost": 5,
+        "batch_rounds": 1
+      }
+    ],
+    "projectiles": [
+      {
+        "id": 1,
+        "ship_id": "ship.web.blue",
+        "position_m": [
+          122.99579237149621,
+          2656.907007010218
+        ],
+        "previous_m": [
+          122.63661684009118,
+          2648.5814176988188
+        ],
+        "velocity_mps": [
+          21.550531884301837,
+          499.5353586839511
+        ]
+      },
+      {
+        "id": 2,
+        "ship_id": "ship.web.blue",
+        "position_m": [
+          70.88181960147192,
+          1658.2044424377618
+        ],
+        "previous_m": [
+          70.5607761947979,
+          1649.8772955328805
+        ],
+        "velocity_mps": [
+          19.262604400441383,
+          499.6288142928829
+        ]
+      },
+      {
+        "id": 3,
+        "ship_id": "ship.web.blue",
+        "position_m": [
+          53.303594040683855,
+          657.9122560265391
+        ],
+        "previous_m": [
+          52.80253187120393,
+          649.5940001308143
+        ],
+        "velocity_mps": [
+          30.063730168795423,
+          499.09535374348843
+        ]
+      }
+    ],
+    "policy_id": "gtw.technical.p2a.ordinary",
+    "damage_enabled": false
+  },
+  "final": {
+    "interface": "gaotian.gunnery-view/p2a-v1alpha1",
+    "command_sequence": 4,
+    "weapons": [
+      {
+        "ship_id": "ship.web.blue",
+        "module_id": "weapon_upper_port",
+        "mode": "manual",
+        "angle_rad": 0.0,
+        "origin_m": [
+          -5.0,
+          -310.0
+        ],
+        "direction": [
+          0.0,
+          1.0
+        ],
+        "aim_point_m": [
+          -5.0,
+          300.0
+        ],
+        "target_ship_id": null,
+        "target_module_id": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "ready",
+        "shots": 6,
+        "ready_rounds": 1,
+        "reload_steps": 0,
+        "cooldown_steps": 0,
+        "ammo_resources": 50,
+        "batch_cost": 5,
+        "batch_rounds": 1
+      },
+      {
+        "ship_id": "ship.web.red",
+        "module_id": "weapon_upper_port",
+        "mode": "auto",
+        "angle_rad": 0,
+        "origin_m": [
+          97.34016813100644,
+          310.0
+        ],
+        "direction": [
+          1.2246467991473532e-16,
+          -1.0
+        ],
+        "aim_point_m": null,
+        "target_ship_id": null,
+        "target_module_id": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "control_unavailable",
+        "shots": 0,
+        "ready_rounds": 1,
+        "reload_steps": 0,
+        "cooldown_steps": 0,
+        "ammo_resources": 80,
+        "batch_cost": 5,
+        "batch_rounds": 1
+      }
+    ],
+    "projectiles": [
+      {
+        "id": 1,
+        "ship_id": "ship.web.blue",
+        "position_m": [
+          328.0850208037699,
+          7410.8185038191605
+        ],
+        "previous_m": [
+          327.7258452723649,
+          7402.492914507761
+        ],
+        "velocity_mps": [
+          21.550531884301837,
+          499.5353586839511
+        ]
+      },
+      {
+        "id": 2,
+        "ship_id": "ship.web.blue",
+        "position_m": [
+          254.19760481233848,
+          6413.0053251250265
+        ],
+        "previous_m": [
+          253.87656140566446,
+          6404.678178220145
+        ],
+        "velocity_mps": [
+          19.262604400441383,
+          499.6288142928829
+        ]
+      },
+      {
+        "id": 3,
+        "ship_id": "ship.web.blue",
+        "position_m": [
+          339.4100928137244,
+          5407.6363724854145
+        ],
+        "previous_m": [
+          338.90903064424447,
+          5399.318116589689
+        ],
+        "velocity_mps": [
+          30.063730168795423,
+          499.09535374348843
+        ]
+      },
+      {
+        "id": 4,
+        "ship_id": "ship.web.blue",
+        "position_m": [
+          266.3146549629899,
+          4410.208931604902
+        ],
+        "previous_m": [
+          265.8364494938645,
+          4401.889330414116
+        ],
+        "velocity_mps": [
+          28.69232814752395,
+          499.17607144721467
+        ]
+      },
+      {
+        "id": 5,
+        "ship_id": "ship.web.blue",
+        "position_m": [
+          431.66730649947164,
+          3392.337864570807
+        ],
+        "previous_m": [
+          430.69120826427076,
+          3384.0618947376283
+        ],
+        "velocity_mps": [
+          58.56589411205402,
+          496.5581899907157
+        ]
+      },
+      {
+        "id": 6,
+        "ship_id": "ship.web.blue",
+        "position_m": [
+          -6.929712072109559,
+          942.9985140499257
+        ],
+        "previous_m": [
+          -6.916878126431788,
+          934.6651905992079
+        ],
+        "velocity_mps": [
+          -0.7700367406662175,
+          499.99940704306647
+        ]
+      }
+    ],
+    "policy_id": "gtw.technical.p2a.ordinary",
+    "damage_enabled": false
+  },
+  "source_sha256": {
+    "backend/high_wilderness_sidecar/tactical_gunnery.py": "cc5db0224c390709445cdbae691d7415402e41d350d033051d2b11f2d551ba82",
+    "backend/high_wilderness_sidecar/tactical_inventory.py": "09b5aad28a070317fddc67348806dc3d98a2c2891b014a5265e03c84bcf3d7c0",
+    "backend/high_wilderness_sidecar/realtime_view.py": "53b83ec8ef9b4d6bf5ba753ea5084c4f29c86cabb31243aef5618eeb3d7b5afb",
+    "backend/high_wilderness_sidecar/tactical_scheduler.py": "34e800b13bd1a3fb939d56b39179c8afe5f13de2c5102f6f7c49d0cb4f9d890d",
+    "apps/desktop/src/tactical/RealtimePanel.tsx": "e5446178f3358dd48d2ba0d127a0d58c62cbc792880e1e1b90a4f70d63016e51",
+    "apps/desktop/src/tactical/TacticalViewport.tsx": "e5c0f8f0973748e1774fb558c71110930cf21d4e0ae0a1733b45545a1679eace",
+    "apps/desktop/src/tactical/viewport.ts": "9690d840dfe20a8675c63ff7faafca44c2ec7dc2d5ed739f4d51c5c0a0df379a",
+    "apps/desktop/src/tactical/gunnery.ts": "12104b524e0fa9eb0ebea8436c4172cae9e33fac65c55cc3fcb46d5430b78e87",
+    "apps/desktop/src/tactical/model.ts": "9bed775fc5637781c26041ea63c5d87903415fce76bd5462f599ae84193ada87",
+    "apps/desktop/src/editor/OutfitPanel.tsx": "527cadbfa3f0e98833b5a94c65d387b2bbeecf006ec2ac22d0d1396b5e9b89e4",
+    "apps/desktop/src-tauri/src/bridge/host.rs": "e2f1e07321d52e28ca98cd499ac41d808929e221f37cc8609c81d907db522436",
+    "contracts/web_bridge/fixtures/p2a-gunnery.json": "4bcff56e19078039e5d890f02db330113bf026b4936187906157fe813bceffe2",
+    "tools/test_tactical_gunnery.py": "3a41ab8210834fc5044ef4dcfa8b75bd7fc2b9c3eeebeab6b7f78ada29cd0f9d",
+    "tools/verify_tactical_gunnery.py": "691be37f74757d4d8ebaf45b35b1a8d6c575610332d8ccee89f171b7ee741377",
+    "tools/verify_gunnery_view.mjs": "4d843f3a1b1b479a0cca5f12a33ef756de7898c00b92bf827078300a2807621a"
+  },
+  "not_covered": [
+    "projectile hits/armor/damage",
+    "full battle checkpoint",
+    "legal settlement/persistent store",
+    "native WebView visual QA",
+    "arbitrary player design deployment",
+    "special ammunition effects"
+  ]
+}
