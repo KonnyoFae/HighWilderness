@@ -391,6 +391,8 @@ class HullEditorDocument:
                 deck["edge_space"] = build_deck_edge_space(
                     deck["regions"], deck["compiled_installation_space"]["internal_cells"]
                 )
+                if 'filling' in deck['compiled_installation_space']:
+                    deck['filling'] = deck['compiled_installation_space']['filling']
         return EditorPreview(
             "HullBlueprint",
             True,

@@ -1,0 +1,1604 @@
+{
+  "status": "H5C_FUEL_UI_PASS",
+  "checks": [
+    "Filling tank shows capacity and independent HP; shortage blocks saving; loading 120 consumes exactly 120 finite supply units",
+    "Live fuel view remains unchanged under propulsion; legal settlement preserves fuel quantities and tank HP",
+    "Real backend restart and preparation reentry preserve exact fuel and finite supply without refill"
+  ],
+  "record": {
+    "armor": [
+      {
+        "deck_id": "deck.0",
+        "deck_level": 0,
+        "durability": 0,
+        "edge_index": 0,
+        "region_id": "deck.0.region.0"
+      },
+      {
+        "deck_id": "deck.0",
+        "deck_level": 0,
+        "durability": 0,
+        "edge_index": 1,
+        "region_id": "deck.0.region.0"
+      },
+      {
+        "deck_id": "deck.0",
+        "deck_level": 0,
+        "durability": 0,
+        "edge_index": 2,
+        "region_id": "deck.0.region.0"
+      },
+      {
+        "deck_id": "deck.0",
+        "deck_level": 0,
+        "durability": 0,
+        "edge_index": 3,
+        "region_id": "deck.0.region.0"
+      },
+      {
+        "deck_id": "deck.0",
+        "deck_level": 0,
+        "durability": 0,
+        "edge_index": 4,
+        "region_id": "deck.0.region.0"
+      },
+      {
+        "deck_id": "deck.0",
+        "deck_level": 0,
+        "durability": 0,
+        "edge_index": 5,
+        "region_id": "deck.0.region.0"
+      },
+      {
+        "deck_id": "deck.0",
+        "deck_level": 0,
+        "durability": 0,
+        "edge_index": 6,
+        "region_id": "deck.0.region.0"
+      },
+      {
+        "deck_id": "deck.1",
+        "deck_level": 1,
+        "durability": 0,
+        "edge_index": 0,
+        "region_id": "deck.1.region.port"
+      },
+      {
+        "deck_id": "deck.1",
+        "deck_level": 1,
+        "durability": 0,
+        "edge_index": 1,
+        "region_id": "deck.1.region.port"
+      },
+      {
+        "deck_id": "deck.1",
+        "deck_level": 1,
+        "durability": 0,
+        "edge_index": 2,
+        "region_id": "deck.1.region.port"
+      },
+      {
+        "deck_id": "deck.1",
+        "deck_level": 1,
+        "durability": 0,
+        "edge_index": 3,
+        "region_id": "deck.1.region.port"
+      },
+      {
+        "deck_id": "deck.1",
+        "deck_level": 1,
+        "durability": 0,
+        "edge_index": 0,
+        "region_id": "deck.1.region.starboard"
+      },
+      {
+        "deck_id": "deck.1",
+        "deck_level": 1,
+        "durability": 0,
+        "edge_index": 1,
+        "region_id": "deck.1.region.starboard"
+      },
+      {
+        "deck_id": "deck.1",
+        "deck_level": 1,
+        "durability": 0,
+        "edge_index": 2,
+        "region_id": "deck.1.region.starboard"
+      },
+      {
+        "deck_id": "deck.1",
+        "deck_level": 1,
+        "durability": 0,
+        "edge_index": 3,
+        "region_id": "deck.1.region.starboard"
+      }
+    ],
+    "design_sha256": "20d5ef0e230a34f5faf3c71783d0b14e077d834a069e3657ad3a0c673c5c891f",
+    "interface": "gaotian.persistent-combat-ship/p3-v1",
+    "resources": {
+      "continuous_damage": {
+        "hull_damage_points_per_intensity_s": 29.62,
+        "max_duration_steps": 3600,
+        "max_intensity_units": 10000,
+        "module_damage_points_per_intensity_s": 4,
+        "natural_decay_units_per_step": 1,
+        "policy": "gaotian.continuous-damage/finite-firefighting/d1b-v1",
+        "resource_units_per_suppression_unit": 1,
+        "suppression_units_per_step": 100
+      },
+      "damage_controls": [
+        {
+          "capacity_units": 100000,
+          "cargo_costs": [
+            {
+              "good_id": "cargo.engineering_parts",
+              "quantity": 2
+            }
+          ],
+          "module_id": "damage_control",
+          "preparation_steps": 300
+        }
+      ],
+      "filling_holds": [],
+      "fire_control": {
+        "degraded": {
+          "direction_error_mdeg": 3000,
+          "position_error_mm": 12000,
+          "velocity_error_mmps": 2000
+        },
+        "normal": {
+          "direction_error_mdeg": 0,
+          "position_error_mm": 0,
+          "velocity_error_mmps": 0
+        }
+      },
+      "fuel": {
+        "filling_durability_points": 100,
+        "filling_utilization": 0.9,
+        "policy": "gaotian.tactical-fuel/tank-destruction-only/h5c-v1",
+        "units_per_m3": 8
+      },
+      "fuel_tanks": [
+        {
+          "capacity_units": 22320,
+          "deck_id": "deck.0",
+          "deck_level": 0,
+          "maximum_points": 100,
+          "module_id": null,
+          "pieces": [
+            [
+              [
+                -5,
+                -75
+              ],
+              [
+                5,
+                -75
+              ],
+              [
+                5.416666666666667,
+                -72.5
+              ],
+              [
+                -5.416666666666667,
+                -72.5
+              ]
+            ],
+            [
+              [
+                -5.416666666666667,
+                -72.5
+              ],
+              [
+                -2.5,
+                -72.5
+              ],
+              [
+                -2.5,
+                -67.5
+              ],
+              [
+                -6.25,
+                -67.5
+              ]
+            ],
+            [
+              [
+                2.5,
+                -72.5
+              ],
+              [
+                5.416666666666667,
+                -72.5
+              ],
+              [
+                6.25,
+                -67.5
+              ],
+              [
+                2.5,
+                -67.5
+              ]
+            ],
+            [
+              [
+                -6.25,
+                -67.5
+              ],
+              [
+                -2.5,
+                -67.5
+              ],
+              [
+                -2.5,
+                -62.5
+              ],
+              [
+                -7.083333333333334,
+                -62.5
+              ]
+            ],
+            [
+              [
+                2.5,
+                -67.5
+              ],
+              [
+                6.25,
+                -67.5
+              ],
+              [
+                7.083333333333334,
+                -62.5
+              ],
+              [
+                2.5,
+                -62.5
+              ]
+            ],
+            [
+              [
+                -7.083333333333334,
+                -62.5
+              ],
+              [
+                -2.5,
+                -62.5
+              ],
+              [
+                -2.5,
+                -57.5
+              ],
+              [
+                -7.916666666666666,
+                -57.5
+              ]
+            ],
+            [
+              [
+                2.5,
+                -62.5
+              ],
+              [
+                7.083333333333334,
+                -62.5
+              ],
+              [
+                7.916666666666666,
+                -57.5
+              ],
+              [
+                2.5,
+                -57.5
+              ]
+            ],
+            [
+              [
+                -7.916666666666666,
+                -57.5
+              ],
+              [
+                -7.5,
+                -57.5
+              ],
+              [
+                -7.5,
+                -52.5
+              ],
+              [
+                -8.75,
+                -52.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -57.5
+              ],
+              [
+                7.916666666666666,
+                -57.5
+              ],
+              [
+                8.75,
+                -52.5
+              ],
+              [
+                7.5,
+                -52.5
+              ]
+            ],
+            [
+              [
+                -8.75,
+                -52.5
+              ],
+              [
+                -7.5,
+                -52.5
+              ],
+              [
+                -7.5,
+                -47.5
+              ],
+              [
+                -9.583333333333334,
+                -47.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -52.5
+              ],
+              [
+                8.75,
+                -52.5
+              ],
+              [
+                9.583333333333332,
+                -47.5
+              ],
+              [
+                7.5,
+                -47.5
+              ]
+            ],
+            [
+              [
+                -9.583333333333334,
+                -47.5
+              ],
+              [
+                -7.5,
+                -47.5
+              ],
+              [
+                -7.5,
+                -45
+              ],
+              [
+                -10,
+                -45
+              ]
+            ],
+            [
+              [
+                7.5,
+                -47.5
+              ],
+              [
+                9.583333333333332,
+                -47.5
+              ],
+              [
+                10,
+                -45
+              ],
+              [
+                7.5,
+                -45
+              ]
+            ],
+            [
+              [
+                -10,
+                -45
+              ],
+              [
+                -7.5,
+                -45
+              ],
+              [
+                -7.5,
+                -42.5
+              ],
+              [
+                -10,
+                -42.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -45
+              ],
+              [
+                10,
+                -45
+              ],
+              [
+                10,
+                -42.5
+              ],
+              [
+                7.5,
+                -42.5
+              ]
+            ],
+            [
+              [
+                -10,
+                -42.5
+              ],
+              [
+                -7.5,
+                -42.5
+              ],
+              [
+                -7.5,
+                -37.5
+              ],
+              [
+                -10,
+                -37.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -42.5
+              ],
+              [
+                10,
+                -42.5
+              ],
+              [
+                10,
+                -37.5
+              ],
+              [
+                7.5,
+                -37.5
+              ]
+            ],
+            [
+              [
+                -10,
+                -37.5
+              ],
+              [
+                -7.5,
+                -37.5
+              ],
+              [
+                -7.5,
+                -32.5
+              ],
+              [
+                -10,
+                -32.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -37.5
+              ],
+              [
+                10,
+                -37.5
+              ],
+              [
+                10,
+                -32.5
+              ],
+              [
+                7.5,
+                -32.5
+              ]
+            ],
+            [
+              [
+                -10,
+                -32.5
+              ],
+              [
+                -7.5,
+                -32.5
+              ],
+              [
+                -7.5,
+                -27.5
+              ],
+              [
+                -10,
+                -27.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -32.5
+              ],
+              [
+                10,
+                -32.5
+              ],
+              [
+                10,
+                -27.5
+              ],
+              [
+                7.5,
+                -27.5
+              ]
+            ],
+            [
+              [
+                -10,
+                -27.5
+              ],
+              [
+                -7.5,
+                -27.5
+              ],
+              [
+                -7.5,
+                -22.5
+              ],
+              [
+                -10,
+                -22.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -27.5
+              ],
+              [
+                10,
+                -27.5
+              ],
+              [
+                10,
+                -22.5
+              ],
+              [
+                7.5,
+                -22.5
+              ]
+            ],
+            [
+              [
+                -10,
+                -22.5
+              ],
+              [
+                -7.5,
+                -22.5
+              ],
+              [
+                -7.5,
+                -17.5
+              ],
+              [
+                -10,
+                -17.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -22.5
+              ],
+              [
+                10,
+                -22.5
+              ],
+              [
+                10,
+                -17.5
+              ],
+              [
+                7.5,
+                -17.5
+              ]
+            ],
+            [
+              [
+                -10,
+                -17.5
+              ],
+              [
+                -7.5,
+                -17.5
+              ],
+              [
+                -7.5,
+                -12.5
+              ],
+              [
+                -10,
+                -12.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -17.5
+              ],
+              [
+                10,
+                -17.5
+              ],
+              [
+                10,
+                -12.5
+              ],
+              [
+                7.5,
+                -12.5
+              ]
+            ],
+            [
+              [
+                -10,
+                -12.5
+              ],
+              [
+                -7.5,
+                -12.5
+              ],
+              [
+                -7.5,
+                -7.5
+              ],
+              [
+                -10,
+                -7.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -12.5
+              ],
+              [
+                10,
+                -12.5
+              ],
+              [
+                10,
+                -7.5
+              ],
+              [
+                7.5,
+                -7.5
+              ]
+            ],
+            [
+              [
+                -10,
+                -7.5
+              ],
+              [
+                -7.5,
+                -7.5
+              ],
+              [
+                -7.5,
+                -2.5
+              ],
+              [
+                -10,
+                -2.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -7.5
+              ],
+              [
+                10,
+                -7.5
+              ],
+              [
+                10,
+                -2.5
+              ],
+              [
+                7.5,
+                -2.5
+              ]
+            ],
+            [
+              [
+                -10,
+                -2.5
+              ],
+              [
+                -7.5,
+                -2.5
+              ],
+              [
+                -7.5,
+                2.5
+              ],
+              [
+                -10,
+                2.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                -2.5
+              ],
+              [
+                10,
+                -2.5
+              ],
+              [
+                10,
+                2.5
+              ],
+              [
+                7.5,
+                2.5
+              ]
+            ],
+            [
+              [
+                -10,
+                2.5
+              ],
+              [
+                -7.5,
+                2.5
+              ],
+              [
+                -7.5,
+                7.5
+              ],
+              [
+                -10,
+                7.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                2.5
+              ],
+              [
+                10,
+                2.5
+              ],
+              [
+                10,
+                7.5
+              ],
+              [
+                7.5,
+                7.5
+              ]
+            ],
+            [
+              [
+                -10,
+                7.5
+              ],
+              [
+                -7.5,
+                7.5
+              ],
+              [
+                -7.5,
+                12.5
+              ],
+              [
+                -10,
+                12.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                7.5
+              ],
+              [
+                10,
+                7.5
+              ],
+              [
+                10,
+                12.5
+              ],
+              [
+                7.5,
+                12.5
+              ]
+            ],
+            [
+              [
+                -10,
+                12.5
+              ],
+              [
+                -7.5,
+                12.5
+              ],
+              [
+                -7.5,
+                17.5
+              ],
+              [
+                -10,
+                17.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                12.5
+              ],
+              [
+                10,
+                12.5
+              ],
+              [
+                10,
+                17.5
+              ],
+              [
+                7.5,
+                17.5
+              ]
+            ],
+            [
+              [
+                -10,
+                17.5
+              ],
+              [
+                -7.5,
+                17.5
+              ],
+              [
+                -7.5,
+                22.5
+              ],
+              [
+                -10,
+                22.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                17.5
+              ],
+              [
+                10,
+                17.5
+              ],
+              [
+                10,
+                22.5
+              ],
+              [
+                7.5,
+                22.5
+              ]
+            ],
+            [
+              [
+                -10,
+                22.5
+              ],
+              [
+                -7.5,
+                22.5
+              ],
+              [
+                -7.5,
+                27.5
+              ],
+              [
+                -10,
+                27.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                22.5
+              ],
+              [
+                10,
+                22.5
+              ],
+              [
+                10,
+                27.5
+              ],
+              [
+                7.5,
+                27.5
+              ]
+            ],
+            [
+              [
+                -10,
+                27.5
+              ],
+              [
+                -7.5,
+                27.5
+              ],
+              [
+                -7.5,
+                32.5
+              ],
+              [
+                -10,
+                32.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                27.5
+              ],
+              [
+                10,
+                27.5
+              ],
+              [
+                10,
+                32.5
+              ],
+              [
+                7.5,
+                32.5
+              ]
+            ],
+            [
+              [
+                -10,
+                32.5
+              ],
+              [
+                -7.5,
+                32.5
+              ],
+              [
+                -7.5,
+                37.5
+              ],
+              [
+                -10,
+                37.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                32.5
+              ],
+              [
+                10,
+                32.5
+              ],
+              [
+                10,
+                37.5
+              ],
+              [
+                7.5,
+                37.5
+              ]
+            ],
+            [
+              [
+                -10,
+                37.5
+              ],
+              [
+                -7.5,
+                37.5
+              ],
+              [
+                -7.5,
+                42.5
+              ],
+              [
+                -10,
+                42.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                37.5
+              ],
+              [
+                10,
+                37.5
+              ],
+              [
+                10,
+                42.5
+              ],
+              [
+                7.5,
+                42.5
+              ]
+            ],
+            [
+              [
+                -10,
+                42.5
+              ],
+              [
+                -7.5,
+                42.5
+              ],
+              [
+                -7.5,
+                47.5
+              ],
+              [
+                -10,
+                47.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                42.5
+              ],
+              [
+                10,
+                42.5
+              ],
+              [
+                10,
+                47.5
+              ],
+              [
+                7.5,
+                47.5
+              ]
+            ],
+            [
+              [
+                -10,
+                47.5
+              ],
+              [
+                -7.5,
+                47.5
+              ],
+              [
+                -7.5,
+                50
+              ],
+              [
+                -10,
+                50
+              ]
+            ],
+            [
+              [
+                7.5,
+                47.5
+              ],
+              [
+                10,
+                47.5
+              ],
+              [
+                10,
+                50
+              ],
+              [
+                7.5,
+                50
+              ]
+            ],
+            [
+              [
+                -10,
+                50
+              ],
+              [
+                -7.5,
+                50
+              ],
+              [
+                -7.5,
+                52.5
+              ],
+              [
+                -9.166666666666666,
+                52.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                50
+              ],
+              [
+                10,
+                50
+              ],
+              [
+                9.166666666666666,
+                52.5
+              ],
+              [
+                7.5,
+                52.5
+              ]
+            ],
+            [
+              [
+                -9.166666666666666,
+                52.5
+              ],
+              [
+                -7.5,
+                52.5
+              ],
+              [
+                -7.5,
+                57.5
+              ]
+            ],
+            [
+              [
+                7.5,
+                52.5
+              ],
+              [
+                9.166666666666666,
+                52.5
+              ],
+              [
+                7.5,
+                57.5
+              ]
+            ],
+            [
+              [
+                -7.5,
+                57.5
+              ],
+              [
+                -2.5,
+                57.5
+              ],
+              [
+                -2.5,
+                62.5
+              ],
+              [
+                -5.833333333333333,
+                62.5
+              ]
+            ],
+            [
+              [
+                2.5,
+                57.5
+              ],
+              [
+                7.5,
+                57.5
+              ],
+              [
+                5.833333333333333,
+                62.5
+              ],
+              [
+                2.5,
+                62.5
+              ]
+            ],
+            [
+              [
+                -5.833333333333333,
+                62.5
+              ],
+              [
+                -2.5,
+                62.5
+              ],
+              [
+                -2.5,
+                67.5
+              ],
+              [
+                -4.166666666666667,
+                67.5
+              ]
+            ],
+            [
+              [
+                2.5,
+                62.5
+              ],
+              [
+                5.833333333333333,
+                62.5
+              ],
+              [
+                4.166666666666667,
+                67.5
+              ],
+              [
+                2.5,
+                67.5
+              ]
+            ],
+            [
+              [
+                -4.166666666666667,
+                67.5
+              ],
+              [
+                -2.5,
+                67.5
+              ],
+              [
+                -2.5,
+                72.5
+              ]
+            ],
+            [
+              [
+                2.5,
+                67.5
+              ],
+              [
+                4.166666666666667,
+                67.5
+              ],
+              [
+                2.5,
+                72.5
+              ]
+            ],
+            [
+              [
+                -2.5,
+                72.5
+              ],
+              [
+                2.5,
+                72.5
+              ],
+              [
+                0.8333333333333339,
+                77.5
+              ],
+              [
+                -0.8333333333333334,
+                77.5
+              ]
+            ],
+            [
+              [
+                -0.8333333333333334,
+                77.5
+              ],
+              [
+                0.8333333333333339,
+                77.5
+              ],
+              [
+                0,
+                80
+              ]
+            ]
+          ],
+          "tank_id": "tank.filling.deck.0"
+        },
+        {
+          "capacity_units": 1000,
+          "deck_id": null,
+          "deck_level": 0,
+          "maximum_points": 100,
+          "module_id": "lift_tank",
+          "pieces": [],
+          "tank_id": "tank.module.lift_tank"
+        }
+      ],
+      "goods": [
+        {
+          "id": "cargo.engineering_parts",
+          "unit": "crate",
+          "unit_mass_g": 50000,
+          "unit_volume_cm3": 1000000,
+          "version": 1
+        },
+        {
+          "id": "cargo.special_alloy",
+          "unit": "crate",
+          "unit_mass_g": 100000,
+          "unit_volume_cm3": 5000000,
+          "version": 1
+        }
+      ],
+      "holds": [
+        {
+          "capacity_cm3": 125000000,
+          "module_id": "custom.cargo"
+        }
+      ],
+      "id": "gtw.preparation.h5c",
+      "interface": "gaotian.persistent-ship-resources/h5c-v1",
+      "magazines": [
+        {
+          "capacity_resources": 100,
+          "module_id": "ammunition_magazine"
+        }
+      ],
+      "projectiles": [
+        {
+          "id": "projectile.p2a.ordinary",
+          "mass_g": 10000,
+          "speed_mmps": 500000,
+          "version": 1
+        },
+        {
+          "id": "projectile.s1.armor_piercing",
+          "mass_g": 10000,
+          "speed_mmps": 500000,
+          "version": 1
+        }
+      ],
+      "recipes": [
+        {
+          "ammo_cost": 5,
+          "cargo_costs": [],
+          "id": "recipe.x1a.ordinary",
+          "projectile": {
+            "id": "projectile.p2a.ordinary",
+            "version": 1
+          },
+          "reload_steps": 120,
+          "rounds": 1,
+          "version": 1
+        },
+        {
+          "ammo_cost": 5,
+          "cargo_costs": [
+            {
+              "good_id": "cargo.special_alloy",
+              "quantity": 1
+            }
+          ],
+          "id": "recipe.x1a.special_armor_piercing",
+          "projectile": {
+            "id": "projectile.s1.armor_piercing",
+            "version": 1
+          },
+          "reload_steps": 120,
+          "rounds": 1,
+          "version": 1
+        }
+      ],
+      "repair": {
+        "hull_points_per_s": 60,
+        "hull_resource_units_per_point": 100,
+        "module_points_per_s": 6,
+        "module_resource_units_per_point": 1000,
+        "policy": "gaotian.damage-control/bounded-repair/d1c-v1"
+      },
+      "source_seed_sha256": "82b9fddc4a80c1554f2563b029b051a9ef3cc769865806741f7a1fe800b7154f",
+      "version": 6,
+      "weapons": [
+        {
+          "module_id": "weapon_upper_port",
+          "ready_capacity": 1,
+          "recipe_ids": [
+            "recipe.x1a.ordinary",
+            "recipe.x1a.special_armor_piercing"
+          ],
+          "turret": {
+            "maximum_mdeg": 90000,
+            "minimum_mdeg": -90000,
+            "slew_mdeg_per_s": 30000
+          }
+        }
+      ]
+    },
+    "ship_id": "ship.fuel.player",
+    "state": {
+      "cargo": [],
+      "crew": [
+        {
+          "count": 2,
+          "crew_type": "officer"
+        },
+        {
+          "count": 10,
+          "crew_type": "ordinary"
+        },
+        {
+          "count": 4,
+          "crew_type": "technical_officer"
+        },
+        {
+          "count": 2,
+          "crew_type": "veteran_damage_control"
+        }
+      ],
+      "damage_controls": [
+        {
+          "module_id": "damage_control",
+          "preparation": null,
+          "quantity_units": 0
+        }
+      ],
+      "engine_latches": [],
+      "fires": [],
+      "fuel_tanks": [
+        {
+          "durability_points": 100,
+          "quantity_units": 120,
+          "tank_id": "tank.filling.deck.0"
+        },
+        {
+          "durability_points": 100,
+          "quantity_units": 800,
+          "tank_id": "tank.module.lift_tank"
+        }
+      ],
+      "fuel_units": 920,
+      "hull_integrity_fraction": 1,
+      "instance_id": "instance.h5c.browser",
+      "interface": "gaotian.persistent-ship/h5c-v1",
+      "magazines": [
+        {
+          "module_id": "ammunition_magazine",
+          "quantity": 0
+        }
+      ],
+      "modules": [
+        {
+          "durability_points": 100,
+          "module_id": "ammunition_magazine",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "cic",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "crew_quarters_base",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "crew_quarters_upper",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "custom.cargo",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "damage_control",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "fire_control",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "generator",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "lift_tank",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "main_engine_port",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "main_engine_starboard",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "remote_core",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "sensor_upper_starboard",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "thruster_port_aft",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "thruster_port_fore",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "thruster_starboard_aft",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "thruster_starboard_fore",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100,
+          "module_id": "weapon_upper_port",
+          "operating_mode": "active"
+        }
+      ],
+      "power_policy": {
+        "allocation_mode": "strict_categories",
+        "category_order": [
+          "damage_control",
+          "weapons_and_active_defense",
+          "fire_control",
+          "sensors"
+        ],
+        "disabled_categories": []
+      },
+      "resources_sha256": "192cb8a9259d8363b8b8a0f66e4ada5a82c075a38b886174762561d7a1c11d55",
+      "revision": 2,
+      "service": {
+        "reasons": [],
+        "status": "available"
+      },
+      "weapons": [
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon_upper_port",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        }
+      ],
+      "wounded_aboard": 0
+    }
+  }
+}

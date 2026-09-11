@@ -15,6 +15,8 @@ from . import simplified_flight as sf
 
 INTERFACE = 'gaotian.persistent-ship/p1a-v1alpha1'
 RESOURCE_INTERFACE = 'gaotian.persistent-ship-resources/p1a-v1alpha1'
+FILLING_RESOURCE_INTERFACE = 'gaotian.persistent-ship-resources/h5b-v1'
+FILLING_CAPACITY_POLICY = 'gaotian.filling-capacity/hull-fraction-v1'
 ENTRY_POLICY = 'p1a/quiescent-redeployment/static-flight-model/v1'
 MAX_INT = 2**53 - 1
 MAX_BYTES = 8 * 1024 * 1024
@@ -67,6 +69,11 @@ def pairs(items):
     return result
 
 
+def filling_capacity(definition, hull_integrity_fraction):
+    # Per-deck identity, shared integrity policy until layer-local structural damage exists.
+    return sum(int(s['capacity_cm3'] * hull_integrity_fraction) for s in definition.get('filling_holds', ()))
+
+
 def encode(value):
     return json.dumps(value, ensure_ascii=False, allow_nan=False, sort_keys=True, separators=(',', ':'))
 
@@ -111,8 +118,25 @@ def compile_resources(seed, definition):
     need(seed.devices is not None and seed.resources is not None and seed.command is not None,
         '$.design', 'Device, resource and command domains required')
     v = clone(definition)
-    obj(v, 'interface id version source_seed_sha256 goods holds magazines weapons projectiles recipes fire_control', '$.resources')
-    need(v['interface'] == RESOURCE_INTERFACE, '$.interface', 'Unsupported resource interface')
+    from . import damage_control_resources as dc
+    dc_version = type(v) is dict and v.get('interface') in dc.RESOURCE_INTERFACES
+    fire_version = type(v) is dict and v.get('interface') in dc.FIRE_RESOURCE_INTERFACES
+    repair_version = type(v) is dict and v.get('interface') in dc.REPAIR_RESOURCE_INTERFACES
+    fuel_version = type(v) is dict and v.get('interface') in dc.FUEL_RESOURCE_INTERFACES
+    filling_version = dc_version or type(v) is dict and v.get('interface') == FILLING_RESOURCE_INTERFACE
+    obj(v, 'interface id version source_seed_sha256 goods holds magazines weapons projectiles recipes fire_control' +
+        (' filling_holds' if filling_version else '') + (' damage_controls' if dc_version else '') + (' continuous_damage' if fire_version else '') + (' repair' if repair_version else '')+(' fuel fuel_tanks' if fuel_version else '')+(' ignition ignition_decks' if v.get('interface')==dc.H5D_RESOURCE_INTERFACE else ''), '$.resources')
+    need(v['interface'] in (RESOURCE_INTERFACE, FILLING_RESOURCE_INTERFACE, *dc.RESOURCE_INTERFACES), '$.interface', 'Unsupported resource interface')
+    if filling_version:
+        sources = rows(v['filling_holds'], 'deck_id', '$.filling_holds')
+        for source in sources.values():
+            obj(source, 'deck_id configuration capacity_cm3 policy', '$.filling_holds')
+            obj(source['configuration'], 'id version', '$.filling_holds.configuration')
+            integer(source['configuration']['version'], '$.filling_holds.configuration.version', 1, 1)
+            need(source['configuration'] == dict(id='gtw.filling.rack', version=1) and
+                source['policy'] == FILLING_CAPACITY_POLICY, '$.filling_holds', 'Unsupported filling source')
+            integer(source['capacity_cm3'], '$.filling_holds.capacity_cm3')
+        v['filling_holds'] = [sources[k] for k in sorted(sources)]
     identifier(v['id'], '$.id'); integer(v['version'], '$.version', 1)
     need(v['source_seed_sha256'] == canonical_sha256(asdict(seed)), '$.source_seed_sha256', 'Prepared design mismatch')
     modules = {m.id: m for m in seed.resources.modules}
@@ -122,6 +146,18 @@ def compile_resources(seed, definition):
         integer(g['version'], '$.goods.version', 1); identifier(g['unit'], '$.goods.unit')
         integer(g['unit_volume_cm3'], '$.goods.unit_volume_cm3', 1)
         integer(g['unit_mass_g'], '$.goods.unit_mass_g')
+    if dc_version:
+        dc.validate_definitions(v, modules, goods)
+    if fire_version:
+        dc.validate_fire_definition(v['continuous_damage'])
+    if repair_version:
+        dc.validate_repair_definition(v['repair'])
+    if fuel_version:
+        from . import tactical_fuel
+        tactical_fuel.validate_definitions(v,modules)
+    if v['interface']==dc.H5D_RESOURCE_INTERFACE:
+        from . import tactical_ignition
+        tactical_ignition.validate_definition(v,modules)
     for name, category, fields, capacity in (
         ('holds', 'cargo_hold', 'module_id capacity_cm3', 'capacity_cm3'),
         ('magazines', 'ammunition_magazine', 'module_id capacity_resources', 'capacity_resources'),
@@ -133,6 +169,7 @@ def compile_resources(seed, definition):
             obj(item, fields, '$.' + name)
             integer(item[capacity], '$.' + name + '.' + capacity, 1)
     integer(sum(h['capacity_cm3'] for h in v['holds']), '$.holds.total_capacity_cm3')
+    integer(sum(h['capacity_cm3'] for h in v['holds']) + sum(s['capacity_cm3'] for s in v.get('filling_holds', ())), '$.cargo.total_capacity_cm3')
     projectiles = rows(v['projectiles'], 'id', '$.projectiles')
     for projectile in projectiles.values():
         obj(projectile, 'id version speed_mmps mass_g', '$.projectiles')
@@ -189,9 +226,14 @@ def verify_pack(pack):
 def _validate(value, pack):
     definition = verify_pack(pack)
     v = clone(value)
+    from . import damage_control_resources as dc
+    dc_version = definition['interface'] in dc.RESOURCE_INTERFACES
+    fire_version = definition['interface'] in dc.FIRE_RESOURCE_INTERFACES
+    fuel_version = definition['interface'] in dc.FUEL_RESOURCE_INTERFACES
     obj(v, 'interface instance_id revision resources_sha256 hull_integrity_fraction fuel_units modules '
-        'crew wounded_aboard power_policy engine_latches service magazines weapons cargo', '$')
-    need(v['interface'] == INTERFACE, '$.interface', 'Unsupported instance version; legacy import requires explicit conversion')
+        'crew wounded_aboard power_policy engine_latches service magazines weapons cargo' +
+        (' damage_controls' if dc_version else '') + (' fires' if fire_version else '')+(' fuel_tanks' if fuel_version else ''), '$')
+    need(v['interface'] == ('gaotian.persistent-ship/h5c-v1' if fuel_version else dc.REPAIR_INSTANCE_INTERFACE if definition['interface'] == dc.REPAIR_RESOURCE_INTERFACE else dc.FIRE_INSTANCE_INTERFACE if fire_version else dc.INSTANCE_INTERFACE if dc_version else INTERFACE), '$.interface', 'Unsupported instance version; legacy import requires explicit conversion')
     identifier(v['instance_id'], '$.instance_id'); integer(v['revision'], '$.revision')
     need(v['resources_sha256'] == pack.source_sha256, '$.resources_sha256', 'Exact design/resource binding mismatch')
     number(v['hull_integrity_fraction'], '$.hull_integrity_fraction', maximum=1)
@@ -203,6 +245,9 @@ def _validate(value, pack):
         obj(item, 'module_id durability_points operating_mode', '$.modules')
         number(item['durability_points'], '$.modules.durability_points', maximum=module_designs[key].maximum_durability_points)
         need(item['operating_mode'] in ('off', 'standby', 'active'), '$.modules.operating_mode', 'Unsupported mode')
+    if fuel_version:
+        from . import tactical_fuel
+        tactical_fuel.validate_state(v,definition,modules)
     crew = rows(v['crew'], 'crew_type', '$.crew')
     crew_types = set(dict(pack.seed.resources.crew)) | {r.crew_type for m in pack.seed.resources.modules for r in m.prototype.crew}
     need(set(crew) <= crew_types, '$.crew', 'Unknown personnel type')
@@ -265,12 +310,16 @@ def _validate(value, pack):
         for cost in r['cargo_costs']:
             reserved_cargo[cost['good_id']] += cost['quantity']
         reload['magazine_allocations'] = [allocations[k] for k in sorted(allocations)]
+    if dc_version:
+        dc.validate_state(v, definition, reserved_cargo)
+    if fire_version:
+        dc.validate_fires(v, definition, modules)
     need(all(n <= mags[k]['quantity'] for k, n in reserved_mags.items()), '$.reload', 'Ammunition over-reserved')
     need(all(n <= cargo.get(k, {}).get('quantity', 0) for k, n in reserved_cargo.items()), '$.reload', 'Cargo over-reserved')
     for name, key in (('modules', 'module_id'), ('crew', 'crew_type'), ('magazines', 'module_id'),
                       ('weapons', 'module_id'), ('cargo', 'good_id')):
         v[name].sort(key=lambda row: row[key])
-    capacity = sum(h['capacity_cm3'] for h in definition['holds'] if modules[h['module_id']]['durability_points'] > 1e-8)
+    capacity = sum(h['capacity_cm3'] for h in definition['holds'] if modules[h['module_id']]['durability_points'] > 1e-8) + filling_capacity(definition, v['hull_integrity_fraction'])
     integer(capacity, '$.cargo.capacity_cm3')
     return v, dict(capacity_cm3=capacity, used_volume_cm3=volume, cargo_mass_g=mass,
         over_capacity=volume > capacity, free_volume_cm3=max(0, capacity-volume),
@@ -319,6 +368,19 @@ def fresh_instance(pack, instance_id):
         magazines=[dict(module_id=m['module_id'], quantity=0) for m in definition['magazines']],
         weapons=[dict(module_id=w['module_id'], recipe_id=None, ready_rounds=0, cooldown_steps=0, reload=None)
             for w in definition['weapons']], cargo=[])
+    from . import damage_control_resources as dc
+    if definition['interface'] in dc.RESOURCE_INTERFACES:
+        value['interface'] = dc.INSTANCE_INTERFACE
+        value['damage_controls'] = [dict(module_id=d['module_id'], quantity_units=0, preparation=None)
+                                    for d in definition['damage_controls']]
+        if definition['interface'] in dc.FIRE_RESOURCE_INTERFACES:
+            value['interface'] = dc.FIRE_INSTANCE_INTERFACE
+            value['fires'] = []
+            if definition['interface'] == dc.REPAIR_RESOURCE_INTERFACE:
+                value['interface'] = dc.REPAIR_INSTANCE_INTERFACE
+            if definition['interface'] in dc.FUEL_RESOURCE_INTERFACES:
+                from . import tactical_fuel
+                value.update(interface=tactical_fuel.INSTANCE_INTERFACE,fuel_tanks=tactical_fuel.fresh(definition,value['fuel_units']))
     return parse_instance(value, pack)
 
 
@@ -359,6 +421,8 @@ def enter_battle(bindings, safety_profile, *, direct_instance_id):
             'Changed fuel availability requires a new compiled entry model; P1a cannot guess it')
         need(all(w['reload'] is None and w['cooldown_steps'] == 0 for w in v['weapons']),
             '$.weapons', 'Active weapon processes cannot enter this flight-only adapter')
+        from .damage_control_resources import require_settled
+        require_settled(v)
         modules = {m['module_id']: m for m in v['modules']}
         seeds.append(replace(seed, motion=replace(seed.motion, hull_integrity_fraction=v['hull_integrity_fraction'],
             fuel_units=v['fuel_units']), devices=replace(seed.devices,

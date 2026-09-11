@@ -1,0 +1,150 @@
+{
+  "status": "PASS",
+  "scope": "compiled filling and real projectile hit; technical coefficients",
+  "hull_sha256": "bb79534689614dae732c1fc173fa0e1ceca9162682ad70b63cda38beba114969",
+  "deck_filling": [
+    {
+      "deck_id": "deck.0",
+      "interface": "gaotian.deck-filling/h5b-v1",
+      "configuration": {
+        "id": "gtw.filling.rack",
+        "version": 1
+      },
+      "gross_volume_m3": 3875.0000000000005,
+      "reserved_volume_m3": 775.0000000000001,
+      "armor_deduction_m3": 0.0,
+      "usable_volume_m3": 3100.0000000000005,
+      "dry_mass_kg": 62000.00000000001,
+      "inertia_kg_m2": 128558333.33333355,
+      "cargo_capacity_cm3": 2790000000
+    },
+    {
+      "deck_id": "deck.1",
+      "interface": "gaotian.deck-filling/h5b-v1",
+      "configuration": {
+        "id": "gtw.filling.none",
+        "version": 1
+      },
+      "gross_volume_m3": 250.0,
+      "reserved_volume_m3": 50.0,
+      "armor_deduction_m3": 0.0,
+      "usable_volume_m3": 200.0,
+      "dry_mass_kg": 0.0,
+      "inertia_kg_m2": 0.0,
+      "cargo_capacity_cm3": 0
+    }
+  ],
+  "capacity_before": {
+    "capacity_cm3": 2915000000,
+    "used_volume_cm3": 0,
+    "cargo_mass_g": 0,
+    "over_capacity": false,
+    "free_volume_cm3": 2915000000,
+    "reserved_ammunition": {
+      "ammunition_magazine": 0
+    },
+    "reserved_cargo": {
+      "cargo.special_alloy": 0
+    }
+  },
+  "capacity_after": {
+    "capacity_cm3": 2859200000,
+    "used_volume_cm3": 0,
+    "cargo_mass_g": 0,
+    "over_capacity": false,
+    "free_volume_cm3": 2859200000,
+    "reserved_ammunition": {
+      "ammunition_magazine": 0
+    },
+    "reserved_cargo": {
+      "cargo.special_alloy": 0
+    }
+  },
+  "hull_integrity_after": 0.98,
+  "resources": {
+    "filling_holds": [
+      {
+        "capacity_cm3": 2790000000,
+        "configuration": {
+          "id": "gtw.filling.rack",
+          "version": 1
+        },
+        "deck_id": "deck.0",
+        "policy": "gaotian.filling-capacity/hull-fraction-v1"
+      }
+    ],
+    "fire_control": {
+      "degraded": {
+        "direction_error_mdeg": 3000,
+        "position_error_mm": 12000,
+        "velocity_error_mmps": 2000
+      },
+      "normal": {
+        "direction_error_mdeg": 0,
+        "position_error_mm": 0,
+        "velocity_error_mmps": 0
+      }
+    },
+    "goods": [
+      {
+        "id": "cargo.special_alloy",
+        "unit": "crate",
+        "unit_mass_g": 100000,
+        "unit_volume_cm3": 5000000,
+        "version": 1
+      }
+    ],
+    "holds": [
+      {
+        "capacity_cm3": 125000000,
+        "module_id": "custom.cargo"
+      }
+    ],
+    "id": "gtw.preparation.technical.inventory",
+    "interface": "gaotian.persistent-ship-resources/h5b-v1",
+    "magazines": [
+      {
+        "capacity_resources": 100,
+        "module_id": "ammunition_magazine"
+      }
+    ],
+    "projectiles": [
+      {
+        "id": "projectile.p2a.ordinary",
+        "mass_g": 10000,
+        "speed_mmps": 500000,
+        "version": 1
+      }
+    ],
+    "recipes": [
+      {
+        "ammo_cost": 5,
+        "cargo_costs": [],
+        "id": "recipe.x1a.ordinary",
+        "projectile": {
+          "id": "projectile.p2a.ordinary",
+          "version": 1
+        },
+        "reload_steps": 120,
+        "rounds": 1,
+        "version": 1
+      }
+    ],
+    "source_seed_sha256": "222fb33791a9778699a6d477fc359fa455ff4a927f03c944589ece330ffd4532",
+    "version": 1,
+    "weapons": [
+      {
+        "module_id": "weapon_upper_port",
+        "ready_capacity": 1,
+        "recipe_ids": [
+          "recipe.x1a.ordinary"
+        ],
+        "turret": {
+          "maximum_mdeg": 90000,
+          "minimum_mdeg": -90000,
+          "slew_mdeg_per_s": 30000
+        }
+      }
+    ]
+  }
+}

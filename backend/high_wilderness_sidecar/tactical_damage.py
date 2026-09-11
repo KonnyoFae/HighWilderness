@@ -12,6 +12,9 @@ from 高天荒野舰艇炮弹与甲弹公式 import (ArmorState, ImpactOutcome, 
     resolve_armor_impact, incidence_angle_deg, relative_impact_velocity_xy)
 from .simplified_flight import ImpactBatch
 from .tactical_devices import DeviceOperation
+from .structural_durability import compile_durability, REFERENCE_MAXIMUM_POINTS
+from .tactical_ammunition import compile_profiles, INCENDIARY
+from .tactical_ignition import Attempt
 
 
 def rotate(p, a):
@@ -72,6 +75,8 @@ class DamageState:
     recent: tuple = ()
     hits: int = 0
     expired: int = 0
+    fuel_damage: tuple = ()
+    ignition_attempts: tuple = ()
 
 
 class DamageKernel:
@@ -81,6 +86,13 @@ class DamageKernel:
         self.profile = scenario.projectile_catalog.profile('gtw.munition.fixture.76mm.standard')
         self.edges, self.cells, self.radius, self.indices = [], [], [], []
         armor = []
+        self.structural_durability = tuple(compile_durability(b.snapshot.hull, scenario.material_registry) for b in scenario.bindings)
+        self.hull_damage_points = self.profile.damage.hull_integrity_damage_fraction * REFERENCE_MAXIMUM_POINTS
+        self.hull_damage_factors = tuple(self.hull_damage_points * d.inverse_maximum_points for d in self.structural_durability)
+        self.profiles = compile_profiles(self.profile)
+        self.fuel_areas = tuple(() for _ in session._seeds)
+        self.profile_hull_factors = {key: tuple(p.damage.hull_integrity_damage_fraction * REFERENCE_MAXIMUM_POINTS * d.inverse_maximum_points
+            for d in self.structural_durability) for key,p in self.profiles.items()}
         for binding, seed in zip(scenario.bindings, session._seeds):
             hull = binding.snapshot.hull
             geometry = compile_projectile_target_geometry(binding.snapshot)
@@ -109,11 +121,14 @@ class DamageKernel:
 
     def advance(self, before, world, projectiles, state):
         if not projectiles:
-            return (), state, ImpactBatch()
+            return (), replace(state,fuel_damage=(),ignition_attempts=()) if state.fuel_damage or state.ignition_attempts else state, ImpactBatch()
         armor = list(state.armor)
         survivors, events, damages, hull = [], [], {}, {}
         expired = 0
+        tank_damage = {}
+        attempts = []
         for p in sorted(projectiles, key=lambda p: p.id):
+            profile = self.profiles[p.projectile_key]
             if world.fixed_step >= p.expires:
                 expired += 1
                 continue
@@ -155,15 +170,17 @@ class DamageKernel:
             relative = rotate(velocity, -heading)
             speed = hypot(*relative)
             direction = (relative[0]/speed, relative[1]/speed) if speed > 1e-9 else (0., 0.)
-            damage = self.profile.damage
+            damage = profile.damage
             ids, amount, outcome, energy = [], damage.surface_module_damage_points, 'module', 0.
             armor_before = armor_after = None
+            fuel_ids=[]
+            internal_ids=set()
             if kind == 1:
                 ids = [self.cells[i][n].module_id]
             else:
                 edge = self.edges[i][n]
                 armor_before = armor[i][n]
-                result = resolve_armor_impact(self.profile.penetration,
+                result = resolve_armor_impact(profile.penetration,
                     ArmorState(edge.protection, edge.thickness_mm, armor_before), speed,
                     incidence_angle_deg(relative, edge.start, edge.end),
                     ricochet_roll=((p.id*2654435761+world.fixed_step*12345) & 0xffffffff)/0xffffffff)
@@ -179,26 +196,37 @@ class DamageKernel:
                             continue
                         entry = _segment_aabb_entry_fraction(point, ray_end, *cell.bounds)
                         if entry is not None:
-                            crossed.append((entry, cell.module_id, cell.center))
+                            crossed.append((entry, cell.module_id, cell.center, cell.exposed))
                     crossed.sort()
                     if crossed:
                         first = crossed[0][2]
-                        ids = [k for _, k, c in crossed if self.profile.penetration.aftereffect == Aftereffect.KINETIC_RAY
+                        ids = [k for _, k, c, exposed in crossed if profile.penetration.aftereffect == Aftereffect.KINETIC_RAY
                             or hypot(c[0]-first[0], c[1]-first[1]) <= damage.internal_effect_radius_m]
+                    if p.projectile_key == INCENDIARY:
+                        internal_ids={k for _,k,_,exposed in crossed if not exposed} & set(ids)
                     amount = damage.internal_module_damage_points*energy
-                    hull[i] = min(1., hull.get(i, 0.)+damage.hull_integrity_damage_fraction*energy)
+                    from .tactical_fuel import crosses_polygon
+                    fuel_ids=[key for key,level,polys in self.fuel_areas[i] if level==p.deck_level
+                              and any(crosses_polygon(point,ray_end,poly) for poly in polys)]
+                    for key in fuel_ids:
+                        tank_damage[i,key]=tank_damage.get((i,key),0)+amount
+                    hull[i] = min(1., hull.get(i, 0.)+self.profile_hull_factors[p.projectile_key][i]*energy)
                 else:
                     ids = [c.module_id for c in self.cells[i] if c.exposed and c.level == p.deck_level
                         and hypot(c.center[0]-point[0], c.center[1]-point[1]) <= damage.surface_effect_radius_m]
             ids = sorted(set(ids))
             for k in ids:
                 damages[i, k] = damages.get((i, k), 0.)+amount
+            if p.projectile_key == INCENDIARY and energy > 0:
+                attempts.extend(Attempt(p.id,p.ship_id,i,k) for k in sorted(internal_ids))
             events.append(dict(projectile_id=p.id, step=world.fixed_step, source_ship_id=p.ship_id, ship_id=ship.ship_id,
+                projectile_type=p.projectile_key[0], projectile_version=p.projectile_key[1],
                 position_m=position, deck_level=p.deck_level, outcome=outcome, module_ids=ids,
                 module_damage=amount if ids else 0., armor_before=armor_before, armor_after=armor_after,
-                residual_energy_ratio=energy))
+                residual_energy_ratio=energy, **(dict(fuel_tank_ids=fuel_ids) if fuel_ids else {})))
         operations = tuple(DeviceOperation(world.epoch, world.ships[i].ship_id, k,
             world.ships[i].devices.modules[self.indices[i][k]].sequence+1, 'damage', amount, world.fixed_step, 'closing')
             for (i, k), amount in sorted(damages.items()) if amount > 0)
-        result = DamageState(tuple(armor), (state.recent+tuple(events))[-32:], state.hits+len(events), state.expired+expired)
+        result = DamageState(tuple(armor), (state.recent+tuple(events))[-32:], state.hits+len(events), state.expired+expired,
+                             tuple((i,k,a) for (i,k),a in sorted(tank_damage.items()) if a>0), tuple(attempts))
         return tuple(survivors), result, ImpactBatch(operations, tuple((world.ships[i].ship_id, v) for i, v in sorted(hull.items())))

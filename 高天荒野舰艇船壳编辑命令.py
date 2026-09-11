@@ -5,6 +5,7 @@ from math import isfinite
 from 高天荒野舰艇数据契约 import (
     ContractError, HullBlueprintInput, HullRegionInput, DeckInput, ResourceReference,
 )
+from 高天荒野舰艇边缘填充 import HULL_FILLING_SCHEMA, NONE, configuration
 
 HULL_EDIT_COMMAND_INTERFACE_ID = "gaotian.hull-edit-commands/v1alpha1"
 
@@ -63,18 +64,21 @@ def validate_hull_draft(source):
     if not isinstance(source, dict) or not isinstance(source.get('decks'), list):
         fail('invalid_draft', '$.decks', '草稿必须含甲板列表')
     header = deepcopy(source)
-    header['decks'] = [_WITNESS_DECK]
+    with_filling = source.get('schema') == HULL_FILLING_SCHEMA
+    header['decks'] = [deepcopy(_WITNESS_DECK)]
+    if with_filling:
+        header['decks'][0]['filling'] = dict(id=NONE, version=1)
     HullBlueprintInput.parse(header)
     if len(source['decks']) > MAX_DECKS:
         fail('draft_limit', '$.decks', '甲板超过 64 层')
     ids, levels = set(), set()
     for di, deck in enumerate(source['decks']):
         path = f'$.decks[{di}]'
-        exact(deck, {'id', 'level', 'is_base', 'structure_material', 'regions'}, path)
+        exact(deck, {'id', 'level', 'is_base', 'structure_material', 'regions'} | ({'filling'} if with_filling else set()), path)
         if not isinstance(deck['regions'], list) or len(deck['regions']) > MAX_REGIONS:
             fail('draft_limit', path + '.regions', '区域必须为不超过 256 项的列表')
         probe = deepcopy(deck); probe['regions'] = [_WITNESS_REGION]
-        DeckInput.parse(probe, path)
+        DeckInput.parse(probe, path, with_filling=with_filling)
         if deck['id'] in ids or deck['level'] in levels:
             fail('duplicate_deck', path, '甲板标识及层级必须唯一')
         ids.add(deck['id']); levels.add(deck['level'])
@@ -134,6 +138,7 @@ def _apply(source, command, args):
         'hull.mirror_region': {'deck_id', 'source_region_id', 'target_region_id'},
         'hull.set_edge_armor': {'deck_id', 'region_id', 'edge_index', 'material', 'thickness_m'},
         'hull.set_structure_material': {'deck_id', 'material'}, 'hull.rename': {'name'},
+        'hull.set_filling': {'deck_id', 'configuration'},
     }
     if command not in fields:
         fail('command_not_supported', '$.command', '未知船壳命令')
@@ -143,9 +148,17 @@ def _apply(source, command, args):
     if command == 'hull.add_deck':
         deck_id = identity(args['deck_id']); integer(args['level'], '$.arguments.level')
         source['decks'].append({'id': deck_id, 'level': args['level'], 'is_base': not source['decks'],
-            'structure_material': deepcopy(args['material']), 'regions': []})
+            'structure_material': deepcopy(args['material']), 'regions': [],
+            **({'filling': dict(id=NONE, version=1)} if source['schema'] == HULL_FILLING_SCHEMA else {})})
         return
     deck = find(source['decks'], args['deck_id'])
+    if command == 'hull.set_filling':
+        configuration(args['configuration'])
+        source['schema'] = HULL_FILLING_SCHEMA
+        for row in source['decks']:
+            row.setdefault('filling', dict(id=NONE, version=1))
+        deck['filling'] = deepcopy(args['configuration'])
+        return
     if command == 'hull.remove_deck':
         source['decks'].remove(deck); return
     if command == 'hull.set_base_deck':

@@ -244,7 +244,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl 
             gunControl.onFire(world(p, camera));
           } else if (gunControl.weaponId) {
             const ship = pickShip(view, p, camera);
-            if (ship && ship !== gunControl.ownShipId) {
+            if (ship && view.geometry.ships.find(s=>s.id===ship)?.side_id !== view.geometry.ships.find(s=>s.id===gunControl.ownShipId)?.side_id) {
               const hits = pickModules(view, p, camera, ship, false, level);
               candidateMode.current = "target";
               if (hits.length === 1) { gunControl.onTarget(ship, hits[0].moduleId); setCandidates([]); }

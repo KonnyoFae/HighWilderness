@@ -161,6 +161,13 @@ class EditorService:
             return document.preview(include_edge_space=True).to_dict()
         preview = document.preview().to_dict()
         preview["model"]["layout"] = document.layout_preview()
+        if any(d.filling for d in document._hull.decks):
+            from 高天荒野舰艇边缘空间 import build_deck_edge_space
+            hull = document._hull
+            inputs = {d.id: d for d in hull.normalized_blueprint.decks}
+            preview['model']['filling_decks'] = [dict(deck_id=d.id, **d.filling.to_dict(),
+                pieces=build_deck_edge_space([r.to_dict() for r in inputs[d.id].regions], d.internal_cells)['pieces'])
+                for d in hull.decks if d.filling]
         preview["model"]["weapon_control"] = document.weapon_control_preview(preview["model"]["layout"])
         return preview
 

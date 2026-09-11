@@ -1,7 +1,8 @@
 """E2.1 module durability authority and compiled host invalidation.
 
 Inputs are internal test/domain operations, never a desktop trust interface.
-No repair rule is invented: test_rebuild is an explicitly enabled fixture reset.
+D1c repair is a bounded partial-health operation admitted only at its maintenance boundary.
+The separate test_rebuild remains an explicitly enabled fixture reset.
 Power, staffing, operating modes and command dependencies belong to E2.2.
 """
 from dataclasses import dataclass, replace
@@ -43,7 +44,7 @@ class DeviceOperation:
     ship_id: str
     module_id: str
     sequence: int  # contiguous per module, issued by the controlled domain caller
-    kind: str  # damage or explicitly enabled test_rebuild
+    kind: str  # damage, maintenance-only repair, or explicitly enabled test_rebuild
     amount: float
     fixed_step: int
     phase: str
@@ -112,7 +113,7 @@ class DeviceKernel:
         return tuple((name, tuple(reason for reason, blocked in zip(OWNED_REASONS, self.reasons(state, i)) if blocked))
             for i, name in enumerate(self.engine_ids))
 
-    def validate_operation(self, op, *, epoch, ship_id, step, allow_rebuild):
+    def validate_operation(self, op, *, epoch, ship_id, step, allow_rebuild, allow_repair=False):
         require(type(op) is DeviceOperation, "Unknown device operation")
         require(op.epoch == epoch and op.ship_id == ship_id and type(op.module_id) is str
             and op.module_id in self.by_id, "Foreign device operation")
@@ -120,7 +121,8 @@ class DeviceKernel:
             and op.fixed_step == step + (op.phase == "closing"), "Wrong device boundary")
         require(type(op.sequence) is int and op.sequence > 0, "Invalid operation sequence")
         require(number(op.amount) and op.amount >= 0, "Invalid damage amount")
-        require(op.kind == "damage" or op.kind == "test_rebuild" and allow_rebuild and op.amount == 0,
+        require(op.kind == "damage" or op.kind == "test_rebuild" and allow_rebuild and op.amount == 0
+            or op.kind == "repair" and allow_repair and op.amount > 0,
             "Unsupported repair or disabled fixture rebuild")
 
     def boundary(self, before, operations):
@@ -135,7 +137,11 @@ class DeviceKernel:
                 require(signature == old.last_operation, "Conflicting duplicate device operation")
                 continue
             require(op.sequence == old.sequence + 1, "Stale or skipped device operation")
-            hp = max(0.0, old.durability_points - op.amount) if op.kind == "damage" else self.seed.modules[i].maximum_durability_points
+            if op.kind == 'repair':
+                require(old.durability_points > EPS, 'Repair cannot rebuild a destroyed module')
+                hp = min(self.seed.modules[i].maximum_durability_points, old.durability_points + op.amount)
+            else:
+                hp = max(0.0, old.durability_points - op.amount) if op.kind == "damage" else self.seed.modules[i].maximum_durability_points
             updated[i] = ModuleState(hp, op.sequence, signature)
             # Partial health changes never invalidate fixed engine contributions.
             if (old.durability_points <= EPS) != (hp <= EPS):

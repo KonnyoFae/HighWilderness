@@ -942,7 +942,8 @@ impl BackendSupervisor {
 
     pub fn tactical_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
         if !matches!(request.method.as_str(), "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
-            | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.gun" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.withdraw" | "tactical.realtime.close") {
+            | "tactical.preparation.library" | "tactical.preparation.import" | "tactical.preparation.open" | "tactical.preparation.read" | "tactical.preparation.draft" | "tactical.preparation.preview" | "tactical.preparation.commit" | "tactical.preparation.discard"
+            | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.gun" | "tactical.realtime.damage_control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.withdraw" | "tactical.realtime.close") {
             return Err(HostFailure::host("method_not_supported", "tactical method not enabled"));
         }
         if request.session_id.is_some() || request.expected_revision.is_some() {
@@ -1346,6 +1347,67 @@ mod tests {
         red["arguments"]["ship_id"] = json!("ship.web.red");
         assert_eq!(supervisor.tactical_request(request("tactical.step", json!({"scene_id": created["scene_id"], "input": red}))).unwrap_err().code, "tactical_command.direct_ship_mismatch");
         supervisor.tactical_request(request("tactical.close", json!({"scene_id":created["scene_id"]}))).unwrap();
+        supervisor.stop("user_exit").unwrap();
+    }
+
+    #[test]
+    fn real_preparation_routes_and_commit_retry() {
+        let supervisor = BackendSupervisor::new(repo_root());
+        let (events, _) = sink();
+        let status = supervisor.start(events).unwrap();
+        assert!(status.capabilities.contains(&"tactical.preparation.commit".into()));
+        let instance = status.backend_instance_id.unwrap();
+        let request = |method: &str, params: Value| EditorRequest {
+            backend_instance_id: instance.clone(), method: method.into(), params,
+            session_id: None, expected_revision: None,
+        };
+        let library = supervisor.tactical_request(request("tactical.preparation.library", json!({}))).unwrap();
+        let source = library["sources"].as_array().unwrap().iter()
+            .find(|s| s["name"].as_str().unwrap().contains("常规有人")).unwrap();
+        supervisor.tactical_request(request("tactical.preparation.import", json!({
+            "instance_id":"instance.native.preparation","source":{"kind":"resource","value":source["key"]}
+        }))).unwrap();
+        let opened = supervisor.tactical_request(request("tactical.preparation.open", json!({
+            "preparation_id":"preparation.native","instance_ids":["instance.native.preparation"]
+        }))).unwrap();
+        let mut draft = opened["draft"].clone();
+        draft["revision"] = json!(1);
+        draft["ships"][0]["magazines"][0]["quantity"] = json!(20);
+        draft["ships"][0]["cargo"] = json!([{"good_id":"cargo.engineering_parts","quantity":4}]);
+        draft["ships"][0]["damage_controls"][0]["prepare"] = json!(true);
+        supervisor.tactical_request(request("tactical.preparation.draft", json!({"draft":draft,"expected_saved_revision":0}))).unwrap();
+        let args = json!({"preparation_id":"preparation.native","revision":1});
+        let preview = supervisor.tactical_request(request("tactical.preparation.preview", args.clone())).unwrap();
+        assert_eq!(preview["can_commit"], true);
+        let saved = supervisor.tactical_request(request("tactical.preparation.commit", args.clone())).unwrap();
+        assert_eq!(saved["supply_after"]["ammunition_resources"], 980);
+        assert_eq!(saved["ships"][0]["after"]["state"]["damage_controls"][0]["quantity_units"], 100000);
+        assert_eq!(supervisor.tactical_request(request("tactical.preparation.commit", args.clone())).unwrap(), saved);
+        let read = supervisor.tactical_request(request("tactical.preparation.read", json!({"preparation_id":"preparation.native"}))).unwrap();
+        assert_eq!(read["receipt"], saved);
+        supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"tactical"}))).unwrap();
+        let entry_args = json!({"preparation_id":"preparation.native","launch_id":"launch.native.prepared","direct_instance_id":"instance.native.preparation"});
+        let entry = supervisor.tactical_request(request("tactical.realtime.deploy_prepared", entry_args.clone())).unwrap();
+        assert_eq!(entry["view"]["static"]["scenario_id"], "gtw.prepared.skirmish.v1");
+        assert_eq!(supervisor.tactical_request(request("tactical.realtime.deploy_prepared", entry_args)).unwrap()["status"]["epoch"], entry["status"]["epoch"]);
+        let query = supervisor.tactical_request(request("tactical.realtime.prepared_entry", json!({"launch_id":"launch.native.prepared"}))).unwrap();
+        assert_eq!(query["scene"]["status"]["epoch"], entry["status"]["epoch"]);
+        let scene_args=json!({"scene_id":entry["status"]["epoch"]});
+        let resumed=supervisor.tactical_request(request("tactical.realtime.resume",scene_args.clone())).unwrap();
+        let device=&resumed["view"]["gunnery"]["damage_control"]["devices"][0];
+        let damage_input=json!({"epoch":entry["status"]["epoch"],"generation":resumed["status"]["generation"],
+            "sequence":1,"ship_id":resumed["direct_ship_id"],"module_id":device["module_id"],"kind":"enabled","arguments":{"enabled":true}});
+        let damage_args=json!({"scene_id":entry["status"]["epoch"],"input":damage_input});
+        let enabled=supervisor.tactical_request(request("tactical.realtime.damage_control",damage_args.clone())).unwrap();
+        assert_eq!(enabled["view"]["gunnery"]["damage_control"]["devices"][0]["enabled"],true);
+        supervisor.tactical_request(request("tactical.realtime.pause",scene_args.clone())).unwrap();
+        let retried=supervisor.tactical_request(request("tactical.realtime.damage_control",damage_args)).unwrap();
+        assert_eq!(retried["view"]["gunnery"]["damage_control"]["command_sequence"],1);
+        let ended=supervisor.tactical_request(request("tactical.realtime.withdraw",scene_args.clone())).unwrap();
+        supervisor.tactical_request(request("tactical.realtime.save",json!({"settlement_id":ended["settlement"]["result"]["settlement_id"]}))).unwrap();
+        supervisor.tactical_request(request("tactical.realtime.close",scene_args)).unwrap();
+        supervisor.tactical_request(request("tactical.set_mode",json!({"mode":"editor"}))).unwrap();
+        supervisor.tactical_request(request("tactical.preparation.discard", args)).unwrap();
         supervisor.stop("user_exit").unwrap();
     }
 

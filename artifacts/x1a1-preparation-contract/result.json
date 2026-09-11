@@ -1,0 +1,33 @@
+{
+  "status": "X1A1_SCOPED_PASS",
+  "checks": {
+    "saved_editor_document_compiled": true,
+    "archived_design_restored": true,
+    "empty_new_inventory": true,
+    "damaged_record_unchanged": true,
+    "overcapacity_preserved": true,
+    "draft_roundtrip": true
+  },
+  "snapshot_sha256": "6964fbb8c334762d3550187b0e39bc1b60f77a2f961bb5818136a5cef4d5e9f3",
+  "resources_sha256": "1cca1a709dfa43591c8d2d9899d3c17195ce6fbb622e9cb5ddb05f390e1f4328",
+  "inventory_summary": {
+    "capacity_cm3": 0,
+    "used_volume_cm3": 250000000,
+    "cargo_mass_g": 5000000,
+    "over_capacity": true,
+    "free_volume_cm3": 0,
+    "reserved_cargo": {
+      "cargo.special_alloy": 0
+    },
+    "reserved_ammunition": {
+      "ammunition_magazine": 0
+    }
+  },
+  "not_implemented": [
+    "supply_and_preload_commit",
+    "preparation_ui",
+    "custom_design_live_battle_route"
+  ],
+  "prototype_policy": "gtw.preparation.technical.inventory",
+  "swap_policy": "explicit-discard-no-refund/v1"
+}

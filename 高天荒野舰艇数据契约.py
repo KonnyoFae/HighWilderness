@@ -3757,11 +3757,16 @@ class DeckInput:
     is_base: bool
     structure_material: ResourceReference
     regions: tuple[HullRegionInput, ...]
+    filling: ResourceReference | None = None
 
     @classmethod
-    def parse(cls, value: Any, path: str) -> "DeckInput":
+    def parse(cls, value: Any, path: str, *, with_filling: bool = False) -> "DeckInput":
         obj = _object(value, path)
-        _keys(obj, path, ("id", "level", "is_base", "structure_material", "regions"))
+        _keys(obj, path, ("id", "level", "is_base", "structure_material", "regions") + (("filling",) if with_filling else ()))
+        filling = ResourceReference.parse(obj['filling'], f'{path}.filling') if with_filling else None
+        if filling is not None:
+            from 高天荒野舰艇边缘填充 import configuration
+            configuration(filling)
         regions_raw = _array(obj["regions"], f"{path}.regions")
         if not regions_raw:
             raise ContractError("array.empty", f"{path}.regions", "甲板至少需要一个区域")
@@ -3774,6 +3779,7 @@ class DeckInput:
                 HullRegionInput.parse(item, f"{path}.regions[{index}]")
                 for index, item in enumerate(regions_raw)
             ),
+            filling,
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -3783,6 +3789,7 @@ class DeckInput:
             "level": self.level,
             "regions": [region.to_dict() for region in self.regions],
             "structure_material": self.structure_material.to_dict(),
+            **({"filling": self.filling.to_dict()} if self.filling is not None else {}),
         }
 
 
@@ -3835,6 +3842,7 @@ class HullBlueprintInput:
     fixture_level: str
     grid: GridInput
     decks: tuple[DeckInput, ...]
+    schema: str = SCHEMA_ID
 
     @classmethod
     def parse(cls, resource: Any, path: str = "$") -> "HullBlueprintInput":
@@ -3844,7 +3852,8 @@ class HullBlueprintInput:
             path,
             ("schema", "kind", "id", "version", "name", "fixture_level", "grid", "decks"),
         )
-        if obj["schema"] != SCHEMA_ID:
+        from 高天荒野舰艇边缘填充 import HULL_FILLING_SCHEMA
+        if obj["schema"] not in (SCHEMA_ID, HULL_FILLING_SCHEMA):
             raise ContractError("schema.unsupported", f"{path}.schema", str(obj["schema"]))
         if obj["kind"] != "HullBlueprint":
             raise ContractError(
@@ -3864,7 +3873,8 @@ class HullBlueprintInput:
             _string(obj["name"], f"{path}.name"),
             fixture_level,
             GridInput.parse(obj["grid"], f"{path}.grid"),
-            tuple(DeckInput.parse(item, f"{path}.decks[{index}]") for index, item in enumerate(decks_raw)),
+            tuple(DeckInput.parse(item, f"{path}.decks[{index}]", with_filling=obj['schema'] == HULL_FILLING_SCHEMA) for index, item in enumerate(decks_raw)),
+            obj['schema'],
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -3875,7 +3885,7 @@ class HullBlueprintInput:
             "id": self.id,
             "kind": "HullBlueprint",
             "name": self.name,
-            "schema": SCHEMA_ID,
+            "schema": self.schema,
             "version": self.version,
         }
 

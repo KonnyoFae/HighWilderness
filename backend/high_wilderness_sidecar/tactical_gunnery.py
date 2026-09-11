@@ -10,6 +10,7 @@ from math import atan2, cos, hypot, pi, sin, sqrt
 from 高天荒野舰艇水平射界 import horizontal_fire_arc
 from 高天荒野舰艇数据契约 import canonical_sha256
 from . import persistent_ship as ps, tactical_inventory as ti
+from .tactical_ammunition import ORDINARY, SUPPORTED, INCENDIARY
 
 RAD = pi / 180000
 RECIPE = 'recipe.p2a.ordinary'
@@ -101,6 +102,9 @@ class GunState:
     shots: int = 0
     deck_level: int = 0
     rng: int = 1
+    reload_recipe_id: str | None = None
+    reload_blocked_key: tuple | None = None
+    reload_blocked_reason: str | None = None
 
 
 @dataclass(frozen=True)
@@ -125,6 +129,7 @@ class Projectile:
     expires: int
     deck_level: int = 0
     height_layer: str | None = None
+    projectile_key: tuple = ORDINARY
 
 
 def resource_pack(seed, config):
@@ -145,7 +150,7 @@ def resource_pack(seed, config):
 
 
 class GunneryBattle:
-    def __init__(self, session, scenario, config, *, damage_enabled=False, enemy_fire=True, instance_bindings=None, instance_prefix='instance.p2a.'):
+    def __init__(self, session, scenario, config, *, damage_enabled=False, enemy_fire=True, instance_bindings=None, instance_prefix='instance.p2a.', allow_test_ignition=False):
         config = ps.clone(config)
         ps.obj(config, 'interface id version description ammo_capacity initial_ammo ammo_cost rounds reload_steps cooldown_steps '
             'speed_mmps mass_g slew_mdeg_per_s minimum_mdeg maximum_mdeg intrinsic_error_mdeg aligned_tolerance_mdeg '
@@ -166,7 +171,7 @@ class GunneryBattle:
         ps.need(len(scenario.bindings) == len(session._seeds), '$', 'Incomplete geometry binding')
         if instance_bindings is not None:
             ps.need(len(instance_bindings) == len(session._seeds), '$.bindings', 'Incomplete persisted inventory mapping')
-        bindings, guns = [], []
+        bindings, guns, gun_recipes, gun_projectiles = [], [], [], []
         self._modules, self._indices, self._sides, self._radars, self._controllers = [], [], [], [], []
         self._blocked_cache = None
         for index, (seed, binding) in enumerate(zip(session._seeds, scenario.bindings)):
@@ -185,6 +190,7 @@ class GunneryBattle:
                 ps.need(pack.seed.contributions == seed.contributions and pack.seed.model == seed.model,
                         '$.bindings', 'Persisted inventory design mismatch')
                 ps.need(all(w['reload'] is None for w in value['weapons']), '$.reload', 'Finish settlement before deployment')
+                ti.dc.require_settled(value)
             bindings.append(ps.InstanceBinding(pack, ps.parse_instance(value, pack)))
             modules = {m.id: m for m in seed.resources.modules}
             self._modules.append(modules)
@@ -201,12 +207,33 @@ class GunneryBattle:
                 cap = m.prototype.capability.to_dict()
                 ps.need(cap['weapon_class'] == 'gun' and cap['fire_control_requirement'] in ('none', 'solution'), '$.weapon', 'Ordinary guns only; guidance is not degraded')
                 arc = horizontal_fire_arc(binding.snapshot.hull, m.anchor_m, m.base_deck_level)
+                definition=pack.definition()
+                spec=next(w for w in definition['weapons'] if w['module_id']==m.id)
+                loaded=next(w for w in value['weapons'] if w['module_id']==m.id)
+                choices={}
+                for choice in spec['recipe_ids']:
+                    recipe=next(r for r in definition['recipes'] if r['id']==choice)
+                    projectile=next(p for p in definition['projectiles'] if p['id']==recipe['projectile']['id'])
+                    key=(projectile['id'],projectile['version'])
+                    ps.need(key in SUPPORTED and projectile['speed_mmps']==config['speed_mmps'] and projectile['mass_g']==config['mass_g'],
+                        '$.recipe','当前炮击内核不支持此弹丸版本或参数')
+                    ps.need(key != INCENDIARY or 'ignition' in definition, '$.recipe', '燃烧弹需要新点燃配置')
+                    choices[choice]=key
+                gun_projectiles.append(choices)
+                recipe_id=loaded['recipe_id'] or next((r for r,key in choices.items() if key==ORDINARY),spec['recipe_ids'][0])
+                gun_recipes.append(recipe_id)
+                turret=spec['turret']
                 guns.append(Gun(index, m.id, tuple(m.anchor_m), m.rotation_deg*pi/180,
-                    config['minimum_mdeg']*RAD, config['maximum_mdeg']*RAD, config['slew_mdeg_per_s']*RAD/60,
+                    turret['minimum_mdeg']*RAD, turret['maximum_mdeg']*RAD, turret['slew_mdeg_per_s']*RAD/60,
                     tuple(tuple(interval) for interval in arc['blocked_intervals_deg']), cap['minimum_range_m'], cap['maximum_range_m']))
         self.inventory = ti.InventoryBattle(ps.PreparedBattle(session, tuple(bindings)))
+        if self.damage:
+            self.damage.fuel_areas=tuple(tuple((t['tank_id'],t['deck_level'],tuple(tuple(tuple(p) for p in poly) for poly in t['pieces']))
+                for t in inv._fuel_tanks.values() if t['module_id'] is None) for inv in self.inventory.inventories)
         self.guns = tuple(guns)
-        self.states = tuple(GunState(rng=(config['seed']+n*65537) & 0xffffffff) for n in range(len(guns)))
+        self._gun_recipes = tuple(gun_recipes)
+        self._gun_projectiles = tuple(gun_projectiles)
+        self.states = tuple(GunState(rng=(config['seed']+n*65537) & 0xffffffff, reload_recipe_id=gun_recipes[n]) for n in range(len(guns)))
         self.projectiles = ()
         self._contacts, self._lock_started = {}, {}
         self._availability_key, self._available = None, None
@@ -214,6 +241,12 @@ class GunneryBattle:
         self._direct_index = next(n for n, s in enumerate(session.world.ships) if s.ship_id == session._direct)
         # Prototype capabilities are copied only at entry, not parsed per step.
         self._capabilities = tuple({k: m.prototype.capability.to_dict() for k, m in modules.items()} for modules in self._modules)
+        from .tactical_fire import FireRuntime
+        self.fire = FireRuntime(self, allow_test_ignition=allow_test_ignition)
+        from .tactical_repair import RepairRuntime
+        self.repair = RepairRuntime(self)
+        from .tactical_ignition import IgnitionRuntime
+        self.ignition = IgnitionRuntime(self)
 
     def _guard(self):
         ps.need(not self.session._executing, '$', 'Gunnery requires idle owner boundary')
@@ -235,7 +268,12 @@ class GunneryBattle:
         ps.need(v['sequence'] == self.sequence+1, '$.sequence', 'Expired or skipped gun sequence')
         state = self.states[index]
         kind, args = v['kind'], v['arguments']
-        if kind == 'mode':
+        if kind == 'ammunition':
+            ps.obj(args, 'recipe_id', '$.arguments')
+            ps.identifier(args['recipe_id'], '$.recipe_id')
+            ps.need(args['recipe_id'] in self._gun_projectiles[index], '$.recipe_id', '此武器不支持所选弹种')
+            state = replace(state, reload_recipe_id=args['recipe_id'])
+        elif kind == 'mode':
             ps.obj(args, 'mode', '$.arguments')
             ps.need(args['mode'] in ('auto', 'manual'), '$.mode', 'Unknown gun mode')
             state = replace(state, mode=args['mode'], target=None, manual_point=None, fire_requested=False, aim_point=None, status='no_target')
@@ -268,6 +306,17 @@ class GunneryBattle:
         else:
             ps.need(False, '$.kind', 'Unknown gun command')
         states = list(self.states); states[index] = state
+        if kind == 'ammunition':
+            # Cancel on the acknowledged command boundary, so an immediate
+            # withdrawal cannot complete a batch the player has already replaced.
+            ship_index = self.guns[index].ship_index
+            current = self.inventory.inventories[ship_index]
+            loading = next(w for w in current._value['weapons'] if w['module_id'] == v['weapon_id'])['reload']
+            if loading and loading['recipe_id'] != state.reload_recipe_id:
+                candidate = current.fork()
+                candidate.command(epoch=candidate.epoch, sequence=candidate.sequence+1, kind='cancel_reload', target=v['weapon_id'])
+                inventories = list(self.inventory.inventories); inventories[ship_index] = candidate
+                self.inventory.inventories = tuple(inventories)
         self.states = tuple(states)
         self.sequence, self._last = v['sequence'], v
         return True
@@ -289,7 +338,7 @@ class GunneryBattle:
                     return available[k]
                 m, n = self._modules[index][k], self._indices[index][k]
                 functions = {'weapon': ('weapon.aim', 'weapon.fire'), 'sensor': ('sensor.search',),
-                             'fire_control': ('fire_control.solution',)}.get(m.prototype.category, ())
+                             'fire_control': ('fire_control.solution',), 'damage_control': ('damage_control.firefighting',)}.get(m.prototype.category, ())
                 automatic = m.prototype.automation.level == 'full' or bool(functions) and all(
                     f in m.prototype.automation.automated_functions for f in functions)
                 if ship.devices.modules[n].durability_points <= 1e-8:
@@ -346,27 +395,38 @@ class GunneryBattle:
     def step(self, control=None, *, project=None, **flight_commands):
         self._guard()
         ps.need(self.ending is None, '$', 'Battle has ended')
+        if self.fire.pending_modes:
+            existing = tuple(flight_commands.get('resource_operations', ()))
+            flight_commands['resource_operations'] = existing+self.fire.mode_operations(existing)
         staged = {}
         def impacts(before, candidate):
             survivors, damage_state, batch = self.damage.advance(before, candidate, self.projectiles, self.damage_state)
             staged.update(survivors=survivors, damage_state=damage_state)
+            if self.fire.enabled:
+                fires, events, batch = self.fire.damage(candidate, batch)
+                staged.update(fires=fires, fire_events=events)
             return batch
         def permissions(world, result, inventories):
             key, available = self._availability(world)
             staged.update(availability_key=key, available=available)
-            for gun in self.guns:
-                if available[gun.ship_index][gun.module_id] or not self._can_fire(world.ships[gun.ship_index], gun.ship_index):
-                    inv = inventories[gun.ship_index]
-                    if next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)['reload']:
-                        inv.command(epoch=inv.epoch, sequence=inv.sequence+1, kind='cancel_reload', target=gun.module_id)
+            if self.fire.enabled:
+                self.fire.permissions(world, inventories, available)
+            for gun,state in zip(self.guns,self.states):
+                inv = inventories[gun.ship_index]
+                loading=next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)['reload']
+                if loading and (loading['recipe_id'] != state.reload_recipe_id or available[gun.ship_index][gun.module_id]
+                    or not self._can_fire(world.ships[gun.ship_index], gun.ship_index)):
+                    inv.command(epoch=inv.epoch, sequence=inv.sequence+1, kind='cancel_reload', target=gun.module_id)
         def simulate(world, result, inventories):
             step = world.fixed_step
             availability_key, available = staged['availability_key'], staged['available']
             starts, contacts = {}, {}
             working_states = self.states
             if self.damage and self.enemy_fire and step >= 180:
-                working_states = tuple(replace(s, target=(self._direct_index, 'cic'))
-                    if self._sides[g.ship_index] != self._sides[self._direct_index] else s
+                working_states = tuple(replace(s, target=(self._direct_index, 'cic' if 'cic' in self._modules[self._direct_index] else None))
+                    if self._sides[g.ship_index] != self._sides[self._direct_index] else
+                    replace(s,target=(next(i for i,side in enumerate(self._sides) if side!=self._sides[g.ship_index]),None))
+                    if g.ship_index!=self._direct_index and s.mode=='auto' and s.target is None and any(side!=self._sides[g.ship_index] for side in self._sides) else s
                     for g, s in zip(self.guns, working_states))
             desired_targets = sorted({(g.ship_index, s.target[0]) for g, s in zip(self.guns, working_states) if s.mode == 'auto' and s.target})
             channel_use = {}
@@ -403,7 +463,7 @@ class GunneryBattle:
                 projectiles = list(staged['survivors'])
             states, projectile_sequence = [], self._projectile_sequence
             ending = self._ending_reason(world) if self.damage else None
-            for gun, state in zip(self.guns, working_states):
+            for gun_index, (gun, state) in enumerate(zip(self.guns, working_states)):
                 if ending:
                     states.append(state)
                     continue
@@ -418,6 +478,22 @@ class GunneryBattle:
                 status = available[gun.ship_index][gun.module_id]
                 if not self._can_fire(ship, gun.ship_index):
                     status = 'control_unavailable'
+                w = next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)
+                def transact(kind, **args):
+                    inv.command(epoch=inv.epoch, sequence=inv.sequence+1, kind=kind, target=gun.module_id, **args)
+                # Empty guns can load without a target. The selected recipe never
+                # changes already-loaded rounds or a projectile that has left the gun.
+                if status is None and w['ready_rounds'] == 0 and w['reload'] is None:
+                    retry_key = (state.reload_recipe_id, inv.sequence, inv._reservation_revision)
+                    if retry_key == state.reload_blocked_key:
+                        status = state.reload_blocked_reason
+                    else:
+                        try:
+                            transact('start_reload', recipe_id=state.reload_recipe_id)
+                        except ps.ContractError as exc:
+                            status = 'no_special_materials' if exc.message == 'Insufficient special materials' else 'no_ammunition'
+                            state = replace(state, reload_blocked_key=retry_key, reload_blocked_reason=status)
+                    w = next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)
                 if state.mode == 'auto':
                     aim = None
                     if state.target:
@@ -438,7 +514,7 @@ class GunneryBattle:
                         if aim is None:
                             status = status or 'target_unavailable'
                 if aim is None:
-                    states.append(replace(state, aim_point=None, status=status or 'no_target', fire_requested=False,
+                    states.append(replace(state, aim_point=None, status=status or ('reloading' if w['reload'] else 'no_target'), fire_requested=False,
                         quality=quality, quality_reason=quality_reason, lock_sources=sources))
                     continue
                 delta = difference(aim, origin)
@@ -454,15 +530,6 @@ class GunneryBattle:
                     'hull_blocked' if self._hull_blocked(gun, angle) else
                     'traversing' if abs(desired-angle) > self.config['aligned_tolerance_mdeg']*RAD else None)
                 w = next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)
-                def transact(kind, **args):
-                    inv.command(epoch=inv.epoch, sequence=inv.sequence+1, kind=kind, target=gun.module_id, **args)
-                # Even manual guns reload after exhausting the ready magazine.
-                if available[gun.ship_index][gun.module_id] is None and self._can_fire(ship, gun.ship_index) and w['ready_rounds'] == 0 and w['reload'] is None:
-                    try:
-                        transact('start_reload', recipe_id=RECIPE)
-                    except ps.ContractError:
-                        status = status or 'no_ammunition'
-                    w = next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)
                 if w['reload']:
                     status = status or 'reloading'
                 elif step < inv._cooldown[gun.module_id]:
@@ -482,12 +549,13 @@ class GunneryBattle:
                             direction = rotate((sin(launch_angle+gun.rotation), cos(launch_angle+gun.rotation)), m.heading_rad)
                             muzzle = add(origin, (direction[0]*3, direction[1]*3))
                             velocity = add(own_velocity, (direction[0]*self.config['speed_mmps']/1000, direction[1]*self.config['speed_mmps']/1000))
+                            shot_projectile = self._gun_projectiles[gun_index][w['recipe_id']]
                             transact('discharge', quantity=1, cooldown_steps=self.config['cooldown_steps'])
                             projectile_sequence += 1
                             projectiles.append(Projectile(projectile_sequence, ship.ship_id, gun.module_id, muzzle, muzzle, velocity,
                                 step+self.config['projectile_lifetime_steps'],
                                 self._modules[state.target[0]][state.target[1]].base_deck_level
-                                if state.mode == 'auto' and state.target and state.target[1] else 0 if state.mode == 'auto' else state.deck_level, m.height_layer))
+                                if state.mode == 'auto' and state.target and state.target[1] else 0 if state.mode == 'auto' else state.deck_level, m.height_layer, shot_projectile))
                             shots += 1
                             status = 'fired'
                             # Begin the next legal batch immediately, including after
@@ -495,11 +563,17 @@ class GunneryBattle:
                             w = next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)
                             if w['ready_rounds'] == 0:
                                 try:
-                                    transact('start_reload', recipe_id=RECIPE)
+                                    transact('start_reload', recipe_id=state.reload_recipe_id)
                                 except ps.ContractError:
                                     pass  # shot remains valid when reserve stock is empty
                 states.append(replace(state, angle=angle, aim_point=display_aim, fire_requested=False, quality=quality,
                     quality_reason=quality_reason, lock_sources=sources, status=status or 'ready', shots=shots, rng=rng))
+            if self.ignition.enabled and self.damage and staged['damage_state'].ignition_attempts and not ending:
+                fires, events = self.ignition.apply(world,staged['damage_state'].ignition_attempts,staged['fires'])
+                staged.update(fires=fires,fire_events=staged['fire_events']+events,ignited_ships={f.ship_index for f in fires})
+            if self.fire.enabled:
+                fires, controllers, events = self.fire.work(world, inventories, staged['fires'], available, ending=ending)
+                staged.update(fires=fires, fire_controllers=controllers, fire_events=staged['fire_events']+events)
             if ending:
                 for inv in inventories:
                     inv.prepare_settlement('ending.'+world.epoch)
@@ -508,15 +582,41 @@ class GunneryBattle:
                 states = [replace(s, target=None, manual_point=None, fire_requested=False, aim_point=None, status='battle_finished') for s in states]
             staged.update(states=tuple(states), projectiles=tuple(projectiles), contacts=contacts, starts=starts,
                 availability_key=availability_key, available=available, projectile_sequence=projectile_sequence)
+        def repairs(world, result, inventories):
+            batch, controllers, events = self.repair.plan(world, inventories, staged['fire_controllers'],
+                {f.ship_index for f in self.fire.fires} | staged.get('ignited_ships',set()))
+            staged.update(fire_controllers=controllers, fire_events=staged['fire_events']+events)
+            return batch
+        def fuel_losses(world,inventories):
+            from . import tactical_fuel as fuel
+            tank_losses={}
+            for n,key,amount in staged['damage_state'].fuel_damage:
+                tank_losses.setdefault(n,{})[key]=amount
+            result=[]
+            for n,(ship,inv) in enumerate(zip(world.ships,inventories)):
+                if not inv._fuel_tanks:continue
+                if ship.devices.revision==self.inventory._device_revisions[n] and n not in tank_losses:continue
+                health={m.instance_id:h.durability_points for m,h in zip(inv.pack.seed.devices.modules,ship.devices.modules)}
+                total=fuel.damage(inv,health,tank_losses.get(n,{}))
+                loss=ship.motion.fuel_units-total
+                ps.need(loss>=-1e-8,'$.fuel','Tactical fuel cannot increase')
+                if loss>0:result.append((ship.ship_id,loss))
+            return tuple(result)
         result = self.inventory.step(control=control, inventory_before_advance=permissions,
-            inventory_project=simulate, project=project, impact_resolver=impacts if self.damage else None, **flight_commands)
+            inventory_fuel=fuel_losses if self.damage and any(i._fuel_tanks for i in self.inventory.inventories) else None,
+            inventory_project=simulate, inventory_repair=repairs if self.repair.enabled else None,
+            project=project, impact_resolver=impacts if self.damage else None, **flight_commands)
         self.states, self.projectiles = staged['states'], staged['projectiles']
+        self.fire.pending_modes = {}
         self._contacts, self._lock_started = staged['contacts'], staged['starts']
         self._availability_key, self._available = staged['availability_key'], staged['available']
         self._projectile_sequence = staged['projectile_sequence']
         if self.damage:
             self.damage_state = staged['damage_state']
             self.ending = staged.get('ending')
+        if self.fire.enabled:
+            self.fire.fires, self.fire.controllers = staged['fires'], staged['fire_controllers']
+            self.fire.recent = (self.fire.recent+staged['fire_events'])[-100:]
         return result
 
     def _can_fire(self, ship, index):
@@ -535,7 +635,17 @@ class GunneryBattle:
         self._guard()
         if self.ending:
             return False
-        self.inventory.prepare_settlement('ending.'+self.session.world.epoch)
+        if self.fire.enabled:
+            _, available = self._availability(self.session.world)
+            candidates = tuple(i.fork() for i in self.inventory.inventories)
+            self.fire.permissions(self.session.world, candidates, available)
+            for inv in candidates:
+                inv.prepare_settlement('ending.'+self.session.world.epoch)
+            self.inventory.inventories = candidates
+        else:
+            self.inventory.prepare_settlement('ending.'+self.session.world.epoch)
+        if self.fire.enabled:
+            self.fire.controllers = tuple(replace(c, enabled=False, status='battle_finished') for c in self.fire.controllers)
         self.ending = dict(reason='withdrawal', step=self.session.world.fixed_step,
             removed_projectiles=len(self.projectiles), saved=False)
         self.projectiles = ()
@@ -545,7 +655,9 @@ class GunneryBattle:
     def view(self):
         self._guard()
         weapons = []
+        inventory_summaries = tuple(inv.summary() for inv in self.inventory.inventories)
         for gun, state in zip(self.guns, self.states):
+            recipe_id = state.reload_recipe_id
             ship = self.session.world.ships[gun.ship_index]
             inv = self.inventory.inventories[gun.ship_index]
             w = next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)
@@ -559,10 +671,22 @@ class GunneryBattle:
                 reload_steps=max(0, inv._due.get(gun.module_id, inv.fixed_step)-inv.fixed_step),
                 cooldown_steps=max(0, inv._cooldown[gun.module_id]-inv.fixed_step),
                 ammo_resources=sum(m['quantity'] for m in inv._value['magazines']),
-                batch_cost=self.config['ammo_cost'], batch_rounds=self.config['rounds']))
+                batch_cost=inv._recipes[recipe_id]['ammo_cost'], batch_rounds=inv._recipes[recipe_id]['rounds'],
+                selected_recipe_id=recipe_id, loaded_recipe_id=w['recipe_id'] if w['ready_rounds'] else None,
+                loading_recipe_id=w['reload']['recipe_id'] if w['reload'] else None,
+                recipe_options=[dict(id=key, ammo_cost=inv._recipes[key]['ammo_cost'], rounds=inv._recipes[key]['rounds'],
+                    cargo_costs=[dict(c) for c in inv._recipes[key]['cargo_costs']]) for key in inv._weapons[gun.module_id]['recipe_ids']],
+                cargo=[dict(good_id=c['good_id'], quantity=c['quantity'], reserved=inventory_summaries[gun.ship_index]['reserved_cargo'].get(c['good_id'],0))
+                    for c in inv._value['cargo']]))
         return dict(interface='gaotian.gunnery-view/p2a-v1alpha1', command_sequence=self.sequence,
             weapons=weapons, projectiles=[dict(id=p.id, ship_id=p.ship_id, position_m=p.position,
-                previous_m=p.previous, velocity_mps=p.velocity) for p in self.projectiles],
+                previous_m=p.previous, velocity_mps=p.velocity, projectile_type=p.projectile_key[0]) for p in self.projectiles],
             policy_id=self.config['id'], damage_enabled=self.damage is not None, ending=self.ending,
             damage=None if self.damage_state is None else dict(hits=self.damage_state.hits, expired=self.damage_state.expired,
-                recent=self.damage_state.recent))
+                recent=self.damage_state.recent),
+            **(dict(damage_control=self.fire.view()) if self.fire.enabled else {}),
+            **(dict(fireproof=self.ignition.view()) if self.ignition.enabled else {}),
+            **(dict(fuel=[dict(ship_id=s.ship_id,total_units=s.motion.fuel_units,tanks=[dict(t,**{k:inv._fuel_tanks[t['tank_id']][k]
+                for k in ('module_id','deck_id','deck_level','capacity_units','maximum_points')})
+                for t in inv._value['fuel_tanks']]) for s,inv in zip(self.session.world.ships,self.inventory.inventories) if inv._fuel_tanks])
+               if any(i._fuel_tanks for i in self.inventory.inventories) else {}))

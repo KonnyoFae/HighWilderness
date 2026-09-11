@@ -464,7 +464,7 @@ class SimplifiedFlightSession:
             control = selection.control
         return tuple(c.requested_percent for c in control.channel_commands)
 
-    def step(self, control=None, *, ship_id=None, events=(), authority_events=(), device_operations=(), resource_operations=(), exit_operations=(), impact_resolver=None, project=None):
+    def step(self, control=None, *, ship_id=None, events=(), authority_events=(), device_operations=(), resource_operations=(), exit_operations=(), impact_resolver=None, project=None, repair_resolver=None, repair_project=None, fuel_resolver=None):
         require(get_ident() == self._owner and not self._executing, "Single non-reentrant authority required")
         before = self._world
         ship_id = self._direct if ship_id is None else ship_id
@@ -646,33 +646,51 @@ class SimplifiedFlightSession:
                 candidate, impact_events = self._impact_boundary(candidate, impact_resolver(before, candidate))
                 emitted.extend(impact_events)
             result = StepResult(candidate.fixed_step, tuple(emitted), tuple(diagnostics))
+            if fuel_resolver is not None:
+                losses=fuel_resolver(candidate)
+                require(type(losses) is tuple and len({sid for sid,_ in losses})==len(losses),'Invalid fuel losses')
+                by_id={s.ship_id:s for s in candidate.ships}
+                for sid,amount in losses:
+                    require(sid in by_id and type(amount) in (int,float) and isfinite(amount)
+                            and 0<=amount<=by_id[sid].motion.fuel_units+1e-8,'Invalid fuel loss amount')
+                amounts=dict(losses)
+                if losses:
+                    candidate=replace(candidate,ships=tuple(replace(s,motion=replace(s.motion,fuel_units=max(0.,s.motion.fuel_units-amounts[s.ship_id])))
+                        if s.ship_id in amounts else s for s in candidate.ships))
+                    result=replace(result,events=result.events+tuple((sid,'fuel','tank_destroyed',amount) for sid,amount in losses))
             if project is not None:
                 project(candidate, result)
+            if repair_resolver is not None:
+                candidate, repair_events = self._impact_boundary(candidate, repair_resolver(candidate, result), repair=True)
+                result = replace(result, events=result.events + repair_events)
+                if repair_project is not None:
+                    repair_project(candidate, result)
             self._world, self._last = candidate, result
             return result
         finally:
             self._executing = False
 
-    def _impact_boundary(self, world, batch):
+    def _impact_boundary(self, world, batch, *, repair=False):
         """Post-motion damage, before publication; only changed ships settle again.
 
         This repeats no integration and no safety-release timer. Device/resource/
         command kernels remain the owners of availability and failure state.
         """
-        require(type(batch) is ImpactBatch and type(batch.device_operations) is tuple and type(batch.hull_damage) is tuple,
+        hull_rows = batch.hull_repair if type(batch) is RepairBatch else batch.hull_damage if type(batch) is ImpactBatch else None
+        require(type(batch) is (RepairBatch if repair else ImpactBatch) and type(batch.device_operations) is tuple and type(hull_rows) is tuple,
                 'Invalid impact batch')
         indexes = {s.ship_id: i for i, s in enumerate(world.ships)}
         hull = {}
-        for ship_id, amount in batch.hull_damage:
+        for ship_id, amount in hull_rows:
             require(ship_id in indexes and ship_id not in hull and type(amount) in (int, float)
                     and isfinite(amount) and 0 <= amount <= 1, 'Invalid impact hull damage')
             hull[ship_id] = amount
         for op in batch.device_operations:
-            require(type(op) is DeviceOperation and op.ship_id in indexes and op.phase == 'closing' and op.kind == 'damage',
+            require(type(op) is DeviceOperation and op.ship_id in indexes and op.phase == 'closing' and op.kind == ('repair' if repair else 'damage'),
                     'Invalid impact device operation')
             dk = self._device_kernels[indexes[op.ship_id]]
             require(dk is not None, 'Impacts require device domain')
-            dk.validate_operation(op, epoch=world.epoch, ship_id=op.ship_id, step=world.fixed_step-1, allow_rebuild=False)
+            dk.validate_operation(op, epoch=world.epoch, ship_id=op.ship_id, step=world.fixed_step-1, allow_rebuild=False, allow_repair=repair)
         affected = set(hull) | {op.ship_id for op in batch.device_operations}
         if not affected:
             return world, ()
@@ -684,11 +702,22 @@ class SimplifiedFlightSession:
             dk, rk, ck, kernel = self._device_kernels[i], self._resource_kernels[i], self._command_kernels[i], self._kernels[i]
             require(dk is not None and rk is not None and ck is not None and ship.command.lifecycle.physical_status != 'exited',
                     'Impact requires present ship domains')
-            devices, updates, receipts, touched = dk.boundary(ship.devices, tuple(op for op in batch.device_operations if op.ship_id == ship_id))
-            fraction = max(0.0, ship.motion.hull_integrity_fraction-hull.get(ship_id, 0))
+            operations = tuple(op for op in batch.device_operations if op.ship_id == ship_id)
+            if repair:
+                require(ship.motion.hull_integrity_fraction > 0 and ship.command.lifecycle.physical_status == 'operational'
+                        and not ship.command.suppress and (ship_id != self._direct or ship.authority_allowed), 'Repair cannot restore a lost ship')
+                require(hull.get(ship_id, 0) <= 1-ship.motion.hull_integrity_fraction+1e-10, 'Hull repair exceeds missing integrity')
+                require(len({op.module_id for op in operations}) == len(operations), 'Duplicate module repair')
+                for op in operations:
+                    idx = dk.by_id[op.module_id]
+                    hp = ship.devices.modules[idx].durability_points
+                    require(hp > 1e-8 and op.amount <= dk.seed.modules[idx].maximum_durability_points-hp+1e-8,
+                            'Repair cannot rebuild or exceed maximum durability')
+            devices, updates, receipts, touched = dk.boundary(ship.devices, operations)
+            fraction = min(1.0, ship.motion.hull_integrity_fraction+hull.get(ship_id, 0)) if repair else max(0.0, ship.motion.hull_integrity_fraction-hull.get(ship_id, 0))
             ship = replace(ship, devices=devices, motion=replace(ship.motion, hull_integrity_fraction=fraction))
             if receipts or hull.get(ship_id, 0):
-                emitted.append((ship_id, 'impact', 'damage', receipts, hull.get(ship_id, 0)))
+                emitted.append((ship_id, 'repair' if repair else 'impact', 'repair' if repair else 'damage', receipts, hull.get(ship_id, 0)))
             changes = tuple(AvailabilityEvent(world.epoch, ship_id, *u, n, 'closing') for u in updates)
             for _ in range(len(seed.contributions.engines)+3):
                 resources, resource_updates = rk.resolve(ship.resources, ship.devices, ship.propulsion)
@@ -723,6 +752,12 @@ class SimplifiedFlightSession:
 class ImpactBatch:
     device_operations: tuple = ()
     hull_damage: tuple = ()
+
+
+@dataclass(frozen=True)
+class RepairBatch:
+    device_operations: tuple = ()
+    hull_repair: tuple = ()
 
 
 def build_sample_session(root, *, with_devices=False, with_resources=False, with_command=False, allow_test_device_rebuild=False):

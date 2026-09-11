@@ -1,0 +1,37 @@
+{
+  "interface": "gaotian.battle-preparation-draft/x1a-v1",
+  "preparation_id": "preparation.evidence",
+  "revision": 0,
+  "swap_policy": "explicit-discard-no-refund/v1",
+  "supply_id": "supply.test.finite",
+  "supply_revision": 1,
+  "supply_sha256": "a3a8a7cd7570e5638bc9835f49627d22bd86f0cf939ed69b534e700c89fb8b73",
+  "ships": [
+    {
+      "instance_id": "instance.preparation.player",
+      "revision": 7,
+      "record_sha256": "521e4e0ff46a2d7706d1f41580aa8a1502091cf4858cf4b4243622fc3d00bc67",
+      "design_sha256": "02403586a28679e8b31d0a34425638f6bb07dc45664c1288a4c01926f3e5ac9e",
+      "magazines": [
+        {
+          "module_id": "ammunition_magazine",
+          "quantity": 0
+        }
+      ],
+      "cargo": [
+        {
+          "good_id": "cargo.special_alloy",
+          "quantity": 50
+        }
+      ],
+      "weapons": [
+        {
+          "module_id": "weapon_upper_port",
+          "action": "keep",
+          "recipe_id": null,
+          "batches": 0
+        }
+      ]
+    }
+  ]
+}

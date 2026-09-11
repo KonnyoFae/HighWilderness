@@ -1,0 +1,37 @@
+{
+  "current": {
+    "minimum_legal": {
+      "hull": "41e236ed176df0d0086abf93e12d8e5b6ee3fc35d803ddeb6d1fb2ab84a707c7",
+      "instance": "c4bdeeed6d8c525267ca97c762aef9ceb3cf34490119752060058bc792b136c5",
+      "stored_instance": "2013386d9ef2e4b7c0628efd948d1d2d9bbceabadc669b2e88479718c43772c8"
+    },
+    "conventional_crewed": {
+      "hull": "e292d0c074d611534fc8fd13b190e86ca148378f9c146bcaed47da3f4fcb8e67",
+      "instance": "c12aabe37955194e3e0a600a2c447a1689ae41bf659643bf8dfb65b0ef2dde88",
+      "stored_instance": "9b68396cbd315c0b001d8e7dad0a773f8c5dacf7e705b752abdba7079215b696"
+    },
+    "unmanned_flagship": {
+      "hull": "5095832f881c61981043b28cf877912a28d59ebb947be684d50c17b600712aa2",
+      "instance": "464d0cebe54d54543389dd5c5dea6af3d6d136e4c30bec526370d75f5ff3b9c0",
+      "stored_instance": "69a798e21c348994c0ddabcc6439e0cf51772e9b96d2de51c389211d011b30b3"
+    }
+  },
+  "pre_h5b": {
+    "minimum_legal": {
+      "hull": "41e236ed176df0d0086abf93e12d8e5b6ee3fc35d803ddeb6d1fb2ab84a707c7",
+      "instance": "c4bdeeed6d8c525267ca97c762aef9ceb3cf34490119752060058bc792b136c5",
+      "stored_instance": "2013386d9ef2e4b7c0628efd948d1d2d9bbceabadc669b2e88479718c43772c8"
+    },
+    "conventional_crewed": {
+      "hull": "e292d0c074d611534fc8fd13b190e86ca148378f9c146bcaed47da3f4fcb8e67",
+      "instance": "c12aabe37955194e3e0a600a2c447a1689ae41bf659643bf8dfb65b0ef2dde88",
+      "stored_instance": "9b68396cbd315c0b001d8e7dad0a773f8c5dacf7e705b752abdba7079215b696"
+    },
+    "unmanned_flagship": {
+      "hull": "5095832f881c61981043b28cf877912a28d59ebb947be684d50c17b600712aa2",
+      "instance": "464d0cebe54d54543389dd5c5dea6af3d6d136e4c30bec526370d75f5ff3b9c0",
+      "stored_instance": "69a798e21c348994c0ddabcc6439e0cf51772e9b96d2de51c389211d011b30b3"
+    }
+  },
+  "unchanged": true
+}

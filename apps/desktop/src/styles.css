@@ -238,9 +238,9 @@ h2 { margin: 7px 0 0; font-size: 19px; }
 
 [hidden] { display: none !important; }
 .workspace-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; width: min(1120px, 100%); margin: 0 auto 18px; }
-.workspace-nav button, .tactical-panel button { padding: 9px 14px; border: 1px solid #567e80; border-radius: 7px; color: #d6e8e6; background: #173239; cursor: pointer; }
+.workspace-nav button, .tactical-panel button, .preparation-panel button { padding: 9px 14px; border: 1px solid #567e80; border-radius: 7px; color: #d6e8e6; background: #173239; cursor: pointer; }
 .workspace-nav button[aria-pressed="true"], .tactical-panel button[aria-pressed="true"] { color: #0d201c; background: #b4decd; border-color: #b4decd; }
-.workspace-nav button:disabled, .tactical-panel button:disabled { opacity: .4; cursor: not-allowed; }
+.workspace-nav button:disabled, .tactical-panel button:disabled, .preparation-panel button:disabled { opacity: .4; cursor: not-allowed; }
 .workspace-nav .editor-error { flex-basis: 100%; margin: 0; }
 .tactical-columns { display: grid; grid-template-columns: minmax(0, 1fr) 235px; border: 1px solid #35585b; border-radius: 10px; overflow: hidden; }
 .tactical-viewport { min-width: 0; background: #0b2026; }
@@ -282,3 +282,12 @@ h2 { margin: 7px 0 0; font-size: 19px; }
 .settlement-ships { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; }
 .settlement-ships article { min-width: 0; }
 .settlement-ships details { margin-block: 12px; }
+.preparation-fleet { display: grid; gap: .7rem; margin: 1rem 0; }
+.preparation-input { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; margin: .8rem 0; }
+.preparation-input input { width: 9rem; }
+.preparation-weapon { border-top: 1px solid #365457; padding: .8rem 0; }
+.preparation-panel fieldset { min-width: 0; margin: 1rem 0; padding: 1rem; border: 1px solid #365457; border-radius: 8px; }
+.preparation-panel select, .preparation-panel input[type="number"] { font: inherit; padding: 9px; color: #e8f2ed; background: #0c211a; border: 1px solid #416452; border-radius: 6px; }
+.preparation-panel [role="alert"] { padding: 12px; color: #ffd1b4; background: #39291e; border-radius: 6px; }
+.preparation-panel [role="status"] { color: #b4decd; }
+.preparation-panel input[type="checkbox"] { margin-right: .6rem; }

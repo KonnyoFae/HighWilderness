@@ -8,6 +8,8 @@ import type { OutfitLayout, LayoutModule } from "./outfitCanvas";
 import { arcText } from "./weaponGroups";
 import { arcVisibleAtLevel, WeaponArcOverlay } from "./WeaponArcOverlay";
 import type { WeaponControl } from "./weaponGroups";
+import { FillingSummary } from "./FillingSummary";
+import type { FillingView } from "./FillingSummary";
 
 const WIDTH = 1000, HEIGHT = 560;
 export function OutfitViewport({ session, options, option, selected, onSelect, busy, onCommand, onLocalDraft, operationError }: {
@@ -19,6 +21,7 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
   const decks = layout?.hull.decks ?? session.hull_binding?.hull.decks ?? [];
   const [deckId, setDeckId] = useState(decks.find(d => d.is_base)?.id ?? "");
   const deck = decks.find(d => d.id === deckId) ?? decks[0];
+  const filling = (session.preview.model.filling_decks as FillingView[] | undefined)?.find(d => d.deck_id === deck?.id);
   const below = lowerDeck(decks, deck);
   const space = layout?.decks.find(d => d.id === deck?.id);
   const modules = session.draft.modules ?? [];
@@ -221,6 +224,7 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
         {gridLines(lo.y,hi.y,camera.scale).map(l=><line key={`y${l.value}`} x1={0} x2={WIDTH} y1={screen({x:0,y:l.value},camera).y} y2={screen({x:0,y:l.value},camera).y} stroke={l.boundary?"#294850":"#152c32"} />)}
         {below?.regions.map(r=><polygon key={`lower${r.id}`} points={poly(r.vertices_m)} fill="#88acd9" fillOpacity={.12} stroke="#88acd9" strokeOpacity={.45} />)}
         {deck?.regions.map(r=><polygon key={r.id} points={poly(r.vertices_m)} fill="#397b72" fillOpacity={.13} stroke="#8fcab7" strokeWidth={2} />)}
+        {filling?.configuration.id !== 'gtw.filling.none' && filling?.pieces?.map((p,i)=><polygon key={`filling${i}`} points={poly(p.vertices_m)} fill="#dfa552" fillOpacity={.25} pointerEvents="none"><title>本层边缘填充空间</title></polygon>)}
         {showArc && arcVisible && selectedArc?.status === "hull_occlusion_resolved" && selectedArc.base_deck_level !== null && decks.filter(d=>d.level > selectedArc.base_deck_level!).flatMap(d=>d.regions.map(r=><polygon key={`obstruction${d.id}${r.id}`} points={poly(r.vertices_m)} fill="#ff6868" fillOpacity={.1} stroke="#ff8888" strokeOpacity={.8} strokeDasharray="5 4" pointerEvents="none"><title>上层船壳投影：第 {d.level} 层 · {r.id}</title></polygon>))}
         {space?.internal_cells.map(([x,y],i)=>cell(x*5,y*5,"#76d9ac",`space${i}`,.05))}
         {layers.top && space?.exposed_top_cells.map(([x,y],i)=>{const p=screen({x:x*5,y:y*5},camera);return <circle key={`top${i}`} cx={p.x} cy={p.y} r={1.8} fill="#d9bc71" />;})}
@@ -247,6 +251,7 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
         {ghost && <g stroke="#fff1bd"><line x1={screen(ghost,camera).x-8} x2={screen(ghost,camera).x+8} y1={screen(ghost,camera).y} y2={screen(ghost,camera).y}/><line x1={screen(ghost,camera).x} x2={screen(ghost,camera).x} y1={screen(ghost,camera).y-8} y2={screen(ghost,camera).y+8}/></g>}
         <text x={12} y={22} fill="#94bab2" fontSize={13}>舰艏 ↑ · 原点为 CIC 格心</text>
       </svg>
+      <FillingSummary value={filling} />
       <div className="viewport-status"><span>{mode==="place"?`放置：${option?.prototype.name}`:mode==="move"?`移动：${selected}`:"选择或拖动已有模块"}</span><span>{ghost?`X ${ghost.x} · Y ${ghost.y} m`:"强制网格 · 安装格 5 m"}</span></div>
       <p className="viewport-help">点选原型后点“放置所选原型”，再点击画布。拖动模块移动；R 旋转，Delete 移除，Esc 取消。空白处或中键拖动平移，滚轮缩放。金色虚线为待提交外形，提交后由后台检查。</p>
       {below && <p className="viewport-help lower-deck-legend">半透明下层参考：{below.id}</p>}

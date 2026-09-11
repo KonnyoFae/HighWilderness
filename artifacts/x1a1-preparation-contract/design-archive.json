@@ -1,0 +1,718 @@
+{
+  "catalog_dependencies_sha256": "06a23c5bc0e62f725e4dae53666f5ed2af8335b177b9f4de48a7aef00d323f35",
+  "deployment": {
+    "active_remote_core_instance_id": null,
+    "control_mode": "crewed",
+    "crew": [
+      {
+        "count": 2,
+        "crew_type": "officer"
+      },
+      {
+        "count": 10,
+        "crew_type": "ordinary"
+      },
+      {
+        "count": 4,
+        "crew_type": "technical_officer"
+      },
+      {
+        "count": 2,
+        "crew_type": "veteran_damage_control"
+      }
+    ],
+    "fuel_units": 800.0,
+    "height_layer": "upper",
+    "id": "deployment.preparation.technical",
+    "version": 1
+  },
+  "document": {
+    "hull_binding": {
+      "catalog_dependencies_sha256": "06a23c5bc0e62f725e4dae53666f5ed2af8335b177b9f4de48a7aef00d323f35",
+      "hull": {
+        "decks": [
+          {
+            "id": "deck.0",
+            "is_base": true,
+            "level": 0,
+            "regions": [
+              {
+                "edge_armor": [
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.armor_steel",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.armor_steel",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.armor_steel",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.armor_steel",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.armor_steel",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.armor_steel",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.armor_steel",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  }
+                ],
+                "id": "deck.0.region.0",
+                "vertices_m": [
+                  [
+                    -10.0,
+                    -45.0
+                  ],
+                  [
+                    -5.0,
+                    -75.0
+                  ],
+                  [
+                    5.0,
+                    -75.0
+                  ],
+                  [
+                    10.0,
+                    -45.0
+                  ],
+                  [
+                    10.0,
+                    50.0
+                  ],
+                  [
+                    0.0,
+                    80.0
+                  ],
+                  [
+                    -10.0,
+                    50.0
+                  ]
+                ]
+              }
+            ],
+            "structure_material": {
+              "id": "gtw.material.structure.armor_steel",
+              "version": 1
+            }
+          },
+          {
+            "id": "deck.1",
+            "is_base": false,
+            "level": 1,
+            "regions": [
+              {
+                "edge_armor": [
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.aluminum_alloy",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.aluminum_alloy",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.aluminum_alloy",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.aluminum_alloy",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  }
+                ],
+                "id": "deck.1.region.port",
+                "vertices_m": [
+                  [
+                    -7.5,
+                    -20.0
+                  ],
+                  [
+                    -2.5,
+                    -20.0
+                  ],
+                  [
+                    -2.5,
+                    20.0
+                  ],
+                  [
+                    -7.5,
+                    20.0
+                  ]
+                ]
+              },
+              {
+                "edge_armor": [
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.aluminum_alloy",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.aluminum_alloy",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.aluminum_alloy",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  },
+                  {
+                    "material": {
+                      "id": "gtw.material.base_armor.aluminum_alloy",
+                      "version": 1
+                    },
+                    "thickness_m": 0.0
+                  }
+                ],
+                "id": "deck.1.region.starboard",
+                "vertices_m": [
+                  [
+                    2.5,
+                    -20.0
+                  ],
+                  [
+                    7.5,
+                    -20.0
+                  ],
+                  [
+                    7.5,
+                    20.0
+                  ],
+                  [
+                    2.5,
+                    20.0
+                  ]
+                ]
+              }
+            ],
+            "structure_material": {
+              "id": "gtw.material.structure.aluminum_alloy",
+              "version": 1
+            }
+          }
+        ],
+        "fixture_level": "canonical_blueprint_fixture",
+        "grid": {
+          "cell_size_m": 5.0,
+          "cic_origin_cell": [
+            0,
+            0
+          ],
+          "deck_height_m": 5.0,
+          "forward_axis": "+Y",
+          "symmetry_axis": "Y"
+        },
+        "id": "hull.preparation.custom",
+        "kind": "HullBlueprint",
+        "name": "战前准备自建船壳",
+        "schema": "gaotian.ship/v1alpha1",
+        "version": 7
+      },
+      "hull_sha256": "1370befec9ae04e2ec89408043b4702c9baeb9cd41b2c001ecb729049b9f8549",
+      "interface": "gaotian.outfit-hull-binding/v1alpha1"
+    },
+    "interface": "gaotian.outfit-document/v1alpha1",
+    "outfit": {
+      "fixture_level": "contract_fixture",
+      "hull_blueprint": {
+        "id": "hull.preparation.custom",
+        "version": 7
+      },
+      "hull_coating": {
+        "id": "gtw.coating.hull.ordinary",
+        "version": 1
+      },
+      "id": "outfit.preparation.custom",
+      "kind": "OutfitPlan",
+      "modules": [
+        {
+          "id": "ammunition_magazine",
+          "placement": {
+            "anchor_half_cell": [
+              0,
+              12
+            ],
+            "deck_id": "deck.0",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.ammunition_magazine",
+            "version": 1
+          }
+        },
+        {
+          "id": "custom.cargo",
+          "placement": {
+            "anchor_half_cell": [
+              2,
+              4
+            ],
+            "deck_id": "deck.0",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.cargo_hold",
+            "version": 1
+          }
+        },
+        {
+          "id": "cic",
+          "placement": {
+            "anchor_half_cell": [
+              0,
+              0
+            ],
+            "deck_id": "deck.0",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.cic",
+            "version": 1
+          }
+        },
+        {
+          "id": "crew_quarters_base",
+          "placement": {
+            "anchor_half_cell": [
+              -2,
+              0
+            ],
+            "deck_id": "deck.0",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.crew_quarters",
+            "version": 1
+          }
+        },
+        {
+          "id": "crew_quarters_upper",
+          "placement": {
+            "anchor_half_cell": [
+              -2,
+              0
+            ],
+            "deck_id": "deck.1",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.crew_quarters",
+            "version": 1
+          }
+        },
+        {
+          "id": "damage_control",
+          "placement": {
+            "anchor_half_cell": [
+              2,
+              0
+            ],
+            "deck_id": "deck.0",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.damage_control",
+            "version": 1
+          }
+        },
+        {
+          "id": "fire_control",
+          "placement": {
+            "anchor_half_cell": [
+              -2,
+              16
+            ],
+            "deck_id": "deck.0",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.fire_control",
+            "version": 1
+          }
+        },
+        {
+          "id": "generator",
+          "placement": {
+            "anchor_half_cell": [
+              -2,
+              4
+            ],
+            "deck_id": "deck.0",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.generator",
+            "version": 1
+          }
+        },
+        {
+          "id": "lift_tank",
+          "placement": {
+            "anchor_half_cell": [
+              0,
+              4
+            ],
+            "deck_id": "deck.0",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.lift_fuel_tank",
+            "version": 1
+          }
+        },
+        {
+          "id": "main_engine_port",
+          "placement": {
+            "anchor_half_cell": [
+              -2,
+              -20
+            ],
+            "deck_id": "deck.0",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.main_engine",
+            "version": 1
+          }
+        },
+        {
+          "id": "main_engine_starboard",
+          "placement": {
+            "anchor_half_cell": [
+              2,
+              -20
+            ],
+            "deck_id": "deck.0",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.main_engine",
+            "version": 1
+          }
+        },
+        {
+          "id": "remote_core",
+          "placement": {
+            "host_instance_id": "cic",
+            "kind": "hosted"
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.remote_core",
+            "version": 1
+          }
+        },
+        {
+          "id": "sensor_upper_starboard",
+          "placement": {
+            "anchor_half_cell": [
+              2,
+              4
+            ],
+            "deck_id": "deck.1",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.sensor",
+            "version": 1
+          }
+        },
+        {
+          "id": "thruster_port_aft",
+          "placement": {
+            "deck_id": "deck.0",
+            "edge_index": 6,
+            "kind": "side",
+            "region_id": "deck.0.region.0",
+            "rotation_deg": 180,
+            "start_slot_index": 15
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.maneuver_thruster",
+            "version": 1
+          }
+        },
+        {
+          "id": "thruster_port_fore",
+          "placement": {
+            "deck_id": "deck.0",
+            "edge_index": 6,
+            "kind": "side",
+            "region_id": "deck.0.region.0",
+            "rotation_deg": 180,
+            "start_slot_index": 5
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.maneuver_thruster",
+            "version": 1
+          }
+        },
+        {
+          "id": "thruster_starboard_aft",
+          "placement": {
+            "deck_id": "deck.0",
+            "edge_index": 3,
+            "kind": "side",
+            "region_id": "deck.0.region.0",
+            "rotation_deg": 180,
+            "start_slot_index": 4
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.maneuver_thruster",
+            "version": 1
+          }
+        },
+        {
+          "id": "thruster_starboard_fore",
+          "placement": {
+            "deck_id": "deck.0",
+            "edge_index": 3,
+            "kind": "side",
+            "region_id": "deck.0.region.0",
+            "rotation_deg": 180,
+            "start_slot_index": 14
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.maneuver_thruster",
+            "version": 1
+          }
+        },
+        {
+          "id": "weapon_upper_port",
+          "placement": {
+            "anchor_half_cell": [
+              -2,
+              -4
+            ],
+            "deck_id": "deck.1",
+            "kind": "grid",
+            "rotation_deg": 0
+          },
+          "prototype": {
+            "id": "gtw.module.fixture.weapon",
+            "version": 1
+          }
+        }
+      ],
+      "name": "战前准备自建栖装",
+      "schema": "gaotian.ship/v1alpha1",
+      "version": 4
+    }
+  },
+  "fuel_projection": {
+    "catalog_sha256": "be25e60c08450ce4be8e4408be3881a16118ef24e115e7d642787c8460a3c228",
+    "outfit_sha256": "a48c80eb50b34648e87d1cd5b34cd0ba61f2a6104e5d845a6d6393e4ee437ca3",
+    "policy": "gaotian.tactical-fuel/no-propulsion-burn/v1",
+    "source_catalog_sha256": "7dcc14d1e32a618d57a4ff7811e28d3b21026b45ca3e0475c43e9d700e167b16",
+    "source_outfit_sha256": "77700a547e8ff60fd6bb4b2e101c1f6fafd0b8313997c9c63b2f12a9e3dd84fa"
+  },
+  "interface": "gaotian.battle-preparation-design/x1a-v1",
+  "policy": {
+    "enabled_recipe_ids": [
+      "recipe.x1a.ordinary"
+    ],
+    "fire_control": {
+      "degraded": {
+        "direction_error_mdeg": 3000,
+        "position_error_mm": 12000,
+        "velocity_error_mmps": 2000
+      },
+      "normal": {
+        "direction_error_mdeg": 0,
+        "position_error_mm": 0,
+        "velocity_error_mmps": 0
+      }
+    },
+    "goods": [
+      {
+        "id": "cargo.special_alloy",
+        "unit": "crate",
+        "unit_mass_g": 100000,
+        "unit_volume_cm3": 5000000,
+        "version": 1
+      }
+    ],
+    "id": "gtw.preparation.technical.inventory",
+    "interface": "gaotian.battle-preparation-policy/x1a-v1",
+    "modules": [
+      {
+        "binding": {
+          "capacity_resources": 100
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.ammunition_magazine",
+          "version": 1
+        },
+        "prototype_sha256": "918e9fad338e7f3f14c163aeebfb79530577f7fd0ef76320601b70a878e1a83c"
+      },
+      {
+        "binding": {
+          "capacity_cm3": 125000000
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.cargo_hold",
+          "version": 1
+        },
+        "prototype_sha256": "0ebd603ab0db2f2491d07f438765fed3cc096467eb308a2f358f9e115f54dec3"
+      },
+      {
+        "binding": {
+          "ready_capacity": 1,
+          "recipe_ids": [
+            "recipe.x1a.ordinary"
+          ],
+          "turret": {
+            "maximum_mdeg": 90000,
+            "minimum_mdeg": -90000,
+            "slew_mdeg_per_s": 30000
+          }
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.weapon",
+          "version": 1
+        },
+        "prototype_sha256": "ac7d5c5e849548cadef2171b9c7112c2ece569233d73f6ec52bcbb5bc12c9a32"
+      },
+      {
+        "binding": {
+          "ready_capacity": 1,
+          "recipe_ids": [
+            "recipe.x1a.ordinary"
+          ],
+          "turret": {
+            "maximum_mdeg": 90000,
+            "minimum_mdeg": -90000,
+            "slew_mdeg_per_s": 30000
+          }
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.weapon",
+          "version": 1
+        },
+        "prototype_sha256": "e4be69bf09e63d6697f918a148bac6023a368b67cb966af1c1fb7de7954e28b7"
+      }
+    ],
+    "projectiles": [
+      {
+        "id": "projectile.p2a.ordinary",
+        "mass_g": 10000,
+        "speed_mmps": 500000,
+        "version": 1
+      }
+    ],
+    "propulsion_timing": [
+      {
+        "prototype": {
+          "id": "gtw.module.fixture.main_engine",
+          "version": 1
+        },
+        "prototype_sha256": "d194a56793a443503eaeed4d9b74f2619e492a54d765ca15ae5a92d0ee403a0c",
+        "response_time_s": 1.0
+      },
+      {
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster",
+          "version": 1
+        },
+        "prototype_sha256": "3452c7332b3a40e09a5ef89ef5860b477e01e3a219e3462c56241771f82e2c35",
+        "response_time_s": 1.0
+      },
+      {
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.main_engine",
+          "version": 1
+        },
+        "prototype_sha256": "c939513144555707902853ea22eba9a347ff5dfc9c1f5aa1952be504bde97da5",
+        "response_time_s": 1.0
+      },
+      {
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.maneuver_thruster",
+          "version": 1
+        },
+        "prototype_sha256": "1396d40ba3355a62405700ad47be942b8ca62603ade37dafe7d19317ef07d86e",
+        "response_time_s": 1.0
+      }
+    ],
+    "recipes": [
+      {
+        "ammo_cost": 5,
+        "cargo_costs": [],
+        "id": "recipe.x1a.ordinary",
+        "projectile": {
+          "id": "projectile.p2a.ordinary",
+          "version": 1
+        },
+        "reload_steps": 120,
+        "rounds": 1,
+        "version": 1
+      }
+    ],
+    "version": 1
+  },
+  "resources_sha256": "1cca1a709dfa43591c8d2d9899d3c17195ce6fbb622e9cb5ddb05f390e1f4328",
+  "ship_id": "ship.preparation.player",
+  "snapshot_sha256": "6964fbb8c334762d3550187b0e39bc1b60f77a2f961bb5818136a5cef4d5e9f3",
+  "source_document_sha256": "60f16ac5d226587f2eb007e697936b515f4d68460b5a58f640a3cfcc23b0515e",
+  "source_outfit_sha256": "c0e7b480833bcf3d818fa56937d1c61602ad2ff831f0f1befea9ba056e5a4955"
+}

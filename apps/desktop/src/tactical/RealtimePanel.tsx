@@ -9,13 +9,20 @@ import { acceptRealtime, pauseLabel, receiptLabel } from "./realtime";
 import type { RealtimeEnvelope } from "./realtime";
 import { SettlementPanel } from "./SettlementPanel";
 import type { SettlementEnvelope, SettlementLibrary } from "./settlement";
+import { fuelTankName } from './settlement';
 import { TacticalViewport } from "./TacticalViewport";
 import { gunStatus, qualityLabel } from "./gunnery";
 import type { GunIntent } from "./gunnery";
 import type { Point } from "../editor/viewport";
+import type { PreparedLaunch } from './preparation';
+import { goodName } from './preparation';
+import { ammunitionName } from './ammunition';
+import { DamageControlPanel } from './DamageControlPanel';
+import type { DamageControlIntent } from './DamageControlPanel';
 
-export function RealtimePanel({ transport, instance, active, onBusy, onClose }: {
+export function RealtimePanel({ transport, instance, active, onBusy, onClose, preparedLaunch }: {
   transport: BridgeTransport; instance: string; active: boolean; onBusy?: (busy: boolean) => void; onClose: () => void;
+  preparedLaunch?:PreparedLaunch|null;
 }) {
   const [view, setView] = useState<TacticalView | null>(null), [state, setState] = useState<RealtimeEnvelope | null>(null);
   const [busy, setBusy] = useState(false), [error, setError] = useState(""), [receipt, setReceipt] = useState("");
@@ -34,6 +41,11 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose }: 
   const [historyResult, setHistoryResult] = useState<SettlementEnvelope | null>(null);
   const launchKey = useRef<{ instanceId: string; revision: number; id: string } | null>(null);
   const weaponRef = useRef(weaponId); weaponRef.current = weaponId;
+  const attemptedEntry=useRef(false);
+  const [entryUncertain,setEntryUncertain]=useState(false);
+  const [damageUncertain,setDamageUncertain]=useState(false);
+  const unknownDamage=useRef(false);
+  useEffect(()=>{if(active&&preparedLaunch&&!attemptedEntry.current){attemptedEntry.current=true;void action('create');}},[active,preparedLaunch]);
   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   useEffect(() => { onBusy?.(busy); return () => onBusy?.(false); }, [busy, onBusy]);
   function call<T>(method: TacticalRequest["method"], params: Record<string, unknown>) {
@@ -77,6 +89,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose }: 
   function accept(next: RealtimeEnvelope) {
     if (!mounted.current) return;
     const accepted = acceptRealtime(latest.current.state, latest.current.view, next, instance);
+    if(!latest.current.state)setSelected(next.direct_ship_id);
     latest.current = { state: next, view: accepted }; setState(next); setView(accepted);
     ack.current = { inputs: next.receipts.filter(r => r.status !== "accepted").map(r => r.sequence),
       event: next.events.at(-1)?.sequence ?? next.status.acknowledged_event_sequence };
@@ -90,6 +103,9 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose }: 
       }
     }
     setError(next.error ?? "");
+    if (unknownDamage.current && next.view.gunnery?.damage_control) {
+      unknownDamage.current=false;setDamageUncertain(false);
+    }
     if (unknownGun.current !== null && next.view.gunnery) {
       // A fresh read resolves a lost reply; never resubmit a click automatically.
       unknownGun.current = null; setGunUncertain(null);
@@ -118,7 +134,21 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose }: 
     acting.current = true; setBusy(true); setError("");
     try {
       await pending.current;
-      if (kind === "create") { setHistoryResult(null); accept(await call<RealtimeEnvelope>("tactical.realtime.create", { scenario_id: SCENARIO_ID })); return; }
+      if (kind === "create") {
+        setHistoryResult(null);setEntryUncertain(!!preparedLaunch);
+        try {
+          accept(await call<RealtimeEnvelope>(preparedLaunch?'tactical.realtime.deploy_prepared':'tactical.realtime.create',preparedLaunch??{scenario_id:SCENARIO_ID}));
+          setEntryUncertain(false);
+        } catch(e) {
+          if(preparedLaunch){
+            const confirmation=await call<{scene:RealtimeEnvelope|null}>('tactical.realtime.prepared_entry',{launch_id:preparedLaunch.launch_id});
+            if(confirmation.scene)accept(confirmation.scene);
+            setEntryUncertain(false);
+          }
+          throw e;
+        }
+        return;
+      }
       if (!latest.current.state) { if (kind === "close") onClose(); return; }
       if (kind === "read") { await read(); return; }
       const scene_id = latest.current.state.status.epoch;
@@ -141,6 +171,20 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose }: 
       } else accept(await call<RealtimeEnvelope>(`tactical.realtime.${kind}`, { scene_id }));
     } catch (e) { if (mounted.current) setError(normalizeHostFailure(e).message); }
     finally { acting.current = false; if (mounted.current) setBusy(false); }
+  }
+  async function sendDamageControl(intent:DamageControlIntent) {
+    if(acting.current||!active||unknownDamage.current)return;
+    acting.current=true;setBusy(true);setError('');
+    try {
+      await pending.current;
+      const current=latest.current.state;
+      if(!current?.status.running||!current.available||!current.view.gunnery?.damage_control)return;
+      unknownDamage.current=true;setDamageUncertain(true);
+      accept(await call<RealtimeEnvelope>('tactical.realtime.damage_control',{scene_id:current.status.epoch,
+        input:{epoch:current.status.epoch,generation:current.status.generation,
+          sequence:current.view.gunnery.damage_control.command_sequence+1,ship_id:current.direct_ship_id,...intent}}));
+    } catch(e){if(mounted.current)setError(normalizeHostFailure(e).message);}
+    finally{acting.current=false;if(mounted.current)setBusy(false);}
   }
   async function sendGun(intent: GunIntent) {
     if (acting.current || !active || unknownGun.current !== null || !weaponRef.current) return;
@@ -185,19 +229,20 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose }: 
     return () => document.removeEventListener("visibilitychange", hide);
   });
   const pose = view?.snapshot.ships.find(s => s.id === selected);
+  const durability = view?.geometry.ships.find(s=>s.id===selected)?.structural_durability;
   const ownGuns = view?.snapshot.gunnery?.weapons.filter(g => g.ship_id === state?.direct_ship_id) ?? [];
   const gun = ownGuns.find(g => g.module_id === weaponId);
   const targetGeometry = view?.geometry.ships.find(s => s.id === gun?.target_ship_id);
   const chooseWeapon = (id: string) => { pointerAim.current = null; queuedFire.current = null; weaponRef.current = id; setWeaponId(id); };
   return <section className="panel tactical-panel" aria-label="实时试航实验">
-    <h2>实时试航（实验）</h2>
-    <p>后台持续运行两舰试航。操纵保持到下次发令，暂停后需要重新发令；战术推进不消耗燃料。</p>
+    <h2>{preparedLaunch?'准备舰船交战':'实时试航（实验）'}</h2>
+    <p>{preparedLaunch?'已保存准备的舰船参与本次交战，玩家操纵旗舰，其余友舰自动交战。':'后台持续运行两舰试航。'}操纵保持到下次发令，暂停后需要重新发令；战术推进不消耗燃料。</p>
     <div className="editor-row">
-      {!state && <button disabled={busy || !active} onClick={() => void action("create")}>建立实时场景</button>}
+      {!state && <button disabled={busy || !active} onClick={() => void action("create")}>{preparedLaunch?'重试进入准备交战':'建立实时场景'}</button>}
       <button disabled={busy || !state || !active || !!state.view.gunnery?.ending} onClick={() => void action(state?.status.running ? "pause" : "resume")}>{state?.status.running ? "暂停试航" : "开始试航"}</button>
       <button disabled={busy || !state || !active} onClick={() => void action("read")}>读取实时状态</button>
       <button disabled={busy || !state || !active || !!state.view.gunnery?.ending} onClick={() => void action("withdraw")}>结束交战 / 撤离</button>
-      <button disabled={busy || !active || !!state?.settlement && !state.settlement.saved} onClick={() => void action("close")}>退出实时实验</button>
+      <button disabled={busy || !active || entryUncertain || !!state?.settlement && !state.settlement.saved || !!preparedLaunch&&!!state&&!state.settlement?.saved} onClick={() => void action("close")}>{preparedLaunch?'返回战前准备':'退出实时实验'}</button>
     </div>
     {error && <p role="alert">{error}</p>}
     {storeError && <p role="alert">{storeError}</p>}
@@ -230,7 +275,15 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose }: 
       {gun?.mode === "manual" && <div className="editor-row"><label>瞄准甲板<select aria-label="瞄准甲板" value={gun.deck_level ?? 0} onChange={e => void sendGun({ kind: "deck", arguments: { level: Number(e.target.value) } })}>
         {[...new Set(view.geometry.ships.flatMap(s => s.decks.map(d => d.level)))].sort((a,b) => a-b).map(level => <option key={level} value={level}>第 {level} 层</option>)}
       </select></label></div>}
-      {gun?.mode === "auto" && <div className="editor-row">{view.geometry.ships.filter(s => s.id !== state?.direct_ship_id).map(s =>
+      {gun?.recipe_options && <div><div className="editor-row"><label>下一批装填弹种<select aria-label="下一批装填弹种" value={gun.selected_recipe_id}
+        onChange={e => void sendGun({kind:'ammunition',arguments:{recipe_id:e.target.value}})}>
+        {gun.recipe_options.map(r=><option key={r.id} value={r.id}>{ammunitionName(r.id)}</option>)}</select></label></div>
+        <p>当前待发：{ammunitionName(gun.loaded_recipe_id)}{gun.loading_recipe_id ? ` · 正在装填：${ammunitionName(gun.loading_recipe_id)}` : ''}</p>
+        <p>{gun.recipe_options.find(r=>r.id===gun.selected_recipe_id)?.cargo_costs.map(c=>
+          `${goodName(c.good_id)}每批 ${c.quantity} 份（库存 ${gun.cargo?.find(g=>g.good_id===c.good_id)?.quantity??0}，已预留 ${gun.cargo?.find(g=>g.good_id===c.good_id)?.reserved??0}）`).join('；')}</p>
+        <small>已装弹保留，打空后换装。切换会取消未完成的旧批次并释放预留；暂停不推进装填。穿甲弹提高穿透、降低无装甲基础伤害。</small>
+      </div>}
+      {gun?.mode === "auto" && <div className="editor-row">{view.geometry.ships.filter(s => s.side_id !== view.geometry.ships.find(v=>v.id===state?.direct_ship_id)?.side_id).map(s =>
         <button key={s.id} onClick={() => void sendGun({ kind: "target", arguments: { ship_id: s.id, module_id: null } })}>瞄准{s.name}</button>)}
         {targetGeometry && <label>指定模块<select aria-label="指定目标模块" value={gun.target_module_id ?? ""} onChange={e => void sendGun({ kind: "target", arguments: { ship_id: targetGeometry.id, module_id: e.target.value || null } })}>
           <option value="">整舰</option>{targetGeometry.modules.map(m => <option key={m.id} value={m.id}>{m.name} · 第 {m.deck_level} 层 · {m.id}</option>)}
@@ -243,13 +296,23 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose }: 
       </div>}
     </fieldset>}
     {view?.snapshot.gunnery?.ending && <p role="status">交战已结束：{{ victory: "敌方失去作战能力", defeat: "本方失去作战能力", draw: "双方失去作战能力", withdrawal: "主动撤离" }[view.snapshot.gunnery.ending.reason] ?? view.snapshot.gunnery.ending.reason}。已完成有效在装批次，清除在途弹丸；{state?.settlement?.saved ? "战后结果已保存。" : "请在结算页面保存本场结果。"}</p>}
+    {view&&state&&<DamageControlPanel view={view} shipId={state.direct_ship_id}
+      disabled={busy||!active||!state.status.running||!state.available||!!view.snapshot.gunnery?.ending}
+      uncertain={damageUncertain} onCommand={intent=>void sendDamageControl(intent)}/>}
+    {view?.snapshot.gunnery?.fireproof&&<section aria-label="交战防火与火情"><h3>防火与火情</h3><p>防火仅降低新起火概率；已有火情需要损管灭火。</p>
+      {view.snapshot.gunnery.fireproof.map(s=>{const ship=view.geometry.ships.find(v=>v.id===s.ship_id);const fires=view.snapshot.gunnery?.damage_control?.fires.filter(f=>f.ship_id===s.ship_id)??[];
+        return <article key={s.ship_id}><h4>{ship?.name??s.ship_id}</h4><p>{s.decks.map(d=>`第 ${d.deck_level} 层：${d.multiplier<1?`起火概率降低 ${((1-d.multiplier)*100).toFixed(0)}%`:'无额外防火'}`).join(' · ')}</p>
+          <p>{fires.length?fires.map(f=>`${ship?.modules.find(m=>m.id===f.module_id)?.name??f.module_id} 正在燃烧（强度 ${(f.intensity_units/1000).toFixed(2)}）`).join('、'):'当前无火情'}</p></article>;})}</section>}
+    {view?.snapshot.gunnery?.fuel&&<section aria-label="燃料储备"><h3>燃料储备</h3><p>发动机运行不消耗燃料；仅燃料槽耐久归零时损失其中燃料。</p>
+      {view.snapshot.gunnery.fuel.map(s=><details key={s.ship_id} open={s.ship_id===state?.direct_ship_id}><summary>{view.geometry.ships.find(v=>v.id===s.ship_id)?.name} · 燃料 {s.total_units.toFixed(2)}</summary>
+        {s.tanks.map(t=><p key={t.tank_id}>{fuelTankName(t,Object.fromEntries(view.geometry.ships.find(v=>v.id===s.ship_id)?.modules.map(m=>[m.id,m.name])??[]))}：燃料 {t.quantity_units.toFixed(2)} / {t.capacity_units} · 耐久 {t.durability_points.toFixed(1)} / {t.maximum_points}{t.durability_points<=0?' · 已损毁':''}</p>)}</details>)}</section>}
     {(state?.settlement || historyResult || !state) && <SettlementPanel
       current={state?.settlement && (!historyResult || historyResult.result.settlement_id === state.settlement.result.settlement_id) ? state.settlement : historyResult}
       library={library} busy={busy || !active} canDeploy={!state || !!state.settlement?.saved}
       onSave={id => void storedAction("save", id)} onInspect={id => void storedAction("inspect", id)}
       onRefresh={() => void storedAction("refresh")} onDeploy={(id, revision) => void storedAction("deploy", id, revision)} />}
     {view?.snapshot.gunnery?.damage && <details open><summary>命中记录 · {view.snapshot.gunnery.damage.hits} 次</summary>
-      {view.snapshot.gunnery.damage.recent.slice(-5).map(hit => <p key={hit.projectile_id}>{view.geometry.ships.find(s => s.id === hit.ship_id)?.name} · 第 {hit.deck_level} 层 · {{ penetrated: "击穿", stopped: "装甲阻挡", ricochet: "跳弹", module: "外部模块命中" }[hit.outcome] ?? hit.outcome}{hit.module_ids.length ? ` · ${hit.module_ids.map(id => view.geometry.ships.find(s => s.id === hit.ship_id)?.modules.find(m => m.id === id)?.name ?? id).join("、")} −${hit.module_damage.toFixed(1)}` : ""}</p>)}
+      {view.snapshot.gunnery.damage.recent.slice(-5).map(hit => <p key={hit.projectile_id}>{view.geometry.ships.find(s => s.id === hit.ship_id)?.name} · 第 {hit.deck_level} 层 · {hit.projectile_type ? ammunitionName(hit.projectile_type)+' · ' : ''}{{ penetrated: "击穿", stopped: "装甲阻挡", ricochet: "跳弹", module: "外部模块命中" }[hit.outcome] ?? hit.outcome}{hit.module_ids.length ? ` · ${hit.module_ids.map(id => view.geometry.ships.find(s => s.id === hit.ship_id)?.modules.find(m => m.id === id)?.name ?? id).join("、")} −${hit.module_damage.toFixed(1)}` : ""}</p>)}
     </details>}
     {view && <><TacticalViewport view={view} active={active} selected={selected} onSelect={setSelected}
       gunControl={view.snapshot.gunnery && state ? { ownShipId: state.direct_ship_id, weaponId, mode: gun?.mode ?? "auto",
@@ -262,6 +325,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose }: 
       } : undefined} />
       <div className="editor-row">{view.geometry.ships.map(s => <button key={s.id} onClick={() => setSelected(s.id)}>{s.name}</button>)}</div>
       {pose && <p>速度 {pose.speed_mps.toFixed(2)} m/s · 转速 {(pose.yaw_rate_radps * 180 / Math.PI).toFixed(2)} °/s · 船壳 {(pose.hull_integrity * 100).toFixed(1)}%</p>}
+      {pose && durability && <p>结构耐久 {(pose.hull_integrity*durability.maximum_points).toFixed(0)} / {durability.maximum_points.toFixed(0)} · 由结构体积与材料冗余决定</p>}
       {pose && <details><summary>所选舰船模块耐久</summary>{pose.modules.map(m => <p key={m.id}>{view.geometry.ships.find(s => s.id === pose.id)?.modules.find(v => v.id === m.id)?.name ?? m.id}：{m.durability.toFixed(1)}{m.durability <= 0 ? " · 已损毁" : ""}</p>)}</details>}
       <details><summary>实时推进响应</summary>{state?.engines.map(e => <p key={e.id}>{view.geometry.ships.find(s => s.id === state.direct_ship_id)?.modules.find(m => m.id === e.id)?.name ?? e.id}：目标 {e.target}% / 实际 {e.actual}%</p>)}</details></>}
   </section>;

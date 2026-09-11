@@ -11,6 +11,7 @@ from dataclasses import dataclass, replace
 from math import ceil, floor, hypot, sqrt
 from statistics import median
 from typing import Any
+from 高天荒野舰艇边缘填充 import DeckFilling, FillingLoad, compile_filling
 
 from 高天荒野舰艇RCS缓存 import HullRCSCache, build_hull_rcs_cache
 from 高天荒野舰艇气动缓存 import (
@@ -631,6 +632,7 @@ class CompiledRegion:
 @dataclass(frozen=True)
 class StructureContext:
     regions: tuple[CompiledRegion, ...]
+    filling_loads: tuple[FillingLoad, ...] = ()
 
     @property
     def vertices(self) -> tuple[Point, ...]:
@@ -644,7 +646,7 @@ class StructureContext:
     def total_mass_kg(self) -> float:
         return self.structure_mass_kg + sum(
             region.armor_mass_kg for region in self.regions
-        )
+        ) + sum(polygon_area(load.vertices) * load.surface_density_kg_m2 for load in self.filling_loads)
 
 
 def mass_less(context: StructureContext, axis: int, value: float) -> float:
@@ -658,7 +660,10 @@ def mass_less(context: StructureContext, axis: int, value: float) -> float:
         for region in context.regions
         for edge in region.edges
     )
-    return structure_mass + armor_mass
+    return structure_mass + armor_mass + sum(
+        polygon_area(clipped) * load.surface_density_kg_m2
+        for load in context.filling_loads
+        if len(clipped := clip_half_plane(load.vertices, axis, value, True)) >= 3)
 
 
 def cut_capacity_n(context: StructureContext, axis: int, value: float) -> float:
@@ -770,6 +775,7 @@ class CompiledDeckResult:
     internal_cells: tuple[tuple[int, int], ...]
     exposed_top_cells: tuple[tuple[int, int], ...]
     side_mount_slots: tuple[SideMountSlot, ...]
+    filling: DeckFilling | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -785,6 +791,7 @@ class CompiledDeckResult:
             "side_mount_slots": [slot.to_dict() for slot in self.side_mount_slots],
             "structure_mass_kg": self.structure_mass_kg,
             "structure_volume_m3": self.structure_volume_m3,
+            **({"filling": self.filling.to_dict()} if self.filling else {}),
         }
 
 
@@ -835,7 +842,7 @@ class CompiledHull:
                 "directional_aerodynamic_geometry_cache",
                 "directional_baseline_hull_rcs_cache",
             ],
-            "compiler_interface": HULL_COMPILER_INTERFACE_ID,
+            "compiler_interface": "gaotian.hull-compiler/h5b-v1" if any(d.filling for d in self.decks) else HULL_COMPILER_INTERFACE_ID,
             "decks": [deck.to_dict() for deck in self.decks],
             "deferred_capabilities": [
                 "module_and_outfit_compilation",
@@ -1032,10 +1039,11 @@ def compile_hull(
                 internal_cells=internal_cells,
                 exposed_top_cells=exposed_cells,
                 side_mount_slots=side_slots,
+                filling=compile_filling(deck, regions) if deck.filling else None,
             )
         )
 
-    context = StructureContext(tuple(all_regions))
+    context = StructureContext(tuple(all_regions), tuple(load for d in deck_results if d.filling for load in d.filling.loads))
     structure_volume = sum(region.structure_volume_m3 for region in all_regions)
     base_armor_volume = sum(region.armor_volume_m3 for region in all_regions)
     structure_inertia = sum(
@@ -1073,9 +1081,9 @@ def compile_hull(
         structure_volume_m3=structure_volume,
         base_armor_volume_m3=base_armor_volume,
         structure_mass_kg=context.structure_mass_kg,
-        base_armor_mass_kg=context.total_mass_kg - context.structure_mass_kg,
+        base_armor_mass_kg=sum(region.armor_mass_kg for region in all_regions) if context.filling_loads else context.total_mass_kg - context.structure_mass_kg,
         hull_mass_kg=context.total_mass_kg,
-        hull_inertia_kg_m2=structure_inertia + armor_inertia,
+        hull_inertia_kg_m2=structure_inertia + armor_inertia + sum(d.filling.inertia_kg_m2 for d in deck_results if d.filling),
         hull_durability_volume_proxy_m3=durability_proxy,
         local_armor_durability_proxy=tuple(
             (

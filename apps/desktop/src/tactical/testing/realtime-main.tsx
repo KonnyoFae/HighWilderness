@@ -12,6 +12,8 @@ const port: CommandPort = {
   invoke: async <T,>(command: string, args?: Record<string, unknown>): Promise<T> => {
     if (command === "bridge_tactical_request" || command === "bridge_editor_request")
       return await window.__e3b_request(args!.request) as T;
+    if (command === "bridge_choose_file")
+      return await window.__e3b_request({ method: "__choose_file", params: args!.request }) as T;
     throw new Error(`Unsupported test host call: ${command}`);
   },
 };

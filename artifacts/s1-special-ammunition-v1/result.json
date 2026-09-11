@@ -1,0 +1,272 @@
+{
+  "status": "PASS",
+  "policy": "gaotian.tactical-ammunition/s1-v1",
+  "scope": "technical 500 m/s hits; real symmetric armor design",
+  "recipe": {
+    "id": "recipe.x1a.special_armor_piercing",
+    "version": 1,
+    "projectile": {
+      "id": "projectile.s1.armor_piercing",
+      "version": 1
+    },
+    "ammo_cost": 5,
+    "rounds": 1,
+    "reload_steps": 120,
+    "cargo_costs": [
+      {
+        "good_id": "cargo.special_alloy",
+        "quantity": 1
+      }
+    ]
+  },
+  "cases": [
+    {
+      "target": "unarmored",
+      "projectile": {
+        "id": "projectile.p2a.ordinary",
+        "version": 1
+      },
+      "event": {
+        "projectile_id": 1,
+        "step": 1,
+        "source_ship_id": "ship.web.red",
+        "ship_id": "ship.special.player",
+        "projectile_type": "projectile.p2a.ordinary",
+        "projectile_version": 1,
+        "position_m": [
+          -9.166666666666666,
+          -350.0
+        ],
+        "deck_level": 0,
+        "outcome": "penetrated",
+        "module_ids": [
+          "main_engine_port"
+        ],
+        "module_damage": 40.0,
+        "armor_before": 0.0,
+        "armor_after": 0.0,
+        "residual_energy_ratio": 1.0
+      },
+      "hull_integrity_after": 0.98,
+      "profile": {
+        "ballistic": {
+          "caliber_mm": 76.0,
+          "form_factor": 0.95,
+          "mass_kg": 6.3,
+          "muzzle_velocity_mps": 905.0
+        },
+        "damage": {
+          "armor_damage_to_local_durability_proxy": 0.01,
+          "hull_integrity_damage_fraction": 0.02,
+          "internal_effect_radius_m": 5.0,
+          "internal_effect_range_m": 40.0,
+          "internal_module_damage_points": 40.0,
+          "surface_effect_radius_m": 5.0,
+          "surface_module_damage_points": 25.0
+        },
+        "maximum_lifetime_s": 30.0,
+        "munition_id": "gtw.munition.fixture.76mm.standard",
+        "name": "契约夹具76毫米半穿高爆弹",
+        "penetration": {
+          "aftereffect": "internal_blast",
+          "can_ricochet": true,
+          "impact_armor_damage_at_reference_speed": 20.0,
+          "normalization_deg": 5.0,
+          "obliquity_exponent": 1.1,
+          "reference_penetration_mm": 140.0,
+          "reference_speed_mps": 900.0,
+          "ricochet_full_deg": 75.0,
+          "ricochet_start_deg": 65.0,
+          "surface_effect_armor_damage": 10.0,
+          "velocity_exponent": 1.4
+        }
+      }
+    },
+    {
+      "target": "unarmored",
+      "projectile": {
+        "id": "projectile.s1.armor_piercing",
+        "version": 1
+      },
+      "event": {
+        "projectile_id": 1,
+        "step": 1,
+        "source_ship_id": "ship.web.red",
+        "ship_id": "ship.special.player",
+        "projectile_type": "projectile.s1.armor_piercing",
+        "projectile_version": 1,
+        "position_m": [
+          -9.166666666666666,
+          -350.0
+        ],
+        "deck_level": 0,
+        "outcome": "penetrated",
+        "module_ids": [
+          "main_engine_port",
+          "main_engine_starboard"
+        ],
+        "module_damage": 32.0,
+        "armor_before": 0.0,
+        "armor_after": 0.0,
+        "residual_energy_ratio": 1.0
+      },
+      "hull_integrity_after": 0.984,
+      "profile": {
+        "ballistic": {
+          "caliber_mm": 76.0,
+          "form_factor": 0.95,
+          "mass_kg": 6.3,
+          "muzzle_velocity_mps": 905.0
+        },
+        "damage": {
+          "armor_damage_to_local_durability_proxy": 0.01,
+          "hull_integrity_damage_fraction": 0.016,
+          "internal_effect_radius_m": 5.0,
+          "internal_effect_range_m": 40.0,
+          "internal_module_damage_points": 32.0,
+          "surface_effect_radius_m": 0.0,
+          "surface_module_damage_points": 10.0
+        },
+        "maximum_lifetime_s": 30.0,
+        "munition_id": "gtw.munition.s1.armor_piercing",
+        "name": "穿甲弹（技术数值）",
+        "penetration": {
+          "aftereffect": "kinetic_ray",
+          "can_ricochet": true,
+          "impact_armor_damage_at_reference_speed": 20.0,
+          "normalization_deg": 8.0,
+          "obliquity_exponent": 1.1,
+          "reference_penetration_mm": 210.0,
+          "reference_speed_mps": 900.0,
+          "ricochet_full_deg": 75.0,
+          "ricochet_start_deg": 65.0,
+          "surface_effect_armor_damage": 10.0,
+          "velocity_exponent": 1.4
+        }
+      }
+    },
+    {
+      "target": "70mm_aft_slopes",
+      "projectile": {
+        "id": "projectile.p2a.ordinary",
+        "version": 1
+      },
+      "event": {
+        "projectile_id": 1,
+        "step": 1,
+        "source_ship_id": "ship.web.red",
+        "ship_id": "ship.special.player",
+        "projectile_type": "projectile.p2a.ordinary",
+        "projectile_version": 1,
+        "position_m": [
+          -9.166666666666666,
+          -350.0
+        ],
+        "deck_level": 0,
+        "outcome": "stopped",
+        "module_ids": [],
+        "module_damage": 0.0,
+        "armor_before": 10.644834428021886,
+        "armor_after": 10.507797390984848,
+        "residual_energy_ratio": 0.0
+      },
+      "hull_integrity_after": 1.0,
+      "profile": {
+        "ballistic": {
+          "caliber_mm": 76.0,
+          "form_factor": 0.95,
+          "mass_kg": 6.3,
+          "muzzle_velocity_mps": 905.0
+        },
+        "damage": {
+          "armor_damage_to_local_durability_proxy": 0.01,
+          "hull_integrity_damage_fraction": 0.02,
+          "internal_effect_radius_m": 5.0,
+          "internal_effect_range_m": 40.0,
+          "internal_module_damage_points": 40.0,
+          "surface_effect_radius_m": 5.0,
+          "surface_module_damage_points": 25.0
+        },
+        "maximum_lifetime_s": 30.0,
+        "munition_id": "gtw.munition.fixture.76mm.standard",
+        "name": "契约夹具76毫米半穿高爆弹",
+        "penetration": {
+          "aftereffect": "internal_blast",
+          "can_ricochet": true,
+          "impact_armor_damage_at_reference_speed": 20.0,
+          "normalization_deg": 5.0,
+          "obliquity_exponent": 1.1,
+          "reference_penetration_mm": 140.0,
+          "reference_speed_mps": 900.0,
+          "ricochet_full_deg": 75.0,
+          "ricochet_start_deg": 65.0,
+          "surface_effect_armor_damage": 10.0,
+          "velocity_exponent": 1.4
+        }
+      }
+    },
+    {
+      "target": "70mm_aft_slopes",
+      "projectile": {
+        "id": "projectile.s1.armor_piercing",
+        "version": 1
+      },
+      "event": {
+        "projectile_id": 1,
+        "step": 1,
+        "source_ship_id": "ship.web.red",
+        "ship_id": "ship.special.player",
+        "projectile_type": "projectile.s1.armor_piercing",
+        "projectile_version": 1,
+        "position_m": [
+          -9.166666666666666,
+          -350.0
+        ],
+        "deck_level": 0,
+        "outcome": "penetrated",
+        "module_ids": [
+          "main_engine_port",
+          "main_engine_starboard"
+        ],
+        "module_damage": 4.183437637818345,
+        "armor_before": 10.644834428021886,
+        "armor_after": 10.583106032960158,
+        "residual_energy_ratio": 0.1307324261818233
+      },
+      "hull_integrity_after": 0.9979082811810909,
+      "profile": {
+        "ballistic": {
+          "caliber_mm": 76.0,
+          "form_factor": 0.95,
+          "mass_kg": 6.3,
+          "muzzle_velocity_mps": 905.0
+        },
+        "damage": {
+          "armor_damage_to_local_durability_proxy": 0.01,
+          "hull_integrity_damage_fraction": 0.016,
+          "internal_effect_radius_m": 5.0,
+          "internal_effect_range_m": 40.0,
+          "internal_module_damage_points": 32.0,
+          "surface_effect_radius_m": 0.0,
+          "surface_module_damage_points": 10.0
+        },
+        "maximum_lifetime_s": 30.0,
+        "munition_id": "gtw.munition.s1.armor_piercing",
+        "name": "穿甲弹（技术数值）",
+        "penetration": {
+          "aftereffect": "kinetic_ray",
+          "can_ricochet": true,
+          "impact_armor_damage_at_reference_speed": 20.0,
+          "normalization_deg": 8.0,
+          "obliquity_exponent": 1.1,
+          "reference_penetration_mm": 210.0,
+          "reference_speed_mps": 900.0,
+          "ricochet_full_deg": 75.0,
+          "ricochet_start_deg": 65.0,
+          "surface_effect_armor_damage": 10.0,
+          "velocity_exponent": 1.4
+        }
+      }
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 import type { Point } from "../editor/viewport";
-export type GunIntent = { kind: "mode" | "target" | "aim" | "fire" | "clear" | "deck"; arguments: Record<string, unknown> };
+export type GunIntent = { kind: "mode" | "target" | "aim" | "fire" | "clear" | "deck" | "ammunition"; arguments: Record<string, unknown> };
 export interface GunInteraction {
   ownShipId: string; weaponId: string | null; mode: "auto" | "manual"; enabled: boolean;
   onWeapon: (id: string) => void;
@@ -7,6 +7,7 @@ export interface GunInteraction {
   onAim: (point: Point) => void; onFire: (point: Point) => void; onLeave: () => void;
 }
 export const gunStatus: Record<string, string> = {
+  no_special_materials: "特殊弹材料不足",
   battle_finished: "交战已结束", no_target: "等待目标", tracking: "跟踪目标", target_unavailable: "目标信息失效", out_of_arc: "超出炮塔射界",
   out_of_range: "超出射程", hull_blocked: "上层船壳遮挡", traversing: "炮塔转向中", reloading: "装填中",
   cooldown: "冷却中", no_ammunition: "弹药资源不足", ready: "就绪", fired: "已开火", destroyed: "武器损毁",

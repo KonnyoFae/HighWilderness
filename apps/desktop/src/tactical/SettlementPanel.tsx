@@ -1,5 +1,6 @@
-import { endingLabel, resourceRows, serviceLabel } from "./settlement";
+import { endingLabel, resourceRows, serviceLabel, fuelTankName } from "./settlement";
 import type { SettlementEnvelope, SettlementLibrary } from "./settlement";
+import { ammunitionName } from './ammunition';
 
 export function SettlementPanel({ current, library, busy, canDeploy, onSave, onInspect, onRefresh, onDeploy }: {
   current: SettlementEnvelope | null; library: SettlementLibrary | null; busy: boolean; canDeploy: boolean;
@@ -14,16 +15,26 @@ export function SettlementPanel({ current, library, busy, canDeploy, onSave, onI
       {current.error && <p role="alert">{current.error}</p>}
       <button disabled={busy || current.saved} onClick={() => onSave(current.result.settlement_id)}>{current.saved ? "结算已保存" : "保存全部战后结果"}</button>
       <div className="settlement-ships">{current.result.ships.map(ship => <article key={ship.after.state.instance_id}>
-        <h4>{ship.after.ship_id === "ship.web.blue" ? "本方舰船" : "敌方舰船"} · {serviceLabel[ship.after.state.service.status]}</h4>
+        <h4>{ship.after.ship_id === "ship.web.red" ? "敌方舰船" : "本方舰船"} · {serviceLabel[ship.after.state.service.status]}</h4>
         <p>船壳 {(ship.before.state.hull_integrity_fraction*100).toFixed(1)}% → {(ship.after.state.hull_integrity_fraction*100).toFixed(1)}%</p>
         <div className="propulsion-tables"><table><thead><tr><th>资源</th><th>战前</th><th>战后</th><th>变动原因</th></tr></thead><tbody>
           {resourceRows(ship).map(row => <tr key={row.key}><td>{row.name}</td><td>{row.before}</td><td>{row.after}</td><td>{row.detail}</td></tr>)}
         </tbody></table></div>
+        {ship.after.state.weapons.map(w => {
+          const before=ship.before.state.weapons.find(v=>v.module_id===w.module_id);
+          return <p key={w.module_id}>{ship.module_names[w.module_id]??w.module_id}待发弹种：{ammunitionName(before?.ready_rounds ? before.recipe_id : null)} → {ammunitionName(w.ready_rounds ? w.recipe_id : null)}</p>;
+        })}
         <p>货舱容积 {(ship.capacity_before.capacity_cm3/1e6).toFixed(1)} → {(ship.capacity_after.capacity_cm3/1e6).toFixed(1)} m³；已用 {(ship.capacity_after.used_volume_cm3/1e6).toFixed(1)} m³{ship.capacity_after.over_capacity ? " · 已超容，现有货物保留，暂不能新增装载" : ""}</p>
-        <details><summary>模块战损</summary>{ship.after.state.modules.map(m => {
+        {!!ship.after.state.damage_controls?.length&&<p>损管消耗已按灭火、部件维修和船壳维修分别计入上表。下方耐久为战损与修复后的净结果；结算不会额外维修。</p>}
+        {!!ship.after.state.fires?.length&&<p>尚有 {ship.after.state.fires.length} 处火情，会随舰船保存，下次入战继续处理。</p>}
+        <details><summary>模块耐久（战损与修复后的净结果）</summary>{ship.after.state.modules.map(m => {
           const before = ship.before.state.modules.find(v => v.module_id === m.module_id)!;
           return <p key={m.module_id}>{ship.module_names[m.module_id] ?? m.module_id}：{before.durability_points.toFixed(1)} → {m.durability_points.toFixed(1)}{m.durability_points === 0 ? " · 已损毁" : ""}</p>;
         })}</details>
+        {!!ship.after.state.fuel_tanks?.length&&<details open><summary>燃料槽耐久</summary>{ship.after.state.fuel_tanks.map(t=>{
+          const spec=ship.after.resources?.fuel_tanks?.find(s=>s.tank_id===t.tank_id),before=ship.before.state.fuel_tanks?.find(s=>s.tank_id===t.tank_id);
+          return <p key={t.tank_id}>{spec?fuelTankName(spec,ship.module_names):t.tank_id}：{before?.durability_points.toFixed(1)} → {t.durability_points.toFixed(1)}{t.durability_points<=0?' · 已损毁':''}</p>;
+        })}</details>}
         <details><summary>局部装甲战损</summary>
           {ship.after.armor.filter((a, i) => a.durability !== ship.before.armor[i].durability).map(a => {
             const before = ship.before.armor.find(v => v.deck_id === a.deck_id && v.region_id === a.region_id && v.edge_index === a.edge_index)!;

@@ -1,8 +1,9 @@
+import type { DamageControlView } from './DamageControlPanel';
 export const SCENARIO_ID = "gtw.sample.web.two_ship.v1";
 export interface TacticalRequest {
   backend_instance_id: string;
-  method: "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
-    | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.withdraw" | "tactical.realtime.gun" | "tactical.realtime.close";
+  method: 'tactical.realtime.damage_control' | `tactical.preparation.${"library" | "import" | "open" | "read" | "draft" | "preview" | "commit" | "discard"}` | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
+    | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.withdraw" | "tactical.realtime.gun" | "tactical.realtime.close";
   params: Record<string, unknown>;
   session_id: null;
   expected_revision: null;
@@ -13,6 +14,7 @@ export interface TacticalStatic {
   resources: Record<string, unknown>;
   ships: { id: string; name: string; side_id: string; fleet_id: string; derived_snapshot_sha256: string;
     decks: { id: string; level: number; regions: { id: string; vertices_m: number[][] }[] }[];
+    structural_durability?: { policy_id:string; maximum_points:number };
     modules: { id: string; name: string; category: string; anchor_m: number[]; rotation_deg: number; deck_level: number;
       internal_cells: number[][]; top_cells: number[][]; body_points: number[][]; max_durability: number }[] }[];
 }
@@ -67,14 +69,21 @@ export interface GunView {
   quality: "normal" | "degraded"; quality_reason: string; lock_sources: string[];
   status: string; shots: number; ready_rounds: number; reload_steps: number; cooldown_steps: number;
   deck_level?: number; ammo_resources: number; batch_cost: number; batch_rounds: number;
+  selected_recipe_id?: string; loaded_recipe_id?: string | null; loading_recipe_id?: string | null;
+  recipe_options?: {id: string; ammo_cost: number; rounds: number; cargo_costs: {good_id: string; quantity: number}[]}[];
+  cargo?: {good_id: string; quantity: number; reserved: number}[];
 }
 export interface GunneryView {
+  fuel?:{ship_id:string;total_units:number;tanks:{tank_id:string;module_id:string|null;deck_id:string|null;deck_level:number;
+    quantity_units:number;durability_points:number;capacity_units:number;maximum_points:number}[]}[];
+  damage_control?:DamageControlView;
+  fireproof?:{ship_id:string;decks:{deck_id:string;deck_level:number;multiplier:number}[]}[];
   interface: "gaotian.gunnery-view/p2a-v1alpha1"; command_sequence: number;
   weapons: GunView[]; projectiles: { id: number; ship_id: string; position_m: number[]; previous_m: number[]; velocity_mps: number[] }[];
   policy_id: string; damage_enabled: boolean;
   ending?: { reason: string; step: number; removed_projectiles: number; saved: boolean } | null;
   damage?: { hits: number; expired: number; recent: { projectile_id: number; step: number; source_ship_id: string;
-    ship_id: string; position_m: number[]; deck_level: number; outcome: string; module_ids: string[]; module_damage: number }[] } | null;
+    ship_id: string; position_m: number[]; deck_level: number; outcome: string; module_ids: string[]; module_damage: number; projectile_type?: string }[] } | null;
 }
 export type WorkspaceMode = "editor" | "tactical";
 export interface ModeResult { mode: WorkspaceMode; paused: boolean; scene_id: string | null }

@@ -9,6 +9,7 @@ from threading import Thread
 from .sessions import EditorService, EDITOR_CAPABILITIES
 from .tactical import TacticalService, TACTICAL_CAPABILITIES
 from .realtime_view import RealtimeViewService, CAPABILITIES as REALTIME_CAPABILITIES
+from .preparation_service import PreparationService, CAPABILITIES as PREPARATION_CAPABILITIES
 from typing import Any, BinaryIO
 
 from 高天荒野舰艇数据契约 import ContractError
@@ -70,6 +71,8 @@ class SidecarServer:
         self.editor = EditorService(instance_id, recovery_dir=recovery_dir)
         self.tactical = TacticalService(instance_id)
         self.realtime = RealtimeViewService(instance_id, settlement_dir=settlement_dir)
+        self.preparation = PreparationService(self.editor,self.realtime.store.directory)
+        self.realtime.preparation_store = self.preparation.store
         self.instance_id = instance_id
         self.handshake_complete = False
         self.last_request_number = 0
@@ -123,7 +126,7 @@ class SidecarServer:
                 error = _bridge_error("handshake_required", "$.method", "首条请求必须是 system.hello")
                 return (response_for(message, error=_error_payload(error)),), True
             try:
-                result = hello_result(message, ("system.hello", "system.ping", "system.shutdown", *EDITOR_CAPABILITIES, *TACTICAL_CAPABILITIES, *REALTIME_CAPABILITIES))
+                result = hello_result(message, ("system.hello", "system.ping", "system.shutdown", *EDITOR_CAPABILITIES, *TACTICAL_CAPABILITIES, *REALTIME_CAPABILITIES, *PREPARATION_CAPABILITIES))
             except ContractError as error:
                 return (response_for(message, error=_error_payload(error)),), True
             self.handshake_complete = True
@@ -151,6 +154,14 @@ class SidecarServer:
             if params["reason"] not in SHUTDOWN_REASONS:
                 raise _bridge_error("invalid_message", "$.params.reason", "未知关闭原因")
             return (response_for(message, result={"accepted": True}),), True
+
+        if method in PREPARATION_CAPABILITIES:
+            try:
+                if self.tactical.mode != 'editor':
+                    raise ContractError('preparation.mode', '$', '请先切换到战前准备视图')
+                return (response_for(message,result=self.preparation.dispatch(message)),),False
+            except ContractError as error:
+                return (response_for(message,error=_error_payload(error)),),False
 
         if method in REALTIME_CAPABILITIES:
             try:
@@ -252,7 +263,7 @@ class SidecarServer:
                     break
                 for raw in decoder.feed(chunk):
                     message = self.accept(raw)
-                    if self.handshake_complete and message["method"] in (*EDITOR_CAPABILITIES, "editor.bind_file", *TACTICAL_CAPABILITIES, *REALTIME_CAPABILITIES):
+                    if self.handshake_complete and message["method"] in (*EDITOR_CAPABILITIES, "editor.bind_file", *TACTICAL_CAPABILITIES, *REALTIME_CAPABILITIES, *PREPARATION_CAPABILITIES):
                         try:
                             jobs.put_nowait(message)
                         except Full:

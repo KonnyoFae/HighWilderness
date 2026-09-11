@@ -2,6 +2,8 @@ import { Application, Graphics } from "../rendering/pixi";
 import { useEffect, useRef, useState } from "react";
 import { HullInspector } from "./HullInspector";
 import { currentEdgeSpace } from "./edgeSpace";
+import { FillingSummary } from "./FillingSummary";
+import type { FillingView } from "./FillingSummary";
 import { closedRegion, deferredCommit, nextId } from "./interaction";
 import { drawingPoint, sameBoundary, symmetricDrawing, symmetrizeRegion } from "./symmetry";
 import type { SourceSide } from "./symmetry";
@@ -339,7 +341,8 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
             <p>毛体积 {edgeSpace.gross_volume_m3.toLocaleString(undefined, { maximumFractionDigits: 2 })} m³</p>
             {edgeSpace.area_m2 === 0 && <p>本层没有安装整格之外的边缘余量。</p>}
             <p className="muted">橙色区域是完整安装格之外的船内余量。毛体积尚未扣除装甲、结构与储存设施，不能作为实际燃料容量。</p>
-            <p className="muted">填充材料选择与效果尚未开放。</p>
+            <FillingSummary value={(session.preview.model.decks as {id: string; filling?: FillingView}[] | undefined)?.find(d => d.id === deck?.id)?.filling} />
+            {!deck?.filling && <p className="muted">选择填充后显示净空间与新增质量；旧设计默认不额外填充。</p>}
           </> : <p className="muted">{localDraft || !session.preview.valid ? "当前草稿的边缘空间待合法提交后更新。" : "当前预览未提供边缘空间，请重新打开会话或更新后台。"}</p>}
         </section>
         <h3>检查结果</h3>

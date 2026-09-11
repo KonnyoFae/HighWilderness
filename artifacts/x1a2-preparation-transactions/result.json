@@ -1,0 +1,39 @@
+{
+  "status": "X1A2_SCOPED_PASS",
+  "checks": {
+    "preview_has_no_side_effects": true,
+    "commit_matches_preview": true,
+    "restart_receipt_retry_no_duplicate_cost": true,
+    "next_preparation_keeps_loaded_rounds": true
+  },
+  "ships": [
+    {
+      "instance_id": "instance.0",
+      "revision": 1,
+      "ammunition_resources": 15,
+      "ready_rounds": 1
+    },
+    {
+      "instance_id": "instance.1",
+      "revision": 1,
+      "ammunition_resources": 15,
+      "ready_rounds": 1
+    }
+  ],
+  "remaining_supply": {
+    "ammunition_resources": 60,
+    "cargo": [
+      {
+        "good_id": "cargo.special_alloy",
+        "quantity": 26
+      }
+    ],
+    "interface": "gaotian.battle-preparation-supply/x1a-v1",
+    "revision": 1,
+    "supply_id": "supply.evidence"
+  },
+  "not_implemented": [
+    "preparation_ui",
+    "custom_design_live_battle_entry"
+  ]
+}

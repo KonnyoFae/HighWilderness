@@ -32,7 +32,7 @@ export interface EditorPreview {
   model: Record<string, unknown>;
 }
 export interface HullRegion { id: string; vertices_m: [number, number][]; edge_armor: { material: { id: string; version: number }; thickness_m: number }[] }
-export interface HullDeck { id: string; level: number; is_base: boolean; regions: HullRegion[]; structure_material: { id: string; version: number } }
+export interface HullDeck { id: string; level: number; is_base: boolean; regions: HullRegion[]; structure_material: { id: string; version: number }; filling?: { id: string; version: number } }
 export interface HullBinding {
   interface: "gaotian.outfit-hull-binding/v1alpha1";
   hull: { kind: "HullBlueprint"; id: string; version: number; name: string; decks: HullDeck[] };

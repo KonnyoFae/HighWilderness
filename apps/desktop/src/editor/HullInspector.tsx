@@ -32,6 +32,12 @@ export function HullInspector({ deck, region, selection, materials, busy, drawin
         {!chosenStructure && <option value={structure}>{deck.structure_material.id}（目录未提供）</option>}
         {structures.map(m => <option key={`${m.id}@${m.version}`} value={`${m.id}@${m.version}`}>{m.name} · v{m.version}</option>)}</select></label>
         <button disabled={!chosenStructure} onClick={() => void onCommand("hull.set_structure_material", { deck_id: deck.id, material: chosenStructure })}>应用结构材料</button>
+        <label>本层边缘填充<select aria-label="本层边缘填充" value={deck.filling?.id ?? "gtw.filling.none"}
+          onChange={e => void onCommand("hull.set_filling", {deck_id: deck.id, configuration: {id: e.target.value, version: 1}})}>
+          <option value="gtw.filling.none">不额外填充</option><option value="gtw.filling.rack">货架填充</option>
+          <option value="gtw.filling.spirit_fuel">灵烷储存设施</option>
+          <option value="gtw.filling.fireproof">防火材料</option>
+        </select></label><small>整层边缘空间统一配置，含同层分离区域。货架只增加容量；灵烷与防火效果尚未接入。</small>
         <button disabled={deck.is_base} onClick={() => void onCommand("hull.set_base_deck", { deck_id: deck.id })}>设为基底层</button></>}
       {(drawing || vertex) && <><div className="point-inputs"><label>X / m<input aria-label="端点 X" type="number" step="2.5" value={x} onChange={e => setX(e.target.value)} /></label>
         <label>Y / m<input aria-label="端点 Y" type="number" step="2.5" value={y} onChange={e => setY(e.target.value)} /></label></div>

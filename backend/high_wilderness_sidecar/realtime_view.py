@@ -15,7 +15,7 @@ from .tactical import render_static, RENDER_INTERFACE
 from .tactical_scenario import build_two_ship_scenario, SCENARIO_ID
 from .tactical_gunnery import GunneryBattle, prepare_trial_session
 
-CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy'))
+CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry'))
 INTERFACE = 'gaotian.realtime-view/e3b-v1alpha1'
 VIEW_PERIOD_NS = 66_666_667
 LEASE_NS = 2_000_000_000
@@ -38,6 +38,50 @@ class RealtimeViewService:
         self._result_saved = False
         self._save_error = None
         self._deployment_key = None
+        self.preparation_store = None
+        self._prepared_lease = None
+
+    def deploy_prepared(self,p):
+        from . import prepared_deployment as deployment, prepared_launch_store as launches, battle_preparation as bp
+        ps=settlement.ps
+        ps.obj(p,'preparation_id launch_id direct_instance_id','$.params')
+        for key in p:ps.identifier(p[key],'$.'+key)
+        digest=canonical_sha256(p);key=('prepared',p['launch_id'],digest)
+        if self.scheduler is not None and self._deployment_key==key:return self.read()
+        require(self.scheduler is None or self.gunnery.ending is not None and self._result_saved,'请先结束并保存当前交战，再进入准备舰船交战')
+        store=self.preparation_store
+        require(store is not None,'准备仓库未接线')
+        if self._prepared_lease is not None:self._prepared_lease.close();self._prepared_lease=None
+        launches.recover(store)
+        lease=launches.BattleLease(store.directory)
+        require(lease.file is not None,'准备舰船正由另一个后台使用')
+        claimed=False;scene=None
+        try:
+            with store.connection() as db:
+                launches.setup(db)
+                old=db.execute('SELECT status FROM prepared_launches WHERE id=?',(p['launch_id'],)).fetchone()
+                require(old is None,'该次入战已结束或中断，请从准备页重新发起')
+                raw=db.execute('SELECT payload,digest FROM preparations WHERE id=?',(p['preparation_id'],)).fetchone()
+                require(raw is not None,'请先保存战前准备')
+                receipt=store._decode(*raw);ships=[]
+                for row in receipt['ships']:
+                    record=row['after'];identity=record['state']['instance_id']
+                    archive=db.execute('SELECT payload,digest FROM preparation_designs WHERE id=?',(identity,)).fetchone()
+                    require(archive is not None,'已保存的设计绑定缺失')
+                    design=bp.restore_design(store._decode(*archive),store.index)
+                    ships.append((design,bp.validate_record(record,design)))
+            template,scenario,_=self._template()
+            battle,geometry=deployment.build(ships,p['direct_instance_id'],template,scenario)
+            scene=battle.session.world.epoch
+            launches.claim(store,p['launch_id'],digest,scene,[r for _,r in ships]);claimed=True
+            result=self._attach(battle,geometry,key)
+            self._prepared_lease=lease
+            return result
+        except BaseException:
+            try:
+                if claimed:launches.rollback_failed_attach(store,p['launch_id'],scene)
+            finally:lease.close()
+            raise
 
     @property
     def running(self):
@@ -91,6 +135,10 @@ class RealtimeViewService:
         return battle, scenario, geometry
 
     def _attach(self, battle, geometry, key=None):
+        geometry = deepcopy(geometry)
+        if battle.damage is not None:
+            for ship, durability in zip(geometry['ships'], battle.damage.structural_durability):
+                ship['structural_durability'] = dict(policy_id=durability.policy_id, maximum_points=durability.maximum_points)
         scheduler = TacticalScheduler(battle.session, clock=self.clock, stepper=battle.step, stop_when=lambda: battle.ending is not None)
         digest = canonical_sha256(geometry)
         previous = dict(self.__dict__)
@@ -154,6 +202,15 @@ class RealtimeViewService:
     def dispatch(self, request, *, mode):
         require(request.get('session_id') is None and request.get('expected_revision') is None, 'Realtime uses scene scope')
         method, p = request['method'], request['params']
+        if method == 'tactical.realtime.deploy_prepared':
+            require(mode=='tactical','请先进入战术视角')
+            return self.deploy_prepared(p)
+        if method == 'tactical.realtime.prepared_entry':
+            require(set(p)=={'launch_id'},'需要入战请求身份')
+            settlement.ps.identifier(p['launch_id'],'$.launch_id')
+            if self.scheduler is not None and self._deployment_key and self._deployment_key[0]=='prepared' and self._deployment_key[1]==p['launch_id']:
+                return dict(scene=self.read())
+            return dict(scene=None)
         if method == 'tactical.realtime.create':
             require(set(p) == {'scenario_id'} and p['scenario_id'] == SCENARIO_ID, 'Unknown realtime fixture')
             require(mode == 'tactical', 'Enter tactical mode first')
@@ -199,17 +256,19 @@ class RealtimeViewService:
             battle = settlement.redeploy(record, template, scenario)
             return self._attach(battle, geometry, key)
         fields = {'scene_id', 'known_static_sha256', 'ack_inputs', 'ack_events'} if method == 'tactical.realtime.read' else \
-            {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun') else {'scene_id'}
+            {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun', 'tactical.realtime.damage_control') else {'scene_id'}
         require(set(p) == fields, 'Unknown or missing realtime fields')
         if method == 'tactical.realtime.close' and self.scheduler is None and p['scene_id'] == self.last_closed and self.last_closed is not None:
             return dict(closed=True)
         require(self.scheduler is not None and p['scene_id'] == self.scheduler.world.epoch, 'Realtime scene identity mismatch')
         q = self.scheduler
         if method == 'tactical.realtime.close':
+            require(self._prepared_lease is None or self._result_saved,'请先结束交战并保存结果，再返回战前准备')
             require(self.gunnery.ending is None or self._result_saved, '请先保存战后结算；失败时可重试，重启后也可从结算列表恢复')
             q.pause('mode_exit')
             self.last_closed = p['scene_id']
             self.scheduler = self.gunnery = self.latest = self.geometry = self.digest = None
+            if self._prepared_lease is not None:self._prepared_lease.close();self._prepared_lease=None
             return dict(closed=True)
         if method == 'tactical.realtime.read':
             require(type(p['ack_inputs']) is list and len(p['ack_inputs']) <= 256 and all(count(s,1) for s in p['ack_inputs']), 'Invalid receipt acknowledgements')
@@ -244,6 +303,14 @@ class RealtimeViewService:
                 next(s for s in q.world.ships if s.ship_id == q._session._direct).authority_allowed,
                 'Gun command is paused, obsolete or lacks direct control')
             self.gunnery.submit(value)
+        elif method == 'tactical.realtime.damage_control':
+            value = p['input']
+            require(type(value) is dict, 'Invalid damage-control input')
+            retry = value == self.gunnery.fire.player_last
+            require(retry or q.status.running and value.get('generation') == q.status.generation and
+                    next(s for s in q.world.ships if s.ship_id == q._session._direct).authority_allowed,
+                    '损管命令需要运行中的当前场景及旗舰控制权')
+            self.gunnery.fire.submit_player(value)
         elif method == 'tactical.realtime.control':
             value = p['input']
             # The transport supplies a current target from a read snapshot. No

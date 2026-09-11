@@ -1,0 +1,226 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaotianwilderness.invalid/schema/hull/v2alpha1",
+  "title": "船壳逐层填充合同 v2alpha1",
+  "$ref": "#/$defs/hullBlueprint",
+  "$defs": {
+    "hullBlueprint": {
+      "additionalProperties": false,
+      "properties": {
+        "decks": {
+          "items": {
+            "$ref": "#/$defs/deck"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "fixture_level": {
+          "enum": [
+            "canonical_blueprint_fixture",
+            "balance_reference"
+          ],
+          "type": "string"
+        },
+        "grid": {
+          "$ref": "#/$defs/grid"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "kind": {
+          "const": "HullBlueprint"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "schema": {
+          "const": "gaotian.hull/v2alpha1"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      },
+      "required": [
+        "schema",
+        "kind",
+        "id",
+        "version",
+        "name",
+        "fixture_level",
+        "grid",
+        "decks"
+      ],
+      "type": "object"
+    },
+    "deck": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "is_base": {
+          "type": "boolean"
+        },
+        "level": {
+          "minimum": 0,
+          "type": "integer"
+        },
+        "regions": {
+          "items": {
+            "$ref": "#/$defs/region"
+          },
+          "minItems": 1,
+          "type": "array"
+        },
+        "structure_material": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "filling": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "version"
+          ],
+          "properties": {
+            "id": {
+              "enum": [
+                "gtw.filling.none",
+                "gtw.filling.rack",
+                "gtw.filling.spirit_fuel",
+                "gtw.filling.fireproof"
+              ]
+            },
+            "version": {
+              "const": 1
+            }
+          }
+        }
+      },
+      "required": [
+        "id",
+        "level",
+        "is_base",
+        "structure_material",
+        "regions",
+        "filling"
+      ],
+      "type": "object"
+    },
+    "resourceId": {
+      "pattern": "^[a-z0-9][a-z0-9._-]*$",
+      "type": "string"
+    },
+    "region": {
+      "additionalProperties": false,
+      "properties": {
+        "edge_armor": {
+          "items": {
+            "$ref": "#/$defs/edgeArmor"
+          },
+          "minItems": 3,
+          "type": "array"
+        },
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "vertices_m": {
+          "items": {
+            "$ref": "#/$defs/pointMeters"
+          },
+          "minItems": 3,
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "vertices_m",
+        "edge_armor"
+      ],
+      "type": "object"
+    },
+    "edgeArmor": {
+      "additionalProperties": false,
+      "properties": {
+        "material": {
+          "$ref": "#/$defs/resourceReference"
+        },
+        "thickness_m": {
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "material",
+        "thickness_m"
+      ],
+      "type": "object"
+    },
+    "resourceReference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/resourceId"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        }
+      },
+      "required": [
+        "id",
+        "version"
+      ],
+      "type": "object"
+    },
+    "version": {
+      "minimum": 1,
+      "type": "integer"
+    },
+    "pointMeters": {
+      "items": false,
+      "maxItems": 2,
+      "minItems": 2,
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "type": "array"
+    },
+    "grid": {
+      "additionalProperties": false,
+      "properties": {
+        "cell_size_m": {
+          "const": 5.0
+        },
+        "cic_origin_cell": {
+          "const": [
+            0,
+            0
+          ]
+        },
+        "deck_height_m": {
+          "const": 5.0
+        },
+        "forward_axis": {
+          "const": "+Y"
+        },
+        "symmetry_axis": {
+          "const": "Y"
+        }
+      },
+      "required": [
+        "cell_size_m",
+        "deck_height_m",
+        "forward_axis",
+        "symmetry_axis",
+        "cic_origin_cell"
+      ],
+      "type": "object"
+    }
+  }
+}

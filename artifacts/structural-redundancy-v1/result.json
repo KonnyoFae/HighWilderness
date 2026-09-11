@@ -1,0 +1,86 @@
+{
+  "status": "PASS",
+  "policy_id": "gaotian.structural-redundancy/v1",
+  "reference_maximum_points": 29620.0,
+  "scope": "Same saved hull geometry/armor/modules, different per-layer structure material; one identical swept projectile per ship",
+  "cases": [
+    {
+      "material": "armor_steel",
+      "structure_volume_m3": 313.0,
+      "maximum_points": 31300.0,
+      "current_points": 30707.6,
+      "integrity_fraction": 0.981073482428115,
+      "hit": {
+        "projectile_id": 1,
+        "step": 1,
+        "source_ship_id": "ship.web.red",
+        "ship_id": "ship.material.player",
+        "position_m": [
+          -9.166666666666668,
+          -350.0
+        ],
+        "deck_level": 0,
+        "outcome": "penetrated",
+        "module_ids": [
+          "main_engine_port"
+        ],
+        "module_damage": 40.0,
+        "armor_before": 0.0,
+        "armor_after": 0.0,
+        "residual_energy_ratio": 1.0
+      }
+    },
+    {
+      "material": "aluminum_alloy",
+      "structure_volume_m3": 313.0,
+      "maximum_points": 20345.0,
+      "current_points": 19752.6,
+      "integrity_fraction": 0.9708822806586385,
+      "hit": {
+        "projectile_id": 1,
+        "step": 1,
+        "source_ship_id": "ship.web.red",
+        "ship_id": "ship.material.player",
+        "position_m": [
+          -9.166666666666668,
+          -350.0
+        ],
+        "deck_level": 0,
+        "outcome": "penetrated",
+        "module_ids": [
+          "main_engine_port"
+        ],
+        "module_damage": 40.0,
+        "armor_before": 0.0,
+        "armor_after": 0.0,
+        "residual_energy_ratio": 1.0
+      }
+    },
+    {
+      "material": "titanium_alloy",
+      "structure_volume_m3": 313.0,
+      "maximum_points": 42255.0,
+      "current_points": 41662.6,
+      "integrity_fraction": 0.9859803573541592,
+      "hit": {
+        "projectile_id": 1,
+        "step": 1,
+        "source_ship_id": "ship.web.red",
+        "ship_id": "ship.material.player",
+        "position_m": [
+          -9.166666666666668,
+          -350.0
+        ],
+        "deck_level": 0,
+        "outcome": "penetrated",
+        "module_ids": [
+          "main_engine_port"
+        ],
+        "module_damage": 40.0,
+        "armor_before": 0.0,
+        "armor_after": 0.0,
+        "residual_energy_ratio": 1.0
+      }
+    }
+  ]
+}

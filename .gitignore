@@ -44,3 +44,9 @@ artifacts/t0-local/
 # Local tactical instances and isolated bridge tests
 .local/
 artifacts/p3-local-tests/
+
+# Regenerable integration-test stores; JSON reports and screenshots are retained
+artifacts/**/*.sqlite3
+artifacts/**/*.sqlite3-wal
+artifacts/**/*.sqlite3-shm
+artifacts/**/prepared-battle.lock

@@ -55,6 +55,8 @@ def parse_record(record, template, index):
     ps.need(set(by_key) == {e.key for e in edges}, '$.armor', '装甲边身份与设计不一致')
     armor = tuple(ps.number(by_key[e.key], '$.armor.durability', maximum=e.maximum) for e in edges)
     ps.need(all(w['reload'] is None for w in v['state']['weapons']), '$.reload', '战后存档不得含未结算装填')
+    from .damage_control_resources import require_settled
+    require_settled(v['state'])
     return ps.InstanceBinding(pack, instance), armor
 
 
@@ -80,6 +82,8 @@ def capture(battle):
         if lifecycle.exit_reason: reasons.add(lifecycle.exit_reason)
         status = 'destroyed' if value['hull_integrity_fraction'] <= 0 else 'withdrawn' if lifecycle.physical_status == 'exited' else 'disabled' if reasons else 'available'
         value['service'] = dict(status=status, reasons=sorted(reasons))
+        if inv._fuel_tanks:
+            value['fuel_tanks']=ps.clone(inv._value['fuel_tanks'])
         value = inv.snapshot(ps.parse_instance(value, binding.resources)).to_dict()
         value['revision'] += 1
         value = ps.parse_instance(value, binding.resources).to_dict()
@@ -150,7 +154,7 @@ def validate_result(value):
         for change in row['changes']:
             ps.obj(change, 'resource reason delta', '$.changes')
             ps.need(type(change['resource']) is str and change['reason'] in tg.ti.REASONS, '$.changes', '不支持的资源变动')
-            amount = ps.integer(change['delta'], '$.delta', -ps.MAX_INT)
+            amount = (ps.number if change['resource'].startswith('fuel:') else ps.integer)(change['delta'], '$.delta', -ps.MAX_INT)
             changes[change['resource']] = changes.get(change['resource'], 0)+amount
         ps.need(all(end.get(k, 0)-start.get(k, 0) == changes.get(k, 0) for k in set(start)|set(end)|set(changes)),
                 '$.changes', '战前、战后资源与变动摘要无法对账')
@@ -176,6 +180,7 @@ class SettlementStore:
             ps.need(version in (0, 1), '$.store', '存档仓库版本不受支持')
             conn.execute('CREATE TABLE IF NOT EXISTS results (id TEXT PRIMARY KEY, payload TEXT NOT NULL, digest TEXT NOT NULL, committed INTEGER NOT NULL DEFAULT 0)')
             conn.execute('CREATE TABLE IF NOT EXISTS ships (id TEXT PRIMARY KEY, revision INTEGER NOT NULL, payload TEXT NOT NULL, digest TEXT NOT NULL)')
+            conn.execute('CREATE TABLE IF NOT EXISTS battle_instance_claims (instance_id TEXT PRIMARY KEY, scene_id TEXT NOT NULL)')
             conn.execute('PRAGMA user_version=1')
             conn.execute('BEGIN IMMEDIATE')
             yield conn
@@ -232,11 +237,15 @@ class SettlementStore:
             if not row[2]:
                 for ship in result['ships']:
                     before = ship['before']['state']
+                    claim = db.execute('SELECT scene_id FROM battle_instance_claims WHERE instance_id=?', (before['instance_id'],)).fetchone()
+                    ps.need(claim is None or claim[0] == result['scene_id'], '$.scene_id', '舰船正被另一场战斗使用，不能覆盖')
                     old = db.execute('SELECT revision,payload,digest FROM ships WHERE id=?', (before['instance_id'],)).fetchone()
                     ps.need(old is None and before['revision'] == 0 or old is not None and old[0] == before['revision']
                         and self._decode(old[1], old[2]) == ship['before'], '$.revision', '舰船已有更新的结算；本场结果保留，不能覆盖其他版本')
                 for ship in result['ships']:
                     self._write_ship(db, ship['after'])
+                    db.execute('DELETE FROM battle_instance_claims WHERE instance_id=? AND scene_id=?',
+                        (ship['before']['state']['instance_id'], result['scene_id']))
                 db.execute('UPDATE results SET committed=1 WHERE id=?', (settlement_id,))
         return dict(result=result, saved=True)
 
