@@ -1,0 +1,17 @@
+.testbench-shell { max-width:1120px; margin:32px auto; padding:24px; background:#10241e; border:1px solid #34584a; border-radius:18px; }
+.testbench-heading,.testbench-toolbar,.testbench-run { display:flex; justify-content:space-between; align-items:center; gap:20px; }
+.testbench-heading h1 { margin:10px 0; font-size:32px; }
+.testbench-badge { background:#244e3e; color:#bde6d5; border-radius:20px; padding:10px 16px; white-space:nowrap; }
+.testbench-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin:24px 0; }
+.testbench-grid article { background:#172f27; border:1px solid #426451; border-radius:12px; padding:20px; }
+.testbench-grid h2 { font-size:21px; margin:0 0 10px; }
+.testbench-shell button { color:#e9fff2; background:#295b45; border:1px solid #5e8d74; padding:10px 16px; border-radius:8px; cursor:pointer; }
+.testbench-shell button:disabled { opacity:.45; cursor:wait; }
+.testbench-shell li { margin:10px 0; line-height:1.6; }
+.testbench-shell details { margin:16px 0; padding:14px; border:1px solid #34584a; border-radius:10px; }
+.testbench-shell summary { cursor:pointer; font-weight:600; }
+.testbench-shell textarea { display:block; width:100%; min-height:90px; margin:10px 0; background:#091b15; color:#eefaf4; padding:12px; border:1px solid #5e8d74; box-sizing:border-box; font:inherit; }
+.testbench-path { overflow-wrap:anywhere; color:#b3c8be; }
+.testbench-run { padding:12px 0; border-bottom:1px solid #34584a; }
+.testbench-run p { margin:5px 0; color:#b3c8be; }
+@media(max-width:760px) { .testbench-grid { grid-template-columns:1fr; } .testbench-heading { align-items:flex-start; flex-direction:column; } .testbench-shell { margin:12px; padding:16px; } }

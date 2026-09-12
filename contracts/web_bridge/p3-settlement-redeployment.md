@@ -1,5 +1,7 @@
 # P3 战后结算、持久保存与再次出航
 
+> 2026-09-12 O4 状态更正：用户已确认 O4 测试实际完成，旧待验收/待留档记录有误，当前为 `O4_COMPLETED_USER_CONFIRMED`，不再安排 O4 收尾。见[验收状态更正](./o4-outfit-ui-acceptance.md)。下文 O4 未完成表述仅保留为历史记录，不代表当前待办；原自动测试与文件检查结果不变。
+
 日期：2026-09-10。状态：`P3_SCOPED_PASS / X1A_E5_NEXT / PLAYER_DESIGN_DEPLOYMENT_NOT_IMPLEMENTED`。基线为 `3e26613` 加 P1a/P1b/P2a/P2b/P3 工作区实现，尚未提交。当前顺序见[后续交付计划](./editor-tactical-delivery-roadmap.md)。
 
 ## 本片交付

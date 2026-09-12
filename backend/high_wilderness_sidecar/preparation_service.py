@@ -3,6 +3,7 @@ from hashlib import sha256
 from . import battle_preparation as bp, persistent_ship as ps, outfit_documents, outfits
 from .preparation_transactions import PreparationStore
 from .storage import read_json
+from .preparation_policy import load_current
 from 高天荒野舰艇数据契约 import canonical_sha256
 
 CAPABILITIES=tuple('tactical.preparation.'+s for s in ('library','import','open','read','draft','preview','commit','discard'))
@@ -13,7 +14,7 @@ class PreparationService:
     def __init__(self,editor,directory):
         self.editor=editor
         self.store=PreparationStore(directory,editor.index)
-        self.policy=ps.decode((editor.root/'contracts/web_bridge/fixtures/h5d-preparation-policy.v7.json').read_text(encoding='utf-8'))
+        self.policy=load_current(editor.root)
 
     def setup(self,db):
         db.execute('CREATE TABLE IF NOT EXISTS preparation_drafts (id TEXT PRIMARY KEY, revision INTEGER NOT NULL, payload TEXT NOT NULL, digest TEXT NOT NULL)')

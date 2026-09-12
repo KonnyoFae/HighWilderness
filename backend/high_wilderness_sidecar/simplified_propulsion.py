@@ -18,9 +18,19 @@ from 高天荒野舰艇推进时间内核 import validate_propulsion_timing_capa
 from 高天荒野舰艇推进通道合同 import DIRECTIONAL_CHANNELS
 
 POLICY = "gaotian.tactical-propulsion/fixed-direction-contributions/v1alpha1"
+OBLIQUE_POLICY = "gaotian.tactical-propulsion/fixed-direction-contributions/v2alpha1"
 INTERFACE = "gaotian.compiled-propulsion-contributions/v1alpha1"
 NUMERIC_POLICY = "gaotian.propulsion/exact-decimal-common-integer-unit/v1"
 AXES = ((0, 1), (0, -1), (-1, 0), (1, 0))
+
+
+def direction_error(category, direction):
+    """Editor actuators round unit vectors to 10 decimals; never rescale thrust."""
+    if category == 'main_engine':
+        return None if direction in AXES else '主发动机推力须朝舰体前、后、左或右'
+    if abs(sum(v*v for v in direction) - 1) > Fraction(2, 10**10):
+        return '转向发动机推力方向须为单位向量，请检查安装方向'
+    return None
 
 
 def _fail(field, message):
@@ -135,6 +145,7 @@ def compile_contributions(*, ship_id, snapshot_sha256, catalog_sha256, design_ma
         _fail("engines", "Duplicate engine identifier")
     rows, source_rows = [], []
     denominator = 1
+    policy = POLICY
     for e in sorted(inputs, key=lambda x: x.instance_id):
         if not isinstance(e.prototype, ResourceReference) or not isinstance(e.capability, ModuleCapability):
             _fail("engines", "Expected typed prototype and capability")
@@ -148,8 +159,11 @@ def compile_contributions(*, ship_id, snapshot_sha256, catalog_sha256, design_ma
             _fail("engines.geometry", "Expected two-dimensional design geometry")
         point = tuple(_number(v, "engines.point") for v in e.application_point_m)
         direction = tuple(_number(v, "engines.direction") for v in e.direction_body)
-        if direction not in AXES:
-            _fail("engines.direction", "This policy requires a cardinal unit direction")
+        error = direction_error(cap.kind, direction)
+        if error:
+            _fail("engines." + e.instance_id + ".direction", e.instance_id + '：' + error)
+        if cap.kind == 'maneuver_thruster' and direction not in AXES:
+            policy = OBLIQUE_POLICY
         values = cap.to_dict()
         thrust = _number(values["thrust_n"], "engines.thrust_n")
         startup, response = validate_propulsion_timing_capability(cap, cap.kind)
@@ -173,12 +187,12 @@ def compile_contributions(*, ship_id, snapshot_sha256, catalog_sha256, design_ma
         tuple(v.numerator * (denominator // v.denominator) for v in vector), startup, response,
         (st.numerator, st.denominator), (rt.numerator, rt.denominator), e.host_instance_id)
         for index, (e, prototype, category, vector, startup, response, st, rt) in enumerate(rows))
-    fingerprint = canonical_sha256(dict(policy=POLICY, numeric_policy=NUMERIC_POLICY, ship_id=ship_id,
+    fingerprint = canonical_sha256(dict(policy=policy, numeric_policy=NUMERIC_POLICY, ship_id=ship_id,
         snapshot_sha256=snapshot_sha256, catalog_sha256=catalog_sha256,
         design_mass_kg=design_mass_kg, design_inertia_kg_m2=design_inertia_kg_m2, engines=source_rows))
     result = CompiledShipContributions(ship_id, snapshot_sha256, catalog_sha256, fingerprint,
         (mass.numerator, mass.denominator), (inertia.numerator, inertia.denominator), denominator, compiled,
-        tuple(sum(e.contribution_units[d] for e in compiled) for d in range(6)))
+        tuple(sum(e.contribution_units[d] for e in compiled) for d in range(6)), policy=policy)
     require_deeply_immutable(result)
     return result
 

@@ -1,5 +1,7 @@
 import { Workspace } from "./Workspace";
-import { useEffect, useMemo, useReducer } from "react";
+import { invoke } from "@tauri-apps/api/core";
+import { TestBench } from "./testing/TestBench";
+import { useEffect, useMemo, useReducer, useState } from "react";
 
 import {
   diagnosticReducer,
@@ -21,6 +23,15 @@ function shortInstance(value: string | null) {
 }
 
 export function App() {
+  const [testing,setTesting]=useState<boolean|null>(null);
+  const [error,setError]=useState('');
+  useEffect(()=>{void invoke<boolean>('testbench_enabled').then(setTesting).catch(e=>setError(String(e)));},[]);
+  if(error)return <main className="app-shell"><p role="alert">无法读取启动模式：{error}</p></main>;
+  if(testing===null)return <main className="app-shell"><p>正在启动…</p></main>;
+  return testing ? <TestBench renderWorkspace={()=> <WorkbenchApp preparationFirst />} /> : <WorkbenchApp />;
+}
+
+function WorkbenchApp({preparationFirst=false}:{preparationFirst?:boolean}) {
   const transport = useMemo(() => new TauriBridgeTransport(), []);
   const [model, dispatch] = useReducer(diagnosticReducer, initialDiagnosticModel);
 
@@ -79,7 +90,7 @@ export function App() {
       </header>
 
       {status.state === "READY" && status.backend_instance_id && (
-        <Workspace key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport}
+        <Workspace key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport} preparationFirst={preparationFirst}
           tacticalAvailable={status.capabilities.includes("tactical.create") && status.capabilities.includes("tactical.set_mode")} />
       )}
 

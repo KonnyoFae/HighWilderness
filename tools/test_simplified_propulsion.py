@@ -68,6 +68,21 @@ class SimplifiedPropulsionTests(unittest.TestCase):
         self.assertTrue(c.remaining(()).present_channels[0])
         self.assertEqual(Fraction(*c.remaining(()).ratios[0]), 0)
 
+    def test_oblique_thrusters_keep_exact_signed_torque_and_no_translation(self):
+        c = compile_rows([engine('left', 10, category='maneuver_thruster', point=(2, 1), direction=(0.6, 0.8)),
+                          engine('right', 10, category='maneuver_thruster', point=(-2, 1), direction=(-0.6, 0.8)),
+                          engine('center', 10, category='maneuver_thruster', point=(3, 4), direction=(0.6, 0.8))])
+        self.assertEqual(quantities(c, c.intact_totals_units), (0, 0, 0, 0, 10, 10))
+        self.assertEqual(quantities(c, c.remaining(('right',)).totals_units), (0, 0, 0, 0, 0, 10))
+        self.assertEqual(c.policy, sp.OBLIQUE_POLICY)
+        self.assertEqual(compile_rows([engine('old', 10)]).policy, sp.POLICY)
+        rounded = compile_rows([engine('slanted', 10, category='maneuver_thruster', point=(2, 1),
+                                       direction=(0.9899494937, -0.1414213562))])
+        self.assertEqual(quantities(rounded, rounded.intact_totals_units)[5], Fraction('12.727922061'))
+        for direction in ((0, 0), (1, 1), (0.6, 0.81), (float('nan'), 1)):
+            with self.subTest(direction=direction), self.assertRaises(ContractError):
+                compile_rows([engine('invalid', 10, category='maneuver_thruster', direction=direction)])
+
     def test_response_keeps_exact_duration_not_just_ceil(self):
         c = compile_rows([engine("a", 10, response=1.01)])
         self.assertEqual(c.engines[0].response_steps, 61)

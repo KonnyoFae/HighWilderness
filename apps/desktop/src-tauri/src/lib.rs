@@ -1,5 +1,6 @@
 mod bridge;
 mod file_dialog;
+mod testbench;
 
 use std::path::PathBuf;
 use std::sync::Arc;
@@ -128,12 +129,43 @@ fn bridge_status(state: State<'_, DesktopState>) -> BridgeStatus {
     state.supervisor.status()
 }
 
+#[tauri::command]
+fn testbench_enabled() -> bool { testbench::enabled() }
+
+#[tauri::command]
+async fn testbench_request(action: String, scenario: Option<String>, run_id: Option<String>, note: Option<String>) -> Result<Value, String> {
+    tauri::async_runtime::spawn_blocking(move || testbench::request(&action, scenario, run_id, note))
+        .await.map_err(|e| e.to_string())?
+}
+
+#[tauri::command]
+async fn testbench_open(state: State<'_, DesktopState>, run_id: String) -> Result<(), String> {
+    let supervisor = Arc::clone(&state.supervisor);
+    tauri::async_runtime::spawn_blocking(move || {
+        let value = testbench::request("show", None, Some(run_id.clone()), None)?;
+        if value["id"].as_str() != Some(&run_id) { return Err("测试记录不匹配".into()); }
+        // Resolve from the controlled root, never from a persisted display path.
+        let directory = repo_root().join(".local/testbench").join(run_id);
+        supervisor.force_stop();
+        supervisor.set_settlement_dir(directory.join("store"));
+        supervisor.set_recovery_dir(directory.join("recovery"));
+        Ok(())
+    }).await.map_err(|e| e.to_string())?
+}
+
 pub fn run() {
     let supervisor = BackendSupervisor::new(repo_root());
     let application_supervisor = Arc::clone(&supervisor);
     tauri::Builder::default()
         .setup(|app| {
-            let recovery = app.path().app_data_dir()?.join("editor-recovery");
+            let recovery = if testbench::enabled() {
+                let staging = repo_root().join(".local/testbench/unselected");
+                app.state::<DesktopState>().supervisor.set_settlement_dir(staging.join("store"));
+                if let Some(window) = app.get_webview_window("main") {
+                    window.set_title("高天荒野 · 战术测试台")?;
+                }
+                staging.join("recovery")
+            } else { app.path().app_data_dir()?.join("editor-recovery") };
             app.state::<DesktopState>()
                 .supervisor
                 .set_recovery_dir(recovery);
@@ -149,6 +181,9 @@ pub fn run() {
             bridge_choose_file,
             bridge_stop,
             bridge_status,
+            testbench_enabled,
+            testbench_request,
+            testbench_open,
         ])
         .build(tauri::generate_context!())
         .expect("failed to build High Wilderness desktop application")

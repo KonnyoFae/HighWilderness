@@ -1,5 +1,7 @@
 # OP1 结算返回战前准备
 
+> 2026-09-12 O4 状态更正：用户已确认 O4 测试实际完成，旧待验收/待留档记录有误，当前为 `O4_COMPLETED_USER_CONFIRMED`，不再安排 O4 收尾。见[验收状态更正](./o4-outfit-ui-acceptance.md)。下文 O4 未完成表述仅保留为历史记录，不代表当前待办；原自动测试与文件检查结果不变。
+
 日期：2026-09-12。基线：`d6d9221`。状态：`OP1_SCOPED_PASS / O4_NATIVE_EVIDENCE_PENDING`。
 
 ## 问题与改动

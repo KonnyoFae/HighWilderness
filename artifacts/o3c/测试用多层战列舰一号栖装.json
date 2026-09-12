@@ -1,0 +1,1663 @@
+{
+  "hull_binding": {
+    "catalog_dependencies_sha256": "06a23c5bc0e62f725e4dae53666f5ed2af8335b177b9f4de48a7aef00d323f35",
+    "hull": {
+      "decks": [
+        {
+          "filling": {
+            "id": "gtw.filling.fireproof",
+            "version": 1
+          },
+          "id": "deck.0",
+          "is_base": true,
+          "level": 0,
+          "regions": [
+            {
+              "edge_armor": [
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                }
+              ],
+              "id": "deck.0.region.0",
+              "vertices_m": [
+                [
+                  -17.5,
+                  -62.5
+                ],
+                [
+                  -15.0,
+                  -72.5
+                ],
+                [
+                  -15.0,
+                  -87.5
+                ],
+                [
+                  -10.0,
+                  -102.5
+                ],
+                [
+                  -5.0,
+                  -107.5
+                ],
+                [
+                  -5.0,
+                  -122.5
+                ],
+                [
+                  -2.5,
+                  -132.5
+                ],
+                [
+                  0.0,
+                  -135.0
+                ],
+                [
+                  2.5,
+                  -132.5
+                ],
+                [
+                  5.0,
+                  -122.5
+                ],
+                [
+                  5.0,
+                  -107.5
+                ],
+                [
+                  10.0,
+                  -102.5
+                ],
+                [
+                  15.0,
+                  -87.5
+                ],
+                [
+                  15.0,
+                  -72.5
+                ],
+                [
+                  17.5,
+                  -62.5
+                ],
+                [
+                  17.5,
+                  -12.5
+                ],
+                [
+                  15.0,
+                  -2.5
+                ],
+                [
+                  10.0,
+                  37.5
+                ],
+                [
+                  7.5,
+                  52.5
+                ],
+                [
+                  7.5,
+                  65.0
+                ],
+                [
+                  5.0,
+                  77.5
+                ],
+                [
+                  0.0,
+                  82.5
+                ],
+                [
+                  -5.0,
+                  77.5
+                ],
+                [
+                  -7.5,
+                  65.0
+                ],
+                [
+                  -7.5,
+                  52.5
+                ],
+                [
+                  -10.0,
+                  37.5
+                ],
+                [
+                  -15.0,
+                  -2.5
+                ],
+                [
+                  -17.5,
+                  -12.5
+                ]
+              ]
+            }
+          ],
+          "structure_material": {
+            "id": "gtw.material.structure.spirit_metal_fabric",
+            "version": 1
+          }
+        },
+        {
+          "filling": {
+            "id": "gtw.filling.rack",
+            "version": 1
+          },
+          "id": "deck.1",
+          "is_base": false,
+          "level": 1,
+          "regions": [
+            {
+              "edge_armor": [
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                }
+              ],
+              "id": "deck.1.region.0",
+              "vertices_m": [
+                [
+                  -15.0,
+                  -87.5
+                ],
+                [
+                  -5.0,
+                  -97.5
+                ],
+                [
+                  -5.0,
+                  -107.5
+                ],
+                [
+                  0.0,
+                  -112.5
+                ],
+                [
+                  5.0,
+                  -107.5
+                ],
+                [
+                  5.0,
+                  -97.5
+                ],
+                [
+                  15.0,
+                  -87.5
+                ],
+                [
+                  15.0,
+                  -72.5
+                ],
+                [
+                  7.5,
+                  -62.5
+                ],
+                [
+                  7.5,
+                  -12.5
+                ],
+                [
+                  10.0,
+                  -7.5
+                ],
+                [
+                  10.0,
+                  5.0
+                ],
+                [
+                  0.0,
+                  17.5
+                ],
+                [
+                  -10.0,
+                  5.0
+                ],
+                [
+                  -10.0,
+                  -7.5
+                ],
+                [
+                  -7.5,
+                  -12.5
+                ],
+                [
+                  -7.5,
+                  -62.5
+                ],
+                [
+                  -15.0,
+                  -72.5
+                ]
+              ]
+            }
+          ],
+          "structure_material": {
+            "id": "gtw.material.structure.frost_silver_alloy",
+            "version": 1
+          }
+        },
+        {
+          "filling": {
+            "id": "gtw.filling.rack",
+            "version": 1
+          },
+          "id": "deck.2",
+          "is_base": false,
+          "level": 2,
+          "regions": [
+            {
+              "edge_armor": [
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                },
+                {
+                  "material": {
+                    "id": "gtw.material.base_armor.armor_steel",
+                    "version": 1
+                  },
+                  "thickness_m": 0.0
+                }
+              ],
+              "id": "deck.2.region.0",
+              "vertices_m": [
+                [
+                  -7.5,
+                  -62.5
+                ],
+                [
+                  0.0,
+                  -72.5
+                ],
+                [
+                  7.5,
+                  -62.5
+                ],
+                [
+                  7.5,
+                  -22.5
+                ],
+                [
+                  0.0,
+                  -12.5
+                ],
+                [
+                  -7.5,
+                  -22.5
+                ]
+              ]
+            }
+          ],
+          "structure_material": {
+            "id": "gtw.material.structure.titanium_alloy",
+            "version": 1
+          }
+        }
+      ],
+      "fixture_level": "canonical_blueprint_fixture",
+      "grid": {
+        "cell_size_m": 5.0,
+        "cic_origin_cell": [
+          0,
+          0
+        ],
+        "deck_height_m": 5.0,
+        "forward_axis": "+Y",
+        "symmetry_axis": "Y"
+      },
+      "id": "user.hull.dc53bd12-c434-476b-8da5-21bfee4d481f",
+      "kind": "HullBlueprint",
+      "name": "测试用多层战列舰",
+      "schema": "gaotian.hull/v2alpha1",
+      "version": 1
+    },
+    "hull_sha256": "18aa14c10b91f21839dc944c84c0cfcff482aaf7a41d76baa92841ce588ef155",
+    "interface": "gaotian.outfit-hull-binding/v1alpha1"
+  },
+  "interface": "gaotian.outfit-document/v1alpha1",
+  "outfit": {
+    "fixture_level": "prototype_unbalanced",
+    "hull_blueprint": {
+      "id": "user.hull.dc53bd12-c434-476b-8da5-21bfee4d481f",
+      "version": 1
+    },
+    "hull_coating": {
+      "id": "gtw.coating.hull.ordinary",
+      "version": 1
+    },
+    "id": "user.outfit.b6806361-e745-431b-84b1-865a147d9842",
+    "kind": "OutfitPlan",
+    "modules": [
+      {
+        "id": "ammunition_magazine.0",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -12
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.ammunition_magazine",
+          "version": 1
+        }
+      },
+      {
+        "id": "ammunition_magazine.1",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -12
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.ammunition_magazine",
+          "version": 1
+        }
+      },
+      {
+        "id": "ammunition_magazine.2",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -18
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.ammunition_magazine",
+          "version": 1
+        }
+      },
+      {
+        "id": "ammunition_magazine.3",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -18
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.ammunition_magazine",
+          "version": 1
+        }
+      },
+      {
+        "id": "ammunition_magazine.4",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -24
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.ammunition_magazine",
+          "version": 1
+        }
+      },
+      {
+        "id": "ammunition_magazine.5",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -24
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.ammunition_magazine",
+          "version": 1
+        }
+      },
+      {
+        "id": "cargo_hold.0",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            4
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.cargo_hold",
+          "version": 1
+        }
+      },
+      {
+        "id": "cargo_hold.1",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            6
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.cargo_hold",
+          "version": 1
+        }
+      },
+      {
+        "id": "cargo_hold.2",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            2
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.cargo_hold",
+          "version": 1
+        }
+      },
+      {
+        "id": "cargo_hold.3",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -2
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.cargo_hold",
+          "version": 1
+        }
+      },
+      {
+        "id": "cargo_hold.4",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -6
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.cargo_hold",
+          "version": 1
+        }
+      },
+      {
+        "id": "cic.0",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            0
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.cic",
+          "version": 1
+        }
+      },
+      {
+        "id": "crew_quarters.0",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -10
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.crew_quarters",
+          "version": 1
+        }
+      },
+      {
+        "id": "crew_quarters.1",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -4
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.crew_quarters",
+          "version": 1
+        }
+      },
+      {
+        "id": "crew_quarters.2",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -14
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.crew_quarters",
+          "version": 1
+        }
+      },
+      {
+        "id": "crew_quarters.3",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -32
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.crew_quarters",
+          "version": 1
+        }
+      },
+      {
+        "id": "crew_quarters.4",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -34
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.crew_quarters",
+          "version": 1
+        }
+      },
+      {
+        "id": "damage_control.0",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            8
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 180
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.damage_control",
+          "version": 1
+        }
+      },
+      {
+        "id": "damage_control.1",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -4
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 180
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.damage_control",
+          "version": 1
+        }
+      },
+      {
+        "id": "damage_control.2",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -4
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 180
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.damage_control",
+          "version": 1
+        }
+      },
+      {
+        "id": "generator.0",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            2
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.generator",
+          "version": 1
+        }
+      },
+      {
+        "id": "generator.1",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            2
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.generator",
+          "version": 1
+        }
+      },
+      {
+        "id": "generator.2",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -2
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.generator",
+          "version": 1
+        }
+      },
+      {
+        "id": "generator.3",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -2
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.generator",
+          "version": 1
+        }
+      },
+      {
+        "id": "generator.4",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -8
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.generator",
+          "version": 1
+        }
+      },
+      {
+        "id": "generator.5",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -20
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.generator",
+          "version": 1
+        }
+      },
+      {
+        "id": "generator.6",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -28
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.generator",
+          "version": 1
+        }
+      },
+      {
+        "id": "lift_fuel_tank.0",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -6
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.lift_fuel_tank",
+          "version": 1
+        }
+      },
+      {
+        "id": "lift_fuel_tank.1",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -6
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.lift_fuel_tank",
+          "version": 1
+        }
+      },
+      {
+        "id": "lift_fuel_tank.2",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -30
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.lift_fuel_tank",
+          "version": 1
+        }
+      },
+      {
+        "id": "lift_fuel_tank.3",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -30
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.lift_fuel_tank",
+          "version": 1
+        }
+      },
+      {
+        "id": "lift_fuel_tank.4",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -36
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.lift_fuel_tank",
+          "version": 1
+        }
+      },
+      {
+        "id": "lift_fuel_tank.5",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -36
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.lift_fuel_tank",
+          "version": 1
+        }
+      },
+      {
+        "id": "lift_fuel_tank.6",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            6
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.lift_fuel_tank",
+          "version": 1
+        }
+      },
+      {
+        "id": "lift_fuel_tank.7",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            6
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.lift_fuel_tank",
+          "version": 1
+        }
+      },
+      {
+        "id": "main_engine.0",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -40
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.main_engine",
+          "version": 1
+        }
+      },
+      {
+        "id": "main_engine.1",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -40
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.main_engine",
+          "version": 1
+        }
+      },
+      {
+        "id": "main_engine.2",
+        "placement": {
+          "anchor_half_cell": [
+            4,
+            -36
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.main_engine",
+          "version": 1
+        }
+      },
+      {
+        "id": "main_engine.3",
+        "placement": {
+          "anchor_half_cell": [
+            -4,
+            -36
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.main_engine",
+          "version": 1
+        }
+      },
+      {
+        "id": "main_engine.4",
+        "placement": {
+          "anchor_half_cell": [
+            -4,
+            -34
+          ],
+          "deck_id": "deck.1",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.main_engine",
+          "version": 1
+        }
+      },
+      {
+        "id": "main_engine.5",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -36
+          ],
+          "deck_id": "deck.1",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.main_engine",
+          "version": 1
+        }
+      },
+      {
+        "id": "main_engine.6",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -36
+          ],
+          "deck_id": "deck.1",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.main_engine",
+          "version": 1
+        }
+      },
+      {
+        "id": "main_engine.7",
+        "placement": {
+          "anchor_half_cell": [
+            4,
+            -34
+          ],
+          "deck_id": "deck.1",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.unmanned.main_engine",
+          "version": 1
+        }
+      },
+      {
+        "id": "maneuver_thruster.2",
+        "placement": {
+          "deck_id": "deck.0",
+          "edge_index": 4,
+          "kind": "side",
+          "region_id": "deck.0.region.0",
+          "rotation_deg": 180,
+          "start_slot_index": 1
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster",
+          "version": 1
+        }
+      },
+      {
+        "id": "maneuver_thruster.3",
+        "placement": {
+          "deck_id": "deck.0",
+          "edge_index": 9,
+          "kind": "side",
+          "region_id": "deck.0.region.0",
+          "rotation_deg": 180,
+          "start_slot_index": 1
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster",
+          "version": 1
+        }
+      },
+      {
+        "id": "maneuver_thruster.4",
+        "placement": {
+          "deck_id": "deck.0",
+          "edge_index": 4,
+          "kind": "side",
+          "region_id": "deck.0.region.0",
+          "rotation_deg": 180,
+          "start_slot_index": 2
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster",
+          "version": 1
+        }
+      },
+      {
+        "id": "maneuver_thruster.5",
+        "placement": {
+          "deck_id": "deck.0",
+          "edge_index": 9,
+          "kind": "side",
+          "region_id": "deck.0.region.0",
+          "rotation_deg": 180,
+          "start_slot_index": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster",
+          "version": 1
+        }
+      },
+      {
+        "id": "maneuver_thruster.6",
+        "placement": {
+          "deck_id": "deck.0",
+          "edge_index": 18,
+          "kind": "side",
+          "region_id": "deck.0.region.0",
+          "rotation_deg": 180,
+          "start_slot_index": 1
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster",
+          "version": 1
+        }
+      },
+      {
+        "id": "maneuver_thruster.7",
+        "placement": {
+          "deck_id": "deck.0",
+          "edge_index": 18,
+          "kind": "side",
+          "region_id": "deck.0.region.0",
+          "rotation_deg": 180,
+          "start_slot_index": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster",
+          "version": 1
+        }
+      },
+      {
+        "id": "maneuver_thruster.8",
+        "placement": {
+          "deck_id": "deck.0",
+          "edge_index": 23,
+          "kind": "side",
+          "region_id": "deck.0.region.0",
+          "rotation_deg": 180,
+          "start_slot_index": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster",
+          "version": 1
+        }
+      },
+      {
+        "id": "maneuver_thruster.9",
+        "placement": {
+          "deck_id": "deck.0",
+          "edge_index": 23,
+          "kind": "side",
+          "region_id": "deck.0.region.0",
+          "rotation_deg": 180,
+          "start_slot_index": 1
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.maneuver_thruster",
+          "version": 1
+        }
+      },
+      {
+        "id": "remote_core.0",
+        "placement": {
+          "host_instance_id": "cic.0",
+          "kind": "hosted"
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.remote_core",
+          "version": 1
+        }
+      },
+      {
+        "id": "sensor.0",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -26
+          ],
+          "deck_id": "deck.2",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.sensor",
+          "version": 1
+        }
+      },
+      {
+        "id": "sensor.1",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -8
+          ],
+          "deck_id": "deck.2",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.sensor",
+          "version": 1
+        }
+      },
+      {
+        "id": "weapon.0",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -10
+          ],
+          "deck_id": "deck.2",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.weapon",
+          "version": 1
+        }
+      },
+      {
+        "id": "weapon.1",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -10
+          ],
+          "deck_id": "deck.2",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.weapon",
+          "version": 1
+        }
+      },
+      {
+        "id": "weapon.2",
+        "placement": {
+          "anchor_half_cell": [
+            -2,
+            -24
+          ],
+          "deck_id": "deck.2",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.weapon",
+          "version": 1
+        }
+      },
+      {
+        "id": "weapon.3",
+        "placement": {
+          "anchor_half_cell": [
+            2,
+            -24
+          ],
+          "deck_id": "deck.2",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.weapon",
+          "version": 1
+        }
+      },
+      {
+        "id": "weapon.4",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            4
+          ],
+          "deck_id": "deck.1",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.weapon",
+          "version": 1
+        }
+      },
+      {
+        "id": "weapon.5",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            -42
+          ],
+          "deck_id": "deck.1",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.weapon",
+          "version": 1
+        }
+      },
+      {
+        "id": "weapon.6",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            10
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.weapon",
+          "version": 1
+        }
+      },
+      {
+        "id": "weapon.7",
+        "placement": {
+          "anchor_half_cell": [
+            0,
+            18
+          ],
+          "deck_id": "deck.0",
+          "kind": "grid",
+          "rotation_deg": 0
+        },
+        "prototype": {
+          "id": "gtw.module.fixture.weapon",
+          "version": 1
+        }
+      }
+    ],
+    "name": "新建舾装",
+    "schema": "gaotian.ship/v1alpha1",
+    "version": 1
+  }
+}

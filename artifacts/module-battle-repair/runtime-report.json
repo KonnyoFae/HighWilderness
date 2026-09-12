@@ -1,0 +1,168 @@
+{
+  "status": "PASS",
+  "scope": "entry, preparation, scheduled turning, save, restart and redeployment; not full module balance acceptance",
+  "expected_prototypes": 21,
+  "covered_prototypes": 21,
+  "missing_prototypes": [],
+  "results": [
+    {
+      "source": "阶段F最小合法舰舾装",
+      "source_sha256": "440be69e67713ba2395fcf0855c5246ef0d47446273dae33f3dcde414fe0085e",
+      "status": "PASS",
+      "modules": 10,
+      "prototypes": [
+        "gtw.module.fixture.cic",
+        "gtw.module.fixture.crew_quarters",
+        "gtw.module.fixture.damage_control",
+        "gtw.module.fixture.generator",
+        "gtw.module.fixture.lift_fuel_tank",
+        "gtw.module.fixture.main_engine",
+        "gtw.module.fixture.maneuver_thruster"
+      ],
+      "steps": 120,
+      "yaw_rate_radps": -0.0007423582177539501,
+      "prepared_damage_controls": 0,
+      "save_restart_redeploy": true
+    },
+    {
+      "source": "阶段F常规有人战舰舾装",
+      "source_sha256": "cb8862db2ea80727bfc85a53a0520a1f4c1e2730a49dce87531c86c829765570",
+      "status": "PASS",
+      "modules": 18,
+      "prototypes": [
+        "gtw.module.fixture.ammunition_magazine",
+        "gtw.module.fixture.cargo_hold",
+        "gtw.module.fixture.cic",
+        "gtw.module.fixture.crew_quarters",
+        "gtw.module.fixture.damage_control",
+        "gtw.module.fixture.fire_control",
+        "gtw.module.fixture.generator",
+        "gtw.module.fixture.lift_fuel_tank",
+        "gtw.module.fixture.main_engine",
+        "gtw.module.fixture.maneuver_thruster",
+        "gtw.module.fixture.remote_core",
+        "gtw.module.fixture.sensor",
+        "gtw.module.fixture.weapon"
+      ],
+      "steps": 120,
+      "yaw_rate_radps": -0.0001172632120818177,
+      "prepared_damage_controls": 1,
+      "save_restart_redeploy": true
+    },
+    {
+      "source": "阶段F完全无人旗舰舾装",
+      "source_sha256": "84dd234ad868d35834bb2b87c6fe2c82a01509333520be3ad8e5791f448377e9",
+      "status": "PASS",
+      "modules": 14,
+      "prototypes": [
+        "gtw.module.fixture.ammunition_magazine",
+        "gtw.module.fixture.lift_fuel_tank",
+        "gtw.module.fixture.remote_core",
+        "gtw.module.fixture.unmanned.cic",
+        "gtw.module.fixture.unmanned.damage_control",
+        "gtw.module.fixture.unmanned.fire_control",
+        "gtw.module.fixture.unmanned.generator",
+        "gtw.module.fixture.unmanned.main_engine",
+        "gtw.module.fixture.unmanned.maneuver_thruster",
+        "gtw.module.fixture.unmanned.sensor",
+        "gtw.module.fixture.unmanned.weapon"
+      ],
+      "steps": 120,
+      "yaw_rate_radps": -0.00046727536010099136,
+      "prepared_damage_controls": 0,
+      "save_restart_redeploy": true
+    },
+    {
+      "source": "artifacts\\o3c\\hull-occlusion-demo.json",
+      "source_sha256": "8e6ff4a1e602ec64eaa829da0a0d83bb83ad5c1cd4bf24a684e5ad67ea64068c",
+      "status": "PASS",
+      "modules": 18,
+      "prototypes": [
+        "gtw.module.fixture.ammunition_magazine",
+        "gtw.module.fixture.cargo_hold",
+        "gtw.module.fixture.cic",
+        "gtw.module.fixture.crew_quarters",
+        "gtw.module.fixture.damage_control",
+        "gtw.module.fixture.fire_control",
+        "gtw.module.fixture.generator",
+        "gtw.module.fixture.lift_fuel_tank",
+        "gtw.module.fixture.main_engine",
+        "gtw.module.fixture.maneuver_thruster",
+        "gtw.module.fixture.remote_core",
+        "gtw.module.fixture.sensor",
+        "gtw.module.fixture.weapon"
+      ],
+      "steps": 120,
+      "yaw_rate_radps": -0.00011711972794378992,
+      "prepared_damage_controls": 1,
+      "save_restart_redeploy": true
+    },
+    {
+      "source": "artifacts\\o3c\\hull-occlusion-demo_1.json",
+      "source_sha256": "3f1d0a739155520cd3d3e0f1df48efd9e043e3abf72d1131f86c7e7a44b38139",
+      "status": "PASS",
+      "modules": 18,
+      "prototypes": [
+        "gtw.module.fixture.ammunition_magazine",
+        "gtw.module.fixture.cargo_hold",
+        "gtw.module.fixture.cic",
+        "gtw.module.fixture.crew_quarters",
+        "gtw.module.fixture.damage_control",
+        "gtw.module.fixture.fire_control",
+        "gtw.module.fixture.generator",
+        "gtw.module.fixture.lift_fuel_tank",
+        "gtw.module.fixture.main_engine",
+        "gtw.module.fixture.maneuver_thruster",
+        "gtw.module.fixture.remote_core",
+        "gtw.module.fixture.sensor",
+        "gtw.module.fixture.weapon"
+      ],
+      "steps": 120,
+      "yaw_rate_radps": -0.0001301212560700109,
+      "prepared_damage_controls": 1,
+      "save_restart_redeploy": true
+    },
+    {
+      "source": "artifacts\\o3c\\hull01M1.json",
+      "source_sha256": "be5c6ee7c57e19513d24c1bb5f0db26430906d1380b2b72b7e42ce5442aa8e1c",
+      "status": "PASS",
+      "modules": 10,
+      "prototypes": [
+        "gtw.module.fixture.cic",
+        "gtw.module.fixture.crew_quarters",
+        "gtw.module.fixture.generator",
+        "gtw.module.fixture.lift_fuel_tank",
+        "gtw.module.fixture.main_engine",
+        "gtw.module.fixture.maneuver_thruster"
+      ],
+      "steps": 120,
+      "yaw_rate_radps": -0.0011381356642237792,
+      "prepared_damage_controls": 0,
+      "save_restart_redeploy": true
+    },
+    {
+      "source": "artifacts\\o3c\\测试用多层战列舰一号栖装.json",
+      "source_sha256": "14439fc0df48481f46cafea351656aa39bf037c4efd486602e5528a45bdf2185",
+      "status": "PASS",
+      "modules": 62,
+      "prototypes": [
+        "gtw.module.fixture.ammunition_magazine",
+        "gtw.module.fixture.cargo_hold",
+        "gtw.module.fixture.crew_quarters",
+        "gtw.module.fixture.generator",
+        "gtw.module.fixture.lift_fuel_tank",
+        "gtw.module.fixture.maneuver_thruster",
+        "gtw.module.fixture.remote_core",
+        "gtw.module.fixture.sensor",
+        "gtw.module.fixture.unmanned.cic",
+        "gtw.module.fixture.unmanned.damage_control",
+        "gtw.module.fixture.unmanned.main_engine",
+        "gtw.module.fixture.weapon"
+      ],
+      "steps": 120,
+      "yaw_rate_radps": -0.00015153186928310616,
+      "prepared_damage_controls": 3,
+      "save_restart_redeploy": true
+    }
+  ]
+}

@@ -1,0 +1,262 @@
+{
+  "scope": "Current editor catalogs and current preparation policy; compile audit, not combat acceptance",
+  "policy": "contracts\\web_bridge\\fixtures\\h5d-preparation-policy.v7.json",
+  "policy_sha256": "3c3c404c402b49362cea19d2c7a42457516c97cb48bbcd248f8e95d0fd812747",
+  "module_count": 21,
+  "categories": {
+    "cargo_hold": 1,
+    "cic": 2,
+    "crew_quarters": 1,
+    "damage_control": 2,
+    "generator": 2,
+    "lift_fuel_tank": 1,
+    "main_engine": 2,
+    "maneuver_thruster": 2,
+    "remote_core": 1,
+    "ammunition_magazine": 1,
+    "fire_control": 2,
+    "sensor": 2,
+    "weapon": 2
+  },
+  "missing_binding_prototypes": [
+    "gtw.module.fixture.unmanned.damage_control"
+  ],
+  "documents": [
+    {
+      "source": "阶段F最小合法舰舾装",
+      "source_sha256": "440be69e67713ba2395fcf0855c5246ef0d47446273dae33f3dcde414fe0085e",
+      "editor_compile": true,
+      "battle_compile": true,
+      "module_count": 10,
+      "prototype_counts": {
+        "gtw.module.fixture.cic": 1,
+        "gtw.module.fixture.crew_quarters": 1,
+        "gtw.module.fixture.damage_control": 1,
+        "gtw.module.fixture.generator": 1,
+        "gtw.module.fixture.lift_fuel_tank": 1,
+        "gtw.module.fixture.main_engine": 1,
+        "gtw.module.fixture.maneuver_thruster": 4
+      },
+      "missing_bindings": [],
+      "non_cardinal_engines": [],
+      "battle_resources": {
+        "holds": 0,
+        "magazines": 0,
+        "weapons": 0,
+        "damage_controls": 1,
+        "fuel_tanks": 1
+      }
+    },
+    {
+      "source": "阶段F常规有人战舰舾装",
+      "source_sha256": "cb8862db2ea80727bfc85a53a0520a1f4c1e2730a49dce87531c86c829765570",
+      "editor_compile": true,
+      "battle_compile": true,
+      "module_count": 18,
+      "prototype_counts": {
+        "gtw.module.fixture.ammunition_magazine": 1,
+        "gtw.module.fixture.cargo_hold": 1,
+        "gtw.module.fixture.cic": 1,
+        "gtw.module.fixture.crew_quarters": 2,
+        "gtw.module.fixture.damage_control": 1,
+        "gtw.module.fixture.fire_control": 1,
+        "gtw.module.fixture.generator": 1,
+        "gtw.module.fixture.lift_fuel_tank": 1,
+        "gtw.module.fixture.main_engine": 2,
+        "gtw.module.fixture.remote_core": 1,
+        "gtw.module.fixture.sensor": 1,
+        "gtw.module.fixture.maneuver_thruster": 4,
+        "gtw.module.fixture.weapon": 1
+      },
+      "missing_bindings": [],
+      "non_cardinal_engines": [],
+      "battle_resources": {
+        "holds": 1,
+        "magazines": 1,
+        "weapons": 1,
+        "damage_controls": 1,
+        "fuel_tanks": 1
+      }
+    },
+    {
+      "source": "阶段F完全无人旗舰舾装",
+      "source_sha256": "84dd234ad868d35834bb2b87c6fe2c82a01509333520be3ad8e5791f448377e9",
+      "editor_compile": true,
+      "battle_compile": false,
+      "module_count": 14,
+      "prototype_counts": {
+        "gtw.module.fixture.ammunition_magazine": 1,
+        "gtw.module.fixture.unmanned.cic": 1,
+        "gtw.module.fixture.unmanned.damage_control": 1,
+        "gtw.module.fixture.unmanned.fire_control": 1,
+        "gtw.module.fixture.unmanned.generator": 1,
+        "gtw.module.fixture.lift_fuel_tank": 1,
+        "gtw.module.fixture.unmanned.main_engine": 1,
+        "gtw.module.fixture.remote_core": 1,
+        "gtw.module.fixture.unmanned.sensor": 1,
+        "gtw.module.fixture.unmanned.maneuver_thruster": 4,
+        "gtw.module.fixture.unmanned.weapon": 1
+      },
+      "missing_bindings": [
+        {
+          "instance_id": "damage_control",
+          "prototype": {
+            "id": "gtw.module.fixture.unmanned.damage_control",
+            "version": 1
+          },
+          "name": "阶段F无人化损管设备"
+        }
+      ],
+      "non_cardinal_engines": [],
+      "error": "[persistent_ship.invalid] $.modules.damage_control: 此原型尚未绑定战术容量或武器配方"
+    },
+    {
+      "source": "artifacts\\o3c\\hull-occlusion-demo.json",
+      "source_sha256": "8e6ff4a1e602ec64eaa829da0a0d83bb83ad5c1cd4bf24a684e5ad67ea64068c",
+      "editor_compile": true,
+      "battle_compile": true,
+      "module_count": 18,
+      "prototype_counts": {
+        "gtw.module.fixture.ammunition_magazine": 1,
+        "gtw.module.fixture.cargo_hold": 1,
+        "gtw.module.fixture.cic": 1,
+        "gtw.module.fixture.crew_quarters": 2,
+        "gtw.module.fixture.damage_control": 1,
+        "gtw.module.fixture.fire_control": 1,
+        "gtw.module.fixture.generator": 1,
+        "gtw.module.fixture.lift_fuel_tank": 1,
+        "gtw.module.fixture.main_engine": 2,
+        "gtw.module.fixture.remote_core": 1,
+        "gtw.module.fixture.sensor": 1,
+        "gtw.module.fixture.maneuver_thruster": 4,
+        "gtw.module.fixture.weapon": 1
+      },
+      "missing_bindings": [],
+      "non_cardinal_engines": [],
+      "battle_resources": {
+        "holds": 1,
+        "magazines": 1,
+        "weapons": 1,
+        "damage_controls": 1,
+        "fuel_tanks": 1
+      }
+    },
+    {
+      "source": "artifacts\\o3c\\hull-occlusion-demo_1.json",
+      "source_sha256": "3f1d0a739155520cd3d3e0f1df48efd9e043e3abf72d1131f86c7e7a44b38139",
+      "editor_compile": true,
+      "battle_compile": true,
+      "module_count": 18,
+      "prototype_counts": {
+        "gtw.module.fixture.ammunition_magazine": 1,
+        "gtw.module.fixture.cargo_hold": 1,
+        "gtw.module.fixture.cic": 1,
+        "gtw.module.fixture.crew_quarters": 2,
+        "gtw.module.fixture.damage_control": 1,
+        "gtw.module.fixture.fire_control": 1,
+        "gtw.module.fixture.generator": 1,
+        "gtw.module.fixture.lift_fuel_tank": 1,
+        "gtw.module.fixture.main_engine": 2,
+        "gtw.module.fixture.remote_core": 1,
+        "gtw.module.fixture.sensor": 1,
+        "gtw.module.fixture.maneuver_thruster": 4,
+        "gtw.module.fixture.weapon": 1
+      },
+      "missing_bindings": [],
+      "non_cardinal_engines": [],
+      "battle_resources": {
+        "holds": 1,
+        "magazines": 1,
+        "weapons": 1,
+        "damage_controls": 1,
+        "fuel_tanks": 1
+      }
+    },
+    {
+      "source": "artifacts\\o3c\\hull01M1.json",
+      "source_sha256": "be5c6ee7c57e19513d24c1bb5f0db26430906d1380b2b72b7e42ce5442aa8e1c",
+      "editor_compile": true,
+      "battle_compile": false,
+      "module_count": 10,
+      "prototype_counts": {
+        "gtw.module.fixture.cic": 1,
+        "gtw.module.fixture.crew_quarters": 1,
+        "gtw.module.fixture.generator": 1,
+        "gtw.module.fixture.lift_fuel_tank": 1,
+        "gtw.module.fixture.main_engine": 2,
+        "gtw.module.fixture.maneuver_thruster": 4
+      },
+      "missing_bindings": [],
+      "non_cardinal_engines": [
+        {
+          "instance_id": "maneuver_thruster.2",
+          "name": "契约夹具转向发动机",
+          "category": "maneuver_thruster",
+          "direction": [
+            0.9899494937,
+            -0.1414213562
+          ]
+        },
+        {
+          "instance_id": "maneuver_thruster.3",
+          "name": "契约夹具转向发动机",
+          "category": "maneuver_thruster",
+          "direction": [
+            -0.9899494937,
+            -0.1414213562
+          ]
+        }
+      ],
+      "error": "[simplified_propulsion.resource] $.engines.direction: This policy requires a cardinal unit direction"
+    },
+    {
+      "source": "artifacts\\o3c\\测试用多层战列舰一号栖装.json",
+      "source_sha256": "14439fc0df48481f46cafea351656aa39bf037c4efd486602e5528a45bdf2185",
+      "editor_compile": true,
+      "battle_compile": false,
+      "module_count": 62,
+      "prototype_counts": {
+        "gtw.module.fixture.ammunition_magazine": 6,
+        "gtw.module.fixture.cargo_hold": 5,
+        "gtw.module.fixture.unmanned.cic": 1,
+        "gtw.module.fixture.crew_quarters": 5,
+        "gtw.module.fixture.unmanned.damage_control": 3,
+        "gtw.module.fixture.generator": 7,
+        "gtw.module.fixture.lift_fuel_tank": 8,
+        "gtw.module.fixture.unmanned.main_engine": 8,
+        "gtw.module.fixture.maneuver_thruster": 8,
+        "gtw.module.fixture.remote_core": 1,
+        "gtw.module.fixture.sensor": 2,
+        "gtw.module.fixture.weapon": 8
+      },
+      "missing_bindings": [
+        {
+          "instance_id": "damage_control.0",
+          "prototype": {
+            "id": "gtw.module.fixture.unmanned.damage_control",
+            "version": 1
+          },
+          "name": "阶段F无人化损管设备"
+        },
+        {
+          "instance_id": "damage_control.1",
+          "prototype": {
+            "id": "gtw.module.fixture.unmanned.damage_control",
+            "version": 1
+          },
+          "name": "阶段F无人化损管设备"
+        },
+        {
+          "instance_id": "damage_control.2",
+          "prototype": {
+            "id": "gtw.module.fixture.unmanned.damage_control",
+            "version": 1
+          },
+          "name": "阶段F无人化损管设备"
+        }
+      ],
+      "non_cardinal_engines": [],
+      "error": "[persistent_ship.invalid] $.modules.damage_control.0: 此原型尚未绑定战术容量或武器配方"
+    }
+  ]
+}

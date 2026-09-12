@@ -260,6 +260,7 @@ pub struct BackendSupervisor {
     repo_root: PathBuf,
     config: SupervisorConfig,
     recovery_dir: Mutex<Option<PathBuf>>,
+    settlement_dir: Mutex<Option<PathBuf>>,
     state: Mutex<SupervisorState>,
 }
 
@@ -273,6 +274,7 @@ impl BackendSupervisor {
             repo_root,
             config,
             recovery_dir: Mutex::new(None),
+            settlement_dir: Mutex::new(None),
             state: Mutex::new(SupervisorState {
                 lifecycle: Lifecycle::Stopped,
                 running: None,
@@ -599,6 +601,10 @@ impl BackendSupervisor {
             command.arguments.push("--recovery-dir".into());
             command.arguments.push(path.as_os_str().to_owned());
         }
+        if let Some(path) = self.settlement_dir.lock().unwrap().as_ref() {
+            command.arguments.push("--settlement-dir".into());
+            command.arguments.push(path.as_os_str().to_owned());
+        }
         self.start_command(command, instance_id, sink)
     }
 
@@ -914,6 +920,10 @@ impl BackendSupervisor {
         } else {
             Err(HostFailure::from_response(&response))
         }
+    }
+
+    pub fn set_settlement_dir(&self, path: PathBuf) {
+        *self.settlement_dir.lock().unwrap() = Some(path);
     }
 
     pub fn set_recovery_dir(&self, path: PathBuf) {

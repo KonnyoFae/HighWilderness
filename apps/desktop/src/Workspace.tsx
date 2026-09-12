@@ -7,10 +7,10 @@ import { PreparationPanel } from "./tactical/PreparationPanel";
 import type { PreparedLaunch } from "./tactical/preparation";
 import type { ModeResult, WorkspaceMode } from "./tactical/model";
 
-export function Workspace({ transport, instance, tacticalAvailable }: {
-  transport: BridgeTransport; instance: string; tacticalAvailable: boolean;
+export function Workspace({ transport, instance, tacticalAvailable, preparationFirst=false }: {
+  transport: BridgeTransport; instance: string; tacticalAvailable: boolean; preparationFirst?:boolean;
 }) {
-  const [mode, setMode] = useState<WorkspaceMode | "preparation">("editor");
+  const [mode, setMode] = useState<WorkspaceMode | "preparation">(preparationFirst ? "preparation" : "editor");
   const [switching, setSwitching] = useState(false), [confirmed, setConfirmed] = useState(true);
   const [editorBlocked, setEditorBlocked] = useState(false), [tacticalBusy, setTacticalBusy] = useState(false);
   const [preparationBusy,setPreparationBusy]=useState(false);

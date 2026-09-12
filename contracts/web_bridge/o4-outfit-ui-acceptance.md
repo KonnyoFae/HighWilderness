@@ -1,6 +1,10 @@
 # O4 舾装验收执行记录（2026-09-07）
 
-2026-09-12 接续说明：本页为 O4 历史验收事实，原生三舰留档仍待补齐。下方历史 T1a/X1a/H5b 接续已由后续实施替代；当前 OP1 结算返回准备已范围内完成，ST0 已完成，下一片为[ST1 战略地图与时钟](./strategy-tactical-integration-plan.md)，以[统一路线图](./editor-tactical-delivery-roadmap.md)为准。本轮浏览器验证不替代 O4 原生证据。
+2026-09-12 状态更正：`O4_COMPLETED_USER_CONFIRMED`。用户明确确认“O4测试实际上已经完成，记录出现问题”，据此将 O4 验收记为已完成，关闭原先“三舰原生往返、关键画布操作及留档收尾”的待办，不再据旧记录安排重复验收。此日期为记录更正日期，不推定实际测试日期。
+
+本次仅修正文档状态，没有重新执行测试，也不补造截图、保存文件或逐项操作日志。`artifacts/o4/saved-artifact-verification.json` 是历史文件比较器的执行结果，其中 `NOT_COVERED` 仅描述当次文件检查范围，不再作为当前 O4 验收状态。当前完成依据为用户确认；历史自动验证结果保持原样。
+
+当前 OP1、ST0 已范围内完成，下一片为[ST1 战略地图与时钟](./strategy-tactical-integration-plan.md)，以[统一路线图](./editor-tactical-delivery-roadmap.md)为准。下文各轮记录（包括“最新复盘”）均为本次更正前的历史快照，旧待办与旧调度已被本节替代。
 
 历史状态：`USER_FUNCTIONAL_ACCEPTED / formal_ui_evidence_pending`。用户最新复测未发现其他问题，主线可进入 T1a；三舰规范实机留档尚未补齐，不据此宣称正式 M3/O4 全项 PASS 或 X1a 通过。下方各轮过程记录保留，最新结论见末节。
 

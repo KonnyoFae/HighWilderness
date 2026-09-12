@@ -18,7 +18,7 @@ from 高天荒野舰艇战术机动求解器 import build_tactical_ship_model, i
 from . import outfit_documents, outfits, persistent_ship as ps, tactical_settlement as ts, damage_control_resources as dc
 from .tactical_resources import compile_tactical_fuel_resources
 from . import tactical_fuel as fuel, tactical_ignition as ignition
-from .simplified_propulsion import compile_snapshot_contributions
+from .simplified_propulsion import compile_snapshot_contributions, direction_error
 from .tactical_devices import seed_from_snapshot as device_seed
 from .tactical_resources_runtime import seed_from_snapshot as resource_seed
 from .tactical_command_runtime import seed_from_snapshot as command_seed
@@ -65,6 +65,31 @@ def compile_design(document, index, deployment, policy, *, ship_id):
     if binding is None:
         binding = outfit_documents.bind(hull.normalized_blueprint.to_dict(), index)
     saved_document = dict(interface=outfit_documents.DOCUMENT_INTERFACE, outfit=source, hull_binding=binding)
+    rules = {}
+    ps.need(type(policy['modules']) is list, '$.policy.modules', '需要原型规则列表')
+    for rule in policy['modules']:
+        ps.obj(rule, 'prototype prototype_sha256 binding', '$.policy.modules')
+        reference = ResourceReference.parse(rule['prototype'], '$.policy.prototype')
+        key = reference.id, reference.version
+        ps.need(key not in rules, '$.policy.prototype', '重复原型规则')
+        original = doc._module_catalog.module(reference)
+        ps.need(canonical_sha256(original) == rule['prototype_sha256'], '$.policy.prototype',
+                original.name + '：战斗配置与模块版本内容不匹配')
+        ps.need(type(rule['binding']) is dict and 'module_id' not in rule['binding'], '$.policy.binding', '规则不能覆盖模块实例身份')
+        rules[key] = rule['binding']
+    required = dict(cargo_hold='货物容积', ammunition_magazine='弹药资源容量', weapon='可用弹种、装填与炮塔参数')
+    if policy['interface'] in (dc.POLICY_INTERFACE, *dc.FIRE_POLICY_INTERFACES):
+        required['damage_control'] = '损管资源容量、准备时间与零件消耗'
+    issues = []
+    for m in source_outfit.instances:
+        category = m.prototype.category
+        if category in required and (m.prototype.reference.id, m.prototype.reference.version) not in rules:
+            issues.append(f'{m.prototype.name}（{m.id}）：缺少{required[category]}配置')
+        if m.actuator:
+            error = direction_error(category, m.actuator.direction_body)
+            if error:
+                issues.append(f'{m.prototype.name}（{m.id}）：{error}')
+    ps.need(not issues, '$.modules', '以下设备尚不能进入战斗：' + '；'.join(issues))
     catalogs = [ModulePrototypeCatalog.parse(s) for d, s in index.resources.values()
                 if d['kind'] == 'ModulePrototypeCatalog']
     migrated = [migrate_known_module_catalog_v1_to_v2(c) for c in catalogs]
@@ -109,18 +134,6 @@ def compile_design(document, index, deployment, policy, *, ship_id):
     seed = ps.sf.ShipSeed(table, ps.sf.MotionModel.from_legacy(model), initialize_tactical_motion_state(model),
         devices=device_seed(snapshot, legacy, table), resources=resource_seed(snapshot, legacy, table),
         command=command_seed(snapshot, legacy, sortie, table))
-    rules = {}
-    ps.need(type(policy['modules']) is list, '$.policy.modules', '需要原型规则列表')
-    for rule in policy['modules']:
-        ps.obj(rule, 'prototype prototype_sha256 binding', '$.policy.modules')
-        ref = rule['prototype']
-        reference = ResourceReference.parse(ref, '$.policy.prototype')
-        key = reference.id, reference.version
-        ps.need(key not in rules, '$.policy.prototype', '重复原型规则')
-        original = doc._module_catalog.module(reference)
-        ps.need(canonical_sha256(original) == rule['prototype_sha256'], '$.policy.prototype', '原型规则内容不匹配')
-        ps.need(type(rule['binding']) is dict and 'module_id' not in rule['binding'], '$.policy.binding', '规则不能覆盖模块实例身份')
-        rules[key] = rule['binding']
     definition = dict(interface=ps.RESOURCE_INTERFACE, id=policy['id'], version=policy['version'],
         source_seed_sha256=canonical_sha256(asdict(seed)), **{k: policy[k] for k in ('goods', 'projectiles', 'recipes', 'fire_control')},
         holds=[], magazines=[], weapons=[])
@@ -149,7 +162,6 @@ def compile_design(document, index, deployment, policy, *, ship_id):
     for m in source_outfit.instances:
         if m.prototype.category in groups:
             key = m.prototype.reference.id, m.prototype.reference.version
-            ps.need(key in rules, '$.modules.'+m.id, '此原型尚未绑定战术容量或武器配方')
             definition[groups[m.prototype.category]].append(dict(module_id=m.id, **rules[key]))
     pack = ps.compile_resources(seed, definition)
     enabled = policy['enabled_recipe_ids']

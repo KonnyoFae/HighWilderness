@@ -1,5 +1,7 @@
 # E1c.1 固定贡献编译实现报告（2026-09-08）
 
+后续更新：2026-09-12 已修复斜边转向设备被拒绝的问题，转向允许合法单位方向；以下“仅正交”描述保留为当时的历史限制，现行行为见[模块接入修复](./module-battle-readiness-repair.md)。
+
 状态：`E1c1_IMPLEMENTED / SIMPLIFIED_FLIGHT_NOT_IMPLEMENTED / REALTIME_NOT_PASSED`。
 
 本片已实现[简化推进规划](./t3a-realtime-simplified-propulsion-plan.md)中的贡献编译和规则边界。实验会话创建时编译两舰只读贡献表；`advance()` 仍运行原 E1b 推进政策。当前桌面后端、血量规则、实际飞行输出都没有切换。此次没有新路线吞吐或提速结论。
