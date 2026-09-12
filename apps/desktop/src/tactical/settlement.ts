@@ -29,7 +29,7 @@ export interface SettlementLibrary {
   ships: { instance_id: string; revision: number; hull_integrity: number; service: { status: string }; can_deploy: boolean }[];
 }
 export const endingLabel: Record<string, string> = { withdrawal: "主动撤离", victory: "本方胜利", defeat: "本方失去作战能力", draw: "双方失去作战能力" };
-export const serviceLabel: Record<string, string> = { available: "可出航", disabled: "失去出航能力", destroyed: "已毁坏", withdrawn: "已离场" };
+export const serviceLabel: Record<string, string> = { available: "可入战", disabled: "失去作战能力", destroyed: "已毁坏", withdrawn: "已离场" };
 const reasonLabel: Record<string, string> = { load: "装载", unload: "卸载", consume: "使用", reload: "装填", discharge: "射击",
   damage_control_preparation:'损管准备', damage_control_use:'损管使用', firefighting:'灭火', module_repair:'部件维修', hull_repair:'船壳维修',tank_destroyed:'燃料槽损毁' };
 

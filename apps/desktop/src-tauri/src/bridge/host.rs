@@ -943,7 +943,7 @@ impl BackendSupervisor {
     pub fn tactical_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
         if !matches!(request.method.as_str(), "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
             | "tactical.preparation.library" | "tactical.preparation.import" | "tactical.preparation.open" | "tactical.preparation.read" | "tactical.preparation.draft" | "tactical.preparation.preview" | "tactical.preparation.commit" | "tactical.preparation.discard"
-            | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.gun" | "tactical.realtime.damage_control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.withdraw" | "tactical.realtime.close") {
+            | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.gun" | "tactical.realtime.damage_control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.deploy_encounter" | "tactical.realtime.encounter" | "tactical.realtime.withdraw" | "tactical.realtime.close") {
             return Err(HostFailure::host("method_not_supported", "tactical method not enabled"));
         }
         if request.session_id.is_some() || request.expected_revision.is_some() {
@@ -1408,6 +1408,58 @@ mod tests {
         supervisor.tactical_request(request("tactical.realtime.close",scene_args)).unwrap();
         supervisor.tactical_request(request("tactical.set_mode",json!({"mode":"editor"}))).unwrap();
         supervisor.tactical_request(request("tactical.preparation.discard", args)).unwrap();
+        supervisor.stop("user_exit").unwrap();
+    }
+
+    #[test]
+    fn real_persisted_encounter_routes_and_receipt() {
+        let supervisor = BackendSupervisor::new(repo_root());
+        let (events, _) = sink();
+        let status = supervisor.start(events).unwrap();
+        assert!(status.capabilities.contains(&"tactical.realtime.deploy_encounter".into()));
+        let instance = status.backend_instance_id.unwrap();
+        let request = |method: &str, params: Value| EditorRequest {
+            backend_instance_id: instance.clone(), method: method.into(), params,
+            session_id: None, expected_revision: None,
+        };
+        let library = supervisor.tactical_request(request("tactical.preparation.library", json!({}))).unwrap();
+        let source = library["sources"].as_array().unwrap().iter()
+            .find(|s| s["name"].as_str().unwrap().contains("常规有人")).unwrap();
+        for id in ["instance.st0.player", "instance.st0.enemy"] {
+            supervisor.tactical_request(request("tactical.preparation.import", json!({
+                "instance_id":id,"source":{"kind":"resource","value":source["key"]}
+            }))).unwrap();
+        }
+        supervisor.tactical_request(request("tactical.preparation.open", json!({
+            "preparation_id":"preparation.st0","instance_ids":["instance.st0.player","instance.st0.enemy"]
+        }))).unwrap();
+        supervisor.tactical_request(request("tactical.preparation.commit", json!({"preparation_id":"preparation.st0","revision":0}))).unwrap();
+        supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"tactical"}))).unwrap();
+        let encounter = json!({"interface":"gaotian.tactical-encounter/st0-v1",
+            "encounter_id":"encounter.native.st0","world_id":"world.native","world_revision":3,
+            "player_side_id":"side.player","sides":[
+                {"side_id":"side.enemy","fleet_id":"fleet.enemy","flagship_instance_id":"instance.st0.enemy",
+                    "ships":[{"instance_id":"instance.st0.enemy","revision":1,"deployment":{"x_m":0,"y_m":300,"heading_rad":3.141592653589793}}]},
+                {"side_id":"side.player","fleet_id":"fleet.player","flagship_instance_id":"instance.st0.player",
+                    "ships":[{"instance_id":"instance.st0.player","revision":1,"deployment":{"x_m":0,"y_m":-300,"heading_rad":0}}]}
+            ]});
+        let entry = supervisor.tactical_request(request("tactical.realtime.deploy_encounter", encounter.clone())).unwrap();
+        assert_eq!(entry["view"]["static"]["ships"].as_array().unwrap().len(), 2);
+        assert_eq!(entry["view"]["static"]["ships"][1]["id"], entry["direct_ship_id"]);
+        assert_eq!(supervisor.tactical_request(request("tactical.realtime.deploy_encounter", encounter)).unwrap()["status"]["epoch"], entry["status"]["epoch"]);
+        let query = json!({"encounter_id":"encounter.native.st0"});
+        let receipt = supervisor.tactical_request(request("tactical.realtime.encounter", query.clone())).unwrap();
+        assert_eq!(receipt["status"], "active");
+        assert_eq!(receipt["instance_mapping"][0]["instance_id"], "instance.st0.enemy");
+        let scene = json!({"scene_id":entry["status"]["epoch"]});
+        let ended = supervisor.tactical_request(request("tactical.realtime.withdraw", scene.clone())).unwrap();
+        let save = json!({"settlement_id":ended["settlement"]["result"]["settlement_id"]});
+        let saved = supervisor.tactical_request(request("tactical.realtime.save", save.clone())).unwrap();
+        assert_eq!(supervisor.tactical_request(request("tactical.realtime.save", save)).unwrap(), saved);
+        let receipt = supervisor.tactical_request(request("tactical.realtime.encounter", query)).unwrap();
+        assert_eq!(receipt["status"], "state_saved");
+        assert_eq!(receipt["world_application"], "not_implemented");
+        supervisor.tactical_request(request("tactical.realtime.close", scene)).unwrap();
         supervisor.stop("user_exit").unwrap();
     }
 

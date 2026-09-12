@@ -1,0 +1,41 @@
+{
+  "interface": "gaotian.tactical-encounter/st0-v1",
+  "encounter_id": "encounter.st0.first",
+  "world_id": "world.fixture",
+  "world_revision": 7,
+  "player_side_id": "side.player",
+  "sides": [
+    {
+      "side_id": "side.enemy",
+      "fleet_id": "fleet.enemy",
+      "flagship_instance_id": "instance.custom.1",
+      "ships": [
+        {
+          "instance_id": "instance.custom.1",
+          "revision": 1,
+          "deployment": {
+            "x_m": 0,
+            "y_m": 300,
+            "heading_rad": 3.141592653589793
+          }
+        }
+      ]
+    },
+    {
+      "side_id": "side.player",
+      "fleet_id": "fleet.player",
+      "flagship_instance_id": "instance.custom.0",
+      "ships": [
+        {
+          "instance_id": "instance.custom.0",
+          "revision": 1,
+          "deployment": {
+            "x_m": 0,
+            "y_m": -300,
+            "heading_rad": 0
+          }
+        }
+      ]
+    }
+  ]
+}

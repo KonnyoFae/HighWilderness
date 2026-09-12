@@ -49,7 +49,7 @@ def recover(store):
     finally:lease.close()
 
 
-def claim(store,launch_id,digest,scene_id,records):
+def claim(store,launch_id,digest,scene_id,records,*,encounter=None,mapping=None):
     with store.connection() as db:
         setup(db)
         ps.need(db.execute('SELECT 1 FROM prepared_launches WHERE id=?',(launch_id,)).fetchone() is None,'$.launch_id','入战请求已经使用，请重新发起准备入战')
@@ -60,6 +60,9 @@ def claim(store,launch_id,digest,scene_id,records):
             ps.need(old is not None and store._decode(*old)==record,'$.revision','舰船已变化，请重新准备后入战')
             db.execute('INSERT INTO battle_instance_claims VALUES (?,?)',(key,scene_id))
         db.execute('INSERT INTO prepared_launches VALUES (?,?,?,?)',(launch_id,digest,scene_id,'active'))
+        if encounter is not None:
+            from .tactical_encounter import bind
+            bind(db,store,encounter,scene_id,mapping)
 
 
 def rollback_failed_attach(store,launch_id,scene_id):
@@ -67,3 +70,6 @@ def rollback_failed_attach(store,launch_id,scene_id):
         ps.need(db.execute('SELECT 1 FROM results WHERE id=?',('settlement.'+scene_id,)).fetchone() is None,'$.scene_id','已生成结算，不能撤销认领')
         db.execute('DELETE FROM battle_instance_claims WHERE scene_id=?',(scene_id,))
         db.execute('DELETE FROM prepared_launches WHERE id=? AND scene_id=?',(launch_id,scene_id))
+        from .tactical_encounter import setup
+        setup(db)
+        db.execute('DELETE FROM tactical_encounters WHERE scene_id=?',(scene_id,))

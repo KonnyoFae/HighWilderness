@@ -1,6 +1,8 @@
 # O4 舾装验收执行记录（2026-09-07）
 
-状态：`USER_FUNCTIONAL_ACCEPTED / formal_ui_evidence_pending`。用户最新复测未发现其他问题，主线可进入 T1a；三舰规范实机留档尚未补齐，不据此宣称正式 M3/O4 全项 PASS 或 X1a 通过。下方各轮过程记录保留，最新结论见末节。
+2026-09-12 接续说明：本页为 O4 历史验收事实，原生三舰留档仍待补齐。下方历史 T1a/X1a/H5b 接续已由后续实施替代；当前 OP1 结算返回准备已范围内完成，ST0 已完成，下一片为[ST1 战略地图与时钟](./strategy-tactical-integration-plan.md)，以[统一路线图](./editor-tactical-delivery-roadmap.md)为准。本轮浏览器验证不替代 O4 原生证据。
+
+历史状态：`USER_FUNCTIONAL_ACCEPTED / formal_ui_evidence_pending`。用户最新复测未发现其他问题，主线可进入 T1a；三舰规范实机留档尚未补齐，不据此宣称正式 M3/O4 全项 PASS 或 X1a 通过。下方各轮过程记录保留，最新结论见末节。
 
 ## 本轮交付
 

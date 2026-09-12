@@ -50,6 +50,23 @@ def ignition_enemy(binding, snapshot, policy):
     return ps.InstanceBinding(pack,ps.parse_instance(value,pack))
 
 
+def load_ship(design, record, *, x, y, heading=None):
+    record=bp.validate_record(record,design); v=record['state']; seed=design.resources.seed
+    ps.need(v['service']['status']=='available', '$.service', '参战舰船已失去作战能力，需要后续维修或救援')
+    ps.need('fuel_tanks' in v or v['fuel_units']==seed.motion.fuel_units, '$.fuel', '旧配置仍保留原燃料状态')
+    modules={m['module_id']:m for m in v['modules']}
+    loaded=replace(seed,
+        motion=replace(seed.motion,position_world_m=replace(seed.motion.position_world_m,x=x,y=y),
+            hull_integrity_fraction=v['hull_integrity_fraction'],fuel_units=v['fuel_units']),
+        devices=replace(seed.devices,initial_durability_points=tuple(modules[m.instance_id]['durability_points'] for m in seed.devices.modules)),
+        resources=replace(seed.resources,modes=tuple('active' if m.prototype.category in ('weapon','sensor','fire_control') else modules[m.id]['operating_mode'] for m in seed.resources.modules),
+            crew=tuple((c['crew_type'],c['count']) for c in v['crew']),policy=ps.RuntimePowerPolicyInput.parse(v['power_policy'],'$.power_policy')),
+        command=replace(seed.command,wounded_aboard=v['wounded_aboard']))
+    if heading is not None:
+        loaded=replace(loaded,motion=replace(loaded.motion,heading_rad=heading))
+    return loaded, ps.InstanceBinding(design.resources,ps.parse_instance(v,design.resources))
+
+
 def build(ships, direct_instance_id, template, technical_scenario, *, allow_test_ignition=False):
     ps.need(1 <= len(ships) <= 15, '$.ships', '本次交战支持 1—15 艘准备舰船及 1 艘测试敌舰')
     ps.need(direct_instance_id in {r['state']['instance_id'] for _,r in ships}, '$.direct_instance_id', '请选择参战舰船作为旗舰')
@@ -58,22 +75,13 @@ def build(ships, direct_instance_id, template, technical_scenario, *, allow_test
     spacing=max(150,2*max(radii)+50)
     direct=None
     for i,(design,record) in enumerate(ships):
-        record=bp.validate_record(record,design); v=record['state']; seed=design.resources.seed
-        ps.need(v['service']['status']=='available', '$.service', '参战舰船已失去作战能力，需要后续维修或救援')
-        ps.need('fuel_tanks' in v or v['fuel_units']==seed.motion.fuel_units, '$.fuel', '旧配置仍保留原燃料状态')
-        modules={m['module_id']:m for m in v['modules']}
-        loaded=replace(seed,
-            motion=replace(seed.motion,position_world_m=replace(seed.motion.position_world_m,x=(i-(len(ships)-1)/2)*spacing,y=-max(300,max(radii)+100)),
-                hull_integrity_fraction=v['hull_integrity_fraction'],fuel_units=v['fuel_units']),
-            devices=replace(seed.devices,initial_durability_points=tuple(modules[m.instance_id]['durability_points'] for m in seed.devices.modules)),
-            resources=replace(seed.resources,modes=tuple('active' if m.prototype.category in ('weapon','sensor','fire_control') else modules[m.id]['operating_mode'] for m in seed.resources.modules),
-                crew=tuple((c['crew_type'],c['count']) for c in v['crew']),policy=ps.RuntimePowerPolicyInput.parse(v['power_policy'],'$.power_policy')),
-            command=replace(seed.command,wounded_aboard=v['wounded_aboard']))
+        loaded, instance=load_ship(design,record,x=(i-(len(ships)-1)/2)*spacing,y=-max(300,max(radii)+100))
+        v=record['state'];seed=design.resources.seed
         sid=seed.contributions.ship_id
         if v['instance_id']==direct_instance_id: direct=sid
         seeds.append(loaded); latches.append((sid,tuple(v['engine_latches'])))
         bindings.append(TacticalSceneShipBinding(sid,design.snapshot,design.sortie,side_id='side.blue',fleet_id='fleet.blue'))
-        instances.append(ps.InstanceBinding(design.resources,ps.parse_instance(v,design.resources)))
+        instances.append(instance)
         armors.append(record['armor']); names[sid]=design.archive()['document']['outfit']['name']
     seeds.append(template.session._seeds[1]); bindings.append(technical_scenario.bindings[1])
     enemy=template.inventory.prepared.bindings[1]

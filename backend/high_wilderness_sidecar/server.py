@@ -165,7 +165,7 @@ class SidecarServer:
 
         if method in REALTIME_CAPABILITIES:
             try:
-                if method in ('tactical.realtime.create', 'tactical.realtime.deploy'):
+                if method in ('tactical.realtime.create', 'tactical.realtime.deploy', 'tactical.realtime.deploy_prepared', 'tactical.realtime.deploy_encounter'):
                     if self.tactical.scenario is not None:
                         raise ContractError('tactical.realtime.scene_active', '$', '请先释放原试航场景')
                 return (response_for(message, result=self.realtime.dispatch(message, mode=self.tactical.mode)),), False

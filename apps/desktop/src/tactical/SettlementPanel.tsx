@@ -2,10 +2,11 @@ import { endingLabel, resourceRows, serviceLabel, fuelTankName } from "./settlem
 import type { SettlementEnvelope, SettlementLibrary } from "./settlement";
 import { ammunitionName } from './ammunition';
 
-export function SettlementPanel({ current, library, busy, canDeploy, onSave, onInspect, onRefresh, onDeploy }: {
+export function SettlementPanel({ current, library, busy, canDeploy, onSave, onInspect, onRefresh, onDeploy, onPrepare, canPrepare = false }: {
   current: SettlementEnvelope | null; library: SettlementLibrary | null; busy: boolean; canDeploy: boolean;
   onSave: (id: string) => void; onInspect: (id: string) => void; onRefresh: () => void;
   onDeploy: (id: string, revision: number) => void;
+  onPrepare?: () => void; canPrepare?: boolean;
 }) {
   return <section aria-label="战后结算与舰船存档" className="settlement-panel">
     <h3>战后结算与舰船存档</h3>
@@ -49,10 +50,15 @@ export function SettlementPanel({ current, library, busy, canDeploy, onSave, onI
       {!library?.results.length && <p>暂无结算记录。</p>}
       {library?.results.map((r, i) => <p key={r.settlement_id}><button disabled={busy} onClick={() => onInspect(r.settlement_id)}>查看结算 {i+1} · {endingLabel[r.reason]} · {r.saved ? "已保存" : "待保存"}</button></p>)}
     </details>
-    <details open><summary>本方舰船 · 再次出航</summary>
+    {onPrepare ? <section aria-label="下一场战前准备">
+      <h4>下一场战前准备</h4>
+      <p>保存本场结果后，返回战前准备管理各舰库存与预装弹种，再选择参加下一场交战的舰船。已有战损、余弹与未灭火情会保留。</p>
+      <button disabled={busy || !canPrepare} onClick={onPrepare}>管理战后库存与下一场准备</button>
+      {!canPrepare && <p>请先保存当前交战结果。</p>}
+    </section> : <details open><summary>技术测试舰 · 再次交战</summary>
       {!library?.ships.length && <p>保存第一次战后结算后，可使用保留下来的舰船进入新交战。</p>}
       {library?.ships.map((s,i) => <p key={s.instance_id}>舰船 {i+1} · 船壳 {(s.hull_integrity*100).toFixed(1)}% · {serviceLabel[s.service.status]} · 保存版本 {s.revision} <button disabled={busy || !canDeploy || !s.can_deploy} onClick={() => onDeploy(s.instance_id, s.revision)}>使用舰船 {i+1} 进入新交战</button>{!s.can_deploy && s.service.status === "available" ? " · 尚有未保存结算" : ""}</p>)}
-      <p>重新出航保留战损与资源，重置部署位置和瞄准，敌方使用新舰船。当前入口仍使用测试舰设计。</p>
-    </details>
+      <p>此入口仅用于技术测试舰，保留战损与资源并重新部署。自建舰请在“战前准备”中管理库存、预装弹药并进入下一场。</p>
+    </details>}
   </section>;
 }

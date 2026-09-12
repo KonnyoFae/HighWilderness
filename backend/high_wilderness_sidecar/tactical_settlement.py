@@ -212,6 +212,8 @@ class SettlementStore:
             old = db.execute('SELECT digest FROM results WHERE id=?', (result['settlement_id'],)).fetchone()
             ps.need(old is None or old[0] == digest, '$.settlement_id', '同一结算身份对应了不同结果')
             if old is None:
+                from .tactical_encounter import validate_association
+                validate_association(db, self, result)
                 db.execute('INSERT INTO results(id,payload,digest) VALUES (?,?,?)', (result['settlement_id'], payload, digest))
         return result['settlement_id']
 
@@ -235,6 +237,8 @@ class SettlementStore:
             ps.need(row is not None, '$.settlement_id', '请先恢复或准备本场结算')
             result = validate_result(self._decode(row[0], row[1]))
             if not row[2]:
+                from .tactical_encounter import validate_association
+                validate_association(db, self, result)
                 for ship in result['ships']:
                     before = ship['before']['state']
                     claim = db.execute('SELECT scene_id FROM battle_instance_claims WHERE instance_id=?', (before['instance_id'],)).fetchone()

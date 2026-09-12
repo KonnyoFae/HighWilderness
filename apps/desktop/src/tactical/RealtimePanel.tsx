@@ -68,6 +68,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       await pending.current;
       if (kind === "refresh") { await refreshLibrary(); return; }
       if (kind === "deploy") {
+        if (preparedLaunch) throw new Error("自建舰需要返回战前准备后进入下一场交战。");
         if (launchKey.current?.instanceId !== id || launchKey.current.revision !== revision)
           launchKey.current = { instanceId: id, revision, id: `launch.${crypto.randomUUID()}` };
         const next = await call<RealtimeEnvelope>("tactical.realtime.deploy", { instance_id: id, revision, launch_id: launchKey.current.id });
@@ -309,6 +310,8 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     {(state?.settlement || historyResult || !state) && <SettlementPanel
       current={state?.settlement && (!historyResult || historyResult.result.settlement_id === state.settlement.result.settlement_id) ? state.settlement : historyResult}
       library={library} busy={busy || !active} canDeploy={!state || !!state.settlement?.saved}
+      onPrepare={preparedLaunch ? ()=>void action('close') : undefined}
+      canPrepare={!entryUncertain && !!state?.settlement?.saved}
       onSave={id => void storedAction("save", id)} onInspect={id => void storedAction("inspect", id)}
       onRefresh={() => void storedAction("refresh")} onDeploy={(id, revision) => void storedAction("deploy", id, revision)} />}
     {view?.snapshot.gunnery?.damage && <details open><summary>命中记录 · {view.snapshot.gunnery.damage.hits} 次</summary>

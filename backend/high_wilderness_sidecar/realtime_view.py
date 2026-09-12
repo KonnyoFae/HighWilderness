@@ -15,7 +15,7 @@ from .tactical import render_static, RENDER_INTERFACE
 from .tactical_scenario import build_two_ship_scenario, SCENARIO_ID
 from .tactical_gunnery import GunneryBattle, prepare_trial_session
 
-CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry'))
+CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry', 'deploy_encounter', 'encounter'))
 INTERFACE = 'gaotian.realtime-view/e3b-v1alpha1'
 VIEW_PERIOD_NS = 66_666_667
 LEASE_NS = 2_000_000_000
@@ -86,6 +86,37 @@ class RealtimeViewService:
     @property
     def running(self):
         return self.scheduler is not None and self.scheduler.status.running
+
+    def deploy_encounter(self, p):
+        from . import tactical_encounter as encounter, prepared_launch_store as launches
+        request = encounter.parse(p)
+        digest = canonical_sha256(request)
+        identity = request['encounter_id']; key = ('encounter', identity, digest)
+        if self.scheduler is not None and self._deployment_key == key: return self.read()
+        require(self.scheduler is None or self.gunnery.ending is not None and self._result_saved,
+            '请先结束并保存当前交战')
+        store = self.preparation_store
+        require(store is not None, '准备仓库未接线')
+        if self._prepared_lease is not None: self._prepared_lease.close(); self._prepared_lease = None
+        launches.recover(store)
+        lease = launches.BattleLease(store.directory)
+        require(lease.file is not None, '参战舰船正由另一个后台使用')
+        claimed = False; scene = None
+        try:
+            ships = encounter.load(store, request)
+            template, scenario, _ = self._template()
+            battle, geometry, mapping = encounter.build(request, ships, template, scenario)
+            scene = battle.session.world.epoch
+            launches.claim(store, identity, digest, scene, [r for _, _, _, r in ships], encounter=request, mapping=mapping)
+            claimed = True
+            result = self._attach(battle, geometry, key)
+            self._prepared_lease = lease
+            return result
+        except BaseException:
+            try:
+                if claimed: launches.rollback_failed_attach(store, identity, scene)
+            finally: lease.close()
+            raise
 
     def pause(self, reason='disconnected'):
         if self.scheduler is not None:
@@ -202,6 +233,13 @@ class RealtimeViewService:
     def dispatch(self, request, *, mode):
         require(request.get('session_id') is None and request.get('expected_revision') is None, 'Realtime uses scene scope')
         method, p = request['method'], request['params']
+        if method == 'tactical.realtime.deploy_encounter':
+            require(mode == 'tactical', '请先进入战术视角')
+            return self.deploy_encounter(p)
+        if method == 'tactical.realtime.encounter':
+            from . import tactical_encounter as encounter
+            require(set(p) == {'encounter_id'}, '需要遭遇身份')
+            return encounter.read(self.store, p['encounter_id'])
         if method == 'tactical.realtime.deploy_prepared':
             require(mode=='tactical','请先进入战术视角')
             return self.deploy_prepared(p)

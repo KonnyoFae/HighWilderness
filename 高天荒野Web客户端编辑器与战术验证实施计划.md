@@ -1,7 +1,11 @@
 # 《高天荒野》Web 客户端、舰艇编辑器与战术验证实施计划
 
 > 建立日期：2026 年 8 月 27 日
-> 更新日期：2026 年 9 月 11 日
+> 更新日期：2026 年 9 月 12 日
+
+2026-09-12 ST0 完成更新：双方持久舰船入战、身份/修订关联及结算回执已接后台与桌面桥接，真实炮击后双方战损与余量可保存并进入下一场，见[实施记录](./contracts/web_bridge/st0-persisted-encounter.md)。下一片为 ST1 最小战略地图、舰队与战略时钟；战略世界战果应用仍未接线。
+
+2026-09-12 接续更新：OP1 已修正自建舰结算后的战前准备入口，完成保存、返回、重启及再准备验证，见[实施记录](./contracts/web_bridge/op1-preparation-return.md)。战略接口复盘已形成[ST0—ST4 分步计划](./contracts/web_bridge/strategy-tactical-integration-plan.md)，下一片为 ST0 双方持久实例入战与结果合同。O4 原生留档独立待收尾；战略地图、调度与经济尚未实现。以下带日期的旧接续内容仅供追溯，当前顺序以[统一路线图](./contracts/web_bridge/editor-tactical-delivery-roadmap.md)为准。
 
 2026-09-11 H5d 完成更新：整层防火、实际燃烧弹、有限货物成本、界面及跨场保存已范围内完成，见[实施记录](./contracts/web_bridge/h5d-fireproof-ignition.md)。下一项为实际操作复测与 O4 原生留档收尾、战略接口复盘。
 
@@ -11,8 +15,8 @@
 
 2026-09-10 统一接续：以[编辑器与战术后续交付顺序](./contracts/web_bridge/editor-tactical-delivery-roadmap.md)为当前调度入口。P1a/P1b 状态与库存事务、P2a/P2b 普通炮及真实命中、P3 结算保存及跨场衔接已范围内完成，见[实现报告](./contracts/web_bridge/p3-settlement-redeployment.md)；当前 X1a/E5 战前准备界面与自建设计入战，X1a.1—X1a.4 设计合同、准备界面及实际入战往返完成，H5b 逐层填充已完成，S1 穿甲弹已完成，D1a—D1d 资源、灭火/维修与玩家界面已完成，H5c 灵烷储备与槽损毁已完成，见[实施记录](./contracts/web_bridge/h5c-spirit-fuel.md)，H5d 整层防火与燃烧弹亦已完成，下一项为操作复测/原生留档及战略接口复盘（2026-09-11 更新，见[详细规划](./contracts/web_bridge/x1a-battle-preparation-plan.md)）。编辑器基本可用，O4 规范留档收尾；E3c 已通过两舰后台 30 分钟验证，技术舰的战后持久保存与下一场衔接已接通。统一弹药、特殊货物配方、共享容积货舱及超容保留规则见[状态规划](./contracts/web_bridge/tactical-persistent-ship-state-plan.md)。货物损毁与固定 2 小时门槛不进入本轮。战略模式仍是尚未实现的核心玩法；本轮为基础设施。P3 已接局部装甲/模块/船壳/库存的逐舰结算、原子保存与重启恢复；玩家自建设计已通过 X1a.4 接入此链路；合法结算默认完成已开始的装填，瞄准/目标不跨战斗保存。
 
-> 已推送基线：`3e26613`；包含编辑器、实时实验 E1—E3c 及验证证据；本次战略衔接重排为后续规划。d4h 曾通过退出门，当前改动后的历史全量门禁未复跑。
-> 当前主线：`T3a_paused_completed / E0_baseline_pass / E1b_implemented / E3b_implemented / E3c_stdio_30min_pass / P1a_scoped_pass / P1b_next / O4_formal_evidence_pending`；两舰 v7 场景、战术画布、模式切换和单步操纵已完成并通过原生验证。独立实时路线 E1a 会话与静态编译已实现，E1b 步内证明复用也已完成，E1c.1 固定贡献编译已实现，E1c.2 独立飞行原型也已完成，E1c.3 新规则验证与范围内吞吐门已通过，P1a 已完成最小状态合同，下一步 P1b 库存与装填事务，原指纹/诊断工作后移为 E1d。舾装经用户复测已无已知功能阻塞，O4 三舰规范实机留档仍待补齐，不冒充正式 M3/O4 全项 PASS；历史指纹与全量结果单独保留。
+> 历史阶段基线（已由顶部接续更新替代）：`3e26613`；包含编辑器、实时实验 E1—E3c 及验证证据；本次战略衔接重排为后续规划。d4h 曾通过退出门，当前改动后的历史全量门禁未复跑。
+> 历史阶段主线：`T3a_paused_completed / E0_baseline_pass / E1b_implemented / E3b_implemented / E3c_stdio_30min_pass / P1a_scoped_pass / P1b_next / O4_formal_evidence_pending`；两舰 v7 场景、战术画布、模式切换和单步操纵已完成并通过原生验证。独立实时路线 E1a 会话与静态编译已实现，E1b 步内证明复用也已完成，E1c.1 固定贡献编译已实现，E1c.2 独立飞行原型也已完成，E1c.3 新规则验证与范围内吞吐门已通过，P1a 已完成最小状态合同，下一步 P1b 库存与装填事务，原指纹/诊断工作后移为 E1d。舾装经用户复测已无已知功能阻塞，O4 三舰规范实机留档仍待补齐，不冒充正式 M3/O4 全项 PASS；历史指纹与全量结果单独保留。
 
 > 最新反馈修正：已加入按秒有限试航，并明确战术推进不扣燃料；独立试航样例提高推力便于观察，玩家设计不套用该倍数。保留编辑框架，独立探索“进入场景严格编译、运行中按变化更新、持续过程按时间推进”，共享计算规则。[E0 基线](./contracts/web_bridge/t3a-realtime-e0-baseline.md)完成两组 192 步重放和三次短测（46.66—49.03 ms/步），仍不满足实时。[E1a 实现](./contracts/web_bridge/t3a-realtime-e1a-flight.md)已通过完整对照，交替短测新路径约 24 ms/步、旧路径约 45 ms/步，耗时减少约 47%；仍未实时。[E1b 步内证明复用](./contracts/web_bridge/t3a-realtime-e1b-record-proofs.md)已接续完成，新路径约 20.4 ms/步，完整对照通过；随后 E1c 已改为固定贡献与简化推进，详见[新政策规划](./contracts/web_bridge/t3a-realtime-simplified-propulsion-plan.md)：取消实时配平，战损事件更新各方向能力，血量独立。[E1c.1 贡献编译](./contracts/web_bridge/t3a-realtime-e1c1-contributions.md)已完成，39 项相关测试及旧路径 192 步回放通过；[E1c.2 飞行原型](./contracts/web_bridge/t3a-realtime-e1c2-flight.md)已实现，56 项相关测试和两次 360 步回放通过，E1c.3 范围内吞吐门已通过，下一项 P1 持久舰艇状态与出入战合同。新内核约 0.15—0.17 ms/步仅为两舰无交火飞行短测，不与含旧完整场景/表现的 20.4 ms 混比；已接范围的领域事件与实验界面验证通过，E3c 后台长跑已通过其范围验收，实际交战、产品保存和默认迁移仍待验收；桌面尚未切换新后端。当前产品合同仍见 `contracts/web_bridge/t3a-bounded-preview.md`。
 > 调整依据：用户确认侧挂修复，保存疑问源于首次需“另存为”，当前未发现其他问题，并要求复盘后准备后续实施。
