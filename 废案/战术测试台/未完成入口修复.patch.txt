@@ -1,0 +1,111 @@
+diff --git a/apps/desktop/src/tactical/RealtimePanel.tsx b/apps/desktop/src/tactical/RealtimePanel.tsx
+index 4520942..27ea0c6 100644
+--- a/apps/desktop/src/tactical/RealtimePanel.tsx
++++ b/apps/desktop/src/tactical/RealtimePanel.tsx
+@@ -19,6 +19,7 @@ import { goodName } from './preparation';
+ import { ammunitionName } from './ammunition';
+ import { DamageControlPanel } from './DamageControlPanel';
+ import type { DamageControlIntent } from './DamageControlPanel';
++import { findLegacyScene, releaseLegacyScene } from './legacyScene';
+ 
+ export function RealtimePanel({ transport, instance, active, onBusy, onClose, preparedLaunch }: {
+   transport: BridgeTransport; instance: string; active: boolean; onBusy?: (busy: boolean) => void; onClose: () => void;
+@@ -43,6 +44,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
+   const weaponRef = useRef(weaponId); weaponRef.current = weaponId;
+   const attemptedEntry=useRef(false);
+   const [entryUncertain,setEntryUncertain]=useState(false);
++  const [legacyScene,setLegacyScene]=useState<string|null>(null);
+   const [damageUncertain,setDamageUncertain]=useState(false);
+   const unknownDamage=useRef(false);
+   useEffect(()=>{if(active&&preparedLaunch&&!attemptedEntry.current){attemptedEntry.current=true;void action('create');}},[active,preparedLaunch]);
+@@ -130,17 +132,25 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
+     return () => { stopped = true; window.clearInterval(timer); };
+   }, [active]);
+ 
+-  async function action(kind: "create" | "read" | "resume" | "pause" | "control" | "withdraw" | "close", turn: -1 | 0 | 1 = 0) {
++  async function action(kind: "create" | "replaceLegacy" | "read" | "resume" | "pause" | "control" | "withdraw" | "close", turn: -1 | 0 | 1 = 0) {
+     if (acting.current || !active) return;
+     acting.current = true; setBusy(true); setError("");
+     try {
+       await pending.current;
+-      if (kind === "create") {
++      if (kind === "create" || kind === 'replaceLegacy') {
++        if (kind === 'replaceLegacy') {
++          if (!legacyScene) throw new Error('尚未确认旧样例，请先重试进入交战。');
++          await releaseLegacyScene(call, legacyScene);
++        }
++        setLegacyScene(null);
+         setHistoryResult(null);setEntryUncertain(!!preparedLaunch);
+         try {
+           accept(await call<RealtimeEnvelope>(preparedLaunch?'tactical.realtime.deploy_prepared':'tactical.realtime.create',preparedLaunch??{scenario_id:SCENARIO_ID}));
+           setEntryUncertain(false);
+         } catch(e) {
++          if (normalizeHostFailure(e).code === 'tactical.realtime.scene_active') {
++            setLegacyScene(await findLegacyScene(call));
++          }
+           if(preparedLaunch){
+             const confirmation=await call<{scene:RealtimeEnvelope|null}>('tactical.realtime.prepared_entry',{launch_id:preparedLaunch.launch_id});
+             if(confirmation.scene)accept(confirmation.scene);
+@@ -236,14 +246,18 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
+   const targetGeometry = view?.geometry.ships.find(s => s.id === gun?.target_ship_id);
+   const chooseWeapon = (id: string) => { pointerAim.current = null; queuedFire.current = null; weaponRef.current = id; setWeaponId(id); };
+   return <section className="panel tactical-panel" aria-label="实时试航实验">
+-    <h2>{preparedLaunch?'准备舰船交战':'实时试航（实验）'}</h2>
+-    <p>{preparedLaunch?'已保存准备的舰船参与本次交战，玩家操纵旗舰，其余友舰自动交战。':'后台持续运行两舰试航。'}操纵保持到下次发令，暂停后需要重新发令；战术推进不消耗燃料。</p>
++    <h2>{preparedLaunch?'准备舰船交战':'固定两舰实时样例'}</h2>
++    <p>{preparedLaunch?'已保存准备的舰船参与本次交战，玩家操纵旗舰，其余友舰自动交战。':'此入口仅使用固定样例舰。使用自建舰请返回战前准备，保存准备后点击“以所选舰为旗舰进入交战”。'}操纵保持到下次发令，暂停后需要重新发令；战术推进不消耗燃料。</p>
++    {legacyScene && <div role="alert" className="editor-error">
++      <p>后台仍有旧的固定两舰样例，占用了交战入口。结束它后会重试本次进入，已保存的舰船准备保持不变。</p>
++      <button disabled={busy || !active} onClick={()=>void action('replaceLegacy')}>{preparedLaunch?'结束旧样例并进入准备交战':'结束旧样例并建立实时样例'}</button>
++    </div>}
+     <div className="editor-row">
+       {!state && <button disabled={busy || !active} onClick={() => void action("create")}>{preparedLaunch?'重试进入准备交战':'建立实时场景'}</button>}
+       <button disabled={busy || !state || !active || !!state.view.gunnery?.ending} onClick={() => void action(state?.status.running ? "pause" : "resume")}>{state?.status.running ? "暂停试航" : "开始试航"}</button>
+       <button disabled={busy || !state || !active} onClick={() => void action("read")}>读取实时状态</button>
+       <button disabled={busy || !state || !active || !!state.view.gunnery?.ending} onClick={() => void action("withdraw")}>结束交战 / 撤离</button>
+-      <button disabled={busy || !active || entryUncertain || !!state?.settlement && !state.settlement.saved || !!preparedLaunch&&!!state&&!state.settlement?.saved} onClick={() => void action("close")}>{preparedLaunch?'返回战前准备':'退出实时实验'}</button>
++      <button disabled={busy || !active || entryUncertain || !!state?.settlement && !state.settlement.saved || !!preparedLaunch&&!!state&&!state.settlement?.saved} onClick={() => void action("close")}>{preparedLaunch?'返回战前准备':'退出固定样例'}</button>
+     </div>
+     {error && <p role="alert">{error}</p>}
+     {storeError && <p role="alert">{storeError}</p>}
+diff --git a/apps/desktop/src/tactical/TacticalPanel.tsx b/apps/desktop/src/tactical/TacticalPanel.tsx
+index 96689da..06a1116 100644
+--- a/apps/desktop/src/tactical/TacticalPanel.tsx
++++ b/apps/desktop/src/tactical/TacticalPanel.tsx
+@@ -22,6 +22,9 @@ export function TacticalPanel({ transport, instance, active = true, onBusy, prep
+   const [uncertain, setUncertain] = useState<StepTicket | null>(null);
+   const [receipt, setReceipt] = useState("");
+   const pending = useRef(false), mounted = useRef(true);
++  useEffect(() => {
++    if (preparedLaunch) { setView(null); setSelected(null); setUncertain(null); setReceipt(''); setExperimental(false); }
++  }, [preparedLaunch?.launch_id]);
+   useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
+   useEffect(() => { onBusy?.(busy); return () => onBusy?.(false); }, [busy, onBusy]);
+   async function run(method: "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.step" | "tactical.advance" | "tactical.pause", input?: TacticalControlInput, stepCount = 1) {
+@@ -86,10 +89,10 @@ export function TacticalPanel({ transport, instance, active = true, onBusy, prep
+   if (experimental || preparedLaunch) return <RealtimePanel key={preparedLaunch?.launch_id??'technical'} transport={transport} instance={instance} active={active} onBusy={onBusy}
+     preparedLaunch={preparedLaunch} onClose={()=>{setExperimental(false);if(preparedLaunch)onPreparedClose?.();}} />;
+   return <section className="panel tactical-panel" aria-label="两舰战术视角">
+-    <h2>两舰试航场景</h2>
+-    <p className="editor-note">选择车钟后按秒试航，观察蓝方旗舰加速与转向；到达指定时长后自动暂停。</p>
++    <h2>固定两舰试航样例</h2>
++    <p className="editor-note">这里使用固定样例舰，不会使用战前准备中的舰船。测试自建舰请在“战前准备”保存准备后，点击“以所选舰为旗舰进入交战”。样例中选择车钟后按秒试航，到达指定时长后自动暂停。</p>
+     <div className="editor-row">
+-      <button disabled={busy || view !== null || !active} onClick={() => setExperimental(true)}>实时试航（实验）</button>
++      <button disabled={busy || view !== null || !active} onClick={() => setExperimental(true)}>固定两舰实时样例</button>
+       <button disabled={busy || view !== null} onClick={() => void run("tactical.create")}>建立两舰场景</button>
+       <button disabled={busy} onClick={() => void run("tactical.inspect")}>读取场景状态</button>
+       <button disabled={busy || !view} onClick={() => void run("tactical.close")}>释放测试场景</button>
+diff --git a/backend/high_wilderness_sidecar/server.py b/backend/high_wilderness_sidecar/server.py
+index 12064bb..f846508 100644
+--- a/backend/high_wilderness_sidecar/server.py
++++ b/backend/high_wilderness_sidecar/server.py
+@@ -167,7 +167,7 @@ class SidecarServer:
+             try:
+                 if method in ('tactical.realtime.create', 'tactical.realtime.deploy', 'tactical.realtime.deploy_prepared', 'tactical.realtime.deploy_encounter'):
+                     if self.tactical.scenario is not None:
+-                        raise ContractError('tactical.realtime.scene_active', '$', '请先释放原试航场景')
++                        raise ContractError('tactical.realtime.scene_active', '$', '后台仍有固定两舰试航样例，请结束旧样例后进入交战')
+                 return (response_for(message, result=self.realtime.dispatch(message, mode=self.tactical.mode)),), False
+             except ContractError as error:
+                 return (response_for(message, error=_error_payload(error)),), False

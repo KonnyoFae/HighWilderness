@@ -1,0 +1,24 @@
+import { normalizeHostFailure } from '../bridge/model';
+import type { TacticalRequest } from './model';
+
+type Call = <T>(method: TacticalRequest['method'], params: Record<string, unknown>) => Promise<T>;
+
+export async function findLegacyScene(call: Call): Promise<string | null> {
+  try {
+    const value = await call<{scene_id: string}>('tactical.inspect', {scene_id: null, known_static_sha256: null});
+    return value.scene_id;
+  } catch (failure) {
+    if (normalizeHostFailure(failure).code === 'tactical.scene_missing') return null;
+    throw failure;
+  }
+}
+
+// Only release the exact legacy sample the user saw. This never closes a live
+// prepared battle or bypasses its settlement/save requirements.
+export async function releaseLegacyScene(call: Call, expected: string): Promise<void> {
+  const current = await findLegacyScene(call);
+  if (current === null) return; // A prior close may have succeeded with a lost reply.
+  if (current !== expected) throw new Error('旧样例已经变化，请重新尝试进入交战以确认当前场景。');
+  const result = await call<{closed: boolean; scene_id: string}>('tactical.close', {scene_id: current});
+  if (!result.closed || result.scene_id !== current) throw new Error('旧样例结束结果尚未确认，请重试。');
+}

@@ -1,0 +1,164 @@
+diff --git a/apps/desktop/src-tauri/src/bridge/host.rs b/apps/desktop/src-tauri/src/bridge/host.rs
+index 4f882c6..9c28b9f 100644
+--- a/apps/desktop/src-tauri/src/bridge/host.rs
++++ b/apps/desktop/src-tauri/src/bridge/host.rs
+@@ -260,6 +260,7 @@ pub struct BackendSupervisor {
+     repo_root: PathBuf,
+     config: SupervisorConfig,
+     recovery_dir: Mutex<Option<PathBuf>>,
++    settlement_dir: Mutex<Option<PathBuf>>,
+     state: Mutex<SupervisorState>,
+ }
+ 
+@@ -273,6 +274,7 @@ impl BackendSupervisor {
+             repo_root,
+             config,
+             recovery_dir: Mutex::new(None),
++            settlement_dir: Mutex::new(None),
+             state: Mutex::new(SupervisorState {
+                 lifecycle: Lifecycle::Stopped,
+                 running: None,
+@@ -599,6 +601,10 @@ impl BackendSupervisor {
+             command.arguments.push("--recovery-dir".into());
+             command.arguments.push(path.as_os_str().to_owned());
+         }
++        if let Some(path) = self.settlement_dir.lock().unwrap().as_ref() {
++            command.arguments.push("--settlement-dir".into());
++            command.arguments.push(path.as_os_str().to_owned());
++        }
+         self.start_command(command, instance_id, sink)
+     }
+ 
+@@ -916,6 +922,10 @@ impl BackendSupervisor {
+         }
+     }
+ 
++    pub fn set_settlement_dir(&self, path: PathBuf) {
++        *self.settlement_dir.lock().unwrap() = Some(path);
++    }
++
+     pub fn set_recovery_dir(&self, path: PathBuf) {
+         *self.recovery_dir.lock().unwrap() = Some(path);
+     }
+diff --git a/apps/desktop/src-tauri/src/lib.rs b/apps/desktop/src-tauri/src/lib.rs
+index 7a5be9b..ea731aa 100644
+--- a/apps/desktop/src-tauri/src/lib.rs
++++ b/apps/desktop/src-tauri/src/lib.rs
+@@ -1,5 +1,6 @@
+ mod bridge;
+ mod file_dialog;
++mod testbench;
+ 
+ use std::path::PathBuf;
+ use std::sync::Arc;
+@@ -128,12 +129,43 @@ fn bridge_status(state: State<'_, DesktopState>) -> BridgeStatus {
+     state.supervisor.status()
+ }
+ 
++#[tauri::command]
++fn testbench_enabled() -> bool { testbench::enabled() }
++
++#[tauri::command]
++async fn testbench_request(action: String, scenario: Option<String>, run_id: Option<String>, note: Option<String>) -> Result<Value, String> {
++    tauri::async_runtime::spawn_blocking(move || testbench::request(&action, scenario, run_id, note))
++        .await.map_err(|e| e.to_string())?
++}
++
++#[tauri::command]
++async fn testbench_open(state: State<'_, DesktopState>, run_id: String) -> Result<(), String> {
++    let supervisor = Arc::clone(&state.supervisor);
++    tauri::async_runtime::spawn_blocking(move || {
++        let value = testbench::request("show", None, Some(run_id.clone()), None)?;
++        if value["id"].as_str() != Some(&run_id) { return Err("测试记录不匹配".into()); }
++        // Resolve from the controlled root, never from a persisted display path.
++        let directory = repo_root().join(".local/testbench").join(run_id);
++        supervisor.force_stop();
++        supervisor.set_settlement_dir(directory.join("store"));
++        supervisor.set_recovery_dir(directory.join("recovery"));
++        Ok(())
++    }).await.map_err(|e| e.to_string())?
++}
++
+ pub fn run() {
+     let supervisor = BackendSupervisor::new(repo_root());
+     let application_supervisor = Arc::clone(&supervisor);
+     tauri::Builder::default()
+         .setup(|app| {
+-            let recovery = app.path().app_data_dir()?.join("editor-recovery");
++            let recovery = if testbench::enabled() {
++                let staging = repo_root().join(".local/testbench/unselected");
++                app.state::<DesktopState>().supervisor.set_settlement_dir(staging.join("store"));
++                if let Some(window) = app.get_webview_window("main") {
++                    window.set_title("高天荒野 · 战术测试台")?;
++                }
++                staging.join("recovery")
++            } else { app.path().app_data_dir()?.join("editor-recovery") };
+             app.state::<DesktopState>()
+                 .supervisor
+                 .set_recovery_dir(recovery);
+@@ -149,6 +181,9 @@ pub fn run() {
+             bridge_choose_file,
+             bridge_stop,
+             bridge_status,
++            testbench_enabled,
++            testbench_request,
++            testbench_open,
+         ])
+         .build(tauri::generate_context!())
+         .expect("failed to build High Wilderness desktop application")
+diff --git a/apps/desktop/src/App.tsx b/apps/desktop/src/App.tsx
+index 81058a3..b45d2fb 100644
+--- a/apps/desktop/src/App.tsx
++++ b/apps/desktop/src/App.tsx
+@@ -1,5 +1,7 @@
+ import { Workspace } from "./Workspace";
+-import { useEffect, useMemo, useReducer } from "react";
++import { invoke } from "@tauri-apps/api/core";
++import { TestBench } from "./testing/TestBench";
++import { useEffect, useMemo, useReducer, useState } from "react";
+ 
+ import {
+   diagnosticReducer,
+@@ -21,6 +23,15 @@ function shortInstance(value: string | null) {
+ }
+ 
+ export function App() {
++  const [testing,setTesting]=useState<boolean|null>(null);
++  const [error,setError]=useState('');
++  useEffect(()=>{void invoke<boolean>('testbench_enabled').then(setTesting).catch(e=>setError(String(e)));},[]);
++  if(error)return <main className="app-shell"><p role="alert">无法读取启动模式：{error}</p></main>;
++  if(testing===null)return <main className="app-shell"><p>正在启动…</p></main>;
++  return testing ? <TestBench renderWorkspace={()=> <WorkbenchApp preparationFirst />} /> : <WorkbenchApp />;
++}
++
++function WorkbenchApp({preparationFirst=false}:{preparationFirst?:boolean}) {
+   const transport = useMemo(() => new TauriBridgeTransport(), []);
+   const [model, dispatch] = useReducer(diagnosticReducer, initialDiagnosticModel);
+ 
+@@ -79,7 +90,7 @@ export function App() {
+       </header>
+ 
+       {status.state === "READY" && status.backend_instance_id && (
+-        <Workspace key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport}
++        <Workspace key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport} preparationFirst={preparationFirst}
+           tacticalAvailable={status.capabilities.includes("tactical.create") && status.capabilities.includes("tactical.set_mode")} />
+       )}
+ 
+diff --git a/apps/desktop/src/Workspace.tsx b/apps/desktop/src/Workspace.tsx
+index 7bfaaa0..4ba48ce 100644
+--- a/apps/desktop/src/Workspace.tsx
++++ b/apps/desktop/src/Workspace.tsx
+@@ -7,10 +7,10 @@ import { PreparationPanel } from "./tactical/PreparationPanel";
+ import type { PreparedLaunch } from "./tactical/preparation";
+ import type { ModeResult, WorkspaceMode } from "./tactical/model";
+ 
+-export function Workspace({ transport, instance, tacticalAvailable }: {
+-  transport: BridgeTransport; instance: string; tacticalAvailable: boolean;
++export function Workspace({ transport, instance, tacticalAvailable, preparationFirst=false }: {
++  transport: BridgeTransport; instance: string; tacticalAvailable: boolean; preparationFirst?:boolean;
+ }) {
+-  const [mode, setMode] = useState<WorkspaceMode | "preparation">("editor");
++  const [mode, setMode] = useState<WorkspaceMode | "preparation">(preparationFirst ? "preparation" : "editor");
+   const [switching, setSwitching] = useState(false), [confirmed, setConfirmed] = useState(true);
+   const [editorBlocked, setEditorBlocked] = useState(false), [tacticalBusy, setTacticalBusy] = useState(false);
+   const [preparationBusy,setPreparationBusy]=useState(false);
