@@ -25,7 +25,7 @@ def catalog_hash(index):
 def bind(source, index):
     if isinstance(source, dict) and (source.get("kind") == "OutfitPlan" or source.get("interface") == DOCUMENT_INTERFACE):
         raise ContractError("editor.hull_file_required", "$.file",
-                            "所选文件是已有舾装方案。请使用“打开文件”继续编辑；“选择船壳并新建舾装”需要单独的船壳蓝图文件。")
+                            "所选文件是已有舾装方案。请使用“打开舾装文件”继续编辑；“选择船壳并新建舾装”需要单独的船壳蓝图文件。")
     if not isinstance(source, dict) or source.get("kind") != "HullBlueprint":
         raise ContractError("editor.hull_file_required", "$.file",
                             "所选文件不是可识别的船壳蓝图。请选择船壳编辑器保存的船壳 JSON 文件。")

@@ -128,11 +128,21 @@ fn bridge_status(state: State<'_, DesktopState>) -> BridgeStatus {
     state.supervisor.status()
 }
 
+#[tauri::command]
+fn desktop_editor_only() -> bool {
+    std::env::args_os().skip(1).any(|arg| arg == "--editors")
+}
+
 pub fn run() {
     let supervisor = BackendSupervisor::new(repo_root());
     let application_supervisor = Arc::clone(&supervisor);
     tauri::Builder::default()
         .setup(|app| {
+            if desktop_editor_only() {
+                if let Some(window) = app.get_webview_window("main") {
+                    window.set_title("高天荒野 · 舰艇编辑器")?;
+                }
+            }
             let recovery = app.path().app_data_dir()?.join("editor-recovery");
             app.state::<DesktopState>()
                 .supervisor
@@ -149,6 +159,7 @@ pub fn run() {
             bridge_choose_file,
             bridge_stop,
             bridge_status,
+            desktop_editor_only,
         ])
         .build(tauri::generate_context!())
         .expect("failed to build High Wilderness desktop application")

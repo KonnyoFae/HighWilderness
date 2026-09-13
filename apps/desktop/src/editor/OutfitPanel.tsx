@@ -1,11 +1,11 @@
+import { EditorNotice } from "./EditorFeedback";
 import { useEffect, useState } from "react";
 import { OutfitViewport } from "./OutfitViewport";
 import { WeaponGroupsPanel } from "./WeaponGroupsPanel";
 import type { HullCommand, ModuleOption, SessionSnapshot } from "./model";
-import { categories, filterModules, instanceFields, mounts, outfitCommand } from "./outfit";
+import { categories, instanceFields, mounts, outfitCommand } from "./outfit";
 import type { OutfitFields } from "./outfit";
 import { defaultRotation, hostedDescendants } from "./outfitCanvas";
-import trialGun from "../../../../contracts/web_bridge/fixtures/p2a-gunnery.json";
 
 const labels: Record<string, string> = {
   active_load_kw: "工作耗电 / kW", standby_load_kw: "待机耗电 / kW", generation_kw: "发电 / kW", consumer_category: "用电类别",
@@ -27,10 +27,10 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
   session: SessionSnapshot; options: ModuleOption[]; busy: boolean; onCommand: HullCommand; onLocalDraft: (value: boolean) => void; operationError?: string; onInteractionBusy?: (value: boolean) => void;
 }) {
   const modules = session.draft.modules ?? [];
-  const [category, setCategory] = useState("");
-  const [mount, setMount] = useState("");
-  const [version, setVersion] = useState("");
-  const visible = filterModules(options, category, mount, version);
+  const [category, setCategory] = useState(modules.length === 0 ? "cic" : options[0]?.prototype.category ?? "");
+  const categoryKeys = [...new Set(options.map(o=>o.prototype.category))];
+  const visible = options.filter(o => o.prototype.category === category);
+  const [mode, setMode] = useState<"select" | "place">("select");
   const [prototype, setPrototype] = useState(() => modules.length === 0 ? options.find(o => o.prototype.category === "cic")?.sha256 ?? "" : "");
   const option = visible.find(o => o.sha256 === prototype) ?? visible[0];
   const [selected, setSelected] = useState("");
@@ -44,7 +44,6 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
   const [error, setError] = useState("");
   const g = option?.prototype.installation;
   const kind = instance?.placement.kind ?? (g?.host_slot ? "hosted" : g?.side_mount_length_steps ? "side" : "grid");
-  const derived = session.preview.valid ? session.preview.model.derived as Record<string, unknown> : null;
   useEffect(() => { setFields(resetFields()); setDirty(false); setError(""); }, [session.revision, selected]);
   useEffect(() => { if (!instance && !dirty) setFields(f => ({ ...f, rotation: String(defaultRotation(option)) })); }, [option?.sha256]);
   useEffect(() => { onLocalDraft(dirty || canvasDraft || groupDraft); return () => onLocalDraft(false); }, [dirty, canvasDraft, groupDraft, onLocalDraft]);
@@ -56,25 +55,35 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
       if (await onCommand(value.command, value.args)) { setDirty(false); setError(""); }
     } catch (e) { setError(e instanceof Error ? e.message : String(e)); }
   }
-  return <section aria-label="舾装模块工作台">
-    <p>从目录选择模块，在下方画布放置、拖动和旋转。武器组配置和精确坐标编辑位于画布下方。</p>
-    {session.hull_binding ? <div className="editor-summary"><strong>固定船壳：{session.hull_binding.hull.name} · v{session.hull_binding.hull.version}</strong>
-      <span>{session.hull_binding.hull.decks.length} 层甲板 · 随舾装文件一同保存，外部修改不会自动同步。</span>
-      <details><summary>船壳身份与指纹</summary><p>{session.hull_binding.hull.id}</p><p>{session.hull_binding.hull_sha256}</p></details></div>
-      : <p>绑定资源目录船壳：{session.draft.hull_blueprint?.id} · v{session.draft.hull_blueprint?.version}。</p>}
-    {modules.length === 0 && <p>这是空白舾装。请先在基底层原点（X 0、Y 0、旋转 0°）安装一个 CIC，再按检查结果补齐升力等条件。通过检查后才能保存文件；已提交草稿可以恢复。</p>}
-    <h3>模块目录</h3>
-    <div className="editor-row">
-      <label>类别<select aria-label="模块类别" value={category} onChange={e => setCategory(e.target.value)}><option value="">全部</option>{[...new Set(options.map(o => o.prototype.category))].map(c => <option key={c} value={c}>{categories[c] ?? c}</option>)}</select></label>
-      <label>安装方式<select aria-label="安装方式筛选" value={mount} onChange={e => setMount(e.target.value)}><option value="">全部</option>{["内部", "顶挂", "侧挂", "嵌入"].map(m => <option key={m}>{m}</option>)}</select></label>
-      <label>版本<select aria-label="模块版本" value={version} onChange={e => setVersion(e.target.value)}><option value="">全部</option>{[...new Set(options.map(o => o.prototype.version))].map(v => <option key={v}>{v}</option>)}</select></label>
-      <label>模块原型<select aria-label="模块原型" value={option?.sha256 ?? ""} onChange={e => setPrototype(e.target.value)}>{visible.map(o => <option key={o.sha256} value={o.sha256}>{o.prototype.name} · v{o.prototype.version}</option>)}</select></label>
-      <span>{visible.length} / {options.length} 个原型</span>
-    </div>
-    <OutfitViewport session={session} options={options} option={option} selected={selected} onSelect={setSelected}
+  return <section className="outfit-editor" aria-label="舾装模块工作台">
+    <aside className="module-library" aria-label="部件选单">
+      <header><h3>部件目录</h3><span>{options.length} 种部件</span></header>
+      <div className="module-mode" role="group" aria-label="部件操作模式">
+        <button aria-pressed={mode === "place"} disabled={busy || dirty || groupDraft || canvasDraft} onClick={() => setMode("place")}>＋ 添加部件</button>
+        <button aria-pressed={mode === "select"} disabled={busy || dirty || groupDraft || canvasDraft} onClick={() => setMode("select")}>↖ 拖动部件</button>
+      </div>
+      <p className="library-mode-hint">{mode === "place" ? "连续添加 · 选部件后点击画布" : "持续拖动 · 在画布选择并拖动部件"}</p>
+      <div className="module-tabs" role="tablist" aria-label="部件类别">
+        {categoryKeys.map(c => <button key={c} id={`category-${c}`} role="tab" aria-selected={category === c} aria-controls="module-page" tabIndex={category === c ? 0 : -1}
+          onKeyDown={e => {
+            const i=categoryKeys.indexOf(c);
+            const next=e.key === "ArrowRight" ? (i+1)%categoryKeys.length : e.key === "ArrowLeft" ? (i+categoryKeys.length-1)%categoryKeys.length : e.key === "Home" ? 0 : e.key === "End" ? categoryKeys.length-1 : null;
+            if(next !== null) { e.preventDefault(); setCategory(categoryKeys[next]); document.getElementById(`category-${categoryKeys[next]}`)?.focus(); }
+          }} onClick={() => setCategory(c)}>{categories[c] ?? c}</button>)}
+      </div>
+      <div className="module-cards" id="module-page" role="tabpanel" aria-labelledby={`category-${category}`} tabIndex={0}>
+        {visible.map(o => <button className="module-card" key={o.sha256} aria-pressed={option?.sha256 === o.sha256} onClick={() => setPrototype(o.sha256)}>
+          <strong>{o.prototype.name}</strong><span>{mounts(o).join(" / ")} · v{o.prototype.version}</span>
+          <span>{o.prototype.mass_kg.toLocaleString()} kg · {Number(o.prototype.power.generation_kw) > 0 ? `发电 ${o.prototype.power.generation_kw}` : `耗电 ${o.prototype.power.active_load_kw ?? 0}`} kW</span>
+        </button>)}
+        {!visible.length && <p>当前类别没有部件。</p>}
+      </div>
+    </aside>
+    <EditorNotice>{modules.length === 0 && <p>空白舾装：先在基底层原点安装 CIC，再补齐升力等条件。</p>}{error && <p className="editor-error">{error}</p>}</EditorNotice>
+    <OutfitViewport session={session} options={options} option={option} selected={selected} mode={mode} onSelect={setSelected}
       busy={busy || dirty || groupDraft} onCommand={onCommand} onLocalDraft={setCanvasDraft} operationError={operationError} />
+    <details className="editor-advanced"><summary>精确编辑与武器组</summary><div className="editor-advanced-scroll">
     <WeaponGroupsPanel session={session} busy={busy || dirty || canvasDraft} onCommand={onCommand} onLocalDraft={setGroupDraft} onSelectWeapon={setSelected} />
-    <details><summary>原型详情与精确位置编辑</summary>
     <fieldset className="outfit-detail-fields" disabled={groupDraft || canvasDraft}>
     {option ? <div className="editor-summary"><strong>{option.prototype.name}</strong><span>{mounts(option).join(" / ")}</span>
       <span>质量 {option.prototype.mass_kg.toLocaleString()} kg · 耐久 {option.prototype.durability_points}</span>
@@ -82,9 +91,6 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
       <details><summary>功率、人员与自动化</summary><Fields value={option.prototype.power} />{option.prototype.crew.length ? option.prototype.crew.map((c, i) => <Fields key={i} value={c} />) : <p>无操作人员需求</p>}<Fields value={option.prototype.automation} /></details>
       <details><summary>安装外形、嵌入槽与净空</summary><Fields value={option.prototype.installation} /></details>
       <details><summary>模块能力</summary><Fields value={option.prototype.capability} /></details>
-      {option.prototype.category === "weapon" && <p>原型待发容量：{String(option.prototype.capability.ready_round_capacity ?? "未定义")} 发。
-        当前实时普通炮技术样例每批消耗 {trialGun.ammo_cost} 点弹药资源、装入 {trialGun.rounds} 发，装填 {trialGun.reload_steps/60} 秒。
-        此试射配方尚未绑定到玩家出航设计，原型兼容弹种不代表特殊弹效果已可用。</p>}
       <details><summary>资源版本与来源</summary><p>{option.prototype.id} · v{option.prototype.version}</p><p>模块指纹：{option.sha256}</p><p>{option.catalog.name} · v{option.catalog.version}</p><p>目录指纹：{option.catalog.sha256}</p></details>
     </div> : <p>没有符合筛选条件的模块；若目录为空，请更新后台并重新打开应用。</p>}
     <h3>已安装模块</h3>
@@ -108,12 +114,8 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
         <button disabled={busy || dirty} onClick={() => void apply("remove")}>{hostedDescendants(modules, instance.id).length ? "移除模块及其嵌入模块" : "移除模块"}</button></> : <button disabled={busy || !option} onClick={() => void apply("place")}>放置模块</button>}
       {dirty && <button disabled={busy} onClick={() => { setFields(resetFields()); setDirty(false); setError(""); }}>取消表单修改</button>}
     </div>
-    {error && <p role="alert">{error}</p>}
+
     </fieldset>
-    </details>
-    <h3>舾装派生与检查</h3>
-    {derived ? <p>{dirty ? "已提交修订" : "当前修订"} {session.revision} · 设计质量 {Number(derived.design_mass_kg).toLocaleString()} kg · 模块质量 {Number(derived.module_mass_kg).toLocaleString()} kg · 发电 {Number(derived.generation_kw).toLocaleString()} kW</p> : <p>当前草稿无法合法编译；请修正或撤销后查看派生结果。</p>}
-    {session.preview.diagnostics.map((d, i) => <p key={i} role={d.severity === "error" ? "alert" : undefined}>{d.message} <span className="muted">{d.path}</span></p>)}
-    {!session.preview.diagnostics.length && <p>当前舾装通过合法性检查。</p>}
+    </div></details>
   </section>;
 }

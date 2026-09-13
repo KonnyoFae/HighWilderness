@@ -41,10 +41,12 @@ export function pick(regions: HullRegion[], p: Point, c: Camera): Selection | nu
 // Installation cells are centred at 5*n; their boundaries are 5*n + 2.5.
 export function gridLines(min: number, max: number, scale: number) {
   const step = scale * 2.5 < 3 ? 25 : 2.5;
-  const offset = step === 25 ? 2.5 : 0;
-  const result: { value: number; boundary: boolean }[] = [];
-  for (let value = Math.ceil((min - offset) / step) * step + offset; value <= max; value += step) {
-    result.push({ value, boundary: Math.abs(value % 5) === 2.5 });
+  const result: { value: number; boundary: boolean; tier: string; color: string; width: number; alpha: number }[] = [];
+  for (let value = Math.ceil(min / step) * step; value <= max; value += step) {
+    const tier = value === 0 ? "axis" : value % 50 === 0 ? "ten" : value % 25 === 0 ? "five" : value % 5 === 0 ? "one" : "half";
+    const style = tier === "axis" ? ["#729aaa", 1, .5] : tier === "ten" ? ["#86aebe", 1.6, .8]
+      : tier === "five" ? ["#597d8d", 1.2, .75] : tier === "one" ? ["#365563", 1, .65] : ["#2c414b", 1, .35];
+    result.push({ value, boundary: Math.abs(value % 5) === 2.5, tier, color: String(style[0]), width: Number(style[1]), alpha: Number(style[2]) });
   }
   return result;
 }

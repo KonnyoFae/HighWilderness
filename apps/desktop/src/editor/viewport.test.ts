@@ -42,6 +42,23 @@ describe("viewport geometry", () => {
     expect(snap({ x: -7.5, y: -20 })).toEqual({ x: -7.5, y: -20 });
   });
 
+  it("distinguishes half, one, five and ten cells on both sides of the origin", () => {
+    const lines = gridLines(-55,55,4);
+    for (const sign of [-1,1]) {
+      expect(lines.find(l=>l.value===sign*2.5)?.tier).toBe("half");
+      expect(lines.find(l=>l.value===sign*5)?.tier).toBe("one");
+      expect(lines.find(l=>l.value===sign*25)?.tier).toBe("five");
+      expect(lines.find(l=>l.value===sign*50)?.tier).toBe("ten");
+    }
+    expect(new Set(lines.filter(l=>l.value>0).map(l=>l.color)).size).toBe(4);
+  });
+
+  it("keeps distant grid references aligned with world coordinates including zero", () => {
+    const lines=gridLines(-101,101,.5);
+    expect(lines.map(l=>l.value)).toEqual([-100,-75,-50,-25,0,25,50,75,100]);
+    expect(lines.find(l=>l.value===0)?.tier).toBe("axis");
+  });
+
   it("uses the immediately lower level regardless of array order, without substituting across a gap", () => {
     const base = { id: "base", level: 0, regions: [region] } as HullDeck;
     const middle = { id: "middle", level: 1, regions: [] } as unknown as HullDeck;

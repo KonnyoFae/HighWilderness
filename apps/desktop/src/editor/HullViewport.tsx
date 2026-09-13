@@ -1,3 +1,5 @@
+import { GridOverlay } from "./GridOverlay";
+import { EditorNotice } from "./EditorFeedback";
 import { Application, Graphics } from "../rendering/pixi";
 import { useEffect, useRef, useState } from "react";
 import { HullInspector } from "./HullInspector";
@@ -31,14 +33,14 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
   const alive = useRef(true);
   const structureMaterial = materials.find(m => m.category === "structure");
   const armorMaterial = materials.find(m => m.category === "base_armor");
-  const localDraft = drawing || moving !== null || submitting || symmetryPreview !== null;
+  const localDraft = drawPoints.length > 0 || moving !== null || submitting || symmetryPreview !== null;
   const edgeSpace = currentEdgeSpace(session.preview, deck?.id, localDraft);
   const locked = busy || submitting;
   useEffect(() => { onLocalDraft(localDraft); }, [localDraft, onLocalDraft]);
   useEffect(() => { alive.current = true; return () => { alive.current = false; deferred.current.cancel(); onLocalDraft(false); }; }, [onLocalDraft]);
   function cancelLocal() {
     if (busy) return;
-    deferred.current.cancel(); setMoving(null); setSubmitting(false); setDrawing(false); setDrawPoints([]); setSymmetryPreview(null); setEditMessage(""); drag.current = null;
+    deferred.current.cancel(); setMoving(null); setSubmitting(false); setDrawPoints([]); setSymmetryPreview(null); setEditMessage(""); drag.current = null;
   }
   function appendPoint(p: Point) {
     if (locked || drawPoints.length >= (symmetric ? 2049 : 4096)) return;
@@ -59,7 +61,7 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
     const ok = await onCommand("hull.add_region", { deck_id: deck.id, region });
     if (!alive.current) return;
     setSubmitting(false);
-    if (ok) { setDrawPoints([]); setDrawing(false); select({ region: id, vertex: null }); }
+    if (ok) { setDrawPoints([]); select({ region: id, vertex: null }); }
   }
   function previewSymmetry(side: SourceSide) {
     if (!region || localDraft || locked) return;
@@ -158,14 +160,12 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
     const lo = world({ x: 0, y: size.height }, camera), hi = world({ x: size.width, y: 0 }, camera);
     for (const line of gridLines(lo.x, hi.x, camera.scale)) {
       const px = screen({ x: line.value, y: 0 }, camera).x;
-      g.moveTo(px, 0).lineTo(px, size.height).stroke({ color: line.boundary ? 0x365b64 : 0x172e35, width: 1 });
+      g.moveTo(px, 0).lineTo(px, size.height).stroke({ color: Number.parseInt(line.color.slice(1),16), width: line.width, alpha: line.alpha });
     }
     for (const line of gridLines(lo.y, hi.y, camera.scale)) {
       const py = screen({ x: 0, y: line.value }, camera).y;
-      g.moveTo(0, py).lineTo(size.width, py).stroke({ color: line.boundary ? 0x365b64 : 0x172e35, width: 1 });
+      g.moveTo(0, py).lineTo(size.width, py).stroke({ color: Number.parseInt(line.color.slice(1),16), width: line.width, alpha: line.alpha });
     }
-    g.moveTo(camera.x, 0).lineTo(camera.x, size.height).moveTo(0, camera.y).lineTo(size.width, camera.y)
-      .stroke({ color: 0x527f89, width: 1 });
     if (drawing && symmetric) g.moveTo(camera.x, 0).lineTo(camera.x, size.height).stroke({ color: 0xffd58b, alpha: 0.65, width: 2 });
     // Reference geometry is drawn underneath and never passed to hover/pick.
     for (const r of below?.regions ?? []) {
@@ -247,18 +247,22 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
   }
   const location = cursor && (drawing && symmetric && !drawPoints.length ? {x: 0, y: snap(cursor).y} : snap(cursor));
   return <div className="hull-workspace">
-    <div className="viewport-toolbar">
+    <div className="viewport-toolbar hull-toolbox" aria-label="船壳绘制工具"><h3>船壳工具</h3>
+      <div className="module-mode" role="group" aria-label="船壳操作模式">
+        <button aria-pressed={drawing} disabled={locked || localDraft || !deck || !armorMaterial} onClick={() => { setDrawing(true); select(null); setEditMessage(""); }}>＋ 绘制区域</button>
+        <button aria-pressed={!drawing} disabled={locked || localDraft} onClick={() => { setDrawing(false); setEditMessage(""); }}>↖ 拖动端点</button>
+      </div>
       <label>当前甲板 <select aria-label="当前甲板" value={deck?.id ?? ""} disabled={localDraft || locked} onChange={e => { setDeckId(e.target.value); select(null); }}>
         {(session.draft.decks ?? []).map(d => <option key={d.id} value={d.id}>{d.id} · 第 {d.level} 层{d.is_base ? " · 基底" : ""}</option>)}
       </select></label>
       <button onClick={() => setCamera(fit(visibleRegions, size.width, size.height))}>适应船壳</button>
+      <button onClick={() => setCamera(c=>({...c,x:size.width/2,y:size.height/2}))}>回到原点</button>
       <button aria-label="放大画布" onClick={() => setCamera(c => zoom(c, { x: size.width / 2, y: size.height / 2 }, 1.25))}>＋</button>
       <button aria-label="缩小画布" onClick={() => setCamera(c => zoom(c, { x: size.width / 2, y: size.height / 2 }, 0.8))}>−</button>
       <button disabled={locked || localDraft || !structureMaterial} onClick={() => void addDeck()}>添加甲板</button>
       <button className="secondary" disabled={locked || localDraft || !deck} onClick={() => void onCommand("hull.remove_deck", { deck_id: deck?.id })}>删除当前甲板</button>
       <label>绘制方式 <select aria-label="绘制方式" value={symmetric ? "symmetric" : "full"} disabled={localDraft || locked} onChange={e => { setSymmetric(e.target.value === "symmetric"); setEditMessage(""); }}><option value="symmetric">对称绘制（画一侧）</option><option value="full">完整轮廓（逐点绘制）</option></select></label>
-      {!drawing ? <button disabled={locked || localDraft || !deck || !armorMaterial} onClick={() => { setDrawing(true); select(null); setEditMessage(""); }}>绘制区域</button>
-        : <><button disabled={locked || drawPoints.length < 3 || (symmetric && drawPoints.at(-1)?.x !== 0)} onClick={() => void closeDrawing()}>{symmetric ? "生成对称船壳" : "闭合并提交区域"}</button>
+      {drawing && <><button disabled={locked || drawPoints.length < 3 || (symmetric && drawPoints.at(-1)?.x !== 0)} onClick={() => void closeDrawing()}>{symmetric ? "生成对称船壳" : "闭合并提交区域"}</button>
         <button disabled={locked || !drawPoints.length} onClick={() => setDrawPoints(points => points.slice(0, -1))}>撤回绘图点</button></>}
       {symmetryPreview && <button disabled={locked} onClick={() => void applySymmetry()}>应用对称替换</button>}
       {localDraft && <button disabled={busy} onClick={cancelLocal}>取消本地编辑</button>}
@@ -269,7 +273,7 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
       {deck && deck.level > 0 && !below && <span className="lower-deck-missing">缺少第 {deck.level - 1} 层，无法显示下层支撑参考</span>}
     </div>
     <div className="viewport-columns">
-      <div><div ref={container} className="hull-canvas" role="region" aria-label="船壳二维画布" tabIndex={0}
+      <div className="hull-canvas-column"><div className="hull-canvas-stack"><div ref={container} className="hull-canvas" role="region" aria-label="船壳二维画布" tabIndex={0}
         onContextMenu={e => e.preventDefault()}
         onKeyDown={e => {
           if (e.key === "Escape") { cancelLocal(); select(null); }
@@ -316,17 +320,18 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
         onPointerCancel={() => { drag.current = null; if (!submitting) setMoving(null); }}
         onLostPointerCapture={() => { if (drag.current) { drag.current = null; setMoving(null); } }}
         onPointerLeave={() => { if (!drag.current) { setCursor(null); setHover(null); } }} />
+        <GridOverlay camera={camera} width={size.width} height={size.height} axesOnly /></div>
         <div className="viewport-status"><span>{location ? `X ${location.x.toFixed(1)} · Y ${location.y.toFixed(1)} m` : "移动指针查看坐标"}</span>
           <span>{camera.scale.toFixed(1)} px/m · 安装格 5 m · 绘图步长 2.5 m{camera.scale * 2.5 < 3 ? "（远景简化）" : ""}</span></div>
-        {drawing && symmetric && <p className="editor-summary">对称绘制：首点自动落在金色中线 X=0；沿左侧或右侧绘制，再回到中线另一点。紫色为自动镜像，最后点击“生成对称船壳”。</p>}
+        <EditorNotice>{drawing && symmetric && <p className="editor-summary">对称绘制：首点自动落在金色中线 X=0；沿左侧或右侧绘制，再回到中线另一点。紫色为自动镜像，最后点击“生成对称船壳”。</p>}
         {editMessage && <p role="status" className="editor-summary">{editMessage}</p>}
         <p className="muted viewport-help">滚轮缩放 · 拖动端点修改 · 拖动空白处/中键平移 · 绘图时点击落点、Enter 闭合、Esc 取消</p>
         {localDraft && <p role="status" className="editor-summary">{drawing ? `本地绘图：${drawPoints.length} 个点，闭合后提交` : symmetryPreview ? "对称替换预览，应用后提交" : "本地拖动草稿，松开后检查并提交"}。尚未持久保存；安装空间待提交后更新。</p>}
         {!session.preview.valid && <p className="editor-error">正在显示当前非法草稿轮廓；权威派生结果暂不可用。</p>}
-        {failure && <p role="alert" className="editor-error">画布初始化失败：{failure}</p>}
+        {failure && <p role="alert" className="editor-error">画布初始化失败：{failure}</p>}</EditorNotice>
       </div>
       <aside className="hull-properties" aria-label="选择属性">
-        <p className="muted">亮线：五米安装格边界；暗线：半格辅助线。原点为安装格中心。</p><h3>选择属性</h3><p>{deck?.id ?? "没有甲板"}{deck?.is_base ? " · 基底层" : ""}</p>
+        <p className="muted">1 格 = 5 m；五格线 25 m、十格线 50 m 加粗。橙色 X 轴、蓝色 Y 轴，原点为安装格中心。</p><h3>选择属性</h3><p>{deck?.id ?? "没有甲板"}{deck?.is_base ? " · 基底层" : ""}</p>
         <p>结构材料：{deck?.structure_material.id.split(".").at(-1)} · v{deck?.structure_material.version}</p>
         {region ? <><strong>{region.id}</strong><p>{region.vertices_m.length} 个端点</p>
           {vertex && <p>端点 {(selected?.vertex ?? 0) + 1}<br />X {vertex[0]} m · Y {vertex[1]} m</p>}</> : <p className="muted">在画布中选择区域或端点，也可使用下方列表。</p>}

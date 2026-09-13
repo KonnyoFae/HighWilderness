@@ -81,7 +81,7 @@ class HullBindingTests(unittest.TestCase):
                     self.create()
                 self.assertEqual(raised.exception.code, "editor.hull_file_required")
                 if source in (outfit, portable):
-                    self.assertIn("打开文件", str(raised.exception))
+                    self.assertIn("打开舾装文件", str(raised.exception))
                 self.assertFalse(self.service.sessions)
 
     def test_actual_hull_missing_fields_still_report_schema_error(self):

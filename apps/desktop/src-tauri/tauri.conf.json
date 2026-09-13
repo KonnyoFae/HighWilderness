@@ -13,11 +13,11 @@
     "windows": [
       {
         "label": "main",
-        "title": "高天荒野 · 桥接诊断",
-        "width": 1180,
-        "height": 760,
-        "minWidth": 860,
-        "minHeight": 600,
+        "title": "高天荒野 · 舰艇工作台",
+        "width": 1280,
+        "height": 860,
+        "minWidth": 1100,
+        "minHeight": 720,
         "resizable": true
       }
     ],
