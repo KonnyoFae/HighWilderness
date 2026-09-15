@@ -5,6 +5,8 @@ from .simplified_flight import RepairBatch
 from .tactical_devices import DeviceOperation
 
 EPS = 1e-8
+EMERGENCY_LIFT_SECONDS = 10
+EMERGENCY_LIFT_FRACTION = .25
 
 
 @dataclass(frozen=True)
@@ -26,9 +28,14 @@ class RepairRuntime:
                             for s in battle.session._seeds)
         self.indices = battle._indices
         self.inverse_hull = battle.fire.inverse_hull
+        self.lift_tanks = tuple(frozenset(name for name,_ in k.lift) for k in battle.session._command_kernels)
+        self.emergency_steps = EMERGENCY_LIFT_SECONDS * 60
 
     def choose(self, ship_index, health):
         maxima = self.maxima[ship_index]
+        destroyed = sorted(k for k in self.lift_tanks[ship_index] if health[k] <= EPS)
+        if destroyed:
+            return destroyed[0]
         return min((k for k,hp in health.items() if EPS < hp < maxima[k]-EPS),
                    key=lambda k:(health[k]/maxima[k],k), default=None)
 
@@ -43,6 +50,7 @@ class RepairRuntime:
 
     def plan(self, world, inventories, controllers, blocked_by_fire):
         health, hull, module_gains, hull_gains = {}, {}, {}, {}
+        emergency_gains, claimed, refills = {}, set(), []
         states, events = [], []
         for c in controllers:
             n, device_id = c.ship_index, c.module_id
@@ -58,7 +66,10 @@ class RepairRuntime:
             target = c.target_module_id
             if target is None:
                 current = c.repair_module_id
-                if current is not None and EPS < hp[current] < maxima[current]-EPS:
+                destroyed = sorted(k for k in self.lift_tanks[n] if hp[k] <= EPS)
+                if destroyed:
+                    target = current if current in destroyed else destroyed[0]
+                elif current is not None and EPS < hp[current] < maxima[current]-EPS:
                     target = current
                 elif current is not None or c.selection_revision != ship.devices.revision:
                     target = self.choose(n, hp)
@@ -67,6 +78,42 @@ class RepairRuntime:
                 c = replace(c, repair_module_id=target)
             device = next(d for d in inv._value['damage_controls'] if d['module_id'] == device_id)
             available = device['quantity_units']
+            if (n,target) in emergency_gains:
+                states.append(replace(c, status='lift_repair_assigned'))
+                continue
+            if target in self.lift_tanks[n] and hp[target] <= EPS:
+                key = n, target
+                if key in claimed:
+                    states.append(replace(c, status='lift_repair_assigned'))
+                    continue
+                claimed.add(key)
+                if c.emergency_target != target:
+                    c = replace(c, emergency_target=target, emergency_steps=0, emergency_spent=0)
+                gain = maxima[target] * EMERGENCY_LIFT_FRACTION
+                total = ceil(gain * profile.module_resource_units_per_point)
+                progress = c.emergency_steps + 1
+                charged = ceil(total * progress / self.emergency_steps)
+                cost = charged - c.emergency_spent
+                if cost > available:
+                    # Consume the resource tail; work resumes after normal preparation.
+                    cost = available
+                    progress = c.emergency_steps
+                if cost:
+                    inv.spend_damage_control(device_id, cost, reason='emergency_lift_repair')
+                c = replace(c, emergency_steps=progress, emergency_spent=c.emergency_spent+cost)
+                if progress >= self.emergency_steps:
+                    hp[target] = gain
+                    emergency_gains[key] = gain
+                    from .tactical_fuel import emergency_refill
+                    if emergency_refill(inv, target, gain):
+                        refills.append((ship.ship_id, target))
+                    events.append(dict(kind='lift_tank_restored', ship_id=ship.ship_id, module_id=target,
+                        device_id=device_id, step=world.fixed_step, restored_points=gain, resource_units=c.emergency_spent))
+                    c = replace(c, emergency_target=None, emergency_steps=0, emergency_spent=0)
+                states.append(replace(c, status='restored_lift_tank' if progress >= self.emergency_steps else 'emergency_lift_repair'))
+                continue
+            if c.emergency_target is not None:
+                c = replace(c, emergency_target=None, emergency_steps=0, emergency_spent=0)
             if target is not None and EPS < hp[target] < maxima[target]-EPS:
                 amount, cost = self.amount(profile.module_points_per_s, maxima[target]-hp[target],
                                            available, profile.module_resource_units_per_point)
@@ -94,4 +141,7 @@ class RepairRuntime:
         operations = tuple(DeviceOperation(world.epoch, world.ships[n].ship_id, target,
             world.ships[n].devices.modules[self.indices[n][target]].sequence+1,
             'repair', amount, world.fixed_step, 'closing') for (n,target),amount in sorted(module_gains.items()))
-        return RepairBatch(operations, tuple((world.ships[n].ship_id, amount) for n,amount in sorted(hull_gains.items()))), tuple(states), tuple(events)
+        operations += tuple(DeviceOperation(world.epoch, world.ships[n].ship_id, target,
+            world.ships[n].devices.modules[self.indices[n][target]].sequence+1,
+            'emergency_lift_repair', amount, world.fixed_step, 'closing') for (n,target),amount in sorted(emergency_gains.items()))
+        return RepairBatch(operations, tuple((world.ships[n].ship_id, amount) for n,amount in sorted(hull_gains.items())), tuple(refills)), tuple(states), tuple(events)

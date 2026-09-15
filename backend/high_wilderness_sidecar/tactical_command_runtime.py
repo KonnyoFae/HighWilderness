@@ -87,8 +87,8 @@ class CommandKernel:
         return CommandState(TacticalShipLifecycleState('operational','scene_command',(),0),
             fleet_phase='active' if self.direct else 'unassigned')
 
-    def resolve(self,before,devices,resources,motion,*,mass,step,exit_reason=None):
-        key=(devices.revision,resources.revision,motion.hull_integrity_fraction,mass)
+    def resolve(self,before,devices,resources,motion,*,mass,step,exit_reason=None,lift_crashed=False):
+        key=(devices.revision,resources.revision,motion.hull_integrity_fraction,mass,lift_crashed)
         if before.cache_key==key and exit_reason is None:
             return before
         dk=self.resources.devices
@@ -118,7 +118,7 @@ class CommandKernel:
         lock=sum(v for _,v in resources.crew)+self.seed.wounded_aboard>0
         runtime=SimpleNamespace(current_hull_integrity_fraction=motion.hull_integrity_fraction,modules=tuple(results.values()),
             cic_control_available=cic,remote_control_available=remote,crew_safety_lock_enabled=lock,
-            terminal_failures=() if lift-mass*STANDARD_GRAVITY_MPS2>=-EPS else ('insufficient_lift',))
+            terminal_failures=('insufficient_lift',) if lift_crashed else ())
         projection=project_tactical_ship_lifecycle(runtime,self.sortie,previous=before.lifecycle)
         lifecycle=_materialize_tactical_ship_lifecycle(projection,step_index=step,previous=before.lifecycle)
         if exit_reason is not None:

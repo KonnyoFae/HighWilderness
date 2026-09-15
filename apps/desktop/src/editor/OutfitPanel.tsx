@@ -87,6 +87,7 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
     <fieldset className="outfit-detail-fields" disabled={groupDraft || canvasDraft}>
     {option ? <div className="editor-summary"><strong>{option.prototype.name}</strong><span>{mounts(option).join(" / ")}</span>
       <span>质量 {option.prototype.mass_kg.toLocaleString()} kg · 耐久 {option.prototype.durability_points}</span>
+      {option.prototype.id === "gtw.module.gun.30mm" && <p>当前可对舰炮击；自动识别威胁、协调火力与拦截将在近防阶段接入。</p>}
       <span>标定状态：{option.prototype.balance_status === "contract_fixture" ? "契约测试夹具" : option.prototype.balance_status === "prototype_unbalanced" ? "未标定原型" : "平衡参考"}</span>
       <details><summary>功率、人员与自动化</summary><Fields value={option.prototype.power} />{option.prototype.crew.length ? option.prototype.crew.map((c, i) => <Fields key={i} value={c} />) : <p>无操作人员需求</p>}<Fields value={option.prototype.automation} /></details>
       <details><summary>安装外形、嵌入槽与净空</summary><Fields value={option.prototype.installation} /></details>

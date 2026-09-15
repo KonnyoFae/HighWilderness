@@ -57,7 +57,7 @@ class ResourceIndex:
         entries = [(p, "MaterialCatalog", None) for p in materials]
         entries += [(data / "涂料" / "船体涂料.v1.json", "HullCoatingCatalog", HullCoatingCatalog.parse)]
         entries += [(data / "模块" / "测试夹具" / name, "ModulePrototypeCatalog", ModulePrototypeCatalog.parse)
-                    for name in ("最小模块目录.v1.json", "战斗系统模块目录.v1.json", "阶段F无人化模块目录.v1.json")]
+                    for name in ("最小模块目录.v1.json", "战斗系统模块目录.v1.json", "阶段F无人化模块目录.v1.json", "战术火炮目录.v2.json")]
         for ship in ("最小合法舰", "常规有人战舰", "完全无人旗舰"):
             entries += [
                 (data / "船壳蓝图夹具" / f"阶段F{ship}船壳.v1.json", "HullBlueprint", HullBlueprintInput.parse),
@@ -160,6 +160,10 @@ class EditorService:
         if isinstance(document, HullEditorDocument):
             return document.preview(include_edge_space=True).to_dict()
         preview = document.preview().to_dict()
+        if preview['valid']:
+            from .lift_reserve import summarize
+            derived = preview['model']['derived']
+            derived['lift_reserve'] = summarize(derived['design_mass_kg'], derived['lift']['lift_force_n'])
         preview["model"]["layout"] = document.layout_preview()
         if any(d.filling for d in document._hull.decks):
             from 高天荒野舰艇边缘空间 import build_deck_edge_space

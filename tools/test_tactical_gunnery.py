@@ -27,7 +27,7 @@ class GunneryTests(unittest.TestCase):
     def battle(self, **config):
         config = dict(self.config, **config)
         session = tg.prepare_trial_session(self.sample, config)
-        return tg.GunneryBattle(session, self.scenario, config)
+        return tg.GunneryBattle(session, self.scenario, config, enemy_fire=False)
 
     def send(self, b, kind='target', **arguments):
         if kind == 'target' and not arguments:
@@ -53,12 +53,13 @@ class GunneryTests(unittest.TestCase):
         return ResourceOperation(b.session.world.epoch, 'ship.web.blue', sequence, 'mode', target, value,
                                  b.session.world.fixed_step, 'opening')
 
-    def test_no_target_no_autonomous_fire(self):
+    def test_no_assignment_automatically_selects_and_fires(self):
         b = self.battle()
         self.advance(b, 120)
-        self.assertTrue(all(s.mode == 'auto' and s.shots == 0 for s in b.states))
-        self.assertFalse(b.projectiles)
-        self.assertEqual(self.gun(b)['ammo_resources'], 80)
+        self.assertEqual(self.gun(b)['target_policy'], 'automatic')
+        self.assertEqual(self.gun(b)['target_ship_id'], 'ship.web.red')
+        self.assertGreater(self.gun(b)['shots'], 0)
+        self.assertTrue(all(s.shots == 0 for g,s in zip(b.guns,b.states) if g.ship_index == 1))
 
     def test_auto_moving_target_acquires_lock_and_consumes_batches(self):
         b = self.battle()

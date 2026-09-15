@@ -1,0 +1,68 @@
+{
+  "status": "TACTICAL_BALLISTICS_UI_PASS",
+  "checks": [
+    "Four real gun modules preload caliber-compatible ordinary ammunition using 135 finite ammunition resources across two magazines",
+    "Manual canvas fire is enabled only on the selected ammunition layer; switching observation alone does not change that layer",
+    "All four calibers fire through real controls into the cloud layer; speed is 70%, lifetime unchanged, hits stay in cloud; pause freezes simulation and controls",
+    "Result saves successfully and all four gun inventories remain caliber-specific in the next preparation"
+  ],
+  "shots": [
+    {
+      "caliber": 120,
+      "shots": 1,
+      "ballistics": {
+        "caliber_mm": 120,
+        "cyclic_rpm": 10,
+        "drag": true,
+        "effective_speed_mps": 454.99999999999994,
+        "lifetime_s": 30,
+        "reference_range_m": 10846.925911725462,
+        "speed_mps": 650,
+        "speed_retention": 0.7
+      }
+    },
+    {
+      "caliber": 50,
+      "shots": 1,
+      "ballistics": {
+        "caliber_mm": 50,
+        "cyclic_rpm": 300,
+        "drag": true,
+        "effective_speed_mps": 700,
+        "lifetime_s": 8,
+        "reference_range_m": 4632.139996822167,
+        "speed_mps": 1000,
+        "speed_retention": 0.7
+      }
+    },
+    {
+      "caliber": 75,
+      "shots": 1,
+      "ballistics": {
+        "caliber_mm": 75,
+        "cyclic_rpm": 120,
+        "drag": true,
+        "effective_speed_mps": 630,
+        "lifetime_s": 25,
+        "reference_range_m": 11776.715438575353,
+        "speed_mps": 900,
+        "speed_retention": 0.7
+      }
+    },
+    {
+      "caliber": 30,
+      "shots": 6,
+      "ballistics": {
+        "caliber_mm": 30,
+        "cyclic_rpm": 1800,
+        "drag": true,
+        "effective_speed_mps": 749,
+        "lifetime_s": 4,
+        "reference_range_m": 2568.3364285955277,
+        "speed_mps": 1070,
+        "speed_retention": 0.7
+      }
+    }
+  ],
+  "scope": "Production UI and simulation with an isolated custom four-gun ship. The passive technical enemy starts in cloud. Not a CIWS interception test."
+}

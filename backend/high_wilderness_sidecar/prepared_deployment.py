@@ -26,6 +26,8 @@ def ignition_enemy(binding, snapshot, policy):
         fuel=ps.clone(policy['fuel']), fuel_tanks=fuel.definitions(snapshot,policy['fuel']),
         ignition=ps.clone(policy['ignition']), ignition_decks=ignition.definitions(snapshot,policy['ignition']))
     definition['projectiles'].append(ps.clone(next(p for p in policy['projectiles'] if p['id']==ignition.PROJECTILE[0])))
+    by_id={p['id']:p for p in policy['projectiles']}
+    definition['projectiles']=[ps.clone(by_id.get(p['id'],p)) for p in definition['projectiles']]
     definition['recipes'].append(ps.clone(next(r for r in policy['recipes'] if r['id']==ignition.RECIPE)))
     for weapon in definition['weapons']:
         weapon['recipe_ids'].append(ignition.RECIPE)
@@ -50,9 +52,10 @@ def ignition_enemy(binding, snapshot, policy):
     return ps.InstanceBinding(pack,ps.parse_instance(value,pack))
 
 
-def load_ship(design, record, *, x, y, heading=None):
+def load_ship(design, record, *, x, y, heading=None, require_available=True):
     record=bp.validate_record(record,design); v=record['state']; seed=design.resources.seed
-    ps.need(v['service']['status']=='available', '$.service', '参战舰船已失去作战能力，需要后续维修或救援')
+    if require_available:
+        ps.need(v['service']['status']=='available', '$.service', '参战舰船已失去作战能力，需要后续维修或救援')
     ps.need('fuel_tanks' in v or v['fuel_units']==seed.motion.fuel_units, '$.fuel', '旧配置仍保留原燃料状态')
     modules={m['module_id']:m for m in v['modules']}
     loaded=replace(seed,

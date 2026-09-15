@@ -1,5 +1,7 @@
 # P2a 普通火炮：自动火控与手动瞄准
 
+2026-09-15 后续变更：本文为 P2a 历史记录。“未指定目标不自行搜敌”和逐炮优先的界面已经由[自动选敌与武器组操作](./tactical-gun-groups-targeting.md)替代；弹道当前实现见[3a](./tactical-stage3a-ballistics.md)。
+
 后续接续：P2b 已完成技术范围内真实命中与结束冻结，见[P2b 报告](./p2b-projectile-damage.md)。下文状态、源哈希与“下一步”保留为 P2a 当时的历史记录。
 
 日期：2026-09-10。状态：`P2A_SCOPED_PASS / P2B_NEXT / HIT_DAMAGE_AND_SETTLEMENT_NOT_IMPLEMENTED`。

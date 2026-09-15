@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <title>雨层动态雨丝临时素材</title>
+  <g fill="none" stroke="#b4d9e9" stroke-linecap="round">
+    <path opacity=".48" stroke-width="1.2" d="M48 20l-9 28 M224 74l-11 35 M416 134l-8 24 M136 286l-12 37 M354 400l-10 32 M492 328l-9 29"/>
+    <path opacity=".3" stroke-width=".8" d="M126 94l-6 19 M312 16l-7 22 M442 18l-6 20 M48 214l-6 19 M258 235l-7 23 M400 272l-6 19 M231 392l-6 18 M60 434l-7 20 M460 464l-6 18"/>
+    <path opacity=".17" stroke-width=".7" d="M180 188l-4 12 M360 168l-5 15 M28 342l-5 14 M312 316l-4 12 M164 472l-4 14 M488 222l-4 12 M70 142l-4 13 M292 472l-5 16"/>
+  </g>
+</svg>

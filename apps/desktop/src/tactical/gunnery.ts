@@ -1,12 +1,15 @@
 import type { Point } from "../editor/viewport";
-export type GunIntent = { kind: "mode" | "target" | "aim" | "fire" | "clear" | "deck" | "ammunition"; arguments: Record<string, unknown> };
+export type GunIntent = { kind: "mode" | "target" | "aim" | "fire" | "clear" | "auto_target" | "deck" | "ammunition" | "layer"; arguments: Record<string, unknown> };
 export interface GunInteraction {
-  ownShipId: string; weaponId: string | null; mode: "auto" | "manual"; enabled: boolean;
+  ownShipId: string; weaponId: string | null; weaponIds?: string[]; selectionKey?: string; mode: "auto" | "manual"; enabled: boolean; canAim?: boolean; attackLayer?: string;
   onWeapon: (id: string) => void;
   onTarget: (shipId: string, moduleId: string | null) => void;
   onAim: (point: Point) => void; onFire: (point: Point) => void; onLeave: () => void;
 }
 export const gunStatus: Record<string, string> = {
+  holding_fire: "停止开火",
+  target_other_layer: "目标不在所选炮弹作用层",
+  layer_out_of_reach: "作用层超出相邻层范围，请重新选择",
   no_special_materials: "特殊弹材料不足",
   battle_finished: "交战已结束", no_target: "等待目标", tracking: "跟踪目标", target_unavailable: "目标信息失效", out_of_arc: "超出炮塔射界",
   out_of_range: "超出射程", hull_blocked: "上层船壳遮挡", traversing: "炮塔转向中", reloading: "装填中",

@@ -1,0 +1,102 @@
+{
+  "interface": "gaotian.ballistic-calibration/3a-v1",
+  "description": "二维阻力研究锚点与计算样本；实际装备的权威弹速、寿命和装填来自准备策略 v9。新 120 毫米榴弹炮不同于本文件的高速 120 毫米研究锚点；155/255 毫米仅作研究标定。",
+  "medium": {
+    "density_kg_m3": 0.55,
+    "sound_speed_mps": 320
+  },
+  "cross_layer_speed_retention": 0.7,
+  "profiles": [
+    {
+      "id": "ballistic.standard.30",
+      "version": 1,
+      "speed_mmps": 1070000,
+      "mass_g": 363,
+      "ballistics": {
+        "interface": "gaotian.projectile-ballistics/3a-v1",
+        "caliber_mm": 30,
+        "form_factor": 1.0,
+        "lifetime_steps": 240,
+        "maximum_range_m": 3000
+      }
+    },
+    {
+      "id": "ballistic.standard.76",
+      "version": 1,
+      "speed_mmps": 905000,
+      "mass_g": 6300,
+      "ballistics": {
+        "interface": "gaotian.projectile-ballistics/3a-v1",
+        "caliber_mm": 76,
+        "form_factor": 0.95,
+        "lifetime_steps": 1500,
+        "maximum_range_m": 16000
+      }
+    },
+    {
+      "id": "ballistic.standard.120",
+      "version": 1,
+      "speed_mmps": 1015000,
+      "mass_g": 18000,
+      "ballistics": {
+        "interface": "gaotian.projectile-ballistics/3a-v1",
+        "caliber_mm": 120,
+        "form_factor": 0.9,
+        "lifetime_steps": 600,
+        "maximum_range_m": 8000
+      }
+    },
+    {
+      "id": "ballistic.standard.155",
+      "version": 1,
+      "speed_mmps": 939000,
+      "mass_g": 42500,
+      "ballistics": {
+        "interface": "gaotian.projectile-ballistics/3a-v1",
+        "caliber_mm": 155,
+        "form_factor": 0.85,
+        "lifetime_steps": 2880,
+        "maximum_range_m": 30000
+      }
+    },
+    {
+      "id": "ballistic.standard.255",
+      "version": 1,
+      "speed_mmps": 700000,
+      "mass_g": 200000,
+      "ballistics": {
+        "interface": "gaotian.projectile-ballistics/3a-v1",
+        "caliber_mm": 255,
+        "form_factor": 0.85,
+        "lifetime_steps": 3960,
+        "maximum_range_m": 35000
+      }
+    },
+    {
+      "id": "ballistic.armor_piercing.76",
+      "version": 1,
+      "speed_mmps": 1050000,
+      "mass_g": 6300,
+      "ballistics": {
+        "interface": "gaotian.projectile-ballistics/3a-v1",
+        "caliber_mm": 76,
+        "form_factor": 0.9,
+        "lifetime_steps": 1200,
+        "maximum_range_m": 16000
+      }
+    },
+    {
+      "id": "ballistic.incendiary.76",
+      "version": 1,
+      "speed_mmps": 850000,
+      "mass_g": 6000,
+      "ballistics": {
+        "interface": "gaotian.projectile-ballistics/3a-v1",
+        "caliber_mm": 76,
+        "form_factor": 1.0,
+        "lifetime_steps": 1080,
+        "maximum_range_m": 16000
+      }
+    }
+  ]
+}

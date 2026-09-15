@@ -20,4 +20,13 @@ describe("current ship feedback",()=>{
     expect(html).toContain("模块信息不全");
     expect(html).not.toContain("缺 160 kW");
   });
+  it("uses the last valid lift reading with its revision when a draft is invalid", () => {
+    const draft = structuredClone(session);
+    Object.assign(draft.last_valid_preview!.model.derived!, { lift_reserve: {
+      dry_mass_kg: 500, available_force_n: 5883.99, margin_n: 980.665, reserve_fraction: .2,
+    } });
+    const html = renderToStaticMarkup(<ShipStats session={draft} options={[option]} />);
+    expect(html).toContain('+20.0%');
+    expect(html).toContain('最近合法结果（修订 2）');
+  });
 });

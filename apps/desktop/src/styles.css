@@ -10,6 +10,80 @@
 
 body { margin: 0; min-width: 320px; min-height: 100vh; }
 
+.app-shell.tactical-app { padding: 18px 24px; }
+.tactical-app > .hero { width: 100%; max-width: none; margin-bottom: 16px; align-items: center; }
+.tactical-app > .hero h1 { font-size: 26px; margin: 3px 0; }
+.tactical-app:has(.battle-workspace) > .hero { display: none; }
+.tactical-app .workspace-diagnostics { margin-top: 24px; }
+.tactical-journey { display: flex; align-items: center; gap: 18px; padding: 12px 0; border-bottom: 1px solid #35585b; margin-bottom: 16px; }
+.tactical-journey > span { color: #869e9a; }
+.tactical-journey > [aria-current] { color: #cef0de; font-weight: 700; }
+.tactical-journey p { margin: 0 0 0 auto; font-size: 12px; color: #9eb4ab; }
+.tactical-workspace .preparation-panel { width: min(1280px, 100%); }
+.tactical-transition-error { padding: 16px; background: #39291e; color: #ffd1b4; }
+.tactical-reset-backdrop { position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; background: #020706cc; padding: 24px; }
+.tactical-reset-dialog { width: min(580px, 100%); max-height: calc(100vh - 48px); overflow: auto; padding: 24px; border: 1px solid #b48065; border-radius: 12px; background: #182824; box-shadow: 0 24px 90px #0009; }
+.tactical-reset-dialog h2 { margin-bottom: 20px; }
+.tactical-reset-dialog p { margin: 12px 0; color: #d6e1d8; line-height: 1.7; font-size: 14px; }
+.tactical-reset-dialog .editor-row { justify-content: flex-end; }
+.tactical-journey button, .tactical-reset-dialog button, .preparation-recovery button { border: 1px solid #456463; border-radius: 6px; padding: 8px 12px; color: #d9ede5; background: #163237; cursor: pointer; }
+.tactical-journey button:disabled, .tactical-reset-dialog button:disabled, .preparation-recovery button:disabled { opacity: .45; cursor: default; }
+.tactical-reset-dialog .tactical-reset-confirm { border-color: #b48065; background: #693d2f; color: #ffe4d3; }
+.tactical-journey .tactical-reset-button { margin-left: 8px; font-size: 12px; }
+.tactical-workspace .battle-workspace { width: 100%; max-width: none; padding: 16px; }
+.battle-toolbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; margin-bottom: 10px; }
+.battle-toolbar h2 { margin: 2px 0; font-size: 22px; }
+.battle-notices:empty { display: none; }
+.battle-notices p { margin-bottom: 8px; }
+.battle-grid { display: grid; grid-template-columns: minmax(0, 1fr) 350px; gap: 14px; align-items: start; }
+.battle-field { min-width: 0; display: flex; flex-direction: column; height: max(600px, calc(100vh - 265px)); }
+.battle-fleet { display: flex; gap: 8px; overflow-x: auto; padding: 0 0 10px; }
+.battle-fleet button { flex: 0 0 auto; }
+.battle-field .tactical-viewport { display: flex; flex-direction: column; flex: 1; min-height: 260px; border: 1px solid #35585b; border-radius: 10px; overflow: hidden; }
+.battle-field .tactical-canvas { height: auto; min-height: 180px; flex: 1; }
+.battle-field .viewport-help { flex: none; padding: 8px 12px; margin: 0; }
+.battle-field .viewport-help summary { cursor: pointer; }
+.battle-field .viewport-help p { margin: 8px 0; }
+.battle-helm { margin-top: 10px; padding: 12px; border: 1px solid #35585b; border-radius: 10px; background: #102326; }
+.battle-helm h3 { margin: 0 0 8px; font-size: 14px; }
+.battle-helm .realtime-helm { margin: 0; padding: 0; border: 0; }
+.battle-helm .editor-row { margin-top: 8px; }
+.battle-inspector { min-width: 0; background: #102326; border: 1px solid #35585b; border-radius: 10px; padding: 16px; max-height: calc(100vh - 215px); overflow: auto; }
+.battle-inspector > h3 { margin: 0 0 12px; overflow-wrap: anywhere; }
+.battle-tabs { display: flex; gap: 6px; border-bottom: 1px solid #35585b; padding-bottom: 12px; margin-bottom: 16px; }
+.battle-tabs button { flex: 1; }
+.battle-inspector fieldset { margin: 0; border: 0; padding: 0; min-width: 0; }
+.battle-inspector legend { padding: 0; margin-bottom: 10px; font-weight: 700; }
+.battle-inspector p, .battle-inspector details { font-size: 13px; line-height: 1.6; overflow-wrap: anywhere; }
+.battle-inspector .editor-row { display: grid; grid-template-columns: minmax(0, 1fr); align-items: stretch; }
+.battle-inspector .editor-row > label { display: grid; gap: 6px; width: 100%; min-width: 0; }
+.battle-inspector select { max-width: 100%; width: 100%; }
+.battle-inspector .editor-row > button { max-width: 100%; }
+.battle-records { border-top: 1px solid #35585b; margin-top: 16px; padding-top: 14px; }
+.battle-records > summary { cursor: pointer; color: #aac9bd; }
+.battle-records section { margin-top: 18px; }
+.battle-stage-note { margin: 16px 0 0; color: #9eb4ab; font-size: 12px; }
+.lift-reserve { margin: 12px 0; padding: 12px; background: #17372f; border-left: 3px solid #8ed4b8; border-radius: 4px; }
+.lift-reserve p { margin: 0 0 6px; }
+.lift-reserve strong { color: #a6ebc6; }
+.lift-reserve small { display: block; color: #b2c6bb; line-height: 1.6; }
+.lift-deficit { background: #402c23; border-color: #edab85; }
+.lift-deficit strong { color: #ffc8a8; }
+.tactical-workspace .preparation-fleet { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.tactical-workspace .preparation-fleet > label { padding: 14px; border: 1px solid #35585b; border-radius: 8px; background: #102326; }
+.tactical-workspace .preparation-fleet > label:has(input:checked) { border-color: #8ed4b8; background: #183d35; }
+@media (max-width: 1050px) {
+  .battle-grid { grid-template-columns: minmax(0, 1fr) 300px; }
+  .app-shell.tactical-app { padding: 12px; }
+}
+@media (max-width: 780px) {
+  .battle-grid { grid-template-columns: minmax(0, 1fr); }
+  .battle-inspector { max-height: none; }
+  .battle-field { height: 680px; }
+  .tactical-journey { flex-wrap: wrap; }
+  .tactical-journey p { margin-left: 0; }
+}
+
 button, input { font: inherit; }
 
 button:focus-visible { outline: 2px solid #8ed4b8; outline-offset: 3px; }
@@ -244,13 +318,31 @@ h2 { margin: 7px 0 0; font-size: 19px; }
 .workspace-nav .editor-error { flex-basis: 100%; margin: 0; }
 .tactical-columns { display: grid; grid-template-columns: minmax(0, 1fr) 235px; border: 1px solid #35585b; border-radius: 10px; overflow: hidden; }
 .tactical-viewport { min-width: 0; background: #0b2026; }
+.tactical-layer-bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px 14px; padding: 9px 12px; background: #152d31; border-bottom: 1px solid #35585b; }
+.tactical-layer-bar nav { display: flex; align-items: center; gap: 5px; }
+.tactical-layer-bar nav > span { font-size: 12px; color: #a8bebc; margin-right: 7px; }
+.tactical-layer-bar button { padding: 5px 10px; font-size: 12px; }
+.tactical-layer-bar small { display: inline-block; min-width: 15px; margin-left: 3px; opacity: .7; font-variant-numeric: tabular-nums; }
+.tactical-layer-bar .layer-context { font-size: 11px; color: #a8bebc; }
+.tactical-viewport .viewport-toolbar { padding: 8px 12px; gap: 6px; }
+.tactical-viewport .viewport-toolbar label { font-size: 11px; color: #b8cecb; }
+.tactical-viewport .viewport-toolbar button, .tactical-viewport .viewport-toolbar select { padding: 6px 8px; font-size: 12px; }
+.tactical-layer-hint, .tactical-art-notice { padding: 6px 12px; margin: 0; background: #203537; color: #c3d8d5; font-size: 12px; }
+.tactical-layer-hint button { padding: 4px 8px; margin-left: 10px; font-size: 11px; }
+.tactical-layer-hint { height: 36px; box-sizing: border-box; display: flex; align-items: center; flex: none; }
+.tactical-grid-key { position: absolute; right: 10px; bottom: 10px; display: flex; flex-wrap: wrap; gap: 10px; color: #d6e5e7; background: #14262cdb; border-radius: 4px; padding: 5px 8px; font-size: 10px; pointer-events: none; }
+.tactical-grid-key strong { color: #f4d9a0; font-weight: 500; }
+.tactical-grid-coordinate { position: absolute; color: #d2e3e5; background: #152c35c9; padding: 1px 3px; border-radius: 2px; font-size: 9px; font-variant-numeric: tabular-nums; pointer-events: none; }
+.tactical-grid-coordinate.major { color: #f4d9a0; }
+.tactical-layer-empty { position: absolute; top: 44%; left: 50%; transform: translate(-50%, -50%); padding: 10px 16px; border-radius: 6px; color: #d1e0e1; background: #16292eac; font-size: 13px; pointer-events: none; }
+.tactical-viewport[data-observation-layer="upper"] .tactical-scale { color: #294955; border-color: #294955; text-shadow: 0 1px 2px #e6ece9; }
 .tactical-canvas { position: relative; width: 100%; height: 540px; overflow: hidden; touch-action: none; cursor: grab; user-select: none; }
 .tactical-canvas:active { cursor: grabbing; }
 .tactical-canvas:focus-visible { outline: 2px solid #8ed4b8; outline-offset: -2px; }
 .tactical-canvas canvas { display: block; }
 .canvas-message { position: absolute; inset: 18px 18px auto; }
 .tactical-scale { position: absolute; bottom: 18px; left: 18px; padding-bottom: 5px; border-bottom: 2px solid #b5d2d3; color: #b5d2d3; text-align: center; font-size: 12px; pointer-events: none; }
-.tactical-ship-label { position: absolute; color: #c7dcdf; font-size: 11px; white-space: nowrap; text-shadow: 0 1px 3px #000; pointer-events: none; }
+.tactical-ship-label { position: absolute; color: #e1edef; background: #142b34c2; border-radius: 3px; padding: 2px 4px; font-size: 11px; white-space: nowrap; text-shadow: 0 1px 3px #000; pointer-events: none; }
 .tactical-inspector { min-width: 0; padding: 16px; border-left: 1px solid #35585b; background: #102326; font-size: 13px; }
 .tactical-inspector h3 { margin: 0 0 12px; }
 .tactical-ship-list { display: grid; gap: 8px; margin-bottom: 24px; }
@@ -291,3 +383,21 @@ h2 { margin: 7px 0 0; font-size: 19px; }
 .preparation-panel [role="alert"] { padding: 12px; color: #ffd1b4; background: #39291e; border-radius: 6px; }
 .preparation-panel [role="status"] { color: #b4decd; }
 .preparation-panel input[type="checkbox"] { margin-right: .6rem; }
+.height-panel { margin: 12px 0; padding: 12px; border: 1px solid #3c5260; border-radius: 8px; background: #15232b; }
+.height-panel h4 { margin: 0 0 8px; }
+.height-panel p { margin: 8px 0; }
+.height-targets { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
+.height-targets button { flex: 1; white-space: nowrap; padding: 7px 8px; }
+.height-progress progress { width: 100%; height: 12px; accent-color: #7cbfcd; }
+.descent-warning { padding: 12px; border-left: 3px solid #f5ac7e; background: #513426; color: #ffe1bd; }
+.gun-group-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 8px; margin-bottom: 12px; }
+.gun-group-list button { display: flex; flex-direction: column; align-items: flex-start; gap: 5px; text-align: left; }
+.gun-group-list button[aria-pressed="true"] { border-color: #76d6bc; background: #1b403b; color: #e5fff8; }
+.gun-group-list button span { opacity: .8; font-size: 12px; }
+.gun-control-panel { min-width: 0; }
+.gun-orders { min-width: 0; border: 0; padding: 0; margin: 0; }
+.gun-control-panel select { max-width: 100%; }
+.gun-control-panel details { margin: 10px 0; }
+.gun-control-panel summary { cursor: pointer; }
+.gun-order-summary { border-left: 3px solid #76d6bc; padding-left: 9px; }
+.gun-members > div { border-top: 1px solid #425259; padding: 10px 0; }

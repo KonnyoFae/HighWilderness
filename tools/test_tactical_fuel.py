@@ -59,7 +59,8 @@ class TacticalFuelTests(unittest.TestCase):
         self.assertEqual(self.tank(b,MODULE)['quantity_units'],0);self.assertEqual(self.tank(b)['quantity_units'],120)
         self.assertEqual(b.session.world.ships[0].motion.fuel_units,120)
         self.assertEqual(b.inventory.inventories[0].changes(),[dict(resource='fuel:'+MODULE,reason='tank_destroyed',delta=-800.)])
-        result=st.capture(b);self.assertEqual(result['ships'][0]['after']['state']['fuel_units'],120)
+        self.assertIsNone(b.ending)  # Negative reserve remains rescuable until the rain deadline.
+        b.withdraw();result=st.capture(b);self.assertEqual(result['ships'][0]['after']['state']['fuel_units'],120)
 
     def test_real_penetration_damages_independent_filling_hp_without_partial_leak(self):
         b=self.battle();self.shot(b);b.step()

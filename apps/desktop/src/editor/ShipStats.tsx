@@ -1,9 +1,12 @@
 import type { ModuleOption, SessionSnapshot } from "./model";
+import { LiftReserve } from "../LiftReserve";
+import type { LiftReserveReading } from "../LiftReserve";
 
 export function ShipStats({ session, options }: { session: SessionSnapshot; options: ModuleOption[] }) {
   const outfit = session.resource.kind === "OutfitPlan";
   const derived = (session.preview.valid ? session.preview : session.last_valid_preview)?.model.derived as {
     design_mass_kg?: number; hull_mass_kg?: number; geometry?: {length_m: number; beam_m: number}; lift?: {lift_margin_n: number};
+    lift_reserve?: LiftReserveReading;
   } | undefined;
   const prototypes = (session.draft.modules ?? []).map(m => options.find(o => o.prototype.id === m.prototype.id && o.prototype.version === m.prototype.version)?.prototype);
   const complete = prototypes.every(Boolean);
@@ -24,6 +27,7 @@ export function ShipStats({ session, options }: { session: SessionSnapshot; opti
         <div><dt>全开耗电</dt><dd>{complete ? fmt(demand,"kW") : "待计算"}</dd></div>
         <div><dt>升力余量</dt><dd>{fmt(derived?.lift?.lift_margin_n,"N")}</dd></div></>}
     </dl>
+    {outfit && <LiftReserve value={derived?.lift_reserve} />}
     <p className="stats-provenance">{!session.preview.valid ? `质量 / 升力为最近合法结果（修订 ${session.last_valid_revision ?? "无"}）；当前草稿待修正。` : `当前设计 · 修订 ${session.revision}`}{outfit && " 功率按当前已装模块额定值合计。"}</p>
     <div className="ship-issues" aria-label="舰船问题">{issues.map((d,i)=><p className="ship-warning" key={`${d.code}:${d.path}:${i}`}>{d.message}</p>)}
       {!session.preview.diagnostics.length && <p className="stats-ok">设计检查通过</p>}</div>

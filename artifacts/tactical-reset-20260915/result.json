@@ -1,0 +1,24 @@
+{
+  "status": "TACTICAL_RESET_UI_PASS",
+  "checks": [
+    "Saving one of multiple pending results automatically opens the next unsaved result",
+    "Refreshing after a lost save reply reconciles the committed result and advances the recovery queue",
+    "Reset remains accessible after save failure; cancel preserves data; lost reset reply retries the same operation and returns to empty preparation",
+    "A running prepared battle can be abandoned without creating or saving a settlement; stale scene reads are rejected",
+    "After reset and backend restart, a new ship enters a real battle; an acknowledged save unlocks preparation even when subsequent scene reads fail"
+  ],
+  "resetRequests": [
+    {
+      "reset_id": "reset.e1d6845a-e6f8-4904-ac88-f0565f6c7d8f",
+      "scope": "all_tactical_test_state"
+    },
+    {
+      "reset_id": "reset.e1d6845a-e6f8-4904-ac88-f0565f6c7d8f",
+      "scope": "all_tactical_test_state"
+    },
+    {
+      "reset_id": "reset.0f09128e-09de-4e3c-ad14-0456f16f4be5",
+      "scope": "all_tactical_test_state"
+    }
+  ]
+}

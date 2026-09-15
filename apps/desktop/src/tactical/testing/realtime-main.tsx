@@ -3,6 +3,7 @@ import { Workspace } from "../../Workspace";
 import { TauriBridgeTransport } from "../../bridge/transport";
 import type { CommandPort } from "../../bridge/transport";
 import "../../styles.css";
+import { TacticalWorkspace } from "../TacticalWorkspace";
 
 // Development-only test host. Browser automation supplies a real Python stdio
 // sidecar through this binding; this entry is absent from the production page.
@@ -17,6 +18,8 @@ const port: CommandPort = {
     throw new Error(`Unsupported test host call: ${command}`);
   },
 };
-createRoot(document.getElementById("root")!).render(<main className="app-shell">
-  <Workspace transport={new TauriBridgeTransport(port)} instance="backend.e3bbrowser" tacticalAvailable />
+const tacticalEntry = new URLSearchParams(window.location.search).get("entry") === "tactical";
+createRoot(document.getElementById("root")!).render(<main className={`app-shell${tacticalEntry ? " tactical-app" : ""}`}>
+  {tacticalEntry ? <TacticalWorkspace transport={new TauriBridgeTransport(port)} instance="backend.e3bbrowser" /> :
+    <Workspace transport={new TauriBridgeTransport(port)} instance="backend.e3bbrowser" tacticalAvailable />}
 </main>);

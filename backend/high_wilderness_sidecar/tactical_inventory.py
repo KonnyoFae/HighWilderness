@@ -11,7 +11,7 @@ from uuid import uuid4
 from . import persistent_ship as ps, damage_control_resources as dc
 
 CHECKPOINT_INTERFACE = 'gaotian.inventory-checkpoint/p1b-v1alpha1'
-REASONS = frozenset(('load', 'unload', 'consume', 'reload', 'discharge', 'discard', 'damage_control_preparation', 'damage_control_use', 'firefighting', 'module_repair', 'hull_repair','tank_destroyed'))
+REASONS = frozenset(('load', 'unload', 'consume', 'reload', 'discharge', 'discard', 'damage_control_preparation', 'damage_control_use', 'firefighting', 'module_repair', 'hull_repair','tank_destroyed','emergency_lift_repair','emergency_lift_refill'))
 
 
 class InventorySession:
@@ -211,7 +211,7 @@ class InventorySession:
         self._check()
         ps.need(self._settlement is None and target in self._damage_controls, '$.target', 'Invalid damage-control spend')
         ps.integer(quantity, '$.quantity', 1)
-        ps.need(reason in ('firefighting', 'module_repair', 'hull_repair'), '$.reason', 'Unknown maintenance effect')
+        ps.need(reason in ('firefighting', 'module_repair', 'hull_repair', 'emergency_lift_repair'), '$.reason', 'Unknown maintenance effect')
         devices = self._value['damage_controls']
         index = next(n for n, d in enumerate(devices) if d['module_id'] == target)
         device = devices[index]
@@ -516,7 +516,7 @@ class InventoryBattle:
             inventory._flight_session = prepared.session
         self._device_revisions = tuple(s.devices.revision for s in prepared.session.world.ships)
 
-    def step(self, *, inventory_commands=(), inventory_before_advance=None, inventory_project=None, inventory_repair=None, inventory_fuel=None, project=None, **flight_commands):
+    def step(self, *, inventory_commands=(), inventory_before_advance=None, inventory_project=None, inventory_repair=None, inventory_fuel=None, inventory_finish=None, project=None, **flight_commands):
         session = self.prepared.session
         ps.need(all(i.fixed_step == session.world.fixed_step for i in self.inventories), '$', 'Flight/inventory clocks differ')
         candidates = tuple(i.fork() for i in self.inventories)
@@ -544,8 +544,6 @@ class InventoryBattle:
                 candidates[index].command(**command)
             if inventory_project is not None:
                 inventory_project(world, flight_result, candidates)
-            if project is not None and inventory_repair is None:
-                return project(world, flight_result)
 
         def repair(world, result):
             return inventory_repair(world, result, candidates)
@@ -564,12 +562,14 @@ class InventoryBattle:
                     from . import tactical_fuel
                     tactical_fuel.damage(inv,health,{})
             revisions = final_revisions
+            if inventory_finish is not None:
+                inventory_finish(world, result, candidates)
             if project is not None:
                 project(world, result)
 
         result = session.step(project=stage, fuel_resolver=(lambda world:inventory_fuel(world,candidates)) if inventory_fuel else None,
             repair_resolver=repair if inventory_repair else None,
-            repair_project=finish if inventory_repair else None, **flight_commands)
+            repair_project=finish, **flight_commands)
         for candidate in candidates:
             candidate._candidate = False
         self.inventories, self._device_revisions = candidates, revisions

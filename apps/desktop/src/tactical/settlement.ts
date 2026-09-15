@@ -22,7 +22,8 @@ export interface SettlementShip {
 }
 export interface SettlementEnvelope {
   saved: boolean; error?: string | null;
-  result: { settlement_id: string; reason: string; fixed_step: number; ships: SettlementShip[] };
+  result: { settlement_id: string; reason: string; fixed_step: number; ships: SettlementShip[];
+    wrecks?:{instance_id:string;ship_id:string;position_m:number[];height_layer:string;reason:string}[] };
 }
 export interface SettlementLibrary {
   results: { settlement_id: string; saved: boolean; reason: string; fixed_step: number }[];
@@ -31,7 +32,7 @@ export interface SettlementLibrary {
 export const endingLabel: Record<string, string> = { withdrawal: "主动撤离", victory: "本方胜利", defeat: "本方失去作战能力", draw: "双方失去作战能力" };
 export const serviceLabel: Record<string, string> = { available: "可入战", disabled: "失去作战能力", destroyed: "已毁坏", withdrawn: "已离场" };
 const reasonLabel: Record<string, string> = { load: "装载", unload: "卸载", consume: "使用", reload: "装填", discharge: "射击",
-  damage_control_preparation:'损管准备', damage_control_use:'损管使用', firefighting:'灭火', module_repair:'部件维修', hull_repair:'船壳维修',tank_destroyed:'燃料槽损毁' };
+  damage_control_preparation:'损管准备', damage_control_use:'损管使用', firefighting:'灭火', module_repair:'部件维修', hull_repair:'船壳维修',tank_destroyed:'燃料槽损毁',emergency_lift_repair:'储罐紧急抢修',emergency_lift_refill:'抢修后补油' };
 
 export function fuelTankName(t:{module_id:string|null;deck_level:number},names:Record<string,string>) {
   return t.module_id?`${names[t.module_id]??t.module_id}燃料槽`:`第 ${t.deck_level} 层填充燃料槽`;

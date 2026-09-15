@@ -66,7 +66,8 @@ def render_static(scenario):
                    for m in snapshot.outfit.instances]
         ships.append(dict(id=binding.ship_id, side_id=binding.side_id, fleet_id=binding.fleet_id,
                           name=scenario.manifest.get('ship_names', {}).get(binding.ship_id, "蓝方测试舰" if binding.side_id == "side.blue" else "红方测试舰"),
-                          derived_snapshot_sha256=snapshot.source_sha256, decks=decks, modules=modules))
+                          derived_snapshot_sha256=snapshot.source_sha256, dry_mass_kg=snapshot.outfit.design_mass_kg,
+                          decks=decks, modules=modules))
     return dict(interface=STATIC_INTERFACE, scenario_id=scenario.manifest.get('scenario_id', SCENARIO_ID), resources=deepcopy(scenario.manifest), ships=ships)
 
 

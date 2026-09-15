@@ -39,6 +39,9 @@ class Controller:
     target_module_id: str | None = None
     repair_module_id: str | None = None
     selection_revision: int = -1
+    emergency_target: str | None = None
+    emergency_steps: int = 0
+    emergency_spent: int = 0
 
 
 class FireRuntime:
@@ -74,17 +77,19 @@ class FireRuntime:
         command = {k: x for k, x in v.items() if k != 'generation'}
         changed = self.submit(command)
         if changed and v['kind'] == 'enabled':
-            self.pending_modes[v['module_id']] = 'active' if v['arguments']['enabled'] else 'off'
+            self.pending_modes[(v['ship_id'],v['module_id'])] = 'active' if v['arguments']['enabled'] else 'off'
         self.player_last = v
         return changed
 
     def mode_operations(self, existing):
         from .tactical_resources_runtime import ResourceOperation
         world = self.battle.session.world
-        ship = world.ships[self.battle._direct_index]
-        sequence = max([ship.resources.sequence]+[op.sequence for op in existing if op.ship_id == ship.ship_id])
-        return tuple(ResourceOperation(world.epoch, ship.ship_id, sequence+i+1, 'mode', key, mode,
-                     world.fixed_step, 'opening') for i,(key,mode) in enumerate(sorted(self.pending_modes.items())))
+        sequences = {s.ship_id:max([s.resources.sequence]+[op.sequence for op in existing if op.ship_id==s.ship_id]) for s in world.ships}
+        result = []
+        for (ship_id,key),mode in sorted(self.pending_modes.items()):
+            sequences[ship_id] += 1
+            result.append(ResourceOperation(world.epoch,ship_id,sequences[ship_id],'mode',key,mode,world.fixed_step,'opening'))
+        return tuple(result)
 
     def _write_fires(self, inventories, fires):
         for n, inv in enumerate(inventories):
@@ -118,7 +123,7 @@ class FireRuntime:
         if v['kind'] == 'enabled':
             ps.obj(v['arguments'], 'enabled', '$.arguments')
             flag = v['arguments']['enabled']
-            ps.need(type(flag) is bool and n == b._direct_index, '$.enabled', 'Only own devices can be controlled')
+            ps.need(type(flag) is bool and b._sides[n] == b._sides[b._direct_index], '$.enabled', 'Only friendly devices can be controlled')
             k = next((k for k, c in enumerate(controllers) if (c.ship_index, c.module_id) == (n, v['module_id'])), None)
             ps.need(k is not None, '$.module_id', 'Not a bound damage-control device')
             copy = list(controllers); copy[k] = replace(copy[k], enabled=flag, status='waiting' if flag else 'off', blocked_key=None)
@@ -131,14 +136,15 @@ class FireRuntime:
         elif v['kind'] == 'repair_target':
             ps.obj(v['arguments'], 'module_id', '$.arguments')
             target = v['arguments']['module_id']
-            ps.need(n == b._direct_index and b.repair.profiles[n] is not None, '$.target', 'Only own supported repair devices may select targets')
+            ps.need(b._sides[n] == b._sides[b._direct_index] and b.repair.profiles[n] is not None, '$.target', 'Only friendly supported repair devices may select targets')
             if target is not None:
                 ps.identifier(target, '$.arguments.module_id')
                 ps.need(target in b._indices[n], '$.target', 'Repair target must be an installed module on this ship')
             k = next((k for k,c in enumerate(controllers) if (c.ship_index,c.module_id)==(n,v['module_id'])), None)
             ps.need(k is not None, '$.module_id', 'Not a bound damage-control device')
             copy = list(controllers)
-            copy[k] = replace(copy[k], target_module_id=target, repair_module_id=None, selection_revision=-1)
+            copy[k] = replace(copy[k], target_module_id=target, repair_module_id=None, selection_revision=-1,
+                emergency_target=None, emergency_steps=0, emergency_spent=0)
             controllers = tuple(copy)
         elif v['kind'] == 'test_ignite':
             ps.need(self.allow_test_ignition, '$.kind', 'Explicit ignition fixture is disabled')
@@ -275,8 +281,10 @@ class FireRuntime:
                 capacity_units=spec['capacity_units'], preparation_steps=spec['preparation_steps'],
                 cargo_costs=[dict(**cost, available=cargo.get(cost['good_id'],0)-reserved[cost['good_id']],
                                  reserved=reserved[cost['good_id']]) for cost in spec['cargo_costs']],
-                mode_pending=c.module_id in self.pending_modes and c.ship_index == b._direct_index,
+                mode_pending=(b.session.world.ships[c.ship_index].ship_id,c.module_id) in self.pending_modes,
                 target_module_id=c.target_module_id, repair_module_id=c.repair_module_id,
+                emergency_target=c.emergency_target, emergency_progress=c.emergency_steps/b.repair.emergency_steps,
+                emergency_remaining_s=(b.repair.emergency_steps-c.emergency_steps)/60 if c.emergency_target else None,
                 remaining_preparation_steps=max(0, inv._due.get(c.module_id,0)-b.session.world.fixed_step)))
         return dict(policy=dc.FIRE_POLICY, command_sequence=self.sequence,
             fires=[dict(ship_id=b.session.world.ships[f.ship_index].ship_id, module_id=f.module_id,

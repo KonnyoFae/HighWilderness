@@ -941,9 +941,9 @@ impl BackendSupervisor {
     }
 
     pub fn tactical_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
-        if !matches!(request.method.as_str(), "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
+        if !matches!(request.method.as_str(), "tactical.reset_test_state" | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
             | "tactical.preparation.library" | "tactical.preparation.import" | "tactical.preparation.open" | "tactical.preparation.read" | "tactical.preparation.draft" | "tactical.preparation.preview" | "tactical.preparation.commit" | "tactical.preparation.discard"
-            | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.gun" | "tactical.realtime.damage_control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.deploy_encounter" | "tactical.realtime.encounter" | "tactical.realtime.withdraw" | "tactical.realtime.close") {
+            | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.gun" | "tactical.realtime.height" | "tactical.realtime.damage_control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.deploy_encounter" | "tactical.realtime.encounter" | "tactical.realtime.withdraw" | "tactical.realtime.close") {
             return Err(HostFailure::host("method_not_supported", "tactical method not enabled"));
         }
         if request.session_id.is_some() || request.expected_revision.is_some() {
@@ -1412,6 +1412,34 @@ mod tests {
     }
 
     #[test]
+    fn real_tactical_test_reset_routes_and_retry() {
+        let supervisor = BackendSupervisor::new(repo_root());
+        let (events, _) = sink();
+        let status = supervisor.start(events).unwrap();
+        assert!(status.capabilities.contains(&"tactical.reset_test_state".into()));
+        let instance = status.backend_instance_id.unwrap();
+        let request = |method: &str, params: Value| EditorRequest {
+            backend_instance_id: instance.clone(), method: method.into(), params,
+            session_id: None, expected_revision: None,
+        };
+        let library = supervisor.tactical_request(request("tactical.preparation.library", json!({}))).unwrap();
+        let source = library["sources"].as_array().unwrap().iter()
+            .find(|s| s["name"].as_str().unwrap().contains("常规有人")).unwrap();
+        let import = json!({"instance_id":"instance.reset.native", "source":{"kind":"resource","value":source["key"]}});
+        supervisor.tactical_request(request("tactical.preparation.import", import.clone())).unwrap();
+        let params = json!({"reset_id":"reset.native.test","scope":"all_tactical_test_state"});
+        let cleared = supervisor.tactical_request(request("tactical.reset_test_state", params.clone())).unwrap();
+        assert_eq!(cleared["cleared"], true);
+        let empty = supervisor.tactical_request(request("tactical.preparation.library", json!({}))).unwrap();
+        assert!(empty["ships"].as_array().unwrap().is_empty());
+        supervisor.tactical_request(request("tactical.preparation.import", import)).unwrap();
+        assert_eq!(supervisor.tactical_request(request("tactical.reset_test_state", params)).unwrap(), cleared);
+        let next = supervisor.tactical_request(request("tactical.preparation.library", json!({}))).unwrap();
+        assert_eq!(next["ships"].as_array().unwrap().len(), 1);
+        supervisor.stop("user_exit").unwrap();
+    }
+
+    #[test]
     fn real_persisted_encounter_routes_and_receipt() {
         let supervisor = BackendSupervisor::new(repo_root());
         let (events, _) = sink();
@@ -1489,18 +1517,44 @@ mod tests {
         let targeted = supervisor.tactical_request(gun()).unwrap();
         assert_eq!(targeted["view"]["gunnery"]["command_sequence"], 1);
         assert_eq!(targeted["view"]["gunnery"]["weapons"][0]["target_ship_id"], "ship.web.red");
+        let height_input = json!({"epoch":scene,"generation":0,"sequence":1,"ship_id":"ship.web.blue","target_layer":"rain"});
+        let height = || request("tactical.realtime.height", json!({"scene_id":scene,"input":height_input}));
+        let ordered = supervisor.tactical_request(height()).unwrap();
+        assert_eq!(ordered["view"]["ships"][0]["height_navigation"]["target_layer"], "rain");
+        assert_eq!(ordered["view"]["ships"][0]["height_navigation"]["next_layer"], "cloud");
+        assert_eq!(ordered["view"]["ships"][0]["height_layer"], "upper");
+        assert_eq!(ordered["view"]["gunnery"]["command_sequence"], 1);
         std::thread::sleep(std::time::Duration::from_millis(150));
         let paused = supervisor.tactical_request(request("tactical.realtime.pause", json!({"scene_id":scene}))).unwrap();
         assert!(paused["status"]["fixed_step"].as_u64().unwrap() > 0);
         assert_eq!(paused["status"]["running"], false);
         assert_eq!(paused["receipts"][0]["status"], "executed");
         assert_eq!(supervisor.tactical_request(gun()).unwrap()["view"]["gunnery"]["command_sequence"], 1);
+        let retried_height = supervisor.tactical_request(height()).unwrap();
+        assert_eq!(retried_height["view"]["height_commands"]["command_sequence"], 1);
+        assert_eq!(retried_height["view"]["ships"][0]["height_navigation"], paused["view"]["ships"][0]["height_navigation"]);
         let read = || request("tactical.realtime.read", json!({"scene_id":scene,
             "known_static_sha256":created["view"]["static_sha256"],"ack_inputs":[],"ack_events":0}));
         let a = supervisor.tactical_request(read()).unwrap();
         assert_eq!(a["view"]["static"], Value::Null);
         assert_eq!(a["status"]["fixed_step"], paused["status"]["fixed_step"]);
         supervisor.tactical_request(request("tactical.realtime.resume", json!({"scene_id":scene}))).unwrap();
+        let layer_input = json!({"epoch":scene,"generation":paused["status"]["generation"],"sequence":2,"weapon_id":"weapon_upper_port",
+            "kind":"layer","arguments":{"layer":"cloud"}});
+        let cross = supervisor.tactical_request(request("tactical.realtime.gun", json!({"scene_id":scene,"input":layer_input}))).unwrap();
+        assert_eq!(cross["view"]["gunnery"]["weapons"][0]["effective_layer"], "cloud");
+        assert_eq!(cross["view"]["gunnery"]["weapons"][0]["ballistics"]["speed_retention"], 0.7);
+        assert_eq!(cross["view"]["ships"][0]["height_layer"], "upper");
+        let group_id = cross["view"]["gunnery"]["groups"].as_array().unwrap().iter()
+            .find(|g| g["ship_id"] == "ship.web.blue").unwrap()["group_id"].clone();
+        let group_input = json!({"epoch":scene,"generation":paused["status"]["generation"],"sequence":3,"group_id":group_id,
+            "kind":"clear","arguments":{}});
+        let group_request = || request("tactical.realtime.gun", json!({"scene_id":scene,"input":group_input}));
+        let held = supervisor.tactical_request(group_request()).unwrap();
+        assert_eq!(held["view"]["gunnery"]["command_sequence"], 3);
+        assert_eq!(held["view"]["gunnery"]["weapons"][0]["target_policy"], "hold");
+        assert_eq!(held["view"]["gunnery"]["weapons"][0]["target_ship_id"], Value::Null);
+        assert_eq!(supervisor.tactical_request(group_request()).unwrap()["view"]["gunnery"]["command_sequence"], 3);
         supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"editor"}))).unwrap();
         assert_eq!(supervisor.tactical_request(read()).unwrap()["status"]["running"], false);
         supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"tactical"}))).unwrap();

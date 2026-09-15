@@ -4,7 +4,7 @@ Only ending/export/entry paths parse these records. No storage runs in a fixed
 step. Pending results are durable before confirmation; commits compare revisions.
 """
 from contextlib import contextmanager
-from dataclasses import replace
+from dataclasses import asdict, replace
 from hashlib import sha256
 from pathlib import Path
 import sqlite3
@@ -14,7 +14,7 @@ from . import persistent_ship as ps, tactical_gunnery as tg
 from .tactical_damage import DamageState
 
 SHIP_INTERFACE = 'gaotian.persistent-combat-ship/p3-v1'
-RESULT_INTERFACE = 'gaotian.battle-settlement/p3-v1'
+RESULT_INTERFACE = 'gaotian.battle-settlement/p3-v2'
 
 
 def armor_record(battle, index, values):
@@ -80,7 +80,7 @@ def capture(battle):
         reasons = set(lifecycle.failure_causes)
         if ship.command.loss_reason: reasons.add(ship.command.loss_reason)
         if lifecycle.exit_reason: reasons.add(lifecycle.exit_reason)
-        status = 'destroyed' if value['hull_integrity_fraction'] <= 0 else 'withdrawn' if lifecycle.physical_status == 'exited' else 'disabled' if reasons else 'available'
+        status = 'destroyed' if ship.wreck is not None or value['hull_integrity_fraction'] <= 0 else 'withdrawn' if lifecycle.physical_status == 'exited' else 'disabled' if reasons else 'available'
         value['service'] = dict(status=status, reasons=sorted(reasons))
         if inv._fuel_tanks:
             value['fuel_tanks']=ps.clone(inv._value['fuel_tanks'])
@@ -95,7 +95,9 @@ def capture(battle):
             changes=inv.changes(), module_names={m.id: m.prototype.name for m in seed.resources.modules}))
     return ps.clone(dict(interface=RESULT_INTERFACE, settlement_id='settlement.'+battle.session.world.epoch,
         scene_id=battle.session.world.epoch, reason=battle.ending['reason'], fixed_step=battle.ending['step'],
-        removed_projectiles=battle.ending['removed_projectiles'], ships=rows))
+        removed_projectiles=battle.ending['removed_projectiles'], ships=rows,
+        wrecks=[dict(interface='gaotian.tactical-wreck/v1',ship_id=s.ship_id,instance_id=binding.instance.to_dict()['instance_id'],
+            side_id=battle._sides[n],**asdict(s.wreck)) for n,(s,binding) in enumerate(zip(battle.session.world.ships,battle.inventory.prepared.bindings)) if s.wreck is not None]))
 
 
 def redeploy(record, template, scenario):
@@ -128,8 +130,9 @@ def redeploy(record, template, scenario):
 
 def validate_result(value):
     v = ps.clone(value)
-    ps.obj(v, 'interface settlement_id scene_id reason fixed_step removed_projectiles ships', '$.settlement')
-    ps.need(v['interface'] == RESULT_INTERFACE, '$.interface', '不支持的结算版本')
+    legacy = v.get('interface') == 'gaotian.battle-settlement/p3-v1'
+    ps.obj(v, 'interface settlement_id scene_id reason fixed_step removed_projectiles ships'+('' if legacy else ' wrecks'), '$.settlement')
+    ps.need(legacy or v['interface'] == RESULT_INTERFACE, '$.interface', '不支持的结算版本')
     ps.identifier(v['settlement_id'], '$.settlement_id'); ps.identifier(v['scene_id'], '$.scene_id')
     ps.need(v['settlement_id'] == 'settlement.'+v['scene_id'], '$.settlement_id', '结算身份不匹配')
     ps.need(v['reason'] in ('withdrawal', 'victory', 'defeat', 'draw'), '$.reason', '非法结束原因')
@@ -158,6 +161,20 @@ def validate_result(value):
             changes[change['resource']] = changes.get(change['resource'], 0)+amount
         ps.need(all(end.get(k, 0)-start.get(k, 0) == changes.get(k, 0) for k in set(start)|set(end)|set(changes)),
                 '$.changes', '战前、战后资源与变动摘要无法对账')
+    wreck_ids = set()
+    ps.need(type(v.get('wrecks',[])) is list and len(v.get('wrecks',[]))<=len(v['ships']), '$.wrecks', '非法残骸列表')
+    for w in v.get('wrecks',[]):
+        ps.obj(w, 'interface ship_id instance_id side_id fixed_step height_layer position_m reason', '$.wreck')
+        ps.need(w['interface']=='gaotian.tactical-wreck/v1' and w['instance_id'] in ids and w['instance_id'] not in wreck_ids, '$.wreck', '残骸身份无效或重复')
+        record = next(r['after'] for r in v['ships'] if r['after']['state']['instance_id']==w['instance_id'])
+        ps.need(w['ship_id']==record['ship_id'] and record['state']['service']['status']=='destroyed' and
+            w['reason'] in record['state']['service']['reasons'], '$.wreck', '残骸与战后舰况不一致')
+        ps.identifier(w['side_id'], '$.wreck.side_id'); ps.integer(w['fixed_step'], '$.wreck.step', maximum=v['fixed_step'])
+        ps.need(w['height_layer'] in ('upper','cloud','rain') and w['reason'] in ('insufficient_lift','cic_destroyed','hull_structure_collapsed'), '$.wreck', '非法坠毁位置或原因')
+        ps.need(w['reason']!='insufficient_lift' or w['height_layer']=='rain', '$.wreck', '升力坠毁必须发生在雨层末段')
+        ps.need(type(w['position_m']) is list and len(w['position_m'])==2, '$.wreck.position_m', '残骸位置缺失')
+        for x in w['position_m']: ps.number(x,'$.wreck.position_m',minimum=-ps.MAX_INT)
+        wreck_ids.add(w['instance_id'])
     return v
 
 

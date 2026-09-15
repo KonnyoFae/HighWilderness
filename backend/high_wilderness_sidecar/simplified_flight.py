@@ -25,6 +25,8 @@ from .simplified_propulsion import CompiledShipContributions
 from .tactical_devices import DeviceSeed, DeviceState, DeviceKernel, DeviceOperation, OWNED_REASONS
 from .tactical_resources_runtime import ResourceSeed, ResourceState, ResourceKernel, ResourceOperation, REASONS as RESOURCE_REASONS
 from .tactical_command_runtime import CommandSeed, CommandState, CommandKernel, ExitOperation
+from . import tactical_layers as height
+from . import tactical_descent as falling
 
 INTERFACE = "gaotian.simplified-flight-experiment/v1alpha1"
 REASONS = ("actuator_destroyed", "host_destroyed", "power_unavailable", "crew_unavailable",
@@ -134,6 +136,9 @@ class FlightShip:
     devices: DeviceState | None = None
     resources: ResourceState | None = None
     command: CommandState | None = None
+    height_navigation: height.HeightNavigation | None = None
+    descent: falling.Descent | None = None
+    wreck: falling.Wreck | None = None
 
 
 @dataclass(frozen=True)
@@ -432,7 +437,7 @@ class SimplifiedFlightSession:
             command=None
             allowed=seed.contributions.ship_id==direct_ship_id
             if ck is not None:
-                command=ck.resolve(ck.initial(),devices,resources,seed.motion,mass=r.current_mass_kg,step=0)
+                command=ck.resolve(ck.initial(),devices,resources,seed.motion,mass=height.dry_mass(seed.contributions),step=0)
                 allowed=command.allowed
                 cut=command.suppress or ck.direct and not command.allowed
                 if cut:
@@ -440,7 +445,8 @@ class SimplifiedFlightSession:
                         for e in seed.contributions.engines)
                     propulsion,_=kernel.boundary(propulsion,0,(0,)*6,changes)
             ships.append(FlightShip(seed.contributions.ship_id, seed.motion,propulsion,directional_control(),
-                allowed, devices=devices,resources=resources,command=command))
+                allowed, devices=devices,resources=resources,command=command,
+                height_navigation=None if command is None else height.entry_navigation(height.dry_mass(seed.contributions),command.lift_force_n)))
         self._world = FlightWorld(uuid4().hex, 0, tuple(ships))
         self._owner, self._executing, self._last = get_ident(), False, None
 
@@ -451,6 +457,12 @@ class SimplifiedFlightSession:
     @property
     def last_result(self):
         return self._last
+
+    def set_height_target(self, ship_id, target_layer):
+        require(get_ident() == self._owner and not self._executing, 'Height orders require idle owner boundary')
+        require(any(s.ship_id == ship_id for s in self._world.ships), 'Unknown height-order ship')
+        ships = tuple(height.set_target(s, target_layer) if s.ship_id == ship_id else s for s in self._world.ships)
+        self._world = replace(self._world, ships=ships)
 
     def _requested(self, ship, state, control):
         if not ship.authority_allowed or ship.motion.hull_integrity_fraction <= 0:
@@ -566,7 +578,8 @@ class SimplifiedFlightSession:
                         if ck is None:
                             return current,()
                         command=ck.resolve(current.command,current.devices,current.resources,current.motion,
-                            mass=seed.model.runtime.current_mass_kg,step=n,exit_reason=exit_reason)
+                            mass=height.dry_mass(seed.contributions),step=n,exit_reason=exit_reason,
+                            lift_crashed=current.wreck is not None and current.wreck.reason=='insufficient_lift')
                         if command is current.command:
                             return current,()
                         if (command.lifecycle,command.fleet_phase)!=(current.command.lifecycle,current.command.fleet_phase):
@@ -626,8 +639,9 @@ class SimplifiedFlightSession:
                         else:
                             require(False, 'Resource cascade failed to settle')
                     ship = replace(ship, propulsion=state, control=selected)
+                    ship = height.reconcile(ship)
                     if phase == "opening":
-                        if ship.command is not None and ship.command.lifecycle.physical_status=='exited':
+                        if ship.wreck is not None or ship.command is not None and ship.command.lifecycle.physical_status=='exited':
                             ship=replace(ship,motion=replace(ship.motion,fixed_step_index=n+1))
                             diagnostics.append((ship.ship_id,None))
                             continue
@@ -645,6 +659,7 @@ class SimplifiedFlightSession:
             if impact_resolver is not None:
                 candidate, impact_events = self._impact_boundary(candidate, impact_resolver(before, candidate))
                 emitted.extend(impact_events)
+            candidate = replace(candidate, ships=tuple(height.reconcile(s) for s in candidate.ships))
             result = StepResult(candidate.fixed_step, tuple(emitted), tuple(diagnostics))
             if fuel_resolver is not None:
                 losses=fuel_resolver(candidate)
@@ -662,9 +677,16 @@ class SimplifiedFlightSession:
                 project(candidate, result)
             if repair_resolver is not None:
                 candidate, repair_events = self._impact_boundary(candidate, repair_resolver(candidate, result), repair=True)
+                candidate = replace(candidate, ships=tuple(height.reconcile(s) for s in candidate.ships))
                 result = replace(result, events=result.events + repair_events)
-                if repair_project is not None:
-                    repair_project(candidate, result)
+            finished = tuple(falling.finish(s, old, candidate.fixed_step) for s, old in zip(candidate.ships, before.ships))
+            crashes = tuple((s.ship_id, 0.) for s, old in zip(finished, candidate.ships) if s.wreck is not None and old.wreck is None)
+            candidate = replace(candidate, ships=finished)
+            if crashes:
+                candidate, crash_events = self._impact_boundary(candidate, ImpactBatch(hull_damage=crashes))
+                result = replace(result, events=result.events + crash_events)
+            if repair_project is not None:
+                repair_project(candidate, result)
             self._world, self._last = candidate, result
             return result
         finally:
@@ -686,11 +708,15 @@ class SimplifiedFlightSession:
                     and isfinite(amount) and 0 <= amount <= 1, 'Invalid impact hull damage')
             hull[ship_id] = amount
         for op in batch.device_operations:
-            require(type(op) is DeviceOperation and op.ship_id in indexes and op.phase == 'closing' and op.kind == ('repair' if repair else 'damage'),
+            require(type(op) is DeviceOperation and op.ship_id in indexes and op.phase == 'closing' and op.kind in (('repair','emergency_lift_repair') if repair else ('damage',)),
                     'Invalid impact device operation')
             dk = self._device_kernels[indexes[op.ship_id]]
             require(dk is not None, 'Impacts require device domain')
-            dk.validate_operation(op, epoch=world.epoch, ship_id=op.ship_id, step=world.fixed_step-1, allow_rebuild=False, allow_repair=repair)
+            dk.validate_operation(op, epoch=world.epoch, ship_id=op.ship_id, step=world.fixed_step-1, allow_rebuild=False, allow_repair=repair, allow_lift_repair=repair)
+        refills = batch.fuel_refills if repair else ()
+        require(type(refills) is tuple and len(set(refills)) == len(refills), 'Invalid emergency fuel refills')
+        require(all(any(op.ship_id==sid and op.module_id==mid and op.kind=='emergency_lift_repair' for op in batch.device_operations)
+            for sid,mid in refills), 'Refill must accompany successful emergency lift work')
         affected = set(hull) | {op.ship_id for op in batch.device_operations}
         if not affected:
             return world, ()
@@ -711,18 +737,28 @@ class SimplifiedFlightSession:
                 for op in operations:
                     idx = dk.by_id[op.module_id]
                     hp = ship.devices.modules[idx].durability_points
-                    require(hp > 1e-8 and op.amount <= dk.seed.modules[idx].maximum_durability_points-hp+1e-8,
-                            'Repair cannot rebuild or exceed maximum durability')
+                    if op.kind == 'emergency_lift_repair':
+                        from .tactical_repair import EMERGENCY_LIFT_FRACTION
+                        require(op.module_id in dict(ck.lift) and hp <= 1e-8 and
+                            op.amount == dk.seed.modules[idx].maximum_durability_points*EMERGENCY_LIFT_FRACTION,
+                            'Emergency repair is limited to destroyed lift tanks')
+                    else:
+                        require(hp > 1e-8 and op.amount <= dk.seed.modules[idx].maximum_durability_points-hp+1e-8,
+                                'Repair cannot rebuild or exceed maximum durability')
             devices, updates, receipts, touched = dk.boundary(ship.devices, operations)
             fraction = min(1.0, ship.motion.hull_integrity_fraction+hull.get(ship_id, 0)) if repair else max(0.0, ship.motion.hull_integrity_fraction-hull.get(ship_id, 0))
             ship = replace(ship, devices=devices, motion=replace(ship.motion, hull_integrity_fraction=fraction))
+            added_fuel = sum(float(rk.modules[mid].prototype.capability.to_dict()['fuel_capacity_units']) for sid,mid in refills if sid==ship_id)
+            if added_fuel:
+                ship = replace(ship, motion=replace(ship.motion, fuel_units=ship.motion.fuel_units+added_fuel))
             if receipts or hull.get(ship_id, 0):
                 emitted.append((ship_id, 'repair' if repair else 'impact', 'repair' if repair else 'damage', receipts, hull.get(ship_id, 0)))
             changes = tuple(AvailabilityEvent(world.epoch, ship_id, *u, n, 'closing') for u in updates)
             for _ in range(len(seed.contributions.engines)+3):
                 resources, resource_updates = rk.resolve(ship.resources, ship.devices, ship.propulsion)
                 command = ck.resolve(ship.command, ship.devices, resources, ship.motion,
-                    mass=seed.model.runtime.current_mass_kg, step=n)
+                    mass=height.dry_mass(seed.contributions), step=n,
+                    lift_crashed=ship.wreck is not None and ship.wreck.reason=='insufficient_lift')
                 if (command.lifecycle, command.fleet_phase) != (ship.command.lifecycle, ship.command.fleet_phase):
                     emitted.append((ship_id, 'impact', 'command', command.lifecycle, command.fleet_phase, command.loss_reason))
                 ship = replace(ship, resources=resources, command=command, authority_allowed=command.allowed, authority_version=command.revision)
@@ -758,6 +794,7 @@ class ImpactBatch:
 class RepairBatch:
     device_operations: tuple = ()
     hull_repair: tuple = ()
+    fuel_refills: tuple = ()
 
 
 def build_sample_session(root, *, with_devices=False, with_resources=False, with_command=False, allow_test_device_rebuild=False):

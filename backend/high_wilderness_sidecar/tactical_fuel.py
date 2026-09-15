@@ -116,3 +116,24 @@ def damage(inv,health,losses):
     if rows!=inv._value['fuel_tanks']:
         inv._value=dict(inv._value,fuel_tanks=rows,fuel_units=sum(r['quantity_units'] for r in rows));inv._ledger=ledger
     return inv._value['fuel_units']
+
+
+def emergency_refill(inv, module_id, restored_points):
+    """Temporary automatic supply; replace this producer with reserve-tank transfer.
+
+    Called only by successful emergency work in an uncommitted candidate. Filling
+    tanks are never created, repaired or drained by this initial supply policy.
+    """
+    spec = inv._fuel_tanks.get('tank.module.'+module_id)
+    if spec is None:
+        return False
+    ps.need(inv._candidate, '$.fuel', 'Emergency refilling requires an atomic repair candidate')
+    key = spec['tank_id']
+    old = next(t for t in inv._value['fuel_tanks'] if t['tank_id']==key)
+    ps.need(old['durability_points']<=1e-8 and old['quantity_units']==0, '$.fuel', 'Only a just-restored destroyed lift tank may refill')
+    rows = [dict(t,quantity_units=spec['capacity_units'],durability_points=restored_points) if t['tank_id']==key else t
+            for t in inv._value['fuel_tanks']]
+    inv._value = dict(inv._value,fuel_tanks=rows,fuel_units=sum(t['quantity_units'] for t in rows))
+    inv._ledger = dict(inv._ledger)
+    inv._record(inv._ledger,'fuel:'+key,'emergency_lift_refill',spec['capacity_units'])
+    return True

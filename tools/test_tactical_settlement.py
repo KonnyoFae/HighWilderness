@@ -108,6 +108,7 @@ s.save(sys.argv[2])
         self.assertGreater(cooldown, 0)
         second = st.redeploy(r, self.battle(), fixtures.GunneryTests.scenario)
         self.assertEqual(second.view()['weapons'][0]['cooldown_steps'], cooldown)
+        fixtures.GunneryTests().send(second, 'clear')  # measure inherited cooldown with firing explicitly held
         for _ in range(cooldown): second.step()
         self.assertEqual(second.view()['weapons'][0]['cooldown_steps'], 0)
         self.assertEqual(second.view()['weapons'][0]['ammo_resources'], 75)
@@ -224,7 +225,8 @@ s.save(sys.argv[2])
         for _ in range(3):
             damage_fixtures.DamageTests().shell(b, (-30, 0), (30, 0)); b.step()
         r = st.capture(b); self.store.stage(r); self.store.save(r['settlement_id'])
-        self.assertEqual(r['ships'][0]['after']['state']['service']['status'], 'disabled')
+        self.assertEqual(r['ships'][0]['after']['state']['service']['status'], 'destroyed')
+        self.assertEqual(r['wrecks'][0]['reason'], 'cic_destroyed')
         with self.assertRaises(ps.ContractError): st.redeploy(r['ships'][0]['after'], self.battle(), fixtures.GunneryTests.scenario)
 
     def request(self, service, method, **params):
@@ -265,6 +267,9 @@ s.save(sys.argv[2])
         clock = Clock(); s = RealtimeViewService('backend.testp3', clock=clock, settlement_dir=self.temp.name)
         scene = self.request(s, 'create', scenario_id='gtw.sample.web.two_ship.v1')['status']['epoch']
         for _ in range(3): damage_fixtures.DamageTests().shell(s.gunnery, (-30, 0), (30, 0), target=1)
+        # This fixture injects rounds outside the integrated stepper; register
+        # their birth exactly as the production history wrapper does.
+        s.presentation.record(s.gunnery.session.world.fixed_step, s.gunnery.projectiles)
         self.request(s, 'resume', scene_id=scene)
         clock.advance(17_000_000); s.tick()
         self.assertEqual(s.read()['settlement']['result']['reason'], 'victory')

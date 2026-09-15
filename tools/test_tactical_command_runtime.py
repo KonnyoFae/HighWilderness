@@ -61,7 +61,8 @@ class CommandTests(unittest.TestCase):
         self.assertEqual(state.command.loss_reason,'direct_ship_falling')
         self.assertFalse(state.authority_allowed)
         self.assertEqual(state.propulsion.output_percent_units,(0,)*6)
-        self.assertGreater(state.motion.velocity_world_mps.y,0)
+        self.assertEqual(state.motion.velocity_world_mps.y,0)
+        self.assertEqual(state.wreck.reason,'cic_destroyed')
         loss=state.command.loss_step
         s.step(device_operations=(self.damage(s,'cic',rebuild=True),))
         self.assertEqual(s.world.ships[0].command.lifecycle.physical_status,'falling')
@@ -94,16 +95,19 @@ class CommandTests(unittest.TestCase):
         self.assertFalse(s.world.ships[0].command.cic_control)
         self.assertFalse(s.world.ships[0].command.remote_control)
 
-    def test_insufficient_lift_uses_existing_latched_lifecycle(self):
+    def test_insufficient_lift_begins_rescuable_descent_without_command_loss(self):
         s=self.session()
         s.step(device_operations=(self.damage(s,'lift_tank'),))
-        self.assertIn('insufficient_lift',s.world.ships[0].command.lifecycle.failure_causes)
-        self.assertEqual(s.world.ships[0].command.lifecycle.physical_status,'falling')
+        self.assertNotIn('insufficient_lift',s.world.ships[0].command.lifecycle.failure_causes)
+        self.assertEqual(s.world.ships[0].command.lifecycle.physical_status,'operational')
+        self.assertIsNotNone(s.world.ships[0].descent)
+        self.assertTrue(s.world.ships[0].authority_allowed)
 
     def test_loss_closing_preserves_current_interval_and_blocks_next(self):
         a,b=self.session(),self.session(); self.fly(a); self.fly(b)
         a.step(); b.step(device_operations=(self.damage(b,'cic',phase='closing'),))
-        self.assertEqual(a.world.ships[0].motion,b.world.ships[0].motion)
+        self.assertEqual(a.world.ships[0].motion.position_world_m,b.world.ships[0].motion.position_world_m)
+        self.assertEqual(b.world.ships[0].motion.velocity_world_mps,sf.dynamics.Vec2(0.,0.))
         self.assertEqual(b.world.ships[0].propulsion.output_percent_units,(0,)*6)
         self.assertEqual(b.world.ships[0].command.loss_step,b.world.fixed_step)
 
@@ -158,7 +162,8 @@ class CommandTests(unittest.TestCase):
     def test_lifecycle_matches_strict_legacy_for_device_and_mode_cases(self):
         old=RealtimeFlightSession(self.root); r=old.resources.ships[0]
         instance=old.world.scene.ships[0].combat_state.instance
-        for module,mode,hp in (('cic',None,None),('cic','off',None),('cic',None,0),('lift_tank',None,0),('generator',None,0)):
+        # Insufficient lift now has its own rescuable descent policy.
+        for module,mode,hp in (('cic',None,None),('cic','off',None),('cic',None,0),('generator',None,0)):
             s=self.session()
             modules=tuple(replace(v,operating_mode=mode if v.instance_id==module and mode else v.operating_mode,
                 current_durability_points=hp if v.instance_id==module and hp is not None else v.current_durability_points) for v in instance.module_states)

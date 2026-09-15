@@ -10,7 +10,10 @@ from math import atan2, cos, hypot, pi, sin, sqrt
 from 高天荒野舰艇水平射界 import horizontal_fire_arc
 from 高天荒野舰艇数据契约 import canonical_sha256
 from . import persistent_ship as ps, tactical_inventory as ti
-from .tactical_ammunition import ORDINARY, SUPPORTED, INCENDIARY
+from .tactical_ammunition import ORDINARY, SUPPORTED, NEW_PROJECTILES, is_incendiary, is_ordinary
+from . import tactical_ballistics as ballistics
+from .tactical_layers import LAYERS
+from . import tactical_targeting as targeting
 
 RAD = pi / 180000
 RECIPE = 'recipe.p2a.ordinary'
@@ -85,11 +88,13 @@ class Gun:
     blocked: tuple
     minimum_range: float
     maximum_range: float
+    cooldown_steps: int
 
 
 @dataclass(frozen=True)
 class GunState:
     mode: str = 'auto'
+    target_policy: str = 'automatic'
     target: tuple | None = None
     manual_point: tuple | None = None
     fire_requested: bool = False
@@ -105,6 +110,7 @@ class GunState:
     reload_recipe_id: str | None = None
     reload_blocked_key: tuple | None = None
     reload_blocked_reason: str | None = None
+    attack_layer: str | None = None
 
 
 @dataclass(frozen=True)
@@ -130,6 +136,7 @@ class Projectile:
     deck_level: int = 0
     height_layer: str | None = None
     projectile_key: tuple = ORDINARY
+    flight_profile: ballistics.FlightProfile | None = None
 
 
 def resource_pack(seed, config):
@@ -171,7 +178,7 @@ class GunneryBattle:
         ps.need(len(scenario.bindings) == len(session._seeds), '$', 'Incomplete geometry binding')
         if instance_bindings is not None:
             ps.need(len(instance_bindings) == len(session._seeds), '$.bindings', 'Incomplete persisted inventory mapping')
-        bindings, guns, gun_recipes, gun_projectiles = [], [], [], []
+        bindings, guns, gun_recipes, gun_projectiles, gun_flights = [], [], [], [], []
         self._modules, self._indices, self._sides, self._radars, self._controllers = [], [], [], [], []
         self._blocked_cache = None
         for index, (seed, binding) in enumerate(zip(session._seeds, scenario.bindings)):
@@ -210,29 +217,41 @@ class GunneryBattle:
                 definition=pack.definition()
                 spec=next(w for w in definition['weapons'] if w['module_id']==m.id)
                 loaded=next(w for w in value['weapons'] if w['module_id']==m.id)
-                choices={}
+                choices={};flights={}
                 for choice in spec['recipe_ids']:
                     recipe=next(r for r in definition['recipes'] if r['id']==choice)
                     projectile=next(p for p in definition['projectiles'] if p['id']==recipe['projectile']['id'])
                     key=(projectile['id'],projectile['version'])
-                    ps.need(key in SUPPORTED and projectile['speed_mmps']==config['speed_mmps'] and projectile['mass_g']==config['mass_g'],
+                    ps.need(key in SUPPORTED and ('ballistics' in projectile or projectile['speed_mmps']==config['speed_mmps'] and projectile['mass_g']==config['mass_g']),
                         '$.recipe','当前炮击内核不支持此弹丸版本或参数')
-                    ps.need(key != INCENDIARY or 'ignition' in definition, '$.recipe', '燃烧弹需要新点燃配置')
+                    ps.need(not is_incendiary(key) or 'ignition' in definition, '$.recipe', '燃烧弹需要新点燃配置')
                     choices[choice]=key
+                    flights[choice]=ballistics.compile_profile(projectile,config['projectile_lifetime_steps'])
+                    if key in NEW_PROJECTILES:
+                        caliber,kind=NEW_PROJECTILES[key]
+                        ps.need('ballistics' in projectile and flights[choice].caliber_mm==caliber,
+                            '$.recipe','弹丸口径与弹道配置不匹配')
+                        ps.need(f'gtw.munition.3a.{caliber}mm.{kind}' in cap['compatible_munition_ids'],
+                            '$.recipe',m.prototype.name+'：不兼容此口径或弹种')
                 gun_projectiles.append(choices)
-                recipe_id=loaded['recipe_id'] or next((r for r,key in choices.items() if key==ORDINARY),spec['recipe_ids'][0])
+                gun_flights.append(flights)
+                recipe_id=loaded['recipe_id'] or next((r for r,key in choices.items() if is_ordinary(key)),spec['recipe_ids'][0])
                 gun_recipes.append(recipe_id)
                 turret=spec['turret']
                 guns.append(Gun(index, m.id, tuple(m.anchor_m), m.rotation_deg*pi/180,
                     turret['minimum_mdeg']*RAD, turret['maximum_mdeg']*RAD, turret['slew_mdeg_per_s']*RAD/60,
-                    tuple(tuple(interval) for interval in arc['blocked_intervals_deg']), cap['minimum_range_m'], cap['maximum_range_m']))
+                    tuple(tuple(interval) for interval in arc['blocked_intervals_deg']), cap['minimum_range_m'], cap['maximum_range_m'],
+                    spec.get('cooldown_steps',config['cooldown_steps'])))
         self.inventory = ti.InventoryBattle(ps.PreparedBattle(session, tuple(bindings)))
         if self.damage:
             self.damage.fuel_areas=tuple(tuple((t['tank_id'],t['deck_level'],tuple(tuple(tuple(p) for p in poly) for poly in t['pieces']))
                 for t in inv._fuel_tanks.values() if t['module_id'] is None) for inv in self.inventory.inventories)
         self.guns = tuple(guns)
+        self.groups = targeting.compile_groups(session, scenario)
+        self._search_contacts = {}
         self._gun_recipes = tuple(gun_recipes)
         self._gun_projectiles = tuple(gun_projectiles)
+        self._gun_flights = tuple(gun_flights)
         self.states = tuple(GunState(rng=(config['seed']+n*65537) & 0xffffffff, reload_recipe_id=gun_recipes[n]) for n in range(len(guns)))
         self.projectiles = ()
         self._contacts, self._lock_started = {}, {}
@@ -247,6 +266,8 @@ class GunneryBattle:
         self.repair = RepairRuntime(self)
         from .tactical_ignition import IgnitionRuntime
         self.ignition = IgnitionRuntime(self)
+        from .tactical_layers import HeightOrders
+        self.height_orders = HeightOrders(self)
 
     def _guard(self):
         ps.need(not self.session._executing, '$', 'Gunnery requires idle owner boundary')
@@ -255,19 +276,40 @@ class GunneryBattle:
     def submit(self, value):
         self._guard()
         v = ps.clone(value)
-        ps.obj(v, 'epoch generation sequence weapon_id kind arguments', '$.gun_input')
+        selector = 'group_id' if 'group_id' in v else 'weapon_id'
+        ps.obj(v, 'epoch generation sequence '+selector+' kind arguments', '$.gun_input')
         ps.need(v['epoch'] == self.session.world.epoch, '$.epoch', 'Stale gun scene')
         ps.integer(v['sequence'], '$.sequence', 1); ps.integer(v['generation'], '$.generation')
-        ps.identifier(v['weapon_id'], '$.weapon_id')
-        index = next((n for n, g in enumerate(self.guns) if g.ship_index == self._direct_index and g.module_id == v['weapon_id']), None)
-        ps.need(index is not None, '$.weapon_id', 'Only own ordinary guns may be controlled')
+        ps.identifier(v[selector], '$.'+selector)
+        members = (v['weapon_id'],) if selector == 'weapon_id' else next((g['weapon_ids'] for g in self.groups
+            if g['ship_id'] == self.session._direct and g['group_id'] == v['group_id']), ())
+        indices = [n for n, g in enumerate(self.guns) if g.ship_index == self._direct_index and g.module_id in members]
+        ps.need(bool(indices) and len(indices) == len(members), '$.'+selector, '请选择本舰火炮或武器组')
         if v['sequence'] == self.sequence:
             ps.need(v == self._last, '$.sequence', 'Conflicting gun retry')
             return False
         ps.need(self.ending is None, '$', 'Battle has ended')
         ps.need(v['sequence'] == self.sequence+1, '$.sequence', 'Expired or skipped gun sequence')
+        # Validate every member before publishing any state or resource change.
+        states = list(self.states)
+        for index in indices:
+            states[index] = self._command_state(index, v['kind'], v['arguments'])
+        inventories = list(self.inventory.inventories)
+        if v['kind'] == 'ammunition':
+            candidate = inventories[self._direct_index].fork()
+            for index in indices:
+                weapon_id = self.guns[index].module_id
+                loading = next(w for w in candidate._value['weapons'] if w['module_id'] == weapon_id)['reload']
+                if loading and loading['recipe_id'] != states[index].reload_recipe_id:
+                    candidate.command(epoch=candidate.epoch, sequence=candidate.sequence+1, kind='cancel_reload', target=weapon_id)
+            inventories[self._direct_index] = candidate
+        self.inventory.inventories = tuple(inventories)
+        self.states = tuple(states)
+        self.sequence, self._last = v['sequence'], v
+        return True
+
+    def _command_state(self, index, kind, args):
         state = self.states[index]
-        kind, args = v['kind'], v['arguments']
         if kind == 'ammunition':
             ps.obj(args, 'recipe_id', '$.arguments')
             ps.identifier(args['recipe_id'], '$.recipe_id')
@@ -276,7 +318,7 @@ class GunneryBattle:
         elif kind == 'mode':
             ps.obj(args, 'mode', '$.arguments')
             ps.need(args['mode'] in ('auto', 'manual'), '$.mode', 'Unknown gun mode')
-            state = replace(state, mode=args['mode'], target=None, manual_point=None, fire_requested=False, aim_point=None, status='no_target')
+            state = replace(state, mode=args['mode'], target_policy='automatic', target=None, manual_point=None, fire_requested=False, aim_point=None, status='no_target')
         elif kind == 'target':
             ps.obj(args, 'ship_id module_id', '$.arguments')
             ps.identifier(args['ship_id'], '$.target')
@@ -286,7 +328,7 @@ class GunneryBattle:
             if args['module_id'] is not None:
                 ps.identifier(args['module_id'], '$.module_id')
                 ps.need(args['module_id'] in self._modules[target], '$.module_id', 'Unknown target module')
-            state = replace(state, target=(target, args['module_id']), fire_requested=False, status='tracking')
+            state = replace(state, target_policy='assigned', target=(target, args['module_id']), fire_requested=False, status='tracking')
         elif kind in ('aim', 'fire'):
             ps.obj(args, 'point', '$.arguments')
             ps.need(type(args['point']) is list and len(args['point']) == 2, '$.point', 'Expected world point')
@@ -294,32 +336,29 @@ class GunneryBattle:
                 ps.number(n, '$.point', -10000000, 10000000)
             ps.need(state.mode == 'manual', '$.mode', 'Manual input requires manual mode')
             state = replace(state, manual_point=tuple(args['point']), fire_requested=kind == 'fire' or state.fire_requested)
+        elif kind == 'layer':
+            ps.obj(args,'layer','$.arguments')
+            layer=args['layer']
+            ship=self.session.world.ships[self.guns[index].ship_index]
+            ps.need(layer is None or type(layer) is str and layer in LAYERS and
+                abs(LAYERS.index(layer)-LAYERS.index(ship.motion.height_layer))<=1,'$.layer','炮弹只能选择本层或相邻高度层')
+            state=replace(state,attack_layer=layer,fire_requested=False,aim_point=None)
         elif kind == 'deck':
             ps.obj(args, 'level', '$.arguments')
             ps.integer(args['level'], '$.level')
             ps.need(args['level'] in {e.key[1] for edges in self.damage.edges for e in edges} if self.damage else args['level'] == 0,
                     '$.level', 'Unknown technical attack deck')
             state = replace(state, deck_level=args['level'], fire_requested=False)
+        elif kind == 'auto_target':
+            ps.obj(args, '', '$.arguments')
+            state = replace(state, mode='auto', target_policy='automatic', target=None, manual_point=None,
+                fire_requested=False, aim_point=None, status='no_target')
         elif kind == 'clear':
             ps.obj(args, '', '$.arguments')
-            state = replace(state, target=None, manual_point=None, fire_requested=False, aim_point=None, status='no_target')
+            state = replace(state, target_policy='hold', target=None, manual_point=None, fire_requested=False, aim_point=None, status='holding_fire')
         else:
             ps.need(False, '$.kind', 'Unknown gun command')
-        states = list(self.states); states[index] = state
-        if kind == 'ammunition':
-            # Cancel on the acknowledged command boundary, so an immediate
-            # withdrawal cannot complete a batch the player has already replaced.
-            ship_index = self.guns[index].ship_index
-            current = self.inventory.inventories[ship_index]
-            loading = next(w for w in current._value['weapons'] if w['module_id'] == v['weapon_id'])['reload']
-            if loading and loading['recipe_id'] != state.reload_recipe_id:
-                candidate = current.fork()
-                candidate.command(epoch=candidate.epoch, sequence=candidate.sequence+1, kind='cancel_reload', target=v['weapon_id'])
-                inventories = list(self.inventory.inventories); inventories[ship_index] = candidate
-                self.inventory.inventories = tuple(inventories)
-        self.states = tuple(states)
-        self.sequence, self._last = v['sequence'], v
-        return True
+        return state
 
     def suspend(self):
         self._guard()
@@ -421,13 +460,8 @@ class GunneryBattle:
             step = world.fixed_step
             availability_key, available = staged['availability_key'], staged['available']
             starts, contacts = {}, {}
-            working_states = self.states
-            if self.damage and self.enemy_fire and step >= 180:
-                working_states = tuple(replace(s, target=(self._direct_index, 'cic' if 'cic' in self._modules[self._direct_index] else None))
-                    if self._sides[g.ship_index] != self._sides[self._direct_index] else
-                    replace(s,target=(next(i for i,side in enumerate(self._sides) if side!=self._sides[g.ship_index]),None))
-                    if g.ship_index!=self._direct_index and s.mode=='auto' and s.target is None and any(side!=self._sides[g.ship_index] for side in self._sides) else s
-                    for g, s in zip(self.guns, working_states))
+            working_states, search_contacts = targeting.acquire(self, world, available, inventories)
+            staged['search_contacts'] = search_contacts
             desired_targets = sorted({(g.ship_index, s.target[0]) for g, s in zip(self.guns, working_states) if s.mode == 'auto' and s.target})
             channel_use = {}
             qualities = {}
@@ -448,17 +482,18 @@ class GunneryBattle:
                     reason = 'radar_unavailable' if not sources else 'channels_busy'
                 quality = 'normal' if locked else 'degraded'
                 qualities[pair] = (quality, reason, sources if locked else ())
-                a, b = world.ships[observer], world.ships[target]
-                distance = hypot(*difference(a.motion.position_world_m.to_list(), b.motion.position_world_m.to_list()))
-                visible = b.motion.hull_integrity_fraction > 0 and b.command.lifecycle.physical_status != 'exited' and (
-                    distance <= self.config['visual_range_m'] or bool(sources))
+                visible = targeting.visible(self, observer, target, world, available)
                 previous = self._contacts.get(pair)
                 if visible and (previous is None or previous.quality != quality or step-previous.step >= self.config['observation_period_steps']):
                     contacts[pair] = self._measure(observer, target, world, quality)
                 elif visible and previous and step-previous.step <= self.config['observation_expiry_steps']:
                     contacts[pair] = previous
-            projectiles = [replace(p, previous=p.position, position=add(p.position, (p.velocity[0]/60, p.velocity[1]/60)))
-                           for p in (() if self.damage else self.projectiles) if step < p.expires]
+            projectiles = []
+            if not self.damage:
+                for p in self.projectiles:
+                    if step>=p.expires:continue
+                    position,velocity=ballistics.flight_segment(p).at(1.)
+                    projectiles.append(replace(p,previous=p.position,position=position,velocity=velocity))
             if self.damage:
                 projectiles = list(staged['survivors'])
             states, projectile_sequence = [], self._projectile_sequence
@@ -469,6 +504,9 @@ class GunneryBattle:
                     continue
                 ship, inv = world.ships[gun.ship_index], inventories[gun.ship_index]
                 m = ship.motion
+                attack_layer=state.attack_layer or m.height_layer
+                cross_legal=abs(LAYERS.index(attack_layer)-LAYERS.index(m.height_layer))<=1
+                speed_ratio=1. if attack_layer==m.height_layer else ballistics.CROSS_LAYER_SPEED
                 offset = rotate(gun.anchor, m.heading_rad)
                 origin = add(tuple(m.position_world_m.to_list()), offset)
                 own_velocity = add(tuple(m.velocity_world_mps.to_list()), (-m.yaw_rate_radps*offset[1], m.yaw_rate_radps*offset[0]))
@@ -479,6 +517,9 @@ class GunneryBattle:
                 if not self._can_fire(ship, gun.ship_index):
                     status = 'control_unavailable'
                 w = next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)
+                flight=self._gun_flights[gun_index][w['recipe_id'] or state.reload_recipe_id]
+                maximum_range=min(gun.maximum_range,ballistics.reference_range(flight,speed_ratio))
+                if not cross_legal:status=status or 'layer_out_of_reach'
                 def transact(kind, **args):
                     inv.command(epoch=inv.epoch, sequence=inv.sequence+1, kind=kind, target=gun.module_id, **args)
                 # Empty guns can load without a target. The selected recipe never
@@ -501,20 +542,15 @@ class GunneryBattle:
                         quality, quality_reason, sources = qualities[pair]
                         contact = contacts.get(pair)
                         if contact:
-                            elapsed = (step-contact.step)/60
-                            position = add(contact.position, (contact.velocity[0]*elapsed, contact.velocity[1]*elapsed))
-                            velocity = contact.velocity
-                            if state.target[1]:
-                                module = self._modules[state.target[0]][state.target[1]]
-                                target_offset = rotate(module.anchor_m, contact.heading+contact.yaw*elapsed)
-                                position = add(position, target_offset)
-                                velocity = add(velocity, (-contact.yaw*target_offset[1], contact.yaw*target_offset[0]))
-                            aim = intercept(origin, own_velocity, position, velocity, self.config['speed_mmps']/1000)
+                            aim = targeting.solution(self, state, contact, step, origin, own_velocity, flight, speed_ratio)
                             bearing_error = contact.bearing_error
                         if aim is None:
                             status = status or 'target_unavailable'
+                        if world.ships[state.target[0]].motion.height_layer != attack_layer:
+                            aim = None
+                            status = status or 'target_other_layer'
                 if aim is None:
-                    states.append(replace(state, aim_point=None, status=status or ('reloading' if w['reload'] else 'no_target'), fire_requested=False,
+                    states.append(replace(state, aim_point=None, status=status or ('holding_fire' if state.target_policy == 'hold' else 'reloading' if w['reload'] else 'no_target'), fire_requested=False,
                         quality=quality, quality_reason=quality_reason, lock_sources=sources))
                     continue
                 delta = difference(aim, origin)
@@ -526,7 +562,7 @@ class GunneryBattle:
                 aim_direction = rotate((sin(desired+gun.rotation), cos(desired+gun.rotation)), m.heading_rad)
                 display_aim = add(origin, (aim_direction[0]*hypot(*delta), aim_direction[1]*hypot(*delta)))
                 status = status or ('out_of_arc' if not gun.minimum <= desired <= gun.maximum else
-                    'out_of_range' if not gun.minimum_range <= hypot(*delta) <= gun.maximum_range else
+                    'out_of_range' if not gun.minimum_range <= hypot(*delta) <= maximum_range else
                     'hull_blocked' if self._hull_blocked(gun, angle) else
                     'traversing' if abs(desired-angle) > self.config['aligned_tolerance_mdeg']*RAD else None)
                 w = next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)
@@ -548,14 +584,14 @@ class GunneryBattle:
                         else:
                             direction = rotate((sin(launch_angle+gun.rotation), cos(launch_angle+gun.rotation)), m.heading_rad)
                             muzzle = add(origin, (direction[0]*3, direction[1]*3))
-                            velocity = add(own_velocity, (direction[0]*self.config['speed_mmps']/1000, direction[1]*self.config['speed_mmps']/1000))
+                            velocity = add(own_velocity, (direction[0]*flight.muzzle_speed_mps*speed_ratio, direction[1]*flight.muzzle_speed_mps*speed_ratio))
                             shot_projectile = self._gun_projectiles[gun_index][w['recipe_id']]
-                            transact('discharge', quantity=1, cooldown_steps=self.config['cooldown_steps'])
+                            transact('discharge', quantity=1, cooldown_steps=gun.cooldown_steps)
                             projectile_sequence += 1
                             projectiles.append(Projectile(projectile_sequence, ship.ship_id, gun.module_id, muzzle, muzzle, velocity,
-                                step+self.config['projectile_lifetime_steps'],
+                                step+flight.lifetime_steps,
                                 self._modules[state.target[0]][state.target[1]].base_deck_level
-                                if state.mode == 'auto' and state.target and state.target[1] else 0 if state.mode == 'auto' else state.deck_level, m.height_layer, shot_projectile))
+                                if state.mode == 'auto' and state.target and state.target[1] else 0 if state.mode == 'auto' else state.deck_level, attack_layer, shot_projectile, flight))
                             shots += 1
                             status = 'fired'
                             # Begin the next legal batch immediately, including after
@@ -602,13 +638,27 @@ class GunneryBattle:
                 ps.need(loss>=-1e-8,'$.fuel','Tactical fuel cannot increase')
                 if loss>0:result.append((ship.ship_id,loss))
             return tuple(result)
+        def finish(world, result, inventories):
+            # A rain-layer deadline is resolved after this tick's emergency work.
+            # Only the final world may declare that formerly rescuable ship lost.
+            ending = self._ending_reason(world) if self.damage else None
+            if ending and not staged.get('ending'):
+                for inv in inventories:
+                    inv.prepare_settlement('ending.'+world.epoch)
+                staged['ending'] = dict(reason=ending, step=world.fixed_step,
+                    removed_projectiles=len(staged['projectiles']), saved=False)
+                staged['projectiles'] = ()
+                staged['states'] = tuple(replace(s, target=None, manual_point=None, fire_requested=False,
+                    aim_point=None, status='battle_finished') for s in staged['states'])
+                staged['fire_controllers'] = tuple(replace(c, enabled=False, status='battle_finished') for c in staged['fire_controllers'])
         result = self.inventory.step(control=control, inventory_before_advance=permissions,
             inventory_fuel=fuel_losses if self.damage and any(i._fuel_tanks for i in self.inventory.inventories) else None,
             inventory_project=simulate, inventory_repair=repairs if self.repair.enabled else None,
-            project=project, impact_resolver=impacts if self.damage else None, **flight_commands)
+            inventory_finish=finish, project=project, impact_resolver=impacts if self.damage else None, **flight_commands)
         self.states, self.projectiles = staged['states'], staged['projectiles']
         self.fire.pending_modes = {}
         self._contacts, self._lock_started = staged['contacts'], staged['starts']
+        self._search_contacts = staged['search_contacts']
         self._availability_key, self._available = staged['availability_key'], staged['available']
         self._projectile_sequence = staged['projectile_sequence']
         if self.damage:
@@ -656,14 +706,21 @@ class GunneryBattle:
         self._guard()
         weapons = []
         inventory_summaries = tuple(inv.summary() for inv in self.inventory.inventories)
-        for gun, state in zip(self.guns, self.states):
+        for gun_index, (gun, state) in enumerate(zip(self.guns, self.states)):
             recipe_id = state.reload_recipe_id
             ship = self.session.world.ships[gun.ship_index]
             inv = self.inventory.inventories[gun.ship_index]
             w = next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)
             origin = add(tuple(ship.motion.position_world_m.to_list()), rotate(gun.anchor, ship.motion.heading_rad))
             direction = rotate((sin(state.angle+gun.rotation), cos(state.angle+gun.rotation)), ship.motion.heading_rad)
-            weapons.append(dict(ship_id=ship.ship_id, module_id=gun.module_id, mode=state.mode, angle_rad=state.angle,
+            layer=state.attack_layer or ship.motion.height_layer
+            ratio=1. if layer==ship.motion.height_layer else ballistics.CROSS_LAYER_SPEED
+            flight=self._gun_flights[gun_index][w['recipe_id'] or recipe_id]
+            weapons.append(dict(ship_id=ship.ship_id, module_id=gun.module_id, mode=state.mode, target_policy=state.target_policy, angle_rad=state.angle,
+                attack_layer=state.attack_layer, effective_layer=layer,
+                ballistics=dict(caliber_mm=flight.caliber_mm,speed_mps=flight.muzzle_speed_mps,effective_speed_mps=flight.muzzle_speed_mps*ratio,
+                    lifetime_s=flight.lifetime_steps/60,reference_range_m=min(gun.maximum_range,ballistics.reference_range(flight,ratio)),
+                    speed_retention=ratio,drag=flight.drag,cyclic_rpm=3600/max(1,gun.cooldown_steps)),
                 origin_m=origin, direction=direction, aim_point_m=state.aim_point,
                 target_ship_id=self.session.world.ships[state.target[0]].ship_id if state.target else None,
                 target_module_id=state.target[1] if state.target else None, deck_level=state.deck_level, quality=state.quality, quality_reason=state.quality_reason,
@@ -679,8 +736,8 @@ class GunneryBattle:
                 cargo=[dict(good_id=c['good_id'], quantity=c['quantity'], reserved=inventory_summaries[gun.ship_index]['reserved_cargo'].get(c['good_id'],0))
                     for c in inv._value['cargo']]))
         return dict(interface='gaotian.gunnery-view/p2a-v1alpha1', command_sequence=self.sequence,
-            weapons=weapons, projectiles=[dict(id=p.id, ship_id=p.ship_id, position_m=p.position,
-                previous_m=p.previous, velocity_mps=p.velocity, projectile_type=p.projectile_key[0]) for p in self.projectiles],
+            groups=ps.clone(list(self.groups)), weapons=weapons, projectiles=[dict(id=p.id, ship_id=p.ship_id, position_m=p.position,
+                previous_m=p.previous, velocity_mps=p.velocity, projectile_type=p.projectile_key[0], height_layer=p.height_layer) for p in self.projectiles],
             policy_id=self.config['id'], damage_enabled=self.damage is not None, ending=self.ending,
             damage=None if self.damage_state is None else dict(hits=self.damage_state.hits, expired=self.damage_state.expired,
                 recent=self.damage_state.recent),

@@ -1,4 +1,5 @@
 import type { CombatRecord, SettlementShip } from './settlement';
+import type { LiftReserveReading } from '../LiftReserve';
 export type WeaponChoice = { module_id: string; action: 'keep' | 'preload' | 'discard_and_preload'; recipe_id: string | null; batches: number };
 export type PreparedLaunch = { preparation_id:string; launch_id:string; direct_instance_id:string };
 export interface PreparationDraft {
@@ -10,14 +11,16 @@ export interface PreparationDraft {
 export interface Supply { ammunition_resources: number;fuel_units?:number; cargo: { good_id: string; quantity: number }[] }
 export interface PreparationResult { preparation_id: string; ships: SettlementShip[]; supply_before: Supply; supply_after: Supply }
 export interface PreparationShip {
+  lift_reserve?: LiftReserveReading;
   instance_id: string; name: string; module_names: Record<string,string>;
   state: Omit<CombatRecord['state'], 'weapons'> & { fuel_units: number; crew: { crew_type: string; count: number }[];
     weapons: (CombatRecord['state']['weapons'][number] & { recipe_id: string | null })[] };
   resources: { ignition_decks?:{deck_id:string;deck_level:number;multiplier:number}[]; fuel_tanks?:{tank_id:string;module_id:string|null;deck_id:string|null;deck_level:number;capacity_units:number;maximum_points:number}[];
     damage_controls?: {module_id:string; capacity_units:number; preparation_steps:number; cargo_costs:{good_id:string;quantity:number}[]}[];
     goods: { id: string; unit_volume_cm3: number }[]; magazines: { module_id: string; capacity_resources: number }[];
-    weapons: { module_id: string; ready_capacity: number; recipe_ids: string[] }[];
-    recipes: { id: string; ammo_cost: number; rounds: number; cargo_costs: { good_id: string; quantity: number }[] }[] };
+    weapons: { module_id: string; ready_capacity: number; recipe_ids: string[]; cooldown_steps?: number }[];
+    projectiles?: { id: string; speed_mmps: number; ballistics?: {caliber_mm: number; lifetime_steps: number} }[];
+    recipes: { id: string; ammo_cost: number; rounds: number; projectile?: {id: string}; reload_steps?: number; cargo_costs: { good_id: string; quantity: number }[] }[] };
   enabled_recipe_ids: string[]; capacity: { capacity_cm3: number; used_volume_cm3: number; over_capacity: boolean };
 }
 export interface PreparationPacket { draft: PreparationDraft; ships: PreparationShip[]; supply: Supply | null; receipt: PreparationResult | null; stale_error: string | null }

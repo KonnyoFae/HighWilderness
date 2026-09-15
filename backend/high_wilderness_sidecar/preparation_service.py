@@ -1,6 +1,6 @@
 """X1a.3 serialized desktop preparation service. No caller-supplied policies."""
 from hashlib import sha256
-from . import battle_preparation as bp, persistent_ship as ps, outfit_documents, outfits
+from . import battle_preparation as bp, persistent_ship as ps, outfit_documents, outfits, lift_reserve
 from .preparation_transactions import PreparationStore
 from .storage import read_json
 from .preparation_policy import load_current
@@ -122,6 +122,7 @@ class PreparationService:
             names={m.id:m.prototype.name for m in design.resources.seed.resources.modules}
             details.append(dict(instance_id=record['state']['instance_id'],name=design.archive()['document']['outfit']['name'],
                 state=record['state'],resources=definition,module_names=names,
+                lift_reserve=lift_reserve.prepared(design, record),
                 enabled_recipe_ids=design.archive()['policy']['enabled_recipe_ids'],
                 capacity=ps.inventory_summary(ps.parse_instance(record['state'],design.resources),design.resources)))
         return dict(draft=draft,ships=details,supply=supply,receipt=receipt,stale_error=None)

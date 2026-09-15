@@ -1,6 +1,7 @@
 from dataclasses import replace
 import json
 from pathlib import Path
+from tempfile import TemporaryDirectory
 import subprocess
 import sys
 from queue import Queue
@@ -24,13 +25,17 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 class ViewTests(unittest.TestCase):
+    def setUp(self):
+        self.temp = TemporaryDirectory()
+        self.addCleanup(self.temp.cleanup)
+
     @classmethod
     def setUpClass(cls):
         cls.sample = sf.build_sample_session(ROOT, with_command=True)
         cls.scenario = build_two_ship_scenario(ROOT)
 
     def service(self):
-        clock = Clock(); s = RealtimeViewService('backend.viewtest', clock=clock)
+        clock = Clock(); s = RealtimeViewService('backend.viewtest', clock=clock, settlement_dir=Path(self.temp.name)/'store')
         factory = lambda *_args, **_kw: sf.SimplifiedFlightSession(self.sample._seeds,self.sample._profile,direct_ship_id=self.sample._direct)
         with patch('backend.high_wilderness_sidecar.realtime_view.build_sample_session', factory), \
              patch('backend.high_wilderness_sidecar.realtime_view.build_two_ship_scenario', return_value=self.scenario):
@@ -135,7 +140,8 @@ class ViewTests(unittest.TestCase):
 
 class WorkerTests(unittest.TestCase):
     def test_real_stdio_worker_runs_without_reads_and_mode_switch_pauses(self):
-        process=subprocess.Popen([sys.executable,'-X','utf8','-m','backend.high_wilderness_sidecar','--instance-id','backend.e3btest'],
+        folder = TemporaryDirectory(); self.addCleanup(folder.cleanup)
+        process=subprocess.Popen([sys.executable,'-X','utf8','-m','backend.high_wilderness_sidecar','--instance-id','backend.e3btest','--settlement-dir',folder.name],
             cwd=ROOT,stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True,encoding='utf-8')
         outputs=Queue()
         def collect():

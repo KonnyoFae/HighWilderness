@@ -1,0 +1,18 @@
+{
+  "status": "TACTICAL_LAYERS_UI_PASS",
+  "checks": [
+    "Independent light, grey/cloud-foreground, and dark/rain art load; observation changes neither actual ship layers nor gun commands; distance references remain identical across layers",
+    "Zoom preserves the 50 metre cell and 500/5000 metre references; panning moves world-anchored coordinate labels by the exact screen offset",
+    "Actual shells keep their upper-layer identity while observing rain; rain moves visibly during battle, freezes on pause, and off-layer clicks cannot fire into the wrong layer",
+    "Default 1280 by 860 desktop layout keeps layer controls, distance legend and the fitted battlefield available without horizontal page overflow",
+    "Reset destroys the canvas and art without a remaining battle animation; a fresh scene still supports observation and camera controls when image resources fail"
+  ],
+  "assets": [
+    "/src/tactical/art/upper-cloud-sea.svg",
+    "/src/tactical/art/cloud-sea.svg",
+    "/src/tactical/art/rain-cloud-sea.svg",
+    "/src/tactical/art/cloud-foreground.svg",
+    "/src/tactical/art/rain-foreground.svg"
+  ],
+  "scope": "Real prepared battle currently deploys both ships in upper layer; simultaneous three-layer picking and fixed projectile layer semantics are additionally checked in unit tests."
+}

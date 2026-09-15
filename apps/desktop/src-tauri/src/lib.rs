@@ -133,6 +133,11 @@ fn desktop_editor_only() -> bool {
     std::env::args_os().skip(1).any(|arg| arg == "--editors")
 }
 
+#[tauri::command]
+fn desktop_tactical_only() -> bool {
+    !desktop_editor_only() && std::env::args_os().skip(1).any(|arg| arg == "--tactical")
+}
+
 pub fn run() {
     let supervisor = BackendSupervisor::new(repo_root());
     let application_supervisor = Arc::clone(&supervisor);
@@ -141,6 +146,10 @@ pub fn run() {
             if desktop_editor_only() {
                 if let Some(window) = app.get_webview_window("main") {
                     window.set_title("高天荒野 · 舰艇编辑器")?;
+                }
+            } else if desktop_tactical_only() {
+                if let Some(window) = app.get_webview_window("main") {
+                    window.set_title("高天荒野 · 战术模式")?;
                 }
             }
             let recovery = app.path().app_data_dir()?.join("editor-recovery");
@@ -160,6 +169,7 @@ pub fn run() {
             bridge_stop,
             bridge_status,
             desktop_editor_only,
+            desktop_tactical_only,
         ])
         .build(tauri::generate_context!())
         .expect("failed to build High Wilderness desktop application")

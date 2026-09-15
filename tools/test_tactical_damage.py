@@ -64,6 +64,7 @@ class DamageTests(unittest.TestCase):
 
     def test_miss_expires_without_damage(self):
         b = self.battle(); self.shell(b, (500, 0), (600, 0))
+        fixtures.GunneryTests().send(b, 'clear')  # isolate the injected miss from default automatic fire
         for _ in range(60): b.step()
         self.assertEqual(b.damage_state.expired, 1)
         self.assertEqual(b.damage_state.hits, 0)

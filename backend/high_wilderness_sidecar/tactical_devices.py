@@ -113,7 +113,7 @@ class DeviceKernel:
         return tuple((name, tuple(reason for reason, blocked in zip(OWNED_REASONS, self.reasons(state, i)) if blocked))
             for i, name in enumerate(self.engine_ids))
 
-    def validate_operation(self, op, *, epoch, ship_id, step, allow_rebuild, allow_repair=False):
+    def validate_operation(self, op, *, epoch, ship_id, step, allow_rebuild, allow_repair=False, allow_lift_repair=False):
         require(type(op) is DeviceOperation, "Unknown device operation")
         require(op.epoch == epoch and op.ship_id == ship_id and type(op.module_id) is str
             and op.module_id in self.by_id, "Foreign device operation")
@@ -122,7 +122,8 @@ class DeviceKernel:
         require(type(op.sequence) is int and op.sequence > 0, "Invalid operation sequence")
         require(number(op.amount) and op.amount >= 0, "Invalid damage amount")
         require(op.kind == "damage" or op.kind == "test_rebuild" and allow_rebuild and op.amount == 0
-            or op.kind == "repair" and allow_repair and op.amount > 0,
+            or op.kind == "repair" and allow_repair and op.amount > 0
+            or op.kind == 'emergency_lift_repair' and allow_lift_repair and op.amount > 0,
             "Unsupported repair or disabled fixture rebuild")
 
     def boundary(self, before, operations):
@@ -140,6 +141,9 @@ class DeviceKernel:
             if op.kind == 'repair':
                 require(old.durability_points > EPS, 'Repair cannot rebuild a destroyed module')
                 hp = min(self.seed.modules[i].maximum_durability_points, old.durability_points + op.amount)
+            elif op.kind == 'emergency_lift_repair':
+                require(old.durability_points <= EPS, 'Emergency work requires a destroyed lift tank')
+                hp = op.amount
             else:
                 hp = max(0.0, old.durability_points - op.amount) if op.kind == "damage" else self.seed.modules[i].maximum_durability_points
             updated[i] = ModuleState(hp, op.sequence, signature)

@@ -120,6 +120,7 @@ class IgnitionTests(unittest.TestCase):
 
     def test_fire_save_restart_and_no_cargo_burn(self):
         b=self.battle();cargo=ps.clone(b.inventory.inventories[0]._value['cargo'])
+        hits.fixtures.GunneryTests().send(b,'clear')  # isolate burning cargo from automatic incendiary reload costs
         with patch.object(ig,'sample',return_value=0):self.shot(b);b.step()
         for _ in range(10):b.step()
         self.assertEqual(b.inventory.inventories[0]._value['cargo'],cargo)
@@ -128,6 +129,7 @@ class IgnitionTests(unittest.TestCase):
             store=st.SettlementStore(temp);store.stage(result);store.save(result['settlement_id'])
             r=st.SettlementStore(temp).load_ship('instance.ignition.player',1)
         again=self.battle(record=r)
+        hits.fixtures.GunneryTests().send(again,'clear')
         self.assertEqual(again.fire.fires,b.fire.fires)
         self.assertEqual(again.inventory.inventories[0]._value['cargo'],cargo)
         with patch.object(ig,'sample',side_effect=AssertionError('saved fire resampled')):again.step()

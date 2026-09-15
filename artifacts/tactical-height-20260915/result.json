@@ -1,0 +1,11 @@
+{
+  "status": "TACTICAL_HEIGHT_UI_PASS",
+  "checks": [
+    "Real prepared flagship starts a timed layer order while propulsion and its automatic gun order remain active; cancellation stops progress without changing the actual layer",
+    "A lost command reply is resolved by reading without resending; pause freezes countdown; a second-segment cancellation retains cloud layer; friendly orders keep flagship control and enemy inspection is read-only",
+    "All three layers contain real ships after actual sequential fixed-step transitions; observation filters the correct identities and the default desktop layout remains usable",
+    "Ending during active height movement still produces a savable result and returns to preparation without retaining a live canvas or countdown"
+  ],
+  "base_duration_s": 73.86444883791802,
+  "scope": "Two legal prepared friendly ships and one technical enemy; real production simulation and UI. External test clock is 2x and the technical enemy is passive. No player store is used."
+}

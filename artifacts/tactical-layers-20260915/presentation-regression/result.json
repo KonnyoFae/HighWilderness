@@ -1,0 +1,21 @@
+{
+  "status": "TACTICAL_PRESENTATION_UI_PASS",
+  "metrics": {
+    "observedFramesPerSecond": 240.05601306971633,
+    "changedFramesPerSecond": 216.71723402127168,
+    "distinctPublications": 39,
+    "reads": 45,
+    "displayedStepsBehindPublicationMsMedian": 66.66666666666667,
+    "displayedStepsBehindPublicationMsP95": 100,
+    "animationCallbackMsP95": 0.3999999761581421,
+    "commandToDisplayedStepMs": 138,
+    "commandToAuthorityPublicationMs": 43
+  },
+  "checks": [
+    "Actual authored ship acceleration, turret targeting and live gunfire render between 15 Hz publications; labels share the same display clock",
+    "Pause freezes the exact committed scene and removes the animation loop; zoom still works and resume excludes paused wall time",
+    "Temporary read failure freezes at the last known scene and recovers without extrapolated hits or backwards motion",
+    "Hidden document stops animation; force reset releases the canvas and the next battle begins with a fresh scene and no prior projectile history"
+  ],
+  "scope": "One authored player ship against the prepared opponent; this is presentation validation, not 15–30 ship load acceptance."
+}

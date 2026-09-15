@@ -1,6 +1,7 @@
 import { Workspace } from "./Workspace";
 import { invoke } from "@tauri-apps/api/core";
 import { EditorPanel } from "./editor/EditorPanel";
+import { TacticalWorkspace } from "./tactical/TacticalWorkspace";
 import { useEffect, useMemo, useReducer, useState } from "react";
 
 import {
@@ -24,6 +25,7 @@ function shortInstance(value: string | null) {
 
 export function App() {
   const [editorOnly, setEditorOnly] = useState<boolean | null>(null);
+  const [tacticalOnly, setTacticalOnly] = useState(false);
   const [launchError, setLaunchError] = useState("");
   const transport = useMemo(() => new TauriBridgeTransport(), []);
   const [model, dispatch] = useReducer(diagnosticReducer, initialDiagnosticModel);
@@ -48,6 +50,7 @@ export function App() {
     setLaunchError("");
     try {
       setEditorOnly(await invoke<boolean>("desktop_editor_only"));
+      setTacticalOnly(await invoke<boolean>("desktop_tactical_only"));
       await runStatusAction("start", () => transport.start(receiveEvent));
     } catch (error) { setLaunchError(normalizeHostFailure(error).message); }
   }
@@ -69,12 +72,12 @@ export function App() {
   const failure = model.commandError ?? status.last_error;
 
   return (
-    <main className="app-shell">
+    <main className={`app-shell${tacticalOnly ? " tactical-app" : ""}`}>
       <header className="hero">
         <div>
           <p className="eyebrow">HIGH WILDERNESS</p>
-          <h1>{editorOnly ? "舰艇编辑器" : "舰艇工作台"}</h1>
-          <p className="lede">{editorOnly ? "船壳设计与部件舾装" : "设计舰体、配置舾装与战前准备"}</p>
+          <h1>{editorOnly ? "舰艇编辑器" : tacticalOnly ? "战术模式" : "舰艇工作台"}</h1>
+          <p className="lede">{editorOnly ? "船壳设计与部件舾装" : tacticalOnly ? "整备舰队，进入战场" : "设计舰体、配置舾装与战前准备"}</p>
         </div>
         <div
           className={`state-pill state-${status.state.toLowerCase()}`}
@@ -87,12 +90,13 @@ export function App() {
 
       {launchError && <section className="panel" role="alert"><p>启动入口读取失败：{launchError}</p><button onClick={() => void initialize()}>重新启动</button></section>}
       {!launchError && status.state !== "READY" && <section className="panel editor-launch-status" role="status">
-        <p>{status.state === "FAILED" || status.state === "STOPPED" && editorOnly !== null ? "编辑服务尚未就绪，请重新连接。" : "正在启动编辑服务…"}</p>
+        <p>{status.state === "FAILED" || status.state === "STOPPED" && editorOnly !== null ? "服务尚未就绪，请重新连接。" : "正在启动服务…"}</p>
         {status.last_error && <p>{status.last_error.message}</p>}
         {(status.state === "FAILED" || status.state === "STOPPED") && editorOnly !== null && <button onClick={() => void runStatusAction("start", () => transport.start(receiveEvent))}>重新连接</button>}
       </section>}
       {status.state === "READY" && status.backend_instance_id && editorOnly !== null && (
-        editorOnly ? <EditorPanel key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport} /> : <Workspace key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport}
+        editorOnly ? <EditorPanel key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport} /> : tacticalOnly ?
+          <TacticalWorkspace key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport} /> : <Workspace key={status.backend_instance_id} instance={status.backend_instance_id} transport={transport}
           tacticalAvailable={status.capabilities.includes("tactical.create") && status.capabilities.includes("tactical.set_mode")} />
       )}
 

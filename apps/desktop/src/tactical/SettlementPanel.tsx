@@ -17,6 +17,7 @@ export function SettlementPanel({ current, library, busy, canDeploy, onSave, onI
       <button disabled={busy || current.saved} onClick={() => onSave(current.result.settlement_id)}>{current.saved ? "结算已保存" : "保存全部战后结果"}</button>
       <div className="settlement-ships">{current.result.ships.map(ship => <article key={ship.after.state.instance_id}>
         <h4>{ship.after.ship_id === "ship.web.red" ? "敌方舰船" : "本方舰船"} · {serviceLabel[ship.after.state.service.status]}</h4>
+        {current.result.wrecks?.some(w=>w.instance_id===ship.after.state.instance_id) && <p>已坠毁并留下可打捞残骸。位置已随战果保存，打捞功能将在战略模式接入。</p>}
         <p>船壳 {(ship.before.state.hull_integrity_fraction*100).toFixed(1)}% → {(ship.after.state.hull_integrity_fraction*100).toFixed(1)}%</p>
         <div className="propulsion-tables"><table><thead><tr><th>资源</th><th>战前</th><th>战后</th><th>变动原因</th></tr></thead><tbody>
           {resourceRows(ship).map(row => <tr key={row.key}><td>{row.name}</td><td>{row.before}</td><td>{row.after}</td><td>{row.detail}</td></tr>)}

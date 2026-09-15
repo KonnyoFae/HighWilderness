@@ -92,7 +92,7 @@ def compile_design(document, index, deployment, policy, *, ship_id):
     ps.need(not issues, '$.modules', '以下设备尚不能进入战斗：' + '；'.join(issues))
     catalogs = [ModulePrototypeCatalog.parse(s) for d, s in index.resources.values()
                 if d['kind'] == 'ModulePrototypeCatalog']
-    migrated = [migrate_known_module_catalog_v1_to_v2(c) for c in catalogs]
+    migrated = [migrate_known_module_catalog_v1_to_v2(c) if c.schema == 'gaotian.ship/v1alpha1' else c for c in catalogs]
     catalog = merge_module_prototype_catalogs(migrated, id='gtw.module_catalog.preparation', version=2,
         name='战前准备技术目录', fixture_level='contract_fixture', schema=migrated[0].schema)
     # Legacy 0.2 s thrusters cannot schedule all discrete thrust stages at 60 Hz.
@@ -179,6 +179,11 @@ def restore_design(archive, index):
     ps.obj(value, 'interface ship_id document deployment policy catalog_dependencies_sha256 source_document_sha256 '
         'source_outfit_sha256 snapshot_sha256 resources_sha256 fuel_projection', '$.design')
     ps.need(value['interface'] == DESIGN_INTERFACE, '$.design.interface', '不支持的设计绑定版本')
+    # Reproduce the exact historical catalog and fingerprints for saved ships.
+    # Fresh imports use the extended catalog and current policy instead.
+    legacy_index = outfit_documents.before_tactical_guns(index)
+    if value['catalog_dependencies_sha256'] == outfit_documents.catalog_hash(legacy_index):
+        index = legacy_index
     result = compile_design(value['document'], index, value['deployment'], value['policy'], ship_id=value['ship_id'])
     ps.need(result.archive() == value, '$.design', '设计、目录或资源政策已变化，不能自动重绑')
     return result

@@ -1,0 +1,9 @@
+{
+  "status": "TACTICAL_DESCENT_UI_PASS",
+  "checks": [
+    "Destroyed lift tanks trigger rescuable descent without flagship loss; helm still works, emergency work takes actual fixed steps, pause freezes both progress bars, and a lost command reply does not duplicate work",
+    "Allied damage control targets and costs belong to the selected ship; recovery in cloud keeps that layer and flagship authority; the rain segment displays its final rescue deadline",
+    "Only the final rain deadline creates one wreck; actual repairs, resource expenses, automatic refills and wreck position survive a saved settlement and return to preparation"
+  ],
+  "scope": "Two legal prepared friendly ships and one passive technical enemy; actual production simulation, UI and settlement. Isolated domain fixture destroys all lift tanks at step 5 and runs a 2x external clock. No player data is used."
+}

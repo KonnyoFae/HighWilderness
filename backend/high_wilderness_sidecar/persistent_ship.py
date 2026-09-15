@@ -166,15 +166,20 @@ def compile_resources(seed, definition):
         need(set(items) == {k for k, m in modules.items() if m.prototype.category == category},
             '$.' + name, 'Every installed module in this category must be explicitly bound')
         for item in items.values():
-            obj(item, fields, '$.' + name)
+            obj(item, fields+(' cooldown_steps' if name=='weapons' and 'cooldown_steps' in item else ''), '$.' + name)
             integer(item[capacity], '$.' + name + '.' + capacity, 1)
+            if name=='weapons' and 'cooldown_steps' in item:
+                integer(item['cooldown_steps'],'$.weapons.cooldown_steps',1,36000)
     integer(sum(h['capacity_cm3'] for h in v['holds']), '$.holds.total_capacity_cm3')
     integer(sum(h['capacity_cm3'] for h in v['holds']) + sum(s['capacity_cm3'] for s in v.get('filling_holds', ())), '$.cargo.total_capacity_cm3')
     projectiles = rows(v['projectiles'], 'id', '$.projectiles')
     for projectile in projectiles.values():
-        obj(projectile, 'id version speed_mmps mass_g', '$.projectiles')
+        obj(projectile, 'id version speed_mmps mass_g'+(' ballistics' if 'ballistics' in projectile else ''), '$.projectiles')
         for key in ('version', 'speed_mmps', 'mass_g'):
             integer(projectile[key], '$.projectiles.' + key, 1)
+        if 'ballistics' in projectile:
+            from .tactical_ballistics import validate
+            validate(projectile['ballistics'])
     recipes = rows(v['recipes'], 'id', '$.recipes')
     for recipe in recipes.values():
         obj(recipe, 'id version projectile ammo_cost rounds reload_steps cargo_costs', '$.recipes')

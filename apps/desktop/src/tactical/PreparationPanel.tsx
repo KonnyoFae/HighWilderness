@@ -6,6 +6,7 @@ import type { PreparedLaunch, PreparationDraft, PreparationLibrary, PreparationP
 import type { TacticalRequest } from './model';
 import { resourceRows, fuelTankName } from './settlement';
 import { ammunitionName } from './ammunition';
+import { LiftReserve } from '../LiftReserve';
 
 export function PreparationPanel({transport,instance,active,onBusy,onEnter}: {
   transport: BridgeTransport; instance: string; active: boolean; onBusy: (value:boolean)=>void;
@@ -121,6 +122,7 @@ export function PreparationPanel({transport,instance,active,onBusy,onEnter}: {
       <label>当前准备舰船<select aria-label="当前准备舰船" value={shipId} onChange={e=>setShipId(e.target.value)}>{packet?.ships.map((s,i)=><option key={s.instance_id} value={s.instance_id}>{s.name} · 舰船 {i+1}</option>)}</select></label>
       {ship&&row&&<fieldset disabled={locked}>
         <legend>{ship.name}</legend>
+        <LiftReserve value={ship.lift_reserve} />
         <p>船壳 {(ship.state.hull_integrity_fraction*100).toFixed(0)}% · 燃料 {ship.state.fuel_units} · 人员 {ship.state.crew.reduce((n,c)=>n+c.count,0)}。准备不会修复已有战损。</p>
         {ship.resources.ignition_decks&&<section aria-label="本舰防火配置"><h3>防火配置</h3>
           {ship.resources.ignition_decks.map(d=><p key={d.deck_id}>第 {d.deck_level} 层：{d.multiplier<1?`起火概率降低 ${((1-d.multiplier)*100).toFixed(0)}%`:'无额外防火效果'}</p>)}
@@ -153,9 +155,11 @@ export function PreparationPanel({transport,instance,active,onBusy,onEnter}: {
           <button onClick={()=>edit(r=>{for(const w of r.weapons)Object.assign(w,{action:'keep',recipe_id:null,batches:0});})}>本舰武器全部保持现状</button></div>
         {row.weapons.map((w,i)=>{const spec=ship.resources.weapons.find(v=>v.module_id===w.module_id)!,current=ship.state.weapons.find(v=>v.module_id===w.module_id)!;
           const recipe=ship.resources.recipes.find(r=>r.id===(w.recipe_id??spec.recipe_ids[0]));
+          const projectile=ship.resources.projectiles?.find(p=>p.id===recipe?.projectile?.id);
           return <article className="preparation-weapon" key={w.module_id}><h4>{ship.module_names[w.module_id]} · 武器 {i+1}</h4>
             <p>现有待发 {current.ready_rounds} / {spec.ready_capacity} 发 · {ammunitionName(current.recipe_id)} · 冷却 {(current.cooldown_steps/60).toFixed(1)} 秒</p>
-            <div className="editor-row"><label>准备动作<select aria-label={`武器 ${i+1} 准备动作`} value={w.action} onChange={e=>edit(r=>{const c=r.weapons[i];c.action=e.target.value as WeaponChoice['action'];c.recipe_id=c.action==='keep'?null:spec.recipe_ids.find(id=>id==='recipe.x1a.ordinary'&&ship.enabled_recipe_ids.includes(id))??spec.recipe_ids.find(id=>ship.enabled_recipe_ids.includes(id))??null;c.batches=c.action==='keep'?0:1;})}><option value="keep">保留现状</option><option value="preload">补装整批弹药</option><option value="discard_and_preload">弃置现有弹药并重装</option></select></label>
+            {projectile?.ballistics && <p>所选弹初速 {Math.round(projectile.speed_mmps/1000)} 米/秒 · 寿命 {(projectile.ballistics.lifetime_steps/60).toFixed(1)} 秒{recipe?.reload_steps !== undefined && ` · 每批装填 ${(recipe.reload_steps/60).toFixed(1)} 秒`}{spec.cooldown_steps && ` · 连续射速 ${Math.round(3600/spec.cooldown_steps)} 发/分`}</p>}
+            <div className="editor-row"><label>准备动作<select aria-label={`武器 ${i+1} 准备动作`} value={w.action} onChange={e=>edit(r=>{const c=r.weapons[i];c.action=e.target.value as WeaponChoice['action'];c.recipe_id=c.action==='keep'?null:spec.recipe_ids.find(id=>(id==='recipe.x1a.ordinary'||id.endsWith('.ordinary'))&&ship.enabled_recipe_ids.includes(id))??spec.recipe_ids.find(id=>ship.enabled_recipe_ids.includes(id))??null;c.batches=c.action==='keep'?0:1;})}><option value="keep">保留现状</option><option value="preload">补装整批弹药</option><option value="discard_and_preload">弃置现有弹药并重装</option></select></label>
             <label>弹药种类<select aria-label={`武器 ${i+1} 弹药种类`} disabled={w.action==='keep'} value={w.recipe_id??spec.recipe_ids[0]} onChange={e=>edit(r=>{r.weapons[i].recipe_id=e.target.value;})}>{spec.recipe_ids.map(id=><option key={id} value={id} disabled={!ship.enabled_recipe_ids.includes(id)}>{ammunitionName(id)}{!ship.enabled_recipe_ids.includes(id)?'（尚不可用）':''}</option>)}</select></label>
             <label>批次<input aria-label={`武器 ${i+1} 预装填批次`} type="number" min="1" max="10000" step="1" disabled={w.action==='keep'} value={w.batches} onChange={e=>edit(r=>{const n=quantity(e.target.value);if(n<1||n>10000)throw new Error('预装填批次须为 1—10000 的整数。');r.weapons[i].batches=n;})}/></label></div>
             {recipe&&w.action!=='keep'&&<p>预计装入 {recipe.rounds*w.batches} 发，消耗 {recipe.ammo_cost*w.batches} 点弹药资源{recipe.cargo_costs.map(c=>`、${goodName(c.good_id)} ${c.quantity*w.batches} 份`)}{w.action==='discard_and_preload'?`；另弃置已有 ${current.ready_rounds} 发`:''}。</p>}

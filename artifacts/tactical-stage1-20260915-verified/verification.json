@@ -1,0 +1,14 @@
+{
+  "date": "2026-09-15",
+  "stage": "tactical-first-release/work-package-1",
+  "frontend": {"typecheck": "PASS", "test_files": 19, "tests_passed": 92},
+  "backend": {
+    "command": "python -X utf8 -m unittest tools.test_prepared_deployment tools.test_preparation_service tools.test_realtime_view",
+    "tests_passed": 24,
+    "status": "PASS"
+  },
+  "desktop_build": {"command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File tools/Start-Tactical.ps1 -BuildOnly", "status": "PASS"},
+  "browser": {"report": "result.json", "status": "TACTICAL_STAGE1_UI_PASS", "runtime": "headless Microsoft Edge, production React and real Python sidecar, isolated store"},
+  "scope": "Entry, shared battlefield layout, read-only lift reserve, preparation/battle/settlement/reentry and interrupted settlement recovery",
+  "not_implemented": ["smooth interpolation", "three-layer battlefield", "active height change", "forced descent", "emergency tank repair", "formal high-speed ammunition", "CIWS", "missiles", "RTS fleet orders and distance retreat"]
+}

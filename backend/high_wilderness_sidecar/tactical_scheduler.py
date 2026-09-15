@@ -213,6 +213,13 @@ class TacticalScheduler:
         self._running, self._reason = True, None
         return self.status
 
+    def set_height_target(self, ship_id, target_layer):
+        """Commit a height instruction without stepping or replacing helm input."""
+        self._guard()
+        require(self._running and self._allowed(), 'Height command requires active flagship authority')
+        self._session.set_height_target(ship_id, target_layer)
+        self._committed = self._session.world
+
     def submit(self, value):
         self._guard()
         request = ScheduledControl.parse(value)

@@ -10,6 +10,7 @@ from .sessions import EditorService, EDITOR_CAPABILITIES
 from .tactical import TacticalService, TACTICAL_CAPABILITIES
 from .realtime_view import RealtimeViewService, CAPABILITIES as REALTIME_CAPABILITIES
 from .preparation_service import PreparationService, CAPABILITIES as PREPARATION_CAPABILITIES
+from .tactical_test_reset import CAPABILITY as RESET_CAPABILITY, reset as reset_tactical_test_state
 from typing import Any, BinaryIO
 
 from 高天荒野舰艇数据契约 import ContractError
@@ -126,7 +127,7 @@ class SidecarServer:
                 error = _bridge_error("handshake_required", "$.method", "首条请求必须是 system.hello")
                 return (response_for(message, error=_error_payload(error)),), True
             try:
-                result = hello_result(message, ("system.hello", "system.ping", "system.shutdown", *EDITOR_CAPABILITIES, *TACTICAL_CAPABILITIES, *REALTIME_CAPABILITIES, *PREPARATION_CAPABILITIES))
+                result = hello_result(message, ("system.hello", "system.ping", "system.shutdown", *EDITOR_CAPABILITIES, *TACTICAL_CAPABILITIES, *REALTIME_CAPABILITIES, *PREPARATION_CAPABILITIES, RESET_CAPABILITY))
             except ContractError as error:
                 return (response_for(message, error=_error_payload(error)),), True
             self.handshake_complete = True
@@ -154,6 +155,14 @@ class SidecarServer:
             if params["reason"] not in SHUTDOWN_REASONS:
                 raise _bridge_error("invalid_message", "$.params.reason", "未知关闭原因")
             return (response_for(message, result={"accepted": True}),), True
+
+        if method == RESET_CAPABILITY:
+            try:
+                if message['session_id'] is not None or message['expected_revision'] is not None:
+                    raise ContractError('reset.scope', '$', '测试重置不绑定编辑会话')
+                return (response_for(message, result=reset_tactical_test_state(self, message['params'])),), False
+            except ContractError as error:
+                return (response_for(message, error=_error_payload(error)),), False
 
         if method in PREPARATION_CAPABILITIES:
             try:
@@ -263,7 +272,7 @@ class SidecarServer:
                     break
                 for raw in decoder.feed(chunk):
                     message = self.accept(raw)
-                    if self.handshake_complete and message["method"] in (*EDITOR_CAPABILITIES, "editor.bind_file", *TACTICAL_CAPABILITIES, *REALTIME_CAPABILITIES, *PREPARATION_CAPABILITIES):
+                    if self.handshake_complete and message["method"] in (*EDITOR_CAPABILITIES, "editor.bind_file", *TACTICAL_CAPABILITIES, *REALTIME_CAPABILITIES, *PREPARATION_CAPABILITIES, RESET_CAPABILITY):
                         try:
                             jobs.put_nowait(message)
                         except Full:

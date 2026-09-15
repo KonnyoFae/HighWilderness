@@ -7,6 +7,9 @@ from pathlib import Path
 from time import monotonic_ns
 from uuid import uuid4
 from . import tactical_settlement as settlement
+from .lift_reserve import summarize as summarize_lift
+from .tactical_descent import view as descent_view
+from .tactical_layers import view as height_view
 
 from 高天荒野舰艇数据契约 import canonical_sha256
 from .simplified_flight import build_sample_session
@@ -14,8 +17,9 @@ from .tactical_scheduler import TacticalScheduler, ScheduledControl, require, co
 from .tactical import render_static, RENDER_INTERFACE
 from .tactical_scenario import build_two_ship_scenario, SCENARIO_ID
 from .tactical_gunnery import GunneryBattle, prepare_trial_session
+from .tactical_presentation import FlightHistory
 
-CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry', 'deploy_encounter', 'encounter'))
+CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'height', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry', 'deploy_encounter', 'encounter'))
 INTERFACE = 'gaotian.realtime-view/e3b-v1alpha1'
 VIEW_PERIOD_NS = 66_666_667
 LEASE_NS = 2_000_000_000
@@ -40,6 +44,7 @@ class RealtimeViewService:
         self._deployment_key = None
         self.preparation_store = None
         self._prepared_lease = None
+        self.presentation = None
 
     def deploy_prepared(self,p):
         from . import prepared_deployment as deployment, prepared_launch_store as launches, battle_preparation as bp
@@ -170,11 +175,20 @@ class RealtimeViewService:
         if battle.damage is not None:
             for ship, durability in zip(geometry['ships'], battle.damage.structural_durability):
                 ship['structural_durability'] = dict(policy_id=durability.policy_id, maximum_points=durability.maximum_points)
-        scheduler = TacticalScheduler(battle.session, clock=self.clock, stepper=battle.step, stop_when=lambda: battle.ending is not None)
+        history = FlightHistory()
+        history.record(battle.session.world.fixed_step, battle.projectiles)
+        def stepper(control=None, **kwargs):
+            result = battle.step(control, **kwargs)
+            history.record(battle.session.world.fixed_step, battle.projectiles,
+                () if battle.damage_state is None else battle.damage_state.recent,
+                () if battle.damage_state is None else battle.damage_state.expired_flights)
+            return result
+        scheduler = TacticalScheduler(battle.session, clock=self.clock, stepper=stepper, stop_when=lambda: battle.ending is not None)
         digest = canonical_sha256(geometry)
         previous = dict(self.__dict__)
         try:
             self.gunnery, self.scheduler = battle, scheduler
+            self.presentation = history
             self.geometry, self.digest = geometry, digest
             self.error = self._result = self._save_error = None
             self._result_saved, self._deployment_key = False, key
@@ -190,19 +204,27 @@ class RealtimeViewService:
         q = self.scheduler
         world = q.world
         ships = []
+        dry_masses = {s['id']: s['dry_mass_kg'] for s in self.geometry['ships']}
         for seed, ship in zip(q._session._seeds, world.ships):
             m = ship.motion
             ships.append(dict(id=ship.ship_id, position_m=m.position_world_m.to_list(), heading_rad=m.heading_rad,
                 velocity_mps=m.velocity_world_mps.to_list(), speed_mps=hypot(m.velocity_world_mps.x, m.velocity_world_mps.y),
                 yaw_rate_radps=m.yaw_rate_radps, height_layer=m.height_layer, hull_integrity=m.hull_integrity_fraction,
                 physical_status=ship.command.lifecycle.physical_status, command_status=ship.command.lifecycle.command_status,
+                lift_reserve=summarize_lift(dry_masses[ship.ship_id], ship.command.lift_force_n),
+                height_navigation=height_view(ship),
+                descent=descent_view(ship), wreck=None if ship.wreck is None else asdict(ship.wreck),
                 modules=[dict(id=d.instance_id, durability=v.durability_points) for d,v in zip(seed.devices.modules,ship.devices.modules)]))
         view = dict(interface=RENDER_INTERFACE, backend_instance_id=self.instance_id, scene_id=world.epoch,
             authority_interface='gaotian.simplified-flight-experiment/v1alpha1', paused=not q.status.running,
             fixed_step=world.fixed_step, fixed_step_s=1/60, time_s=world.fixed_step/60,
-            static_sha256=self.digest, static=None, ships=ships, events=[])
+            static_sha256=self.digest, static=None, ships=ships, events=[],
+            height_commands=dict(command_sequence=self.gunnery.height_orders.sequence))
         if self.gunnery is not None:
             view['gunnery'] = self.gunnery.view()
+            for projectile in view['gunnery']['projectiles']:
+                projectile.update(self.presentation.launch(projectile['id']))
+            view['presentation'] = self.presentation.view()
         self._size(view)
         self.latest, self.last_publish = view, self.clock()
 
@@ -260,7 +282,10 @@ class RealtimeViewService:
             return self._attach(battle, geometry)
         require(method in CAPABILITIES, 'Unknown realtime method')
         if method in ('tactical.realtime.settlements', 'tactical.realtime.settlement', 'tactical.realtime.save', 'tactical.realtime.deploy'):
-            require(mode == 'tactical', 'Enter tactical mode first')
+            # Completed results are also recoverable from the independent
+            # preparation entry. Only deployment requires tactical mode.
+            if method == 'tactical.realtime.deploy':
+                require(mode == 'tactical', 'Enter tactical mode first')
             if method == 'tactical.realtime.settlements':
                 require(not p, 'Unexpected library fields')
                 result = self.store.list(); self._size(result)
@@ -294,7 +319,7 @@ class RealtimeViewService:
             battle = settlement.redeploy(record, template, scenario)
             return self._attach(battle, geometry, key)
         fields = {'scene_id', 'known_static_sha256', 'ack_inputs', 'ack_events'} if method == 'tactical.realtime.read' else \
-            {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun', 'tactical.realtime.damage_control') else {'scene_id'}
+            {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun', 'tactical.realtime.height', 'tactical.realtime.damage_control') else {'scene_id'}
         require(set(p) == fields, 'Unknown or missing realtime fields')
         if method == 'tactical.realtime.close' and self.scheduler is None and p['scene_id'] == self.last_closed and self.last_closed is not None:
             return dict(closed=True)
@@ -306,6 +331,7 @@ class RealtimeViewService:
             q.pause('mode_exit')
             self.last_closed = p['scene_id']
             self.scheduler = self.gunnery = self.latest = self.geometry = self.digest = None
+            self.presentation = None
             if self._prepared_lease is not None:self._prepared_lease.close();self._prepared_lease=None
             return dict(closed=True)
         if method == 'tactical.realtime.read':
@@ -322,6 +348,7 @@ class RealtimeViewService:
         require(mode == 'tactical' or method == 'tactical.realtime.pause', 'Enter tactical mode first')
         if method == 'tactical.realtime.withdraw':
             self.gunnery.withdraw()
+            self.presentation.record(q.world.fixed_step, ())
             q.pause('battle_finished')
         elif method == 'tactical.realtime.resume':
             require(self.gunnery.ending is None, 'Battle has ended; create a new scene')
@@ -331,6 +358,14 @@ class RealtimeViewService:
         elif method == 'tactical.realtime.pause':
             q.pause()
             self.gunnery.suspend()
+        elif method == 'tactical.realtime.height':
+            value = p['input']
+            require(type(value) is dict, 'Invalid height input')
+            retry = value == self.gunnery.height_orders.last
+            require(retry or q.status.running and value.get('generation') == q.status.generation and
+                next(s for s in q.world.ships if s.ship_id == q._session._direct).authority_allowed,
+                '换层命令需要运行中的当前场景及旗舰控制权')
+            self.gunnery.height_orders.submit(value, apply_target=q.set_height_target)
         elif method == 'tactical.realtime.gun':
             value = p['input']
             require(type(value) is dict, 'Invalid gun input')

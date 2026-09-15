@@ -126,7 +126,7 @@ class CheckpointTests(unittest.TestCase):
             for reason in ('scripted_transfer', 'fell_below_scene'):
                 s = self.session(); self.fly(s)
                 if reason == 'fell_below_scene':
-                    s.step(device_operations=(self.damage(s, 'lift_tank'),))
+                    s.step(device_operations=(self.damage(s, 'cic'),))
                 s.step(exit_operations=(ExitOperation(s.world.epoch, s._direct,
                     s.world.fixed_step+(phase == 'closing'), phase, reason),))
                 self.pair(s)

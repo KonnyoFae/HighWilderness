@@ -16,9 +16,11 @@ from . import simplified_flight as sf
 from .tactical_devices import DeviceState, ModuleState, DeviceOperation
 from .tactical_resources_runtime import ResourceState, ResourceOperation, REASONS as RESOURCE_REASONS
 from .tactical_command_runtime import CommandState
+from . import tactical_layers as height
+from . import tactical_descent as descent
 
-INTERFACE = 'gaotian.tactical-checkpoint/e2.3-v1alpha1'
-POLICY = 'fixed-six-directions/no-balance/no-propulsion-fuel/latched-command/e2.3'
+INTERFACE = 'gaotian.tactical-checkpoint/e2.3-v3alpha1'
+POLICY = 'fixed-six-directions/no-balance/no-propulsion-fuel/rescuable-descent-v1'
 
 
 def need(ok, detail):
@@ -78,6 +80,9 @@ def _binding(session):
 def _ship(ship):
     p, d, r, c = ship.propulsion, ship.devices, ship.resources, ship.command
     return dict(ship_id=ship.ship_id, motion=ship.motion.to_dict(), control=ship.control.to_dict(),
+        height_navigation=asdict(ship.height_navigation),
+        descent=None if ship.descent is None else asdict(ship.descent),
+        wreck=None if ship.wreck is None else asdict(ship.wreck),
         authority_allowed=ship.authority_allowed, authority_version=ship.authority_version,
         propulsion=dict(engines=[dict(engine=s.engine.to_dict(), blocked=list(s.blocked), versions=list(s.versions)) for s in p.engines],
             targets=list(p.targets), governors=[asdict(g) for g in p.governors], phase_revision=p.phase_revision),
@@ -95,7 +100,6 @@ def dumps(session):
     need(get_ident() == session._owner and not session._executing, 'Checkpoint requires idle owner boundary')
     need(all(s.devices is not None and s.resources is not None and s.command is not None for s in session.world.ships),
         'Checkpoint requires device/resource/command domains for every ship')
-    need(all(s.motion.layer_transition is None for s in session.world.ships), 'Layer transitions are unsupported')
     return json.dumps(dict(interface=INTERFACE, policy=POLICY, resources_sha256=_binding(session),
         fixed_step=session.world.fixed_step, ships=[_ship(s) for s in session.world.ships]),
         ensure_ascii=False, sort_keys=True, allow_nan=False, separators=(',', ':'))
@@ -104,12 +108,21 @@ def dumps(session):
 def _motion(value, seed, step):
     obj(value, 'position_world_m velocity_world_mps heading_rad yaw_rate_radps height_layer layer_transition hull_integrity_fraction fuel_units fixed_step_index')
     need(integer(value['fixed_step_index']) == step, 'Motion boundary mismatch')
-    need(value['layer_transition'] is None and value['height_layer'] == seed.motion.height_layer, 'Unsupported height change')
+    need(type(value['height_layer']) is str and value['height_layer'] in height.LAYERS, 'Unsupported height layer')
+    transition = None
+    if value['layer_transition'] is not None:
+        v = obj(value['layer_transition'], 'source_layer target_layer elapsed_s duration_s progress')
+        need(v['source_layer'] == value['height_layer'] and type(v['target_layer']) is str and v['target_layer'] in height.LAYERS,
+            'Invalid layer transition endpoints')
+        need(abs(height.LAYERS.index(v['source_layer']) - height.LAYERS.index(v['target_layer'])) == 1, 'Non-adjacent layer transition')
+        elapsed, duration = number(v['elapsed_s']), number(v['duration_s'])
+        need(duration > 0 and 0 <= elapsed < duration and abs(number(v['progress']) - elapsed / duration) < 1e-10, 'Invalid layer progress')
+        transition = sf.dynamics.LayerTransitionState(v['source_layer'], v['target_layer'], elapsed, duration)
     need(number(value['fuel_units']) == seed.motion.fuel_units, 'Tactical propulsion fuel must remain unchanged')
     def vector(v):
         return sf.dynamics.Vec2(*(number(n) for n in array(v, 2)))
     motion = sf.dynamics.TacticalMotionState(vector(value['position_world_m']), vector(value['velocity_world_mps']),
-        number(value['heading_rad']), number(value['yaw_rate_radps']), value['height_layer'], None,
+        number(value['heading_rad']), number(value['yaw_rate_radps']), value['height_layer'], transition,
         number(value['hull_integrity_fraction']), value['fuel_units'], step)
     sf.validate_motion(motion)
     return motion
@@ -171,7 +184,7 @@ def _propulsion(value, kernel, step):
         targets, tuple(governors), integer(value['phase_revision']))
 
 
-def _devices(value, dk, step, allow_rebuild):
+def _devices(value, dk, step, allow_rebuild, lift_tanks=()):
     obj(value, 'modules revision')
     modules = []
     for raw, design, initial in zip(array(value['modules'], len(dk.seed.modules)), dk.seed.modules, dk.seed.initial_durability_points):
@@ -188,7 +201,8 @@ def _devices(value, dk, step, allow_rebuild):
             need(signature[4] in ('opening', 'closing') and (n < step or signature[4] == 'closing'), 'Uncommitted device receipt')
             op = DeviceOperation('', '', design.instance_id,
                 seq, signature[1], signature[2], n, signature[4])
-            dk.validate_operation(op, epoch='', ship_id='', step=n-(op.phase=='closing'), allow_rebuild=allow_rebuild)
+            dk.validate_operation(op, epoch='', ship_id='', step=n-(op.phase=='closing'), allow_rebuild=allow_rebuild,
+                allow_repair=True, allow_lift_repair=design.instance_id in lift_tanks)
             if op.kind == 'test_rebuild':
                 need(hp == design.maximum_durability_points, 'Rebuild receipt disagrees with durability')
         modules.append(ModuleState(hp, seq, signature))
@@ -232,7 +246,7 @@ def _resources(value, rk, devices, propulsion, step):
     return replace(rebuilt, revision=revision)
 
 
-def _command(value, ck, devices, resources, motion, seed, step):
+def _command(value, ck, devices, resources, motion, seed, step, wreck):
     obj(value, 'lifecycle fleet_phase loss_reason loss_step revision')
     lifecycle = TacticalShipLifecycleState.parse(value['lifecycle'], '$.lifecycle')
     integer(lifecycle.last_transition_step_index, step)
@@ -259,7 +273,8 @@ def _command(value, ck, devices, resources, motion, seed, step):
     revision = integer(value['revision'])
     need(revision > 0, 'Missing command evaluation')
     state = CommandState(lifecycle, phase, loss, loss_step, revision)
-    rebuilt = ck.resolve(state, devices, resources, motion, mass=seed.model.runtime.current_mass_kg, step=step)
+    rebuilt = ck.resolve(state, devices, resources, motion, mass=height.dry_mass(seed.contributions), step=step,
+        lift_crashed=wreck is not None and wreck.reason=='insufficient_lift')
     need((rebuilt.lifecycle, rebuilt.fleet_phase, rebuilt.loss_reason, rebuilt.loss_step) ==
         (lifecycle, phase, loss, loss_step), 'Command state contradicts current domain state')
     return replace(rebuilt, revision=revision)
@@ -283,18 +298,31 @@ def loads(payload, seeds, safety_profile, *, direct_ship_id, allow_test_device_r
         step = integer(value['fixed_step'])
         raws = array(value['ships'], len(session._seeds))
         if step == 0:
-            need(value == json.loads(dumps(session)), 'Fresh checkpoint must match prepared scene')
-            return session
+            # Orders can be accepted before the first tick. All other initial
+            # facts must still match the entry, including baseline lift.
+            initial = json.loads(json.dumps(value))
+            for raw in initial['ships']:
+                raw['height_navigation']['target_layer'] = None
+                raw['motion']['layer_transition'] = None
+            need(initial == json.loads(dumps(session)), 'Fresh checkpoint must match prepared scene')
         ships = []
         for raw, seed, kernel, dk, rk, ck in zip(raws, session._seeds, session._kernels,
                 session._device_kernels, session._resource_kernels, session._command_kernels):
-            obj(raw, 'ship_id motion control authority_allowed authority_version propulsion devices resources command')
+            obj(raw, 'ship_id motion control authority_allowed authority_version propulsion devices resources command height_navigation descent wreck')
             need(raw['ship_id'] == seed.contributions.ship_id, 'Ship ordering/identity mismatch')
             motion = _motion(raw['motion'], seed, step)
             propulsion = _propulsion(raw['propulsion'], kernel, step)
-            devices = _devices(raw['devices'], dk, step, allow_test_device_rebuild)
+            devices = _devices(raw['devices'], dk, step, allow_test_device_rebuild, dict(ck.lift))
             resources = _resources(raw['resources'], rk, devices, propulsion, step)
-            command = _command(raw['command'], ck, devices, resources, motion, seed, step)
+            wreck = None
+            if raw['wreck'] is not None:
+                w = obj(raw['wreck'], 'fixed_step height_layer position_m reason')
+                wreck = descent.Wreck(integer(w['fixed_step'],step),w['height_layer'],tuple(number(x) for x in array(w['position_m'],2)),w['reason'])
+                need(wreck.reason in ('insufficient_lift','cic_destroyed','hull_structure_collapsed') and
+                    wreck.height_layer==motion.height_layer and wreck.position_m==tuple(motion.position_world_m.to_list()) and
+                    motion.velocity_world_mps==sf.dynamics.Vec2(0.,0.) and motion.yaw_rate_radps==0., 'Invalid wreck position or cause')
+                need(wreck.reason!='insufficient_lift' or wreck.height_layer=='rain', 'Lift crash before rain deadline')
+            command = _command(raw['command'], ck, devices, resources, motion, seed, step, wreck)
             allowed, version = boolean(raw['authority_allowed']), integer(raw['authority_version'], command.revision)
             need(allowed == command.allowed and (version == command.revision or version == 0 and command.revision == 1),
                 'Authority disagrees with command domain')
@@ -311,7 +339,34 @@ def loads(payload, seeds, safety_profile, *, direct_ship_id, allow_test_device_r
                 for reason, v in zip(sf.REASONS, slot.versions):
                     limit = devices.revision if reason in ('actuator_destroyed', 'host_destroyed') else resources.revision if reason in RESOURCE_REASONS else command.revision if reason == 'command_unavailable' else None
                     need(limit is None or v <= limit, 'Availability version exceeds its producer')
-            ships.append(sf.FlightShip(raw['ship_id'], motion, propulsion, control, allowed, version, devices, resources, command))
+            nav = obj(raw['height_navigation'], 'dry_mass_kg initial_lift_force_n base_duration_s target_layer')
+            baseline = next(s.height_navigation for s in session.world.ships if s.ship_id == raw['ship_id'])
+            for key in ('dry_mass_kg', 'initial_lift_force_n', 'base_duration_s'):
+                need(nav[key] is None if getattr(baseline,key) is None else number(nav[key]) == getattr(baseline,key), 'Altered entry height baseline')
+            target = nav['target_layer']
+            need(target is None or type(target) is str and target in height.LAYERS and target != motion.height_layer, 'Invalid height order')
+            ship = sf.FlightShip(raw['ship_id'], motion, propulsion, control, allowed, version, devices, resources, command,
+                replace(baseline, target_layer=target), wreck=wreck)
+            if raw['descent'] is not None:
+                d = obj(raw['descent'], 'source_layer progress duration_s paused')
+                state = descent.Descent(d['source_layer'],number(d['progress']),number(d['duration_s']),boolean(d['paused']))
+                need(wreck is None and target is None and command.lifecycle.physical_status=='operational' and
+                    state.source_layer==motion.height_layer and 0<=state.progress<1 and state.duration_s>0, 'Invalid descent state')
+                seconds = descent.duration(baseline.dry_mass_kg,command.lift_force_n)
+                need(command.lift_force_n<=baseline.dry_mass_kg*height.STANDARD_GRAVITY_MPS2 and
+                    (state.paused and seconds is None or not state.paused and state.duration_s==seconds), 'Descent contradicts lift')
+                ship = replace(ship, descent=state)
+            if step>0 and command.lifecycle.physical_status=='operational':
+                need(descent.reconcile(ship)==ship, 'Missing or unsettled descent')
+            need(wreck is None or wreck.reason in command.lifecycle.failure_causes, 'Wreck lacks a terminal cause')
+            need((target is None) == (motion.layer_transition is None), 'Height order/segment disagreement')
+            if target is not None:
+                segment = motion.layer_transition
+                need(height.unavailable_reason(ship) is None and
+                    (height.LAYERS.index(segment.target_layer) - height.LAYERS.index(motion.height_layer)) *
+                    (height.LAYERS.index(target) - height.LAYERS.index(motion.height_layer)) > 0, 'Invalid active height direction')
+                need(segment.duration_s == height.duration(ship.height_navigation,command.lift_force_n), 'Unsettled height debuff')
+            ships.append(ship)
         session._world = sf.FlightWorld(session.world.epoch, step, tuple(ships))
         return session
     except ContractError:

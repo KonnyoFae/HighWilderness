@@ -1,0 +1,57 @@
+{
+  "status": "TACTICAL_TARGETING_UI_PASS",
+  "checks": [
+    "Custom saved groups survive preparation: two 30 mm guns in one group, a separate 30 mm group, and a 75 mm group",
+    "No target order needed: both group members acquire the cloud enemy after layer selection; stop-fire holds without automatic reacquisition",
+    "One canvas target command atomically assigns both members; module selection also applies to both; another same-caliber group remains unchanged",
+    "Single-gun overrides display mixed group settings; group manual fire respects observation layer and fires one round per member; automatic resume and pause work",
+    "Battle result saves and the grouped ship can enter the next preparation without resetting inventory"
+  ],
+  "commands": [
+    {
+      "kind": "layer",
+      "group_id": "group.forward"
+    },
+    {
+      "kind": "clear",
+      "group_id": "group.forward"
+    },
+    {
+      "kind": "target",
+      "group_id": "group.forward"
+    },
+    {
+      "kind": "target",
+      "group_id": "group.forward"
+    },
+    {
+      "kind": "clear",
+      "group_id": "group.forward"
+    },
+    {
+      "kind": "layer",
+      "weapon_id": "gun.partner"
+    },
+    {
+      "kind": "layer",
+      "group_id": "group.forward"
+    },
+    {
+      "kind": "mode",
+      "group_id": "group.forward"
+    },
+    {
+      "kind": "fire",
+      "group_id": "group.forward"
+    },
+    {
+      "kind": "auto_target",
+      "group_id": "group.forward"
+    },
+    {
+      "kind": "clear",
+      "group_id": "group.forward"
+    }
+  ],
+  "scope": "Production React and Python simulation; isolated saved custom groups, passive cloud enemy. Not a CIWS interception test."
+}

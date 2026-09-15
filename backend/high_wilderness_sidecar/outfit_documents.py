@@ -3,7 +3,7 @@
 No path in a document or recovery record is ever followed. Only create consumes
 a host-granted hull file; subsequent work uses the embedded canonical resource.
 """
-from copy import deepcopy
+from copy import deepcopy, copy
 import json
 
 from 高天荒野舰艇数据契约 import ContractError, OutfitPlanInput, canonical_sha256
@@ -11,6 +11,14 @@ from 高天荒野舰艇编辑器领域层 import HullEditorDocument
 
 BINDING_INTERFACE = "gaotian.outfit-hull-binding/v1alpha1"
 DOCUMENT_INTERFACE = "gaotian.outfit-document/v1alpha1"
+TACTICAL_GUN_CATALOG = 'gtw.module_catalog.tactical.guns'
+
+
+def before_tactical_guns(index):
+    """Exact additive-catalog compatibility: old entries are never rewritten."""
+    result = copy(index)
+    result.resources = {k:v for k,v in index.resources.items() if v[0]['id'] != TACTICAL_GUN_CATALOG}
+    return result
 
 
 def fail(code, message):
@@ -39,7 +47,7 @@ def validate(binding, source, index):
         fail("hull_binding_invalid", "船壳快照版本或字段不匹配")
     if canonical_sha256(binding["hull"]) != binding["hull_sha256"]:
         fail("hull_binding_corrupt", "船壳快照内容指纹不一致")
-    if binding["catalog_dependencies_sha256"] != catalog_hash(index):
+    if binding["catalog_dependencies_sha256"] not in (catalog_hash(index),catalog_hash(before_tactical_guns(index))):
         fail("hull_binding_dependencies_changed", "材料、模块或涂料目录已变化，不能自动重绑旧快照")
     hull = HullEditorDocument(binding["hull"], index.registry).compile().normalized_blueprint.to_dict()
     if hull != binding["hull"]:

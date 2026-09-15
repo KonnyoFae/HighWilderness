@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <title>上层浅色云海临时素材</title>
+  <filter id="sea" x="0" y="0" width="100%" height="100%" color-interpolation-filters="sRGB">
+    <feTurbulence type="fractalNoise" baseFrequency=".008 .014" numOctaves="4" seed="12" stitchTiles="stitch"/>
+    <feGaussianBlur stdDeviation="2"/>
+    <feColorMatrix values=".22 .22 .22 0 .43  .22 .22 .22 0 .46  .22 .22 .22 0 .45  0 0 0 0 1"/>
+  </filter>
+  <rect width="1024" height="1024" fill="#c5d0cb" filter="url(#sea)"/>
+</svg>
