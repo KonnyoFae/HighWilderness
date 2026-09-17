@@ -54,7 +54,8 @@ class MagazineRuntime:
         self.locations = []
         for n, inv in enumerate(battle.inventory.inventories):
             locations = {}
-            for mid in inv._magazines:
+            missile_ids={s['module_id'] for s in inv._definition.get('missiles',{}).get('magazines',())}
+            for mid in set(inv._magazines)|missile_ids:
                 levels = {}
                 for cell in battle.damage.cells[n]:
                     if cell.module_id == mid: levels.setdefault(cell.level, set()).add(cell.center)
@@ -99,7 +100,11 @@ class MagazineRuntime:
         triggers = []
         for n, (ship, old, inv) in enumerate(zip(world.ships, before.ships, b.inventory.inventories)):
             if old.motion.hull_integrity_fraction <= 0 or ship.command.lifecycle.physical_status == 'exited': continue
-            for row in sorted(inv._value['magazines'], key=lambda m:m['module_id']):
+            stores=list(inv._value['magazines'])
+            if 'missiles' in inv._definition:
+                from .missile_resources import explosives
+                stores += [dict(module_id=r['module_id'],quantity=explosives(inv._definition['missiles'],r)) for r in inv._value['missiles']['magazines']]
+            for row in sorted(stores, key=lambda m:m['module_id']):
                 mid, quantity = row['module_id'], row['quantity']
                 idx = b._indices[n][mid]
                 if quantity and old.devices.modules[idx].durability_points > EPS and ship.devices.modules[idx].durability_points-damage.get((ship.ship_id, mid), 0.) <= EPS:
@@ -138,6 +143,7 @@ class MagazineRuntime:
             offset = rotate(center, ship.motion.heading_rad)
             events.append(dict(ship_id=ship.ship_id, module_id=mid, step=world.fixed_step, deck_level=level,
                 height_layer=ship.motion.height_layer, cause=cause, ammunition_resources=quantity, radius_m=radius,
+                store_kind='ammunition' if mid in b.inventory.inventories[n]._magazines else 'missile',
                 position_local_m=center, position_m=(ship.motion.position_world_m.x+offset[0],ship.motion.position_world_m.y+offset[1]),
                 module_losses=losses, hull_damage_fraction=hull_loss))
         indices = {s.ship_id:n for n,s in enumerate(world.ships)}
@@ -152,7 +158,11 @@ class MagazineRuntime:
     def consume(events, world, inventories):
         indices = {s.ship_id:n for n,s in enumerate(world.ships)}
         for event in events:
-            inventories[indices[event['ship_id']]].consume_destroyed_magazine(event['module_id'], event['ammunition_resources'])
+            inv=inventories[indices[event['ship_id']]]
+            if event.get('store_kind','ammunition')=='missile':
+                from .missile_logistics import destroy_magazine
+                destroy_magazine(inv,event['module_id'])
+            else: inv.consume_destroyed_magazine(event['module_id'],event['ammunition_resources'])
 
     def commit(self, events):
         self.recent = (self.recent+events)[-32:]

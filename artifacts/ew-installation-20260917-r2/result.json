@@ -1,0 +1,11 @@
+{
+  "status": "EW_INSTALLATION_UI_PASS",
+  "checks": [
+    "小型箔条发射器 placed through real catalog and canvas, with no internal space or turret clearance.",
+    "大型箔条发射器 placed through real catalog and canvas, with no internal space or turret clearance.",
+    "小型热能烟雾发射器 placed through real catalog and canvas, with no internal space or turret clearance.",
+    "大型热能烟雾发射器 placed through real catalog and canvas, with no internal space or turret clearance.",
+    "主动诱饵发射器 placed through real catalog and canvas, with no internal space or turret clearance.",
+    "All five placements retain exact geometry and prototype versions on save/reopen."
+  ]
+}

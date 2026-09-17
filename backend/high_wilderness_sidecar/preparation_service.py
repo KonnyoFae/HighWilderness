@@ -8,7 +8,7 @@ from . import preparation_maintenance as maintenance
 from 高天荒野舰艇数据契约 import canonical_sha256
 
 CAPABILITIES=tuple('tactical.preparation.'+s for s in ('library','import','open','read','draft','preview','commit','discard',
-    'scene_read','scene_save','scene_encounter','supply_replenish','maintenance'))
+    'scene_read','scene_save','scene_encounter','supply_replenish','missile','maintenance'))
 SUPPLY_ID='supply.preparation.technical.v1'
 
 
@@ -36,7 +36,7 @@ class PreparationService:
                 if add_fuel:value['supply'].update(interface=bp.fuel.SUPPLY_INTERFACE,fuel_units=10000)
                 if additions or add_fuel:
                     value['goods'].extend(additions)
-                    value['supply']['cargo'].extend(dict(good_id=g['id'],quantity=100) for g in additions)
+                    value['supply']['cargo'].extend(dict(good_id=g['id'],quantity=SUPPLY_DEFAULTS['goods_quantity']) for g in additions)
                     value['supply']['revision']+=1
                     self.store._write_supply(db,value['supply'],value['goods'])
                 return
@@ -124,8 +124,9 @@ class PreparationService:
         return dict(draft=draft,ships=details,supply=supply,receipt=receipt,stale_error=None)
 
     def ship_detail(self, design, record):
+        from .missile_presentation import resources
         return dict(instance_id=record['state']['instance_id'],name=design.archive()['document']['outfit']['name'],
-            state=record['state'],resources=design.resources.definition(),
+            state=record['state'],resources=resources(design.resources.definition()),
             module_names={m.id:m.prototype.name for m in design.resources.seed.resources.modules},
             lift_reserve=lift_reserve.prepared(design, record),
             enabled_recipe_ids=design.archive()['policy']['enabled_recipe_ids'],
@@ -162,6 +163,9 @@ class PreparationService:
     def dispatch(self,request):
         ps.need(request['session_id'] is None and request['expected_revision'] is None,'$.session_id','准备操作不绑定编辑会话')
         p=request['params']; action=request['method'].removeprefix('tactical.preparation.')
+        if action=='missile':
+            from .preparation_missiles import action as missile_action
+            return missile_action(self,p)
         if action=='maintenance':return maintenance.action(self,p)
         if action.startswith('scene_') or action=='supply_replenish':
             from . import tactical_test_scene as scene

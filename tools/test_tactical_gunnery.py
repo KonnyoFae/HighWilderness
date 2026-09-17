@@ -133,6 +133,7 @@ class GunneryTests(unittest.TestCase):
         # Technical second source, with real health/power/mode eligibility; use
         # the installed fire-control module as the explicit second radar fixture.
         b._radars[0] = ('sensor_upper_starboard', 'fire_control')
+        b.observation.sensors[0]['fire_control']=dict(b.observation.sensors[0]['sensor_upper_starboard'])
         b._capabilities[0]['fire_control'] = dict(b._capabilities[0]['fire_control'], maximum_instrumented_range_m=50000)
         self.send(b); self.advance(b, 95)
         b.step(device_operations=(self.damage(b, 'sensor_upper_starboard'),))

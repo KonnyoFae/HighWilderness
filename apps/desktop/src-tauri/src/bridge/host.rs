@@ -942,9 +942,9 @@ impl BackendSupervisor {
 
     pub fn tactical_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
         if !matches!(request.method.as_str(), "tactical.reset_test_state" | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
-            | "tactical.preparation.maintenance" | "tactical.preparation.scene_read" | "tactical.preparation.scene_save" | "tactical.preparation.scene_encounter" | "tactical.preparation.supply_replenish"
+            | "tactical.preparation.missile" | "tactical.preparation.maintenance" | "tactical.preparation.scene_read" | "tactical.preparation.scene_save" | "tactical.preparation.scene_encounter" | "tactical.preparation.supply_replenish"
             | "tactical.preparation.library" | "tactical.preparation.import" | "tactical.preparation.open" | "tactical.preparation.read" | "tactical.preparation.draft" | "tactical.preparation.preview" | "tactical.preparation.commit" | "tactical.preparation.discard"
-            | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.gun" | "tactical.realtime.height" | "tactical.realtime.damage_control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.deploy_encounter" | "tactical.realtime.encounter" | "tactical.realtime.withdraw" | "tactical.realtime.close") {
+            | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.gun" | "tactical.realtime.height" | "tactical.realtime.missile" | "tactical.realtime.countermeasure" | "tactical.realtime.fire_control" | "tactical.realtime.damage_control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.deploy_encounter" | "tactical.realtime.encounter" | "tactical.realtime.withdraw" | "tactical.realtime.close") {
             return Err(HostFailure::host("method_not_supported", "tactical method not enabled"));
         }
         if request.session_id.is_some() || request.expected_revision.is_some() {
@@ -1382,7 +1382,14 @@ mod tests {
         let updated = supervisor.tactical_request(request("tactical.preparation.maintenance", operation.clone())).unwrap();
         assert_eq!(updated["revision"], 2);
         assert_eq!(supervisor.tactical_request(request("tactical.preparation.maintenance", operation)).unwrap(), updated);
-        let args = json!({"preparation_id":"preparation.native","revision":2});
+        let missile_op=json!({"operation_id":"missile.native.5c","preparation_id":"preparation.native","revision":2,
+            "instance_id":"instance.native.preparation","order":{"kind":"clear_plan"}});
+        let missile_draft=supervisor.tactical_request(request("tactical.preparation.missile",missile_op.clone())).unwrap();
+        assert_eq!(missile_draft["revision"],3);
+        assert_eq!(supervisor.tactical_request(request("tactical.preparation.missile",missile_op)).unwrap(),missile_draft);
+        assert!(status.capabilities.contains(&"tactical.realtime.missile".into()));
+        assert!(status.capabilities.contains(&"tactical.realtime.fire_control".into()));
+        let args = json!({"preparation_id":"preparation.native","revision":3});
         let preview = supervisor.tactical_request(request("tactical.preparation.preview", args.clone())).unwrap();
         assert_eq!(preview["can_commit"], true);
         let saved = supervisor.tactical_request(request("tactical.preparation.commit", args.clone())).unwrap();

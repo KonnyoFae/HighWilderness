@@ -1,7 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { compatibleHosts, defaultRotation, footprint, gridHint, hostedDescendants, mountKind, nearestSlot, placementPoint, sidePreview, visibleAtLevel } from "./outfitCanvas";
+import { compatibleHosts, defaultRotation, footprint, gridHint, gridPlacementDeck, hostedDescendants, mountKind, nearestSlot, placementPoint, sidePreview, visibleAtLevel } from "./outfitCanvas";
 import type { OutfitLayout, SideSlot } from "./outfitCanvas";
 import type { ModuleOption, OutfitInstance } from "./model";
+import missileCatalog from "../../../../舰艇数据/模块/测试夹具/战术导弹目录.v2.json";
 const option = (geometry = {}): ModuleOption => ({
   prototype: { id: "module", version: 1, name: "test", category: "cargo", balance_status: "contract_fixture", mass_kg: 1, durability_points: 1,
     installation: { allowed_rotations_deg: [0,90,180,270], internal_footprint_half_cells: [[0,0]], top_footprint_half_cells: [], side_mount_length_steps: 0, host_slot: null, ...geometry },
@@ -73,8 +74,53 @@ describe("outfit canvas geometry", () => {
     expect(mountKind(option({side_mount_length_steps:1}))).toBe("side");
     expect(mountKind(option({host_slot:"control"}))).toBe("hosted");
   });
+  it('allows data-link backups on the same command computer',()=>{
+    const host=option({provided_slots:['fire_control_datalink']}),child=option({host_slot:'fire_control_datalink'});
+    host.prototype.category='fire_control';child.prototype.id='link';child.prototype.category='datalink';
+    const m:OutfitInstance={id:'computer',prototype:{id:'module',version:1},placement:{kind:'grid'}};
+    const c:OutfitInstance={id:'existing',prototype:{id:'link',version:1},placement:{kind:'hosted',host_instance_id:'computer'}};
+    expect(compatibleHosts(child,[m,c],[host,child])).toEqual([m]);
+  });
   it("keeps cross-deck and raised top modules selectable on occupied decks", () => {
     const m:OutfitLayout["modules"][number]={id:"span",base_deck_level:0,anchor_m:[0,0],rotation_deg:0,placement_kind:"grid",host_instance_id:null,internal_cells:[[0,0,0],[1,0,0]],top_cells:[[2,0,0]],body_spatial_keys:[],clearance_spatial_keys:[],side_slots:[]};
     expect([0,1,2,3].map(level=>visibleAtLevel(m,level))).toEqual([true,true,true,false]);
+  });
+  const vls = () => option(missileCatalog.modules.find(m => m.id === "gtw.module.launcher.5c.vls")!.installation);
+  const twoDecks = (): OutfitLayout => ({ ...layout(), decks: [
+    {id:"lower",level:0,internal_cells:[[0,0]],exposed_top_cells:[],side_mount_slots:[]},
+    {id:"upper",level:1,internal_cells:[[0,0]],exposed_top_cells:[[0,0]],side_mount_slots:[]},
+  ] });
+  it("places the real VLS from its exposed top into the two internal decks below", () => {
+    const l=twoDecks(),o=vls(),mount=gridPlacementDeck(l,"upper",o);
+    expect(gridHint(l,"upper",o,{x:0,y:0},0)).toContain("跨层"); // Original UI failure.
+    expect(mount).toEqual({deckId:"lower",error:""});
+    expect(gridHint(l,mount.deckId!,o,{x:0,y:0},0)).toBe("");
+    // A higher superstructure elsewhere does not invalidate the local exposed deck.
+    l.decks.push({id:"bridge",level:2,internal_cells:[[5,5]],exposed_top_cells:[[5,5]],side_mount_slots:[]});
+    expect(gridHint(l,"upper",o,{x:0,y:0},0)).toContain("内部安装格");
+    expect(gridHint(l,gridPlacementDeck(l,"upper",o).deckId!,o,{x:0,y:0},0)).toBe("");
+  });
+  it("rejects missing lower decks and a missing lower hull footprint", () => {
+    const l=twoDecks(),o=vls();
+    expect(gridPlacementDeck(l,"lower",o).error).toContain("下方甲板不足");
+    l.decks[0].internal_cells=[];
+    expect(gridHint(l,gridPlacementDeck(l,"upper",o).deckId!,o,{x:0,y:0},0)).toContain("内部安装格");
+  });
+  it("still checks both internal decks and the exposed top for conflicts", () => {
+    const l=twoDecks(),o=vls(),base=gridPlacementDeck(l,"upper",o).deckId!;
+    for (const level of [0,1]) {
+      l.modules=[{id:"occupied",base_deck_level:level,anchor_m:[0,0],rotation_deg:0,placement_kind:"grid",host_instance_id:null,
+        internal_cells:[[level,0,0]],top_cells:[],body_spatial_keys:[],clearance_spatial_keys:[],side_slots:[]}];
+      expect(gridHint(l,base,o,{x:0,y:0},0)).toContain("occupied");
+    }
+    l.modules[0].internal_cells=[];l.modules[0].top_cells=[[1,0,0]];
+    expect(gridHint(l,base,o,{x:0,y:0},0)).toContain("occupied");
+    l.modules=[];l.decks[1].exposed_top_cells=[];
+    expect(gridHint(l,base,o,{x:0,y:0},0)).toContain("露天格");
+  });
+  it("preserves the installed base when dragging VLS from either occupied deck", () => {
+    for (const viewed of ["lower","upper"]) expect(gridPlacementDeck(twoDecks(),viewed,vls(),"lower")).toEqual({deckId:"lower",error:""});
+    expect(gridPlacementDeck(twoDecks(),"upper",option())).toEqual({deckId:"upper",error:""});
+    expect(gridPlacementDeck(twoDecks(),"upper",option({top_footprint_half_cells:[[0,0]],top_deck_offset:0}))).toEqual({deckId:"upper",error:""});
   });
 });

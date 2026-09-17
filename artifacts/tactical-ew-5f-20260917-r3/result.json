@@ -1,0 +1,8 @@
+{
+  "status": "TACTICAL_EW_5F_UI_PASS",
+  "checks": [
+    "Both-fleet preparation enters real battle; five devices appear; actual chaff blocks radar; lost reply does not double-spend.",
+    "Direction-selected decoy moves; composite missile actually launches; AI deploys countermeasures and missile enters memory with visible guidance feedback.",
+    "Both sides settle equipment expenditure, return to preparation and retain exact saved inventory after backend restart."
+  ]
+}

@@ -14,7 +14,7 @@ from . import persistent_ship as ps, tactical_gunnery as tg
 from .tactical_damage import DamageState
 
 SHIP_INTERFACE = 'gaotian.persistent-combat-ship/p3-v1'
-RESULT_INTERFACE = 'gaotian.battle-settlement/p3-v2'
+RESULT_INTERFACE = 'gaotian.battle-settlement/p3-v3'
 
 
 def armor_record(battle, index, values):
@@ -41,6 +41,7 @@ def parse_record(record, template, index):
     reference = template.inventory.prepared.bindings[index].resources.definition()
     ps.need(all(pack.definition()[k] == reference[k] for k in ('weapons', 'recipes', 'projectiles', 'fire_control')),
             '$.resources', '当前战术入口仅支持已接通的普通炮资源版本')
+    ps.need(pack.definition().get('missiles')==reference.get('missiles'), '$.resources.missiles', '导弹型号与后勤规则不能在重新入战时更换')
     instance = ps.parse_instance(v['state'], pack)
     if any('zone_id' in fire for fire in v['state'].get('fires',())):
         from .tactical_spatial_fire import validate_rows
@@ -92,13 +93,15 @@ def capture(battle):
         value['revision'] += 1
         value = ps.parse_instance(value, binding.resources).to_dict()
         initial_armor = getattr(battle, 'entry_armor', battle.damage.initial.armor)[n]
-        rows.append(dict(before=combat_record(battle, n, before, initial_armor),
+        rows.append(dict(side_id=battle._sides[n], ship_name=battle.ship_names.get(ship.ship_id, ship.ship_id),
+            before=combat_record(battle, n, before, initial_armor),
             after=combat_record(battle, n, value, battle.damage_state.armor[n]),
             capacity_before=ps.inventory_summary(binding.instance, binding.resources),
             capacity_after=ps.inventory_summary(ps.parse_instance(value, binding.resources), binding.resources),
             changes=inv.changes(), module_names={m.id: m.prototype.name for m in seed.resources.modules}))
     return ps.clone(dict(interface=RESULT_INTERFACE, settlement_id='settlement.'+battle.session.world.epoch,
-        scene_id=battle.session.world.epoch, reason=battle.ending['reason'], fixed_step=battle.ending['step'],
+        scene_id=battle.session.world.epoch, player_side_id=battle._sides[battle._direct_index],
+        reason=battle.ending['reason'], fixed_step=battle.ending['step'],
         removed_projectiles=battle.ending['removed_projectiles'], ships=rows,
         wrecks=[dict(interface='gaotian.tactical-wreck/v1',ship_id=s.ship_id,instance_id=binding.instance.to_dict()['instance_id'],
             side_id=battle._sides[n],**asdict(s.wreck)) for n,(s,binding) in enumerate(zip(battle.session.world.ships,battle.inventory.prepared.bindings)) if s.wreck is not None]))
@@ -135,8 +138,11 @@ def redeploy(record, template, scenario):
 def validate_result(value):
     v = ps.clone(value)
     legacy = v.get('interface') == 'gaotian.battle-settlement/p3-v1'
-    ps.obj(v, 'interface settlement_id scene_id reason fixed_step removed_projectiles ships'+('' if legacy else ' wrecks'), '$.settlement')
-    ps.need(legacy or v['interface'] == RESULT_INTERFACE, '$.interface', '不支持的结算版本')
+    contextual = v.get('interface') == RESULT_INTERFACE
+    ps.obj(v, 'interface settlement_id scene_id reason fixed_step removed_projectiles ships'+
+        ('' if legacy else ' wrecks')+(' player_side_id' if contextual else ''), '$.settlement')
+    ps.need(legacy or contextual or v['interface'] == 'gaotian.battle-settlement/p3-v2', '$.interface', '不支持的结算版本')
+    if contextual: ps.identifier(v['player_side_id'], '$.player_side_id')
     ps.identifier(v['settlement_id'], '$.settlement_id'); ps.identifier(v['scene_id'], '$.scene_id')
     ps.need(v['settlement_id'] == 'settlement.'+v['scene_id'], '$.settlement_id', '结算身份不匹配')
     ps.need(v['reason'] in ('withdrawal', 'victory', 'defeat', 'draw'), '$.reason', '非法结束原因')
@@ -144,7 +150,11 @@ def validate_result(value):
     ps.need(type(v['ships']) is list and 1 <= len(v['ships']) <= 16, '$.ships', '非法结算舰船列表')
     ids = set()
     for row in v['ships']:
-        ps.obj(row, 'before after capacity_before capacity_after changes module_names', '$.ships')
+        ps.obj(row, 'before after capacity_before capacity_after changes module_names'+
+            (' side_id ship_name' if contextual else ''), '$.ships')
+        if contextual:
+            ps.identifier(row['side_id'], '$.ships.side_id')
+            ps.need(type(row['ship_name']) is str and 0 < len(row['ship_name']) <= 2000, '$.ships.ship_name', '舰名无效')
         a, b = row['before']['state'], row['after']['state']
         ps.identifier(a['instance_id'], '$.instance_id')
         ps.integer(a['revision'], '$.revision'); ps.integer(b['revision'], '$.revision')
@@ -165,6 +175,8 @@ def validate_result(value):
             changes[change['resource']] = changes.get(change['resource'], 0)+amount
         ps.need(all(end.get(k, 0)-start.get(k, 0) == changes.get(k, 0) for k in set(start)|set(end)|set(changes)),
                 '$.changes', '战前、战后资源与变动摘要无法对账')
+    if contextual:
+        ps.need(v['player_side_id'] in {r['side_id'] for r in v['ships']}, '$.player_side_id', '结算缺少玩家阵营')
     wreck_ids = set()
     ps.need(type(v.get('wrecks',[])) is list and len(v.get('wrecks',[]))<=len(v['ships']), '$.wrecks', '非法残骸列表')
     for w in v.get('wrecks',[]):

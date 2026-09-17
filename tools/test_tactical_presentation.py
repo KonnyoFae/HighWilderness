@@ -68,7 +68,7 @@ class PresentationTests(unittest.TestCase):
         history = FlightHistory()
         p = Projectile(1, 'ship.blue', 'weapon', (1, 2), (1, 2), (5000, 0), 100)
         history.record(5, [p]); history.record(6, [replace(p, position=(84, 2))])
-        self.assertEqual(history.launch(1), dict(born_step=5, origin_m=(1, 2), expires_step=100))
+        self.assertEqual(history.launch(1), dict(born_step=5, origin_m=(1, 2), expires_step=100,trajectory=[(5,1,2),(6,84,2)]))
         history.record(6, [])
         self.assertIsNone(history.view()['finished_projectiles'][0]['impact'])
         self.assertEqual(history.view()['finished_projectiles'][0]['end_m'], (84, 2))

@@ -1,0 +1,8 @@
+{
+  "status": "TACTICAL_MISSILES_5C_UI_PASS",
+  "checks": [
+    "Canvas selection opens missile page; five parallel rounds assemble in 31 seconds and four ready rounds load in 28 seconds. Lost action reply retries without duplication; preview leaves both ships unchanged.",
+    "One atomic preparation commit preserves source identities and enemy stores; lost commit reply returns the same receipt.",
+    "Real battle assembly consumes onboard materials and progresses; ending/saving/restarting retains five incomplete jobs and four loaded rounds with no refund or completion."
+  ]
+}

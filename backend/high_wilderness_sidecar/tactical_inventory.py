@@ -12,7 +12,7 @@ from math import ceil
 from . import persistent_ship as ps, damage_control_resources as dc
 
 CHECKPOINT_INTERFACE = 'gaotian.inventory-checkpoint/p1b-v1alpha1'
-REASONS = frozenset(('load', 'unload', 'consume', 'reload', 'discharge', 'discard', 'damage_control_preparation', 'damage_control_use', 'firefighting', 'module_repair', 'hull_repair','tank_destroyed','emergency_lift_repair','emergency_lift_refill','magazine_detonation'))
+REASONS = frozenset(('load', 'unload', 'consume', 'reload', 'discharge', 'discard', 'damage_control_preparation', 'damage_control_use', 'firefighting', 'module_repair', 'hull_repair','tank_destroyed','emergency_lift_repair','emergency_lift_refill','magazine_detonation','missile_logistics','missile_fired'))
 
 
 class InventorySession:
@@ -94,6 +94,8 @@ class InventorySession:
         result.update({'ready:' + x['module_id']: x['ready_rounds'] for x in value['weapons']})
         result.update({'damage_control:' + d['module_id']: d['quantity_units'] for d in value.get('damage_controls', ())})
         result.update({'fuel:'+t['tank_id']:t['quantity_units'] for t in value.get('fuel_tanks',())})
+        from .missile_resources import totals
+        result.update(totals(value.get('missiles')))
         return result
 
     def _record(self, ledger, resource, reason, delta):
@@ -459,6 +461,13 @@ class InventorySession:
         self._settlement = settlement_id
         return True
 
+    def weapon_readout(self, module_id):
+        """Small detached UI reading; full validation remains at export/save."""
+        self._check()
+        row = next(w for w in self._value['weapons'] if w['module_id'] == module_id)
+        return dict(ready_rounds=row['ready_rounds'],
+                    reload_remaining_steps=max(0, self._due[module_id]-self._step) if row['reload'] else 0)
+
     def snapshot(self, base=None):
         """Validated domain export; optionally overlay a freshly exported ship."""
         self._check()
@@ -478,6 +487,8 @@ class InventorySession:
                 base[key] = value[key]
             if 'fires' in value:
                 base['fires'] = value['fires']
+            if 'missiles' in value:
+                base['missiles'] = value['missiles']
             if 'personnel' in value:
                 base['personnel'] = value['personnel']
             if 'fuel_tanks' in value:
@@ -513,6 +524,9 @@ class InventorySession:
             ps.need(not result._due, '$.instance.weapons', 'Settled checkpoint contains active reload')
         current = result._totals(result._value)
         allowed = {'ammunition'} | {'cargo:' + k for k in result._goods} | {'ready:' + k for k in result._weapons} | {'damage_control:' + k for k in result._damage_controls} | {'fuel:'+k for k in result._fuel_tanks}
+        if 'missiles' in result._definition:
+            from .missile_resources import ledger_keys
+            allowed |= ledger_keys(result._definition['missiles'])
         ps.need(type(v['baseline']) is dict and set(v['baseline']) <= allowed, '$.baseline', 'Unknown resource')
         for k,n in v['baseline'].items():
             (ps.number if k.startswith('fuel:') else ps.integer)(n, '$.baseline')

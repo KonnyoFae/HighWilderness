@@ -1170,11 +1170,14 @@ class _OutfitCompiler:
         if placement.host_instance_id not in self.instance_input_by_id:
             raise ContractError("outfit.host_missing", path, "找不到宿主实例")
         host = self._compile_instance(placement.host_instance_id)
+        if prototype.category == 'datalink' and host.prototype.category != 'fire_control':
+            raise ContractError('outfit.datalink_host', path, '数据链只能安装于指挥机')
         if slot not in host.prototype.installation.provided_slots:
             raise ContractError("outfit.host_slot_missing", path, f"宿主不提供槽位 {slot}")
         slot_key = placement.host_instance_id, slot
         existing = self.hosted_slot_users.get(slot_key)
-        if existing is not None:
+        if existing is not None and not (slot == 'fire_control_datalink' and prototype.category == 'datalink'
+                                        and host.prototype.category == 'fire_control'):
             raise ContractError("outfit.host_slot_occupied", path, f"槽位已被 {existing} 使用")
         self.hosted_slot_users[slot_key] = instance_input.id
         points = host.mass_points_m

@@ -41,7 +41,8 @@ def document(source, index, hull_source=None):
     coatings = [HullCoatingCatalog.parse(s) for d, s in index.resources.values() if d["kind"] == "HullCoatingCatalog"]
     if len(coatings) != 1:
         raise ContractError("editor.outfit_coating_missing", "$.hull_coating", "涂料目录必须唯一")
-    return OutfitEditorDocument(source, HullEditorDocument(hulls[0], index.registry).compile(), module_catalog(index), coatings[0])
+    return OutfitEditorDocument(source, HullEditorDocument(hulls[0], index.registry).compile(), module_catalog(index), coatings[0],
+                                launcher_kinds=index.launcher_kinds)
 
 
 def command(doc, name, arguments, index):
@@ -56,6 +57,7 @@ def command(doc, name, arguments, index):
         "outfit.move_side": {"instance_id", "deck_id", "region_id", "edge_index", "start_slot_index", "rotation_deg"},
         "outfit.rehost": {"instance_id", "host_instance_id"},
         "outfit.remove": {"instance_id"},
+        "outfit.upgrade_sensor": {"instance_id"},
     }
     if not isinstance(name, str) or name not in fields or not isinstance(arguments, dict) or set(arguments) != fields[name]:
         raise ContractError("editor.invalid_arguments", "$.params.arguments", "舾装命令或字段不匹配")

@@ -240,6 +240,7 @@ class IgnitionTests(unittest.TestCase):
             for _ in range(30):b.step()
 
     def test_supply_upgrade_adds_only_new_goods_once(self):
+        from backend.high_wilderness_sidecar.tactical_test_scene import SUPPLY_DEFAULTS
         from backend.high_wilderness_sidecar.server import SidecarServer
         from backend.high_wilderness_sidecar.preparation_service import SUPPLY_ID
         with TemporaryDirectory() as temp:
@@ -256,7 +257,7 @@ class IgnitionTests(unittest.TestCase):
                 after=service.store._decode(*db.execute('SELECT payload,digest FROM preparation_supplies WHERE id=?',(SUPPLY_ID,)).fetchone())['supply']
             self.assertEqual(after['fuel_units'],37);self.assertEqual(after['ammunition_resources'],9)
             self.assertEqual({g['good_id']:g['quantity'] for g in after['cargo']},
-                {**{g['good_id']:7 for g in raw['supply']['cargo']},ig.GOOD:100})
+                {**{g['good_id']:7 for g in raw['supply']['cargo']},ig.GOOD:SUPPLY_DEFAULTS['goods_quantity']})
 
     def test_empty_guns_default_to_ordinary_without_using_special_goods(self):
         r=self.record()

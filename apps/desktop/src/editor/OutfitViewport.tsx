@@ -5,11 +5,11 @@ import type { HullCommand, ModuleOption, OutfitInstance, SessionSnapshot } from 
 import { nextId } from "./interaction";
 import { fit, lowerDeck, screen, world, zoom } from "./viewport";
 import type { Camera, Point } from "./viewport";
-import { compatibleHosts, defaultRotation, footprint, gridHint, hostedDescendants, mountKind, nearestSlot, placementPoint, sidePreview, visibleAtLevel } from "./outfitCanvas";
+import { compatibleHosts, defaultRotation, footprint, gridHint, gridPlacementDeck, hostedDescendants, mountKind, nearestSlot, placementPoint, sidePreview, visibleAtLevel } from "./outfitCanvas";
 import type { OutfitLayout, LayoutModule } from "./outfitCanvas";
-import { arcText } from "./weaponGroups";
+import { arcText, sensorArcText } from "./weaponGroups";
 import { arcVisibleAtLevel, WeaponArcOverlay } from "./WeaponArcOverlay";
-import type { WeaponControl } from "./weaponGroups";
+import type { WeaponControl, WeaponArc } from "./weaponGroups";
 import { FillingSummary } from "./FillingSummary";
 import type { FillingView } from "./FillingSummary";
 
@@ -30,7 +30,8 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
   const modules = session.draft.modules ?? [];
   const instance = modules.find(m => m.id === selected);
   const control = session.preview.model.weapon_control as WeaponControl | undefined;
-  const selectedArc = control && ["gaotian.weapon-control-view/v1alpha1", "gaotian.weapon-control-view/v2alpha1"].includes(control.interface) ? control.arcs.find(a => a.instance_id === selected) : undefined;
+  const sensorArc = (session.preview.model.sensor_arcs as WeaponArc[] | undefined)?.find(a=>a.instance_id===selected);
+  const selectedArc = sensorArc ?? (control && ["gaotian.weapon-control-view/v1alpha1", "gaotian.weapon-control-view/v2alpha1"].includes(control.interface) ? control.arcs.find(a => a.instance_id === selected) : undefined);
   const [showArc, setShowArc] = useState(true);
   const [showNames, setShowNames] = useState(false);
   const prototypeOf = (m?: OutfitInstance) => options.find(o => o.prototype.id === m?.prototype.id && o.prototype.version === m?.prototype.version);
@@ -131,8 +132,11 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
     const args: Record<string, unknown> = { instance_id: id };
     if (!target) args.prototype = { id: o.prototype.id, version: o.prototype.version };
     if (k === "grid") {
+      if (!layout) return;
+      const mounting = gridPlacementDeck(layout, deck.id, o, preserveBase ? target?.placement.deck_id : undefined);
+      if (!mounting.deckId) { setMessage(mounting.error); setMoving(null); return; }
       const a = placementPoint(world(p, camera), o, r);
-      Object.assign(args, { deck_id: preserveBase && target ? target.placement.deck_id : deck.id, anchor_half_cell: [a.x / 2.5, a.y / 2.5], rotation_deg: r });
+      Object.assign(args, { deck_id: mounting.deckId, anchor_half_cell: [a.x / 2.5, a.y / 2.5], rotation_deg: r });
     } else if (k === "side") {
       const slot = nearestSlot(space?.side_mount_slots ?? [], world(p, camera), 14 / camera.scale);
       if (!slot) { setMessage("请点击紫色船边槽位，侧挂模块只能安装在槽位上。"); setMoving(null); return; }
@@ -156,7 +160,8 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
   }
   const ghost = cursor && activeOption && (mode !== "select" || moving || relocating) && kind === "grid" ? placementPoint(cursor, activeOption, activeRotation) : null;
   const ghostCells = ghost && activeOption ? footprint(activeOption, ghost, activeRotation) : [];
-  const hint = ghost && activeOption && layout ? gridHint(layout, moving && activeInstance?.placement.deck_id || deck?.id || "", activeOption, ghost, activeRotation, activeInstance?.id) : "";
+  const mounting = activeOption && layout ? gridPlacementDeck(layout, deck?.id ?? "", activeOption, moving ? activeInstance?.placement.deck_id : undefined) : undefined;
+  const hint = ghost && activeOption && layout && mounting ? mounting.error || gridHint(layout, mounting.deckId!, activeOption, ghost, activeRotation, activeInstance?.id) : "";
   const slotHover = cursor && kind === "side" && (mode !== "select" || moving || relocating) ? nearestSlot(space?.side_mount_slots ?? [], cursor, 14 / camera.scale) : undefined;
   const sideGhost = slotHover && activeOption ? sidePreview(space?.side_mount_slots ?? [], slotHover, activeOption, activeRotation) : undefined;
   const poly = (points: number[][]) => points.map(([x, y]) => { const p = screen({ x, y }, camera); return `${p.x},${p.y}`; }).join(" ");
@@ -240,7 +245,7 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
         {layers.top && space?.exposed_top_cells.map(([x,y],i)=>{const p=screen({x:x*5,y:y*5},camera);return <circle key={`top${i}`} cx={p.x} cy={p.y} r={1.8} fill="#d9bc71" />;})}
         {layers.side && space?.side_mount_slots.map((s,i)=><line key={`slot${i}`} x1={screen({x:s.start_m[0],y:s.start_m[1]},camera).x} y1={screen({x:s.start_m[0],y:s.start_m[1]},camera).y} x2={screen({x:s.end_m[0],y:s.end_m[1]},camera).x} y2={screen({x:s.end_m[0],y:s.end_m[1]},camera).y} stroke={s===slotHover?"#fff4b0":"#bc91d1"} strokeWidth={s===slotHover?7:3} strokeDasharray="8 2" />)}
         {views.map(geometry)}
-        <WeaponArcOverlay arc={selectedArc} module={selectedView} level={deck?.level} camera={camera} show={showArc} />
+        <WeaponArcOverlay arc={selectedArc} module={selectedView} level={deck?.level} camera={camera} show={showArc} sensor={!!sensorArc} />
         {modules.filter(m=>!views.some(v=>v.id===m.id) && m.placement.deck_id===deck?.id).map(m=> {
           const a=anchorOf(m), o=prototypeOf(m);
           return a && o ? <g key={`invalid${m.id}`}>{footprint(o,a,m.placement.rotation_deg ?? 0).map((p,i)=>cell(p.x,p.y,"#ff7777",String(i),.2,true))}</g> : null;
@@ -266,6 +271,7 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
         <p>{mode === "place" ? `添加模式：${option?.prototype.name ?? "请先选择部件"}。点击画布连续添加；R 旋转待放置部件。` : "拖动模式：点击选择部件，按住拖到新位置；R 旋转所选部件，Delete 移除。"} 中键拖动画布，滚轮缩放；Esc 取消当前动作，保持操作模式。</p>
         {message && <p className="editor-error">{message}</p>}
         {hint && <p className="editor-error">放置提示：{hint}</p>}
+        {kind === "grid" && activeOption && Number(activeOption.prototype.installation.top_deck_offset ?? 0) > 0 && (mode === "place" || relocating) && <p>点击顶部所在的露天甲板放置，内部筒体向下安装，占用 {Number(activeOption.prototype.installation.internal_deck_span)} 层内部空间。拖动已有部件时保持原安装层。</p>}
         {!layout && <p className="editor-error">未能加载舾装画布数据，请保存已有内容后重新打开设计。</p>}
         {kind === "side" && (mode === "place" || moving || relocating) && <p>侧挂部件：点击紫色船边槽位；橙色虚线表示净空 / 尾焰。{slotHover && !sideGhost ? "此处连续槽位不足。" : ""}</p>}
       </EditorNotice>
@@ -282,7 +288,14 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
       }}>使用推荐侧挂朝向</button>}
       {instance?.placement.kind === "hosted" && <p>宿主：{instance.placement.host_instance_id}{!modules.some(m=>m.id===instance.placement.host_instance_id) ? "（已不存在）。请选择新宿主，或移除此旧模块。" : ""}</p>}
       {kind==="hosted" && activeOption && <><h3>可用宿主</h3>{compatibleHosts(activeOption,modules,options,activeInstance?.id).map(m=><button key={m.id} disabled={locked} onClick={()=>{const a=anchorOf(m);if(a)submit(screen(a,camera),activeInstance);}}>{m.id}</button>)}<p>点击画布中提供空闲槽位的宿主；嵌入模块与宿主共用位置。</p></>}
-      {selectedArc && <><h3>武器射界</h3><label className="outfit-layer"><input type="checkbox" checked={showArc} onChange={e=>setShowArc(e.target.checked)}/>显示水平射界</label><p>{arcText(selectedArc)}</p>
+      {sensorArc ? <><h3>探测视界</h3><label className="outfit-layer"><input type="checkbox" checked={showArc} onChange={e=>setShowArc(e.target.checked)}/>显示水平探测视界</label><p>{sensorArcText(sensorArc)}</p>
+        <p>沿用炮塔的上层船壳遮挡规则：红色扇区内无法发现或维持跟踪，其他方向照常工作。扇区不表示探测距离。</p>
+        {instance?.prototype.version===1&&options.some(o=>o.prototype.id===instance.prototype.id&&o.prototype.version===2)&&<>
+          <p>这部设备保留旧版格子净空。升级可取消周围八格禁放，位置和其他性能保持不变。</p>
+          <button disabled={locked} onClick={()=>void send('outfit.upgrade_sensor',{instance_id:instance.id},'')}>升级此探测设备</button>
+        </>}
+        {showArc&&!arcVisible&&sensorArc.base_deck_level!==null&&<p>请切回第 {sensorArc.base_deck_level} 层查看探测视界。</p>}
+      </> : selectedArc?.status === "vertical_launch" ? <><h3>发射方式</h3><p>{arcText(selectedArc)}</p><p>顶部出口须露天且未被占用。导弹出筒后转向，不计算炮塔水平禁射角。</p></> : selectedArc?.status === "launch_policy_unavailable" ? <><h3>发射方式</h3><p>{arcText(selectedArc)}</p></> : selectedArc && <><h3>武器射界</h3><label className="outfit-layer"><input type="checkbox" checked={showArc} onChange={e=>setShowArc(e.target.checked)}/>显示水平射界</label><p>{arcText(selectedArc)}</p>
         {selectedArc.status === "requires_higher_deck_hull_raycast" && <p role="status" className="editor-error">当前后台尚未加载遮挡计算，因此无法显示射界圈。请在页面底部点“显式重启”，再恢复当前草稿。</p>}
         {showArc && selectedArc.origin_m && selectedArc.base_deck_level !== null && <p>{arcVisible ? `所选武器安装于第 ${selectedArc.base_deck_level} 层，射界按该层计算。` : `所选武器在本层不可见；请切回第 ${selectedArc.base_deck_level} 层查看射界。`}</p>}
         <p>红色虚线轮廓为上层船壳投影；红色扇区禁射。扇区不表示射程。</p></>}

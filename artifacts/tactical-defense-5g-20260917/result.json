@@ -1,0 +1,24 @@
+{
+  "status": "TACTICAL_DEFENSE_5G_UI_PASS",
+  "checks": [
+    "Real both-fleet preparation and automatic interceptor flight; integrated radar/computer works with standalone radar and command computer off; actual impact removes six durability.",
+    "Integer projectile targets render without errors; dedicated sensor switch is independent from weapon mode.",
+    "Finite spent interceptors and CIWS stocks settle for both fleets, survive return and backend restart."
+  ],
+  "impact": {
+    "durability_after": 6,
+    "durability_before": 12,
+    "height_layer": "upper",
+    "impact_fraction": 0.56404765285712,
+    "intercepted": false,
+    "position_m": [
+      -2.5658482759191554,
+      205.58278639021987
+    ],
+    "projectile_id": 1,
+    "round_id": 5,
+    "source_ship_id": "ship.defense.player",
+    "step": 602,
+    "weapon_id": "weapon_upper_port"
+  }
+}

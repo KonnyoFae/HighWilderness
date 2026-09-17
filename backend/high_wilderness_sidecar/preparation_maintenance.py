@@ -7,6 +7,8 @@ from . import persistent_ship as ps, tactical_fuel as fuel
 
 DRAFT_INTERFACE = 'gaotian.battle-preparation-draft/5b-v1'
 RESULT_INTERFACE = 'gaotian.battle-preparation-result/5b-v1'
+MISSILE_DRAFT_INTERFACE = 'gaotian.battle-preparation-draft/5c-v1'
+DRAFT_INTERFACES = (DRAFT_INTERFACE, MISSILE_DRAFT_INTERFACE)
 
 
 @lru_cache(maxsize=1)
@@ -15,7 +17,7 @@ def policy():
 
 
 def upgrade(draft):
-    v=ps.clone(draft);v['interface']=DRAFT_INTERFACE;v['maintenance_policy']=ps.clone(policy())
+    v=ps.clone(draft);v['interface']=MISSILE_DRAFT_INTERFACE if v.get('interface')==MISSILE_DRAFT_INTERFACE else DRAFT_INTERFACE;v['maintenance_policy']=ps.clone(policy())
     for row in v['ships']:
         for key in ('repairs','damage_controls','fuel_tanks'):row.setdefault(key,[])
     return v
@@ -25,7 +27,7 @@ def targets(design, record):
     definition=design.resources.definition();state=record['state']
     maxima={m.instance_id:m.maximum_durability_points for m in design.resources.seed.devices.modules}
     categories={m.id:m.prototype.category for m in design.resources.seed.resources.modules}
-    groups={m['module_id']:'weapon' for m in definition['weapons']}
+    groups={m['module_id']:'countermeasure' if any(r.startswith('recipe.ew.') for r in m['recipe_ids']) else 'weapon' for m in definition['weapons']}
     groups.update({m['module_id']:'magazine' for m in definition['magazines']})
     groups.update({m['module_id']:'damage_control' for m in definition.get('damage_controls',())})
     groups.update({m['module_id']:'fuel' for m in definition.get('fuel_tanks',()) if m['module_id']})
@@ -70,7 +72,7 @@ def plan(draft, design, record, *, target_id, kind, scope):
         elif group=='damage_control':
             for d in row['damage_controls']:
                 if d['module_id'] in ids:d.update(prepare=False,top_up=True)
-        elif group=='weapon':
+        elif group in ('weapon','countermeasure'):
             loaded={w['module_id']:w for w in record['state']['weapons']}
             enabled=design.archive()['policy']['enabled_recipe_ids']
             for w in row['weapons']:

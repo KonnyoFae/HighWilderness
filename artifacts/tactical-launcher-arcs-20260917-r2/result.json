@@ -1,0 +1,9 @@
+{
+  "status": "TACTICAL_MISSILE_FLIGHT_5E_UI_PASS",
+  "checks": [
+    "Paused launcher selection highlights real partial hull occlusion, a full-clear turret, and 360-degree VLS; layer/tab switches clear the overlay, and hull rotation keeps the selected launcher anchored.",
+    "Fire-control target assignment carries into missile page. Default auto remains off. A lost single-fire receipt does not duplicate a VLS departure; exactly one round is spent, appears after delay and hits the enemy.",
+    "Canvas point assignment clears target assignment; adjacent-layer selection is accepted by the real backend.",
+    "Battle results save missile expenditure once, return to preparation, and survive a backend restart."
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "status": "DEFENSE_INSTALLATION_UI_PASS",
+  "checks": [
+    "近程自动拦截发射器 placed through real catalog and canvas, with the correct internal and exposed footprints.",
+    "自持火控近程拦截发射器 placed through real catalog and canvas, with the correct internal and exposed footprints.",
+    "红外自持火控30毫米近防炮 placed through real catalog and canvas, with the correct internal and exposed footprints.",
+    "All three defense placements retain exact geometry and prototype versions on save/reopen."
+  ]
+}

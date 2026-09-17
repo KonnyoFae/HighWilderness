@@ -332,6 +332,14 @@ h2 { margin: 7px 0 0; font-size: 19px; }
 .tactical-viewport .viewport-toolbar { padding: 8px 12px; gap: 6px; }
 .tactical-viewport .viewport-toolbar label { font-size: 11px; color: #b8cecb; }
 .tactical-viewport .viewport-toolbar button, .tactical-viewport .viewport-toolbar select { padding: 6px 8px; font-size: 12px; }
+.launcher-arc-key { display:flex; flex-wrap:wrap; align-items:center; gap:4px 12px; padding:7px 12px; background:#152d31; color:#d9e7df; font-size:12px; border-bottom:1px solid #35585b; }
+.launcher-arc-key strong { color:#b5e9ff; }
+.launcher-arc-key small { color:#a8bebc; }
+.launcher-arc-key i { display:inline-block; width:9px; height:9px; border-radius:2px; }
+.launcher-arc-key .clear { background:#70dfa1; }
+.launcher-arc-key .blocked { background:#ff6868; }
+.launcher-arc-key .direction { background:#8de6ff; }
+.launcher-arc-key button { padding:3px 7px; font-size:12px; }
 .tactical-layer-hint, .tactical-art-notice { padding: 6px 12px; margin: 0; background: #203537; color: #c3d8d5; font-size: 12px; }
 .tactical-layer-hint button { padding: 4px 8px; margin-left: 10px; font-size: 11px; }
 .tactical-layer-hint { height: 36px; box-sizing: border-box; display: flex; align-items: center; flex: none; }
@@ -463,5 +471,40 @@ h2 { margin: 7px 0 0; font-size: 19px; }
 .formation-properties input { width: 100%; }.formation-properties button { margin: 4px 4px 4px 0; }
 .formation-distance-note { margin: 0; padding: 8px 16px 12px; color: #9eb0be; font-size: 12px; }
 .test-supply input { width: 100%; }.test-supply { margin-top: 12px; }
+.missile-stores { min-width: 0; font-size: 13px; }
+.missile-device { margin: 12px 0; padding: 10px; min-width: 0; border: 1px solid #49616f; border-radius: 6px; }
+.missile-device legend { color: #dfc28b; font-weight: 600; max-width: 100%; }
+.missile-device label { display: block; margin: 8px 0; }
+.missile-device select { display: block; width: 100%; margin-top: 5px; min-width: 0; }
+.missile-device .editor-row { flex-wrap: wrap; }
+.missile-job { margin: 7px 0; padding: 7px; background: #243b45; border-radius: 4px; }
+.missile-job progress { display: block; width: 100%; height: 6px; margin-top: 6px; accent-color: #e0bf79; }
 @media (max-width: 1150px) { .preparation-stage { grid-template-columns: 185px minmax(220px, 1fr) 300px; gap: 7px; padding: 7px; } .formation-view header { flex-wrap: wrap; } }
 @media (max-width: 800px) { .preparation-stage { grid-template-columns: 1fr 1fr; height: auto; } .preparation-views { grid-column: 1 / -1; grid-row: 1; height: 680px; } .preparation-float { max-height: 600px; } }
+/* Fire-control contacts and equipment share the selected-ship inspector. */
+.observation-panel { display: grid; gap: 12px; }
+.observation-card { border: 1px solid #425267; border-radius: 8px; padding: 12px; background: #162332; }
+.observation-card p { margin: 8px 0; overflow-wrap: anywhere; }
+.observation-card.lost { opacity: .65; border-style: dashed; }
+.observation-heading { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.observation-heading strong { overflow-wrap: anywhere; }
+.observation-card meter { width: 100%; }
+.battle-inspector .battle-tabs { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); }
+.battle-inspector .battle-tabs button { white-space: nowrap; }
+.missile-combat { margin: 14px 0; font-size: 13px; min-width: 0; }
+.missile-combat fieldset { min-width: 0; padding: 12px; border: 1px solid #518b89; border-radius: 8px; background: #162b32; }
+.missile-combat legend { color: #96e2cf; font-weight: 600; }
+.missile-combat label { display: block; margin: 10px 0; }
+.missile-combat select { display: block; width: 100%; min-width: 0; margin-top: 5px; }
+.missile-combat p { overflow-wrap: anywhere; }
+.missile-combat .editor-row { flex-wrap: wrap; gap: 7px; }
+.missile-combat .missile-auto { display: flex; align-items: center; gap: 8px; }
+.tactical-ew-key { position: absolute; top: 12px; left: 12px; display: flex; flex-wrap: wrap; gap: 10px; max-width: calc(100% - 24px); padding: 6px 9px; border-radius: 4px; background: #14292de8; font-size: 12px; pointer-events: none; }
+.countermeasure-panel input[type="range"] { width: 100%; }
+.missile-tabs { margin: 12px 0; }
+.battle-inspector .missile-tabs button { white-space: normal; }
+.missile-performance { margin: 10px 0; padding: 8px; background: #14232d; border-radius: 5px; }
+.missile-performance summary { color: #a4dace; cursor: pointer; }
+.missile-performance table { width: 100%; font-size: 12px; border-collapse: collapse; }
+.missile-performance caption { padding: 6px 0; color: #acc0cd; }
+.missile-performance th, .missile-performance td { text-align: left; padding: 5px; border-bottom: 1px solid #354954; }

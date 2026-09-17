@@ -81,6 +81,18 @@ export function hostedDescendants(modules: OutfitInstance[], id: string) {
   }
   return modules.filter(m => m.id !== id && ids.has(m.id));
 }
+// Canvas placement uses the exposed top of a raised module. Persisted placements
+// still name its internal base; dragging from any occupied deck preserves that base.
+export function gridPlacementDeck(layout: OutfitLayout, visibleDeckId: string, option: ModuleOption, preservedBaseId?: string) {
+  if (preservedBaseId) return { deckId: preservedBaseId, error: "" };
+  const visible = layout.decks.find(d => d.id === visibleDeckId);
+  if (!visible) return { deckId: undefined, error: "没有可用甲板" };
+  const g = option.prototype.installation;
+  const offset = g.top_footprint_half_cells.length ? Number(g.top_deck_offset ?? 0) : 0;
+  const base = layout.decks.find(d => d.level === visible.level - offset);
+  return base ? { deckId: base.id, error: "" }
+    : { deckId: undefined, error: "下方甲板不足，无法容纳该部件；请在有足够下层空间的露天甲板放置。" };
+}
 export function gridHint(layout: OutfitLayout, deckId: string, option: ModuleOption, anchor: Point, rotation: number, exclude = "") {
   const base = layout.decks.find(d => d.id === deckId);
   if (!base) return "没有可用甲板";
@@ -107,6 +119,6 @@ export function compatibleHosts(option: ModuleOption, modules: OutfitInstance[],
   const slot = option.prototype.installation.host_slot;
   return modules.filter(m => m.id !== exclude && options.some(o => o.prototype.id === m.prototype.id && o.prototype.version === m.prototype.version
     && (o.prototype.installation.provided_slots as string[] | undefined)?.includes(slot ?? ""))
-    && !modules.some(child => child.id !== exclude && child.placement.host_instance_id === m.id
-      && options.some(o => o.prototype.id === child.prototype.id && o.prototype.version === child.prototype.version && o.prototype.installation.host_slot === slot)));
+    && (slot === 'fire_control_datalink' && option.prototype.category === 'datalink' || !modules.some(child => child.id !== exclude && child.placement.host_instance_id === m.id
+      && options.some(o => o.prototype.id === child.prototype.id && o.prototype.version === child.prototype.version && o.prototype.installation.host_slot === slot))));
 }

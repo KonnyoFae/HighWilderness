@@ -360,6 +360,7 @@ class HullCoatingCatalog:
 
 
 MODULE_CATEGORIES = {
+    "datalink",
     "ammunition_magazine",
     "cic",
     "lift_fuel_tank",
@@ -397,6 +398,7 @@ POWER_CONSUMER_CATEGORIES = (
 POWER_CONSUMER_CATEGORY_SET = set(POWER_CONSUMER_CATEGORIES)
 BALANCE_STATUSES = {"contract_fixture", "prototype_unbalanced", "balance_reference"}
 MODULE_FUNCTIONS_BY_CATEGORY = {
+    "datalink": ("datalink.share",),
     "ammunition_magazine": ("ammunition.feed", "ammunition.inventory"),
     "cargo_hold": ("cargo.inventory",),
     "cic": ("cic.basic_control",),
@@ -418,6 +420,7 @@ FIRE_CONTROL_REQUIREMENTS = {"none", "solution", "continuous_guidance"}
 SENSOR_CHANNELS = {"infrared", "optical", "radar"}
 SENSOR_MODES = {"active_search", "fire_control_lock", "passive_search", "track"}
 COMBAT_POWER_CATEGORY_BY_MODULE_CATEGORY = {
+    "datalink": "fire_control",
     "weapon": "weapons_and_active_defense",
     "fire_control": "fire_control",
     "sensor": "sensors",
@@ -1253,6 +1256,8 @@ class ModuleCapability:
                     "supported_requirements": list(requirements),
                 }
             )
+        elif kind == "datalink":
+            _keys(obj, path, ("kind",))
         elif kind == "sensor":
             _keys(
                 obj,
@@ -1377,6 +1382,8 @@ class ModulePrototype:
         if status not in BALANCE_STATUSES:
             raise ContractError("module.balance_status", f"{path}.balance_status", status)
         installation = ModuleInstallationGeometry.parse(obj["installation"], f"{path}.installation")
+        if category == 'datalink' and installation.host_slot != 'fire_control_datalink':
+            raise ContractError('module.datalink_host', path, '数据链必须嵌入指挥机数据链槽')
         power = ModulePowerProfile.parse(obj["power"], f"{path}.power")
         crew = tuple(
             sorted(
@@ -1565,7 +1572,7 @@ class ModulePrototype:
                 f"{category} 必须属于 {expected_combat_power_category} 供电类别",
             )
         if category == "weapon" and (
-            not installation.internal_footprint_half_cells
+            (not installation.internal_footprint_half_cells and capability.to_dict().get('weapon_class') != 'active_defense')
             or not (
                 installation.top_footprint_half_cells
                 or installation.side_external_footprint_half_cells
@@ -1574,7 +1581,7 @@ class ModulePrototype:
             raise ContractError(
                 "module.weapon_geometry",
                 path,
-                "武器必须同时具有内部本体和顶挂或侧挂外露部分",
+                "火炮和导弹发射器须有内部本体及外露部分；主动防御设备可仅有外露部分",
             )
         if category == "sensor" and not installation.top_footprint_half_cells:
             raise ContractError(

@@ -777,6 +777,18 @@
             "maximum_instrumented_range_m"
           ],
           "type": "object"
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "datalink"
+            }
+          },
+          "required": [
+            "kind"
+          ]
         }
       ]
     },
@@ -1064,7 +1076,8 @@
             "cargo_hold",
             "fire_control",
             "sensor",
-            "weapon"
+            "weapon",
+            "datalink"
           ],
           "type": "string"
         },

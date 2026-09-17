@@ -16,18 +16,20 @@ def compile_groups(session, scenario):
         prototypes = {(m.prototype.id, m.prototype.version): modules[m.id] for m in plan.modules}
         catalog = SimpleNamespace(module=lambda ref: prototypes[(ref.id, ref.version)])
         for group in weapon_groups(plan, catalog):
+            if any(modules[mid].capability.to_dict().get('weapon_class')!='gun' for mid in group.weapon_instance_ids): continue
             groups.append(dict(ship_id=seed.contributions.ship_id, group_id=group.id,
                 name=group.name, weapon_ids=list(group.weapon_instance_ids)))
     return tuple(groups)
 
 
-def visible(battle, observer, target, world, available):
+def visible(battle, observer, target, world, available, frame=None):
     from .tactical_gunnery import difference
     own, other = world.ships[observer], world.ships[target]
     if other.motion.hull_integrity_fraction <= 0 or other.command.lifecycle.physical_status != 'operational':
         return False
     distance = hypot(*difference(own.motion.position_world_m.to_list(), other.motion.position_world_m.to_list()))
-    return distance <= battle.config['visual_range_m'] or bool(battle._sources(observer, target, world, available)[0])
+    track=(frame or battle.observation.frame).tracks.get((observer,other.ship_id))
+    return distance <= battle.config['visual_range_m'] or bool(track and track.valid)
 
 
 def solution(battle, state, contact, step, origin, own_velocity, flight, ratio):
@@ -46,7 +48,7 @@ def solution(battle, state, contact, step, origin, own_velocity, flight, ratio):
     return intercept(origin, own_velocity, position, velocity, flight.muzzle_speed_mps*ratio)
 
 
-def acquire(battle, world, available, inventories):
+def acquire(battle, world, available, inventories, frame=None):
     from .tactical_gunnery import add, difference, rotate, wrap
     states, contacts = list(battle.states), {}
     own_side = battle._sides[battle._direct_index]
@@ -60,12 +62,12 @@ def acquire(battle, world, available, inventories):
     # contact once per observation period; selected targets acquire locks later.
     for observer in observers:
         for target in range(len(world.ships)):
-            if battle._sides[target] == battle._sides[observer] or not visible(battle, observer, target, world, available):
+            if battle._sides[target] == battle._sides[observer] or not visible(battle, observer, target, world, available, frame):
                 continue
             pair = observer, target
             previous = battle._contacts.get(pair) or battle._search_contacts.get(pair)
             contacts[pair] = previous if previous and world.fixed_step-previous.step < battle.config['observation_period_steps'] else (
-                battle._measure(observer, target, world, 'degraded'))
+                battle.observation.contact(observer,world.ships[target].ship_id,world,'degraded',frame) or battle._measure(observer, target, world, 'degraded'))
     for index in automatic:
         gun, state = battle.guns[index], states[index]
         ship = world.ships[gun.ship_index]
@@ -84,7 +86,9 @@ def acquire(battle, world, available, inventories):
         own_velocity = add(tuple(motion.velocity_world_mps.to_list()), (-motion.yaw_rate_radps*offset[1], motion.yaw_rate_radps*offset[0]))
         candidates = []
         for (observer, target), contact in contacts.items():
-            if observer != gun.ship_index or world.ships[target].motion.height_layer != layer:
+            track=(frame or battle.observation.frame).tracks.get((observer,world.ships[target].ship_id))
+            target_layer=track.target.layer if track and track.valid else world.ships[target].motion.height_layer
+            if observer != gun.ship_index or target_layer != layer:
                 continue
             distance = hypot(*difference(contact.position, origin))
             if not gun.minimum_range <= distance <= maximum:

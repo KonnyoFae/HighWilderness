@@ -1,0 +1,563 @@
+{
+  "fixture_level": "prototype_unbalanced",
+  "id": "gtw.module_catalog.tactical.sensors",
+  "kind": "ModulePrototypeCatalog",
+  "modules": [
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "fire_control.guidance",
+          "fire_control.solution"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "fire_control",
+        "maximum_lock_range_m": 100000.0,
+        "simultaneous_channels": 32,
+        "supported_requirements": [
+          "continuous_guidance",
+          "solution"
+        ]
+      },
+      "category": "fire_control",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "fire_control.guidance",
+          "model": "binary_until_destroyed",
+          "points": []
+        },
+        {
+          "function_id": "fire_control.solution",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.6
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.command_computer.5d",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [
+          "fire_control_datalink"
+        ],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1000.0,
+      "name": "指挥机",
+      "power": {
+        "active_load_kw": 120.0,
+        "consumer_category": "fire_control",
+        "generation_kw": 0.0,
+        "standby_load_kw": 10.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "datalink.share"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "datalink"
+      },
+      "category": "datalink",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "datalink.share",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.datalink.5d",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": "fire_control_datalink",
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 180.0,
+      "name": "数据链",
+      "power": {
+        "active_load_kw": 30.0,
+        "consumer_category": "fire_control",
+        "generation_kw": 0.0,
+        "standby_load_kw": 2.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "sensor.search",
+          "sensor.track"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "sensor",
+        "maximum_instrumented_range_m": 50000.0,
+        "sensor_channel": "infrared",
+        "supported_modes": [
+          "fire_control_lock",
+          "passive_search",
+          "track"
+        ]
+      },
+      "category": "sensor",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "sensor.search",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.4
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        },
+        {
+          "function_id": "sensor.track",
+          "model": "stepwise",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.sensor.5d.infrared",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "local_exposed_top",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [
+          [
+            -2,
+            -2
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "mass_kg": 600.0,
+      "name": "红外搜索",
+      "power": {
+        "active_load_kw": 100.0,
+        "consumer_category": "sensors",
+        "generation_kw": 0.0,
+        "standby_load_kw": 15.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "sensor.search",
+          "sensor.track"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "sensor",
+        "maximum_instrumented_range_m": 50000.0,
+        "sensor_channel": "radar",
+        "supported_modes": [
+          "active_search",
+          "fire_control_lock",
+          "track"
+        ]
+      },
+      "category": "sensor",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "sensor.search",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.4
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        },
+        {
+          "function_id": "sensor.track",
+          "model": "stepwise",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.sensor.5d.radar",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "local_exposed_top",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [
+          [
+            -2,
+            -2
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "mass_kg": 850.0,
+      "name": "火控雷达",
+      "power": {
+        "active_load_kw": 180.0,
+        "consumer_category": "sensors",
+        "generation_kw": 0.0,
+        "standby_load_kw": 15.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "sensor.search",
+          "sensor.track"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "sensor",
+        "maximum_instrumented_range_m": 60000.0,
+        "sensor_channel": "radar",
+        "supported_modes": [
+          "active_search",
+          "fire_control_lock",
+          "track"
+        ]
+      },
+      "category": "sensor",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "sensor.search",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.4
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        },
+        {
+          "function_id": "sensor.track",
+          "model": "stepwise",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.sensor.5d.radar.advanced",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "local_exposed_top",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [
+          [
+            -2,
+            -2
+          ],
+          [
+            0,
+            -2
+          ],
+          [
+            2,
+            -2
+          ],
+          [
+            -2,
+            0
+          ],
+          [
+            2,
+            0
+          ],
+          [
+            -2,
+            2
+          ],
+          [
+            0,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "mass_kg": 1800.0,
+      "name": "高容量火控雷达",
+      "power": {
+        "active_load_kw": 360.0,
+        "consumer_category": "sensors",
+        "generation_kw": 0.0,
+        "standby_load_kw": 15.0
+      },
+      "version": 1
+    }
+  ],
+  "name": "战术感知与指挥设备",
+  "schema": "gaotian.module-prototype-catalog/v3",
+  "version": 3
+}

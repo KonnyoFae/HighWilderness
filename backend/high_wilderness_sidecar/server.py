@@ -232,7 +232,9 @@ class SidecarServer:
             while True:
                 self.realtime.tick()
                 try:
-                    message = jobs.get(timeout=.002 if self.realtime.running else 0 if self.tactical.advancing else None)
+                    # Service queued input between bounded pumps, but do not
+                    # add an idle OS wait while committed simulation work is due.
+                    message = jobs.get(timeout=0 if self.realtime.work_pending or self.tactical.advancing else .002 if self.realtime.running else None)
                 except Empty:
                     # Bounded preview advances on the authority thread; renders/reads
                     # do not drive simulation. Check pause and other jobs every step.

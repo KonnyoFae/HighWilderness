@@ -1,0 +1,211 @@
+{
+  "fixture_level": "prototype_unbalanced",
+  "id": "gtw.module_catalog.tactical.ammunition_scale",
+  "kind": "ModulePrototypeCatalog",
+  "modules": [
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "ammunition.feed",
+          "ammunition.inventory"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "capacity_units": 10000,
+        "compatible_munition_ids": [
+          "gtw.munition.fixture.76mm.special",
+          "gtw.munition.fixture.76mm.standard"
+        ],
+        "inventory_scope": "ship_shared",
+        "kind": "ammunition_magazine"
+      },
+      "category": "ammunition_magazine",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "ammunition.feed",
+          "model": "binary_until_destroyed",
+          "points": []
+        },
+        {
+          "function_id": "ammunition.inventory",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.ammunition_magazine",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1500.0,
+      "name": "标准弹药库",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 2
+    },
+    {
+      "automatic_activation_events": [
+        "ship.weapon_fire_requested"
+      ],
+      "automation": {
+        "automated_functions": [
+          "weapon.aim",
+          "weapon.fire"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "partial",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "compatible_munition_ids": [
+          "gtw.munition.3a.30mm.armor_piercing",
+          "gtw.munition.3a.30mm.incendiary",
+          "gtw.munition.3a.30mm.ordinary"
+        ],
+        "engagement_domains": [
+          "ship"
+        ],
+        "fire_control_requirement": "solution",
+        "kind": "weapon",
+        "maximum_range_m": 3000.0,
+        "minimum_range_m": 0.0,
+        "ready_round_capacity": 2000,
+        "weapon_class": "gun"
+      },
+      "category": "weapon",
+      "counts_toward_departure_minimum": false,
+      "crew": [
+        {
+          "crew_type": "ordinary",
+          "minimum_operating": 0,
+          "standard": 1
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "weapon.aim",
+          "model": "piecewise_linear",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        },
+        {
+          "function_id": "weapon.fire",
+          "model": "binary_until_destroyed",
+          "points": []
+        },
+        {
+          "function_id": "weapon.reload",
+          "model": "stepwise",
+          "points": [
+            {
+              "durability_fraction": 0.0,
+              "output_fraction": 0.0
+            },
+            {
+              "durability_fraction": 0.5,
+              "output_fraction": 0.5
+            },
+            {
+              "durability_fraction": 1.0,
+              "output_fraction": 1.0
+            }
+          ]
+        }
+      ],
+      "default_operating_mode": "standby",
+      "durability_points": 100.0,
+      "id": "gtw.module.gun.30mm",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "local_exposed_top",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "mass_kg": 1200.0,
+      "name": "30 毫米近防炮",
+      "power": {
+        "active_load_kw": 100.0,
+        "consumer_category": "weapons_and_active_defense",
+        "generation_kw": 0.0,
+        "standby_load_kw": 5.0
+      },
+      "version": 2
+    }
+  ],
+  "name": "战术弹药仓容校准",
+  "schema": "gaotian.module-prototype-catalog/v3",
+  "version": 3
+}

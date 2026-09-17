@@ -1,0 +1,101 @@
+{
+  "interface": "gaotian.tactical-observation/5d-v1",
+  "version": 1,
+  "balance_status": "prototype_unbalanced",
+  "sample_steps": 6,
+  "memory_steps": 180,
+  "datalink_range_m": 100000.0,
+  "high_speed_mps": 1000.0,
+  "sensor_profiles": [
+    {
+      "prototype": {
+        "id": "gtw.module.sensor.5d.infrared",
+        "version": 1
+      },
+      "prototype_sha256": "0ecbbb21616c5edde50e0f21c1846906963a667e062d94fd12da45e6eeb5420b",
+      "tracking_capacity": 24,
+      "coasting_range_m": 12000,
+      "ship_range_m": 12000,
+      "weather": [
+        1.0,
+        0.3,
+        0.5
+      ]
+    },
+    {
+      "prototype": {
+        "id": "gtw.module.sensor.5d.radar",
+        "version": 1
+      },
+      "prototype_sha256": "b3c44cfec624dd7ee5761eea4d29af775de0cf5e71cccc172e66872c979d39e9",
+      "tracking_capacity": 24,
+      "coasting_range_m": 50000,
+      "ship_range_m": 50000,
+      "weather": [
+        1.0,
+        0.8,
+        0.4
+      ]
+    },
+    {
+      "prototype": {
+        "id": "gtw.module.sensor.5d.radar.advanced",
+        "version": 1
+      },
+      "prototype_sha256": "f912f7a505b1f8032c2152be775cd5ac92cece319d44b97d0b88dd654b0b9007",
+      "tracking_capacity": 64,
+      "coasting_range_m": 60000,
+      "ship_range_m": 60000,
+      "weather": [
+        1.0,
+        0.8,
+        0.4
+      ]
+    },
+    {
+      "prototype": {
+        "id": "gtw.module.sensor.5d.infrared",
+        "version": 2
+      },
+      "prototype_sha256": "03e1ff5a365e145a28125ef4dc5394b721543b3992b1aa864631cdd5de69d1bb",
+      "tracking_capacity": 24,
+      "coasting_range_m": 12000,
+      "ship_range_m": 12000,
+      "weather": [
+        1.0,
+        0.3,
+        0.5
+      ]
+    },
+    {
+      "prototype": {
+        "id": "gtw.module.sensor.5d.radar",
+        "version": 2
+      },
+      "prototype_sha256": "935f7c1f74da046645349b5e35110b950ffb09c73755fd7a03b30f89ccac773d",
+      "tracking_capacity": 24,
+      "coasting_range_m": 50000,
+      "ship_range_m": 50000,
+      "weather": [
+        1.0,
+        0.8,
+        0.4
+      ]
+    },
+    {
+      "prototype": {
+        "id": "gtw.module.sensor.5d.radar.advanced",
+        "version": 2
+      },
+      "prototype_sha256": "6114f33a056e89c1b8f636f1c2092f89185fd4c4de7d74a1f211b37f87557b98",
+      "tracking_capacity": 64,
+      "coasting_range_m": 60000,
+      "ship_range_m": 60000,
+      "weather": [
+        1.0,
+        0.8,
+        0.4
+      ]
+    }
+  ]
+}

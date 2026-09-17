@@ -1,4 +1,4 @@
-import { endingLabel, resourceRows, serviceLabel, fuelTankName } from "./settlement";
+import { endingLabel, resourceRows, serviceLabel, fuelTankName, settlementShipLabel, missileSettlement } from "./settlement";
 import type { SettlementEnvelope, SettlementLibrary } from "./settlement";
 import { ammunitionName } from './ammunition';
 import { PersonnelSettlement } from './PersonnelPanel';
@@ -13,14 +13,18 @@ export function SettlementPanel({ current, library, busy, canDeploy, onSave, onI
     <h3>战后结算与舰船存档</h3>
     {current && <>
       <p role="status">{endingLabel[current.result.reason]} · {(current.result.fixed_step/60).toFixed(1)} 秒 · {current.saved ? "已保存全部参战舰船" : "待保存结算"}</p>
-      {!current.saved && <p>有效的在装批次已完成。保存将一并记录双方战损和资源余量；{current.error ? "恢复记录写入失败，请保留当前场景并重试保存。" : "重启后可从下方结算记录恢复。"}</p>}
+      {!current.saved && <p>有效的火炮装填与损管准备批次已结算；导弹未完成作业保留进度。保存将一并记录双方战损和资源余量；{current.error ? "恢复记录写入失败，请保留当前场景并重试保存。" : "重启后可恢复待保存战果。"}</p>}
       {current.error && <p role="alert">{current.error}</p>}
       <button disabled={busy || current.saved} onClick={() => onSave(current.result.settlement_id)}>{current.saved ? "结算已保存" : "保存全部战后结果"}</button>
       <div className="settlement-ships">{current.result.ships.map(ship => <article key={ship.after.state.instance_id}>
-        <h4>{ship.after.ship_id === "ship.web.red" ? "敌方舰船" : "本方舰船"} · {serviceLabel[ship.after.state.service.status]}</h4>
+        <h4>{settlementShipLabel(ship, current.result.player_side_id)} · {serviceLabel[ship.after.state.service.status]}</h4>
         {current.result.wrecks?.some(w=>w.instance_id===ship.after.state.instance_id) && <p>已坠毁并留下可打捞残骸。位置已随战果保存，打捞功能将在战略模式接入。</p>}
         <p>船壳 {(ship.before.state.hull_integrity_fraction*100).toFixed(1)}% → {(ship.after.state.hull_integrity_fraction*100).toFixed(1)}%</p>
         <PersonnelSettlement before={ship.before} after={ship.after}/>
+        {ship.after.state.missiles && (() => { const m = missileSettlement(ship); return <section aria-label="导弹结存">
+          <p>待发 {m.before.ready} → {m.after.ready} 枚 · 库内整装弹 {m.before.stored} → {m.after.stored} 枚 · 作业中 {m.before.working} → {m.after.working} 枚 · 本场已发射 {m.fired} 枚</p>
+          <p>已发射导弹含仍在飞行和垂发转向中的弹，均已消耗，不退库，也不会在下一场重新出现。未完成作业的弹药、已投入原料及进度一并保存；下一次准备核对会计入剩余作业耗时。</p>
+        </section>; })()}
         <div className="propulsion-tables"><table><thead><tr><th>资源</th><th>战前</th><th>战后</th><th>变动原因</th></tr></thead><tbody>
           {resourceRows(ship).map(row => <tr key={row.key}><td>{row.name}</td><td>{row.before}</td><td>{row.after}</td><td>{row.detail}</td></tr>)}
         </tbody></table></div>

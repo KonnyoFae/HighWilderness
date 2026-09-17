@@ -55,6 +55,7 @@ class Attempt:
     deck_level: int | None = None
     position_local: tuple | None = None
     surface: bool = False
+    intensity_scale: int = 1
 
 
 def sample(seed, attempt, target_ship_id):
@@ -116,7 +117,7 @@ class IgnitionRuntime:
                 old = remaining.get(key)
                 fire = b.fire.profiles[n]
                 remaining[key] = Fire(n, (zone.modules[0] if zone.modules else None) if zone else a.module_id,
-                    min(fire.max_intensity_units, profile['intensity_units']+(old.intensity_units if old else 0)),
+                    min(fire.max_intensity_units, profile['intensity_units']*a.intensity_scale+(old.intensity_units if old else 0)),
                     max(profile['duration_steps'], old.remaining_steps if old else 0),
                     zone.id if zone else None,
                     old.spread_steps if old else b.fire.spatial_policy['spread_interval_steps'] if zone else 0,

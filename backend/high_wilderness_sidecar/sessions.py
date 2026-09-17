@@ -51,18 +51,28 @@ def string(value: Any, path: str) -> str:
 class ResourceIndex:
     """An explicit read-only development pack; no test-module dependencies."""
     def __init__(self, root: Path = ROOT):
+        from .preparation_policy import load_current
+        # Use the same exact launcher classification as combat, without changing
+        # prototype contents or the fingerprints of existing outfit documents.
+        self.launcher_kinds = {
+            (r['prototype']['id'], r['prototype']['version'], r['prototype_sha256']): r['binding']['launcher_kind']
+            for r in load_current(root)['modules'] if r['binding'].get('kind') == 'missile_launcher'
+        }
         data = root / "舰艇数据"
         materials = [data / "材料" / name for name in ("结构材质.v1.json", "基础装甲材质.v1.json")]
         self.registry = load_material_registry(materials)
         entries = [(p, "MaterialCatalog", None) for p in materials]
         entries += [(data / "涂料" / "船体涂料.v1.json", "HullCoatingCatalog", HullCoatingCatalog.parse)]
         entries += [(data / "模块" / "测试夹具" / name, "ModulePrototypeCatalog", ModulePrototypeCatalog.parse)
-                    for name in ("最小模块目录.v1.json", "战斗系统模块目录.v1.json", "阶段F无人化模块目录.v1.json", "战术火炮目录.v2.json")]
+                    for name in ("最小模块目录.v1.json", "战斗系统模块目录.v1.json", "阶段F无人化模块目录.v1.json", "战术火炮目录.v2.json", "战术导弹目录.v2.json", "战术感知目录.v3.json", "战术探测安装修正目录.v3.json", "战术弹药库目录.v3.json", "战术火炮装填校准目录.v3.json", "战术电子对抗目录.v3.json", "战术进阶防御目录.v3.json")]
         for ship in ("最小合法舰", "常规有人战舰", "完全无人旗舰"):
             entries += [
                 (data / "船壳蓝图夹具" / f"阶段F{ship}船壳.v1.json", "HullBlueprint", HullBlueprintInput.parse),
                 (data / "舾装方案夹具" / f"阶段F{ship}舾装.v1.json", "OutfitPlan", OutfitPlanInput.parse),
             ]
+        entries += [(data / "舾装方案夹具" / name, "OutfitPlan", OutfitPlanInput.parse)
+                    for name in ("炮塔式导弹后勤测试舰.v1.json", "VLS导弹后勤测试舰.v1.json", "雷达数据链测试舰.v1.json", "红外数据链测试舰.v1.json",
+                                 "火箭雷达导弹交战测试舰.v1.json", "涡喷红外导弹交战测试舰.v1.json", "VLS导弹交战测试舰.v1.json", "电子对抗与复合制导测试舰.v1.json", "基础自动拦截测试舰.v1.json", "进阶自动防御测试舰.v1.json")]
         self.resources: dict[str, tuple[dict, dict]] = {}
         for path, kind, parser in entries:
             source = load_json(path)
@@ -173,6 +183,7 @@ class EditorService:
                 pieces=build_deck_edge_space([r.to_dict() for r in inputs[d.id].regions], d.internal_cells)['pieces'])
                 for d in hull.decks if d.filling]
         preview["model"]["weapon_control"] = document.weapon_control_preview(preview["model"]["layout"])
+        preview["model"]["sensor_arcs"] = document.sensor_arc_preview(preview["model"]["layout"])
         return preview
 
     def validate_draft(self, source, kind):

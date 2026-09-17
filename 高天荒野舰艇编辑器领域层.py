@@ -21,6 +21,7 @@ from 高天荒野舰艇数据契约 import (
     OutfitPlanInput,
     ResourceReference,
     canonical_json,
+    canonical_sha256,
     load_json,
     save_canonical_json,
 )
@@ -424,11 +425,14 @@ class OutfitEditorDocument:
         hull: CompiledHull,
         module_catalog: ModulePrototypeCatalog,
         coating_catalog: HullCoatingCatalog,
+        *,
+        launcher_kinds: dict[tuple[str, int, str], str] | None = None,
     ):
         self._source = deepcopy(source)
         self._hull = hull
         self._module_catalog = module_catalog
         self._coating_catalog = coating_catalog
+        self._launcher_kinds = dict(launcher_kinds or {})
 
     @classmethod
     def load(
@@ -496,7 +500,7 @@ class OutfitEditorDocument:
         if name is not None:
             next_source["name"] = name
         document = OutfitEditorDocument(
-            next_source, self._hull, self._module_catalog, self._coating_catalog
+            next_source, self._hull, self._module_catalog, self._coating_catalog, launcher_kinds=self._launcher_kinds
         )
         document.parse()
         return document
@@ -775,7 +779,7 @@ class OutfitEditorDocument:
         *, allow_invalid_draft: bool = False,
     ) -> "OutfitEditorDocument":
         """Validate a detached complete replacement before changing the source."""
-        candidate = OutfitEditorDocument(self.source_dict(), self._hull, self._module_catalog, self._coating_catalog)
+        candidate = OutfitEditorDocument(self.source_dict(), self._hull, self._module_catalog, self._coating_catalog, launcher_kinds=self._launcher_kinds)
         module = candidate._module(instance_id)
         if module["placement"].get("kind") != "side":
             raise ContractError("editor.placement_kind", "$.modules", "只能移动侧挂模块")
@@ -789,7 +793,7 @@ class OutfitEditorDocument:
         return self
 
     def rehost(self, instance_id: str, host_instance_id: str, *, allow_invalid_draft: bool = False) -> "OutfitEditorDocument":
-        candidate = OutfitEditorDocument(self.source_dict(), self._hull, self._module_catalog, self._coating_catalog)
+        candidate = OutfitEditorDocument(self.source_dict(), self._hull, self._module_catalog, self._coating_catalog, launcher_kinds=self._launcher_kinds)
         module = candidate._module(instance_id)
         if module["placement"].get("kind") != "hosted":
             raise ContractError("editor.placement_kind", "$.modules", "只能为嵌入模块更换宿主")
@@ -844,6 +848,47 @@ class OutfitEditorDocument:
         self._source = reconcile_weapon_groups(self._source, self._module_catalog)
         return self
 
+    def _non_horizontal_weapon_arc(self, prototype, origin, level):
+        if prototype.capability.to_dict().get('weapon_class') == 'active_defense':
+            return dict(policy="gaotian.countermeasure-deployment/5f-v1",origin_m=list(origin),base_deck_level=level,
+                        status="countermeasure_deployment",intervals_deg=[],blocked_intervals_deg=[])
+        if prototype.capability.to_dict().get('weapon_class') != 'missile_launcher':
+            return None
+        key = (prototype.reference.id, prototype.reference.version, canonical_sha256(prototype.to_dict()))
+        kind = self._launcher_kinds.get(key)
+        if kind in ('turret', 'automatic_interceptor'):
+            return None
+        # A missing exact binding is unknown, never an implicit turret or VLS.
+        return dict(policy="gaotian.weapon-launch-geometry/v1", origin_m=list(origin), base_deck_level=level,
+                    status="vertical_launch" if kind == 'vls' else "launch_policy_unavailable",
+                    intervals_deg=[], blocked_intervals_deg=[])
+
+    def upgrade_sensor(self, instance_id: str) -> "OutfitEditorDocument":
+        from 高天荒野舰艇数据契约 import ResourceReference
+        row = next((m for m in self._source['modules'] if m['id'] == instance_id), None)
+        allowed = {'gtw.module.sensor.5d.radar', 'gtw.module.sensor.5d.radar.advanced', 'gtw.module.sensor.5d.infrared'}
+        if row is None or row['prototype']['id'] not in allowed or row['prototype']['version'] != 1:
+            raise ContractError('outfit.sensor_upgrade_unavailable', '$.instance_id', '此设备不需要探测净空升级')
+        self._module_catalog.module(ResourceReference(row['prototype']['id'], 2))
+        row['prototype']['version'] = 2
+        self.validate_placement_edit(instance_id)
+        return self
+
+    def sensor_arc_preview(self, layout) -> list:
+        from 高天荒野舰艇水平射界 import horizontal_fire_arc
+        views = {m['id']: m for m in layout['modules']}
+        invalid = {e['instance_id'] for e in layout['errors']} | {i for c in layout['conflicts'] for i in c['instance_ids']}
+        arcs = []
+        for m in self.parse().modules:
+            p = self._module_catalog.module(m.prototype)
+            if p.category != 'sensor' or p.capability.to_dict()['sensor_channel'] not in ('radar','infrared'):
+                continue
+            v = None if m.id in invalid else views.get(m.id)
+            arc = horizontal_fire_arc(self._hull, v['anchor_m'], max((c[0] for c in v['top_cells']), default=v['base_deck_level'])) if v else dict(
+                status='placement_invalid', origin_m=None, base_deck_level=None, intervals_deg=[], blocked_intervals_deg=[])
+            arcs.append(dict(arc, instance_id=m.id))
+        return arcs
+
     def weapon_control_preview(self, layout) -> dict:
         from 高天荒野舰艇武器组 import weapon_groups
         from 高天荒野舰艇水平射界 import horizontal_fire_arc
@@ -853,10 +898,12 @@ class OutfitEditorDocument:
         invalid = {e["instance_id"] for e in layout["errors"]} | {id for c in layout["conflicts"] for id in c["instance_ids"]}
         arcs = []
         for m in self.parse().modules:
-            if self._module_catalog.module(m.prototype).category != "weapon":
+            prototype = self._module_catalog.module(m.prototype)
+            if prototype.category != "weapon":
                 continue
             v = None if m.id in invalid else views.get(m.id)
-            arc = horizontal_fire_arc(self._hull, v["anchor_m"], v["base_deck_level"]) if v else dict(
+            arc = (self._non_horizontal_weapon_arc(prototype, v["anchor_m"], v["base_deck_level"]) or
+                   horizontal_fire_arc(self._hull, v["anchor_m"], v["base_deck_level"])) if v else dict(
                 origin_m=None, base_deck_level=None, status="placement_invalid", intervals_deg=[], blocked_intervals_deg=[])
             arcs.append(dict(arc, instance_id=m.id))
         return dict(interface="gaotian.weapon-control-view/v2alpha1", groups=[g.to_dict() for g in groups],
@@ -865,6 +912,9 @@ class OutfitEditorDocument:
     def _weapon_arc_preview(self, instance: Any) -> dict[str, Any] | None:
         if instance.prototype.category != "weapon":
             return None
+        special = self._non_horizontal_weapon_arc(instance.prototype, instance.anchor_m, instance.base_deck_level)
+        if special is not None:
+            return special
         higher_decks = [
             deck.level for deck in self._hull.decks if deck.level > instance.base_deck_level
         ]

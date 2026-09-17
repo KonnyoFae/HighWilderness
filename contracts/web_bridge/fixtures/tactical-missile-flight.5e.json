@@ -1,0 +1,142 @@
+{
+  "interface": "gaotian.missile-flight/5e-v1",
+  "description": "5e 可调工程初值；仅四种代表型号。速度单位 m/s，加速度 m/s²，转向过载 G，时长 60 Hz 步数。",
+  "models": [
+    {
+      "model_id": "gtw.missile.5c.small.rocket.active_radar",
+      "seeker": "radar",
+      "diameter_mm": 80,
+      "mass_kg": 12,
+      "durability": 3,
+      "boost_steps": 180,
+      "engine_steps": 900,
+      "coast_steps": [
+        1800,
+        1320,
+        900
+      ],
+      "launch_speed": 30,
+      "boost_acceleration": 250,
+      "boost_cap": 800,
+      "engine_acceleration": 100,
+      "speed_cap": 1400,
+      "max_g": 18,
+      "low_speed_reference": 400,
+      "seeker_range": 20000,
+      "seeker_half_cone": 1.0471975511965976,
+      "weather": [
+        1,
+        0.8,
+        0.4
+      ],
+      "maximum_range": 50000,
+      "steering_law": "aerodynamic"
+    },
+    {
+      "model_id": "gtw.missile.5c.small.turbojet.infrared",
+      "seeker": "infrared",
+      "diameter_mm": 80,
+      "mass_kg": 12,
+      "durability": 3,
+      "boost_steps": 180,
+      "engine_steps": 7200,
+      "coast_steps": [
+        2700,
+        1800,
+        1200
+      ],
+      "launch_speed": 30,
+      "boost_acceleration": 110,
+      "boost_cap": 350,
+      "engine_acceleration": 20,
+      "speed_cap": 350,
+      "max_g": 12,
+      "low_speed_reference": 120,
+      "seeker_range": 8000,
+      "seeker_half_cone": 1.0471975511965976,
+      "weather": [
+        1,
+        0.3,
+        0.5
+      ],
+      "maximum_range": 50000,
+      "steering_law": "aerodynamic"
+    },
+    {
+      "model_id": "gtw.missile.5c.medium.rocket.active_radar",
+      "seeker": "radar",
+      "diameter_mm": 300,
+      "mass_kg": 220,
+      "durability": 12,
+      "boost_steps": 240,
+      "engine_steps": 900,
+      "coast_steps": [
+        1800,
+        1320,
+        900
+      ],
+      "launch_speed": 30,
+      "boost_acceleration": 250,
+      "boost_cap": 1100,
+      "engine_acceleration": 100,
+      "speed_cap": 2200,
+      "max_g": 12,
+      "low_speed_reference": 400,
+      "seeker_range": 30000,
+      "seeker_half_cone": 1.0471975511965976,
+      "weather": [
+        1,
+        0.8,
+        0.4
+      ],
+      "maximum_range": 50000,
+      "steering_law": "aerodynamic"
+    },
+    {
+      "model_id": "gtw.missile.5c.medium.turbojet.infrared",
+      "seeker": "infrared",
+      "diameter_mm": 300,
+      "mass_kg": 220,
+      "durability": 12,
+      "boost_steps": 180,
+      "engine_steps": 7200,
+      "coast_steps": [
+        2700,
+        1800,
+        1200
+      ],
+      "launch_speed": 30,
+      "boost_acceleration": 110,
+      "boost_cap": 350,
+      "engine_acceleration": 20,
+      "speed_cap": 400,
+      "max_g": 8,
+      "low_speed_reference": 120,
+      "seeker_range": 12000,
+      "seeker_half_cone": 1.0471975511965976,
+      "weather": [
+        1,
+        0.3,
+        0.5
+      ],
+      "maximum_range": 50000,
+      "steering_law": "aerodynamic"
+    }
+  ],
+  "damage": [
+    {
+      "size": "small",
+      "damage_scale": 4,
+      "penetration_scale": 1.05,
+      "internal_range_m": 25,
+      "radius_m": 8
+    },
+    {
+      "size": "medium",
+      "damage_scale": 16,
+      "penetration_scale": 2,
+      "internal_range_m": 50,
+      "radius_m": 20
+    }
+  ]
+}

@@ -8,6 +8,7 @@ from collections import deque
 
 HISTORY_STEPS = 120
 MAX_FINISHED_FLIGHTS = 128
+PATH_STEPS = 32  # covers interpolation delay and bounded publication jitter
 
 
 class FlightHistory:
@@ -25,13 +26,15 @@ class FlightHistory:
                 continue
             hit = impacts.get(identity)
             # Only committed collision/expiry data supplies the terminal point.
+            endpoint=hit['position_m'] if hit else terminals.get(identity,flight['position_m'])
             self.finished.append(dict(flight, end_step=step,
-                end_m=hit['position_m'] if hit else terminals.get(identity,flight['position_m']),
+                end_m=endpoint,trajectory=[*flight['trajectory'][-PATH_STEPS:],(step,*endpoint)],
                 impact=None if hit is None else dict(ship_id=hit['ship_id'], outcome=hit['outcome'])))
         self.active = {identity: dict(
             self.active.get(identity, dict(id=p.id, ship_id=p.ship_id, born_step=step,
                 origin_m=p.position, expires_step=p.expires, height_layer=p.height_layer)),
-            position_m=p.position, velocity_mps=p.velocity) for identity, p in current.items()}
+            position_m=p.position, velocity_mps=p.velocity,kind='missile' if getattr(p,'missile',None) else 'shell',
+            trajectory=[*self.active.get(identity,{}).get('trajectory',())[-PATH_STEPS:],(step,*p.position)]) for identity, p in current.items()}
         while self.finished and self.finished[0]['end_step'] < step-HISTORY_STEPS:
             self.finished.popleft()
         while len(self.finished) > MAX_FINISHED_FLIGHTS:
@@ -44,4 +47,4 @@ class FlightHistory:
 
     def launch(self, identity):
         flight = self.active[identity]
-        return {key: flight[key] for key in ('born_step', 'origin_m', 'expires_step')}
+        return {key: flight[key] for key in ('born_step', 'origin_m', 'expires_step','trajectory')}

@@ -18,7 +18,7 @@ from 高天荒野舰艇战术机动求解器 import build_tactical_ship_model, i
 from . import outfit_documents, outfits, persistent_ship as ps, tactical_settlement as ts, damage_control_resources as dc
 from .tactical_resources import compile_tactical_fuel_resources
 from . import tactical_fuel as fuel, tactical_ignition as ignition
-from . import preparation_maintenance as maintenance
+from . import preparation_maintenance as maintenance, missile_resources as missiles
 from .simplified_propulsion import compile_snapshot_contributions, direction_error
 from .tactical_devices import seed_from_snapshot as device_seed
 from .tactical_resources_runtime import seed_from_snapshot as resource_seed
@@ -54,13 +54,13 @@ def compile_design(document, index, deployment, policy, *, ship_id):
     doc = outfits.document(source, index, binding['hull'] if binding else None)
     source_outfit = doc.compile()
     hull = doc._hull
-    allowed=('gtw.filling.none','gtw.filling.rack')+(('gtw.filling.spirit_fuel',) if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else ())+(('gtw.filling.fireproof',) if policy.get('interface')==ignition.POLICY_INTERFACE else ())
+    allowed=('gtw.filling.none','gtw.filling.rack')+(('gtw.filling.spirit_fuel',) if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else ())+(('gtw.filling.fireproof',) if policy.get('interface') in dc.IGNITION_POLICY_INTERFACES else ())
     ps.need(all(d.filling is None or d.filling.config.id in allowed for d in hull.decks),
         '$.hull.filling', '当前旧配置尚未接入此填充效果；请使用支持对应效果的新配置')
     ps.obj(policy, 'interface id version modules propulsion_timing goods projectiles recipes fire_control enabled_recipe_ids' +
         (' continuous_damage' if policy.get('interface') in dc.FIRE_POLICY_INTERFACES else '') +
         (' repair' if policy.get('interface') in dc.REPAIR_POLICY_INTERFACES else '')+
-        (' fuel' if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else '')+(' ignition' if policy.get('interface')==ignition.POLICY_INTERFACE else ''), '$.policy')
+        (' fuel' if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else '')+(' ignition' if policy.get('interface') in dc.IGNITION_POLICY_INTERFACES else '')+(' missiles' if policy.get('interface')==missiles.POLICY_INTERFACE else '')+(' ammunition_resource_liters' if 'ammunition_resource_liters' in policy else ''), '$.policy')
     ps.need(policy['interface'] in (POLICY_INTERFACE, dc.POLICY_INTERFACE, *dc.FIRE_POLICY_INTERFACES), '$.policy.interface', '不支持的战前准备资源政策')
     # Make indexed legacy plans portable too, with an exact embedded hull.
     if binding is None:
@@ -116,11 +116,22 @@ def compile_design(document, index, deployment, policy, *, ship_id):
             m['capability']['response_time_s'] = timing[m['id']]
     catalog = ModulePrototypeCatalog.parse(catalog_value)
     plan = ps.clone(source)
+    ammunition_upgrades=('gtw.module.fixture.ammunition_magazine','gtw.module.gun.30mm','gtw.module.gun.50mm','gtw.module.gun.75mm')
     for module in plan['modules']:
-        # The known migration changes only engine prototype versions, not IDs,
-        # module positions, hosts, rotations or weapon group membership.
-        target = next(m for m in catalog.modules if m.reference.id == module['prototype']['id'])
+        # Preserve exact selected versions. Only the named propulsion and
+        # ammunition upgrades below may change a prototype reference.
+        original = doc._module_catalog.module(ResourceReference.parse(module['prototype'], '$.prototype'))
+        version = 2 if original.category in ('main_engine','maneuver_thruster') and original.reference.version == 1 else original.reference.version
+        # New preparations explicitly upgrade the named ammunition capacities.
+        # Archived policies without the revised binding retain their old scale.
+        if original.reference.id in ammunition_upgrades and version == 1 and (original.reference.id,2) in rules:
+            version = 2
+        target = catalog.module(ResourceReference(original.reference.id, version))
         module['prototype'] = target.reference.to_dict()
+    for group in plan.get('weapon_groups',[]):
+        ref=group['prototype']
+        if ref['id'] in ammunition_upgrades and ref['version']==1 and (ref['id'],2) in rules:
+            group['prototype']['version']=2
     catalog, plan, fuel_manifest = compile_tactical_fuel_resources(catalog, OutfitPlanInput.parse(plan))
     snapshot = build_derived_ship_snapshot(hull, compile_outfit(plan, hull, catalog, doc._coating_catalog))
     ps.obj(deployment, 'id version crew fuel_units height_layer control_mode active_remote_core_instance_id', '$.deployment')
@@ -138,6 +149,8 @@ def compile_design(document, index, deployment, policy, *, ship_id):
     definition = dict(interface=ps.RESOURCE_INTERFACE, id=policy['id'], version=policy['version'],
         source_seed_sha256=canonical_sha256(asdict(seed)), **{k: policy[k] for k in ('goods', 'projectiles', 'recipes', 'fire_control')},
         holds=[], magazines=[], weapons=[])
+    if 'ammunition_resource_liters' in policy:
+        definition['ammunition_resource_liters']=ps.integer(policy['ammunition_resource_liters'],'$.ammunition_resource_liters',1)
     groups = {'cargo_hold': 'holds', 'ammunition_magazine': 'magazines', 'weapon': 'weapons'}
     if any(d.filling for d in hull.decks):
         definition['interface'] = ps.FILLING_RESOURCE_INTERFACE
@@ -157,11 +170,21 @@ def compile_design(document, index, deployment, policy, *, ship_id):
             definition['repair'] = policy['repair']
         if policy['interface'] in dc.FUEL_POLICY_INTERFACES:
             definition.update(interface=fuel.RESOURCE_INTERFACE,fuel=policy['fuel'],fuel_tanks=fuel.definitions(snapshot,policy['fuel']))
-    if policy['interface']==ignition.POLICY_INTERFACE:
+    if policy['interface'] in dc.IGNITION_POLICY_INTERFACES:
         definition.update(interface=ignition.RESOURCE_INTERFACE, ignition=policy['ignition'],
             ignition_decks=ignition.definitions(snapshot,policy['ignition']))
-    for m in source_outfit.instances:
-        if m.prototype.category in groups:
+    if policy['interface']==missiles.POLICY_INTERFACE:
+        missiles.validate_profile(policy['missiles'], {g['id'] for g in policy['goods']})
+        ps.need(not policy['missiles']['launchers'] and not policy['missiles']['magazines'], '$.policy.missiles', '政策不能预置设备实例')
+        definition.update(interface=missiles.RESOURCE_INTERFACE, missiles=ps.clone(policy['missiles']))
+    for m in snapshot.outfit.instances:
+        key = m.prototype.reference.id, m.prototype.reference.version
+        rule = rules.get(key,{})
+        if rule.get('kind') in ('missile_launcher','missile_magazine'):
+            ps.need('missiles' in definition, '$.policy', '此版本尚未绑定导弹后勤')
+            group = 'launchers' if rule['kind']=='missile_launcher' else 'magazines'
+            definition['missiles'][group].append(dict(module_id=m.id, **{k:v for k,v in rule.items() if k!='kind'}))
+        elif m.prototype.category in groups:
             key = m.prototype.reference.id, m.prototype.reference.version
             definition[groups[m.prototype.category]].append(dict(module_id=m.id, **rules[key]))
     pack = ps.compile_resources(seed, definition)
@@ -182,9 +205,8 @@ def restore_design(archive, index):
     ps.need(value['interface'] == DESIGN_INTERFACE, '$.design.interface', '不支持的设计绑定版本')
     # Reproduce the exact historical catalog and fingerprints for saved ships.
     # Fresh imports use the extended catalog and current policy instead.
-    legacy_index = outfit_documents.before_tactical_guns(index)
-    if value['catalog_dependencies_sha256'] == outfit_documents.catalog_hash(legacy_index):
-        index = legacy_index
+    index = next((i for i in outfit_documents.catalog_generations(index)
+                  if value['catalog_dependencies_sha256'] == outfit_documents.catalog_hash(i)), index)
     result = compile_design(value['document'], index, value['deployment'], value['policy'], ship_id=value['ship_id'])
     ps.need(result.archive() == value, '$.design', '设计、目录或资源政策已变化，不能自动重绑')
     return result
@@ -271,14 +293,18 @@ def new_draft(preparation_id, ships, supply, *, supply_goods=None):
         known = {g['id']: g for g in supply_goods}
         ps.need(all(known.get(k) == v for k,v in goods.items()), '$.goods', '舰内货物与供给定义不匹配')
     supply = parse_supply(supply, list(goods.values()) if supply_goods is None else supply_goods)
-    return dict(interface=fuel.DRAFT_INTERFACE if fuel_version else dc.DRAFT_INTERFACE if dc_version else DRAFT_INTERFACE, preparation_id=preparation_id, revision=0, swap_policy=SWAP_POLICY,
+    result = dict(interface=fuel.DRAFT_INTERFACE if fuel_version else dc.DRAFT_INTERFACE if dc_version else DRAFT_INTERFACE, preparation_id=preparation_id, revision=0, swap_policy=SWAP_POLICY,
         supply_id=supply['supply_id'], supply_revision=supply['revision'], supply_sha256=canonical_sha256(supply), ships=rows)
+    if any('missiles' in d.resources.definition() for d,_ in ships):
+        result = maintenance.upgrade(result);result['interface']=maintenance.MISSILE_DRAFT_INTERFACE
+        for row in result['ships']: row['missile_orders']=[]
+    return result
 
 
 def validate_draft(value, ships, supply, *, supply_goods=None):
     """Strict stale-state/selection boundary; feasibility and spending are X1a.2."""
     v = ps.clone(value)
-    modern = v.get('interface') == maintenance.DRAFT_INTERFACE
+    modern = v.get('interface') in maintenance.DRAFT_INTERFACES
     ps.obj(v, 'interface preparation_id revision swap_policy supply_id supply_revision supply_sha256 ships'+(' maintenance_policy' if modern else ''), '$.draft')
     ps.integer(v['revision'], '$.draft.revision')
     ps.integer(v['supply_revision'], '$.supply_revision')
@@ -295,11 +321,16 @@ def validate_draft(value, ships, supply, *, supply_goods=None):
     for key, row in actual.items():
         ps.obj(row, 'instance_id revision record_sha256 design_sha256 magazines cargo weapons' +
             (' damage_controls' if modern or v['interface'] in (dc.DRAFT_INTERFACE,fuel.DRAFT_INTERFACE) else '')+
-            (' fuel_tanks' if modern or v['interface']==fuel.DRAFT_INTERFACE else '')+(' repairs' if modern else ''), '$.ships')
+            (' fuel_tanks' if modern or v['interface']==fuel.DRAFT_INTERFACE else '')+(' repairs' if modern else '')+(' missile_orders' if v['interface']==maintenance.MISSILE_DRAFT_INTERFACE else ''), '$.ships')
         ps.integer(row['revision'], '$.ships.revision')
         ps.need(all(row[k] == expected[key][k] for k in ('revision', 'record_sha256', 'design_sha256')),
                 '$.ships.'+key, '舰船已有新的战损、库存或设计版本，准备草稿不能覆盖')
         definition = designs[key].resources.definition()
+        if v['interface']==maintenance.MISSILE_DRAFT_INTERFACE:
+            from .missile_logistics import validate_order
+            ps.need(type(row['missile_orders']) is list and len(row['missile_orders'])<=1000, '$.missile_orders', '导弹准备操作过多')
+            ps.need(not row['missile_orders'] or 'missiles' in definition, '$.missile_orders', '此旧舰配置不支持导弹准备')
+            for order in row['missile_orders']: validate_order(order,definition['missiles'],preparation=True)
         if modern:
             record=next(r for _,r in ships if r['state']['instance_id']==key)
             options={t['id']:t for t in maintenance.targets(designs[key],record)}

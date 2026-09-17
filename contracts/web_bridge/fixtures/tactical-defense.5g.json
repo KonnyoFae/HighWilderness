@@ -1,0 +1,45 @@
+{
+  "interface": "gaotian.integrated-defense/5g-v1",
+  "profiles": [
+    {
+      "prototype": {
+        "id": "gtw.module.launcher.5c.interceptor.advanced",
+        "version": 1
+      },
+      "prototype_sha256": "fdea05ebef87144587fc9c0967b259412820cb85c7a4ddd1a21c251996a0b80d",
+      "channel": "radar",
+      "range_m": 30000.0,
+      "coasting_range_m": 30000.0,
+      "ship_range_m": 30000.0,
+      "tracking_capacity": 12,
+      "weather": [
+        1.0,
+        0.8,
+        0.4
+      ],
+      "damage_function": "weapon.aim"
+    },
+    {
+      "prototype": {
+        "id": "gtw.module.gun.5g.30mm.infrared",
+        "version": 1
+      },
+      "prototype_sha256": "579d1ba3127aa7a38eb344fa6b610ccd64da573d3a43ffa9a60f21cdcd9f5e64",
+      "channel": "infrared",
+      "range_m": 20000.0,
+      "coasting_range_m": 6000.0,
+      "ship_range_m": 6000.0,
+      "tracking_capacity": 8,
+      "weather": [
+        1.0,
+        0.3,
+        0.5
+      ],
+      "damage_function": "weapon.aim"
+    }
+  ],
+  "high_speed_mps": 1000.0,
+  "prediction_seconds": 30.0,
+  "reservation_grace_steps": 30,
+  "interceptor_model_id": "gtw.missile.5c.small.interceptor"
+}

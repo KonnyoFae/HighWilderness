@@ -12,13 +12,40 @@ from 高天荒野舰艇编辑器领域层 import HullEditorDocument
 BINDING_INTERFACE = "gaotian.outfit-hull-binding/v1alpha1"
 DOCUMENT_INTERFACE = "gaotian.outfit-document/v1alpha1"
 TACTICAL_GUN_CATALOG = 'gtw.module_catalog.tactical.guns'
+TACTICAL_MISSILE_CATALOG = 'gtw.module_catalog.tactical.missiles'
+TACTICAL_SENSOR_CATALOG = 'gtw.module_catalog.tactical.sensors'
+SENSOR_GEOMETRY_CATALOG = 'gtw.module_catalog.tactical.sensor_geometry'
+AMMUNITION_SCALE_CATALOG = 'gtw.module_catalog.tactical.ammunition_scale'
+AMMUNITION_CALIBERS_CATALOG = 'gtw.module_catalog.tactical.ammunition_calibers'
+EW_CATALOG = 'gtw.module_catalog.tactical.ew'
+DEFENSE_CATALOG = 'gtw.module_catalog.tactical.defense'
 
 
 def before_tactical_guns(index):
     """Exact additive-catalog compatibility: old entries are never rewritten."""
     result = copy(index)
-    result.resources = {k:v for k,v in index.resources.items() if v[0]['id'] != TACTICAL_GUN_CATALOG}
+    result.resources = {k:v for k,v in index.resources.items()
+                        if v[0]['id'] not in (TACTICAL_GUN_CATALOG, TACTICAL_MISSILE_CATALOG, TACTICAL_SENSOR_CATALOG, SENSOR_GEOMETRY_CATALOG, AMMUNITION_SCALE_CATALOG, AMMUNITION_CALIBERS_CATALOG, EW_CATALOG, DEFENSE_CATALOG)}
     return result
+
+
+def catalog_generations(index):
+    """Only the actual additive catalog generations, never arbitrary subsets."""
+    ew = copy(index)
+    ew.resources = {k:v for k,v in index.resources.items() if v[0]['id'] != DEFENSE_CATALOG}
+    calibers = copy(ew)
+    calibers.resources = {k:v for k,v in ew.resources.items() if v[0]['id'] != EW_CATALOG}
+    ammunition = copy(calibers)
+    ammunition.resources = {k:v for k,v in calibers.resources.items() if v[0]['id'] != AMMUNITION_CALIBERS_CATALOG}
+    geometry = copy(ammunition)
+    geometry.resources = {k:v for k,v in ammunition.resources.items() if v[0]['id'] != AMMUNITION_SCALE_CATALOG}
+    sensors = copy(geometry)
+    sensors.resources = {k:v for k,v in geometry.resources.items() if v[0]['id'] != SENSOR_GEOMETRY_CATALOG}
+    missiles = copy(sensors)
+    missiles.resources = {k:v for k,v in sensors.resources.items() if v[0]['id'] != TACTICAL_SENSOR_CATALOG}
+    previous = copy(missiles)
+    previous.resources = {k:v for k,v in missiles.resources.items() if v[0]['id'] != TACTICAL_MISSILE_CATALOG}
+    return index, ew, calibers, ammunition, geometry, sensors, missiles, previous, before_tactical_guns(index)
 
 
 def fail(code, message):
@@ -47,7 +74,7 @@ def validate(binding, source, index):
         fail("hull_binding_invalid", "船壳快照版本或字段不匹配")
     if canonical_sha256(binding["hull"]) != binding["hull_sha256"]:
         fail("hull_binding_corrupt", "船壳快照内容指纹不一致")
-    if binding["catalog_dependencies_sha256"] not in (catalog_hash(index),catalog_hash(before_tactical_guns(index))):
+    if binding["catalog_dependencies_sha256"] not in tuple(catalog_hash(i) for i in catalog_generations(index)):
         fail("hull_binding_dependencies_changed", "材料、模块或涂料目录已变化，不能自动重绑旧快照")
     hull = HullEditorDocument(binding["hull"], index.registry).compile().normalized_blueprint.to_dict()
     if hull != binding["hull"]:

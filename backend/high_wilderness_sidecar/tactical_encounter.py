@@ -120,10 +120,14 @@ def validate_association(db, store, result):
     launch = db.execute('SELECT status FROM prepared_launches WHERE scene_id=?', (result['scene_id'],)).fetchone()
     ps.need(launch is not None and launch[0] in ('active', 'pending'), '$.scene_id', '已中断的遭遇不能补交战果')
     association = store._decode(*row)
+    if 'player_side_id' in result:
+        ps.need(result['player_side_id'] == association['request']['player_side_id'], '$.player_side_id', '结算玩家阵营与遭遇不一致')
     mapping = {r['instance_id']: r for r in association['instance_mapping']}
     ps.need(set(mapping) == {r['before']['state']['instance_id'] for r in result['ships']}, '$.ships', '遭遇结算参战名单不一致')
     for ship in result['ships']:
         expected = mapping[ship['before']['state']['instance_id']]
+        if 'side_id' in ship:
+            ps.need(ship['side_id'] == expected['side_id'], '$.ships.side_id', '结算舰船阵营与遭遇不一致')
         ps.need(ps.canonical_sha256(ship['before']) == expected['before_sha256'], '$.ships', '遭遇入场状态或身份不一致')
 
 

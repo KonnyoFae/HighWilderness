@@ -62,7 +62,7 @@ def load_ship(design, record, *, x, y, heading=None, require_available=True):
         motion=replace(seed.motion,position_world_m=replace(seed.motion.position_world_m,x=x,y=y),
             hull_integrity_fraction=v['hull_integrity_fraction'],fuel_units=v['fuel_units']),
         devices=replace(seed.devices,initial_durability_points=tuple(modules[m.instance_id]['durability_points'] for m in seed.devices.modules)),
-        resources=replace(seed.resources,modes=tuple('active' if m.prototype.category in ('weapon','sensor','fire_control') else modules[m.id]['operating_mode'] for m in seed.resources.modules),
+        resources=replace(seed.resources,modes=tuple('active' if m.prototype.category in ('weapon','sensor','fire_control') and modules[m.id]['operating_mode']=='standby' else modules[m.id]['operating_mode'] for m in seed.resources.modules),
             crew=tuple((c['crew_type'],c['count']) for c in v['crew']),policy=ps.RuntimePowerPolicyInput.parse(v['power_policy'],'$.power_policy')),
         command=replace(seed.command,wounded_aboard=v['wounded_aboard']))
     if heading is not None:
@@ -90,7 +90,7 @@ def build(ships, direct_instance_id, template, technical_scenario, *, allow_test
     seeds.append(template.session._seeds[1]); bindings.append(technical_scenario.bindings[1])
     enemy=template.inventory.prepared.bindings[1]
     from . import tactical_ignition as ignition
-    new_design=next((d for d,_ in ships if d.resources.definition()['interface']==ignition.RESOURCE_INTERFACE),None)
+    new_design=next((d for d,_ in ships if 'ignition' in d.resources.definition()),None)
     if new_design:
         enemy=ignition_enemy(enemy,technical_scenario.bindings[1].snapshot,new_design.archive()['policy'])
     instances.append(enemy); names[seeds[-1].contributions.ship_id]='红方测试舰'

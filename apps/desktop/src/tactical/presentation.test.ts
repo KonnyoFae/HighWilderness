@@ -21,6 +21,15 @@ const trail: FinishedProjectile = { id: 1, ship_id: id, born_step: 1, origin_m: 
   position_m: [10, 0], end_step: 2, end_m: [60, 0], expires_step: 20, impact: { ship_id: 'target', outcome: 'module' } };
 
 describe('shared tactical presentation time', () => {
+  it('samples committed accelerating and turning paths instead of reusing launch origin with current speed',()=>{
+    const clock=new PresentationTimeline(),b=frame(4);
+    b.snapshot.gunnery!.projectiles=[{id:77,ship_id:id,kind:'missile',born_step:0,origin_m:[0,0],expires_step:500,
+      position_m:[40,12],previous_m:[25,5],velocity_mps:[900,420],trajectory:[[0,0,0],[1,5,0],[2,13,1],[3,25,5],[4,40,12]]}];
+    clock.push(frame(0),0);clock.push(b,4/60*1000);
+    const p=clock.sample(100+2.5/60*1000)!.snapshot.gunnery!.projectiles[0];
+    expect(p.position_m[0]).toBeCloseTo(19);expect(p.position_m[1]).toBeCloseTo(3);
+    expect(p.kind).toBe('missile');expect(b.snapshot.gunnery!.projectiles[0].position_m).toEqual([40,12]);
+  });
   it('draws intermediate positions at frame cadence without changing authority', () => {
     const clock = new PresentationTimeline(), a = frame(0), b = frame(4), original = JSON.stringify([a, b]);
     clock.push(a, 0); clock.push(b, 4/60*1000);

@@ -70,6 +70,12 @@ class FlightSegment:
     k: float
     seconds: float
 
+    @property
+    def maximum_speed(self): return self.speed
+
+    @property
+    def curvature(self): return self.k*self.speed**2
+
     def at(self, fraction):
         distance,speed=scalar(self.speed,self.seconds*fraction,self.k)
         direction=tuple(v/self.speed for v in self.velocity) if self.speed else (0.,0.)
@@ -77,6 +83,9 @@ class FlightSegment:
 
 
 def flight_segment(projectile, seconds=1/60):
+    if getattr(projectile,'missile',None) is not None:
+        from .missile_flight import segment
+        return segment(projectile,seconds)
     profile=projectile.flight_profile
     speed=hypot(*projectile.velocity)
     k=step_coefficient(profile,speed,seconds) if profile else 0.

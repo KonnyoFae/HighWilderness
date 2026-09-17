@@ -42,4 +42,16 @@ describe("下层武器射界显示", () => {
     expect(render(0, { ...arc, status: "requires_higher_deck_hull_raycast" })).toBe("<svg></svg>");
     expect(render(0, { ...arc, status: "placement_invalid", origin_m: null })).toBe("<svg></svg>");
   });
+  it.each([0, 1])("垂发在第 %i 层不绘制炮塔射界或禁射圈", level => {
+    expect(render(level, { ...arc, status: "vertical_launch", blocked_intervals_deg: [[0, 360]] })).toBe("<svg></svg>");
+    expect(render(level, { ...arc, status: "launch_policy_unavailable" })).toBe("<svg></svg>");
+  });
+  it('探测设备共用扇区几何，标明可探测方向与盲区', () => {
+    const svg=renderToStaticMarkup(<svg><WeaponArcOverlay arc={arc} module={weapon} level={0}
+      camera={{x:100,y:100,scale:2}} show sensor/></svg>);
+    expect(svg.match(/<path /g)).toHaveLength(3);
+    expect(svg).toContain('传感器水平视界');
+    expect(svg).toContain('无法探测');
+    expect(svg).not.toContain('禁止开火');
+  });
 });

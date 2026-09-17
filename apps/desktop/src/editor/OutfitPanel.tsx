@@ -29,7 +29,8 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
   const modules = session.draft.modules ?? [];
   const [category, setCategory] = useState(modules.length === 0 ? "cic" : options[0]?.prototype.category ?? "");
   const categoryKeys = [...new Set(options.map(o=>o.prototype.category))];
-  const visible = options.filter(o => o.prototype.category === category);
+  const visible = options.filter(o => o.prototype.category === category && !options.some(next =>
+    next.prototype.id === o.prototype.id && next.prototype.version > o.prototype.version));
   const [mode, setMode] = useState<"select" | "place">("select");
   const [prototype, setPrototype] = useState(() => modules.length === 0 ? options.find(o => o.prototype.category === "cic")?.sha256 ?? "" : "");
   const option = visible.find(o => o.sha256 === prototype) ?? visible[0];
@@ -100,7 +101,7 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
     <div className="editor-row">
       <label>实例名称<input aria-label="模块实例名称" value={fields.instance_id} disabled={busy || !!instance} onChange={e => edit("instance_id", e.target.value)} /></label>
       {kind === "hosted" ? <label>宿主模块<select aria-label="宿主模块" value={fields.host} disabled={busy} onChange={e => edit("host", e.target.value)}><option value="">请选择</option>{modules.filter(m => m.id !== selected).map(m => <option key={m.id}>{m.id}</option>)}</select></label> : <>
-        <label>甲板<input aria-label="安装甲板" value={fields.deck_id} disabled={busy} onChange={e => edit("deck_id", e.target.value)} /></label>
+        <label>安装起始甲板<input aria-label="安装甲板" value={fields.deck_id} disabled={busy} onChange={e => edit("deck_id", e.target.value)} /></label>
         {kind === "grid" ? <>{(["x", "y"] as const).map(k => <label key={k}>{k.toUpperCase()} / m<input type="number" step="2.5" aria-label={`模块 ${k.toUpperCase()} 坐标`} value={fields[k]} disabled={busy} onChange={e => edit(k, e.target.value)} /></label>)}</> : <>
           <label>区域<input aria-label="侧挂区域" value={fields.region_id} disabled={busy} onChange={e => edit("region_id", e.target.value)} /></label>
           <label>边序号<input type="number" min="0" step="1" aria-label="侧挂边序号" value={fields.edge} disabled={busy} onChange={e => edit("edge", e.target.value)} /></label>
@@ -110,6 +111,7 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
       </>}
     </div>
     <p className="muted">网格锚点使用米制坐标，必须为 2.5 m 的整数倍；实际占用还须符合模块形状和船壳安装格。边、槽序号从 0 开始。</p>
+    {Number((instance ? options.find(o => o.prototype.id === instance.prototype.id && o.prototype.version === instance.prototype.version) : option)?.prototype.installation.top_deck_offset ?? 0) > 0 && <p>此处精确编辑填写内部最底层甲板；画布则点击部件顶部所在的露天甲板，自动确定底层。</p>}
     <div className="editor-row">
       {instance ? <><button disabled={busy} onClick={() => void apply("move")}>{kind === "hosted" ? "更换宿主" : "应用位置与旋转"}</button>
         <button disabled={busy || dirty} onClick={() => void apply("remove")}>{hostedDescendants(modules, instance.id).length ? "移除模块及其嵌入模块" : "移除模块"}</button></> : <button disabled={busy || !option} onClick={() => void apply("place")}>放置模块</button>}

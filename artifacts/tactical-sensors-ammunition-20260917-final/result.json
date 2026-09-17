@@ -1,0 +1,9 @@
+{
+  "status": "TACTICAL_SENSORS_5D_UI_PASS",
+  "checks": [
+    "Actual preparation UI fills the 2,000-round 30 mm magazine for 40 resource points; the standard ammunition store is 10,000 points at 10 litres per point.",
+    "Three real prepared ships deploy at 10 km. Fire-control page acquires the selected enemy track.",
+    "Lost mode-command reply is resolved by fresh reads without a second command. Friendly IR replaces the disabled local radar; one data-link backup suffices; losing both immediately leaves only stale contacts.",
+    "Battle result saves all device modes; returning to preparation and restarting the backend preserves them."
+  ]
+}

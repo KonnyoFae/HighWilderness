@@ -1,0 +1,77 @@
+{
+  "interface": "gaotian.tactical-ew/5f-v1",
+  "decoy_takeover_ratio": 1.5,
+  "max_effects": 128,
+  "profiles": [
+    {
+      "prototype": {
+        "id": "gtw.module.ew.5f.chaff.small",
+        "version": 1
+      },
+      "prototype_sha256": "07f53891ccbf19811f0e625dca56ea4adc85791ed40314ac45c178d9b51c0e5a",
+      "kind": "chaff",
+      "radius_m": 300.0,
+      "lifetime_steps": 2700,
+      "speed_mps": 0.0,
+      "signal": 0.0,
+      "recipe_id": "recipe.ew.5f.chaff.small",
+      "ai_interval_steps": 1200
+    },
+    {
+      "prototype": {
+        "id": "gtw.module.ew.5f.chaff.large",
+        "version": 1
+      },
+      "prototype_sha256": "ce7e780b1880b33612dd898b7dfa7e0d6d92eb875af55b3a17f325c25fb8128d",
+      "kind": "chaff",
+      "radius_m": 800.0,
+      "lifetime_steps": 5400,
+      "speed_mps": 0.0,
+      "signal": 0.0,
+      "recipe_id": "recipe.ew.5f.chaff.large",
+      "ai_interval_steps": 1200
+    },
+    {
+      "prototype": {
+        "id": "gtw.module.ew.5f.thermal.small",
+        "version": 1
+      },
+      "prototype_sha256": "8b20f69b451dd1b2326296fc07ca8b8f9e8b4abf019cdab205dc2c356faf3c8f",
+      "kind": "thermal",
+      "radius_m": 300.0,
+      "lifetime_steps": 2700,
+      "speed_mps": 0.0,
+      "signal": 0.0,
+      "recipe_id": "recipe.ew.5f.thermal.small",
+      "ai_interval_steps": 1200
+    },
+    {
+      "prototype": {
+        "id": "gtw.module.ew.5f.thermal.large",
+        "version": 1
+      },
+      "prototype_sha256": "864a75066920ecc7d504781eba58976b1e468644a3b507acb29aa3d588eaab6b",
+      "kind": "thermal",
+      "radius_m": 800.0,
+      "lifetime_steps": 5400,
+      "speed_mps": 0.0,
+      "signal": 0.0,
+      "recipe_id": "recipe.ew.5f.thermal.large",
+      "ai_interval_steps": 1200
+    },
+    {
+      "prototype": {
+        "id": "gtw.module.ew.5f.decoy.active",
+        "version": 1
+      },
+      "prototype_sha256": "be1ea5cc1bafd34006e5079081541ddfa3d94c829eb10176cfb55869a533418a",
+      "kind": "decoy",
+      "radius_m": 0.0,
+      "lifetime_steps": 5400,
+      "speed_mps": 180.0,
+      "signal": 8.0,
+      "recipe_id": "recipe.ew.5f.decoy.active",
+      "ai_interval_steps": 1800
+    }
+  ]
+}

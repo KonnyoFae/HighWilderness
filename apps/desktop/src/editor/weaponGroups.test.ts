@@ -4,6 +4,10 @@ import type { WeaponGroup } from "./weaponGroups";
 
 const base: WeaponGroup[] = [{id:"weapon_group.1",name:"主炮",prototype:{id:"gun",version:1},weapon_instance_ids:["a","b","c"]}];
 describe("武器组配置", () => {
+  it("垂发明确说明发射方式，不以炮塔禁射角描述", () => {
+    expect(arcText({instance_id:"vls",origin_m:[0,0],base_deck_level:0,status:"vertical_launch"})).toBe("垂直发射，不受水平射界限制");
+    expect(arcText({instance_id:"unknown",origin_m:[0,0],base_deck_level:0,status:"launch_policy_unavailable"})).toContain("发射方式尚未接入");
+  });
   it("按舰艏顺时针绘制禁射扇区和全圆", () => {
     const quarter = arcSectorPath(0,0,90,[0,90]);
     expect(quarter).toContain("M 0,0 L 0,-90 A 90,90 0 0 1 90,");

@@ -74,7 +74,7 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
     if(editorBusy)return;
     const fleet=packet?.scene.sides.find(s=>s.ships.some(m=>m.instance_id===id));if(fleet)setSide(fleet.id);
     setShipId(id);setModuleId(module);
-    const m=packet?.geometry.ships.find(s=>s.id===id)?.modules.find(m=>m.id===module);if(m)setTab(moduleTab(m.category));
+    const m=packet?.geometry.ships.find(s=>s.id===id)?.modules.find(m=>m.id===module);if(m)setTab(moduleTab(m.equipment_kind??m.category));
   }
   const onEditorBusy=useCallback((value:boolean)=>setEditorBusy(value),[]);
   async function leavePreparation() {
@@ -148,7 +148,7 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
         {selectedModule&&<div className="selected-preparation-module"><strong>{selectedModule.name}</strong><p>甲板 {selectedModule.deck_level} · 耐久 {selectedState?.state.modules.find(m=>m.module_id===moduleId)?.durability_points.toFixed(1)} / {selectedModule.max_durability}</p><button onClick={()=>setModuleId(null)}>查看本舰此页全部部件</button></div>}
         {!preparation&&<>
           {tab==='devices'&&<LiftReserve value={selectedState?.lift_reserve}/>}
-          {tab==='missiles'?<p>导弹型号、发射器与导弹库在 5c 阶段接入。</p>:<p>点击画布上的部件查看。物资草稿同时保存双方配置，核对通过后统一扣料。</p>}
+          {tab==='missiles'?<p>可选择发射器与导弹库的型号、战斗部并安排组装和装填。</p>:<p>点击画布上的部件查看。物资草稿同时保存双方配置，核对通过后统一扣料。</p>}
           <button disabled={lock||!ids.length} onClick={()=>{const next=changeScene(sceneRef.current!,s=>{s.preparation_id=`preparation.${crypto.randomUUID()}`;});void run(()=>save(next));}}>配置双方舰内物资</button>
           <p className="muted">进入物资准备后，可补满单个部件或本舰同类部件，并消耗工程零件修复未毁部件。</p>
           {!ready&&ids.length>0&&<p>双方各加入至少一艘舰艇，并完成物资准备后可开始测试。</p>}

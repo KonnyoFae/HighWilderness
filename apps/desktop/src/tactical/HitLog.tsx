@@ -28,6 +28,6 @@ export function HitLog({view, open=false}:{view:TacticalView;open?:boolean}) {
         </small>}
       </article>;
     })}
-    {!damage.recent.length && <p>尚无炮弹命中。</p>}
+    {!damage.recent.length && <p>尚无弹药命中。</p>}
   </details>;
 }

@@ -1,0 +1,9 @@
+{
+  "status": "VLS_INSTALLATION_UI_PASS",
+  "checks": [
+    "The catalog VLS is placed by clicking deck 1; the saved base is deck 0, with two internal cells and a deck-1 exposed top.",
+    "Dragging from either occupied deck preserves the installation base; undo restores the legal original layout.",
+    "Attempting top-based placement on the lowest deck reports missing lower space without creating an invalid module.",
+    "Save and reopen preserve exact VLS geometry and pass the authoritative compiler."
+  ]
+}

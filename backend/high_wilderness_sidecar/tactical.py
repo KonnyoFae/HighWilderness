@@ -60,6 +60,8 @@ def render_static(scenario):
         decks = [dict(id=d.id, level=d.level, regions=[dict(id=r.id, vertices_m=[list(p) for p in r.vertices_m])
                                                        for r in d.regions]) for d in snapshot.hull.normalized_blueprint.decks]
         modules = [dict(id=m.id, name=m.prototype.name, category=m.prototype.category,
+                        **(dict(equipment_kind='countermeasure') if m.prototype.capability.to_dict().get('weapon_class')=='active_defense' else {}),
+                        **(dict(equipment_kind='missile_launcher' if m.prototype.category=='weapon' else 'missile_magazine') if any(k.startswith('gtw.missile.5c.') for k in m.prototype.capability.to_dict().get('compatible_munition_ids',())) else {}),
                         anchor_m=list(m.anchor_m), rotation_deg=m.rotation_deg, deck_level=m.base_deck_level,
                         internal_cells=[list(c) for c in m.internal_cells], top_cells=[list(c) for c in m.top_cells],
                         body_points=[list(c) for c in m.body_spatial_keys], max_durability=m.prototype.durability_points)

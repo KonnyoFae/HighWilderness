@@ -11,6 +11,18 @@ EPS = 1e-9
 POLICY = "gaotian.horizontal-fire-arc/higher-hull/v1"
 
 
+def interval_blocks_bearing(intervals, bearing_deg):
+    """Shared inclusive angular boundary for guns and shipboard sensors."""
+    angle = bearing_deg % 360
+    return any(a-1e-8 <= angle <= b+1e-8 or angle < 1e-8 and b >= 360-1e-8 for a,b in intervals)
+
+
+def sensor_arc(hull, sensor):
+    # A top-mounted sensor observes from its exposed deck, not an internal base.
+    level = max((c[0] for c in sensor.top_cells), default=sensor.base_deck_level)
+    return horizontal_fire_arc(hull, sensor.anchor_m, level)
+
+
 def higher_regions(hull, level):
     return tuple((deck.id, region) for deck in hull.normalized_blueprint.decks
                  if deck.level > level for region in deck.regions)

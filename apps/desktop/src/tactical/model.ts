@@ -1,10 +1,13 @@
+import type {MissileView} from './missiles';
+import type {ObservationView} from './FireControlPanel';
+import type {ElectronicWarfareView} from './CountermeasurePanel';
 import type { DamageControlView } from './DamageControlPanel';
 import type { LiftReserveReading } from '../LiftReserve';
 export const SCENARIO_ID = "gtw.sample.web.two_ship.v1";
 export interface TacticalRequest {
   backend_instance_id: string;
-  method: 'tactical.realtime.deploy_encounter' | 'tactical.reset_test_state' | 'tactical.realtime.height' | 'tactical.realtime.damage_control' | `tactical.preparation.${"maintenance" | "scene_read" | "scene_save" | "scene_encounter" | "supply_replenish" | "library" | "import" | "open" | "read" | "draft" | "preview" | "commit" | "discard"}` | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
-    | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.withdraw" | "tactical.realtime.gun" | "tactical.realtime.close";
+  method: 'tactical.realtime.deploy_encounter' | 'tactical.reset_test_state' | 'tactical.realtime.missile' | 'tactical.realtime.fire_control' | 'tactical.realtime.height' | 'tactical.realtime.damage_control' | `tactical.preparation.${"missile" | "maintenance" | "scene_read" | "scene_save" | "scene_encounter" | "supply_replenish" | "library" | "import" | "open" | "read" | "draft" | "preview" | "commit" | "discard"}` | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
+    | 'tactical.realtime.countermeasure' | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.withdraw" | "tactical.realtime.gun" | "tactical.realtime.close";
   params: Record<string, unknown>;
   session_id: null;
   expected_revision: null;
@@ -16,7 +19,7 @@ export interface TacticalStatic {
   ships: { id: string; name: string; side_id: string; fleet_id: string; derived_snapshot_sha256: string;
     decks: { id: string; level: number; regions: { id: string; vertices_m: number[][] }[] }[];
     structural_durability?: { policy_id:string; maximum_points:number };
-    modules: { id: string; name: string; category: string; anchor_m: number[]; rotation_deg: number; deck_level: number;
+    modules: { id: string; name: string; category: string; equipment_kind?:string; anchor_m: number[]; rotation_deg: number; deck_level: number;
       internal_cells: number[][]; top_cells: number[][]; body_points: number[][]; max_durability: number }[] }[];
 }
 export interface TacticalVisualEvent {
@@ -88,6 +91,8 @@ export interface GunView {
   cargo?: {good_id: string; quantity: number; reserved: number}[];
 }
 export interface GunneryView {
+  observation?:ObservationView;
+  electronic_warfare?:ElectronicWarfareView;
   point_defense?:{hits:number;intercepted:number;recent:{step:number;impact_fraction:number;projectile_id:number;round_id:number;
     source_ship_id:string;weapon_id:string;position_m:number[];height_layer:string;durability_before:number;durability_after:number;intercepted:boolean}[];
     threats:{observer_ship_id:string;projectile_id:number;ship_id:string;remaining_s:number;durability:number;height_layer:string}[]};
@@ -104,7 +109,7 @@ export interface GunneryView {
   damage_control?:DamageControlView;
   fireproof?:{ship_id:string;decks:{deck_id:string;deck_level:number;multiplier:number}[]}[];
   interface: "gaotian.gunnery-view/p2a-v1alpha1"; command_sequence: number;
-  weapons: GunView[]; projectiles: DisplayProjectile[];
+  missiles?:MissileView;weapons: GunView[]; projectiles: DisplayProjectile[];
   policy_id: string; damage_enabled: boolean;
   ending?: { reason: string; step: number; removed_projectiles: number; saved: boolean } | null;
   damage?: { hits: number; expired: number; magazine_detonations?:number; magazine_explosions?:{
@@ -121,12 +126,15 @@ export interface HeightNavigation {
   remaining_s: number | null; total_remaining_s: number | null; unavailable_reason: string | null;
 }
 export interface DisplayProjectile {
+  kind?:'shell'|'missile';trajectory?:number[][];
+  missile?:{model_id:string;warhead_id:string;phase:string;seeker_state:string;target_id:string|number|null;age_s:number;remaining_s:number;datalink?:boolean;original_target_id?:string|number|null;interceptor?:boolean;interception_damage?:number;interception_radius_m?:number;link_sender?:string|null}|null;
   durability?:number|null;maximum_durability?:number|null;interception_target_id?:number|null;
   id: number; ship_id: string; position_m: number[]; previous_m: number[]; velocity_mps: number[];
   born_step?: number; origin_m?: number[]; expires_step?: number;
   height_layer?: string | null;
 }
 export interface FinishedProjectile {
+  kind?:'shell'|'missile';trajectory?:number[][];
   id: number; ship_id: string; born_step: number; origin_m: number[]; expires_step: number;
   position_m: number[]; velocity_mps: number[]; end_step: number; end_m: number[];
   impact: { ship_id: string; outcome: string } | null;

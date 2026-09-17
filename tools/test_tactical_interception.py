@@ -147,9 +147,11 @@ class PointDefenseTests(unittest.TestCase):
         for _ in range(35):
             b.step();target=next((q for q in b.projectiles if q.id==p.id),None)
             if target is None:break
-            committed=sum(q.interception_damage for q in b.projectiles if q.interception_target_id==p.id
-                and q.interception_expected_step>=b.session.world.fixed_step)
-            self.assertLessEqual(committed,target.durability)
+            # Ships without data links now coordinate only their own batteries.
+            for ship in b.session.world.ships:
+                committed=sum(q.interception_damage for q in b.projectiles if q.interception_target_id==p.id
+                    and q.ship_id==ship.ship_id and q.interception_expected_step>=b.session.world.fixed_step)
+                self.assertLessEqual(committed,target.durability)
         self.assertTrue(any(s.shots for s in b.states if s.point_defense))
         self.assertTrue(any(s.status=='defense_covered' for s in b.states))
 

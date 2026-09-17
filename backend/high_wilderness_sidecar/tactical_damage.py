@@ -48,8 +48,8 @@ def local_path(flight, old, new):
     omega = abs((new.heading_rad-old.heading_rad+pi) % (2*pi)-pi)/seconds
     translation = hypot(new.position_world_m.x-old.position_world_m.x,
                         new.position_world_m.y-old.position_world_m.y)/seconds
-    distance = hypot(*local(flight.origin, old))+(flight.speed+translation)*seconds
-    curvature = flight.k*flight.speed**2+2*omega*(flight.speed+translation)+omega**2*distance
+    distance = hypot(*local(flight.origin, old))+(flight.maximum_speed+translation)*seconds
+    curvature = flight.curvature+2*omega*(flight.maximum_speed+translation)+omega**2*distance
     count = max(1, ceil(sqrt(curvature*seconds**2/(8*.002))))
     points = []
     for n in range(count+1):
@@ -122,7 +122,8 @@ class DamageKernel:
         self.structural_durability = tuple(compile_durability(b.snapshot.hull, scenario.material_registry) for b in scenario.bindings)
         self.hull_damage_points = self.profile.damage.hull_integrity_damage_fraction * REFERENCE_MAXIMUM_POINTS
         self.hull_damage_factors = tuple(self.hull_damage_points * d.inverse_maximum_points for d in self.structural_durability)
-        self.profiles = compile_profiles(self.profile)
+        from .missile_flight import damage_profiles
+        self.profiles = {**compile_profiles(self.profile),**damage_profiles(self.profile)}
         self.sides = {b.ship_id: b.side_id for b in scenario.bindings}
         self.fuel_areas = tuple(() for _ in session._seeds)
         self.seed = seed
@@ -212,7 +213,7 @@ class DamageKernel:
         levels = self.module_levels[index].get(module_id, ())
         return (self.module_base_levels[index][module_id],) if levels and self.deck_policy.spanning_module_bonus == 'base' else levels
 
-    def advance(self, before, world, projectiles, state):
+    def advance(self, before, world, projectiles, state, decoys=()):
         if not projectiles:
             return (), replace(state,fuel_damage=(),ignition_attempts=(),expired_flights=(),module_impacts=(),interceptions=()) if state.fuel_damage or state.ignition_attempts or state.expired_flights or state.module_impacts or state.interceptions else state, ImpactBatch()
         armor = list(state.armor)
@@ -230,6 +231,15 @@ class DamageKernel:
             flight = flight_segment(p)
             end, end_velocity = flight.at(1)
             hits = []
+            if p.missile:
+                from .tactical_interception import contact_fraction
+                from .tactical_gunnery import Projectile
+                for decoy in decoys:
+                    if decoy.layer!=p.height_layer or decoy.side==self.sides.get(p.ship_id) or world.fixed_step>=decoy.expires:continue
+                    body=Projectile(-1,decoy.ship_id,'decoy',decoy.position,decoy.position,decoy.velocity,decoy.expires,
+                                    None,decoy.layer,collision_radius_m=1.)
+                    t=contact_fraction(p,body)
+                    if t is not None:hits.append((t,-1,2,decoy.id))
             selections = {choice.ship_id: choice for choice in p.deck_selections}
             for i, (old, ship) in enumerate(zip(before.ships, world.ships)):
                 if p.height_layer is not None and ship.motion.height_layer != p.height_layer:
@@ -238,7 +248,7 @@ class DamageKernel:
                     continue
                 if p.ship_id in self.sides and self.sides[p.ship_id] == self.sides[ship.ship_id]:
                     continue
-                radius = self.radius[i]
+                radius = self.radius[i]+flight.curvature*flight.seconds**2/8
                 lo = tuple(min(a, b)-radius for a, b in zip(old.motion.position_world_m.to_list(), ship.motion.position_world_m.to_list()))
                 hi = tuple(max(a, b)+radius for a, b in zip(old.motion.position_world_m.to_list(), ship.motion.position_world_m.to_list()))
                 if _segment_aabb_entry_fraction(p.position, end, lo, hi) is None:
@@ -279,7 +289,13 @@ class DamageKernel:
                        if not any(item[1].id==p.id for item in pending))
         for (t,i,kind,n),p,flight in sorted(pending,key=lambda item:(item[0][0],item[1].id)):
             if p.id in removed:continue
+            if kind==2:
+                terminals.append(dict(projectile_id=p.id,position_m=flight.at(t)[0],decoy_id=n))
+                continue
             profile = self.profiles[p.projectile_key]
+            incendiary=is_incendiary(p.projectile_key) or bool(p.missile and p.missile.warhead=='incendiary')
+            surface_incendiary=is_surface_incendiary(p.projectile_key) or bool(p.missile and p.missile.warhead=='incendiary')
+            fire_scale=((4 if p.missile.profile.diameter_mm>=100 else 2)*p.missile.profile.warhead_scale) if p.missile else 1
             ship, old = world.ships[i], before.ships[i]
             level = self.edges[i][n].key[1] if kind == 0 else self.cells[i][n].level
             selection = next((choice for choice in p.deck_selections if choice.ship_id == ship.ship_id), None)
@@ -326,7 +342,9 @@ class DamageKernel:
                         first = crossed[0][2]
                         ids = [k for _, k, c, exposed in crossed if profile.penetration.aftereffect == Aftereffect.KINETIC_RAY
                             or hypot(c[0]-first[0], c[1]-first[1]) <= damage.internal_effect_radius_m]
-                    if is_incendiary(p.projectile_key):
+                        if p.missile and p.missile.warhead=='blast':
+                            ids=[c.module_id for c in self.cells[i] if c.level==level and hypot(c.center[0]-first[0],c.center[1]-first[1])<=damage.internal_effect_radius_m]
+                    if incendiary:
                         internal_ids={k for _,k,_,exposed in crossed if not exposed} & set(ids)
                         for _,key,center,exposed in crossed:
                             if not exposed and key in internal_ids:
@@ -341,15 +359,17 @@ class DamageKernel:
                 else:
                     ids = [c.module_id for c in self.cells[i] if c.exposed and c.level == level
                         and hypot(c.center[0]-point[0], c.center[1]-point[1]) <= damage.surface_effect_radius_m]
+            if kind==1 and p.missile and p.missile.warhead=='blast':
+                ids.extend(c.module_id for c in self.cells[i] if c.exposed and c.level==level and hypot(c.center[0]-point[0],c.center[1]-point[1])<=damage.surface_effect_radius_m)
             ids = sorted(set(ids))
             for k in ids:
                 damages[i, k] = damages.get((i, k), 0.)+amount
                 if amount > 0: module_impacts.append((i, k, amount, level))
-            if is_incendiary(p.projectile_key) and energy > 0:
+            if incendiary and energy > 0:
                 attempts.extend(Attempt(p.id,p.ship_id,i,k,level,
-                    internal_points[k] if is_surface_incendiary(p.projectile_key) else None) for k in sorted(internal_ids))
-            if is_surface_incendiary(p.projectile_key):
-                attempts.append(Attempt(p.id,p.ship_id,i,self.cells[i][n].module_id if kind==1 else None,level,point,True))
+                    internal_points[k] if surface_incendiary else None,intensity_scale=fire_scale) for k in sorted(internal_ids))
+            if surface_incendiary:
+                attempts.append(Attempt(p.id,p.ship_id,i,self.cells[i][n].module_id if kind==1 else None,level,point,True,fire_scale))
             events.append(dict(projectile_id=p.id, step=world.fixed_step, source_ship_id=p.ship_id, ship_id=ship.ship_id,
                 impact_fraction=t, relative_speed_mps=speed, projectile_speed_mps=hypot(*impact_velocity),
                 projectile_type=p.projectile_key[0], projectile_version=p.projectile_key[1],

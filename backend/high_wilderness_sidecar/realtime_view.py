@@ -14,16 +14,20 @@ from .tactical_layers import view as height_view
 from 高天荒野舰艇数据契约 import canonical_sha256
 from .simplified_flight import build_sample_session
 from .tactical_scheduler import TacticalScheduler, ScheduledControl, require, count
+from .tactical_scheduler import QUANTA
 from .tactical import render_static, RENDER_INTERFACE
 from .tactical_scenario import build_two_ship_scenario, SCENARIO_ID
 from .tactical_gunnery import GunneryBattle, prepare_trial_session
 from .tactical_presentation import FlightHistory
 
-CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'height', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry', 'deploy_encounter', 'encounter'))
+CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'height', 'missile', 'countermeasure', 'fire_control', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry', 'deploy_encounter', 'encounter'))
 INTERFACE = 'gaotian.realtime-view/e3b-v1alpha1'
 VIEW_PERIOD_NS = 66_666_667
 LEASE_NS = 2_000_000_000
 MAX_RESPONSE_BYTES = 256*1024
+# A settlement carries complete before/after records for both fleets, unlike
+# a realtime frame. Still bounded below the bridge's 8 MiB frame limit.
+MAX_SETTLEMENT_RESPONSE_BYTES = 4*1024*1024
 
 
 class RealtimeViewService:
@@ -91,6 +95,11 @@ class RealtimeViewService:
     @property
     def running(self):
         return self.scheduler is not None and self.scheduler.status.running
+
+    @property
+    def work_pending(self):
+        """A bounded pump may yield to input while still owing complete steps."""
+        return self.running and self.scheduler.status.debt_quanta >= QUANTA
 
     def deploy_encounter(self, p):
         from . import tactical_encounter as encounter, prepared_launch_store as launches
@@ -232,8 +241,8 @@ class RealtimeViewService:
         self.latest, self.last_publish = view, self.clock()
 
     @staticmethod
-    def _size(value):
-        require(len(json.dumps(value, ensure_ascii=False, allow_nan=False).encode('utf-8')) <= MAX_RESPONSE_BYTES,
+    def _size(value, budget=MAX_RESPONSE_BYTES):
+        require(len(json.dumps(value, ensure_ascii=False, allow_nan=False).encode('utf-8')) <= budget,
             'Realtime response exceeds byte budget')
 
     def read(self, known=None):
@@ -250,7 +259,7 @@ class RealtimeViewService:
             engines=[dict(id=s.engine.actuator_instance_id, phase=s.engine.phase, target=s.engine.target_output_percent,
                 actual=s.engine.actual_output_percent) for s in direct.propulsion.engines], error=self.error,
             settlement=None if self._result is None else dict(result=self._result, saved=self._result_saved, error=self._save_error))
-        self._size(result)
+        self._size(result, MAX_SETTLEMENT_RESPONSE_BYTES if self._result is not None else MAX_RESPONSE_BYTES)
         # Domain records contain immutable tuples. The bridge deliberately accepts
         # only JSON arrays/objects; conversion occurs here, never in fixed steps.
         return json.loads(json.dumps(result, ensure_ascii=False, allow_nan=False))
@@ -306,7 +315,7 @@ class RealtimeViewService:
                         self.publish()
                 else:
                     result = self.store.read(identity)
-                self._size(result)
+                self._size(result, MAX_SETTLEMENT_RESPONSE_BYTES)
                 return result
             require(set(p) == {'instance_id', 'revision', 'launch_id'}, 'Expected deployment identity')
             settlement.ps.identifier(p['launch_id'], '$.launch_id')
@@ -322,7 +331,7 @@ class RealtimeViewService:
             battle = settlement.redeploy(record, template, scenario)
             return self._attach(battle, geometry, key)
         fields = {'scene_id', 'known_static_sha256', 'ack_inputs', 'ack_events'} if method == 'tactical.realtime.read' else \
-            {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun', 'tactical.realtime.height', 'tactical.realtime.damage_control') else {'scene_id'}
+            {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun', 'tactical.realtime.height', 'tactical.realtime.missile', 'tactical.realtime.countermeasure', 'tactical.realtime.fire_control', 'tactical.realtime.damage_control') else {'scene_id'}
         require(set(p) == fields, 'Unknown or missing realtime fields')
         if method == 'tactical.realtime.close' and self.scheduler is None and p['scene_id'] == self.last_closed and self.last_closed is not None:
             return dict(closed=True)
@@ -379,6 +388,30 @@ class RealtimeViewService:
                 next(s for s in q.world.ships if s.ship_id == q._session._direct).authority_allowed,
                 'Gun command is paused, obsolete or lacks direct control')
             self.gunnery.submit(value)
+        elif method == 'tactical.realtime.countermeasure':
+            value=p['input']
+            require(type(value) is dict,'Invalid countermeasure input')
+            retry=value==self.gunnery.ew.last
+            require(retry or q.status.running and value.get('generation')==q.status.generation and
+                    next(s for s in q.world.ships if s.ship_id==q._session._direct).authority_allowed,
+                    '干扰投放需要运行中的当前场景及旗舰控制权')
+            self.gunnery.ew.submit(value)
+        elif method == 'tactical.realtime.fire_control':
+            value=p['input']
+            require(type(value) is dict,'Invalid fire-control input')
+            retry=value==self.gunnery.observation.last
+            require(retry or q.status.running and value.get('generation')==q.status.generation and
+                    next(s for s in q.world.ships if s.ship_id==q._session._direct).authority_allowed,
+                    '火控命令需要运行中的当前场景及旗舰控制权')
+            self.gunnery.observation.submit(value)
+        elif method == 'tactical.realtime.missile':
+            value=p['input']
+            require(type(value) is dict,'Invalid missile input')
+            retry=value==self.gunnery.missiles.last
+            require(retry or q.status.running and value.get('generation')==q.status.generation and
+                    next(s for s in q.world.ships if s.ship_id==q._session._direct).authority_allowed,
+                    '导弹命令需要运行中的当前场景及旗舰控制权')
+            self.gunnery.missiles.submit(value)
         elif method == 'tactical.realtime.damage_control':
             value = p['input']
             require(type(value) is dict, 'Invalid damage-control input')

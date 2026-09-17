@@ -10,7 +10,7 @@ export interface WeaponArc {
   instance_id: string;
   origin_m: [number, number] | null;
   base_deck_level: number | null;
-  status: "placement_invalid" | "requires_higher_deck_hull_raycast" | "full_circle_no_higher_deck" | "hull_occlusion_resolved";
+  status: "placement_invalid" | "requires_higher_deck_hull_raycast" | "full_circle_no_higher_deck" | "hull_occlusion_resolved" | "vertical_launch" | "countermeasure_deployment" | "launch_policy_unavailable";
   intervals_deg?: [number, number][];
   blocked_intervals_deg?: [number, number][];
 }
@@ -39,12 +39,21 @@ export function mergeGroups(groups: WeaponGroup[], sourceId: string, targetId: s
 
 export function arcText(arc?: WeaponArc): string {
   if (!arc || arc.status === "placement_invalid") return "安装位置无效，射界暂不可用";
+  if (arc.status === "vertical_launch") return "垂直发射，不受水平射界限制";
+  if (arc.status === "countermeasure_deployment") return "外部投放设备，不受水平射界限制";
+  if (arc.status === "launch_policy_unavailable") return "发射方式尚未接入，暂不显示水平射界";
   if (arc.status === "hull_occlusion_resolved") {
     const blocked = (arc.blocked_intervals_deg ?? []).reduce((total, [a,b]) => total + b-a, 0);
     return blocked === 0 ? "水平射界 360°：上层船壳无遮挡" : `上层船壳禁射 ${blocked.toFixed(1)}°；绿色可射，红色禁射（含边界）`;
   }
   if (arc.status === "full_circle_no_higher_deck") return "没有更高甲板；船壳参考射界为 360°";
   return "存在更高甲板，遮挡射界尚需检查，不能按全向射界使用";
+}
+
+export function sensorArcText(arc?: WeaponArc): string {
+  if (!arc || arc.status === 'placement_invalid') return '安装位置无效，探测视界暂不可用';
+  const blocked = (arc.blocked_intervals_deg ?? []).reduce((sum, [a,b]) => sum+b-a, 0);
+  return blocked === 0 ? '水平探测 360°：上层船壳无遮挡' : `上层船壳遮挡 ${blocked.toFixed(1)}°；绿色可探测，红色为盲区（含边界）`;
 }
 
 export function arcSectorPath(cx: number, cy: number, radius: number, [start, end]: [number, number]): string {

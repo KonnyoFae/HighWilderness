@@ -22,7 +22,7 @@ def evaluate(draft, ships, supply, *, supply_goods=None):
     """
     draft = bp.validate_draft(draft, ships, supply, supply_goods=supply_goods)
     by_id = {r['state']['instance_id']: (d, r) for d, r in ships}
-    candidates, transfers, issues, repairs = {}, [], [], {}
+    candidates, transfers, issues, repairs, missile_times = {}, [], [], {}, {}
     goods = {g['id']: g for d, _ in ships for g in d.resources.definition()['goods']}
     if supply_goods is not None: goods = {g['id']: g for g in supply_goods}
     supply = bp.parse_supply(supply, list(goods.values()))
@@ -95,6 +95,12 @@ def evaluate(draft, ships, supply, *, supply_goods=None):
                     else:inv.prepare_damage_control(choice['module_id'])
                 except ps.ContractError as exc:
                     issue(key, choice['module_id'], exc.message, code=exc.code)
+    for row in draft['ships']:
+        key=row['instance_id'];inv=candidates[key]
+        if 'missiles' in inv._definition:
+            from .missile_logistics import prepare
+            try: missile_times[key]=prepare(inv,row.get('missile_orders',()),stock)
+            except ps.ContractError as exc: issue(key,'missiles',exc.message,code=exc.code)
     for resource, amount in sorted(stock.items()):
         if amount < 0:issue(None,resource,'可用供给不足',missing=-amount)
         elif amount > ps.MAX_INT:issue(None,resource,'供给数量超出支持范围')
@@ -114,19 +120,21 @@ def evaluate(draft, ships, supply, *, supply_goods=None):
         rows.append(dict(before=ps.clone(before),after=after,changes=changes,choices=choice['weapons'],
             capacity_before=ps.inventory_summary(ps.parse_instance(before['state'],design.resources),design.resources),
             capacity_after=inv.summary()))
+        if key in missile_times: rows[-1]['missile_preparation_steps']=missile_times[key]
         if 'damage_controls' in choice:
             rows[-1]['damage_control_choices'] = ps.clone(choice['damage_controls'])
         if 'fuel_tanks' in choice:
             rows[-1]['fuel_choices']=ps.clone(choice['fuel_tanks'])
-        if draft['interface']==maintenance.DRAFT_INTERFACE:rows[-1]['repairs']=repairs[key]
+        if draft['interface'] in maintenance.DRAFT_INTERFACES:rows[-1]['repairs']=repairs[key]
     after_supply=ps.clone(supply)
     after_supply.update(revision=ps.integer(supply['revision']+1,'$.supply.revision'),
         ammunition_resources=stock['ammunition'],
         cargo=[dict(good_id=k.removeprefix('cargo:'),quantity=v) for k,v in sorted(stock.items()) if k.startswith('cargo:')])
     if 'fuel' in stock:after_supply['fuel_units']=stock['fuel']
     after_supply=bp.parse_supply(after_supply,list(goods.values()))
-    return dict(can_commit=True,issues=[],result=dict(interface=(maintenance.RESULT_INTERFACE if draft['interface']==maintenance.DRAFT_INTERFACE else 'gaotian.battle-preparation-result/h5c-v1' if draft['interface']==bp.fuel.DRAFT_INTERFACE else 'gaotian.battle-preparation-result/d1-v1' if draft['interface'] == bp.dc.DRAFT_INTERFACE else RESULT_INTERFACE),
+    return dict(can_commit=True,issues=[],result=dict(interface=(maintenance.RESULT_INTERFACE if draft['interface'] in maintenance.DRAFT_INTERFACES else 'gaotian.battle-preparation-result/h5c-v1' if draft['interface']==bp.fuel.DRAFT_INTERFACE else 'gaotian.battle-preparation-result/d1-v1' if draft['interface'] == bp.dc.DRAFT_INTERFACE else RESULT_INTERFACE),
         preparation_id=draft['preparation_id'],draft_revision=draft['revision'],ships=rows,
+        **(dict(preparation_elapsed_steps=max(missile_times.values(),default=0)) if missile_times else {}),
         supply_before=supply,supply_after=after_supply))
 
 
@@ -215,7 +223,7 @@ class PreparationStore(SettlementStore):
             return bp.new_draft(preparation_id,ships,supply,supply_goods=goods)
 
     def _draft_inputs(self,db,draft):
-        ps.obj(draft,'interface preparation_id revision swap_policy supply_id supply_revision supply_sha256 ships'+(' maintenance_policy' if draft.get('interface')==maintenance.DRAFT_INTERFACE else ''),'$.draft')
+        ps.obj(draft,'interface preparation_id revision swap_policy supply_id supply_revision supply_sha256 ships'+(' maintenance_policy' if draft.get('interface') in maintenance.DRAFT_INTERFACES else ''),'$.draft')
         rows=ps.rows(draft['ships'],'instance_id','$.ships')
         return self._inputs(db,list(rows),draft['supply_id'])
 

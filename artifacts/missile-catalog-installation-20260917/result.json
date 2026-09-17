@@ -1,0 +1,14 @@
+{
+  "status": "MISSILE_CATALOG_INSTALLATION_UI_PASS",
+  "checks": [
+    "火箭雷达小型导弹发射器 placed through real catalog and canvas, with the correct internal and exposed footprints.",
+    "火箭反辐射小型导弹发射器 placed through real catalog and canvas, with the correct internal and exposed footprints.",
+    "火箭红外小型导弹发射器 placed through real catalog and canvas, with the correct internal and exposed footprints.",
+    "火箭复合小型导弹发射器 placed through real catalog and canvas, with the correct internal and exposed footprints.",
+    "涡喷雷达小型导弹发射器 placed through real catalog and canvas, with the correct internal and exposed footprints.",
+    "涡喷反辐射小型导弹发射器 placed through real catalog and canvas, with the correct internal and exposed footprints.",
+    "涡喷红外小型导弹发射器 placed through real catalog and canvas, with the correct internal and exposed footprints.",
+    "涡喷复合小型导弹发射器 placed through real catalog and canvas, with the correct internal and exposed footprints.",
+    "All eight missile launcher placements retain exact geometry and prototype versions on save/reopen."
+  ]
+}

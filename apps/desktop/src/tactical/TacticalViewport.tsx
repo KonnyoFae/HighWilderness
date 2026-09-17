@@ -11,6 +11,9 @@ import { HEIGHT_LAYERS, initialObservationLayer, isHeightLayer, layerName, LAYER
 import type { HeightLayer } from './layers';
 import { distanceGrid, distanceLabel, gridLabels, scaleReference } from './distanceGrid';
 import { TacticalAtmosphere } from './atmosphere';
+import { launcherArcLabel, launcherArcProjection } from './launcherArc';
+import type { LauncherSelection } from './launcherArc';
+import { selectedLauncher } from './missiles';
 
 type ShipObjects = { root: Container; selection: Graphics; modules: { id: string; max: number; graphic: Graphics }[] };
 function buildShip(ship: ShipGeometry, light: boolean): ShipObjects {
@@ -43,9 +46,11 @@ function buildShip(ship: ShipGeometry, light: boolean): ShipObjects {
   return { root, selection, modules };
 }
 
-export function TacticalViewport({ view, active, selected, onSelect, gunControl, compact = false }: {
+export function TacticalViewport({ view, active, selected, onSelect, gunControl, missileControl, launcherSelection, compact = false }: {
   view: TacticalView; active: boolean; selected: string | null; onSelect: (id: string | null) => void;
   gunControl?: GunInteraction;
+  missileControl?:{enabled:boolean;attackLayer:string;onPoint:(point:Point)=>void;onCancel:()=>void};
+  launcherSelection?:LauncherSelection;
   compact?: boolean;
 }) {
   const host = useRef<HTMLDivElement>(null);
@@ -59,6 +64,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
   const [size, setSize] = useState({ width: 800, height: 540 });
   const [pickLevel, setPickLevel] = useState<string>("all");
   const [observationLayer, setObservationLayer] = useState<HeightLayer>(() => initialObservationLayer(view, gunControl?.ownShipId ?? selected));
+  useEffect(()=>{if(missileControl&&isHeightLayer(missileControl.attackLayer))setObservationLayer(missileControl.attackLayer);},[missileControl?.attackLayer]);
   const [candidates, setCandidates] = useState<{ shipId: string; moduleId: string; name: string; level: number }[]>([]);
   const candidateMode = useRef<"weapon" | "target">("target");
   useEffect(() => { setCandidates([]); }, [gunControl?.weaponId, gunControl?.selectionKey, gunControl?.mode, gunControl?.attackLayer, observationLayer]);
@@ -70,8 +76,8 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
   const labels = useRef(new Map<string, HTMLSpanElement>());
   const draw = useRef<(now: number) => void>(() => {});
   const gridCache = useRef('');
-  const latest = useRef({ view, camera, size, selected, gunControl, observationLayer });
-  latest.current = { view, camera, size, selected, gunControl, observationLayer };
+  const latest = useRef({ view, camera, size, selected, gunControl, observationLayer, launcherSelection });
+  latest.current = { view, camera, size, selected, gunControl, observationLayer, launcherSelection };
   const drag = useRef<{ pointer: number; start: Point; camera: Camera; moved: boolean; button: number } | null>(null);
 
   useEffect(() => {
@@ -139,7 +145,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     const app = renderer.current, root = scene.current, g = grid.current, v = vectors.current;
     if (!active || !ready || !app || !root || !g || !v) return;
     const source = timeline.current.sample(now) ?? latest.current.view;
-    const { camera, size, selected, gunControl, observationLayer } = latest.current;
+    const { camera, size, selected, gunControl, observationLayer, launcherSelection } = latest.current;
     const view = viewOnLayer(source, observationLayer), light = observationLayer === 'upper';
     fullDisplay.current = source;
     displayed.current = view;
@@ -156,6 +162,16 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
       }
     }
     v.clear();
+    for(const effect of view.snapshot.gunnery?.electronic_warfare?.effects??[]) {
+      if(effect.height_layer!==observationLayer)continue;
+      const point=screen({x:effect.position_m[0],y:effect.position_m[1]},camera);
+      const color=effect.kind==='chaff'?0x8296bc:effect.kind==='thermal'?0xed9453:0xe456c6;
+      if(effect.kind==='decoy') {
+        v.circle(point.x,point.y,5).fill({color,alpha:.9});
+        const angle=Math.atan2(-effect.velocity_mps[1],effect.velocity_mps[0]);
+        v.moveTo(point.x,point.y).lineTo(point.x+Math.cos(angle)*18,point.y+Math.sin(angle)*18).stroke({color,width:2});
+      } else v.circle(point.x,point.y,effect.radius_m*camera.scale).fill({color,alpha:.13}).stroke({color,width:1.5,alpha:.65});
+    }
     for (const [id, object] of objects.current) {
       const pose = view.snapshot.ships.find(s => s.id === id);
       object.root.visible = !!pose;
@@ -178,6 +194,23 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
         const a = Math.atan2(end.y - start.y, end.x - start.x);
         v.moveTo(start.x, start.y).lineTo(end.x, end.y).lineTo(end.x - 7 * Math.cos(a - .4), end.y - 7 * Math.sin(a - .4))
           .moveTo(end.x, end.y).lineTo(end.x - 7 * Math.cos(a + .4), end.y - 7 * Math.sin(a + .4)).stroke({ color: light ? 0x25624a : 0xa3efb9, width: 1.5 });
+      }
+    }
+    const launcherArc=launcherArcProjection(view,launcherSelection,camera);
+    if(launcherArc){
+      for(const sector of launcherArc.sectors){
+        const color=sector.kind==='clear'?(light?0x197143:0x70dfa1):sector.kind==='hull_blocked'?(light?0xb93232:0xff6868):(light?0x67717b:0x99a6b5);
+        v.poly(sector.points,true).fill({color,alpha:launcherArc.vertical ? .08 : .18}).stroke({color,width:2,alpha:.9});
+      }
+      const {origin,direction}=launcherArc;
+      const tint=light?0x125e8c:0x8de6ff;
+      v.circle(origin.x,origin.y,7).fill({color:tint,alpha:.45}).stroke({color:tint,width:2});
+      if(!launcherArc.vertical){
+        const angle=Math.atan2(direction.y-origin.y,direction.x-origin.x);
+        v.moveTo(origin.x,origin.y).lineTo(direction.x,direction.y)
+          .lineTo(direction.x-10*Math.cos(angle-.4),direction.y-10*Math.sin(angle-.4))
+          .moveTo(direction.x,direction.y).lineTo(direction.x-10*Math.cos(angle+.4),direction.y-10*Math.sin(angle+.4))
+          .stroke({color:tint,width:3});
       }
     }
     for (const gun of view.snapshot.gunnery?.weapons ?? []) {
@@ -221,6 +254,14 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
       if (light) v.moveTo(before.x, before.y).lineTo(at.x, at.y).stroke({ color: 0x544525, width: 4, alpha: .8 });
       v.moveTo(before.x, before.y).lineTo(at.x, at.y).stroke({ color: 0xfff2b8, width: 2 });
       v.circle(at.x, at.y, 2).fill(0xffffff);
+      if(p.kind==='missile'){
+        const angle=Math.atan2(-p.velocity_mps[1],p.velocity_mps[0]);
+        v.moveTo(at.x+6*Math.cos(angle),at.y+6*Math.sin(angle))
+          .lineTo(at.x+4*Math.cos(angle+2.5),at.y+4*Math.sin(angle+2.5))
+          .lineTo(at.x+4*Math.cos(angle-2.5),at.y+4*Math.sin(angle-2.5))
+          .closePath().fill(light?0x1d655e:0x7dffe1);
+        if(p.missile?.phase!=='coast')v.circle(at.x-6*Math.cos(angle),at.y-6*Math.sin(angle),2).fill(0xff9b40);
+      }
     }
     for (const event of view.snapshot.gunnery?.point_defense?.recent ?? []) {
       const age=view.snapshot.fixed_step-event.step;
@@ -251,7 +292,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     }
   };
 
-  useEffect(() => { if (!document.hidden) draw.current(performance.now()); }, [active, ready, view, selected, camera, size, gunControl?.weaponId, gunControl?.selectionKey, observationLayer]);
+  useEffect(() => { if (!document.hidden) draw.current(performance.now()); }, [active, ready, view, selected, camera, size, gunControl?.weaponId, gunControl?.selectionKey, observationLayer, launcherSelection?.shipId, launcherSelection?.moduleId]);
   useEffect(() => {
     if (!active || !ready) return;
     let frame = 0;
@@ -293,6 +334,9 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
   const lines = useMemo(() => distanceGrid(camera, size.width, size.height), [camera, size]);
   const references = useMemo(() => gridLabels(lines, camera.scale, size.width, size.height), [lines, camera.scale, size]);
   const selectedPose = view.snapshot.ships.find(s => s.id === selected);
+  const launcherShip=view.snapshot.gunnery?.missiles?.ships.find(s=>s.ship_id===launcherSelection?.shipId);
+  const arcLauncher=launcherSelection?selectedLauncher(launcherShip,launcherSelection.moduleId):undefined;
+  const launcherLayer=view.snapshot.ships.find(s=>s.id===launcherSelection?.shipId)?.height_layer;
   const ownLayer = view.snapshot.ships.find(s => s.id === gunControl?.ownShipId)?.height_layer;
   const visibleCount = view.snapshot.ships.filter(s => s.height_layer === observationLayer).length;
   const attackLayer = gunControl?.attackLayer ?? ownLayer;
@@ -322,13 +366,21 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
         {[...new Set(view.geometry.ships.flatMap(s => s.decks.map(d => d.level)))].sort().map(level => <option key={level} value={level}>第 {level} 甲板</option>)}
       </select></label>}
     </div>
+    {arcLauncher&&<div className="launcher-arc-key" aria-label="所选发射器射界" data-launcher-id={arcLauncher.module_id} data-ship-id={launcherSelection?.shipId}
+      data-visible={launcherLayer===observationLayer}>
+      <strong>{launcherShip?.module_names[arcLauncher.module_id]??'所选发射器'}</strong><span>{launcherArcLabel(arcLauncher.fire_arc)}</span>
+      {arcLauncher.fire_arc?.launcher_kind!=='vls'&&<span><i className="clear"/>绿色可射　<i className="blocked"/>红色舰体遮挡（含边界）　<i className="direction"/>蓝色箭头为当前朝向</span>}
+      <small>方向示意，不代表射程；射界随舰艇转向变化。</small>
+      {launcherLayer!==observationLayer&&<span>发射器位于{layerName(launcherLayer)}。<button onClick={()=>{if(isHeightLayer(launcherLayer))setObservationLayer(launcherLayer);}}>查看发射器所在层</button></span>}
+    </div>}
     {candidates.length > 0 && gunControl?.enabled && <div className="editor-row" aria-label="重叠模块候选">
       <span>选择{candidateMode.current === "weapon" ? "火炮" : "目标模块"}：</span>
       {candidates.map(c => <button key={c.shipId+c.moduleId} onClick={() => selectCandidate(c)}>{c.name} · 第 {c.level} 层 · {c.moduleId}</button>)}
       {candidateMode.current === "target" && <button onClick={() => { gunControl.onTarget(candidates[0].shipId, null); setCandidates([]); }}>瞄准整舰</button>}
       <button onClick={() => setCandidates([])}>取消选择</button>
     </div>}
-    <div ref={host} className="tactical-canvas" tabIndex={active ? 0 : -1} aria-label={gunControl ? "战术画布，右键选择武器组，左键指定目标或射击，中键平移" : "战术画布，点击选舰，拖动平移，滚轮缩放"} onContextMenu={e => e.preventDefault()}
+    {missileControl&&<p role="status">请在{layerName(missileControl.attackLayer)}画布点击发射地点，再在面板下达单发或自动发射指令。<button onClick={missileControl.onCancel}>取消选点</button></p>}
+    <div ref={host} className="tactical-canvas" tabIndex={active ? 0 : -1} aria-label={missileControl?'战术画布，点击指定导弹发射地点':gunControl ? "战术画布，右键选择武器组，左键指定目标或射击，中键平移" : "战术画布，点击选舰，拖动平移，滚轮缩放"} onContextMenu={e => e.preventDefault()}
       onPointerDown={e => {
         if (![0, 1, 2].includes(e.button) || drag.current) return;
         e.preventDefault(); e.currentTarget.focus(); e.currentTarget.setPointerCapture(e.pointerId);
@@ -349,6 +401,10 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
         const released = point(e);
         if (released.x < 0 || released.y < 0 || released.x > size.width || released.y > size.height) return;
         const view = displayed.current;
+        if(missileControl&&d.button===0){
+          if(missileControl.enabled&&observationLayer===missileControl.attackLayer)missileControl.onPoint(world(released,camera));
+          return;
+        }
         if (gunControl && (d.button === 0 || d.button === 2)) {
           if (!(d.button === 2 ? gunControl.enabled && ownLayer === observationLayer : canvasWeaponsEnabled)) { if (d.button === 0) onSelect(pickShip(view, released, camera)); return; }
           const p = point(e), level = pickLevel === "all" ? undefined : Number(pickLevel);
@@ -379,12 +435,18 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
         } else if (["+", "=", "-"].includes(e.key)) {
           e.preventDefault(); setCamera(c => zoomScene(c, { x: size.width / 2, y: size.height / 2 }, e.key === "-" ? 1 / 1.3 : 1.3));
         } else if (e.key === "Home") { e.preventDefault(); fit(); }
-        else if (e.key === "Escape") { drag.current = null; onSelect(null); }
+        else if (e.key === "Escape") { drag.current = null; if(missileControl)missileControl.onCancel();else onSelect(null); }
       }}>
       {failure && <p role="alert" className="canvas-message editor-error">{failure}。舰艇列表仍可查看；可返回编辑再进入重试。</p>}
       {!ready && !failure && <p role="status" className="canvas-message">正在建立战术画布…</p>}
       {ready && <div className="tactical-scale" style={{ width: step * camera.scale }}>{step} m</div>}
       {ready && <>
+        {!!view.snapshot.gunnery?.electronic_warfare?.effects.some(e=>e.height_layer===observationLayer)&&<div className="tactical-ew-key" aria-label="本层电子对抗区域">
+          {([['chaff','箔条','#abc0ed'],['thermal','热能烟雾','#ffb17a'],['decoy','主动诱饵','#fa8fe1']] as const).map(([kind,name,color])=>{
+            const count=view.snapshot.gunnery?.electronic_warfare?.effects.filter(e=>e.height_layer===observationLayer&&e.kind===kind).length??0;
+            return count>0&&<span key={kind} style={{color}}>{name} × {count}</span>;
+          })}
+        </div>}
         <div className="tactical-grid-key"><span>小格 50 m</span><span>参考线 500 m</span><strong>主参考线 5 km</strong></div>
         {references.map(line => <span key={`${line.axis}:${line.world_m}`} className={`tactical-grid-coordinate ${line.spacing === 5000 ? 'major' : ''}`}
           aria-hidden="true" style={line.axis === 'x' ? { left: line.pixel+5, top: 4 } : { left: 5, top: line.pixel+3 }}>

@@ -1,0 +1,9 @@
+{
+  "status": "SENSOR_GEOMETRY_UI_PASS",
+  "checks": [
+    "火控雷达 v2 places through the real canvas beside the upper hull, with one external cell, no internal/eight-cell clearance and matching blind sectors.",
+    "红外搜索 v2 places through the real canvas beside the upper hull, with one external cell, no internal/eight-cell clearance and matching blind sectors.",
+    "Saved/reopened design retains exact sensor installation and valid layout.",
+    "Opening v1 does not silently change it; explicit upgrade, undo, redo and save work through the real editor."
+  ]
+}

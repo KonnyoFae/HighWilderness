@@ -24,7 +24,8 @@ class MaintenanceTests(unittest.TestCase):
         r=bp.new_record(self.design,key)
         for w in r['state']['weapons']:
             cal=75 if w['module_id']=='gun.heavy' else 30
-            w.update(recipe_id=f'recipe.3a.{cal}mm.ordinary',ready_rounds=5 if cal==75 else 59,cooldown_steps=11)
+            cap=next(s['ready_capacity'] for s in self.definition['weapons'] if s['module_id']==w['module_id'])
+            w.update(recipe_id=f'recipe.3a.{cal}mm.ordinary',ready_rounds=cap-1,cooldown_steps=11)
         return r
 
     def supply(self):
@@ -59,14 +60,20 @@ class MaintenanceTests(unittest.TestCase):
         self.assertEqual(second['changes'],[]);self.assertEqual(r,baseline)
 
     def test_empty_fleet_guns_reuse_magazine_capacity_between_loads(self):
-        r=bp.new_record(self.design,'instance.empty')
-        result=self.evaluate(r,scope='same_class')
-        self.assertTrue(all(w['ready_rounds']>0 for w in result['ships'][0]['after']['state']['weapons']))
-        self.assertGreater(result['supply_before']['ammunition_resources']-result['supply_after']['ammunition_resources'],self.definition['magazines'][0]['capacity_resources'])
+        # Force the original capacity edge in an isolated small-magazine policy.
+        policy=load_current(ROOT)
+        next(r for r in policy['modules'] if r['prototype']==dict(id='gtw.module.fixture.ammunition_magazine',version=2))['binding']['capacity_resources']=100
+        design=bp.compile_design(self.doc,self.index,self.dep,policy,ship_id='ship.small.magazine')
+        with patch.object(self,'design',design),patch.object(self,'definition',design.resources.definition()):
+            r=bp.new_record(self.design,'instance.empty')
+            result=self.evaluate(r,scope='same_class')
+            self.assertTrue(all(w['ready_rounds']>0 for w in result['ships'][0]['after']['state']['weapons']))
+            self.assertGreater(result['supply_before']['ammunition_resources']-result['supply_after']['ammunition_resources'],self.definition['magazines'][0]['capacity_resources'])
 
     def test_full_gun_free_existing_special_recipe_preserved(self):
         r=self.record();w=next(w for w in r['state']['weapons'] if w['module_id']=='gun.heavy')
-        w.update(recipe_id='recipe.3a.75mm.armor_piercing',ready_rounds=6)
+        capacity=next(s['ready_capacity'] for s in self.definition['weapons'] if s['module_id']==w['module_id'])
+        w.update(recipe_id='recipe.3a.75mm.armor_piercing',ready_rounds=capacity)
         result=self.evaluate(r)
         self.assertEqual(result['ships'][0]['changes'],[])
         self.assertEqual(result['supply_before']['cargo'],result['supply_after']['cargo'])

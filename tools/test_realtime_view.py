@@ -50,6 +50,18 @@ class ViewTests(unittest.TestCase):
         return self.call(s, 'read', dict(scene_id=s.scheduler.world.epoch, known_static_sha256=s.digest,
             ack_inputs=ack_inputs or [], ack_events=ack_events))
 
+    def test_due_work_continues_between_bounded_pumps_and_still_accepts_input(self):
+        s,clock=self.service();self.call(s,'resume');q=s.scheduler
+        clock.advance(140_000_000);s.tick()
+        self.assertEqual(q.world.fixed_step,4);self.assertTrue(s.work_pending)
+        request=ScheduledControl(q.world.epoch,q.status.generation,1,self.sample._direct,4,command())
+        self.call(s,'control',dict(scene_id=q.world.epoch,input=request.to_dict()))
+        # No new wall time: drain the already owed steps without an idle wait.
+        s.tick();self.assertEqual(q.world.fixed_step,8);self.assertFalse(s.work_pending)
+        self.assertEqual(q.query(q.world.epoch,1).status,'executed')
+        clock.advance(500_000_000);s.tick()
+        self.assertFalse(s.work_pending);self.assertEqual(q.status.pause_reason,'overload')
+
     def test_cached_snapshot_frequency_reads_never_advance_authority(self):
         s, clock = self.service(); self.call(s,'resume')
         initial = s.latest

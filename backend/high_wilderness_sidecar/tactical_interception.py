@@ -1,4 +1,4 @@
-"""Swept contact between finite projectiles; no proximity detonation."""
+"""Swept finite contacts; interceptor activation radius is separate from body size."""
 from dataclasses import replace
 from functools import lru_cache
 from math import ceil, floor, sqrt
@@ -19,17 +19,18 @@ def properties(profile):
                 interception_damage=policy()['round_damage'] if profile.caliber_mm==30 else 0.)
 
 
-def contact_fraction(a, b):
+def contact_fraction(a, b, *, activation_radius=0.):
     """Earliest relative contact, with 10 micrometre drag-chord tolerance."""
-    radius = a.collision_radius_m+b.collision_radius_m
+    radius = max(a.collision_radius_m,activation_radius)+b.collision_radius_m
     if radius <= 0:return None
     fa,fb = flight_segment(a),flight_segment(b)
     ae,_ = fa.at(1);be,_ = fb.at(1)
+    curve_margin=(fa.curvature+fb.curvature)*fa.seconds**2/8
     if any(max(min(a.position[k],ae[k]),min(b.position[k],be[k])) >
-           min(max(a.position[k],ae[k]),max(b.position[k],be[k]))+radius for k in range(2)):
+           min(max(a.position[k],ae[k]),max(b.position[k],be[k]))+radius+curve_margin for k in range(2)):
         return None
     tolerance = min(1e-5,radius*1e-3)
-    curvature = fa.k*fa.speed**2+fb.k*fb.speed**2
+    curvature = fa.curvature+fb.curvature
     count = max(1,ceil(sqrt(curvature*fa.seconds**2/(8*tolerance))))
     previous = tuple(x-y for x,y in zip(a.position,b.position))
     for n in range(1,count+1):
@@ -57,10 +58,11 @@ def resolve(projectiles, sides, deadlines, step):
     targets = [p for p in active.values() if p.durability is not None and p.durability>0]
     rounds = [p for p in active.values() if p.interception_damage>0]
     if not targets or not rounds:return active,set(),()
-    def buckets(p):
-        end,_=flight_segment(p).at(1)
-        lower=[floor((min(a,b)-p.collision_radius_m)/128) for a,b in zip(p.position,end)]
-        upper=[floor((max(a,b)+p.collision_radius_m)/128) for a,b in zip(p.position,end)]
+    def buckets(p,activation_radius=0.):
+        path=flight_segment(p);end,_=path.at(1)
+        radius=max(p.collision_radius_m,activation_radius)+path.curvature*path.seconds**2/8
+        lower=[floor((min(a,b)-radius)/128) for a,b in zip(p.position,end)]
+        upper=[floor((max(a,b)+radius)/128) for a,b in zip(p.position,end)]
         if (upper[0]-lower[0]+1)*(upper[1]-lower[1]+1)>256:return None
         return ((p.height_layer,x,y) for x in range(lower[0],upper[0]+1) for y in range(lower[1],upper[1]+1))
     grid={};global_targets=set()
@@ -71,13 +73,13 @@ def resolve(projectiles, sides, deadlines, step):
             for key in cells:grid.setdefault(key,set()).add(target.id)
     pending = []
     for shot in rounds:
-        cells=buckets(shot)
+        cells=buckets(shot,shot.interception_radius_m)
         candidates={p.id for p in targets} if cells is None else global_targets.union(*(grid.get(key,set()) for key in cells))
         for identity in sorted(candidates):
             target=active[identity]
             if shot.id==target.id or sides.get(shot.ship_id)==sides.get(target.ship_id) or shot.height_layer!=target.height_layer:
                 continue
-            t = contact_fraction(shot,target)
+            t = contact_fraction(shot,target,activation_radius=shot.interception_radius_m)
             limit = min(deadlines.get(shot.id,float('inf')),deadlines.get(target.id,float('inf')),
                         1. if step==shot.expires or step==target.expires else 1.+1e-8)
             if t is not None and t < limit-1e-10:

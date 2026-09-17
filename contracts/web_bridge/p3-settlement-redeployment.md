@@ -1,5 +1,7 @@
 # P3 战后结算、持久保存与再次出航
 
+2026-09-17 5i 更新：当前双方自建多舰流程、连续两场与恢复见[5i 记录](./tactical-stage5i-continuity-handoff.md)。新增结果 `p3-v3` 的根字段 `player_side_id` 及逐舰 `side_id/ship_name`；仍原样读取 p3-v1/v2，不变更舰艇实例版本。完整结算读取／保存／战局结束回复限 4 MiB，实时画面仍限 256 KiB。导弹未完成作业保留进度；已发射及 VLS 转向中弹不返还。下文两舰技术场景及旧结束规则是历史范围，不替代当前规则。
+
 > 2026-09-12 O4 状态更正：用户已确认 O4 测试实际完成，旧待验收/待留档记录有误，当前为 `O4_COMPLETED_USER_CONFIRMED`，不再安排 O4 收尾。见[验收状态更正](./o4-outfit-ui-acceptance.md)。下文 O4 未完成表述仅保留为历史记录，不代表当前待办；原自动测试与文件检查结果不变。
 
 日期：2026-09-10。状态：`P3_SCOPED_PASS / X1A_E5_NEXT / PLAYER_DESIGN_DEPLOYMENT_NOT_IMPLEMENTED`。基线为 `3e26613` 加 P1a/P1b/P2a/P2b/P3 工作区实现，尚未提交。当前顺序见[后续交付计划](./editor-tactical-delivery-roadmap.md)。

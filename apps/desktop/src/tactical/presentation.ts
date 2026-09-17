@@ -9,6 +9,13 @@ const mix = (a: number, b: number, t: number) => a + (b-a)*t;
 const pair = (a: number[], b: number[], t: number) => [mix(a[0], b[0], t), mix(a[1], b[1], t)];
 const wrap = (a: number) => Math.atan2(Math.sin(a), Math.cos(a));
 const angle = (a: number, b: number, t: number) => a+wrap(b-a)*t;
+function pathPosition(path:number[][],step:number) {
+  if(step<=path[0][0])return path[0].slice(1);
+  const i=path.findIndex(p=>p[0]>=step);
+  if(i<0)return path[path.length-1].slice(1);
+  const a=path[i-1],b=path[i];
+  return pair(a.slice(1),b.slice(1),(step-a[0])/(b[0]-a[0]));
+}
 type Impact = NonNullable<NonNullable<TacticalSnapshot['gunnery']>['damage']>['recent'][number];
 
 export class PresentationTimeline {
@@ -70,6 +77,17 @@ export class PresentationTimeline {
         direction: [Math.cos(direction), Math.sin(direction)],
         aim_point_m: sameAim && a.aim_point_m && b.aim_point_m ? pair(a.aim_point_m, b.aim_point_m, t) : gun.aim_point_m };
     });
+    const missiles=discrete.gunnery?.missiles;
+    const ew=discrete.gunnery?.electronic_warfare;
+    const effects=ew?.effects.map(e=>{
+      const a=left.gunnery?.electronic_warfare?.effects.find(v=>v.id===e.id),b=right.gunnery?.electronic_warfare?.effects.find(v=>v.id===e.id);
+      return a&&b?{...e,position_m:pair(a.position_m,b.position_m,t)}:e;
+    });
+    const missileShips=missiles?.ships.map(s=>({...s,launchers:s.launchers?.map(launcher=>{
+      const find=(frame:TacticalSnapshot)=>frame.gunnery?.missiles?.ships.find(v=>v.ship_id===s.ship_id)?.launchers?.find(l=>l.module_id===launcher.module_id);
+      const a=find(left),b=find(right);
+      return a&&b?{...launcher,angle_rad:angle(a.angle_rad,b.angle_rad,t)}:launcher;
+    })}));
     const projectiles = new Map<number, DisplayProjectile>();
     for (const p of latest.gunnery?.projectiles ?? []) {
       if (p.born_step === undefined || !p.origin_m) {
@@ -80,7 +98,7 @@ export class PresentationTimeline {
         continue;
       }
       if (step < p.born_step || step >= (p.expires_step ?? Infinity)) continue;
-      const at = (s: number) => p.origin_m!.map((v, i) => v+p.velocity_mps[i]*(s-p.born_step!)*latest.fixed_step_s);
+      const at = (s: number) => p.trajectory?.length ? pathPosition(p.trajectory,s) : p.origin_m!.map((v, i) => v+p.velocity_mps[i]*(s-p.born_step!)*latest.fixed_step_s);
       projectiles.set(p.id, { ...p, position_m: at(step), previous_m: at(Math.max(p.born_step, step-.06/latest.fixed_step_s)) });
     }
     const hits = new Map<number, Impact>();
@@ -88,7 +106,7 @@ export class PresentationTimeline {
     for (const p of latest.presentation?.finished_projectiles ?? []) {
       projectiles.delete(p.id);
       if (step >= p.born_step && step < p.end_step && step < p.expires_step) {
-        const at = (s: number) => s <= p.end_step-1 ?
+        const at = (s: number) => p.trajectory?.length ? pathPosition(p.trajectory,s) : s <= p.end_step-1 ?
           p.origin_m.map((v, i) => v+p.velocity_mps[i]*(s-p.born_step)*latest.fixed_step_s) :
           pair(p.position_m, p.end_m, s-(p.end_step-1));
         projectiles.set(p.id, { ...p, position_m: at(step), previous_m: at(Math.max(p.born_step, step-.06/latest.fixed_step_s)) });
@@ -101,6 +119,8 @@ export class PresentationTimeline {
     return { geometry: newest.geometry, snapshot: { ...discrete, fixed_step: step, time_s: step*latest.fixed_step_s,
       ships, events: discrete.events.filter(e => e.fixed_step <= step),
       gunnery: discrete.gunnery && { ...discrete.gunnery, weapons, projectiles: [...projectiles.values()],
+        missiles:missiles&&{...missiles,ships:missileShips!},
+        electronic_warfare:ew&&{...ew,effects:effects!},
         damage: discrete.gunnery.damage && { ...discrete.gunnery.damage,
           recent: [...hits.values()].filter(h => h.step <= step && step-h.step <= 45) } } } };
   }
