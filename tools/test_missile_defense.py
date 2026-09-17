@@ -201,7 +201,7 @@ class MissileDefenseTests(unittest.TestCase):
         for _ in range(pending.due_step-b.session.world.fixed_step):b.step()
         p=next(p for p in b.projectiles if p.id==pending.projectile.id)
         self.assertEqual(p.missile.age,0);self.assertEqual(p.height_layer,'cloud')
-        self.assertEqual(p.expires-pending.due_step,p.missile.profile.lifetime('cloud'))
+        self.assertEqual(p.expires-pending.due_step,p.missile.profile.lifetime())
 
 
 if __name__=='__main__':unittest.main()

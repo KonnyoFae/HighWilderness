@@ -3,6 +3,7 @@ export interface ObservedContact {
   id:string|number;kind:string;position_m:number[];velocity_mps:number[];height_layer:string;
   valid:boolean;age_s:number;sources:string[];status:string;radar_source_available:boolean;
   defense_weapon_ids?:string[];
+  altitude_m?:number|null;vertical_speed_mps?:number;
 }
 export interface ObservationShip {
   ship_id:string;locked_target_id:string|number|null;lock_status:string|null;contacts:ObservedContact[];
@@ -41,7 +42,8 @@ export function FireControlPanel({ship,tab,disabled,names,onCommand,onAssignMiss
     {[...ship.contacts].sort((a,b)=>Number(b.valid)-Number(a.valid)).map(c=><section key={c.id} className={`observation-card ${c.valid?'':'lost'}`}>
       <div className="observation-heading"><strong>{c.kind==='ship'?(names[c.id]??'敌舰'):`${c.kind==='shell'?'来袭炮弹':'敌方导弹'} #${c.id}`}</strong>
         <span>{!c.valid?'已失联':c.status==='no_computer'?(c.defense_weapon_ids?.length?'仅进阶武器自持火控':'缺少指挥机'):ship.locked_target_id===c.id?(ship.lock_status==='locked'?'已锁定':'正在锁定'):'跟踪中'}</span></div>
-      <p>{layer[c.height_layer]} · {Math.hypot(...c.velocity_mps).toFixed(0)} 米/秒 · {c.age_s.toFixed(1)} 秒前观测</p>
+      <p>{layer[c.height_layer]} · 总速度 {Math.hypot(...c.velocity_mps,c.vertical_speed_mps??0).toFixed(0)} 米/秒 · {c.age_s.toFixed(1)} 秒前观测</p>
+      {c.kind==='missile'&&c.altitude_m!=null&&<p>观测高度 {c.altitude_m.toFixed(0)} 米 · {(c.vertical_speed_mps??0)>0?'上爬':(c.vertical_speed_mps??0)<0?'下潜':'平飞'} · 垂直速度 {Math.abs(c.vertical_speed_mps??0).toFixed(0)} 米/秒</p>}
       <p className="muted">来源：{c.sources.length?c.sources.map(source=>ship.devices.find(d=>d.module_id===source)?.name??`友舰共享 · ${names[source.split('/')[0]]??'友舰'}`).join('、'):'无有效火控来源'}</p>
       {c.valid&&<button disabled={disabled||c.status==='no_computer'||ship.locked_target_id===c.id}
         onClick={()=>onCommand({kind:'lock',target:c.id,value:null})}>锁定此目标</button>}

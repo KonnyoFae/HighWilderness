@@ -5,17 +5,17 @@ Only opposing ships intercept. Moving/rotating geometry uses bounded local
 chords of the authoritative drag trajectory. No cargo destruction.
 """
 from dataclasses import dataclass, replace
-from math import cos, sin, hypot, pi, ceil, sqrt
+from math import cos, sin, hypot, pi, ceil, sqrt, acos, degrees
 
 from 高天荒野舰艇战术弹丸世界 import compile_projectile_target_geometry, _segment_aabb_entry_fraction
 from 高天荒野舰艇炮弹与甲弹公式 import (ArmorState, ImpactOutcome, Aftereffect,
-    resolve_armor_impact, incidence_angle_deg, relative_impact_velocity_xy)
+    resolve_armor_impact, relative_impact_velocity_xy)
 from .simplified_flight import ImpactBatch
 from .tactical_devices import DeviceOperation
 from .structural_durability import compile_durability, REFERENCE_MAXIMUM_POINTS
 from .tactical_ammunition import compile_profiles, is_incendiary, is_surface_incendiary
 from .tactical_ignition import Attempt
-from .tactical_ballistics import flight_segment
+from .tactical_ballistics import flight_segment,layer_at,layer_breaks,advance_projectile
 from . import tactical_deck_hits as deck_hits
 
 
@@ -38,7 +38,7 @@ def pose_at(old, new, t):
     return center, heading
 
 
-def local_path(flight, old, new):
+def local_path(flight, old, new, breaks=()):
     """Chord error bound of 2 mm, including drag, translation and rotation.
 
     The second derivative bound gives M*dt²/8 per chord. Subdivide collision
@@ -52,12 +52,31 @@ def local_path(flight, old, new):
     curvature = flight.curvature+2*omega*(flight.maximum_speed+translation)+omega**2*distance
     count = max(1, ceil(sqrt(curvature*seconds**2/(8*.002))))
     points = []
-    for n in range(count+1):
-        t = n/count
+    for t in sorted({*(n/count for n in range(count+1)),*breaks}):
         position, _ = flight.at(t)
         center, heading = pose_at(old, new, t)
         points.append((t, rotate((position[0]-center[0], position[1]-center[1]), -heading)))
     return points
+
+
+def ship_layer_boundary(old,new,seconds):
+    if old.height_layer==new.height_layer:return 1.
+    transition=old.layer_transition
+    return max(0.,min(1.,(transition.duration_s-transition.elapsed_s)/seconds)) if transition else 1.
+
+
+def ship_layer_at(old,new,t,seconds):
+    return old.height_layer if t<ship_layer_boundary(old,new,seconds) else new.height_layer
+
+
+def impact_incidence(relative, edge, vertical_speed):
+    # Deck geometry is still planar. Its side-armor normal has zero vertical
+    # component: use total speed once for energy and once to normalize the
+    # incidence vector, without stretching the internal XY aftereffect ray.
+    speed=hypot(*relative,vertical_speed)
+    ex,ey=edge.end[0]-edge.start[0],edge.end[1]-edge.start[1]
+    cosine=abs(-relative[0]*ey+relative[1]*ex)/(hypot(ex,ey)*speed) if speed else 0.
+    return degrees(acos(max(0.,min(1.,cosine))))
 
 
 def segment(a, b, c, d):
@@ -162,7 +181,7 @@ class DamageKernel:
             armor.append(tuple(e.maximum for e in edges))
         self.initial = DamageState(tuple(armor))
 
-    def contacts_on_path(self, index, ship, path, level=None):
+    def contacts_on_path(self, index, ship, path, level=None, accept=None):
         """Earliest physical contact on each deck, preserving the swept path."""
         contacts = {}
         for (t0, a), (t1, b) in zip(path, path[1:]):
@@ -171,6 +190,7 @@ class DamageKernel:
             def remember(deck, fraction, kind, n):
                 if fraction is not None:
                     hit = t0+(t1-t0)*fraction, index, kind, n
+                    if accept and not accept(hit[0]):return
                     if deck not in contacts or hit < contacts[deck]:
                         contacts[deck] = hit
             for n, edge in enumerate(self.edges[index]):
@@ -229,20 +249,24 @@ class DamageKernel:
                 terminals.append(dict(projectile_id=p.id, position_m=p.position))
                 continue
             flight = flight_segment(p)
-            end, end_velocity = flight.at(1)
+            end, _ = flight.at(1)
             hits = []
             if p.missile:
                 from .tactical_interception import contact_fraction
                 from .tactical_gunnery import Projectile
                 for decoy in decoys:
-                    if decoy.layer!=p.height_layer or decoy.side==self.sides.get(p.ship_id) or world.fixed_step>=decoy.expires:continue
+                    if decoy.side==self.sides.get(p.ship_id) or world.fixed_step>=decoy.expires:continue
                     body=Projectile(-1,decoy.ship_id,'decoy',decoy.position,decoy.position,decoy.velocity,decoy.expires,
                                     None,decoy.layer,collision_radius_m=1.)
                     t=contact_fraction(p,body)
                     if t is not None:hits.append((t,-1,2,decoy.id))
             selections = {choice.ship_id: choice for choice in p.deck_selections}
             for i, (old, ship) in enumerate(zip(before.ships, world.ships)):
-                if p.height_layer is not None and ship.motion.height_layer != p.height_layer:
+                boundary=ship_layer_boundary(old.motion,ship.motion,flight.seconds)
+                def same_layer(t):
+                    return p.height_layer is None or layer_at(p,flight,t)==ship_layer_at(old.motion,ship.motion,t,flight.seconds)
+                breaks=sorted({0.,1.,boundary,*layer_breaks(flight)})
+                if not any(same_layer((a+b)/2) for a,b in zip(breaks,breaks[1:])) and not same_layer(1.):
                     continue
                 if ship.ship_id == p.ship_id or ship.command.lifecycle.physical_status == 'exited' or ship.motion.hull_integrity_fraction <= 0:
                     continue
@@ -253,10 +277,14 @@ class DamageKernel:
                 hi = tuple(max(a, b)+radius for a, b in zip(old.motion.position_world_m.to_list(), ship.motion.position_world_m.to_list()))
                 if _segment_aabb_entry_fraction(p.position, end, lo, hi) is None:
                     continue
-                path = local_path(flight, old.motion, ship.motion)
+                path = local_path(flight, old.motion, ship.motion,breaks)
                 choice = selections.get(ship.ship_id)
                 level = choice.level if choice else p.deck_level
-                contacts = self.contacts_on_path(i, ship, path, level)
+                contacts={}
+                for a,b in zip(path,path[1:]):
+                    if not same_layer((a[0]+b[0])/2) and not same_layer(b[0]):continue
+                    for deck,hit in self.contacts_on_path(i,ship,(a,b),level,same_layer).items():
+                        if deck not in contacts or hit<contacts[deck]:contacts[deck]=hit
                 if world.fixed_step == p.expires:
                     contacts = {deck: hit for deck, hit in contacts.items() if hit[0] < 1-1e-10}
                 if not contacts:
@@ -277,7 +305,7 @@ class DamageKernel:
                     expired += 1
                     terminals.append(dict(projectile_id=p.id, position_m=end))
                 else:
-                    survivors.append(replace(p, previous=p.position, position=end, velocity=end_velocity))
+                    survivors.append(advance_projectile(p,flight))
                 continue
             pending.append((min(hits),p,flight))
         from .tactical_interception import resolve as intercept_projectiles
@@ -307,8 +335,10 @@ class DamageKernel:
             velocity = relative_impact_velocity_xy(impact_velocity, target_velocity,
                 yaw, (position[0]-center[0], position[1]-center[1]))
             relative = rotate(velocity, -heading)
-            speed = hypot(*relative)
-            direction = (relative[0]/speed, relative[1]/speed) if speed > 1e-9 else (0., 0.)
+            horizontal_speed = hypot(*relative)
+            vertical_speed = flight.vertical_speed(t) if hasattr(flight,'vertical_speed') else 0.
+            speed = hypot(horizontal_speed,vertical_speed)
+            direction = (relative[0]/horizontal_speed, relative[1]/horizontal_speed) if horizontal_speed > 1e-9 else (0., 0.)
             damage = profile.damage
             ids, amount, outcome, energy = [], damage.surface_module_damage_points, 'module', 0.
             armor_before = armor_after = None
@@ -322,7 +352,7 @@ class DamageKernel:
                 armor_before = armor[i][n]
                 result = resolve_armor_impact(profile.penetration,
                     ArmorState(edge.protection, edge.thickness_mm, armor_before), speed,
-                    incidence_angle_deg(relative, edge.start, edge.end),
+                    impact_incidence(relative,edge,vertical_speed),
                     ricochet_roll=((p.id*2654435761+world.fixed_step*12345) & 0xffffffff)/0xffffffff)
                 outcome, energy = result.outcome.value, result.residual_energy_ratio
                 armor_after = max(0., armor_before-result.armor_damage_formula_points*damage.armor_damage_to_local_durability_proxy)
@@ -371,9 +401,9 @@ class DamageKernel:
             if surface_incendiary:
                 attempts.append(Attempt(p.id,p.ship_id,i,self.cells[i][n].module_id if kind==1 else None,level,point,True,fire_scale))
             events.append(dict(projectile_id=p.id, step=world.fixed_step, source_ship_id=p.ship_id, ship_id=ship.ship_id,
-                impact_fraction=t, relative_speed_mps=speed, projectile_speed_mps=hypot(*impact_velocity),
+                impact_fraction=t, relative_speed_mps=speed, projectile_speed_mps=hypot(*impact_velocity,vertical_speed),
                 projectile_type=p.projectile_key[0], projectile_version=p.projectile_key[1],
-                position_m=position, deck_level=level, height_layer=p.height_layer or ship.motion.height_layer, outcome=outcome, module_ids=ids,
+                position_m=position, deck_level=level, height_layer=layer_at(p,flight,t) or ship_layer_at(old.motion,ship.motion,t,flight.seconds), outcome=outcome, module_ids=ids,
                 module_damage=amount if ids else 0., armor_before=armor_before, armor_after=armor_after,
                 residual_energy_ratio=energy,
                 **(dict(deck_selection=dict(policy=self.deck_policy.id, preferred_levels=selection.preferred_levels,

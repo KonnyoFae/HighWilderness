@@ -5,7 +5,7 @@ from math import ceil, floor, sqrt
 from pathlib import Path
 import json
 
-from .tactical_ballistics import flight_segment
+from .tactical_ballistics import flight_segment,layer_at,layer_breaks
 
 
 @lru_cache(maxsize=1)
@@ -32,19 +32,24 @@ def contact_fraction(a, b, *, activation_radius=0.):
     tolerance = min(1e-5,radius*1e-3)
     curvature = fa.curvature+fb.curvature
     count = max(1,ceil(sqrt(curvature*fa.seconds**2/(8*tolerance))))
-    previous = tuple(x-y for x,y in zip(a.position,b.position))
-    for n in range(1,count+1):
-        pa,_ = fa.at(n/count);pb,_ = fb.at(n/count)
+    times=sorted({*(n/count for n in range(count+1)),*layer_breaks(fa),*layer_breaks(fb)})
+    for start,end in zip(times,times[1:]):
+        if layer_at(a,fa,(start+end)/2)!=layer_at(b,fb,(start+end)/2):continue
+        pa,_=fa.at(start);pb,_=fb.at(start)
+        previous=tuple(x-y for x,y in zip(pa,pb))
+        pa,_ = fa.at(end);pb,_ = fb.at(end)
         current = tuple(x-y for x,y in zip(pa,pb))
         v = tuple(x-y for x,y in zip(current,previous))
         aa = sum(x*x for x in v);bb = 2*sum(x*y for x,y in zip(previous,v))
         cc = sum(x*x for x in previous)-(radius+tolerance)**2
-        if cc <= 0:return (n-1)/count
+        if cc <= 0:return start
         disc = bb*bb-4*aa*cc
         if aa>1e-20 and disc>=0:
             t = (-bb-sqrt(disc))/(2*aa)
-            if 0<=t<=1:return (n-1+t)/count
-        previous = current
+            if 0<=t<=1:
+                hit=start+(end-start)*t
+                if layer_at(a,fa,hit)==layer_at(b,fb,hit):return hit
+    if layer_at(a,fa,1.)==layer_at(b,fb,1.) and sum((x-y)**2 for x,y in zip(ae,be))<=(radius+tolerance)**2:return 1.
     return None
 
 
@@ -64,7 +69,8 @@ def resolve(projectiles, sides, deadlines, step):
         lower=[floor((min(a,b)-radius)/128) for a,b in zip(p.position,end)]
         upper=[floor((max(a,b)+radius)/128) for a,b in zip(p.position,end)]
         if (upper[0]-lower[0]+1)*(upper[1]-lower[1]+1)>256:return None
-        return ((p.height_layer,x,y) for x in range(lower[0],upper[0]+1) for y in range(lower[1],upper[1]+1))
+        layers={p.height_layer,*(v for _,v in getattr(path,'transitions',()))}
+        return ((layer,x,y) for layer in layers for x in range(lower[0],upper[0]+1) for y in range(lower[1],upper[1]+1))
     grid={};global_targets=set()
     for target in targets:
         cells=buckets(target)
@@ -77,7 +83,7 @@ def resolve(projectiles, sides, deadlines, step):
         candidates={p.id for p in targets} if cells is None else global_targets.union(*(grid.get(key,set()) for key in cells))
         for identity in sorted(candidates):
             target=active[identity]
-            if shot.id==target.id or sides.get(shot.ship_id)==sides.get(target.ship_id) or shot.height_layer!=target.height_layer:
+            if shot.id==target.id or sides.get(shot.ship_id)==sides.get(target.ship_id):
                 continue
             t = contact_fraction(shot,target,activation_radius=shot.interception_radius_m)
             limit = min(deadlines.get(shot.id,float('inf')),deadlines.get(target.id,float('inf')),
@@ -95,6 +101,6 @@ def resolve(projectiles, sides, deadlines, step):
         point,_ = flight_segment(target).at(t)
         events.append(dict(step=step,impact_fraction=t,projectile_id=tid,round_id=sid,
             source_ship_id=shot.ship_id,weapon_id=shot.weapon_id,position_m=point,
-            height_layer=target.height_layer,durability_before=target.durability,
+            height_layer=layer_at(target,flight_segment(target),t),durability_before=target.durability,
             durability_after=after,intercepted=after<=0))
     return active,removed,tuple(events)

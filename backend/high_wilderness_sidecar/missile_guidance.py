@@ -33,6 +33,8 @@ class Measurement:
     layer: str
     sender: str | None = None
     sender_position: tuple | None = None
+    altitude_m: float | None = None
+    vertical_velocity_mps: float = 0.
 
 
 @dataclass(frozen=True)
@@ -69,7 +71,8 @@ def contact(f,position,layer,own_side,t,environment,step):
         if not t.decoy and (t.kind!='projectile' or t.durability is None or t.durability<=0):return None
         if t.id in environment.unavailable_targets and t.id not in (f.original_target,f.target_id):return None
     elif t.kind=='projectile':return None
-    # First acquisition and new targets remain in the immutable attack layer.
+    # First acquisition and new autonomous targets use the current collision
+    # layer; an already acquired target may lead a real altitude pursuit.
     if t.layer!=layer and not (f.ever_locked and t.id in (f.original_target,f.target_id)):return None
     distance=hypot(*(a-b for a,b in zip(t.position,position)));p=f.profile
     if distance>p.seeker_range*p.weather[LAYERS.index(t.layer)]:return None
@@ -81,7 +84,9 @@ def contact(f,position,layer,own_side,t,environment,step):
     if p.seeker=='anti_radiation' and not t.emitting:return None
     if p.interceptor and not t.decoy and environment.threat_check and not environment.threat_check(own_side,t):return None
     # A sample is copied only after every visibility gate above succeeds.
-    return Measurement(t.id,t.position,t.velocity,step,t.layer),distance,t.signal/max(1.,distance)**2,t
+    return Measurement(t.id,t.position,t.velocity,step,t.layer,
+                       altitude_m=getattr(t.payload,'altitude_m',None),
+                       vertical_velocity_mps=getattr(t.payload,'vertical_velocity_mps',0.)),distance,t.signal/max(1.,distance)**2,t
 
 
 def prediction(sample,step,*,velocity=True):
@@ -109,19 +114,29 @@ def update(f,projectile,step,side,environment):
     requested=dict(environment.retargets).get(projectile.id)
     identity=requested or f.original_target
     links=[s for s_side,s in environment.links if s_side==side and s.id==identity
-           and s.layer==projectile.height_layer and 0<=step-s.step<=p.datalink_valid_steps
+           and 0<=step-s.step<=p.datalink_valid_steps
            and (s.sender_position is None or hypot(*(a-b for a,b in zip(position,s.sender_position)))<=environment.datalink_range_m)] if p.datalink else []
     link=max(links,key=lambda s:(s.step,s.sender or '')) if links else None
     if requested and link:
         f=replace(f,original_target=requested,target_id=None,ever_locked=False,last_sample=None,
                   loss_step=None,search_step=None,acquire_step=None,seeker_state='midcourse')
     f=replace(f,link_sample=link)
+    # A lost midcourse relay must follow the model's loss policy using the
+    # last copied measurement, not silently revert to the original launch point.
+    if f.seeker_state=='midcourse' and f.last_sample is not None and link is None:
+        f=replace(f,seeker_state='search')
     launch=Measurement(identity or '',f.launch_point,f.launch_velocity,f.born_step,projectile.height_layer)
     aim=prediction(link or launch,step)
     if f.seeker_state=='midcourse':
-        if hypot(*(a-b for a,b in zip(aim,position)))>p.seeker_range*p.weather[LAYERS.index(projectile.height_layer)]:return f,aim
+        if hypot(*(a-b for a,b in zip(aim,position)))>p.seeker_range*p.weather[LAYERS.index((link or launch).layer)]:
+            return replace(f,last_sample=link) if link else f,aim
         f=replace(f,seeker_state='search')
-    samples=[s for t in environment.contacts if (s:=contact(f,position,projectile.height_layer,side,t,environment,step))]
+    # A fresh linked cross-layer assignment is still midcourse guidance. Do
+    # not replace it immediately with an unrelated target on our current layer.
+    # On arrival (or relay loss), normal autonomous acquisition resumes. This
+    # does not grant the assigned target a cross-layer first seeker lock.
+    entering_layer=link is not None and not f.ever_locked and link.layer!=projectile.height_layer
+    samples=[] if entering_layer else [s for t in environment.contacts if (s:=contact(f,position,projectile.height_layer,side,t,environment,step))]
     chosen=choose(f,samples,environment)
     if chosen:
         sample,distance,_,_=chosen

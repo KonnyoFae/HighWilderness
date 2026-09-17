@@ -55,21 +55,41 @@ def create(directory):
     scene.save(service,v,0)
 
 
-def serve(directory):
+def serve(directory, *, layered=False):
     from time import perf_counter
+    from dataclasses import replace
     from backend.high_wilderness_sidecar.realtime_view import RealtimeViewService
     from backend.high_wilderness_sidecar.tactical_scheduler import DomainBatch
     from backend.high_wilderness_sidecar.tactical_devices import DeviceOperation
     original=RealtimeViewService._attach
     def attach(self,battle,geometry,key=None):
         original_step=battle.step
-        timing=dict(steps=0,step_seconds=0.,max_step_s=0.,max_gap_s=0.)
-        last=[None]
+        if layered:
+            # Declared initial EW cooldown leaves time to acquire the ship and
+            # begin a layer pursuit; afterwards the opponent uses normal AI EW.
+            for n,inv in enumerate(battle.inventory.inventories):
+                if battle._sides[n]!=battle._sides[battle._direct_index]:
+                    for mid in inv._cooldown:
+                        if mid.startswith('countermeasure.'):inv._cooldown[mid]=battle.session.world.fixed_step+600
+        timing=dict(steps=0,step_seconds=0.,max_step_s=0.,max_gap_s=0.,peak_maneuvering=0,layer_changes=0)
+        last=[None];costs=[];switched=[False];missile_layers={}
         def measured_step(*args,**kwargs):
             start=perf_counter()
             if last[0] is not None:timing['max_gap_s']=max(timing['max_gap_s'],start-last[0])
             result=original_step(*args,**kwargs);end=perf_counter();last[0]=end
             timing['steps']+=1;timing['step_seconds']+=end-start;timing['max_step_s']=max(timing['max_step_s'],end-start)
+            costs.append(end-start)
+            missiles=[p for p in battle.projectiles if p.missile]
+            timing['peak_maneuvering']=max(timing['peak_maneuvering'],sum(p.missile.maneuver_state in ('climbing','diving','returning','leveling') for p in missiles))
+            for p in missiles:
+                if p.id in missile_layers and missile_layers[p.id]!=p.height_layer:timing['layer_changes']+=1
+                missile_layers[p.id]=p.height_layer
+            if layered and not switched[0] and any(p.ship_id=='ship.ew.ally' and p.missile.target_id=='ship.ew.enemy' and p.missile.age>p.missile.profile.boost_steps+30 for p in missiles):
+                # Explicit completed enemy-layer fixture, after real acquisition.
+                # No missile state, guidance or collision is manufactured.
+                w=battle.session.world
+                battle.session._world=replace(w,ships=tuple(replace(s,motion=replace(s.motion,height_layer='cloud')) if s.ship_id=='ship.ew.enemy' else s for s in w.ships))
+                timing['target_change_step']=w.fixed_step;switched[0]=True
             return result
         battle.step=measured_step
         result=original(self,battle,geometry,key)
@@ -85,7 +105,10 @@ def serve(directory):
             original_tick()
             if not written[0] and (battle.ending or self.scheduler.status.pause_reason=='overload'):
                 written[0]=True
-                (directory.parent/'runtime-timing.json').write_text(json.dumps(dict(timing,status=self.scheduler.status.pause_reason),indent=2),encoding='utf-8')
+                ordered=sorted(costs)
+                quantile=lambda fraction:ordered[min(len(ordered)-1,int((len(ordered)-1)*fraction))] if ordered else 0.
+                (directory.parent/'runtime-timing.json').write_text(json.dumps(dict(timing,status=self.scheduler.status.pause_reason,
+                    fixture='5j-layered' if layered else '5i-flat-replay',step_p50_ms=quantile(.5)*1000,step_p95_ms=quantile(.95)*1000,step_p99_ms=quantile(.99)*1000),indent=2),encoding='utf-8')
         self.tick=measured_tick
         return result
     RealtimeViewService._attach=attach
@@ -94,6 +117,6 @@ def serve(directory):
 
 
 if __name__=='__main__':
-    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('directory',type=Path);parser.add_argument('--serve',action='store_true')
+    parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('directory',type=Path);parser.add_argument('--serve',action='store_true');parser.add_argument('--layered',action='store_true')
     args=parser.parse_args()
-    serve(args.directory) if args.serve else create(args.directory)
+    serve(args.directory,layered=args.layered) if args.serve else create(args.directory)

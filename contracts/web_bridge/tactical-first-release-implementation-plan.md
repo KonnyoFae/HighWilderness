@@ -1,8 +1,10 @@
 # 战术模式首版初步开发规划
 
-最新进度（2026-09-17）：5f 制导与电子对抗、5g 自动拦截与进阶防御均已完成初版，见[5f 记录](./tactical-stage5f-guidance-ew.md)和[5g 记录](./tactical-stage5g-interceptor-defense.md)。5h 全目录及四舰联合验收已通过，见[5h 记录](./tactical-stage5h-catalog-joint-acceptance.md)；5i 连续战局、保存恢复与交接已接通，见[5i 记录](./tactical-stage5i-continuity-handoff.md)；下一工作包为 6 舰队指挥、撤离和战果接口。
+2026-09-18 5j.4 更新：导弹换层追击整包已完成范围内联合验收，17 型、四舰攻防、连续两场保存重启和负载记录见[5j.4 记录](./tactical-stage5j4-joint-acceptance.md)。下一工作包为 6 舰队指挥、撤离和战果接口；15～30 舰规模与最终平衡仍归 7。完整规则见[导弹在途换层、重力与固定寿命](./tactical-missile-layer-pursuit-design.md)，5a～5i 的历史证据保持原验收范围。
 
-日期：2026-09-17。状态：工作包 1 的独立入口、界面骨架与升力冗余读数已实现，证据见[阶段记录](./tactical-stage1-entry-ui.md)；2a 共用显示时间线、短命弹体显示与暂停/释放已实现，见[2a 记录](./tactical-stage2a-presentation.md)；2b 三层观察、云雨素材接口和固定距离网格已接通，见[2b 记录](./tactical-stage2b-layers.md)；2c 主动换层、战损耗时修正、并行指令及真实层归属已接通，见[2c 记录](./tactical-stage2c-active-height.md)。2d 的三段下坠、零点冻结、10 秒储罐抢修/补油及残骸记录已接通，见[2d 下坠与抢修记录](./tactical-stage2d-descent-repair.md)。3a 已接通分口径火炮、时间阻力弹道、跨层降速与高速扫掠，见[3a 记录](./tactical-stage3a-ballistics.md)。已补齐射程内自动选敌及武器组批量火控，见[炮组操作记录](./tactical-gun-groups-targeting.md)。3b 已完成概率甲板、模块加权与现有毁伤衔接，见[3b 记录](./tactical-stage3b-deck-hits.md)。3c 已完成表面燃烧、同甲板蔓延与损管，见[3c 记录](./tactical-stage3c-spatial-fire.md)。3d 已完成仅摧毁触发、不连锁的弹药库殉爆及有限库存结算，见[3d 记录](./tactical-stage3d-magazine-detonation.md)。3e 已完成人员舱伤亡、岗位效能及跨场保存，见[3e 记录](./tactical-stage3e-personnel.md)。工作包 4 已接通弹体耐久、30 毫米近防、三档威胁排序与在途火力协调，见[4 阶段记录](./tactical-stage4-point-defense.md)。导弹及准备界面设计已汇总，工作包 5 已拆为 5a～5i，5a 双方场景与准备画布、5b 部件补满与战前维修、5c 型号目录/发射器/导弹库后勤已接通，5d 感知、指挥机与数据链、5e 代表导弹交战、5f 完整制导与电子对抗及 5g 自动防御均已接通，5h 全目录及四舰联合验收已通过，见[5h 记录](./tactical-stage5h-catalog-joint-acceptance.md)；5i 连续战局、保存恢复与交接已接通，见[5i 记录](./tactical-stage5i-continuity-handoff.md)；下一工作包为 6 舰队指挥、撤离和战果接口；见[实施分解](./tactical-stage5-implementation-plan.md)。规划基线：`ac243e0`；待定规则仅约束对应功能，完整首版尚未完成。
+最新进度（2026-09-17）：5f 制导与电子对抗、5g 自动拦截与进阶防御均已完成初版，见[5f 记录](./tactical-stage5f-guidance-ew.md)和[5g 记录](./tactical-stage5g-interceptor-defense.md)。5h 全目录及四舰联合验收已通过，见[5h 记录](./tactical-stage5h-catalog-joint-acceptance.md)；5i 连续战局、保存恢复与交接已接通，见[5i 记录](./tactical-stage5i-continuity-handoff.md)；[5j 导弹换层追击](./tactical-missile-layer-pursuit-implementation-plan.md)现已完成范围内验收，接续工作包 6 舰队指挥、撤离和战果接口。
+
+日期：2026-09-17。状态：工作包 1 的独立入口、界面骨架与升力冗余读数已实现，证据见[阶段记录](./tactical-stage1-entry-ui.md)；2a 共用显示时间线、短命弹体显示与暂停/释放已实现，见[2a 记录](./tactical-stage2a-presentation.md)；2b 三层观察、云雨素材接口和固定距离网格已接通，见[2b 记录](./tactical-stage2b-layers.md)；2c 主动换层、战损耗时修正、并行指令及真实层归属已接通，见[2c 记录](./tactical-stage2c-active-height.md)。2d 的三段下坠、零点冻结、10 秒储罐抢修/补油及残骸记录已接通，见[2d 下坠与抢修记录](./tactical-stage2d-descent-repair.md)。3a 已接通分口径火炮、时间阻力弹道、跨层降速与高速扫掠，见[3a 记录](./tactical-stage3a-ballistics.md)。已补齐射程内自动选敌及武器组批量火控，见[炮组操作记录](./tactical-gun-groups-targeting.md)。3b 已完成概率甲板、模块加权与现有毁伤衔接，见[3b 记录](./tactical-stage3b-deck-hits.md)。3c 已完成表面燃烧、同甲板蔓延与损管，见[3c 记录](./tactical-stage3c-spatial-fire.md)。3d 已完成仅摧毁触发、不连锁的弹药库殉爆及有限库存结算，见[3d 记录](./tactical-stage3d-magazine-detonation.md)。3e 已完成人员舱伤亡、岗位效能及跨场保存，见[3e 记录](./tactical-stage3e-personnel.md)。工作包 4 已接通弹体耐久、30 毫米近防、三档威胁排序与在途火力协调，见[4 阶段记录](./tactical-stage4-point-defense.md)。导弹及准备界面设计已汇总，工作包 5 已拆为 5a～5i，5a 双方场景与准备画布、5b 部件补满与战前维修、5c 型号目录/发射器/导弹库后勤已接通，5d 感知、指挥机与数据链、5e 代表导弹交战、5f 完整制导与电子对抗及 5g 自动防御均已接通，5h 全目录及四舰联合验收已通过，见[5h 记录](./tactical-stage5h-catalog-joint-acceptance.md)；5i 连续战局、保存恢复与交接已接通，见[5i 记录](./tactical-stage5i-continuity-handoff.md)；[5j 导弹换层追击](./tactical-missile-layer-pursuit-implementation-plan.md)现已完成范围内验收，接续工作包 6 舰队指挥、撤离和战果接口；见[实施分解](./tactical-stage5-implementation-plan.md)。规划基线：`ac243e0`；待定规则仅约束对应功能，完整首版尚未完成。
 
 ## 一、首版范围与推进方式
 
@@ -167,14 +169,15 @@
 | 5g | 自动拦截弹、简化近炸、默认一枚与在途换靶、多武器协调、自带传感器/计算的进阶防御 |
 | 5h | 补齐当前 16＋1 工作型号及对应装备，完成双方多舰的准备/战斗界面与联合攻防验证 |
 | 5i | 全流程保存、双方战果与再准备、旧设计兼容、阶段负载和工作包 6/7 交接 |
+| 5j（5j.1～5j.4 已交付） | 固定寿命、连续换层与重力、低速回落、碰撞、异层数据链及防御协调已完成；17 型、四舰联合攻防与连续战局已验证，见[5j.4 记录](./tactical-stage5j4-joint-acceptance.md)。接续工作包 6，规模与平衡仍归 7 |
 
 5a 可先用已存在的火炮舰完成实际入战往返，不等待全部导弹型号数值或维修规则敲定。5b 以后的必要行为在各片接入前收敛；每片所需界面、数据、保存和验证同时交付，不能把所有可操作性与资源一致性都推到 5h/5i。
 
 本包保留以下关键约束：
 
 - 准备画布上下双方同时可见，分页只切编辑方；点选模块进入火炮/导弹/设备/损管/货舱。测试距离是显式场景设置，以双方旗舰距离表示，调整保留各队内部排布。
-- 动力、制导和库存分别维护状态。导弹助推不转向，转弯耗速、主动力补偿；总寿命为三段之和，VLS 已出膛转向延迟不计入动力/寿命，进入平面飞行才开始三段计时。
-- 发射只能本层/相邻层、固定作用层；感知按目标层天气重评估，不允许弹体随目标换层。无有效来源时不得读取全场真实情报代替雷达/IR/数据链。
+- 动力、制导和库存分别维护状态。导弹助推不转向，转弯耗速、主动力补偿；总寿命为助推、主动力与型号固定无动力时长之和，不再按天气层选取或改变寿命；VLS 已出膛转向延迟不计入动力/寿命，进入平面飞行才开始三段计时。
+- 发射只能本层/相邻层并固定初始层；感知按目标层天气重评估，弹体可按新专题实际逐层追击，每段完成后才切换碰撞所属层。无有效来源时不得读取全场真实情报代替雷达/IR/数据链。
 - 整装优先、原料回退、来源可追踪、卸弹/拆解不重复返还；导弹库整装/在制均参与殉爆。已发射在途与 VLS 转向中弹战后不可回收。
 - 自动拦截弹负责近防范围外的大型高速撞舰威胁，默认一枚且伤害更高；实际命中才扣耐久，目标被其他武器消灭后可换靶。近防炮仍需真实弹体碰撞。
 
@@ -214,7 +217,7 @@
 
 ## 五、近期实施准备与首批交付
 
-2026-09-17：**5a 双方场景与准备画布**已接通并完成范围内验证，见[5a 记录](./tactical-stage5a-preparation-canvas.md)。**5b 部件补满与战前维修**也已完成范围内验证，见[5b 记录](./tactical-stage5b-preparation-maintenance.md)；**5c 型号目录、发射器和导弹库后勤**也已接通，见[5c 记录](./tactical-stage5c-missile-logistics.md)；**5d 感知、指挥机与数据链**也已接通，见[5d 记录](./tactical-stage5d-observation.md)；5e～5i 也已接通，当前进入工作包 6，范围见[交接记录](./tactical-stage5i-continuity-handoff.md)；不重复讨论上下画布形式和已确认的测试距离口径。
+2026-09-17：**5a 双方场景与准备画布**已接通并完成范围内验证，见[5a 记录](./tactical-stage5a-preparation-canvas.md)。**5b 部件补满与战前维修**也已完成范围内验证，见[5b 记录](./tactical-stage5b-preparation-maintenance.md)；**5c 型号目录、发射器和导弹库后勤**也已接通，见[5c 记录](./tactical-stage5c-missile-logistics.md)；**5d 感知、指挥机与数据链**也已接通，见[5d 记录](./tactical-stage5d-observation.md)；5e～5i 也已接通，当前先进入 5j 导弹换层追击，之后接工作包 6，范围见[交接记录](./tactical-stage5i-continuity-handoff.md)；不重复讨论上下画布形式和已确认的测试距离口径。
 
 首片要交付一条可操作流程：选方导入栖装（可见加载/失败提示）→自动生成舰艇→上下双方编队对比与排布→设置测试初始交战距离→准备并实际入战→保存双方战果→返回/重启下一场。距离按双方旗舰计算，调整保留各自编队内部位置；它是测试参数，不改变正式 50/25 公里规则或武器性能。
 

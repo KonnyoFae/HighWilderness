@@ -4,6 +4,8 @@ Angles are clockwise from local bow. Contacts are sampled measurements, never
 direct target truth fed to the firing solution. Inventory/projectiles/flight
 commit together. This adapter deliberately does not relax guided-weapon rules.
 """
+from .missile_flight import speed_view as missile_speed_view
+from .missile_maneuver import view as missile_maneuver_view
 from dataclasses import asdict, dataclass, replace
 from math import atan2, ceil, cos, hypot, pi, sin, sqrt
 
@@ -531,8 +533,7 @@ class GunneryBattle:
             availability_key, available = staged['availability_key'], staged['available']
             self.missiles.advance(world,inventories,available)
             projectiles = list(staged['survivors']) if self.damage else [
-                replace(p,previous=p.position,position=ballistics.flight_segment(p).at(1.)[0],
-                    velocity=ballistics.flight_segment(p).at(1.)[1]) for p in self.projectiles if step<p.expires]
+                ballistics.advance_projectile(p) for p in self.projectiles if step<p.expires]
             from .missile_flight import prepare as prepare_missile
             effects=self.ew.advance_effects(step)
             if self.damage:
@@ -544,7 +545,7 @@ class GunneryBattle:
             if ew_plan[3]:sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,ew_plan[1]))
             environment=self.ew.environment(world,available,sensor_frame,ew_plan[1],projectiles)
             from .tactical_missile_defense import prepare_all
-            projectiles=prepare_all(self,world,available,projectiles,environment)
+            projectiles=prepare_all(self,world,available,projectiles,environment,sensor_frame)
             staged['sensor_frame']=sensor_frame
             starts, contacts = {}, {}
             working_states, search_contacts = targeting.acquire(self, world, available, inventories, sensor_frame)
@@ -878,6 +879,8 @@ class GunneryBattle:
                 kind='missile' if p.missile else 'shell',
                 missile=None if not p.missile else dict(model_id=p.missile.profile.model_id,warhead_id=p.missile.warhead,
                     phase=p.missile.phase,seeker_state=p.missile.seeker_state,target_id=p.missile.target_id,
+                    **missile_speed_view(p),
+                    **missile_maneuver_view(p),
                     datalink=p.missile.profile.datalink,original_target_id=p.missile.original_target,
                     interceptor=p.missile.profile.interceptor,interception_damage=p.interception_damage,
                     interception_radius_m=p.interception_radius_m,

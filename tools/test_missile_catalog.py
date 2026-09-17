@@ -75,7 +75,7 @@ class CatalogTests(unittest.TestCase):
                         self.assertEqual(shot.missile.profile,p);self.assertEqual(shot.missile.warhead,head)
                         self.assertEqual(shot.projectile_key,(mid+'.'+head,1));self.assertEqual(shot.height_layer,'cloud')
                         self.assertEqual(shot.durability,p.durability);self.assertEqual(shot.missile.ratio,.7)
-                        self.assertEqual(shot.expires-shot.missile.born_step,p.lifetime('cloud'))
+                        self.assertEqual(shot.expires-shot.missile.born_step,p.lifetime())
                         self.assertAlmostEqual(hypot(*shot.velocity),p.launch_speed*.7,delta=3)
                         b.withdraw();result=settlement.validate_result(settlement.capture(b));after=result['ships'][0]['after']
                         bp.validate_record(after,d)
@@ -89,10 +89,10 @@ class CatalogTests(unittest.TestCase):
         self.assertEqual(len(shown['flight_profiles']),17)
         for mid,p in mf.profiles().items():
             row=shown['flight_profiles'][mid]
-            self.assertEqual(row['range_m'],[p.range(layer) for layer in ('upper','cloud','rain')])
-            self.assertEqual(row['coast_s'],[n/60 for n in p.coast_steps])
-            for layer in ('upper','cloud','rain'):
-                self.assertLessEqual(p.range(layer,.7),p.range(layer))
+            self.assertEqual(row['range_m'],p.range())
+            self.assertEqual(row['coast_s'],p.coast_steps/60)
+            self.assertLessEqual(p.range(.7),p.range())
+            self.assertEqual(row['lifetime_s'],p.lifetime()/60)
             if 'radar_infrared' in mid:self.assertEqual(p.warhead_scale,.8)
             if 'turbojet' in mid:
                 rocket=mf.profiles()[mid.replace('turbojet','rocket')]

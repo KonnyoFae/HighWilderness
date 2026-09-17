@@ -1,7 +1,8 @@
-"""5e immutable missile flight and explicit, adjustable representative models.
+"""Immutable missile flight and explicit, adjustable model parameters.
 
 Control is sampled at a committed 60 Hz boundary. Each following interval has
-an analytic accelerating/turning path shared by movement and swept collision.
+an accelerating/turning path shared by movement and swept collision. 5j adds
+continuous altitude and gravity while retaining the flat-flight analytic path.
 No engine or seeker state lives on a mutable projectile or a launcher.
 """
 from dataclasses import dataclass, replace
@@ -11,8 +12,8 @@ from cmath import exp
 from pathlib import Path
 import json
 
-from .tactical_layers import LAYERS
 from .tactical_ballistics import FlightProfile
+from .missile_flight_catalog import normalize
 
 G = 9.8
 DT = 1/60
@@ -20,7 +21,7 @@ DT = 1/60
 
 @lru_cache(maxsize=1)
 def catalog():
-    return json.loads((Path(__file__).resolve().parents[2]/'contracts/web_bridge/fixtures/tactical-missile-flight.5g.json').read_text(encoding='utf-8'))
+    return normalize(json.loads((Path(__file__).resolve().parents[2]/'contracts/web_bridge/fixtures/tactical-missile-flight.5j.json').read_text(encoding='utf-8')))
 
 
 @dataclass(frozen=True)
@@ -32,7 +33,7 @@ class Profile:
     durability: float
     boost_steps: int
     engine_steps: int
-    coast_steps: tuple
+    coast_steps: int
     launch_speed: float
     boost_acceleration: float
     boost_cap: float
@@ -57,14 +58,16 @@ class Profile:
     interceptor: bool = False
     interception_radius_m: float = 0.
     interception_damage: float = 0.
+    minimum_climb_speed_mps: float = 50.
+    maximum_pitch_rad: float = pi/6
 
-    def lifetime(self, layer):
-        return self.boost_steps+self.engine_steps+self.coast_steps[LAYERS.index(layer)]
+    def lifetime(self):
+        return self.boost_steps+self.engine_steps+self.coast_steps
 
     def phase(self, age):
         return 'boost' if age<self.boost_steps else 'powered' if age<self.boost_steps+self.engine_steps else 'coast'
 
-    def range(self, layer, ratio=1.):
+    def range(self, ratio=1.):
         # Nominal straight flight, independent of target truth. Coast has no drag.
         v=self.launch_speed;distance=0.
         for seconds,acc,cap in ((self.boost_steps/60,self.boost_acceleration,self.boost_cap),
@@ -72,16 +75,16 @@ class Profile:
             t=min(seconds,max(0.,cap-v)/acc) if acc else 0.
             distance+=v*t+.5*acc*t*t+min(cap,v+acc*t)*(seconds-t)
             v=min(cap,v+acc*seconds)
-        distance+=v*self.coast_steps[LAYERS.index(layer)]/60
+        distance+=v*self.coast_steps/60
         return min(self.maximum_range,distance*ratio)
 
-    def ballistics(self, layer, ratio):
-        return FlightProfile(self.diameter_mm,self.mass_kg,self.launch_speed*ratio,0.,self.lifetime(layer),self.range(layer,ratio),False)
+    def ballistics(self, ratio):
+        return FlightProfile(self.diameter_mm,self.mass_kg,self.launch_speed*ratio,0.,self.lifetime(),self.range(ratio),False)
 
 
 @lru_cache(maxsize=1)
 def profiles():
-    return {v['model_id']:Profile(**{**v,'coast_steps':tuple(v['coast_steps']),'weather':tuple(v['weather'])}) for v in catalog()['models']}
+    return {v['model_id']:Profile(**{**v,'weather':tuple(v['weather'])}) for v in catalog()['models']}
 
 
 @dataclass(frozen=True)
@@ -108,6 +111,25 @@ class Flight:
     search_step: int | None = None
     search_center: tuple | None = None
     search_axis: float = 0.
+    vertical_velocity_mps: float = 0.
+    altitude_m: float | None = None
+    pitch_rad: float = 0.
+    pitch_rate: float = 0.
+    goal_layer: str | None = None
+    goal_altitude_m: float | None = None
+    maneuver_target_id: str | int | None = None
+    maneuver_state: str = 'level'
+    maneuver_reason: str | None = None
+    return_layer: str | None = None
+    failed_climb_targets: tuple = ()
+    settled_layer: str | None = None
+
+
+def speed_view(projectile):
+    horizontal = hypot(*projectile.velocity)
+    vertical = projectile.missile.vertical_velocity_mps
+    return dict(speed_mps=hypot(horizontal, vertical), horizontal_speed_mps=horizontal,
+                vertical_speed_mps=vertical)
 
 
 @dataclass(frozen=True)
@@ -143,9 +165,20 @@ class Segment:
         return (self.origin[0]+delta.real,self.origin[1]+delta.imag),(speed*cos(heading),speed*sin(heading))
 
 
+@lru_cache(maxsize=256)
 def segment(projectile, seconds=DT):
     f=projectile.missile
+    if f.altitude_m is not None and (f.pitch_rad or f.pitch_rate or f.return_layer):
+        from .missile_maneuver import Trajectory
+        return Trajectory(projectile,seconds)
     return Segment(projectile.position,projectile.velocity,hypot(*projectile.velocity),f.heading,f.angular_rate,f.acceleration,seconds)
+
+
+def advance(projectile, path=None):
+    path=path or segment(projectile)
+    if hasattr(path,'arrival'):return path.arrival()
+    position,velocity=path.at(1.)
+    return replace(projectile,previous=projectile.position,position=position,velocity=velocity)
 
 
 def wrap(angle): return (angle+pi)%(2*pi)-pi
@@ -186,7 +219,8 @@ def prepare(projectile, world, sides, environment=None):
             if s.command.lifecycle.physical_status=='operational' and s.motion.hull_integrity_fraction>0))
     side=sides[next(i for i,s in enumerate(world.ships) if s.ship_id==projectile.ship_id)]
     f,aim=update(f,projectile,world.fixed_step,side,environment)
-    return replace(projectile,missile=steer(f,hypot(*projectile.velocity),aim,projectile.position))
+    from .missile_maneuver import control
+    return replace(projectile,missile=control(f,hypot(*projectile.velocity,f.vertical_velocity_mps),aim,projectile.position,projectile.height_layer))
 
 
 def damage_profiles(ordinary):

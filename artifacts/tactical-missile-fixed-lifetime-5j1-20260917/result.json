@@ -1,0 +1,10 @@
+{
+  "status": "TACTICAL_MISSILE_FIXED_LIFETIME_5J1_UI_PASS",
+  "checks": [
+    "Real preparation panels show one fixed coast duration for rocket (30 s) and turbojet (45 s), while retaining three weather-dependent seeker ranges.",
+    "Combat performance agrees with preparation; an actual VLS flight keeps its fixed deadline, exposes total/horizontal speeds, and pauses without consuming lifetime.",
+    "Fire-control target assignment carries into missile page. Default auto remains off. A lost single-fire receipt does not duplicate a VLS departure; exactly one round is spent, appears after delay and hits the enemy.",
+    "Canvas point assignment clears target assignment; adjacent-layer selection is accepted by the real backend.",
+    "Battle results save missile expenditure once, return to preparation, and survive a backend restart."
+  ]
+}

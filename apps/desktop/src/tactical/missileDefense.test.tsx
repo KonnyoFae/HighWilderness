@@ -28,4 +28,19 @@ describe('拦截目标与独立火控界面',()=>{
     const html=renderToStaticMarkup(<FireControlPanel ship={observation} tab="fire_control" disabled={false} names={{}} onCommand={()=>{}} onAssignMissile={()=>{}}/>);
     expect(html).toContain('仅进阶武器自持火控');expect(html).toContain('disabled="">锁定此目标');expect(html).toContain('>分配拦截弹</button>');
   });
+  it('异层改攻只列出有效火控目标，火控页显示实际总速度与垂直观测',()=>{
+    const valid={...contact,height_layer:'cloud',status:'tracked',sources:['radar'],altitude_m:5200,vertical_speed_mps:-800,velocity_mps:[600,0]};
+    const observed={...observation,contacts:[valid,{...valid,id:43,valid:false,status:'lost'}]};
+    const p={id:3,ship_id:'own',velocity_mps:[0,2000],height_layer:'upper',
+      missile:{interceptor:true,datalink:true,phase:'powered',seeker_state:'datalink',remaining_s:9,target_id:null}} as DisplayProjectile;
+    const html=renderToStaticMarkup(<InFlightMissiles projectiles={[p]} observation={observed} names={{}} friendlyIds={['own']} disabled={false} onRetarget={()=>{}}/>);
+    expect(html).toContain('value="42"');expect(html).toContain('云层');expect(html).not.toContain('value="43"');
+    const fireControl=renderToStaticMarkup(<FireControlPanel ship={observed} tab="fire_control" disabled={false} names={{}} onCommand={()=>{}}/>);
+    expect(fireControl).toContain('总速度 1000 米/秒');expect(fireControl).toContain('观测高度 5200 米');expect(fireControl).toContain('下潜');
+  });
+  it('自动拦截允许选择本层或相邻层，也可以手动固定发射层',()=>{
+    const html=renderToStaticMarkup(<MissileCombatPanel ship={{...ship,launchers:ship.launchers!.map(l=>({...l,automatic_layer:true,active_target_id:42,active_attack_layer:'cloud'}))}} observation={observation} projectiles={[]} names={{}} selected="launcher" onSelect={()=>{}} ownLayer="upper" disabled={false} picking={false} onPick={()=>{}} onCommand={()=>{}}/>);
+    expect(html).toContain('value="auto" selected=""');expect(html).toContain('自动选择本层／相邻层');
+    expect(html).toContain('当前目标的发射层：云层');
+  });
 });

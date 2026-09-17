@@ -1,6 +1,5 @@
 """Read-only model comparison; never changes persisted logistics definitions."""
 from . import persistent_ship as ps, missile_flight as flight
-from .tactical_layers import LAYERS
 
 
 def profile(value, model_ids=None):
@@ -14,11 +13,12 @@ def profile(value, model_ids=None):
         if p is None:
             continue
         result['flight_profiles'][model['id']] = dict(
+            interface='gaotian.missile-performance/5j-v1',
             seeker=p.seeker, boost_s=p.boost_steps/60, powered_s=p.engine_steps/60,
-            coast_s=[n/60 for n in p.coast_steps], speed_cap_mps=p.speed_cap,
+            coast_s=p.coast_steps/60, lifetime_s=p.lifetime()/60, speed_cap_mps=p.speed_cap,
             max_g=p.max_g, durability=p.durability, datalink=p.datalink,
             lost_behavior=p.lost_behavior, warhead_scale=p.warhead_scale,
-            range_m=[p.range(layer) for layer in LAYERS],
+            range_m=p.range(),
             seeker_range_m=[p.seeker_range*k for k in p.weather])
     return result
 

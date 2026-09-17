@@ -19,6 +19,7 @@ class Launcher:
     status: str = 'no_target'
     aim: tuple | None = None
     active_target: str | int | None = None
+    active_layer: str | None = None
 
 
 @dataclass(frozen=True)
@@ -97,8 +98,8 @@ class MissileRuntime:
             ps.need(any(available[index][mid] is None for mid in b.observation.links[index]),'$.ship_id','所选舰艇没有可用数据链')
             track=b.observation.frame.tracks.get((index,order['target_id']))
             appropriate=track and ((track.target.kind in ('shell','missile') and track.target.durability is not None) if projectile.missile.profile.interceptor else track.target.kind=='ship')
-            ps.need(track and track.valid and appropriate and track.target.layer==projectile.height_layer
-                    and b.observation.sources(index,order['target_id'],world,available)[0],'$.target_id','需要作用层内敌舰的有效火控观测')
+            ps.need(track and track.valid and appropriate
+                    and b.observation.sources(index,order['target_id'],world,available)[0],'$.target_id','需要对应敌方目标的有效火控观测')
             ps.need(hypot(*(a-c for a,c in zip(projectile.position,world.ships[index].motion.position_world_m.to_list())))<=b.observation.policy['datalink_range_m'],
                     '$.projectile_id','导弹超出数据链通信范围')
             self.retargets={**self.retargets,projectile.id:order['target_id']}
@@ -123,8 +124,11 @@ class MissileRuntime:
                 for x in point:ps.number(x,'$.point_m',-1e7,1e7)
                 state=replace(state,point=tuple(point),target=None,fire_requested=False)
             elif kind=='attack_layer':
-                ps.need(order['layer'] in LAYERS,'$.layer','未知作用层')
-                ps.need(abs(LAYERS.index(order['layer'])-LAYERS.index(b.session.world.ships[index].motion.height_layer))<=1,'$.layer','只能发射至本层或相邻层')
+                row=next(r for r in b.inventory.inventories[index]._value['missiles']['launchers'] if r['module_id']==key[1])
+                profile=flight.profiles().get(row['model_id'])
+                automatic=order['layer'] is None and profile and profile.interceptor
+                ps.need(automatic or order['layer'] in LAYERS,'$.layer','未知作用层')
+                ps.need(automatic or abs(LAYERS.index(order['layer'])-LAYERS.index(b.session.world.ships[index].motion.height_layer))<=1,'$.layer','只能发射至本层或相邻层')
                 state=replace(state,layer=order['layer'],fire_requested=False)
             elif kind=='fire':
                 row=next(r for r in b.inventory.inventories[index]._value['missiles']['launchers'] if r['module_id']==key[1])
@@ -179,20 +183,27 @@ class MissileRuntime:
             sources_for=lambda identity:b.observation.defense_sources(n,identity,world,available,frame,mid) if p.interceptor else b.observation.sources(n,identity,world,available,frame)
             if p.interceptor and row['auto_fire'] and not state.fire_requested and not status:
                 rows=defense_threats if state.target is None else tuple(r for r in defense_threats if r['projectile_id']==state.target)
-                choice,reason=select(b,n,mid,p,layer,origin,world,available,inventories,projectiles,frame,defense_contacts,rows,pending)
-                if choice:target=choice['projectile_id']
+                choice,reason=select(b,n,mid,p,state.layer,origin,world,available,inventories,projectiles,frame,defense_contacts,rows,pending)
+                if choice:
+                    target=choice['projectile_id'];layer=choice['layer']
+                    ratio=1. if layer==motion.height_layer else CROSS_LAYER_SPEED
                 else:target=None;aim=None;status=reason
             elif target is None and aim is None and row['auto_fire'] and not status:
                 candidates=[t for (i,_),t in frame.tracks.items() if i==n and t.valid and t.target.kind=='ship' and t.target.layer==layer
                             and b.observation.sources(n,t.target.id,world,available,frame)[0]
-                            and hypot(*(a-c for a,c in zip(t.target.position,origin)))<=p.range(layer,ratio)]
+                            and hypot(*(a-c for a,c in zip(t.target.position,origin)))<=p.range(ratio)]
                 if candidates:target=min(candidates,key=lambda t:(not t.target.large,hypot(*(a-c for a,c in zip(t.target.position,origin))),t.target.id)).target.id
             if target is not None:
                 track=frame.tracks.get((n,target))
                 appropriate=track and ((track.target.kind in ('shell','missile') and track.target.durability is not None) if p.interceptor else track.target.kind=='ship')
                 if track and track.valid and appropriate and sources_for(target)[0]:
                     aim=tuple(a+v*(step-track.step)/60 for a,v in zip(track.target.position,track.target.velocity));velocity=track.target.velocity
-                    if track.target.layer!=layer:status=status or 'target_other_layer'
+                    from .projectile_observation import extrapolate
+                    target_layer=extrapolate(track.target.payload,max(0,step-track.step)/60).height_layer if track.target.payload else track.target.layer
+                    if p.interceptor and state.layer is None:
+                        layer=target_layer;ratio=1. if layer==motion.height_layer else CROSS_LAYER_SPEED
+                        if abs(LAYERS.index(layer)-LAYERS.index(motion.height_layer))>1:status=status or 'layer_out_of_reach'
+                    if target_layer!=layer:status=status or 'target_other_layer'
                 else:status=status or 'target_unavailable';aim=None
             if p.interceptor and not b.observation.defense_ready(n,mid,world,available):status=status or 'defense_sensor_unavailable'
             angle=state.angle
@@ -205,7 +216,7 @@ class MissileRuntime:
                     if not status:angle+=max(-limit,min(limit,max(gun.minimum,min(gun.maximum,desired))-angle))
                     status=status or ('out_of_arc' if not gun.minimum<=desired<=gun.maximum else 'hull_blocked' if b._hull_blocked(gun,angle)
                                      else 'traversing' if abs(wrap(desired-angle))>b.config['aligned_tolerance_mdeg']*pi/180000 else None)
-                if hypot(*delta)>p.range(layer,ratio):status=status or 'out_of_range'
+                if hypot(*delta)>p.range(ratio):status=status or 'out_of_range'
             else:status=status or 'no_target'
             # A replenishment job owns a different round. Multi-round launchers
             # may fire their remaining ready rounds at the configured interval.
@@ -227,18 +238,18 @@ class MissileRuntime:
                 sequence+=1;due=step+spec['launch_delay_steps'];shots+=1;requested=False
                 launch_point=tuple(a+v*spec['launch_delay_steps']/60 for a,v in zip(aim,velocity))
                 f=flight.Flight(p,unit['warhead_id'],due,atan2(direction[1],direction[0]),launch_point,velocity,target,ratio)
-                projectile=Projectile(sequence,ship.ship_id,mid,muzzle,muzzle,tuple(d*p.launch_speed*ratio for d in direction),due+p.lifetime(layer),
-                    None,layer,(p.model_id+'.'+unit['warhead_id'],1),p.ballistics(layer,ratio),aimed_ship_id=target if not p.interceptor else None,
+                projectile=Projectile(sequence,ship.ship_id,mid,muzzle,muzzle,tuple(d*p.launch_speed*ratio for d in direction),due+p.lifetime(),
+                    None,layer,(p.model_id+'.'+unit['warhead_id'],1),p.ballistics(ratio),aimed_ship_id=target if not p.interceptor else None,
                     durability=p.durability,maximum_durability=p.durability,collision_radius_m=p.diameter_mm/2000,missile=f,
                     interception_damage=p.interception_damage,interception_radius_m=p.interception_radius_m,
                     interception_target_id=target if p.interceptor and type(target) is int else None,
-                    interception_expected_step=due+p.lifetime(layer) if p.interceptor and type(target) is int else None)
+                    interception_expected_step=due+p.lifetime() if p.interceptor and type(target) is int else None)
                 if due>step:pending.append(Departure(due,projectile));status='departed'
                 else:projectiles.append(reservation(flight.prepare(projectile,world,b._sides,environment),step));status='fired'
                 events.append(dict(kind='fired',step=step,projectile_id=sequence,ship_id=ship.ship_id,weapon_id=mid,model_id=p.model_id,
                                    warhead_id=unit['warhead_id'],height_layer=layer,emergence_step=due,
                                    position_m=muzzle,direction=direction,effect='missile_vls_launch' if due>step else 'missile_turret_launch'))
-            states[key]=replace(state,angle=angle,status=status or 'ready',aim=aim,shots=shots,fire_requested=requested,active_target=target)
+            states[key]=replace(state,angle=angle,status=status or 'ready',aim=aim,shots=shots,fire_requested=requested,active_target=target,active_layer=layer)
         return states,tuple(pending),sequence,tuple(events)
 
     def commit(self,plan,ending=False):
@@ -266,13 +277,13 @@ class MissileRuntime:
                          for group in ('launchers','magazines') for s in profile[group]},
                 cargo=ps.clone(inv._value['cargo']),over_capacity=inv.summary()['over_capacity'],
                 launchers=[dict(module_id=mid,target_id=s.target,point_m=s.point,attack_layer=s.layer or ship.motion.height_layer,
-                    active_target_id=s.active_target,
+                    active_target_id=s.active_target,active_attack_layer=s.active_layer,automatic_layer=s.layer is None,
                     interceptor=bool((p:=flight.profiles().get(next(r['model_id'] for r in inv._value['missiles']['launchers'] if r['module_id']==mid))) and p.interceptor),
                     integrated_fire_control=(i,mid) in b.observation.integrated,
                     fire_arc=ps.clone(self.fire_arcs[i,mid]),
                     angle_rad=s.angle,aim_point_m=s.aim,fire_requested=s.fire_requested,shots=s.shots,status=s.status,
                     supported=next(r['model_id'] for r in inv._value['missiles']['launchers'] if r['module_id']==mid) in flight.profiles(),
-                    maximum_range_m=flight.profiles()[r['model_id']].range(s.layer or ship.motion.height_layer,1. if (s.layer or ship.motion.height_layer)==ship.motion.height_layer else CROSS_LAYER_SPEED)
+                    maximum_range_m=flight.profiles()[r['model_id']].range(1. if (s.active_layer or s.layer or ship.motion.height_layer)==ship.motion.height_layer else CROSS_LAYER_SPEED)
                         if (r:=next(r for r in inv._value['missiles']['launchers'] if r['module_id']==mid))['model_id'] in flight.profiles() else 0.)
                     for (n,mid),s in self.states.items() if n==i]))
         return dict(command_sequence=self.sequence,flight_available=True,supported_model_ids=list(flight.profiles()),ships=ships,

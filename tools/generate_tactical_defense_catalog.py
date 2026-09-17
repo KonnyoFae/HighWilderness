@@ -56,6 +56,8 @@ def build():
         outfit['modules'].append(dict(id='defense.magazine',prototype=dict(id='gtw.module.fixture.ammunition_magazine',version=2),
             placement=dict(kind='grid',deck_id='deck.0',anchor_half_cell=[-2,12],rotation_deg=0)))
         (ROOT/'舰艇数据/舾装方案夹具'/f"{outfit['name']}.v1.json").write_text(json.dumps(outfit,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    from tools.generate_tactical_missile_flight_catalog import build as build_flight
+    build_flight()
 
 
 if __name__=='__main__':build()

@@ -36,12 +36,14 @@ export function MissileCombatPanel({ship,observation,missiles,names,selected,onS
       <legend>发射控制</legend>
       <p><strong>{model.name}</strong> · 待发 {row.ready.length} 枚</p>
       <p role="status">{statuses[launcher.status]??'暂不可用'}{launcher.fire_requested?' · 单发指令等待执行':''} · 已发射 {launcher.shots} 枚</p>
-      <p className="muted">当前参考射程 {(launcher.maximum_range_m/1000).toFixed(1)} 公里，机动会缩短实际飞行距离。</p>
+      <p className="muted">当前发射参考射程 {(launcher.maximum_range_m/1000).toFixed(1)} 公里，转向、上爬和下潜会改变实际航程。</p>
       <MissilePerformance value={ship.profile.flight_profiles?.[row.model_id]}/>
       {launcher.interceptor&&<p>自动防御：外圈大型高速撞舰威胁优先，每目标先分配一枚。{launcher.active_target_id!==null&&launcher.active_target_id!==undefined?` 当前处理 ${targetName(launcher.active_target_id)}。`:''}</p>}
-      <label>导弹作用层<select aria-label="导弹作用层" value={launcher.attack_layer} onChange={e=>send('attack_layer',{layer:e.target.value})}>
+      <label>导弹作用层<select aria-label="导弹作用层" value={launcher.interceptor&&launcher.automatic_layer?'auto':launcher.attack_layer} onChange={e=>send('attack_layer',{layer:e.target.value==='auto'?null:e.target.value})}>
+        {launcher.interceptor&&<option value="auto">自动选择本层／相邻层</option>}
         {HEIGHT_LAYERS.map((layer,i)=><option key={layer} value={layer} disabled={Math.abs(i-HEIGHT_LAYERS.indexOf(ownLayer as typeof layer))>1}>{layerName(layer)}</option>)}
       </select></label>
+      {launcher.interceptor&&launcher.automatic_layer&&launcher.active_target_id!=null&&<p>当前目标的发射层：{layerName(launcher.active_attack_layer??launcher.attack_layer)}。在途弹可根据有效情报逐层追击。</p>}
       <label>发射目标<select aria-label="导弹发射目标" value={launcher.target_id??''} onChange={e=>e.target.value?send('target',{target_id:contacts.find(c=>String(c.id)===e.target.value)!.id}):send('clear')}>
         <option value="">{launcher.point_m?'已指定地点':'未指定（开启自动后搜索）'}</option>
         {launcher.target_id&&!contacts.some(c=>c.id===launcher.target_id)&&<option value={launcher.target_id}>{targetName(launcher.target_id)} · 已失联</option>}

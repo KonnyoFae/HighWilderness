@@ -21,7 +21,7 @@ def missile(speed=1000.,**kw):
     p=mf.profiles()[MODEL]
     f=mf.Flight(p,'blast',0,0.,(10000.,0.),(0.,0.),None,phase='coast',age=p.boost_steps+p.engine_steps)
     return replace(Projectile(1,'blue',LAUNCHER,(0.,0.),(0.,0.),(speed,0.),10000,None,'upper',
-        (MODEL+'.blast',1),p.ballistics('upper',1.),durability=p.durability,maximum_durability=p.durability,
+        (MODEL+'.blast',1),p.ballistics(1.),durability=p.durability,maximum_durability=p.durability,
         collision_radius_m=.04,missile=f),**kw)
 
 
@@ -54,7 +54,7 @@ class FlightTests(unittest.TestCase):
         self.assertLess(abs(mf.steer(f,10.,(0.,1000.),(0.,0.)).angular_rate),abs(mf.steer(f,100.,(0.,1000.),(0.,0.)).angular_rate))
         cross=mf.steer(replace(f,age=p.boost_steps,ratio=.7),p.speed_cap*.7,(1000.,0.),(0.,0.))
         self.assertEqual(cross.acceleration,0.)
-        self.assertEqual(p.lifetime('cloud'),p.boost_steps+p.engine_steps+p.coast_steps[1])
+        self.assertEqual(p.lifetime(),p.boost_steps+p.engine_steps+p.coast_steps)
 
     def test_fast_curved_swept_interception_and_hp(self):
         for speed in (2000.,5000.):
@@ -154,7 +154,7 @@ class CombatTests(unittest.TestCase):
         d=b.missiles.pending[-1];p=d.projectile
         self.assertEqual(p.height_layer,'cloud');self.assertEqual(p.missile.ratio,.7)
         self.assertAlmostEqual(hypot(*p.velocity),p.missile.profile.launch_speed*.7)
-        self.assertEqual(p.expires-d.due_step,p.missile.profile.lifetime('cloud'))
+        self.assertEqual(p.expires-d.due_step,p.missile.profile.lifetime())
         self.order(b,'attack_layer',layer='upper')
         self.assertEqual(b.missiles.pending[-1],d)
 
@@ -180,7 +180,7 @@ class CombatTests(unittest.TestCase):
         while b.session.world.fixed_step<d.due_step:b.step()
         self.assertEqual(len(b.projectiles),1);p=b.projectiles[0]
         self.assertEqual(p.height_layer,'upper');self.assertEqual(p.missile.age,0)
-        self.assertEqual(p.expires-b.session.world.fixed_step,p.missile.profile.lifetime('upper'))
+        self.assertEqual(p.expires-b.session.world.fixed_step,p.missile.profile.lifetime())
         self.assertFalse(b.missiles.pending)
 
     def test_vls_fires_all_azimuths_without_computing_turret_occlusion(self):
@@ -276,7 +276,7 @@ class CombatTests(unittest.TestCase):
                     p=DamageTests().shell(b,(-30,0),(-30+speed/60,0),target=0)
                     profile=mf.profiles()[model]
                     f=replace(missile().missile,profile=profile,warhead=head,heading=atan2(p.velocity[1],p.velocity[0]),born_step=b.session.world.fixed_step-10000,age=10000)
-                    p=replace(p,missile=f,height_layer='upper',projectile_key=(model+'.'+head,1),flight_profile=profile.ballistics('upper',1.))
+                    p=replace(p,missile=f,height_layer='upper',projectile_key=(model+'.'+head,1),flight_profile=profile.ballistics(1.))
                     b.projectiles=(p,);b.step()
                     self.assertEqual(b.damage_state.hits,1)
                     self.assertAlmostEqual(b.damage_state.recent[0]['projectile_speed_mps'],speed)

@@ -1,0 +1,7 @@
+{
+  "status": "TACTICAL_MISSILE_COORDINATION_5J3_UI_PASS",
+  "mode": "retarget",
+  "checks": [
+    "A real same-layer VLS departure is retargeted to an observed cloud target through the visible data-link selector, starts physical descent without a seeker lock, keeps its fixed deadline and spends exactly one round."
+  ]
+}

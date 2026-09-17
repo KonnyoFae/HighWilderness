@@ -127,7 +127,7 @@ export interface HeightNavigation {
 }
 export interface DisplayProjectile {
   kind?:'shell'|'missile';trajectory?:number[][];
-  missile?:{model_id:string;warhead_id:string;phase:string;seeker_state:string;target_id:string|number|null;age_s:number;remaining_s:number;datalink?:boolean;original_target_id?:string|number|null;interceptor?:boolean;interception_damage?:number;interception_radius_m?:number;link_sender?:string|null}|null;
+  missile?:{model_id:string;warhead_id:string;phase:string;seeker_state:string;target_id:string|number|null;age_s:number;remaining_s:number;speed_mps?:number;horizontal_speed_mps?:number;vertical_speed_mps?:number;altitude_m?:number;pitch_deg?:number;maneuver_state?:string;maneuver_reason?:string|null;maneuver_target_layer?:string|null;vertical_remaining_m?:number|null;failed_climb_targets?:(string|number)[];datalink?:boolean;original_target_id?:string|number|null;interceptor?:boolean;interception_damage?:number;interception_radius_m?:number;link_sender?:string|null}|null;
   durability?:number|null;maximum_durability?:number|null;interception_target_id?:number|null;
   id: number; ship_id: string; position_m: number[]; previous_m: number[]; velocity_mps: number[];
   born_step?: number; origin_m?: number[]; expires_step?: number;

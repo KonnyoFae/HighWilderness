@@ -12,6 +12,7 @@ from 高天荒野舰艇数据契约 import canonical_sha256
 from 高天荒野舰艇水平射界 import sensor_arc, interval_blocks_bearing
 from . import persistent_ship as ps
 from .tactical_layers import LAYERS
+from . import projectile_observation as observed
 
 
 @dataclass(frozen=True)
@@ -50,7 +51,8 @@ class Frame:
 
 
 def tracking_cost(target, high_speed=1000.):
-    return (1 if target.large else 2)*(4 if hypot(*target.velocity)>=high_speed else 1)
+    speed=observed.total_speed(target.payload) if target.payload else hypot(*target.velocity)
+    return (1 if target.large else 2)*(4 if speed>=high_speed else 1)
 
 
 def can_observe(sensor, own_position, own_layer, target, blocked=False):
@@ -142,17 +144,18 @@ class ObservationRuntime:
             side=b.damage.sides[p.ship_id] if b.damage else b._sides[next(n for n,s in enumerate(world.ships) if s.ship_id==p.ship_id)]
             # Priority hint only. Actual interception still predicts swept hull
             # collision from the measured sample in PointDefense.
-            threat=False
+            threat=False;measured=observed.sample(p)
             for n,s in enumerate(world.ships):
-                if b._sides[n]==side or s.motion.height_layer!=p.height_layer:continue
+                if b._sides[n]==side:continue
                 delta=tuple(a-c for a,c in zip(s.motion.position_world_m.to_list(),p.position))
                 relative=tuple(a-c for a,c in zip(p.velocity,s.motion.velocity_world_mps.to_list()))
                 speed2=sum(v*v for v in relative)
                 time=sum(a*v for a,v in zip(delta,relative))/speed2 if speed2 else -1
-                if 0<=time<=(p.expires-world.fixed_step)/60 and hypot(*(a-v*time for a,v in zip(delta,relative)))<100:threat=True;break
+                if (0<=time<=(p.expires-world.fixed_step)/60 and observed.layer_at(measured,time)==s.motion.height_layer
+                    and hypot(*(a-v*time for a,v in zip(delta,relative)))<100):threat=True;break
             result.append(Target(p.id,'missile' if getattr(p,'missile',None) else 'shell',side,p.position,p.velocity,p.height_layer,
                 powered=bool(getattr(p,'missile',None) and p.missile.phase!='coast'),
-                large=bool(p.flight_profile and p.flight_profile.caliber_mm>=75),durability=p.durability,payload=p,threat=threat))
+                large=bool(p.flight_profile and p.flight_profile.caliber_mm>=75),durability=p.durability,payload=measured,threat=threat))
         # 5e supplies immutable Target missile samples with powered/coasting
         # state. No fake missile objects are added by 5d.
         result.extend(missiles)
@@ -324,6 +327,8 @@ class ObservationRuntime:
                     defense_weapon_ids=[mid for i,mid,_ in track.sources if i==n and (n,mid) in self.integrated
                         and available[n][mid] is None and self.sensor_enabled.get((n,mid),True)] if track.valid else [],
                     velocity_mps=track.target.velocity,height_layer=track.target.layer,valid=track.valid,
+                    altitude_m=track.target.payload.altitude_m if track.target.payload else None,
+                    vertical_speed_mps=track.target.payload.vertical_velocity_mps if track.target.payload else 0.,
                     age_s=max(0,world.fixed_step-track.step)/60,sources=list(sources),
                     status='lost' if not track.valid else 'tracked' if sources else 'no_computer',
                     radar_source_available=bool(self.sources(n,key,world,available,radar_only=True)[0])))

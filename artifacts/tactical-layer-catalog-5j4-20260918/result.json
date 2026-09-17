@@ -1,0 +1,857 @@
+{
+  "status": "MISSILE_LAYER_CATALOG_5J4_PASS",
+  "models": 17,
+  "samples": [
+    {
+      "model": "gtw.missile.5c.small.rocket.active_radar",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 12.85,
+      "outcome": "reached",
+      "minimum_speed_mps": 633.1937295111809,
+      "maximum_speed_mps": 1293.9101593029163,
+      "final_altitude_m": 10000.193367483549,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.rocket.active_radar",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 12.616666666666667,
+      "outcome": "reached",
+      "minimum_speed_mps": 642.54023393973,
+      "maximum_speed_mps": 1334.8802339397419,
+      "final_altitude_m": 4999.975507740164,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.rocket.active_radar",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.rocket.infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 12.85,
+      "outcome": "reached",
+      "minimum_speed_mps": 633.1937295111809,
+      "maximum_speed_mps": 1293.9101593029163,
+      "final_altitude_m": 10000.193367483549,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.rocket.infrared",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 12.616666666666667,
+      "outcome": "reached",
+      "minimum_speed_mps": 642.54023393973,
+      "maximum_speed_mps": 1334.8802339397419,
+      "final_altitude_m": 4999.975507740164,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.rocket.infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.rocket.anti_radiation",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 12.85,
+      "outcome": "reached",
+      "minimum_speed_mps": 633.1937295111809,
+      "maximum_speed_mps": 1293.9101593029163,
+      "final_altitude_m": 10000.193367483549,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.rocket.anti_radiation",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 12.616666666666667,
+      "outcome": "reached",
+      "minimum_speed_mps": 642.54023393973,
+      "maximum_speed_mps": 1334.8802339397419,
+      "final_altitude_m": 4999.975507740164,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.rocket.anti_radiation",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.rocket.radar_infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 12.85,
+      "outcome": "reached",
+      "minimum_speed_mps": 633.1937295111809,
+      "maximum_speed_mps": 1293.9101593029163,
+      "final_altitude_m": 10000.193367483549,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.rocket.radar_infrared",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 12.616666666666667,
+      "outcome": "reached",
+      "minimum_speed_mps": 642.54023393973,
+      "maximum_speed_mps": 1334.8802339397419,
+      "final_altitude_m": 4999.975507740164,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.rocket.radar_infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 48.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.active_radar",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 48.88333333333333,
+      "outcome": "reached",
+      "minimum_speed_mps": 223.88884052241858,
+      "maximum_speed_mps": 350.0,
+      "final_altitude_m": 10000.020662586803,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.active_radar",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 41.86666666666667,
+      "outcome": "reached",
+      "minimum_speed_mps": 229.22336413418566,
+      "maximum_speed_mps": 437.9549510036856,
+      "final_altitude_m": 4999.968789130014,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.active_radar",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 48.88333333333333,
+      "outcome": "reached",
+      "minimum_speed_mps": 223.88884052241858,
+      "maximum_speed_mps": 350.0,
+      "final_altitude_m": 10000.020662586803,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.infrared",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 41.86666666666667,
+      "outcome": "reached",
+      "minimum_speed_mps": 229.22336413418566,
+      "maximum_speed_mps": 437.9549510036856,
+      "final_altitude_m": 4999.968789130014,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.anti_radiation",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 48.88333333333333,
+      "outcome": "reached",
+      "minimum_speed_mps": 223.88884052241858,
+      "maximum_speed_mps": 350.0,
+      "final_altitude_m": 10000.020662586803,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.anti_radiation",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 41.86666666666667,
+      "outcome": "reached",
+      "minimum_speed_mps": 229.22336413418566,
+      "maximum_speed_mps": 437.9549510036856,
+      "final_altitude_m": 4999.968789130014,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.anti_radiation",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.radar_infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 48.88333333333333,
+      "outcome": "reached",
+      "minimum_speed_mps": 223.88884052241858,
+      "maximum_speed_mps": 350.0,
+      "final_altitude_m": 10000.020662586803,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.radar_infrared",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 41.86666666666667,
+      "outcome": "reached",
+      "minimum_speed_mps": 229.22336413418566,
+      "maximum_speed_mps": 437.9549510036856,
+      "final_altitude_m": 4999.968789130014,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.turbojet.radar_infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.active_radar",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 13.533333333333333,
+      "outcome": "reached",
+      "minimum_speed_mps": 1006.027427411475,
+      "maximum_speed_mps": 1302.7465899307601,
+      "final_altitude_m": 10000.14574833826,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.active_radar",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 13.433333333333334,
+      "outcome": "reached",
+      "minimum_speed_mps": 1028.6550042411673,
+      "maximum_speed_mps": 1329.7159799163132,
+      "final_altitude_m": 4999.8413940860855,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.active_radar",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 13.533333333333333,
+      "outcome": "reached",
+      "minimum_speed_mps": 1006.027427411475,
+      "maximum_speed_mps": 1302.7465899307601,
+      "final_altitude_m": 10000.14574833826,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.infrared",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 13.433333333333334,
+      "outcome": "reached",
+      "minimum_speed_mps": 1028.6550042411673,
+      "maximum_speed_mps": 1329.7159799163132,
+      "final_altitude_m": 4999.8413940860855,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.anti_radiation",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 13.533333333333333,
+      "outcome": "reached",
+      "minimum_speed_mps": 1006.027427411475,
+      "maximum_speed_mps": 1302.7465899307601,
+      "final_altitude_m": 10000.14574833826,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.anti_radiation",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 13.433333333333334,
+      "outcome": "reached",
+      "minimum_speed_mps": 1028.6550042411673,
+      "maximum_speed_mps": 1329.7159799163132,
+      "final_altitude_m": 4999.8413940860855,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.anti_radiation",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.radar_infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 13.533333333333333,
+      "outcome": "reached",
+      "minimum_speed_mps": 1006.027427411475,
+      "maximum_speed_mps": 1302.7465899307601,
+      "final_altitude_m": 10000.14574833826,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.radar_infrared",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 13.433333333333334,
+      "outcome": "reached",
+      "minimum_speed_mps": 1028.6550042411673,
+      "maximum_speed_mps": 1329.7159799163132,
+      "final_altitude_m": 4999.8413940860855,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.rocket.radar_infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 49.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.active_radar",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 41.016666666666666,
+      "outcome": "reached",
+      "minimum_speed_mps": 232.93069805394555,
+      "maximum_speed_mps": 399.99857466586866,
+      "final_altitude_m": 10000.023830163855,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.active_radar",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 34.666666666666664,
+      "outcome": "reached",
+      "minimum_speed_mps": 240.8689662121876,
+      "maximum_speed_mps": 477.1749999999845,
+      "final_altitude_m": 4999.967619807108,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.active_radar",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 41.016666666666666,
+      "outcome": "reached",
+      "minimum_speed_mps": 232.93069805394555,
+      "maximum_speed_mps": 399.99857466586866,
+      "final_altitude_m": 10000.023830163855,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.infrared",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 34.666666666666664,
+      "outcome": "reached",
+      "minimum_speed_mps": 240.8689662121876,
+      "maximum_speed_mps": 477.1749999999845,
+      "final_altitude_m": 4999.967619807108,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.anti_radiation",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 41.016666666666666,
+      "outcome": "reached",
+      "minimum_speed_mps": 232.93069805394555,
+      "maximum_speed_mps": 399.99857466586866,
+      "final_altitude_m": 10000.023830163855,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.anti_radiation",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 34.666666666666664,
+      "outcome": "reached",
+      "minimum_speed_mps": 240.8689662121876,
+      "maximum_speed_mps": 477.1749999999845,
+      "final_altitude_m": 4999.967619807108,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.anti_radiation",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.radar_infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 41.016666666666666,
+      "outcome": "reached",
+      "minimum_speed_mps": 232.93069805394555,
+      "maximum_speed_mps": 399.99857466586866,
+      "final_altitude_m": 10000.023830163855,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.radar_infrared",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 34.666666666666664,
+      "outcome": "reached",
+      "minimum_speed_mps": 240.8689662121876,
+      "maximum_speed_mps": 477.1749999999845,
+      "final_altitude_m": 4999.967619807108,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.medium.turbojet.radar_infrared",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.30127134392039,
+      "maximum_speed_mps": 51.96918328308362,
+      "final_altitude_m": 4999.755305555681,
+      "fixed_lifetime_s": 168.0
+    },
+    {
+      "model": "gtw.missile.5c.small.interceptor",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "cloud",
+        "upper"
+      ],
+      "elapsed_s": 6.466666666666667,
+      "outcome": "reached",
+      "minimum_speed_mps": 1200.0,
+      "maximum_speed_mps": 1999.993315211771,
+      "final_altitude_m": 10000.027433673113,
+      "fixed_lifetime_s": 18.5
+    },
+    {
+      "model": "gtw.missile.5c.small.interceptor",
+      "start": "upper",
+      "goal": "cloud",
+      "phase": "powered",
+      "low_speed": false,
+      "layers": [
+        "upper",
+        "cloud"
+      ],
+      "elapsed_s": 6.466666666666667,
+      "outcome": "reached",
+      "minimum_speed_mps": 1200.0,
+      "maximum_speed_mps": 2020.6170862568829,
+      "final_altitude_m": 4999.399317881316,
+      "fixed_lifetime_s": 18.5
+    },
+    {
+      "model": "gtw.missile.5c.small.interceptor",
+      "start": "cloud",
+      "goal": "upper",
+      "phase": "coast",
+      "low_speed": true,
+      "layers": [
+        "cloud"
+      ],
+      "elapsed_s": 5.483333333333333,
+      "outcome": "returned_after_failure",
+      "minimum_speed_mps": 43.301271343912276,
+      "maximum_speed_mps": 51.9691832830757,
+      "final_altitude_m": 4999.755305555694,
+      "fixed_lifetime_s": 18.5
+    }
+  ],
+  "scope": "17 unchanged model profiles; moving observed targets, powered ascent/descent and 50 m/s unpowered failure/return; physical flight at 60 Hz, exact expiry and identity preservation."
+}

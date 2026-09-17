@@ -92,6 +92,23 @@ def flight_segment(projectile, seconds=1/60):
     return FlightSegment(projectile.position,projectile.velocity,speed,k,seconds)
 
 
+def layer_at(projectile, path, fraction):
+    return path.layer_at(fraction) if hasattr(path,'layer_at') else projectile.height_layer
+
+
+def layer_breaks(path):return tuple(t for t,_ in getattr(path,'transitions',()))
+
+
+def advance_projectile(projectile, path=None):
+    path=path or flight_segment(projectile)
+    if getattr(projectile,'missile',None):
+        from .missile_flight import advance
+        return advance(projectile,path)
+    from dataclasses import replace
+    position,velocity=path.at(1.)
+    return replace(projectile,previous=projectile.position,position=position,velocity=velocity)
+
+
 def distance_after(profile, speed, seconds):
     distance=0.
     # Same midpoint-Cd equation as the fixed step. This coarser integration is

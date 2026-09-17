@@ -1,11 +1,11 @@
 """Observed incoming threats, shared in-flight commitments and real gun work."""
-from dataclasses import replace
 from functools import lru_cache
 from math import atan2, ceil, cos, hypot, sin, sqrt
 
 from . import tactical_ballistics as ballistics
 from .tactical_interception import policy
 from .tactical_layers import LAYERS
+from . import projectile_observation as observed
 
 
 class Trajectory:
@@ -96,31 +96,27 @@ class PointDefense:
                 sources,_=b.observation.defense_sources(observer,p.id,world,available,frame)
                 if not sources:continue
                 track=(frame or b.observation.frame).tracks[key]
-                old=self.contacts.get(key)
-                if old and old[0]==track.step:
-                    stamp,measured,collisions=old
-                else:
-                    # The current normal radar policy has zero measurement error.
-                    # Between samples the firing solution only sees this contact.
-                    stamp,measured=track.step,track.target.payload
-                    identity=b._sides[observer],p.id
-                    if identity not in predictions:
-                        age=(step-stamp)/60
-                        position,velocity=predict(measured,age)
-                        current=replace(measured,position=position,velocity=velocity)
-                        predictions[identity]=tuple((sid,t+age) for sid,t in self.predict_collisions(observer,current,world))
-                    collisions=predictions[identity]
+                # Only the frozen sensor sample reaches prediction; the live
+                # projectile above is used solely to prune destroyed identities.
+                stamp,measured=track.step,track.target.payload
+                age=max(0,step-stamp)/60
+                current=observed.extrapolate(measured,age)
+                identity=b._sides[observer],stamp,measured
+                if identity not in predictions:
+                    predictions[identity]=tuple((sid,t+age) for sid,t in self.predict_collisions(observer,current,world))
+                collisions=predictions[identity]
                 contacts[key]=(stamp,measured,collisions)
                 for sid,arrival in collisions:
                     endangered=next(s for s in world.ships if s.ship_id==sid)
-                    if endangered.motion.height_layer!=measured.height_layer or endangered.command.lifecycle.physical_status!='operational':continue
+                    if endangered.command.lifecycle.physical_status!='operational':continue
                     remaining=arrival-(step-stamp)/60
                     if remaining>0:threats.append(dict(observer=observer,projectile_id=p.id,ship_id=sid,
-                        remaining_s=remaining,durability=measured.durability,height_layer=measured.height_layer))
+                        remaining_s=remaining,durability=measured.durability,height_layer=current.height_layer,
+                        impact_layer=endangered.motion.height_layer))
         return contacts,tuple(threats)
 
     def predict_collisions(self,observer,p,world):
-        b=self.battle
+        b=self.battle;p=observed.sample(p)
         from .tactical_defense import policy as defense_policy
         seconds=min(defense_policy()['prediction_seconds'],(p.expires-world.fixed_step)/60)
         if seconds<=0:return ()
@@ -132,7 +128,7 @@ class PointDefense:
         sampled=None
         collisions=[]
         for n,ship in enumerate(world.ships):
-            if b._sides[n]!=b._sides[observer] or ship.motion.height_layer!=p.height_layer or (
+            if b._sides[n]!=b._sides[observer] or (
                     ship.motion.hull_integrity_fraction<=0 or ship.command.lifecycle.physical_status!='operational'):continue
             m=ship.motion;path=[];radius=b.damage.radius[n]
             if linear and m.yaw_rate_radps==0:
@@ -152,8 +148,20 @@ class PointDefense:
                     min(v[1] for _,v in path)>radius or max(v[1] for _,v in path)<-radius):continue
             # Geometry is checked against all decks; only actual future impact
             # will sample its damage deck. An inflated ship circle cannot qualify.
-            hit=b.damage.contacts_on_path(n,ship,path)
-            if hit:collisions.append((ship.ship_id,min(h[0] for h in hit.values())))
+            # Split at measured altitude crossings. Testing the entire XY path
+            # first could hide a later valid contact behind an earlier wrong-layer hit.
+            boundaries=observed.breaks(p,seconds)
+            for start,end in zip(boundaries,boundaries[1:]):
+                if observed.layer_at(p,(start+end)/2)!=m.height_layer:continue
+                def relative(t):
+                    x,y=predict(p,t)[0];x-=m.position_world_m.x+m.velocity_world_mps.x*t
+                    y-=m.position_world_m.y+m.velocity_world_mps.y*t
+                    angle=-m.heading_rad-m.yaw_rate_radps*t;c,s=cos(angle),sin(angle)
+                    return t,(c*x-s*y,s*x+c*y)
+                interval=[relative(start),*(r for r in path if start<r[0]<end),relative(end)]
+                hit=b.damage.contacts_on_path(n,ship,interval)
+                times=[h[0] for h in hit.values() if observed.layer_at(p,h[0])==m.height_layer]
+                if times:collisions.append((ship.ship_id,min(times)));break
         return tuple(sorted(collisions,key=lambda row:(row[1],row[0])))[:1]
 
     def choose(self,index,state,world,available,projectiles,contacts,threats,channels,locks,inv,frame=None):
@@ -166,14 +174,14 @@ class PointDefense:
         known={p.id:p for p in projectiles}
         candidates=[]
         for row in threats:
-            if row['observer']!=gun.ship_index or row['height_layer']!=layer:continue
+            if row['observer']!=gun.ship_index:continue
             p=known.get(row['projectile_id'])
             if not p:continue
             stamp,measured,_=contacts[gun.ship_index,p.id]
-            position,velocity=predict(measured,(world.fixed_step-stamp)/60)
-            measured=replace(measured,position=position,velocity=velocity)
+            measured=observed.extrapolate(measured,(world.fixed_step-stamp)/60)
+            position,velocity=measured.position,measured.velocity
             distance=hypot(*(v-o for v,o in zip(position,m.position_world_m.to_list())))
-            high=measured.flight_profile and measured.flight_profile.caliber_mm>=self.policy['durability_tiers'][0][0] and hypot(*velocity)>=self.policy['high_speed_mps']
+            high=measured.flight_profile and measured.flight_profile.caliber_mm>=self.policy['durability_tiers'][0][0] and observed.total_speed(measured)>=self.policy['high_speed_mps']
             priority=0 if high else 1 if row['ship_id']==ship.ship_id else 2
             candidates.append((priority,distance,p.id,row,measured))
         if not candidates:return None,'defense_waiting'
@@ -186,7 +194,7 @@ class PointDefense:
         reason='defense_waiting'
         for priority,distance,pid,row,p in sorted(candidates,key=lambda v:v[:3]):
             from .tactical_defense import commitments
-            reserved=sum(q.interception_damage for q in commitments(b,gun.ship_index,pid,projectiles,world,available))
+            reserved=sum(q.interception_damage for q in commitments(b,gun.ship_index,pid,projectiles,world,available,frame=frame))
             if reserved+1e-8>=p.durability:reason='defense_covered';continue
             sources,capacity=b.observation.defense_sources(gun.ship_index,pid,world,available,frame,gun.module_id)
             if not sources:reason='defense_sensor_unavailable';continue
@@ -198,6 +206,7 @@ class PointDefense:
             solution=firing_solution(origin,inherited,p,profile,ratio,min(row['remaining_s'],profile.lifetime_steps/60,(p.expires-world.fixed_step)/60))
             if solution is None:continue
             aim,seconds=solution
+            if observed.layer_at(p,seconds)!=layer:continue
             delta=difference(aim,origin);local=rotate(delta,-m.heading_rad)
             desired=wrap(atan2(local[0],local[1])-gun.rotation)
             if not gun.minimum<=desired<=gun.maximum or b._hull_blocked(gun,desired):continue

@@ -1,0 +1,7 @@
+{
+  "status": "TACTICAL_MISSILE_COORDINATION_5J3_UI_PASS",
+  "mode": "defense",
+  "checks": [
+    "Real radar/IR displays measured altitude and vertical motion. The automatic launcher selects the legal adjacent layer; one actual interceptor follows the layer change and destroys the threat in cloud without a duplicate shot or TTL reset."
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "status": "TACTICAL_MISSILE_FALL_5J2_UI_PASS",
+  "checks": [
+    "A seeded part-flight sample crosses the actual 50 m/s total-speed limit, falls continuously to its source layer without TTL reset, and displays the persistent same-target climb ban."
+  ]
+}

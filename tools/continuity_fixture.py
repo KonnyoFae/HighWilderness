@@ -12,7 +12,7 @@ LAUNCHER = 'weapon_upper_port'
 MAG = 'ammunition_magazine'
 
 
-def create(directory):
+def create(directory, *, layered=False):
     create_joint(directory)
     server = SidecarServer('backend.continuity.fixture', settlement_dir=directory)
     service = server.preparation
@@ -34,10 +34,27 @@ def create(directory):
             record['state'] = inv.snapshot().to_dict()
             service.store._write_ship(db, record)
     packet = scene.packet(service); value = packet['scene']; previous = value['revision']
-    value['revision'] += 1; value['distance_m'] = 50000
+    value['revision'] += 1; value['distance_m'] = 16000 if layered else 50000
     for side in value['sides']:
         for ship in side['ships']: ship['y_m'] = 0
     scene.save(service, value, previous)
 
 
-if __name__ == '__main__': create(Path(sys.argv[1]))
+def serve(directory):
+    from dataclasses import replace
+    from backend.high_wilderness_sidecar.realtime_view import RealtimeViewService
+    original=RealtimeViewService._attach
+    def attach(self,battle,geometry,key=None):
+        battle.enemy_fire=False
+        w=battle.session.world
+        battle.session._world=replace(w,ships=tuple(replace(s,motion=replace(s.motion,height_layer='cloud')) if s.ship_id=='ship.ew.enemy' else s for s in w.ships))
+        # A declared stationary cloud target isolates save ownership from EW.
+        battle.ew.states={k:s for k,s in battle.ew.states.items() if battle._sides[k[0]]==battle._sides[battle._direct_index]}
+        return original(self,battle,geometry,key)
+    RealtimeViewService._attach=attach
+    raise SystemExit(SidecarServer('backend.e3bbrowser',settlement_dir=directory).serve(sys.stdin.buffer,sys.stdout.buffer))
+
+
+if __name__ == '__main__':
+    directory=Path(sys.argv[1])
+    serve(directory) if '--serve' in sys.argv[2:] else create(directory,layered='--layered' in sys.argv[2:])

@@ -1,0 +1,745 @@
+{
+  "status": "TACTICAL_JOINT_5J4_UI_PASS",
+  "checks": [
+    "Both sides have two saved ships; fire-control assignment opens launch controls with the chosen target; performance and flight have separate visible views.",
+    "Actual four-ship combat includes a declared completed target layer change after lock; missiles maneuver and change collision layers without refreshing lifetime.",
+    "Real missiles, automatic defense contacts, 50mm gunfire, player and AI EW and data-link sharing coexist; a destroyed tank is rescued by a player order and finite damage-control resources.",
+    "All four result records and finite missile/EW/repair costs survive save, return to preparation and a normal backend restart."
+  ],
+  "scope": "Four ships; production engine and UI. Declared tank failure at 20 s, initial 10 s enemy EW cooldown, and completed enemy-layer change after acquisition; no synthetic missile/impact or repair completion. Not a 15–30 ship stress test.",
+  "metrics": {
+    "peak_projectiles": 34,
+    "peak_missiles": 10,
+    "peak_maneuvering": 1,
+    "peak_response_bytes": 377847,
+    "peak_live_response_bytes": 167812,
+    "overload_seen": false,
+    "shots": [
+      {
+        "direction": [
+          0.0003126954193593119,
+          -0.9999999511107862
+        ],
+        "effect": "missile_vls_launch",
+        "emergence_step": 91,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.medium.rocket.active_radar",
+        "position_m": [
+          -4.999061913741922,
+          7987.000000146668
+        ],
+        "projectile_id": 1,
+        "ship_id": "ship.ew.enemy",
+        "step": 1,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          -0.24210781763772737,
+          0.9702493517847343
+        ],
+        "effect": "missile_vls_launch",
+        "emergence_step": 127,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.medium.rocket.radar_infrared",
+        "position_m": [
+          3994.273676547087,
+          -8007.089251944646
+        ],
+        "projectile_id": 5,
+        "ship_id": "ship.ew.ally",
+        "step": 37,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          0.0003126954193593119,
+          -0.9999999511107862
+        ],
+        "effect": "missile_vls_launch",
+        "emergence_step": 181,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.medium.rocket.active_radar",
+        "position_m": [
+          -4.999061913741922,
+          7987.000000146668
+        ],
+        "projectile_id": 11,
+        "ship_id": "ship.ew.enemy",
+        "step": 91,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          0.0003126954193593119,
+          -0.9999999511107862
+        ],
+        "effect": "missile_vls_launch",
+        "emergence_step": 271,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.medium.rocket.active_radar",
+        "position_m": [
+          -4.999061913741922,
+          7987.000000146668
+        ],
+        "projectile_id": 19,
+        "ship_id": "ship.ew.enemy",
+        "step": 181,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          0.0003126954193593119,
+          -0.9999999511107862
+        ],
+        "effect": "missile_vls_launch",
+        "emergence_step": 361,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.medium.rocket.active_radar",
+        "position_m": [
+          -4.999061913741922,
+          7987.000000146668
+        ],
+        "projectile_id": 28,
+        "ship_id": "ship.ew.enemy",
+        "step": 271,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          0.000045644298939744614,
+          0.9999999989582989
+        ],
+        "effect": "missile_turret_launch",
+        "emergence_step": 326,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.small.interceptor",
+        "position_m": [
+          -4.999863067103181,
+          -8007.000000003125
+        ],
+        "projectile_id": 40,
+        "ship_id": "ship.defense.player",
+        "step": 326,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          -0.7389206502388243,
+          0.67379245517491
+        ],
+        "effect": "missile_turret_launch",
+        "emergence_step": 398,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.small.interceptor",
+        "position_m": [
+          3992.7832380492837,
+          -6007.978622634475
+        ],
+        "projectile_id": 48,
+        "ship_id": "ship.defense.escort",
+        "step": 398,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          0.000045644298939744614,
+          0.9999999989582989
+        ],
+        "effect": "missile_turret_launch",
+        "emergence_step": 416,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.small.interceptor",
+        "position_m": [
+          -4.999863067103181,
+          -8007.000000003125
+        ],
+        "projectile_id": 49,
+        "ship_id": "ship.defense.player",
+        "step": 416,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          0.000045644298939744614,
+          0.9999999989582989
+        ],
+        "effect": "missile_turret_launch",
+        "emergence_step": 506,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.small.interceptor",
+        "position_m": [
+          -4.999863067103181,
+          -8007.000000003125
+        ],
+        "projectile_id": 50,
+        "ship_id": "ship.defense.player",
+        "step": 506,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          0.00004478656537156183,
+          0.9999999989970818
+        ],
+        "effect": "missile_turret_launch",
+        "emergence_step": 594,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.small.interceptor",
+        "position_m": [
+          -4.999865640303885,
+          -8007.000000003009
+        ],
+        "projectile_id": 51,
+        "ship_id": "ship.defense.player",
+        "step": 594,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          0.00034087730263620213,
+          0.9999999419013306
+        ],
+        "effect": "missile_turret_launch",
+        "emergence_step": 624,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.small.interceptor",
+        "position_m": [
+          -4.998977368092091,
+          -8007.000000174296
+        ],
+        "projectile_id": 52,
+        "ship_id": "ship.defense.player",
+        "step": 624,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          0.00023428699280696582,
+          0.9999999725548021
+        ],
+        "effect": "missile_turret_launch",
+        "emergence_step": 743,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.small.interceptor",
+        "position_m": [
+          -4.9992971390215795,
+          -8007.000000082336
+        ],
+        "projectile_id": 53,
+        "ship_id": "ship.defense.player",
+        "step": 743,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          0.00025807486257719295,
+          0.9999999666986821
+        ],
+        "effect": "missile_turret_launch",
+        "emergence_step": 849,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.small.interceptor",
+        "position_m": [
+          -4.999225775412269,
+          -8007.000000099904
+        ],
+        "projectile_id": 54,
+        "ship_id": "ship.defense.player",
+        "step": 849,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "direction": [
+          0.0008123291884534729,
+          0.9999996700605903
+        ],
+        "effect": "missile_turret_launch",
+        "emergence_step": 1013,
+        "height_layer": "upper",
+        "kind": "fired",
+        "model_id": "gtw.missile.5c.small.interceptor",
+        "position_m": [
+          -4.9975630124346395,
+          -8007.000000989819
+        ],
+        "projectile_id": 55,
+        "ship_id": "ship.defense.player",
+        "step": 1013,
+        "warhead_id": "blast",
+        "weapon_id": "weapon_upper_port"
+      }
+    ],
+    "interceptions": [
+      {
+        "durability_after": 6,
+        "durability_before": 12,
+        "height_layer": "upper",
+        "impact_fraction": 0.56404765285712,
+        "intercepted": false,
+        "position_m": [
+          -2.5658482759191554,
+          205.58278639021987
+        ],
+        "projectile_id": 1,
+        "round_id": 40,
+        "source_ship_id": "ship.defense.player",
+        "step": 602,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 0,
+        "durability_before": 6,
+        "height_layer": "upper",
+        "impact_fraction": 0.650173856244675,
+        "intercepted": true,
+        "position_m": [
+          -2.1602285401434185,
+          -1091.5891286204603
+        ],
+        "projectile_id": 1,
+        "round_id": 49,
+        "source_ship_id": "ship.defense.player",
+        "step": 653,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 6,
+        "durability_before": 12,
+        "height_layer": "upper",
+        "impact_fraction": 0.650173856244675,
+        "intercepted": false,
+        "position_m": [
+          -2.1602285401434185,
+          -1091.5891286204603
+        ],
+        "projectile_id": 11,
+        "round_id": 50,
+        "source_ship_id": "ship.defense.player",
+        "step": 743,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 0,
+        "durability_before": 6,
+        "height_layer": "upper",
+        "impact_fraction": 0.4496916703602295,
+        "intercepted": true,
+        "position_m": [
+          -1.7515949360889367,
+          -2398.399394386565
+        ],
+        "projectile_id": 11,
+        "round_id": 51,
+        "source_ship_id": "ship.defense.player",
+        "step": 792,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 6,
+        "durability_before": 12,
+        "height_layer": "upper",
+        "impact_fraction": 0.3005004649930717,
+        "intercepted": false,
+        "position_m": [
+          -2.031430178707836,
+          -1503.4862884914137
+        ],
+        "projectile_id": 19,
+        "round_id": 52,
+        "source_ship_id": "ship.defense.player",
+        "step": 849,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 0,
+        "durability_before": 6,
+        "height_layer": "upper",
+        "impact_fraction": 0.5720733188920324,
+        "intercepted": true,
+        "position_m": [
+          -1.4713218456150456,
+          -3294.712737721981
+        ],
+        "projectile_id": 19,
+        "round_id": 53,
+        "source_ship_id": "ship.defense.player",
+        "step": 914,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 6,
+        "durability_before": 12,
+        "height_layer": "upper",
+        "impact_fraction": 0.20289811235521776,
+        "intercepted": false,
+        "position_m": [
+          -1.3944888954224763,
+          -3540.424512437794
+        ],
+        "projectile_id": 28,
+        "round_id": 54,
+        "source_ship_id": "ship.defense.player",
+        "step": 1013,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 0,
+        "durability_before": 6,
+        "height_layer": "upper",
+        "impact_fraction": 0.8350214090129168,
+        "intercepted": true,
+        "position_m": [
+          -0.5874342239482746,
+          -6121.385351812039
+        ],
+        "projectile_id": 28,
+        "round_id": 55,
+        "source_ship_id": "ship.defense.player",
+        "step": 1099,
+        "weapon_id": "weapon_upper_port"
+      }
+    ],
+    "shells": [
+      "joint.gun",
+      "defense.ciws"
+    ],
+    "effects": [
+      {
+        "height_layer": "upper",
+        "id": "ew.1",
+        "kind": "chaff",
+        "position_m": [
+          4005,
+          -8015
+        ],
+        "radius_m": 300,
+        "remaining_s": 21.483333333333334,
+        "ship_id": "ship.ew.ally",
+        "velocity_mps": [
+          0,
+          0
+        ]
+      },
+      {
+        "height_layer": "cloud",
+        "id": "ew.2",
+        "kind": "chaff",
+        "position_m": [
+          5,
+          7990
+        ],
+        "radius_m": 800,
+        "remaining_s": 69.35,
+        "ship_id": "ship.ew.enemy",
+        "velocity_mps": [
+          0,
+          0
+        ]
+      },
+      {
+        "height_layer": "cloud",
+        "id": "ew.3",
+        "kind": "chaff",
+        "position_m": [
+          5,
+          7985
+        ],
+        "radius_m": 300,
+        "remaining_s": 24.35,
+        "ship_id": "ship.ew.enemy",
+        "velocity_mps": [
+          0,
+          0
+        ]
+      },
+      {
+        "height_layer": "cloud",
+        "id": "ew.4",
+        "kind": "decoy",
+        "position_m": [
+          3722,
+          8005
+        ],
+        "radius_m": 0,
+        "remaining_s": 69.35,
+        "ship_id": "ship.ew.enemy",
+        "velocity_mps": [
+          180,
+          0
+        ]
+      },
+      {
+        "height_layer": "cloud",
+        "id": "ew.5",
+        "kind": "thermal",
+        "position_m": [
+          5,
+          8000
+        ],
+        "radius_m": 800,
+        "remaining_s": 69.35,
+        "ship_id": "ship.ew.enemy",
+        "velocity_mps": [
+          0,
+          0
+        ]
+      },
+      {
+        "height_layer": "cloud",
+        "id": "ew.6",
+        "kind": "thermal",
+        "position_m": [
+          5,
+          7995
+        ],
+        "radius_m": 300,
+        "remaining_s": 24.35,
+        "ship_id": "ship.ew.enemy",
+        "velocity_mps": [
+          0,
+          0
+        ]
+      }
+    ],
+    "shared": true,
+    "descent": true,
+    "missile_layer_changes": 1
+  },
+  "timing": {
+    "realtime_requests": {
+      "count": 421,
+      "p50_ms": 19.148199999995995,
+      "p95_ms": 36.337100000000646,
+      "max_ms": 1919.1034
+    },
+    "commands": {
+      "count": 5,
+      "p50_ms": 19.142800000001444,
+      "p95_ms": 32.322299999999814,
+      "max_ms": 39.33689999999842
+    },
+    "browser_animation_frames": {
+      "count": 6545,
+      "p50_ms": 4.19999999999709,
+      "p95_ms": 8.30000000000291,
+      "max_ms": 137.5
+    },
+    "canvas_callback": {
+      "count": 6480,
+      "p50_ms": 0.5,
+      "p95_ms": 0.800000011920929,
+      "max_ms": 2.899999976158142
+    }
+  },
+  "stockBefore": [
+    {
+      "ship_id": "ship.ew.enemy",
+      "state": {
+        "interface": "gaotian.missile-stores/5c-v1",
+        "launchers": [
+          {
+            "auto_fire": true,
+            "cooldown_steps": 0,
+            "job": null,
+            "load_remaining": 4,
+            "model_id": "gtw.missile.5c.medium.rocket.active_radar",
+            "module_id": "weapon_upper_port",
+            "ready": [],
+            "unload_remaining": 0,
+            "warhead_id": "blast"
+          }
+        ],
+        "magazines": [
+          {
+            "assembly_remaining": 0,
+            "jobs": [],
+            "model_id": "gtw.missile.5c.small.rocket.active_radar",
+            "module_id": "ammunition_magazine",
+            "stock": [],
+            "warhead_id": "blast"
+          }
+        ],
+        "next_serial": 5
+      }
+    },
+    {
+      "ship_id": "ship.defense.escort",
+      "state": {
+        "interface": "gaotian.missile-stores/5c-v1",
+        "launchers": [
+          {
+            "auto_fire": true,
+            "cooldown_steps": 0,
+            "job": null,
+            "load_remaining": 1,
+            "model_id": "gtw.missile.5c.small.interceptor",
+            "module_id": "weapon_upper_port",
+            "ready": [
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 2,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 3,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 4,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 5,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 6,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 7,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 8,
+                "source": "raw",
+                "warhead_id": "blast"
+              }
+            ],
+            "unload_remaining": 0,
+            "warhead_id": "blast"
+          }
+        ],
+        "magazines": [
+          {
+            "assembly_remaining": 0,
+            "jobs": [],
+            "model_id": "gtw.missile.5c.small.rocket.active_radar",
+            "module_id": "ammunition_magazine",
+            "stock": [],
+            "warhead_id": "blast"
+          }
+        ],
+        "next_serial": 9
+      }
+    },
+    {
+      "ship_id": "ship.defense.player",
+      "state": {
+        "interface": "gaotian.missile-stores/5c-v1",
+        "launchers": [
+          {
+            "auto_fire": true,
+            "cooldown_steps": 0,
+            "job": null,
+            "load_remaining": 8,
+            "model_id": "gtw.missile.5c.small.interceptor",
+            "module_id": "weapon_upper_port",
+            "ready": [],
+            "unload_remaining": 0,
+            "warhead_id": "blast"
+          }
+        ],
+        "magazines": [
+          {
+            "assembly_remaining": 0,
+            "jobs": [],
+            "model_id": "gtw.missile.5c.small.rocket.active_radar",
+            "module_id": "ammunition_magazine",
+            "stock": [],
+            "warhead_id": "blast"
+          }
+        ],
+        "next_serial": 9
+      }
+    },
+    {
+      "ship_id": "ship.ew.ally",
+      "state": {
+        "interface": "gaotian.missile-stores/5c-v1",
+        "launchers": [
+          {
+            "auto_fire": false,
+            "cooldown_steps": 0,
+            "job": null,
+            "load_remaining": 1,
+            "model_id": "gtw.missile.5c.medium.rocket.radar_infrared",
+            "module_id": "weapon_upper_port",
+            "ready": [
+              {
+                "model_id": "gtw.missile.5c.medium.rocket.radar_infrared",
+                "serial": 2,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.medium.rocket.radar_infrared",
+                "serial": 3,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.medium.rocket.radar_infrared",
+                "serial": 4,
+                "source": "raw",
+                "warhead_id": "blast"
+              }
+            ],
+            "unload_remaining": 0,
+            "warhead_id": "blast"
+          }
+        ],
+        "magazines": [
+          {
+            "assembly_remaining": 0,
+            "jobs": [],
+            "model_id": "gtw.missile.5c.small.rocket.active_radar",
+            "module_id": "ammunition_magazine",
+            "stock": [],
+            "warhead_id": "blast"
+          }
+        ],
+        "next_serial": 5
+      }
+    }
+  ]
+}
