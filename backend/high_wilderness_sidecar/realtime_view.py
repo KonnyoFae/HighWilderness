@@ -181,7 +181,10 @@ class RealtimeViewService:
             result = battle.step(control, **kwargs)
             history.record(battle.session.world.fixed_step, battle.projectiles,
                 () if battle.damage_state is None else battle.damage_state.recent,
-                () if battle.damage_state is None else battle.damage_state.expired_flights)
+                () if battle.damage_state is None else battle.damage_state.expired_flights+tuple(
+                    dict(projectile_id=pid,position_m=e['position_m'])
+                    for e in battle.damage_state.interceptions
+                    for pid in ((e['round_id'],e['projectile_id']) if e['intercepted'] else (e['round_id'],))))
             return result
         scheduler = TacticalScheduler(battle.session, clock=self.clock, stepper=stepper, stop_when=lambda: battle.ending is not None)
         digest = canonical_sha256(geometry)
@@ -268,7 +271,7 @@ class RealtimeViewService:
         if method == 'tactical.realtime.prepared_entry':
             require(set(p)=={'launch_id'},'需要入战请求身份')
             settlement.ps.identifier(p['launch_id'],'$.launch_id')
-            if self.scheduler is not None and self._deployment_key and self._deployment_key[0]=='prepared' and self._deployment_key[1]==p['launch_id']:
+            if self.scheduler is not None and self._deployment_key and self._deployment_key[0] in ('prepared','encounter') and self._deployment_key[1]==p['launch_id']:
                 return dict(scene=self.read())
             return dict(scene=None)
         if method == 'tactical.realtime.create':

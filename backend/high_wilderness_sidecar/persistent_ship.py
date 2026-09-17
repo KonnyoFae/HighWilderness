@@ -237,7 +237,7 @@ def _validate(value, pack):
     fuel_version = definition['interface'] in dc.FUEL_RESOURCE_INTERFACES
     obj(v, 'interface instance_id revision resources_sha256 hull_integrity_fraction fuel_units modules '
         'crew wounded_aboard power_policy engine_latches service magazines weapons cargo' +
-        (' damage_controls' if dc_version else '') + (' fires' if fire_version else '')+(' fuel_tanks' if fuel_version else ''), '$')
+        (' damage_controls' if dc_version else '') + (' fires' if fire_version else '')+(' fuel_tanks' if fuel_version else '')+(' personnel' if 'personnel' in v else ''), '$')
     need(v['interface'] == ('gaotian.persistent-ship/h5c-v1' if fuel_version else dc.REPAIR_INSTANCE_INTERFACE if definition['interface'] == dc.REPAIR_RESOURCE_INTERFACE else dc.FIRE_INSTANCE_INTERFACE if fire_version else dc.INSTANCE_INTERFACE if dc_version else INTERFACE), '$.interface', 'Unsupported instance version; legacy import requires explicit conversion')
     identifier(v['instance_id'], '$.instance_id'); integer(v['revision'], '$.revision')
     need(v['resources_sha256'] == pack.source_sha256, '$.resources_sha256', 'Exact design/resource binding mismatch')
@@ -258,6 +258,8 @@ def _validate(value, pack):
     need(set(crew) <= crew_types, '$.crew', 'Unknown personnel type')
     for c in crew.values():
         obj(c, 'crew_type count', '$.crew'); integer(c['count'], '$.crew.count')
+    from .tactical_personnel import validate as validate_personnel
+    validate_personnel(v,crew_types)
     v['power_policy'] = RuntimePowerPolicyInput.parse(v['power_policy'], '$.power_policy').to_dict()
     latches = v['engine_latches']
     need(type(latches) is list and all(type(k) is str for k in latches) and len(set(latches)) == len(latches)
@@ -300,10 +302,12 @@ def _validate(value, pack):
             and w['recipe_id'] in d['recipe_ids'], '$.weapons.recipe_id', 'Missing or incompatible loaded recipe')
         if w['reload'] is None:
             continue
-        reload = obj(w['reload'], 'recipe_id remaining_steps magazine_allocations', '$.weapons.reload')
+        reload = obj(w['reload'], 'recipe_id remaining_steps magazine_allocations'+(' crew_work_rate' if 'crew_work_rate' in w['reload'] else ''), '$.weapons.reload')
         need(type(reload['recipe_id']) is str and reload['recipe_id'] in d['recipe_ids'], '$.reload.recipe_id', 'Unknown reload recipe')
         r = recipes[reload['recipe_id']]
-        integer(reload['remaining_steps'], '$.reload.remaining_steps', 1, r['reload_steps'])
+        from math import ceil
+        work_rate = number(reload.get('crew_work_rate',1.),'$.reload.crew_work_rate',1e-12,1)
+        integer(reload['remaining_steps'], '$.reload.remaining_steps', 1, ceil(r['reload_steps']/work_rate))
         need(w['ready_rounds'] + r['rounds'] <= d['ready_capacity'] and
             (w['ready_rounds'] == 0 or w['recipe_id'] == r['id']), '$.reload', 'Batch overflow or unsupported mixed rounds')
         allocations = rows(reload['magazine_allocations'], 'module_id', '$.reload.magazine_allocations')
@@ -464,6 +468,7 @@ def export_instances(battle):
         v['modules'] = [dict(module_id=d.instance_id, durability_points=m.durability_points, operating_mode=mode)
             for d, m, mode in zip(seed.devices.modules, ship.devices.modules, ship.resources.modes)]
         v['crew'] = [dict(crew_type=k, count=n) for k, n in ship.resources.crew]
+        v['wounded_aboard'] = ship.command.wounded_aboard
         v['power_policy'] = ship.resources.policy.to_dict()
         v['engine_latches'] = [e.instance_id for e, latched in zip(seed.contributions.engines, ship.resources.latched) if latched]
         lifecycle, command = ship.command.lifecycle, ship.command

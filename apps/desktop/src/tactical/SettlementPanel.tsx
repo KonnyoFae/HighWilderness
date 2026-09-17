@@ -1,6 +1,7 @@
 import { endingLabel, resourceRows, serviceLabel, fuelTankName } from "./settlement";
 import type { SettlementEnvelope, SettlementLibrary } from "./settlement";
 import { ammunitionName } from './ammunition';
+import { PersonnelSettlement } from './PersonnelPanel';
 
 export function SettlementPanel({ current, library, busy, canDeploy, onSave, onInspect, onRefresh, onDeploy, onPrepare, canPrepare = false }: {
   current: SettlementEnvelope | null; library: SettlementLibrary | null; busy: boolean; canDeploy: boolean;
@@ -19,6 +20,7 @@ export function SettlementPanel({ current, library, busy, canDeploy, onSave, onI
         <h4>{ship.after.ship_id === "ship.web.red" ? "敌方舰船" : "本方舰船"} · {serviceLabel[ship.after.state.service.status]}</h4>
         {current.result.wrecks?.some(w=>w.instance_id===ship.after.state.instance_id) && <p>已坠毁并留下可打捞残骸。位置已随战果保存，打捞功能将在战略模式接入。</p>}
         <p>船壳 {(ship.before.state.hull_integrity_fraction*100).toFixed(1)}% → {(ship.after.state.hull_integrity_fraction*100).toFixed(1)}%</p>
+        <PersonnelSettlement before={ship.before} after={ship.after}/>
         <div className="propulsion-tables"><table><thead><tr><th>资源</th><th>战前</th><th>战后</th><th>变动原因</th></tr></thead><tbody>
           {resourceRows(ship).map(row => <tr key={row.key}><td>{row.name}</td><td>{row.before}</td><td>{row.after}</td><td>{row.detail}</td></tr>)}
         </tbody></table></div>
@@ -53,7 +55,7 @@ export function SettlementPanel({ current, library, busy, canDeploy, onSave, onI
     </details>
     {onPrepare ? <section aria-label="下一场战前准备">
       <h4>下一场战前准备</h4>
-      <p>保存本场结果后，返回战前准备管理各舰库存与预装弹种，再选择参加下一场交战的舰船。已有战损、余弹与未灭火情会保留。</p>
+      <p>保存本场结果后，返回战前准备管理各舰库存与预装弹种，再选择参加下一场交战的舰船。已有战损、余弹、伤亡与未灭火情会保留。</p>
       <button disabled={busy || !canPrepare} onClick={onPrepare}>管理战后库存与下一场准备</button>
       {!canPrepare && <p>请先保存当前交战结果。</p>}
     </section> : <details open><summary>技术测试舰 · 再次交战</summary>

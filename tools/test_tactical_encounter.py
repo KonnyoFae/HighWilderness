@@ -97,17 +97,22 @@ class EncounterTests(unittest.TestCase):
             (out/'result.json').write_text(json.dumps(dict(status='ST0_BOTH_SIDES_ROUNDTRIP_PASS',
                 receipt=receipt,settlement=result,reentry=next_view['view']['gunnery']),ensure_ascii=False,indent=2),encoding='utf-8')
 
-    def test_stale_missing_and_overlapping_deployment_leave_no_claims(self):
+    def test_stale_missing_deployment_leave_no_claims(self):
         self.prepare(2)
-        for change in ('revision','missing','overlap'):
+        for change in ('revision','missing'):
             v=request()
             if change=='revision':v['sides'][0]['ships'][0]['revision']=2
             elif change=='missing':
                 v['sides'][0]['ships'][0]['instance_id']='instance.missing';v['sides'][0]['flagship_instance_id']='instance.missing'
-            else:v['sides'][0]['ships'][0]['deployment']['y_m']=-300
             with self.subTest(change=change),self.assertRaises(ps.ContractError):self.launch(v)
             self.assertFalse(any(s['blocked'] for s in self.call('library',{})['ships']))
         self.launch()
+
+    def test_overlapping_ships_are_legal_without_ship_collisions(self):
+        self.prepare(2)
+        v=request();v['sides'][0]['ships'][0]['deployment']['y_m']=-300
+        view=self.launch(v)
+        self.assertEqual(view['view']['ships'][0]['position_m'],view['view']['ships'][1]['position_m'])
 
     def test_claimed_opponent_and_changed_retry_rejected(self):
         self.prepare(2);self.launch()

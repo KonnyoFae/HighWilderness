@@ -5,12 +5,12 @@ direct target truth fed to the firing solution. Inventory/projectiles/flight
 commit together. This adapter deliberately does not relax guided-weapon rules.
 """
 from dataclasses import asdict, dataclass, replace
-from math import atan2, cos, hypot, pi, sin, sqrt
+from math import atan2, ceil, cos, hypot, pi, sin, sqrt
 
 from 高天荒野舰艇水平射界 import horizontal_fire_arc
 from 高天荒野舰艇数据契约 import canonical_sha256
 from . import persistent_ship as ps, tactical_inventory as ti
-from .tactical_ammunition import ORDINARY, SUPPORTED, NEW_PROJECTILES, is_incendiary, is_ordinary
+from .tactical_ammunition import ORDINARY, SUPPORTED, NEW_PROJECTILES, is_incendiary, is_ordinary, is_surface_incendiary
 from . import tactical_ballistics as ballistics
 from .tactical_layers import LAYERS
 from . import tactical_targeting as targeting
@@ -105,12 +105,16 @@ class GunState:
     lock_sources: tuple = ()
     status: str = 'no_target'
     shots: int = 0
-    deck_level: int = 0
+    deck_level: int | None = None
     rng: int = 1
     reload_recipe_id: str | None = None
     reload_blocked_key: tuple | None = None
     reload_blocked_reason: str | None = None
     attack_layer: str | None = None
+    point_defense: bool = False
+    interception_target_id: int | None = None
+    interception_priority: int | None = None
+    interception_needed_rounds: int = 0
 
 
 @dataclass(frozen=True)
@@ -133,10 +137,22 @@ class Projectile:
     previous: tuple
     velocity: tuple
     expires: int
-    deck_level: int = 0
+    # A fixed deck is retained only for explicit geometry fixtures. Production
+    # launch uses None and resolves its deck at physical ship contact.
+    deck_level: int | None = 0
     height_layer: str | None = None
     projectile_key: tuple = ORDINARY
     flight_profile: ballistics.FlightProfile | None = None
+    aimed_ship_id: str | None = None
+    aimed_module_id: str | None = None
+    preferred_deck: int | None = None
+    deck_selections: tuple = ()
+    durability: float | None = None
+    maximum_durability: float | None = None
+    collision_radius_m: float = 0.
+    interception_damage: float = 0.
+    interception_target_id: int | None = None
+    interception_expected_step: int | None = None
 
 
 def resource_pack(seed, config):
@@ -172,7 +188,7 @@ class GunneryBattle:
         ps.need(config['max_projectiles'] <= 512 and config['observation_period_steps'] <= config['observation_expiry_steps'], '$', 'Invalid bounded gunnery policy')
         self.config, self.session = config, session
         from .tactical_damage import DamageKernel
-        self.damage = DamageKernel(scenario, session) if damage_enabled else None
+        self.damage = DamageKernel(scenario, session, config['seed']) if damage_enabled else None
         self.damage_state = self.damage.initial if self.damage else None
         self.enemy_fire, self.ending = enemy_fire, None
         ps.need(len(scenario.bindings) == len(session._seeds), '$', 'Incomplete geometry binding')
@@ -261,13 +277,21 @@ class GunneryBattle:
         # Prototype capabilities are copied only at entry, not parsed per step.
         self._capabilities = tuple({k: m.prototype.capability.to_dict() for k, m in modules.items()} for modules in self._modules)
         from .tactical_fire import FireRuntime
-        self.fire = FireRuntime(self, allow_test_ignition=allow_test_ignition)
+        self.fire = FireRuntime(self, scenario, allow_test_ignition=allow_test_ignition)
         from .tactical_repair import RepairRuntime
         self.repair = RepairRuntime(self)
         from .tactical_ignition import IgnitionRuntime
         self.ignition = IgnitionRuntime(self)
         from .tactical_layers import HeightOrders
         self.height_orders = HeightOrders(self)
+        from .tactical_magazine import MagazineRuntime
+        self.magazines = MagazineRuntime(self) if self.damage else None
+        from .tactical_personnel import PersonnelRuntime
+        self.personnel = PersonnelRuntime(self) if self.damage else None
+        from .tactical_point_defense import PointDefense
+        self.point_defense = PointDefense(self) if self.damage else None
+        if self.point_defense:
+            self.states = tuple(replace(s,point_defense=self.point_defense.capable[i]) for i,s in enumerate(self.states))
 
     def _guard(self):
         ps.need(not self.session._executing, '$', 'Gunnery requires idle owner boundary')
@@ -310,7 +334,14 @@ class GunneryBattle:
 
     def _command_state(self, index, kind, args):
         state = self.states[index]
-        if kind == 'ammunition':
+        if kind == 'point_defense':
+            ps.obj(args,'enabled','$.arguments')
+            ps.need(type(args['enabled']) is bool and self.point_defense and self.point_defense.capable[index],
+                '$.point_defense','请选择支持自动近防的 30 毫米炮组')
+            state = replace(state,point_defense=args['enabled'],mode='auto',target_policy='automatic',target=None,
+                manual_point=None,fire_requested=False,aim_point=None,interception_target_id=None,
+                interception_priority=None,interception_needed_rounds=0)
+        elif kind == 'ammunition':
             ps.obj(args, 'recipe_id', '$.arguments')
             ps.identifier(args['recipe_id'], '$.recipe_id')
             ps.need(args['recipe_id'] in self._gun_projectiles[index], '$.recipe_id', '此武器不支持所选弹种')
@@ -345,9 +376,10 @@ class GunneryBattle:
             state=replace(state,attack_layer=layer,fire_requested=False,aim_point=None)
         elif kind == 'deck':
             ps.obj(args, 'level', '$.arguments')
-            ps.integer(args['level'], '$.level')
-            ps.need(args['level'] in {e.key[1] for edges in self.damage.edges for e in edges} if self.damage else args['level'] == 0,
-                    '$.level', 'Unknown technical attack deck')
+            if args['level'] is not None:
+                ps.integer(args['level'], '$.level')
+                ps.need(args['level'] in {e.key[1] for edges in self.damage.edges for e in edges} if self.damage else args['level'] == 0,
+                        '$.level', 'Unknown attack deck preference')
             state = replace(state, deck_level=args['level'], fire_requested=False)
         elif kind == 'auto_target':
             ps.obj(args, '', '$.arguments')
@@ -358,6 +390,8 @@ class GunneryBattle:
             state = replace(state, target_policy='hold', target=None, manual_point=None, fire_requested=False, aim_point=None, status='holding_fire')
         else:
             ps.need(False, '$.kind', 'Unknown gun command')
+        if kind in ('mode','target','aim','fire','auto_target','clear'):
+            state=replace(state,point_defense=False,interception_target_id=None,interception_priority=None,interception_needed_rounds=0)
         return state
 
     def suspend(self):
@@ -388,7 +422,8 @@ class GunneryBattle:
                     reason = 'host_unavailable'
                 elif m.prototype.power.active_load_kw > 0 and k not in powered:
                     reason = 'power_unavailable'
-                elif not automatic and any(dict(allocations.get(k, ())).get(r.crew_type, 0) < r.minimum_operating for r in m.prototype.crew):
+                elif not automatic and (any(dict(allocations.get(k, ())).get(r.crew_type, 0) < r.minimum_operating for r in m.prototype.crew)
+                    or functions and any(self.crew_efficiency(world,index,k,f)<=1e-8 for f in functions)):
                     reason = 'crew_unavailable'
                 else:
                     reason = None
@@ -399,13 +434,16 @@ class GunneryBattle:
             result.append(available)
         return key, tuple(result)
 
+    def crew_efficiency(self,world,index,module_id,function):
+        return self.session._resource_kernels[index].crew_efficiency(world.ships[index].resources,module_id,function)
+
     def _sources(self, observer, target, world, available):
         ship, other = world.ships[observer], world.ships[target]
         distance = hypot(*difference(ship.motion.position_world_m.to_list(), other.motion.position_world_m.to_list()))
         controls = [k for k in self._controllers[observer] if available[observer][k] is None
-                    and distance <= self._capabilities[observer][k]['maximum_lock_range_m']]
+                    and distance <= self._capabilities[observer][k]['maximum_lock_range_m']*self.crew_efficiency(world,observer,k,'fire_control.solution')]
         sensors = [k for k in self._radars[observer] if available[observer][k] is None
-                   and distance <= self._capabilities[observer][k]['maximum_instrumented_range_m']]
+                   and distance <= self._capabilities[observer][k]['maximum_instrumented_range_m']*self.crew_efficiency(world,observer,k,'sensor.search')]
         return tuple(sensors) if controls else (), sum(self._capabilities[observer][k]['simultaneous_channels'] for k in controls)
 
     def _measure(self, observer, target, world, quality):
@@ -442,18 +480,35 @@ class GunneryBattle:
             survivors, damage_state, batch = self.damage.advance(before, candidate, self.projectiles, self.damage_state)
             staged.update(survivors=survivors, damage_state=damage_state)
             if self.fire.enabled:
-                fires, events, batch = self.fire.damage(candidate, batch)
+                fires, events, batch, armor_losses = self.fire.damage(candidate, batch)
+                if armor_losses:
+                    armor = [list(values) for values in damage_state.armor]
+                    for n,key,amount in armor_losses:
+                        edge = self.fire.armor_indices[n][key]
+                        armor[n][edge] = max(0.,armor[n][edge]-amount)
+                    damage_state = replace(damage_state,armor=tuple(tuple(values) for values in armor))
+                    staged['damage_state'] = damage_state
                 staged.update(fires=fires, fire_events=events)
+            batch, damage_state, explosions = self.magazines.resolve(before, candidate, batch, staged['damage_state'])
+            staged.update(damage_state=damage_state, magazine_explosions=explosions)
+            batch, records, events = self.personnel.resolve(candidate,batch,damage_state,staged.get('fire_events',()),explosions)
+            staged.update(personnel_records=records,personnel_events=events)
             return batch
         def permissions(world, result, inventories):
+            if self.magazines:
+                self.magazines.consume(staged['magazine_explosions'], world, inventories)
+                self.personnel.synchronize(world,inventories,staged['personnel_records'])
             key, available = self._availability(world)
             staged.update(availability_key=key, available=available)
+            for n,inv in enumerate(inventories):
+                inv._weapon_work_rates = {mid:self.crew_efficiency(world,n,mid,'weapon.reload') for mid in inv._weapons}
             if self.fire.enabled:
                 self.fire.permissions(world, inventories, available)
             for gun,state in zip(self.guns,self.states):
                 inv = inventories[gun.ship_index]
                 loading=next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)['reload']
                 if loading and (loading['recipe_id'] != state.reload_recipe_id or available[gun.ship_index][gun.module_id]
+                    or inv._weapon_work_rates[gun.module_id]<=1e-8
                     or not self._can_fire(world.ships[gun.ship_index], gun.ship_index)):
                     inv.command(epoch=inv.epoch, sequence=inv.sequence+1, kind='cancel_reload', target=gun.module_id)
         def simulate(world, result, inventories):
@@ -496,6 +551,9 @@ class GunneryBattle:
                     projectiles.append(replace(p,previous=p.position,position=position,velocity=velocity))
             if self.damage:
                 projectiles = list(staged['survivors'])
+            defense_contacts,defense_threats = self.point_defense.observe(world,available,projectiles) if self.point_defense else ({},())
+            staged.update(defense_contacts=defense_contacts,defense_threats=defense_threats)
+            defense_locks=set()
             states, projectile_sequence = [], self._projectile_sequence
             ending = self._ending_reason(world) if self.damage else None
             for gun_index, (gun, state) in enumerate(zip(self.guns, working_states)):
@@ -532,10 +590,23 @@ class GunneryBattle:
                         try:
                             transact('start_reload', recipe_id=state.reload_recipe_id)
                         except ps.ContractError as exc:
-                            status = 'no_special_materials' if exc.message == 'Insufficient special materials' else 'no_ammunition'
+                            status = 'crew_unavailable' if exc.message == 'Weapon crew unavailable' else 'no_special_materials' if exc.message == 'Insufficient special materials' else 'no_ammunition'
                             state = replace(state, reload_blocked_key=retry_key, reload_blocked_reason=status)
                     w = next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)
-                if state.mode == 'auto':
+                defense_assignment=None
+                if state.point_defense:
+                    aim=None;wanted=False
+                    quality,quality_reason,sources='normal','point_defense',()
+                    if status is None:
+                        defense_assignment,reason=self.point_defense.choose(gun_index,state,world,available,projectiles,
+                            defense_contacts,defense_threats,channel_use,defense_locks,inv)
+                        if defense_assignment:
+                            aim=defense_assignment['aim'];wanted=True;sources=defense_assignment['sources']
+                        else:status=reason
+                    state=replace(state,target=None,interception_target_id=defense_assignment['projectile_id'] if defense_assignment else None,
+                        interception_priority=defense_assignment['priority'] if defense_assignment else None,
+                        interception_needed_rounds=defense_assignment['needed_rounds'] if defense_assignment else 0)
+                elif state.mode == 'auto':
                     aim = None
                     if state.target:
                         pair = gun.ship_index, state.target[0]
@@ -557,7 +628,8 @@ class GunneryBattle:
                 local = rotate(delta, -m.heading_rad)
                 desired = wrap(atan2(local[0], local[1])-gun.rotation+bearing_error)
                 constrained = min(gun.maximum, max(gun.minimum, desired))
-                angle = state.angle if status else state.angle + min(gun.slew, max(-gun.slew, constrained-state.angle))
+                slew = gun.slew*self.crew_efficiency(world,gun.ship_index,gun.module_id,'weapon.aim')
+                angle = state.angle if status else state.angle + min(slew, max(-slew, constrained-state.angle))
                 # Show the direction actually requested including degraded error.
                 aim_direction = rotate((sin(desired+gun.rotation), cos(desired+gun.rotation)), m.heading_rad)
                 display_aim = add(origin, (aim_direction[0]*hypot(*delta), aim_direction[1]*hypot(*delta)))
@@ -578,7 +650,8 @@ class GunneryBattle:
                         status = 'projectile_limit'
                     else:
                         rng, error = noise(rng)
-                        launch_angle = angle+error*self.config['intrinsic_error_mdeg']*RAD
+                        spread = self.point_defense.policy['intrinsic_error_mdeg'] if state.point_defense else self.config['intrinsic_error_mdeg']
+                        launch_angle = angle+error*spread*RAD
                         if not gun.minimum <= launch_angle <= gun.maximum or self._hull_blocked(gun, launch_angle):
                             status = 'hull_blocked' if self._hull_blocked(gun, launch_angle) else 'out_of_arc'
                         else:
@@ -586,12 +659,17 @@ class GunneryBattle:
                             muzzle = add(origin, (direction[0]*3, direction[1]*3))
                             velocity = add(own_velocity, (direction[0]*flight.muzzle_speed_mps*speed_ratio, direction[1]*flight.muzzle_speed_mps*speed_ratio))
                             shot_projectile = self._gun_projectiles[gun_index][w['recipe_id']]
-                            transact('discharge', quantity=1, cooldown_steps=gun.cooldown_steps)
+                            transact('discharge', quantity=1, cooldown_steps=ceil(gun.cooldown_steps/self.crew_efficiency(world,gun.ship_index,gun.module_id,'weapon.fire')))
                             projectile_sequence += 1
+                            from .tactical_interception import properties as projectile_properties
                             projectiles.append(Projectile(projectile_sequence, ship.ship_id, gun.module_id, muzzle, muzzle, velocity,
-                                step+flight.lifetime_steps,
-                                self._modules[state.target[0]][state.target[1]].base_deck_level
-                                if state.mode == 'auto' and state.target and state.target[1] else 0 if state.mode == 'auto' else state.deck_level, attack_layer, shot_projectile, flight))
+                                step+flight.lifetime_steps, None, attack_layer, shot_projectile, flight,
+                                aimed_ship_id=world.ships[state.target[0]].ship_id if state.mode == 'auto' and state.target else None,
+                                aimed_module_id=state.target[1] if state.mode == 'auto' and state.target else None,
+                                preferred_deck=state.deck_level if state.mode == 'manual' else None,
+                                **projectile_properties(flight),
+                                interception_target_id=defense_assignment['projectile_id'] if defense_assignment else None,
+                                interception_expected_step=defense_assignment['expected_step'] if defense_assignment else None))
                             shots += 1
                             status = 'fired'
                             # Begin the next legal batch immediately, including after
@@ -604,6 +682,10 @@ class GunneryBattle:
                                     pass  # shot remains valid when reserve stock is empty
                 states.append(replace(state, angle=angle, aim_point=display_aim, fire_requested=False, quality=quality,
                     quality_reason=quality_reason, lock_sources=sources, status=status or 'ready', shots=shots, rng=rng))
+            if self.fire.enabled and not ending:
+                fires, events = self.fire.spread(world,staged['fires'])
+                staged.update(fires=fires,fire_events=staged['fire_events']+events,
+                    ignited_ships={f.ship_index for f in fires})
             if self.ignition.enabled and self.damage and staged['damage_state'].ignition_attempts and not ending:
                 fires, events = self.ignition.apply(world,staged['damage_state'].ignition_attempts,staged['fires'])
                 staged.update(fires=fires,fire_events=staged['fire_events']+events,ignited_ships={f.ship_index for f in fires})
@@ -663,6 +745,10 @@ class GunneryBattle:
         self._projectile_sequence = staged['projectile_sequence']
         if self.damage:
             self.damage_state = staged['damage_state']
+            self.magazines.commit(staged['magazine_explosions'])
+            self.personnel.records = staged['personnel_records']
+            self.personnel.recent = (self.personnel.recent+staged['personnel_events'])[-32:]
+            self.point_defense.commit(staged['defense_contacts'],staged['defense_threats'],self.damage_state.interceptions)
             self.ending = staged.get('ending')
         if self.fire.enabled:
             self.fire.fires, self.fire.controllers = staged['fires'], staged['fire_controllers']
@@ -716,14 +802,24 @@ class GunneryBattle:
             layer=state.attack_layer or ship.motion.height_layer
             ratio=1. if layer==ship.motion.height_layer else ballistics.CROSS_LAYER_SPEED
             flight=self._gun_flights[gun_index][w['recipe_id'] or recipe_id]
+            projectile=inv._recipes[w['recipe_id'] or recipe_id]['projectile']
+            projectile_key=(projectile['id'],projectile['version'])
             weapons.append(dict(ship_id=ship.ship_id, module_id=gun.module_id, mode=state.mode, target_policy=state.target_policy, angle_rad=state.angle,
+                point_defense_capable=bool(self.point_defense and self.point_defense.capable[gun_index]),point_defense=state.point_defense,
+                interception_target_id=state.interception_target_id,interception_priority=state.interception_priority,
+                interception_needed_rounds=state.interception_needed_rounds,
+                incendiary_effect='surface' if is_surface_incendiary(projectile_key) else 'internal' if is_incendiary(projectile_key) else None,
                 attack_layer=state.attack_layer, effective_layer=layer,
                 ballistics=dict(caliber_mm=flight.caliber_mm,speed_mps=flight.muzzle_speed_mps,effective_speed_mps=flight.muzzle_speed_mps*ratio,
                     lifetime_s=flight.lifetime_steps/60,reference_range_m=min(gun.maximum_range,ballistics.reference_range(flight,ratio)),
                     speed_retention=ratio,drag=flight.drag,cyclic_rpm=3600/max(1,gun.cooldown_steps)),
                 origin_m=origin, direction=direction, aim_point_m=state.aim_point,
                 target_ship_id=self.session.world.ships[state.target[0]].ship_id if state.target else None,
-                target_module_id=state.target[1] if state.target else None, deck_level=state.deck_level, quality=state.quality, quality_reason=state.quality_reason,
+                target_module_id=state.target[1] if state.target else None, deck_level=state.deck_level,
+                aimed_deck_levels=(self.damage.aim_levels(state.target[0], state.target[1])
+                    if self.damage and state.mode == 'auto' and state.target and state.target[1] else
+                    (state.deck_level,) if state.mode == 'manual' and state.deck_level is not None else ()),
+                quality=state.quality, quality_reason=state.quality_reason,
                 lock_sources=state.lock_sources, status=state.status, shots=state.shots, ready_rounds=w['ready_rounds'],
                 reload_steps=max(0, inv._due.get(gun.module_id, inv.fixed_step)-inv.fixed_step),
                 cooldown_steps=max(0, inv._cooldown[gun.module_id]-inv.fixed_step),
@@ -736,12 +832,17 @@ class GunneryBattle:
                 cargo=[dict(good_id=c['good_id'], quantity=c['quantity'], reserved=inventory_summaries[gun.ship_index]['reserved_cargo'].get(c['good_id'],0))
                     for c in inv._value['cargo']]))
         return dict(interface='gaotian.gunnery-view/p2a-v1alpha1', command_sequence=self.sequence,
+            deck_hit_policy=asdict(self.damage.deck_policy) if self.damage else None,
             groups=ps.clone(list(self.groups)), weapons=weapons, projectiles=[dict(id=p.id, ship_id=p.ship_id, position_m=p.position,
-                previous_m=p.previous, velocity_mps=p.velocity, projectile_type=p.projectile_key[0], height_layer=p.height_layer) for p in self.projectiles],
+                previous_m=p.previous, velocity_mps=p.velocity, projectile_type=p.projectile_key[0], height_layer=p.height_layer,
+                durability=p.durability,maximum_durability=p.maximum_durability,interception_target_id=p.interception_target_id) for p in self.projectiles],
             policy_id=self.config['id'], damage_enabled=self.damage is not None, ending=self.ending,
             damage=None if self.damage_state is None else dict(hits=self.damage_state.hits, expired=self.damage_state.expired,
-                recent=self.damage_state.recent),
+                recent=self.damage_state.recent, magazine_explosions=self.magazines.recent,
+                magazine_detonations=self.magazines.count),
             **(dict(damage_control=self.fire.view()) if self.fire.enabled else {}),
+            **(dict(personnel=self.personnel.view()) if self.personnel else {}),
+            **(dict(point_defense=self.point_defense.view()) if self.point_defense else {}),
             **(dict(fireproof=self.ignition.view()) if self.ignition.enabled else {}),
             **(dict(fuel=[dict(ship_id=s.ship_id,total_units=s.motion.fuel_units,tanks=[dict(t,**{k:inv._fuel_tanks[t['tank_id']][k]
                 for k in ('module_id','deck_id','deck_level','capacity_units','maximum_points')})

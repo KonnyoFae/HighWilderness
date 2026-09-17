@@ -1,0 +1,9 @@
+{
+  "id": "gaotian.point-defense/contact-durability/4-v1",
+  "durability_tiers": [[75, 3], [120, 6]],
+  "round_damage": 1,
+  "high_speed_mps": 1000,
+  "observation_steps": 6,
+  "prediction_seconds": 15,
+  "intrinsic_error_mdeg": 10
+}

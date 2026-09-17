@@ -9,7 +9,8 @@ from .prepared_launch_store import BattleLease
 CAPABILITY = 'tactical.reset_test_state'
 TABLES = ('results', 'ships', 'battle_instance_claims', 'tactical_encounters',
           'preparation_designs', 'preparation_supplies', 'preparations',
-          'prepared_launches', 'preparation_drafts', 'preparation_imports')
+          'prepared_launches', 'preparation_drafts', 'preparation_imports',
+          'tactical_test_scene', 'tactical_test_supply_updates', 'preparation_actions')
 
 
 def reset(server, params):

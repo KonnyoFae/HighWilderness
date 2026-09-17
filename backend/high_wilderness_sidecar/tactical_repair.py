@@ -59,6 +59,7 @@ class RepairRuntime:
                 states.append(c)
                 continue
             ship, inv = world.ships[n], inventories[n]
+            efficiency = self.battle.crew_efficiency(world,n,device_id,'damage_control.firefighting')
             if n not in health:
                 health[n] = {k:ship.devices.modules[i].durability_points for k,i in self.indices[n].items()}
                 hull[n] = ship.motion.hull_integrity_fraction
@@ -91,7 +92,7 @@ class RepairRuntime:
                     c = replace(c, emergency_target=target, emergency_steps=0, emergency_spent=0)
                 gain = maxima[target] * EMERGENCY_LIFT_FRACTION
                 total = ceil(gain * profile.module_resource_units_per_point)
-                progress = c.emergency_steps + 1
+                progress = min(self.emergency_steps,c.emergency_steps + efficiency)
                 charged = ceil(total * progress / self.emergency_steps)
                 cost = charged - c.emergency_spent
                 if cost > available:
@@ -115,7 +116,7 @@ class RepairRuntime:
             if c.emergency_target is not None:
                 c = replace(c, emergency_target=None, emergency_steps=0, emergency_spent=0)
             if target is not None and EPS < hp[target] < maxima[target]-EPS:
-                amount, cost = self.amount(profile.module_points_per_s, maxima[target]-hp[target],
+                amount, cost = self.amount(profile.module_points_per_s*efficiency, maxima[target]-hp[target],
                                            available, profile.module_resource_units_per_point)
                 if amount:
                     hp[target] += amount
@@ -128,7 +129,7 @@ class RepairRuntime:
                 # One work target per device per tick; hull work begins next tick.
                 continue
             gap = max(0., (1-hull[n])/self.inverse_hull[n])
-            amount, cost = self.amount(profile.hull_points_per_s, gap, available, profile.hull_resource_units_per_point)
+            amount, cost = self.amount(profile.hull_points_per_s*efficiency, gap, available, profile.hull_resource_units_per_point)
             if amount:
                 fraction = amount*self.inverse_hull[n]
                 hull[n] = min(1., hull[n]+fraction)

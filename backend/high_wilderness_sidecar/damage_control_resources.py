@@ -57,10 +57,20 @@ def validate_fire_definition(profile):
 
 def validate_fires(value, definition, modules):
     profile = definition['continuous_damage']
-    fires = ps.rows(value['fires'], 'module_id', '$.fires')
-    ps.need(set(fires) <= set(modules), '$.fires', 'Unknown burning module')
-    for fire in fires.values():
-        ps.obj(fire, 'module_id intensity_units remaining_steps', '$.fires')
+    ps.need(type(value['fires']) is list, '$.fires', 'Expected fire list')
+    fires = {}
+    for fire in value['fires']:
+        spatial = type(fire) is dict and 'zone_id' in fire
+        ps.obj(fire, 'module_id intensity_units remaining_steps'+(' zone_id spread_steps random_state' if spatial else ''), '$.fires')
+        if spatial:
+            ps.identifier(fire['zone_id'],'$.fires.zone_id')
+            from .tactical_spatial_fire import policy
+            ps.integer(fire['spread_steps'],'$.fires.spread_steps',0,policy()['spread_interval_steps'])
+            ps.integer(fire['random_state'],'$.fires.random_state',0,0xffffffff)
+        ps.need(fire['module_id'] in modules or spatial and fire['module_id'] is None, '$.fires.module_id', 'Unknown burning module')
+        key = fire['zone_id'] if spatial else fire['module_id']
+        ps.need(key not in fires,'$.fires','Duplicate fire region')
+        fires[key] = fire
         ps.integer(fire['intensity_units'], '$.fires.intensity_units', 1, profile['max_intensity_units'])
         ps.integer(fire['remaining_steps'], '$.fires.remaining_steps', 1, profile['max_duration_steps'])
     value['fires'] = [fires[k] for k in sorted(fires)]

@@ -3,13 +3,15 @@ export interface CombatRecord {
   ship_id: string;
   state: {
     instance_id: string; revision: number; hull_integrity_fraction: number;
+    crew?:{crew_type:string;count:number}[];wounded_aboard?:number;
+    personnel?:{policy:string;statuses:{crew_type:string;wounded:number;dead:number;loss_fraction:number;death_fraction:number}[]};
     service: { status: string; reasons: string[] };
     modules: { module_id: string; durability_points: number }[];
     magazines: { module_id: string; quantity: number }[];
     weapons: { module_id: string; ready_rounds: number; cooldown_steps: number; recipe_id?: string | null }[];
     cargo: { good_id: string; quantity: number }[];
     damage_controls?: {module_id:string; quantity_units:number; preparation:{remaining_steps:number}|null}[];
-    fires?: {module_id:string; intensity_units:number; remaining_steps:number}[];
+    fires?: {module_id:string|null; intensity_units:number; remaining_steps:number;zone_id?:string;spread_steps?:number;random_state?:number}[];
     fuel_tanks?:{tank_id:string;quantity_units:number;durability_points:number}[];
   };
   armor: { deck_id: string; deck_level: number; region_id: string; edge_index: number; durability: number }[];
@@ -32,7 +34,7 @@ export interface SettlementLibrary {
 export const endingLabel: Record<string, string> = { withdrawal: "主动撤离", victory: "本方胜利", defeat: "本方失去作战能力", draw: "双方失去作战能力" };
 export const serviceLabel: Record<string, string> = { available: "可入战", disabled: "失去作战能力", destroyed: "已毁坏", withdrawn: "已离场" };
 const reasonLabel: Record<string, string> = { load: "装载", unload: "卸载", consume: "使用", reload: "装填", discharge: "射击",
-  damage_control_preparation:'损管准备', damage_control_use:'损管使用', firefighting:'灭火', module_repair:'部件维修', hull_repair:'船壳维修',tank_destroyed:'燃料槽损毁',emergency_lift_repair:'储罐紧急抢修',emergency_lift_refill:'抢修后补油' };
+  damage_control_preparation:'损管准备', damage_control_use:'损管使用', firefighting:'灭火', module_repair:'部件维修', hull_repair:'船壳维修',tank_destroyed:'燃料槽损毁',emergency_lift_repair:'储罐紧急抢修',emergency_lift_refill:'抢修后补油',magazine_detonation:'弹药库殉爆' };
 
 export function fuelTankName(t:{module_id:string|null;deck_level:number},names:Record<string,string>) {
   return t.module_id?`${names[t.module_id]??t.module_id}燃料槽`:`第 ${t.deck_level} 层填充燃料槽`;

@@ -15,7 +15,10 @@ import { GunControlPanel, commonGunValue } from './GunControlPanel';
 import type { GunIntent } from "./gunnery";
 import type { Point } from "../editor/viewport";
 import type { PreparedLaunch } from './preparation';
-import { ammunitionName } from './ammunition';
+import { HitLog } from './HitLog';
+import { PersonnelPanel, PersonnelLog } from './PersonnelPanel';
+import { InterceptionLog } from './InterceptionLog';
+import { FireSummary } from './FireSummary';
 import { DamageControlPanel } from './DamageControlPanel';
 import type { DamageControlIntent } from './DamageControlPanel';
 import { LiftReserve } from '../LiftReserve';
@@ -156,7 +159,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       if (kind === "create") {
         setHistoryResult(null);setEntryUncertain(!!preparedLaunch);
         try {
-          accept(await call<RealtimeEnvelope>(preparedLaunch?'tactical.realtime.deploy_prepared':'tactical.realtime.create',preparedLaunch??{scenario_id:SCENARIO_ID}));
+          accept(await call<RealtimeEnvelope>(preparedLaunch?.encounter?'tactical.realtime.deploy_encounter':preparedLaunch?'tactical.realtime.deploy_prepared':'tactical.realtime.create',preparedLaunch?.encounter??preparedLaunch??{scenario_id:SCENARIO_ID}));
           setEntryUncertain(false);
         } catch(e) {
           if(preparedLaunch){
@@ -366,6 +369,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
             <dt>转向速度</dt><dd>{(pose.yaw_rate_radps * 180 / Math.PI).toFixed(1)} °/s</dd>
           </dl>
           {durability && <p>结构耐久 {(pose.hull_integrity * durability.maximum_points).toFixed(0)} / {durability.maximum_points.toFixed(0)}</p>}
+          <PersonnelPanel view={view} shipId={pose.id}/>
           <details><summary>模块状态</summary>{pose.modules.map(m => <p key={m.id}>{view.geometry.ships.find(s => s.id === pose.id)?.modules.find(v => v.id === m.id)?.name ?? m.id}：{m.durability.toFixed(1)}{m.durability <= 0 ? " · 已损毁" : ""}</p>)}</details>
         </div>}
         {selected === state.direct_ship_id ? <>
@@ -396,18 +400,15 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       onRefresh={() => void storedAction("refresh")} onDeploy={(id, revision) => void storedAction("deploy", id, revision)} />}
 
     {view && <details className="battle-records"><summary>战场记录与全舰资源</summary>
-    {view?.snapshot.gunnery?.fireproof&&<section aria-label="交战防火与火情"><h3>防火与火情</h3><p>防火仅降低新起火概率；已有火情需要损管灭火。</p>
-      {view.snapshot.gunnery.fireproof.map(s=>{const ship=view.geometry.ships.find(v=>v.id===s.ship_id);const fires=view.snapshot.gunnery?.damage_control?.fires.filter(f=>f.ship_id===s.ship_id)??[];
-        return <article key={s.ship_id}><h4>{ship?.name??s.ship_id}</h4><p>{s.decks.map(d=>`第 ${d.deck_level} 层：${d.multiplier<1?`起火概率降低 ${((1-d.multiplier)*100).toFixed(0)}%`:'无额外防火'}`).join(' · ')}</p>
-          <p>{fires.length?fires.map(f=>`${ship?.modules.find(m=>m.id===f.module_id)?.name??f.module_id} 正在燃烧（强度 ${(f.intensity_units/1000).toFixed(2)}）`).join('、'):'当前无火情'}</p></article>;})}</section>}
+    {view && <FireSummary view={view}/>}
 
     {view?.snapshot.gunnery?.fuel&&<section aria-label="燃料储备"><h3>燃料储备</h3><p>发动机运行不消耗燃料；仅燃料槽耐久归零时损失其中燃料。</p>
       {view.snapshot.gunnery.fuel.map(s=><details key={s.ship_id} open={s.ship_id===state?.direct_ship_id}><summary>{view.geometry.ships.find(v=>v.id===s.ship_id)?.name} · 燃料 {s.total_units.toFixed(2)}</summary>
         {s.tanks.map(t=><p key={t.tank_id}>{fuelTankName(t,Object.fromEntries(view.geometry.ships.find(v=>v.id===s.ship_id)?.modules.map(m=>[m.id,m.name])??[]))}：燃料 {t.quantity_units.toFixed(2)} / {t.capacity_units} · 耐久 {t.durability_points.toFixed(1)} / {t.maximum_points}{t.durability_points<=0?' · 已损毁':''}</p>)}</details>)}</section>}
 
-    {view?.snapshot.gunnery?.damage && <details><summary>命中记录 · {view.snapshot.gunnery.damage.hits} 次</summary>
-      {view.snapshot.gunnery.damage.recent.slice(-5).map(hit => <p key={hit.projectile_id}>{view.geometry.ships.find(s => s.id === hit.ship_id)?.name} · 第 {hit.deck_level} 层 · {hit.projectile_type ? ammunitionName(hit.projectile_type)+' · ' : ''}{{ penetrated: "击穿", stopped: "装甲阻挡", ricochet: "跳弹", module: "外部模块命中" }[hit.outcome] ?? hit.outcome}{hit.module_ids.length ? ` · ${hit.module_ids.map(id => view.geometry.ships.find(s => s.id === hit.ship_id)?.modules.find(m => m.id === id)?.name ?? id).join("、")} −${hit.module_damage.toFixed(1)}` : ""}</p>)}
-    </details>}
+    {view && <HitLog view={view} />}
+    {view && <PersonnelLog view={view}/>}
+    {view && <InterceptionLog view={view}/>}
 
     </details>}
     <p className="battle-stage-note">当前阶段可通过“结束本场交战”进入结算；按距离撤离将在后续阶段接入。</p>
@@ -445,10 +446,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     {view&&state&&<DamageControlPanel view={view} shipId={state.direct_ship_id}
       disabled={busy||!active||!state.status.running||!state.available||!!view.snapshot.gunnery?.ending}
       uncertain={damageUncertain} onCommand={intent=>void sendDamageControl(intent)}/>}
-    {view?.snapshot.gunnery?.fireproof&&<section aria-label="交战防火与火情"><h3>防火与火情</h3><p>防火仅降低新起火概率；已有火情需要损管灭火。</p>
-      {view.snapshot.gunnery.fireproof.map(s=>{const ship=view.geometry.ships.find(v=>v.id===s.ship_id);const fires=view.snapshot.gunnery?.damage_control?.fires.filter(f=>f.ship_id===s.ship_id)??[];
-        return <article key={s.ship_id}><h4>{ship?.name??s.ship_id}</h4><p>{s.decks.map(d=>`第 ${d.deck_level} 层：${d.multiplier<1?`起火概率降低 ${((1-d.multiplier)*100).toFixed(0)}%`:'无额外防火'}`).join(' · ')}</p>
-          <p>{fires.length?fires.map(f=>`${ship?.modules.find(m=>m.id===f.module_id)?.name??f.module_id} 正在燃烧（强度 ${(f.intensity_units/1000).toFixed(2)}）`).join('、'):'当前无火情'}</p></article>;})}</section>}
+    {view && <FireSummary view={view}/>}
     {view?.snapshot.gunnery?.fuel&&<section aria-label="燃料储备"><h3>燃料储备</h3><p>发动机运行不消耗燃料；仅燃料槽耐久归零时损失其中燃料。</p>
       {view.snapshot.gunnery.fuel.map(s=><details key={s.ship_id} open={s.ship_id===state?.direct_ship_id}><summary>{view.geometry.ships.find(v=>v.id===s.ship_id)?.name} · 燃料 {s.total_units.toFixed(2)}</summary>
         {s.tanks.map(t=><p key={t.tank_id}>{fuelTankName(t,Object.fromEntries(view.geometry.ships.find(v=>v.id===s.ship_id)?.modules.map(m=>[m.id,m.name])??[]))}：燃料 {t.quantity_units.toFixed(2)} / {t.capacity_units} · 耐久 {t.durability_points.toFixed(1)} / {t.maximum_points}{t.durability_points<=0?' · 已损毁':''}</p>)}</details>)}</section>}
@@ -459,9 +457,8 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       canPrepare={!entryUncertain && !!state?.settlement?.saved}
       onSave={id => void storedAction("save", id)} onInspect={id => void storedAction("inspect", id)}
       onRefresh={() => void storedAction("refresh")} onDeploy={(id, revision) => void storedAction("deploy", id, revision)} />}
-    {view?.snapshot.gunnery?.damage && <details open><summary>命中记录 · {view.snapshot.gunnery.damage.hits} 次</summary>
-      {view.snapshot.gunnery.damage.recent.slice(-5).map(hit => <p key={hit.projectile_id}>{view.geometry.ships.find(s => s.id === hit.ship_id)?.name} · 第 {hit.deck_level} 层 · {hit.projectile_type ? ammunitionName(hit.projectile_type)+' · ' : ''}{{ penetrated: "击穿", stopped: "装甲阻挡", ricochet: "跳弹", module: "外部模块命中" }[hit.outcome] ?? hit.outcome}{hit.module_ids.length ? ` · ${hit.module_ids.map(id => view.geometry.ships.find(s => s.id === hit.ship_id)?.modules.find(m => m.id === id)?.name ?? id).join("、")} −${hit.module_damage.toFixed(1)}` : ""}</p>)}
-    </details>}
+    {view && <HitLog view={view} open />}
+    {view && <PersonnelLog view={view}/>}
     {view && <><TacticalViewport view={view} active={active} selected={selected} onSelect={setSelected}
       gunControl={view.snapshot.gunnery && state ? { ownShipId: state.direct_ship_id, weaponId, weaponIds: controlledGuns.map(g=>g.module_id), selectionKey: groupId ?? weaponId ?? "", mode: gunMode ?? "auto", attackLayer: gunLayer,
         enabled: active && state.status.running && state.available && !busy && gunUncertain === null, canAim: !!gunMode && !!gunLayer,
@@ -474,6 +471,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       <div className="editor-row">{view.geometry.ships.map(s => <button key={s.id} onClick={() => setSelected(s.id)}>{s.name}</button>)}</div>
       {pose && <p>速度 {pose.speed_mps.toFixed(2)} m/s · 转速 {(pose.yaw_rate_radps * 180 / Math.PI).toFixed(2)} °/s · 船壳 {(pose.hull_integrity * 100).toFixed(1)}%</p>}
       {pose && durability && <p>结构耐久 {(pose.hull_integrity*durability.maximum_points).toFixed(0)} / {durability.maximum_points.toFixed(0)} · 由结构体积与材料冗余决定</p>}
+      {pose && view && <PersonnelPanel view={view} shipId={pose.id}/>}
       {pose && <details><summary>所选舰船模块耐久</summary>{pose.modules.map(m => <p key={m.id}>{view.geometry.ships.find(s => s.id === pose.id)?.modules.find(v => v.id === m.id)?.name ?? m.id}：{m.durability.toFixed(1)}{m.durability <= 0 ? " · 已损毁" : ""}</p>)}</details>}
       <details><summary>实时推进响应</summary>{state?.engines.map(e => <p key={e.id}>{view.geometry.ships.find(s => s.id === state.direct_ship_id)?.modules.find(m => m.id === e.id)?.name ?? e.id}：目标 {e.target}% / 实际 {e.actual}%</p>)}</details></>}
   </section>;

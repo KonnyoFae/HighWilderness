@@ -3,11 +3,12 @@
 Ship state remains in P3. World ownership/time are caller assertions until ST1;
 this module never claims to have applied a result to a strategic world.
 """
-from math import hypot, pi
+from math import pi
 from . import persistent_ship as ps, battle_preparation as bp
 from . import prepared_deployment as deployment
 from .tactical_damage import DamageState
 from .tactical import render_static
+from .tactical_limits import MAX_DEPLOYED_SHIPS
 from 高天荒野舰艇统一战术场景 import TacticalSceneShipBinding
 
 INTERFACE = 'gaotian.tactical-encounter/st0-v1'
@@ -27,7 +28,7 @@ def parse(value):
         for k in ('side_id', 'fleet_id', 'flagship_instance_id'): ps.identifier(side[k], '$.'+k)
         ps.need(side['side_id'] not in sides and side['fleet_id'] not in fleets, '$.sides', '阵营或舰队重复')
         sides.add(side['side_id']); fleets.add(side['fleet_id'])
-        ps.need(type(side['ships']) is list and 1 <= len(side['ships']) <= 15, '$.ships', '阵营必须提供舰船')
+        ps.need(type(side['ships']) is list and 1 <= len(side['ships']) < MAX_DEPLOYED_SHIPS, '$.ships', '阵营必须提供舰船')
         members = set()
         for ship in side['ships']:
             ps.obj(ship, 'instance_id revision deployment', '$.ships')
@@ -39,7 +40,7 @@ def parse(value):
             for k in ('x_m', 'y_m'): ps.number(pose[k], '$.'+k, -1_000_000, 1_000_000)
             ps.number(pose['heading_rad'], '$.heading_rad', -pi, pi)
         ps.need(side['flagship_instance_id'] in members, '$.flagship_instance_id', '旗舰不在本方名单内')
-    ps.need(v['player_side_id'] in sides and len(instances) <= 16, '$.sides', '玩家阵营缺失或超出当前 16 舰上限')
+    ps.need(v['player_side_id'] in sides and len(instances) <= MAX_DEPLOYED_SHIPS, '$.sides', f'玩家阵营缺失或超出当前 {MAX_DEPLOYED_SHIPS} 舰上限')
     return v
 
 
@@ -65,14 +66,9 @@ def load(store, request):
 def build(request, ships, template, technical_scenario):
     seeds, bindings, instances, latches, names, mapping = [], [], [], [], {}, []
     direct = None
-    radii = []
     for side, member, design, record in ships:
         pose = member['deployment']
-        radius = max((hypot(*p) for d in design.snapshot.hull.normalized_blueprint.decks
-            for region in d.regions for p in region.vertices_m), default=50)
-        for x, y, other in radii:
-            ps.need(hypot(pose['x_m']-x, pose['y_m']-y) > radius+other, '$.deployment', '部署舰体重叠或相切')
-        radii.append((pose['x_m'], pose['y_m'], radius))
+        # Ships may overlap: unmodelled vertical separation prevents collisions.
         seed, instance = deployment.load_ship(design, record, x=pose['x_m'], y=pose['y_m'], heading=pose['heading_rad'])
         sid = record['ship_id']
         if side['side_id'] == request['player_side_id'] and member['instance_id'] == side['flagship_instance_id']: direct = sid

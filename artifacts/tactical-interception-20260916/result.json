@@ -1,0 +1,133 @@
+{
+  "status": "TACTICAL_INTERCEPTION_UI_PASS",
+  "checks": [
+    "A normally prepared 30 mm gun detects and shoots a real incoming 120 mm shell; six swept contacts reduce durability 6 to 0, protecting the ship and consuming actual ready rounds",
+    "Production weapon-group controls toggle dedicated defense and ordinary fire; records distinguish partial hits from kills, and pause freezes all changes",
+    "Settlement and another preparation/deployment preserve ammunition expenditure without restoring fired rounds or carrying over old threats"
+  ],
+  "shots": 10,
+  "initial_rounds": 60,
+  "remaining_rounds": 50,
+  "result": {
+    "hits": 6,
+    "intercepted": 1,
+    "policy": {
+      "durability_tiers": [
+        [
+          75,
+          3
+        ],
+        [
+          120,
+          6
+        ]
+      ],
+      "high_speed_mps": 1000,
+      "id": "gaotian.point-defense/contact-durability/4-v1",
+      "intrinsic_error_mdeg": 10,
+      "observation_steps": 6,
+      "prediction_seconds": 15,
+      "round_damage": 1
+    },
+    "recent": [
+      {
+        "durability_after": 5,
+        "durability_before": 6,
+        "height_layer": "upper",
+        "impact_fraction": 0.7146209466455323,
+        "intercepted": false,
+        "position_m": [
+          0,
+          702.0894183625376
+        ],
+        "projectile_id": 1000,
+        "round_id": 1001,
+        "source_ship_id": "ship.caliber.30",
+        "step": 61,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 4,
+        "durability_before": 5,
+        "height_layer": "upper",
+        "impact_fraction": 0.7048800021168362,
+        "intercepted": false,
+        "position_m": [
+          0,
+          669.8430182634582
+        ],
+        "projectile_id": 1000,
+        "round_id": 1003,
+        "source_ship_id": "ship.caliber.30",
+        "step": 63,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 3,
+        "durability_before": 4,
+        "height_layer": "upper",
+        "impact_fraction": 0.5742600398220099,
+        "intercepted": false,
+        "position_m": [
+          0,
+          189.35588900856408
+        ],
+        "projectile_id": 1000,
+        "round_id": 1007,
+        "source_ship_id": "ship.caliber.30",
+        "step": 93,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 2,
+        "durability_before": 3,
+        "height_layer": "upper",
+        "impact_fraction": 0.6025889197267745,
+        "intercepted": false,
+        "position_m": [
+          0,
+          172.92837923460988
+        ],
+        "projectile_id": 1000,
+        "round_id": 1008,
+        "source_ship_id": "ship.caliber.30",
+        "step": 94,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 1,
+        "durability_before": 2,
+        "height_layer": "upper",
+        "impact_fraction": 0.6348372550562017,
+        "intercepted": false,
+        "position_m": [
+          0,
+          156.445854054679
+        ],
+        "projectile_id": 1000,
+        "round_id": 1009,
+        "source_ship_id": "ship.caliber.30",
+        "step": 95,
+        "weapon_id": "weapon_upper_port"
+      },
+      {
+        "durability_after": 0,
+        "durability_before": 1,
+        "height_layer": "upper",
+        "impact_fraction": 0.6643748119225307,
+        "intercepted": true,
+        "position_m": [
+          0,
+          140.0141897726381
+        ],
+        "projectile_id": 1000,
+        "round_id": 1010,
+        "source_ship_id": "ship.caliber.30",
+        "step": 96,
+        "weapon_id": "weapon_upper_port"
+      }
+    ],
+    "threats": []
+  },
+  "scope": "Production React/Python, isolated storage, one technical incoming round; no forced contacts, durability deductions or automatic kill. Not fleet-scale/native-window acceptance."
+}

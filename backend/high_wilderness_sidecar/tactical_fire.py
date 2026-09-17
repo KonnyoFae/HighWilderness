@@ -1,10 +1,7 @@
-"""D1b finite fires and firefighting; staged with real damage and inventories.
-
-No full-world checkpoint, spreading, fuel-tank/cargo burn or module repair.
-The explicit ignition source is test-only; normal/AP ammunition is unchanged.
-"""
+"""Finite legacy and deck-local spatial fires, suppression and atomic inventory use."""
 from dataclasses import dataclass, replace
 from . import persistent_ship as ps, damage_control_resources as dc
+from . import tactical_spatial_fire as spatial
 from .simplified_flight import ImpactBatch
 from .tactical_devices import DeviceOperation
 
@@ -12,9 +9,26 @@ from .tactical_devices import DeviceOperation
 @dataclass(frozen=True)
 class Fire:
     ship_index: int
-    module_id: str
+    module_id: str | None
     intensity_units: int
     remaining_steps: int
+    zone_id: str | None = None
+    spread_steps: int = 0
+    random_state: int = 0
+
+    @property
+    def target_id(self):
+        return self.zone_id or self.module_id
+
+    @property
+    def key(self):
+        return self.ship_index, self.target_id
+
+    def record(self):
+        value = dict(module_id=self.module_id, intensity_units=self.intensity_units, remaining_steps=self.remaining_steps)
+        if self.zone_id:
+            value.update(zone_id=self.zone_id, spread_steps=self.spread_steps, random_state=self.random_state)
+        return value
 
 
 @dataclass(frozen=True)
@@ -40,20 +54,26 @@ class Controller:
     repair_module_id: str | None = None
     selection_revision: int = -1
     emergency_target: str | None = None
-    emergency_steps: int = 0
+    emergency_steps: float = 0
     emergency_spent: int = 0
+    fire_target: str | None = None
 
 
 class FireRuntime:
-    def __init__(self, battle, *, allow_test_ignition=False):
+    def __init__(self, battle, scenario, *, allow_test_ignition=False):
         ps.need(type(allow_test_ignition) is bool, '$.allow_test_ignition', 'Expected explicit test-fixture flag')
         self.battle = battle
         self.allow_test_ignition = allow_test_ignition
+        self.zones = tuple(spatial.compile_zones(binding.snapshot.hull, seed.resources.modules)
+            for binding, seed in zip(scenario.bindings, battle.session._seeds))
+        self.spatial_policy = spatial.policy()
+        self.armor_indices = tuple({edge.key:k for k,edge in enumerate(edges)} for edges in battle.damage.edges) if battle.damage else ()
         self.profiles, fires, controllers = [], [], []
         for n, inv in enumerate(battle.inventory.inventories):
             spec = inv._definition.get('continuous_damage')
             self.profiles.append(None if spec is None else FireProfile(**spec))
             if spec:
+                spatial.validate_rows(inv._value['fires'], self.zones[n])
                 fires.extend(Fire(n, **f) for f in inv._value['fires'])
                 controllers.extend(Controller(n, k) for k in sorted(inv._damage_controls))
         self.profiles = tuple(self.profiles)
@@ -94,8 +114,7 @@ class FireRuntime:
     def _write_fires(self, inventories, fires):
         for n, inv in enumerate(inventories):
             if self.profiles[n] is not None:
-                rows = [dict(module_id=f.module_id, intensity_units=f.intensity_units, remaining_steps=f.remaining_steps)
-                        for f in fires if f.ship_index == n]
+                rows = [f.record() for f in fires if f.ship_index == n]
                 if rows != inv._value['fires']:
                     inv._value = dict(inv._value, fires=rows)
 
@@ -155,14 +174,13 @@ class FireRuntime:
             ship = b.session.world.ships[n]
             ps.need(ship.motion.hull_integrity_fraction > 0 and ship.command.lifecycle.physical_status != 'exited', '$.target', 'Cannot ignite absent/collapsed ship')
             key = n, v['module_id']
-            old = next((f for f in fires if (f.ship_index, f.module_id) == key), None)
+            old = next((f for f in fires if f.key == key), None)
             fire = Fire(*key, min(profile.max_intensity_units, args['intensity_units']+(old.intensity_units if old else 0)),
                         max(args['duration_steps'], old.remaining_steps if old else 0))
-            fires = tuple(sorted([f for f in fires if (f.ship_index, f.module_id) != key]+[fire], key=lambda f:(f.ship_index,f.module_id)))
+            fires = tuple(sorted([f for f in fires if f.key != key]+[fire], key=lambda f:f.key))
             inventories[n] = inventories[n].fork()
             # Update only this candidate; do not mutate another ship's inventory.
-            inventories[n]._value = dict(inventories[n]._value, fires=[dict(module_id=f.module_id,
-                intensity_units=f.intensity_units, remaining_steps=f.remaining_steps) for f in fires if f.ship_index == n])
+            inventories[n]._value = dict(inventories[n]._value, fires=[f.record() for f in fires if f.ship_index == n])
             recent = (recent+(dict(kind='test_ignition', ship_id=v['ship_id'], module_id=v['module_id'], step=b.session.world.fixed_step),))[-100:]
         else:
             ps.need(False, '$.kind', 'Unsupported damage-control command')
@@ -178,36 +196,77 @@ class FireRuntime:
         after both, before any resource use or preparation completion.
         """
         if not self.fires:
-            return self.fires, (), batch
+            return self.fires, (), batch, ()
         b = self.battle
         damage = {(op.ship_id, op.module_id): op.amount for op in batch.device_operations}
         hull = dict(batch.hull_damage)
-        fires, events = [], []
+        fires, events, armor_losses = [], [], {}
         for f in self.fires:
             n = f.ship_index; ship = world.ships[n]; p = self.profiles[n]
             if ship.motion.hull_integrity_fraction <= 0 or ship.command.lifecycle.physical_status == 'exited':
                 fires.append(f)
                 continue
-            key = ship.ship_id, f.module_id
-            hp = ship.devices.modules[b._indices[n][f.module_id]].durability_points
-            module_loss = min(max(0, hp-damage.get(key, 0)), p.module_damage_points_per_intensity_s*f.intensity_units/60000)
-            hull_loss = min(max(0, ship.motion.hull_integrity_fraction-hull.get(ship.ship_id, 0)),
+            zone = self.zones[n][f.zone_id] if f.zone_id else None
+            ids = zone.modules if zone else (f.module_id,)
+            module_loss = 0.
+            module_losses = []
+            for mid in ids:
+                key = ship.ship_id, mid
+                hp = ship.devices.modules[b._indices[n][mid]].durability_points
+                loss = min(max(0, hp-damage.get(key, 0)), p.module_damage_points_per_intensity_s*f.intensity_units/60000)
+                if loss: damage[key] = damage.get(key, 0)+loss
+                if loss: module_losses.append(dict(module_id=mid,damage_points=loss))
+                module_loss += loss
+            hull_loss = 0. if zone and zone.surface else min(max(0, ship.motion.hull_integrity_fraction-hull.get(ship.ship_id, 0)),
                 p.hull_damage_points_per_intensity_s*f.intensity_units/60000*self.inverse_hull[n])
-            if module_loss: damage[key] = damage.get(key, 0)+module_loss
+            if zone and zone.surface:
+                for edge in zone.armor:
+                    armor_losses[n,edge] = armor_losses.get((n,edge),0.)+self.spatial_policy['armor_damage_points_per_intensity_s']*f.intensity_units/60000
             if hull_loss: hull[ship.ship_id] = hull.get(ship.ship_id, 0)+hull_loss
             intensity = max(0, f.intensity_units-p.natural_decay_units_per_step)
             duration = f.remaining_steps-1
             if intensity and duration:
-                fires.append(replace(f, intensity_units=intensity, remaining_steps=duration))
+                fires.append(replace(f, intensity_units=intensity, remaining_steps=duration,
+                    spread_steps=max(0,f.spread_steps-1) if zone else 0))
             events.append(dict(kind='fire_damage', ship_id=ship.ship_id, module_id=f.module_id, step=world.fixed_step,
-                module_damage=module_loss, hull_damage_fraction=hull_loss))
+                zone_id=f.zone_id, module_damage=module_loss, hull_damage_fraction=hull_loss,module_losses=module_losses,
+                surface=zone.surface if zone else False,deck_level=zone.level if zone else b.damage.module_base_levels[n][f.module_id]))
             if not intensity or not duration:
                 events.append(dict(kind='fire_burned_out', ship_id=ship.ship_id, module_id=f.module_id, step=world.fixed_step))
         indices = {s.ship_id:n for n,s in enumerate(world.ships)}
         operations = tuple(DeviceOperation(world.epoch, sid, mid,
             world.ships[indices[sid]].devices.modules[b._indices[indices[sid]][mid]].sequence+1,
             'damage', amount, world.fixed_step, 'closing') for (sid, mid), amount in sorted(damage.items()))
-        return tuple(fires), tuple(events), ImpactBatch(operations, tuple(sorted(hull.items())))
+        return tuple(fires), tuple(events), ImpactBatch(operations, tuple(sorted(hull.items()))), tuple((n,key,v) for (n,key),v in sorted(armor_losses.items()))
+
+    def spread(self, world, fires):
+        """Only surviving pre-existing fires may spread; children wait a full interval."""
+        remaining = {f.key:f for f in fires}
+        events = []
+        for f in sorted(fires, key=lambda f:f.key):
+            if not f.zone_id or f.spread_steps:
+                continue
+            ship = world.ships[f.ship_index]
+            if ship.motion.hull_integrity_fraction <= 0 or ship.command.lifecycle.physical_status != 'operational':
+                continue
+            zone = self.zones[f.ship_index][f.zone_id]
+            state = f.random_state
+            multiplier = next((d['multiplier'] for d in self.battle.ignition.decks[f.ship_index] if d['deck_level']==zone.level),1.)
+            probability = min(1.,self.spatial_policy['spread_probability_at_unit_intensity']*f.intensity_units/1000)*multiplier
+            for key in zone.neighbors:
+                if (f.ship_index,key) in remaining:
+                    continue
+                state, roll = spatial.random_step(state)
+                if roll >= probability:
+                    continue
+                child = self.zones[f.ship_index][key]
+                remaining[f.ship_index,key] = Fire(f.ship_index, child.modules[0] if child.modules else None,
+                    max(1,int(f.intensity_units*self.spatial_policy['child_intensity_ratio'])), f.remaining_steps,
+                    key, self.spatial_policy['spread_interval_steps'], spatial.seed(state,key))
+                events.append(dict(kind='fire_spread',ship_id=ship.ship_id,zone_id=key,source_zone_id=f.zone_id,
+                    deck_level=child.level,surface=child.surface,step=world.fixed_step))
+            remaining[f.key] = replace(f,spread_steps=self.spatial_policy['spread_interval_steps'],random_state=state)
+        return tuple(remaining[k] for k in sorted(remaining)), tuple(events)
 
     def reason(self, controller, world, available):
         n = controller.ship_index
@@ -225,7 +284,7 @@ class FireRuntime:
                 inv.command(epoch=inv.epoch, sequence=inv.sequence+1, kind='cancel_damage_control_preparation', target=c.module_id)
 
     def work(self, world, inventories, fires, available, *, ending):
-        remaining = {(f.ship_index, f.module_id):f for f in fires}
+        remaining = {f.key:f for f in fires}
         controllers, events = [], []
         for c in self.controllers:
             n, key = c.ship_index, c.module_id
@@ -248,21 +307,25 @@ class FireRuntime:
                         c = replace(c, status='no_engineering_parts', blocked_key=retry)
                 controllers.append(c)
                 continue
-            budget = min(device['quantity_units'], p.suppression_units_per_step)
+            efficiency = self.battle.crew_efficiency(world,n,key,'damage_control.firefighting')
+            budget = min(device['quantity_units'], int(p.suppression_units_per_step*efficiency))
             spent = 0
-            for target in sorted((f for f in remaining.values() if f.ship_index == n), key=lambda f:(-f.intensity_units,f.module_id)):
-                if not budget: break
+            target = remaining.get((n,c.fire_target))
+            if target is None:
+                target = min((f for f in remaining.values() if f.ship_index == n),key=lambda f:(-f.intensity_units,f.target_id),default=None)
+            if target is not None:
                 amount = min(budget, target.intensity_units)
-                tkey = n, target.module_id
+                tkey = target.key
                 if amount == target.intensity_units:
                     del remaining[tkey]
                     events.append(dict(kind='fire_extinguished', ship_id=world.ships[n].ship_id, module_id=target.module_id, step=world.fixed_step))
                 else: remaining[tkey] = replace(target, intensity_units=target.intensity_units-amount)
-                budget -= amount; spent += amount
+                spent = amount
                 events.append(dict(kind='fire_suppressed', ship_id=world.ships[n].ship_id, device_id=key,
-                    module_id=target.module_id, step=world.fixed_step, suppression_units=amount, resource_units=amount))
+                    module_id=target.module_id, zone_id=target.zone_id, step=world.fixed_step, suppression_units=amount, resource_units=amount))
             if spent: inv.spend_damage_control(key, spent)
-            controllers.append(replace(c, status='firefighting' if spent else 'idle', blocked_key=None))
+            controllers.append(replace(c, status='firefighting' if spent else 'idle', blocked_key=None,
+                fire_target=target.target_id if target and target.key in remaining else None))
         result = tuple(remaining[k] for k in sorted(remaining))
         self._write_fires(inventories, result)
         return result, tuple(controllers), tuple(events)
@@ -283,10 +346,13 @@ class FireRuntime:
                                  reserved=reserved[cost['good_id']]) for cost in spec['cargo_costs']],
                 mode_pending=(b.session.world.ships[c.ship_index].ship_id,c.module_id) in self.pending_modes,
                 target_module_id=c.target_module_id, repair_module_id=c.repair_module_id,
+                fire_target=c.fire_target, fire_target_label=self.zones[c.ship_index][c.fire_target].label
+                    if c.fire_target in self.zones[c.ship_index] else None,
                 emergency_target=c.emergency_target, emergency_progress=c.emergency_steps/b.repair.emergency_steps,
                 emergency_remaining_s=(b.repair.emergency_steps-c.emergency_steps)/60 if c.emergency_target else None,
                 remaining_preparation_steps=max(0, inv._due.get(c.module_id,0)-b.session.world.fixed_step)))
         return dict(policy=dc.FIRE_POLICY, command_sequence=self.sequence,
-            fires=[dict(ship_id=b.session.world.ships[f.ship_index].ship_id, module_id=f.module_id,
-                intensity_units=f.intensity_units, remaining_steps=f.remaining_steps) for f in self.fires],
+            fires=[dict(ship_id=b.session.world.ships[f.ship_index].ship_id, **f.record(),
+                **(dict(label=self.zones[f.ship_index][f.zone_id].label,deck_level=self.zones[f.ship_index][f.zone_id].level,
+                    surface=self.zones[f.ship_index][f.zone_id].surface,position_local_m=self.zones[f.ship_index][f.zone_id].center) if f.zone_id else {})) for f in self.fires],
             devices=devices, recent=[dict(e) for e in self.recent])

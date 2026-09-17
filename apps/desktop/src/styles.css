@@ -59,6 +59,11 @@ body { margin: 0; min-width: 320px; min-height: 100vh; }
 .battle-inspector .editor-row > label { display: grid; gap: 6px; width: 100%; min-width: 0; }
 .battle-inspector select { max-width: 100%; width: 100%; }
 .battle-inspector .editor-row > button { max-width: 100%; }
+.personnel-panel { margin-block: 16px; }
+.personnel-panel h4 { margin: 0 0 8px; }
+.personnel-panel summary { cursor: pointer; }
+.personnel-post { padding: 8px 0; border-bottom: 1px solid #35585b; }
+.personnel-post p { margin: 8px 0 0; }
 .battle-records { border-top: 1px solid #35585b; margin-top: 16px; padding-top: 14px; }
 .battle-records > summary { cursor: pointer; color: #aac9bd; }
 .battle-records section { margin-top: 18px; }
@@ -398,6 +403,65 @@ h2 { margin: 7px 0 0; font-size: 19px; }
 .gun-orders { min-width: 0; border: 0; padding: 0; margin: 0; }
 .gun-control-panel select { max-width: 100%; }
 .gun-control-panel details { margin: 10px 0; }
+.deck-hit-record { padding: 10px 0; border-bottom: 1px solid #35585b; }
+.deck-hit-record p { margin: 0 0 4px; }
+.deck-hit-record small { display: block; line-height: 1.6; }
+.fire-list ul { max-height: 200px; overflow-y: auto; padding-left: 22px; }
+.fire-list li { margin-block: 6px; line-height: 1.5; }
 .gun-control-panel summary { cursor: pointer; }
 .gun-order-summary { border-left: 3px solid #76d6bc; padding-left: 9px; }
 .gun-members > div { border-top: 1px solid #425259; padding: 10px 0; }
+/* Dual-fleet preparation: both comparison views remain present while editing. */
+.preparation-workspace { color: #dce5ec; background: #101922; border: 1px solid #344657; border-radius: 12px; overflow: hidden; }
+.preparation-workspace button, .preparation-workspace input, .preparation-workspace select { font: inherit; font-size: 12px; border: 1px solid #496070; border-radius: 5px; padding: 7px 9px; color: #dfebf2; background: #243847; }
+.preparation-workspace button { cursor: pointer; }.preparation-workspace button:hover:not(:disabled) { background: #365366; }
+.preparation-workspace button:disabled { opacity: .45; cursor: default; }.preparation-workspace button.primary { background: #316978; border-color: #73b9c4; }
+.preparation-workspace input, .preparation-workspace select { background: #0f202b; }.preparation-workspace input:focus { outline: 1px solid #74c2d2; }
+.preparation-toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 15px 20px; background: #182530; border-bottom: 1px solid #344657; }
+.preparation-toolbar h2 { margin: 2px 16px 0 0; font-size: 23px; }
+.preparation-toolbar small, .preparation-details header small { color: #9bb3c3; }
+.preparation-toolbar label { display: flex; align-items: center; gap: 6px; }
+.preparation-toolbar input { width: 95px; }
+.formation-tabs { display: flex; gap: 4px; }
+.formation-tabs [aria-selected="true"], .preparation-detail-tabs [aria-pressed="true"] { color: #effcff; background: #275565; border-color: #67b8c7; }
+.preparation-feedback { padding: 0 20px; font-size: 13px; }
+.preparation-feedback p { margin: 6px 0; }
+.preparation-stage { display: grid; grid-template-columns: 230px minmax(260px, 1fr) 360px; gap: 12px; padding: 12px; height: max(630px, calc(100vh - 255px)); background: radial-gradient(ellipse at center, #23313e, #111b25); }
+.preparation-float { background: #192632f5; border: 1px solid #425466; border-radius: 9px; padding: 13px; overflow-y: auto; min-width: 0; box-shadow: 0 6px 22px #0005; }
+.preparation-float h3 { margin: 5px 0 12px; }
+.preparation-float p { font-size: 12px; line-height: 1.6; }
+.preparation-float label { display: block; font-size: 12px; margin: 8px 0; }
+.preparation-float input, .preparation-float select { max-width: 100%; box-sizing: border-box; }
+.preparation-add > button, .preparation-add label select, .preparation-roster button, .preparation-add details > button { width: 100%; margin-bottom: 6px; }
+.preparation-roster { padding: 10px 0; border-top: 1px solid #354757; }
+.preparation-roster > strong { display: block; font-size: 12px; margin-bottom: 8px; }
+.preparation-roster.enemy > strong { color: #eda085; }.preparation-roster.player > strong { color: #83cbd4; }
+.preparation-roster button { text-align: left; display: flex; justify-content: space-between; gap: 6px; }
+.preparation-roster button.selected { border-color: #83cbd4; background: #28444f; }
+.preparation-views { display: grid; grid-template-rows: 1fr 1fr; gap: 12px; min-height: 0; min-width: 0; }
+.formation-view { position: relative; display: flex; flex-direction: column; min-height: 0; border: 1px solid #425668; border-radius: 7px; overflow: hidden; background: #15222d; }
+.formation-view.enemy { border-top: 3px solid #bb7564; }.formation-view.player { border-top: 3px solid #579aa8; }
+.formation-view header { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 8px 10px; font-size: 13px; background: #1e2e3a; }
+.formation-view header > div { display: flex; align-items: center; gap: 3px; }
+.formation-view header small { font-weight: normal; opacity: .65; }
+.formation-view header button { padding: 3px 7px; font-size: 12px; }.formation-view header select { padding: 2px; width: 44px; }
+.formation-view svg { display: block; width: 100%; flex: 1; min-height: 0; touch-action: none; }
+.formation-view svg [role="button"] { cursor: grab; }.formation-view svg [role="button"]:focus { outline: none; filter: brightness(1.4); }
+.formation-view footer { color: #93a8b7; font-size: 10px; padding: 6px 10px; }
+.formation-empty { position: absolute; left: 0; right: 0; top: 45%; text-align: center; color: #8299a9; pointer-events: none; }
+.preparation-detail-tabs { display: flex; gap: 4px; margin: 12px 0; position: sticky; top: -13px; padding: 8px 0; background: #192632; z-index: 1; }
+.preparation-detail-tabs button { flex: 1; min-width: 0; padding: 7px 3px; }
+.preparation-details .preparation-panel { border: 0; background: transparent; box-shadow: none; padding: 0; }
+.preparation-details .preparation-panel .editor-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.preparation-details .preparation-panel button { font-size: 12px; padding: 6px 8px; }
+.preparation-details .preparation-panel fieldset { padding: 8px; min-width: 0; }
+.preparation-details .preparation-input { display: block; }
+.preparation-details .preparation-input input { display: block; width: 100%; margin-top: 5px; }
+.preparation-details .preparation-panel .preparation-weapon { padding: 7px; margin: 8px 0; }
+.preparation-details .preparation-panel h3 { font-size: 14px; }.preparation-details .preparation-panel h4 { font-size: 13px; }
+.selected-preparation-module { padding: 10px; background: #314342; border-left: 3px solid #e9bd76; }
+.formation-properties input { width: 100%; }.formation-properties button { margin: 4px 4px 4px 0; }
+.formation-distance-note { margin: 0; padding: 8px 16px 12px; color: #9eb0be; font-size: 12px; }
+.test-supply input { width: 100%; }.test-supply { margin-top: 12px; }
+@media (max-width: 1150px) { .preparation-stage { grid-template-columns: 185px minmax(220px, 1fr) 300px; gap: 7px; padding: 7px; } .formation-view header { flex-wrap: wrap; } }
+@media (max-width: 800px) { .preparation-stage { grid-template-columns: 1fr 1fr; height: auto; } .preparation-views { grid-column: 1 / -1; grid-row: 1; height: 680px; } .preparation-float { max-height: 600px; } }

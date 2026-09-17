@@ -7,11 +7,12 @@ Flight mass/inertia remain the prepared model until the loadout compiler lands.
 from copy import copy, deepcopy
 from threading import get_ident
 from uuid import uuid4
+from math import ceil
 
 from . import persistent_ship as ps, damage_control_resources as dc
 
 CHECKPOINT_INTERFACE = 'gaotian.inventory-checkpoint/p1b-v1alpha1'
-REASONS = frozenset(('load', 'unload', 'consume', 'reload', 'discharge', 'discard', 'damage_control_preparation', 'damage_control_use', 'firefighting', 'module_repair', 'hull_repair','tank_destroyed','emergency_lift_repair','emergency_lift_refill'))
+REASONS = frozenset(('load', 'unload', 'consume', 'reload', 'discharge', 'discard', 'damage_control_preparation', 'damage_control_use', 'firefighting', 'module_repair', 'hull_repair','tank_destroyed','emergency_lift_repair','emergency_lift_refill','magazine_detonation'))
 
 
 class InventorySession:
@@ -59,6 +60,7 @@ class InventorySession:
         self._due.update({d['module_id']: ps.integer(fixed_step + d['preparation']['remaining_steps'], '$.preparation.due')
                           for d in value.get('damage_controls', ()) if d['preparation']})
         self._cooldown = {w['module_id']: ps.integer(fixed_step + w['cooldown_steps'], '$.cooldown') for w in value['weapons']}
+        self._weapon_work_rates = {}  # trusted staffing at batch start; existing work keeps its timer
         self._baseline = self._totals(value)
         self._next_due = min(self._due.values(), default=None)
         if any(w['reload'] and (not self._alive(w['module_id']) or any(
@@ -333,12 +335,39 @@ class InventorySession:
                 else:
                     allocations = self._reload_allocations(value, weapon, recipe_id)
                     recipe = self._recipes[recipe_id]
-                    weapon['reload'] = dict(recipe_id=recipe_id, remaining_steps=recipe['reload_steps'], magazine_allocations=allocations)
-                    due[target] = ps.integer(self._step + recipe['reload_steps'], '$.reload.due')
+                    rate = self._weapon_work_rates.get(target,1.)
+                    ps.need(rate>0,'$.target','Weapon crew unavailable')
+                    duration = ceil(recipe['reload_steps']/rate)
+                    weapon['reload'] = dict(recipe_id=recipe_id, remaining_steps=duration, magazine_allocations=allocations)
+                    if rate!=1.:weapon['reload']['crew_work_rate'] = rate
+                    due[target] = ps.integer(self._step + duration, '$.reload.due')
         self._value, self._ledger, self._due, self._cooldown = value, ledger, due, cooldown
         self._next_due = min(due.values(), default=None)
         self._sequence, self._last = sequence, operation
         return True
+
+    def consume_destroyed_magazine(self, module_id, expected_quantity):
+        """Trusted damage effect, before advance completes reserved reloads.
+
+        Reservations are still physical stock. Cancel each affected whole batch
+        (including its special-material reservation); retain loaded rounds and
+        stock in other magazines. The battle validates destruction, atomically.
+        """
+        self._check()
+        ps.need(self._settlement is None, '$', 'Settled inventory is frozen')
+        ps.integer(expected_quantity, '$.expected_quantity', 1)
+        row = next((m for m in self._value['magazines'] if m['module_id'] == module_id), None)
+        ps.need(row is not None and row['quantity'] == expected_quantity, '$.magazine', 'Detonation stock changed')
+        value, ledger, due = deepcopy(self._value), dict(self._ledger), dict(self._due)
+        next(m for m in value['magazines'] if m['module_id'] == module_id)['quantity'] = 0
+        for weapon in value['weapons']:
+            if weapon['reload'] and any(a['module_id'] == module_id for a in weapon['reload']['magazine_allocations']):
+                weapon['reload'] = None
+                due.pop(weapon['module_id'])
+        self._record(ledger, 'ammunition', 'magazine_detonation', -expected_quantity)
+        self._value, self._ledger, self._due = value, ledger, due
+        self._next_due = min(due.values(), default=None)
+        self._reservation_revision += 1
 
     def advance(self, fixed_step, *, health=None, hull_integrity=None):
         """One fixed step, or same boundary for changed device health; never wall time.
@@ -449,6 +478,8 @@ class InventorySession:
                 base[key] = value[key]
             if 'fires' in value:
                 base['fires'] = value['fires']
+            if 'personnel' in value:
+                base['personnel'] = value['personnel']
             if 'fuel_tanks' in value:
                 base['fuel_tanks']=value['fuel_tanks'];base['fuel_units']=value['fuel_units']
             value = base

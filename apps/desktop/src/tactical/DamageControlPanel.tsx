@@ -1,14 +1,18 @@
 import type { TacticalView } from './model';
 import { goodName } from './preparation';
+import {FireList} from './FireList';
 
 export type DamageControlIntent = {module_id:string; kind:'enabled'|'repair_target'; arguments:Record<string,unknown>};
+export interface FireView {ship_id:string;module_id:string|null;intensity_units:number;remaining_steps:number;
+  zone_id?:string;label?:string;deck_level?:number;surface?:boolean;position_local_m?:number[];}
 export interface DamageControlView {
   command_sequence:number;
   devices:{ship_id:string;module_id:string;enabled:boolean;status:string;quantity_units:number;capacity_units:number;
     target_module_id:string|null;repair_module_id:string|null;remaining_preparation_steps:number;preparation_steps:number;mode_pending:boolean;
     emergency_target?:string|null;emergency_progress?:number;emergency_remaining_s?:number|null;
+    fire_target?:string|null;fire_target_label?:string|null;
     cargo_costs:{good_id:string;quantity:number;available:number;reserved:number}[]}[];
-  fires:{ship_id:string;module_id:string;intensity_units:number;remaining_steps:number}[];
+  fires:FireView[];
 }
 const statusName:Record<string,string> = {off:'已关闭',waiting:'等待执行',idle:'待机 · 无需维修',firefighting:'优先灭火中',
   preparing:'准备损管资源',no_engineering_parts:'工程零件不足',repairing_module:'维修部件中',repairing_hull:'修复船壳中',
@@ -24,14 +28,15 @@ export function DamageControlPanel({view,shipId,disabled,uncertain,onCommand}:{v
   const name=(id:string)=>geometry?.modules.find(m=>m.id===id)?.name??id;
   return <fieldset aria-label="损管操作" disabled={disabled||uncertain}>
     <legend>本舰损管</legend>
-    <p>启动后优先灭火。自动模式随后抢修已毁升力储罐，再修复其他受损部件和船壳；也可指定维修目标。其他已毁部件与装甲暂不可修复。</p>
+    <p>启动后优先灭火，每具设备同时处理一处火点。自动模式随后抢修已毁升力储罐，再修复其他受损部件和船壳；也可指定维修目标。其他已毁部件与装甲暂不可修复。</p>
     {pose?.descent && <p role="status" className="descent-warning">{pose.descent.paused ? '下坠进度已冻结' : `${pose.descent.next_layer ? '本舰正在下坠' : '雨层下坠，即将坠毁'} · 本段剩余 ${(pose.descent.remaining_s ?? 0).toFixed(1)} 秒`}。恢复正升力冗余即可解除。</p>}
     {uncertain&&<p role="alert">损管命令结果尚待确认，正在读取设备状态，请勿重复发令。</p>}
     {!devices.length&&<p>本舰没有可用的新配置损管设备。可在战前准备中重新导入带损管设备的栖装设计。</p>}
-    {!!fire?.fires.filter(f=>f.ship_id===shipId).length&&<p>当前火情：{fire.fires.filter(f=>f.ship_id===shipId).map(f=>`${name(f.module_id)}（强度 ${(f.intensity_units/1000).toFixed(2)}）`).join('、')}</p>}
+    <FireList fires={fire?.fires.filter(f=>f.ship_id===shipId)??[]} name={name}/>
     {devices.map((d,i)=><article className="preparation-weapon" key={d.module_id}>
       <h4>{name(d.module_id)} · 损管 {i+1}</h4>
       <p aria-live="off">{statusName[d.status]??d.status}{d.mode_pending?' · 启停等待下一步执行':''} · 资源 {(d.quantity_units/1000).toFixed(3)} / {d.capacity_units/1000} 点</p>
+      {d.status==='firefighting'&&d.fire_target&&<p>正在扑救：{d.fire_target_label??name(d.fire_target)}</p>}
       <div className="editor-row"><button aria-label={`损管 ${i+1} ${d.enabled?'关闭':'启动'}`} onClick={()=>onCommand({module_id:d.module_id,kind:'enabled',arguments:{enabled:!d.enabled}})}>{d.enabled?'关闭损管':'启动损管'}</button>
         <label>维修目标<select aria-label={`损管 ${i+1} 维修目标`} value={d.target_module_id??''} onChange={e=>onCommand({module_id:d.module_id,kind:'repair_target',arguments:{module_id:e.target.value||null}})}>
           <option value="">自动选择受损部件</option>{geometry?.modules.map(m=><option key={m.id} value={m.id}>{m.name} · 第 {m.deck_level} 层 · {m.id}{(pose?.modules.find(v=>v.id===m.id)?.durability??0)<=0?'（已毁）':''}</option>)}

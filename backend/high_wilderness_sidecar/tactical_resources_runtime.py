@@ -48,6 +48,7 @@ class ResourceState:
     power: object = None
     staffing: tuple = ()
     allocations: tuple = ()
+    engine_crew_efficiencies: tuple | None = None
 
 
 class ResourceKernel:
@@ -75,6 +76,27 @@ class ResourceKernel:
 
     def initial(self):
         return ResourceState(self.seed.modes,self.seed.crew,self.seed.policy,latched=(False,)*len(self.engines))
+
+    def casualties(self, state, losses):
+        """Trusted closing damage; preserves player resource-command sequencing."""
+        counts = dict(state.crew)
+        require(len({kind for kind,_,_ in losses})==len(losses),'Duplicate casualty type')
+        for kind,wounded,dead in losses:
+            require(kind in self.crew_types and type(wounded) is int and type(dead) is int and wounded>=0 and dead>=0
+                    and 0<wounded+dead<=counts.get(kind,0),'Invalid casualty count')
+            counts[kind] -= wounded+dead
+        return replace(state,crew=tuple(sorted(counts.items())),input_revision=state.input_revision+1) if losses else state
+
+    def crew_efficiency(self,state,module_id,function):
+        module = self.modules[module_id]
+        auto = module.prototype.automation
+        if auto.level=='full' or function in auto.automated_functions:return 1.
+        assigned = dict(dict(state.allocations).get(module_id,()))
+        if any(assigned.get(r.crew_type,0)+EPS<r.minimum_operating for r in module.prototype.crew):return 0.
+        return dict(state.staffing).get(module_id,1.)
+
+    def engine_efficiencies(self,state):
+        return state.engine_crew_efficiencies
 
     def operations(self, before, operations, *, epoch, ship_id, step, phase, can_reset):
         state, resets, receipts = before, [], []
@@ -132,6 +154,10 @@ class ResourceKernel:
         crew_memo,power_memo={},{}
         crew_host={k:_host_availability(m,self.modules,crew_states,crew_memo) for k,m in self.modules.items()}
         staffing,_,allocations=_manual_staffing(self.modules,crew_states,crew_host,dict(before.crew),before.policy)
+        # Below the operating minimum is unavailable, not a fractional trickle.
+        for mid,module in self.modules.items():
+            if any(dict(allocations[mid]).get(r.crew_type,0)+EPS<r.minimum_operating for r in module.prototype.crew):
+                staffing[mid] = 0.
         power_host={k:_host_availability(m,self.modules,power_states,power_memo) for k,m in self.modules.items()}
         power=_allocate_power(self.modules,power_states,power_host,staffing,before.policy)
         powered=set(power.powered_instance_ids)
@@ -158,8 +184,10 @@ class ResourceKernel:
             old=before.facts[i] if before.facts else (False,)*4
             changes.extend((e.instance_id,r,new,revision) for r,prev,new in zip(REASONS,old,current) if prev!=new)
             facts.append(current)
-        return replace(before,cache_key=key,revision=revision,facts=tuple(facts),latched=tuple(latched),
-            power=power,staffing=tuple(sorted(staffing.items())),allocations=tuple(sorted(allocations.items()))),tuple(changes)
+        result = replace(before,cache_key=key,revision=revision,facts=tuple(facts),latched=tuple(latched),
+            power=power,staffing=tuple(sorted(staffing.items())),allocations=tuple(sorted(allocations.items())))
+        efficiencies = tuple(self.crew_efficiency(result,e.instance_id,ACTUATOR_FUNCTION_BY_CATEGORY[e.category]) for e in self.engines)
+        return replace(result,engine_crew_efficiencies=None if all(v==1. for v in efficiencies) else efficiencies),tuple(changes)
 
 
 def seed_from_snapshot(snapshot, instance, contributions):

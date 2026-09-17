@@ -1,6 +1,6 @@
 """P2b swept 2D deck collision. Immutable compiled geometry; staged hit deltas.
 
-Deck is chosen when firing, not an instruction to hit a specific ship/module.
+Deck is sampled at ship contact, then preserved until actual deck impact.
 Only opposing ships intercept. Moving/rotating geometry uses bounded local
 chords of the authoritative drag trajectory. No cargo destruction.
 """
@@ -13,9 +13,10 @@ from 高天荒野舰艇炮弹与甲弹公式 import (ArmorState, ImpactOutcome, 
 from .simplified_flight import ImpactBatch
 from .tactical_devices import DeviceOperation
 from .structural_durability import compile_durability, REFERENCE_MAXIMUM_POINTS
-from .tactical_ammunition import compile_profiles, is_incendiary
+from .tactical_ammunition import compile_profiles, is_incendiary, is_surface_incendiary
 from .tactical_ignition import Attempt
 from .tactical_ballistics import flight_segment
+from . import tactical_deck_hits as deck_hits
 
 
 def rotate(p, a):
@@ -107,10 +108,12 @@ class DamageState:
     fuel_damage: tuple = ()
     ignition_attempts: tuple = ()
     expired_flights: tuple = ()
+    module_impacts: tuple = ()  # this boundary only, ordered; includes actual deck
+    interceptions: tuple = ()  # actual contacts in this boundary only
 
 
 class DamageKernel:
-    def __init__(self, scenario, session):
+    def __init__(self, scenario, session, seed=1):
         # Explicit technical mapping: P2a speed/mass with the existing ordinary
         # 76 mm penetration/damage fixture. This is not a balanced weapon asset.
         self.profile = scenario.projectile_catalog.profile('gtw.munition.fixture.76mm.standard')
@@ -122,6 +125,11 @@ class DamageKernel:
         self.profiles = compile_profiles(self.profile)
         self.sides = {b.ship_id: b.side_id for b in scenario.bindings}
         self.fuel_areas = tuple(() for _ in session._seeds)
+        self.seed = seed
+        self.deck_policy = deck_hits.load_policy()
+        self.ship_salts = tuple(deck_hits.identity_salt(b.ship_id) for b in scenario.bindings)
+        self.module_levels = []
+        self.module_base_levels = []
         self.profile_hull_factors = {key: tuple(p.damage.hull_integrity_damage_fraction * REFERENCE_MAXIMUM_POINTS * d.inverse_maximum_points
             for d in self.structural_durability) for key,p in self.profiles.items()}
         for binding, seed in zip(scenario.bindings, session._seeds):
@@ -145,19 +153,74 @@ class DamageKernel:
                 cells.extend(Cell(m.id, level, (x, y), False) for level, x, y in sorted(internal))
                 cells.extend(Cell(m.id, level, (x, y), True) for level, x, y in sorted(exposed))
             self.edges.append(tuple(edges)); self.cells.append(tuple(cells))
+            self.module_levels.append({m.id: tuple(sorted({c.level for c in cells if c.module_id == m.id}))
+                for m in seed.resources.modules})
+            self.module_base_levels.append({m.id: m.base_deck_level for m in seed.resources.modules})
             self.radius.append(max([d.bounding_radius_m for d in geometry.decks]+[hypot(*c.center)+4 for c in cells]))
             self.indices.append({m.instance_id: n for n, m in enumerate(seed.devices.modules)})
             armor.append(tuple(e.maximum for e in edges))
         self.initial = DamageState(tuple(armor))
 
+    def contacts_on_path(self, index, ship, path, level=None):
+        """Earliest physical contact on each deck, preserving the swept path."""
+        contacts = {}
+        for (t0, a), (t1, b) in zip(path, path[1:]):
+            radius=self.radius[index]
+            if any(min(a[k],b[k])>radius or max(a[k],b[k])<-radius for k in range(2)):continue
+            def remember(deck, fraction, kind, n):
+                if fraction is not None:
+                    hit = t0+(t1-t0)*fraction, index, kind, n
+                    if deck not in contacts or hit < contacts[deck]:
+                        contacts[deck] = hit
+            for n, edge in enumerate(self.edges[index]):
+                if level is None or edge.key[1] == level:
+                    remember(edge.key[1], segment(a, b, edge.start, edge.end), 0, n)
+            for n, cell in enumerate(self.cells[index]):
+                if cell.exposed and (level is None or cell.level == level) and ship.devices.modules[self.indices[index][cell.module_id]].durability_points > 0:
+                    remember(cell.level, _segment_aabb_entry_fraction(a, b, *cell.bounds), 1, n)
+        return contacts
+
+    def choose_deck(self, index, ship, old, flight, contact, projectile):
+        t = contact[0]
+        position, impact_velocity = flight.at(t)
+        center, heading = pose_at(old.motion, ship.motion, t)
+        point = rotate((position[0]-center[0], position[1]-center[1]), -heading)
+        target_velocity = lerp(old.motion.velocity_world_mps.to_list(), ship.motion.velocity_world_mps.to_list(), t)
+        yaw = old.motion.yaw_rate_radps+(ship.motion.yaw_rate_radps-old.motion.yaw_rate_radps)*t
+        relative = rotate(relative_impact_velocity_xy(impact_velocity, target_velocity,
+            yaw, (position[0]-center[0], position[1]-center[1])), -heading)
+        speed = hypot(*relative)
+        if speed <= 1e-9:
+            candidates = (self.edges[index][contact[3]].key[1] if contact[2] == 0 else self.cells[index][contact[3]].level,)
+        else:
+            length = 2*self.radius[index]+1.
+            end = point[0]+relative[0]/speed*length, point[1]+relative[1]/speed*length
+            # Inspect the whole projected hull crossing, not just this tick.
+            # The selected smaller deck can be physically reached in a later tick.
+            candidates = self.contacts_on_path(index, ship, ((0., point), (1., end)))
+            first_level = self.edges[index][contact[3]].key[1] if contact[2] == 0 else self.cells[index][contact[3]].level
+            candidates = set(candidates) | {first_level}
+        preferred = ()
+        if projectile.aimed_ship_id == ship.ship_id and projectile.aimed_module_id:
+            preferred = self.aim_levels(index, projectile.aimed_module_id)
+        elif projectile.preferred_deck is not None:
+            preferred = (projectile.preferred_deck,)
+        return deck_hits.select(ship.ship_id, self.deck_policy.weights(candidates, preferred), preferred,
+            deck_hits.sample(self.seed, projectile.id, self.ship_salts[index]))
+
+    def aim_levels(self, index, module_id):
+        levels = self.module_levels[index].get(module_id, ())
+        return (self.module_base_levels[index][module_id],) if levels and self.deck_policy.spanning_module_bonus == 'base' else levels
+
     def advance(self, before, world, projectiles, state):
         if not projectiles:
-            return (), replace(state,fuel_damage=(),ignition_attempts=(),expired_flights=()) if state.fuel_damage or state.ignition_attempts or state.expired_flights else state, ImpactBatch()
+            return (), replace(state,fuel_damage=(),ignition_attempts=(),expired_flights=(),module_impacts=(),interceptions=()) if state.fuel_damage or state.ignition_attempts or state.expired_flights or state.module_impacts or state.interceptions else state, ImpactBatch()
         armor = list(state.armor)
         survivors, events, damages, hull = [], [], {}, {}
         expired = 0
         tank_damage = {}
         attempts = []
+        module_impacts = []
         terminals, pending = [], []
         for p in sorted(projectiles, key=lambda p: p.id):
             if world.fixed_step > p.expires:
@@ -167,6 +230,7 @@ class DamageKernel:
             flight = flight_segment(p)
             end, end_velocity = flight.at(1)
             hits = []
+            selections = {choice.ship_id: choice for choice in p.deck_selections}
             for i, (old, ship) in enumerate(zip(before.ships, world.ships)):
                 if p.height_layer is not None and ship.motion.height_layer != p.height_layer:
                     continue
@@ -180,19 +244,20 @@ class DamageKernel:
                 if _segment_aabb_entry_fraction(p.position, end, lo, hi) is None:
                     continue
                 path = local_path(flight, old.motion, ship.motion)
-                for (t0,a),(t1,b) in zip(path,path[1:]):
-                    contacts = []
-                    for n, edge in enumerate(self.edges[i]):
-                        if edge.key[1] == p.deck_level:
-                            t = segment(a,b,edge.start,edge.end)
-                            if t is not None: contacts.append((t0+(t1-t0)*t,i,0,n))
-                    for n, cell in enumerate(self.cells[i]):
-                        if cell.exposed and cell.level == p.deck_level and ship.devices.modules[self.indices[i][cell.module_id]].durability_points > 0:
-                            t = _segment_aabb_entry_fraction(a,b,*cell.bounds)
-                            if t is not None: contacts.append((t0+(t1-t0)*t,i,1,n))
-                    if contacts:
-                        hits.append(min(contacts))
-                        break
+                choice = selections.get(ship.ship_id)
+                level = choice.level if choice else p.deck_level
+                contacts = self.contacts_on_path(i, ship, path, level)
+                if world.fixed_step == p.expires:
+                    contacts = {deck: hit for deck, hit in contacts.items() if hit[0] < 1-1e-10}
+                if not contacts:
+                    continue
+                if level is None:
+                    choice = self.choose_deck(i, ship, old, flight, min(contacts.values()), p)
+                    selections[ship.ship_id] = choice
+                    p = replace(p, deck_selections=tuple(selections[k] for k in sorted(selections)))
+                    level = choice.level
+                if level in contacts:
+                    hits.append(contacts[level])
             # TTL is a deadline: the final interval exists, but its endpoint is
             # already expired. A collision strictly before it can still resolve.
             if world.fixed_step == p.expires:
@@ -205,9 +270,19 @@ class DamageKernel:
                     survivors.append(replace(p, previous=p.position, position=end, velocity=end_velocity))
                 continue
             pending.append((min(hits),p,flight))
+        from .tactical_interception import resolve as intercept_projectiles
+        updated,removed,interceptions = intercept_projectiles(projectiles,self.sides,
+            {p.id:hit[0] for hit,p,_ in pending},world.fixed_step)
+        survivors = [replace(p,durability=updated[p.id].durability) for p in survivors if p.id not in removed]
+        terminals = [row for row in terminals if row['projectile_id'] not in removed]
+        expired -= sum(p.id in removed and p.expires==world.fixed_step for p in projectiles
+                       if not any(item[1].id==p.id for item in pending))
         for (t,i,kind,n),p,flight in sorted(pending,key=lambda item:(item[0][0],item[1].id)):
+            if p.id in removed:continue
             profile = self.profiles[p.projectile_key]
             ship, old = world.ships[i], before.ships[i]
+            level = self.edges[i][n].key[1] if kind == 0 else self.cells[i][n].level
+            selection = next((choice for choice in p.deck_selections if choice.ship_id == ship.ship_id), None)
             position, impact_velocity = flight.at(t)
             center, heading = pose_at(old.motion, ship.motion, t)
             point = rotate((position[0]-center[0],position[1]-center[1]),-heading)
@@ -223,6 +298,7 @@ class DamageKernel:
             armor_before = armor_after = None
             fuel_ids=[]
             internal_ids=set()
+            internal_points={}
             if kind == 1:
                 ids = [self.cells[i][n].module_id]
             else:
@@ -240,7 +316,7 @@ class DamageKernel:
                     ray_end = point[0]+direction[0]*damage.internal_effect_range_m, point[1]+direction[1]*damage.internal_effect_range_m
                     crossed = []
                     for cell in self.cells[i]:
-                        if cell.level != p.deck_level or ship.devices.modules[self.indices[i][cell.module_id]].durability_points <= 0:
+                        if cell.level != level or ship.devices.modules[self.indices[i][cell.module_id]].durability_points <= 0:
                             continue
                         entry = _segment_aabb_entry_fraction(point, ray_end, *cell.bounds)
                         if entry is not None:
@@ -252,30 +328,41 @@ class DamageKernel:
                             or hypot(c[0]-first[0], c[1]-first[1]) <= damage.internal_effect_radius_m]
                     if is_incendiary(p.projectile_key):
                         internal_ids={k for _,k,_,exposed in crossed if not exposed} & set(ids)
+                        for _,key,center,exposed in crossed:
+                            if not exposed and key in internal_ids:
+                                internal_points.setdefault(key,center)
                     amount = damage.internal_module_damage_points*energy
                     from .tactical_fuel import crosses_polygon
-                    fuel_ids=[key for key,level,polys in self.fuel_areas[i] if level==p.deck_level
+                    fuel_ids=[key for key,tank_level,polys in self.fuel_areas[i] if tank_level==level
                               and any(crosses_polygon(point,ray_end,poly) for poly in polys)]
                     for key in fuel_ids:
                         tank_damage[i,key]=tank_damage.get((i,key),0)+amount
                     hull[i] = min(1., hull.get(i, 0.)+self.profile_hull_factors[p.projectile_key][i]*energy)
                 else:
-                    ids = [c.module_id for c in self.cells[i] if c.exposed and c.level == p.deck_level
+                    ids = [c.module_id for c in self.cells[i] if c.exposed and c.level == level
                         and hypot(c.center[0]-point[0], c.center[1]-point[1]) <= damage.surface_effect_radius_m]
             ids = sorted(set(ids))
             for k in ids:
                 damages[i, k] = damages.get((i, k), 0.)+amount
+                if amount > 0: module_impacts.append((i, k, amount, level))
             if is_incendiary(p.projectile_key) and energy > 0:
-                attempts.extend(Attempt(p.id,p.ship_id,i,k) for k in sorted(internal_ids))
+                attempts.extend(Attempt(p.id,p.ship_id,i,k,level,
+                    internal_points[k] if is_surface_incendiary(p.projectile_key) else None) for k in sorted(internal_ids))
+            if is_surface_incendiary(p.projectile_key):
+                attempts.append(Attempt(p.id,p.ship_id,i,self.cells[i][n].module_id if kind==1 else None,level,point,True))
             events.append(dict(projectile_id=p.id, step=world.fixed_step, source_ship_id=p.ship_id, ship_id=ship.ship_id,
                 impact_fraction=t, relative_speed_mps=speed, projectile_speed_mps=hypot(*impact_velocity),
                 projectile_type=p.projectile_key[0], projectile_version=p.projectile_key[1],
-                position_m=position, deck_level=p.deck_level, height_layer=p.height_layer or ship.motion.height_layer, outcome=outcome, module_ids=ids,
+                position_m=position, deck_level=level, height_layer=p.height_layer or ship.motion.height_layer, outcome=outcome, module_ids=ids,
                 module_damage=amount if ids else 0., armor_before=armor_before, armor_after=armor_after,
-                residual_energy_ratio=energy, **(dict(fuel_tank_ids=fuel_ids) if fuel_ids else {})))
+                residual_energy_ratio=energy,
+                **(dict(deck_selection=dict(policy=self.deck_policy.id, preferred_levels=selection.preferred_levels,
+                    probabilities=[dict(deck_level=deck, probability=weight/sum(w for _,w in selection.weights))
+                        for deck,weight in selection.weights], sample=selection.roll)) if selection else {}),
+                **(dict(fuel_tank_ids=fuel_ids) if fuel_ids else {})))
         operations = tuple(DeviceOperation(world.epoch, world.ships[i].ship_id, k,
             world.ships[i].devices.modules[self.indices[i][k]].sequence+1, 'damage', amount, world.fixed_step, 'closing')
             for (i, k), amount in sorted(damages.items()) if amount > 0)
         result = DamageState(tuple(armor), (state.recent+tuple(events))[-32:], state.hits+len(events), state.expired+expired,
-                             tuple((i,k,a) for (i,k),a in sorted(tank_damage.items()) if a>0), tuple(attempts), tuple(terminals))
+                             tuple((i,k,a) for (i,k),a in sorted(tank_damage.items()) if a>0), tuple(attempts), tuple(terminals), tuple(module_impacts),interceptions)
         return tuple(survivors), result, ImpactBatch(operations, tuple((world.ships[i].ship_id, v) for i, v in sorted(hull.items())))

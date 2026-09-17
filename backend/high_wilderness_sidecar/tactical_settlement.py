@@ -42,6 +42,9 @@ def parse_record(record, template, index):
     ps.need(all(pack.definition()[k] == reference[k] for k in ('weapons', 'recipes', 'projectiles', 'fire_control')),
             '$.resources', '当前战术入口仅支持已接通的普通炮资源版本')
     instance = ps.parse_instance(v['state'], pack)
+    if any('zone_id' in fire for fire in v['state'].get('fires',())):
+        from .tactical_spatial_fire import validate_rows
+        validate_rows(v['state']['fires'], template.fire.zones[index])
     edges = template.damage.edges[index]
     ps.need(type(v['armor']) is list and len(v['armor']) == len(edges), '$.armor', '装甲边记录缺失')
     by_key = {}
@@ -74,6 +77,7 @@ def capture(battle):
             modules=[dict(module_id=m.instance_id, durability_points=h.durability_points, operating_mode=mode)
                 for m, h, mode in zip(seed.devices.modules, ship.devices.modules, ship.resources.modes)],
             crew=[dict(crew_type=k, count=count) for k, count in ship.resources.crew],
+            wounded_aboard=ship.command.wounded_aboard,
             power_policy=ship.resources.policy.to_dict(),
             engine_latches=[e.instance_id for e, latched in zip(seed.contributions.engines, ship.resources.latched) if latched])
         lifecycle = ship.command.lifecycle

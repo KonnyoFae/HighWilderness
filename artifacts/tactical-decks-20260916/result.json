@@ -1,0 +1,1142 @@
+{
+  "status": "TACTICAL_DECK_HITS_UI_PASS",
+  "checks": [
+    "Custom saved groups survive preparation: two 30 mm guns in one group, a separate 30 mm group, and a 75 mm group",
+    "A group aiming at an upper-deck module produces real hits on both candidate decks, with 1/3 and 2/3 weights and no cross-height-layer damage",
+    "UI distinguishes actual hit deck, aimed deck, height layer and per-shot probabilities; manual aim permits clearing the preference; pause prevents firing",
+    "Probabilistic-hit battle settles and saves through the production flow, then returns to the next preparation"
+  ],
+  "hits": [
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 1
+          }
+        ],
+        "sample": 0.10967425256967545
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.7380778326351328,
+      "module_damage": 0,
+      "module_ids": [],
+      "outcome": "penetrated",
+      "position_m": [
+        8.55800004334785,
+        222.41452211886187
+      ],
+      "projectile_id": 30,
+      "projectile_speed_mps": 704.7797795092187,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.6528139521535,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 94
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 1
+          }
+        ],
+        "sample": 0.6712342433165759
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.887723657831668,
+      "module_damage": 0,
+      "module_ids": [],
+      "outcome": "penetrated",
+      "position_m": [
+        7.931921930932961,
+        224.33668905736363
+      ],
+      "projectile_id": 29,
+      "projectile_speed_mps": 704.6365549465463,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.6291342321141,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 94
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 1
+          }
+        ],
+        "sample": 0.803241545567289
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.7390647533390685,
+      "module_damage": 0,
+      "module_ids": [],
+      "outcome": "penetrated",
+      "position_m": [
+        8.700462598948123,
+        222.585859436798
+      ],
+      "projectile_id": 31,
+      "projectile_speed_mps": 704.7788347462921,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.7626637102322,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 96
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 1
+          }
+        ],
+        "sample": 0.02885894593782723
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.0893602781890218,
+      "module_damage": 0,
+      "module_ids": [],
+      "outcome": "penetrated",
+      "position_m": [
+        7.407403596863404,
+        226.56898478300323
+      ],
+      "projectile_id": 32,
+      "projectile_speed_mps": 704.4436388706642,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.3306957663949,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 97
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 1,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.8305504831951112
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.6423612461436352,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "sensor_upper_starboard"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        3.6613872158794902,
+        280.0018114281026
+      ],
+      "projectile_id": 27,
+      "projectile_speed_mps": 700.1126047144613,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 700.1517639462203,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 97
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 1,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.7143453990574926
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.6493430405982815,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "sensor_upper_starboard"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        4.896937093702476,
+        280.00179511031763
+      ],
+      "projectile_id": 28,
+      "projectile_speed_mps": 700.1060003500079,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 700.0311978449238,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 97
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 1
+          }
+        ],
+        "sample": 0.9204966130200773
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.5447638974827238,
+      "module_damage": 0,
+      "module_ids": [],
+      "outcome": "penetrated",
+      "position_m": [
+        9.644097778886385,
+        220.2957597202489
+      ],
+      "projectile_id": 33,
+      "projectile_speed_mps": 704.9648846055404,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.9378778179938,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 98
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 1
+          }
+        ],
+        "sample": 0.10120179294608533
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.1963276096825377,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "ammunition_magazine"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        7.1974766249538105,
+        227.82990468967134
+      ],
+      "projectile_id": 34,
+      "projectile_speed_mps": 704.3413248566496,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.2310489726243,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 99
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 1
+          }
+        ],
+        "sample": 0.009651586413383484
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.5964842915152337,
+      "module_damage": 0,
+      "module_ids": [],
+      "outcome": "penetrated",
+      "position_m": [
+        9.646166905896548,
+        220.90342790215828
+      ],
+      "projectile_id": 35,
+      "projectile_speed_mps": 704.915350928054,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.8883826718732,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 100
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.009053992806002498
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.36291109137362776,
+      "module_damage": 0,
+      "module_ids": [],
+      "outcome": "penetrated",
+      "position_m": [
+        6.758599039187557,
+        229.79545045676122
+      ],
+      "projectile_id": 36,
+      "projectile_speed_mps": 704.1820472968133,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.0771385454146,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 101
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 1
+          }
+        ],
+        "sample": 0.7217334245797247
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.6700944478153086,
+      "module_damage": 0,
+      "module_ids": [],
+      "outcome": "penetrated",
+      "position_m": [
+        9.564426080020432,
+        221.76894111361017
+      ],
+      "projectile_id": 37,
+      "projectile_speed_mps": 704.8448649804698,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.8189043707001,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 102
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 1
+          }
+        ],
+        "sample": 0.1832833990920335
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.25423271167150596,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "ammunition_magazine"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        7.377031590755153,
+        228.50570485413778
+      ],
+      "projectile_id": 38,
+      "projectile_speed_mps": 704.285951153759,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.1738623564113,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 103
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.17722578789107502
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.0720618419810257,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "fire_control"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        12.467823917687333,
+        226.2248822853137
+      ],
+      "projectile_id": 40,
+      "projectile_speed_mps": 704.4601875785612,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.2907582202487,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 105
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.002117570023983717
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.4253518744630214,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "fire_control"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        13.955018429683445,
+        230.58213639040656
+      ],
+      "projectile_id": 39,
+      "projectile_speed_mps": 704.1223635653033,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.0486748014574,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 105
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.15856217150576413
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.3123812145755582,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "fire_control"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        13.816079989289676,
+        229.00212283526488
+      ],
+      "projectile_id": 44,
+      "projectile_speed_mps": 704.2303534515411,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.0470065630711,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 109
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.15883905137889087
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.40707484948489886,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "fire_control"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        14.278769037621986,
+        230.36215435503453
+      ],
+      "projectile_id": 43,
+      "projectile_speed_mps": 704.1398325271446,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 704.0625242027409,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 109
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 1,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.7542665766086429
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.6513014462824184,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "crew_quarters_upper"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        16.17694455854981,
+        280.0017903959679
+      ],
+      "projectile_id": 41,
+      "projectile_speed_mps": 700.1041478364839,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 700.0163883071482,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 111
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 1,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.9653704834636301
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.669848054026143,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "crew_quarters_upper"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        14.504703658331337,
+        280.00174277185033
+      ],
+      "projectile_id": 42,
+      "projectile_speed_mps": 700.0866045408844,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 699.9144717091323,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 111
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.279131515417248
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.37873586857577807,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "fire_control"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        14.670509326569103,
+        229.7509160767321
+      ],
+      "projectile_id": 50,
+      "projectile_speed_mps": 704.1669203001028,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 703.9744354036679,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 115
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 1,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.9509571634698659
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.6532015356123706,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "crew_quarters_upper"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        17.292134653023496,
+        280.0017857645689
+      ],
+      "projectile_id": 45,
+      "projectile_speed_mps": 700.102350495484,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 700.0032954915666,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 115
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 1,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.7412612133193761
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.6783401675878817,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "crew_quarters_upper"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        17.303749536628224,
+        280.00171916876
+      ],
+      "projectile_id": 46,
+      "projectile_speed_mps": 700.0785721169445,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 699.8781204782761,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 115
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 1,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.548304554540664
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.6549013048874259,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "crew_quarters_upper"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        18.21024656489404,
+        280.0017815735163
+      ],
+      "projectile_id": 47,
+      "projectile_speed_mps": 700.100742649947,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 699.992388174264,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 117
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 1,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.4893375758547336
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.6731089020615655,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "crew_quarters_upper"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        15.624416884768534,
+        280.00173384204595
+      ],
+      "projectile_id": 48,
+      "projectile_speed_mps": 700.0835201851751,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 699.9000745948773,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 117
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 1,
+      "deck_selection": {
+        "policy": "gaotian.deck-hit-policy/3b-v1",
+        "preferred_levels": [
+          1
+        ],
+        "probabilities": [
+          {
+            "deck_level": 0,
+            "probability": 0.3333333333333333
+          },
+          {
+            "deck_level": 1,
+            "probability": 0.6666666666666666
+          }
+        ],
+        "sample": 0.8972694571129978
+      },
+      "height_layer": "cloud",
+      "impact_fraction": 0.6533795698344291,
+      "module_damage": 6.232686980609419,
+      "module_ids": [
+        "crew_quarters_upper"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        17.391486164019597,
+        280.001785327719
+      ],
+      "projectile_id": 49,
+      "projectile_speed_mps": 700.1021820890285,
+      "projectile_type": "projectile.3a.30mm.ordinary",
+      "projectile_version": 1,
+      "relative_speed_mps": 700.0021279807391,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.web.red",
+      "source_ship_id": "ship.groups.player",
+      "step": 119
+    }
+  ],
+  "beforeSave": [
+    {
+      "id": "ship.groups.player",
+      "hull": 1,
+      "modules": [
+        {
+          "durability": 100,
+          "id": "ammunition_magazine"
+        },
+        {
+          "durability": 100,
+          "id": "cic"
+        },
+        {
+          "durability": 100,
+          "id": "crew_quarters_base"
+        },
+        {
+          "durability": 100,
+          "id": "crew_quarters_upper"
+        },
+        {
+          "durability": 100,
+          "id": "custom.cargo"
+        },
+        {
+          "durability": 100,
+          "id": "damage_control"
+        },
+        {
+          "durability": 100,
+          "id": "fire_control"
+        },
+        {
+          "durability": 100,
+          "id": "generator"
+        },
+        {
+          "durability": 100,
+          "id": "gun.heavy"
+        },
+        {
+          "durability": 100,
+          "id": "gun.partner"
+        },
+        {
+          "durability": 100,
+          "id": "gun.reserve"
+        },
+        {
+          "durability": 100,
+          "id": "lift_tank"
+        },
+        {
+          "durability": 100,
+          "id": "magazine.extra"
+        },
+        {
+          "durability": 100,
+          "id": "main_engine_port"
+        },
+        {
+          "durability": 100,
+          "id": "main_engine_starboard"
+        },
+        {
+          "durability": 100,
+          "id": "remote_core"
+        },
+        {
+          "durability": 100,
+          "id": "sensor_upper_starboard"
+        },
+        {
+          "durability": 100,
+          "id": "thruster_port_aft"
+        },
+        {
+          "durability": 100,
+          "id": "thruster_port_fore"
+        },
+        {
+          "durability": 100,
+          "id": "thruster_starboard_aft"
+        },
+        {
+          "durability": 100,
+          "id": "thruster_starboard_fore"
+        },
+        {
+          "durability": 100,
+          "id": "weapon_upper_port"
+        }
+      ]
+    },
+    {
+      "id": "ship.web.red",
+      "hull": 0.9252077562326865,
+      "modules": [
+        {
+          "durability": 87.53462603878117,
+          "id": "ammunition_magazine"
+        },
+        {
+          "durability": 100,
+          "id": "cargo_hold"
+        },
+        {
+          "durability": 100,
+          "id": "cic"
+        },
+        {
+          "durability": 100,
+          "id": "crew_quarters_base"
+        },
+        {
+          "durability": 56.37119113573408,
+          "id": "crew_quarters_upper"
+        },
+        {
+          "durability": 100,
+          "id": "damage_control"
+        },
+        {
+          "durability": 68.83656509695292,
+          "id": "fire_control"
+        },
+        {
+          "durability": 100,
+          "id": "generator"
+        },
+        {
+          "durability": 100,
+          "id": "lift_tank"
+        },
+        {
+          "durability": 100,
+          "id": "main_engine_port"
+        },
+        {
+          "durability": 100,
+          "id": "main_engine_starboard"
+        },
+        {
+          "durability": 100,
+          "id": "remote_core"
+        },
+        {
+          "durability": 87.53462603878117,
+          "id": "sensor_upper_starboard"
+        },
+        {
+          "durability": 100,
+          "id": "thruster_port_aft"
+        },
+        {
+          "durability": 100,
+          "id": "thruster_port_fore"
+        },
+        {
+          "durability": 100,
+          "id": "thruster_starboard_aft"
+        },
+        {
+          "durability": 100,
+          "id": "thruster_starboard_fore"
+        },
+        {
+          "durability": 100,
+          "id": "weapon_upper_port"
+        }
+      ]
+    }
+  ],
+  "scope": "Production React and Python simulation, isolated saved multi-gun ship and passive cloud enemy. Does not validate future spreading, magazine explosion or personnel damage."
+}

@@ -3,7 +3,7 @@ import type { BridgeTransport } from "../bridge/transport";
 import { normalizeHostFailure } from "../bridge/model";
 import type { ModeResult } from "./model";
 import type { PreparedLaunch } from "./preparation";
-import { PreparationPanel } from "./PreparationPanel";
+import { PreparationWorkspace } from "./PreparationWorkspace";
 import { RealtimePanel } from "./RealtimePanel";
 import { PreparationRecovery } from "./PreparationRecovery";
 import { TacticalTestReset } from "./TacticalTestReset";
@@ -63,8 +63,8 @@ export function TacticalWorkspace({ transport, instance }: {
     </div>}
     {busy && <p role="status">正在切换场景…</p>}
     {!launch && !recovered ? <PreparationRecovery key={preparationEpoch} transport={transport} instance={instance} onReady={() => setRecovered(true)} /> : !launch ? <div inert={busy || retry !== null}>
-      <PreparationPanel key={preparationEpoch} transport={transport} instance={instance}
-        active={!busy && !resetLocked && retry === null} onBusy={() => {}} onEnter={next => void changeScene(next)} />
+      <PreparationWorkspace key={preparationEpoch} transport={transport} instance={instance}
+        active={!busy && !resetLocked && retry === null} onEnter={next => void changeScene(next)} />
     </div> : <div inert={busy || retry !== null}>
       <RealtimePanel key={launch.launch_id} transport={transport} instance={instance}
         active={!busy && !resetLocked && retry === null} preparedLaunch={launch} battleLayout

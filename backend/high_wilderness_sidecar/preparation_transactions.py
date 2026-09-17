@@ -7,6 +7,7 @@ from contextlib import contextmanager
 
 from 高天荒野舰艇数据契约 import canonical_sha256
 from . import battle_preparation as bp, persistent_ship as ps
+from . import preparation_maintenance as maintenance
 from .tactical_inventory import InventorySession
 from .tactical_settlement import SettlementStore
 
@@ -21,7 +22,7 @@ def evaluate(draft, ships, supply, *, supply_goods=None):
     """
     draft = bp.validate_draft(draft, ships, supply, supply_goods=supply_goods)
     by_id = {r['state']['instance_id']: (d, r) for d, r in ships}
-    candidates, transfers, issues = {}, [], []
+    candidates, transfers, issues, repairs = {}, [], [], {}
     goods = {g['id']: g for d, _ in ships for g in d.resources.definition()['goods']}
     if supply_goods is not None: goods = {g['id']: g for g in supply_goods}
     supply = bp.parse_supply(supply, list(goods.values()))
@@ -34,6 +35,10 @@ def evaluate(draft, ships, supply, *, supply_goods=None):
         state = record['state']
         inv = InventorySession(design.resources, ps.parse_instance(state, design.resources))
         candidates[key] = inv
+        repairs[key]=maintenance.apply_repairs(inv,row.get('repairs',()),design,record)
+        if repairs[key]:
+            resource='cargo:cargo.engineering_parts'
+            stock[resource]=stock.get(resource,0)-sum(r['engineering_parts'] for r in repairs[key])
         if row.get('fuel_tanks'):
             from . import tactical_fuel as fuel
             for target in row['fuel_tanks']:
@@ -54,11 +59,6 @@ def evaluate(draft, ships, supply, *, supply_goods=None):
                     resource = 'ammunition' if suffix=='ammunition' else 'cargo:'+target
                     stock[resource] = stock.get(resource,0)-delta
                     transfers.append((key,target,suffix,delta))
-    for resource, amount in sorted(stock.items()):
-        if amount < 0:
-            issue(None,resource,'可用供给不足',missing=-amount)
-        elif amount > ps.MAX_INT:
-            issue(None,resource,'供给数量超出支持范围')
     # Private candidates may be explored even if supply is short, to show other
     # capacity/weapon errors in the same preview. They are never published then.
     for sign in (-1,1):
@@ -72,20 +72,9 @@ def evaluate(draft, ships, supply, *, supply_goods=None):
                 issue(key,target,exc.message,code=exc.code)
     for row in draft['ships']:
         key = row['instance_id']; inv = candidates[key]
-        recipes = inv._recipes
-        costs = {}
-        for choice in row['weapons']:
-            if choice['action']=='keep': continue
-            recipe = recipes[choice['recipe_id']]; batches = choice['batches']
-            costs['ammunition'] = costs.get('ammunition',0)+recipe['ammo_cost']*batches
-            for c in recipe['cargo_costs']:
-                resource = 'cargo:'+c['good_id']
-                costs[resource] = costs.get(resource,0)+c['quantity']*batches
-        for choice in row.get('damage_controls', ()):
-            if choice['prepare']:
-                for c in inv._damage_controls[choice['module_id']]['cargo_costs']:
-                    resource = 'cargo:' + c['good_id']
-                    costs[resource] = costs.get(resource, 0) + c['quantity']
+        manual=dict(weapons=[w for w in row['weapons'] if w['action']!='top_up'],
+            damage_controls=[d for d in row.get('damage_controls',()) if not d.get('top_up')])
+        costs = maintenance.loading_costs(manual,inv._value,by_id[key][0].resources.definition())
         totals = inv._totals(inv._value)
         totals['ammunition'] = sum(m['quantity'] for m in inv._value['magazines'] if inv._alive(m['module_id']))
         for resource, amount in costs.items():
@@ -94,16 +83,21 @@ def evaluate(draft, ships, supply, *, supply_goods=None):
         for choice in row['weapons']:
             if choice['action']=='keep': continue
             try:
-                inv.prepare_reload(choice['module_id'],choice['recipe_id'],choice['batches'],
-                    discard=choice['action']=='discard_and_preload')
+                if choice['action']=='top_up':maintenance.supply_top_up(inv,choice['module_id'],choice['recipe_id'],stock)
+                else:inv.prepare_reload(choice['module_id'],choice['recipe_id'],choice['batches'],
+                        discard=choice['action']=='discard_and_preload')
             except ps.ContractError as exc:
                 issue(key,choice['module_id'],exc.message,code=exc.code)
         for choice in row.get('damage_controls', ()):
-            if choice['prepare']:
+            if choice['prepare'] or choice.get('top_up'):
                 try:
-                    inv.prepare_damage_control(choice['module_id'])
+                    if choice.get('top_up'):maintenance.supply_top_up(inv,choice['module_id'],None,stock)
+                    else:inv.prepare_damage_control(choice['module_id'])
                 except ps.ContractError as exc:
                     issue(key, choice['module_id'], exc.message, code=exc.code)
+    for resource, amount in sorted(stock.items()):
+        if amount < 0:issue(None,resource,'可用供给不足',missing=-amount)
+        elif amount > ps.MAX_INT:issue(None,resource,'供给数量超出支持范围')
     if issues:
         return dict(can_commit=False,issues=issues,result=None)
     rows = []
@@ -124,13 +118,14 @@ def evaluate(draft, ships, supply, *, supply_goods=None):
             rows[-1]['damage_control_choices'] = ps.clone(choice['damage_controls'])
         if 'fuel_tanks' in choice:
             rows[-1]['fuel_choices']=ps.clone(choice['fuel_tanks'])
+        if draft['interface']==maintenance.DRAFT_INTERFACE:rows[-1]['repairs']=repairs[key]
     after_supply=ps.clone(supply)
     after_supply.update(revision=ps.integer(supply['revision']+1,'$.supply.revision'),
         ammunition_resources=stock['ammunition'],
         cargo=[dict(good_id=k.removeprefix('cargo:'),quantity=v) for k,v in sorted(stock.items()) if k.startswith('cargo:')])
     if 'fuel' in stock:after_supply['fuel_units']=stock['fuel']
     after_supply=bp.parse_supply(after_supply,list(goods.values()))
-    return dict(can_commit=True,issues=[],result=dict(interface=('gaotian.battle-preparation-result/h5c-v1' if draft['interface']==bp.fuel.DRAFT_INTERFACE else 'gaotian.battle-preparation-result/d1-v1' if draft['interface'] == bp.dc.DRAFT_INTERFACE else RESULT_INTERFACE),
+    return dict(can_commit=True,issues=[],result=dict(interface=(maintenance.RESULT_INTERFACE if draft['interface']==maintenance.DRAFT_INTERFACE else 'gaotian.battle-preparation-result/h5c-v1' if draft['interface']==bp.fuel.DRAFT_INTERFACE else 'gaotian.battle-preparation-result/d1-v1' if draft['interface'] == bp.dc.DRAFT_INTERFACE else RESULT_INTERFACE),
         preparation_id=draft['preparation_id'],draft_revision=draft['revision'],ships=rows,
         supply_before=supply,supply_after=after_supply))
 
@@ -220,7 +215,7 @@ class PreparationStore(SettlementStore):
             return bp.new_draft(preparation_id,ships,supply,supply_goods=goods)
 
     def _draft_inputs(self,db,draft):
-        ps.obj(draft,'interface preparation_id revision swap_policy supply_id supply_revision supply_sha256 ships','$.draft')
+        ps.obj(draft,'interface preparation_id revision swap_policy supply_id supply_revision supply_sha256 ships'+(' maintenance_policy' if draft.get('interface')==maintenance.DRAFT_INTERFACE else ''),'$.draft')
         rows=ps.rows(draft['ships'],'instance_id','$.ships')
         return self._inputs(db,list(rows),draft['supply_id'])
 

@@ -1,0 +1,8 @@
+{
+  "id": "gaotian.spatial-fire/same-deck-separated-surfaces/3c-v1",
+  "spread_interval_steps": 120,
+  "spread_probability_at_unit_intensity": 0.25,
+  "child_intensity_ratio": 0.5,
+  "armor_damage_points_per_intensity_s": 0.5,
+  "incendiary_penetration_ratio": 0.02
+}

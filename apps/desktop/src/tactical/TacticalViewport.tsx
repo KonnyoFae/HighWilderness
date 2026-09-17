@@ -206,12 +206,35 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
         }
       }
     }
+    for (const fire of view.snapshot.gunnery?.damage_control?.fires ?? []) {
+      const pose=view.snapshot.ships.find(s=>s.id===fire.ship_id);
+      if(!pose||!fire.position_local_m)continue;
+      const at=screen(bodyToWorld({x:fire.position_local_m[0],y:fire.position_local_m[1]},pose),camera);
+      const pulse=.75+.25*Math.sin(view.snapshot.time_s*5+fire.position_local_m[0]);
+      const radius=Math.max(3,Math.min(10,3*camera.scale))*pulse;
+      v.circle(at.x,at.y,radius).fill({color:fire.surface?0xef681c:0xc52d26,alpha:.7});
+      v.circle(at.x,at.y,radius*.4).fill({color:0xffdc71,alpha:.9});
+    }
     for (const p of view.snapshot.gunnery?.projectiles ?? []) {
       const at = screen({ x: p.position_m[0], y: p.position_m[1] }, camera);
       const before = screen({ x: p.previous_m[0], y: p.previous_m[1] }, camera);
       if (light) v.moveTo(before.x, before.y).lineTo(at.x, at.y).stroke({ color: 0x544525, width: 4, alpha: .8 });
       v.moveTo(before.x, before.y).lineTo(at.x, at.y).stroke({ color: 0xfff2b8, width: 2 });
       v.circle(at.x, at.y, 2).fill(0xffffff);
+    }
+    for (const event of view.snapshot.gunnery?.point_defense?.recent ?? []) {
+      const age=view.snapshot.fixed_step-event.step;
+      if(age<0||age>35)continue;
+      const at=screen({x:event.position_m[0],y:event.position_m[1]},camera);
+      v.circle(at.x,at.y,(event.intercepted?7:3)+age*.12).stroke({color:event.intercepted?0x80ffe0:0xffdc87,width:2,alpha:1-age/36});
+    }
+    for (const event of view.snapshot.gunnery?.damage?.magazine_explosions ?? []) {
+      const age=view.snapshot.fixed_step-event.step;
+      if(age<0||age>90)continue;
+      const at=screen({x:event.position_m[0],y:event.position_m[1]},camera);
+      const radius=Math.max(8,event.radius_m*camera.scale)*Math.min(1,.25+age/30);
+      v.circle(at.x,at.y,radius).fill({color:0xff9d32,alpha:.3*(1-age/91)});
+      v.circle(at.x,at.y,radius).stroke({color:0xff5c20,width:2,alpha:1-age/91});
     }
     for (const hit of view.snapshot.gunnery?.damage?.recent ?? []) {
       const age = view.snapshot.fixed_step-hit.step;

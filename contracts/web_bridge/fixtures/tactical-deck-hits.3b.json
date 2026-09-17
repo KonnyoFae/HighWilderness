@@ -1,0 +1,6 @@
+{
+  "id": "gaotian.deck-hit-policy/3b-v1",
+  "base_weight": 1.0,
+  "aim_bonus": 1.0,
+  "spanning_module_bonus": "split"
+}

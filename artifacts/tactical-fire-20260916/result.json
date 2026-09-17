@@ -1,0 +1,110 @@
+{
+  "status": "TACTICAL_SPATIAL_FIRE_UI_PASS",
+  "checks": [
+    "Production preparation consumes finite ammunition, special fuel and engineering parts for the new incendiary and damage control",
+    "Two actual incoming shells produce finite fires without forced probability; live spatial propagation and deck/domain feedback are visible",
+    "Pause freezes fire state; save and next preparation preserve region identity, lifetime, spreading countdown and RNG; damage-control intent resets",
+    "One displayed target per damage-control device; extinguishing consumes real device resources and removes all remaining fires"
+  ],
+  "savedFires": [
+    {
+      "intensity_units": 371,
+      "module_id": null,
+      "random_state": 587230189,
+      "remaining_steps": 351,
+      "spread_steps": 111,
+      "zone_id": "fire.armor.2e0d02223c4df724f171"
+    },
+    {
+      "intensity_units": 751,
+      "module_id": null,
+      "random_state": 3680440689,
+      "remaining_steps": 351,
+      "spread_steps": 111,
+      "zone_id": "fire.armor.f3d07b47f84e1385d0aa"
+    },
+    {
+      "intensity_units": 751,
+      "module_id": "main_engine_starboard",
+      "random_state": 1347356737,
+      "remaining_steps": 351,
+      "spread_steps": 111,
+      "zone_id": "fire.cell.54476467a0781a4b0e45"
+    },
+    {
+      "intensity_units": 751,
+      "module_id": "main_engine_port",
+      "random_state": 3284999319,
+      "remaining_steps": 351,
+      "spread_steps": 111,
+      "zone_id": "fire.cell.a6f02defb4d58e2a2c71"
+    }
+  ],
+  "spread": [
+    {
+      "deck_level": 0,
+      "kind": "fire_spread",
+      "ship_id": "ship.ignition.player",
+      "source_zone_id": "fire.armor.f3d07b47f84e1385d0aa",
+      "step": 241,
+      "surface": true,
+      "zone_id": "fire.armor.2e0d02223c4df724f171"
+    }
+  ],
+  "hits": [
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "height_layer": "upper",
+      "impact_fraction": 0.33999999999999997,
+      "module_damage": 20,
+      "module_ids": [
+        "main_engine_port",
+        "main_engine_starboard"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        -9.166666666666666,
+        -350
+      ],
+      "projectile_id": 1,
+      "projectile_speed_mps": 500.00000000000006,
+      "projectile_type": "projectile.h5d.incendiary",
+      "projectile_version": 2,
+      "relative_speed_mps": 500.00000000000006,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.ignition.player",
+      "source_ship_id": "ship.web.red",
+      "step": 1
+    },
+    {
+      "armor_after": 0,
+      "armor_before": 0,
+      "deck_level": 0,
+      "height_layer": "upper",
+      "impact_fraction": 0.33999999999999997,
+      "module_damage": 20,
+      "module_ids": [
+        "main_engine_port",
+        "main_engine_starboard"
+      ],
+      "outcome": "penetrated",
+      "position_m": [
+        -9.166666666666666,
+        -350
+      ],
+      "projectile_id": 2,
+      "projectile_speed_mps": 500.00000000000006,
+      "projectile_type": "projectile.h5d.incendiary",
+      "projectile_version": 2,
+      "relative_speed_mps": 500.00000000000006,
+      "residual_energy_ratio": 1,
+      "ship_id": "ship.ignition.player",
+      "source_ship_id": "ship.web.red",
+      "step": 1
+    }
+  ],
+  "remainingDamageControl": 96760,
+  "scope": "Real React/Python preparation and saved ship; two isolated incoming shells exercise natural ignition. No detonation or casualties yet."
+}

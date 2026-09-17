@@ -1,0 +1,50 @@
+{
+  "status": "TACTICAL_MAGAZINE_UI_PASS",
+  "checks": [
+    "A legal full-health magazine is destroyed by three real swept shells, consumes exactly 45 remaining resources, and preserves the already loaded round",
+    "The battle canvas and damage log show the blast, deck, local damage and finite stock loss; pausing freezes the event and simulation",
+    "Battle results save magazine destruction, zero remaining stock and a separately reconciled detonation ledger entry",
+    "The next preparation and battle retain destroyed empty storage without restoring stock or replaying an old explosion"
+  ],
+  "event": {
+    "ammunition_resources": 45,
+    "cause": "projectile",
+    "deck_level": 0,
+    "height_layer": "upper",
+    "hull_damage_fraction": 0.015192437542201214,
+    "module_id": "ammunition_magazine",
+    "module_losses": [
+      {
+        "damage_points": 79.98118967475018,
+        "module_id": "fire_control"
+      },
+      {
+        "damage_points": 65.96101041949821,
+        "module_id": "thruster_port_fore"
+      },
+      {
+        "damage_points": 85.11382515355321,
+        "module_id": "thruster_starboard_fore"
+      }
+    ],
+    "position_local_m": [
+      0,
+      30
+    ],
+    "position_m": [
+      0,
+      -270
+    ],
+    "radius_m": 14.22757321796025,
+    "ship_id": "ship.ignition.player",
+    "step": 1
+  },
+  "savedChanges": [
+    {
+      "delta": -45,
+      "reason": "magazine_detonation",
+      "resource": "ammunition"
+    }
+  ],
+  "scope": "Production UI/Python preparation and save, isolated store, three real technical incoming shells; no forced HP or explosion event."
+}

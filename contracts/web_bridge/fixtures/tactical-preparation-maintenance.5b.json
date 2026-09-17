@@ -1,0 +1,14 @@
+{
+  "id": "gaotian.preparation-maintenance/5b-v1",
+  "repair_points_per_engineering_part": 25,
+  "repair_destroyed": false,
+  "repair_timing": "instant_on_commit",
+  "repair_material_source": "supply",
+  "partial_reload_cost": "ceil_per_resource",
+  "groups": {
+    "weapon": "火炮",
+    "magazine": "弹药库",
+    "damage_control": "损管设备",
+    "fuel": "燃料槽"
+  }
+}

@@ -74,10 +74,12 @@ class PreparationServiceTests(unittest.TestCase):
         self.call('draft',dict(draft=draft,expected_saved_revision=0))
         self.call('commit',dict(preparation_id='preparation.ui',revision=1))
         self.call('discard',dict(preparation_id='preparation.ui',revision=1))
+        self.assertEqual(self.call('discard',dict(preparation_id='preparation.ui',revision=1)),dict(removed=True))
         self.assertEqual(self.call('library',{})['drafts'],[])
         packet=self.call('open',dict(preparation_id='preparation.new',instance_ids=['instance.ui']))
         self.assertEqual(packet['ships'][0]['state']['magazines'][0]['quantity'],10)
-        self.assertEqual(packet['supply']['ammunition_resources'],990)
+        from backend.high_wilderness_sidecar.tactical_test_scene import SUPPLY_DEFAULTS
+        self.assertEqual(packet['supply']['ammunition_resources'],SUPPLY_DEFAULTS['ammunition_resources']-10)
 
     def test_open_retry_cannot_reset_draft_and_raw_policy_not_accepted(self):
         packet=self.open();draft=packet['draft'];draft['revision']=1

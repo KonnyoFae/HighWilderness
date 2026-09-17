@@ -51,7 +51,7 @@ def acquire(battle, world, available, inventories):
     states, contacts = list(battle.states), {}
     own_side = battle._sides[battle._direct_index]
     automatic = [i for i, (gun, state) in enumerate(zip(battle.guns, states))
-        if state.mode == 'auto' and state.target_policy == 'automatic'
+        if state.mode == 'auto' and state.target_policy == 'automatic' and not state.point_defense
         and (battle.enemy_fire or battle._sides[gun.ship_index] == own_side)]
     observers = sorted({battle.guns[i].ship_index for i in automatic
         if battle._can_fire(world.ships[battle.guns[i].ship_index], battle.guns[i].ship_index)

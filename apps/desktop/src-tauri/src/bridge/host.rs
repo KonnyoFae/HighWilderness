@@ -942,6 +942,7 @@ impl BackendSupervisor {
 
     pub fn tactical_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
         if !matches!(request.method.as_str(), "tactical.reset_test_state" | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
+            | "tactical.preparation.maintenance" | "tactical.preparation.scene_read" | "tactical.preparation.scene_save" | "tactical.preparation.scene_encounter" | "tactical.preparation.supply_replenish"
             | "tactical.preparation.library" | "tactical.preparation.import" | "tactical.preparation.open" | "tactical.preparation.read" | "tactical.preparation.draft" | "tactical.preparation.preview" | "tactical.preparation.commit" | "tactical.preparation.discard"
             | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.gun" | "tactical.realtime.height" | "tactical.realtime.damage_control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.deploy_encounter" | "tactical.realtime.encounter" | "tactical.realtime.withdraw" | "tactical.realtime.close") {
             return Err(HostFailure::host("method_not_supported", "tactical method not enabled"));
@@ -1376,11 +1377,16 @@ mod tests {
         draft["ships"][0]["cargo"] = json!([{"good_id":"cargo.engineering_parts","quantity":4}]);
         draft["ships"][0]["damage_controls"][0]["prepare"] = json!(true);
         supervisor.tactical_request(request("tactical.preparation.draft", json!({"draft":draft,"expected_saved_revision":0}))).unwrap();
-        let args = json!({"preparation_id":"preparation.native","revision":1});
+        let operation = json!({"operation_id":"maintenance.native.5b","preparation_id":"preparation.native","revision":1,
+            "instance_id":"instance.native.preparation","target_id":draft["ships"][0]["weapons"][0]["module_id"],"kind":"fill","scope":"single"});
+        let updated = supervisor.tactical_request(request("tactical.preparation.maintenance", operation.clone())).unwrap();
+        assert_eq!(updated["revision"], 2);
+        assert_eq!(supervisor.tactical_request(request("tactical.preparation.maintenance", operation)).unwrap(), updated);
+        let args = json!({"preparation_id":"preparation.native","revision":2});
         let preview = supervisor.tactical_request(request("tactical.preparation.preview", args.clone())).unwrap();
         assert_eq!(preview["can_commit"], true);
         let saved = supervisor.tactical_request(request("tactical.preparation.commit", args.clone())).unwrap();
-        assert_eq!(saved["supply_after"]["ammunition_resources"], 980);
+        assert_eq!(saved["supply_before"]["ammunition_resources"].as_i64().unwrap()-saved["supply_after"]["ammunition_resources"].as_i64().unwrap(), 20);
         assert_eq!(saved["ships"][0]["after"]["state"]["damage_controls"][0]["quantity_units"], 100000);
         assert_eq!(supervisor.tactical_request(request("tactical.preparation.commit", args.clone())).unwrap(), saved);
         let read = supervisor.tactical_request(request("tactical.preparation.read", json!({"preparation_id":"preparation.native"}))).unwrap();
@@ -1462,15 +1468,19 @@ mod tests {
             "preparation_id":"preparation.st0","instance_ids":["instance.st0.player","instance.st0.enemy"]
         }))).unwrap();
         supervisor.tactical_request(request("tactical.preparation.commit", json!({"preparation_id":"preparation.st0","revision":0}))).unwrap();
+        let mut layout = supervisor.tactical_request(request("tactical.preparation.scene_read", json!({}))).unwrap()["scene"].clone();
+        layout["revision"] = json!(1);
+        layout["distance_m"] = json!(600);
+        for (n, id) in ["instance.st0.enemy", "instance.st0.player"].iter().enumerate() {
+            layout["sides"][n]["flagship_instance_id"] = json!(id);
+            layout["sides"][n]["ships"] = json!([{"instance_id":id,"x_m":20,"y_m":10,"heading_rad":0}]);
+        }
+        supervisor.tactical_request(request("tactical.preparation.scene_save", json!({"scene":layout,"expected_revision":0}))).unwrap();
+        let encounter = supervisor.tactical_request(request("tactical.preparation.scene_encounter", json!({"revision":1,"launch_id":"encounter.native.st0"}))).unwrap();
+        assert_eq!(encounter["sides"][0]["ships"][0]["deployment"]["y_m"], 300.0);
+        let supplied = supervisor.tactical_request(request("tactical.preparation.supply_replenish", json!({"operation_id":"supply.native.5a","ammunition_resources":2000000,"goods_quantity":100000,"fuel_units":10000000}))).unwrap();
+        assert_eq!(supplied["ammunition_resources"], 2000000);
         supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"tactical"}))).unwrap();
-        let encounter = json!({"interface":"gaotian.tactical-encounter/st0-v1",
-            "encounter_id":"encounter.native.st0","world_id":"world.native","world_revision":3,
-            "player_side_id":"side.player","sides":[
-                {"side_id":"side.enemy","fleet_id":"fleet.enemy","flagship_instance_id":"instance.st0.enemy",
-                    "ships":[{"instance_id":"instance.st0.enemy","revision":1,"deployment":{"x_m":0,"y_m":300,"heading_rad":3.141592653589793}}]},
-                {"side_id":"side.player","fleet_id":"fleet.player","flagship_instance_id":"instance.st0.player",
-                    "ships":[{"instance_id":"instance.st0.player","revision":1,"deployment":{"x_m":0,"y_m":-300,"heading_rad":0}}]}
-            ]});
         let entry = supervisor.tactical_request(request("tactical.realtime.deploy_encounter", encounter.clone())).unwrap();
         assert_eq!(entry["view"]["static"]["ships"].as_array().unwrap().len(), 2);
         assert_eq!(entry["view"]["static"]["ships"][1]["id"], entry["direct_ship_id"]);
@@ -1555,6 +1565,17 @@ mod tests {
         assert_eq!(held["view"]["gunnery"]["weapons"][0]["target_policy"], "hold");
         assert_eq!(held["view"]["gunnery"]["weapons"][0]["target_ship_id"], Value::Null);
         assert_eq!(supervisor.tactical_request(group_request()).unwrap()["view"]["gunnery"]["command_sequence"], 3);
+        assert_eq!(held["view"]["gunnery"]["deck_hit_policy"]["id"], "gaotian.deck-hit-policy/3b-v1");
+        for (sequence, kind, arguments, preference) in [
+            (4, "mode", json!({"mode":"manual"}), json!([])),
+            (5, "deck", json!({"level":1}), json!([1])),
+            (6, "deck", json!({"level":null}), json!([])),
+        ] {
+            let input = json!({"epoch":scene,"generation":paused["status"]["generation"],"sequence":sequence,
+                "group_id":group_id,"kind":kind,"arguments":arguments});
+            let changed = supervisor.tactical_request(request("tactical.realtime.gun", json!({"scene_id":scene,"input":input}))).unwrap();
+            assert_eq!(changed["view"]["gunnery"]["weapons"][0]["aimed_deck_levels"], preference);
+        }
         supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"editor"}))).unwrap();
         assert_eq!(supervisor.tactical_request(read()).unwrap()["status"]["running"], false);
         supervisor.tactical_request(request("tactical.set_mode", json!({"mode":"tactical"}))).unwrap();

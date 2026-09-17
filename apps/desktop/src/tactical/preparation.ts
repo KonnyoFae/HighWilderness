@@ -1,17 +1,19 @@
 import type { CombatRecord, SettlementShip } from './settlement';
 import type { LiftReserveReading } from '../LiftReserve';
-export type WeaponChoice = { module_id: string; action: 'keep' | 'preload' | 'discard_and_preload'; recipe_id: string | null; batches: number };
-export type PreparedLaunch = { preparation_id:string; launch_id:string; direct_instance_id:string };
+export type WeaponChoice = { module_id: string; action: 'keep' | 'preload' | 'discard_and_preload' | 'top_up'; recipe_id: string | null; batches: number };
+export type PreparedLaunch = { preparation_id:string; launch_id:string; direct_instance_id:string; encounter?: Record<string,unknown> };
 export interface PreparationDraft {
   preparation_id: string; revision: number; supply_id: string;
   ships: { instance_id: string; revision: number; magazines: { module_id: string; quantity: number }[];
     cargo: { good_id: string; quantity: number }[]; weapons: WeaponChoice[];
-    damage_controls?: {module_id:string; prepare:boolean}[];fuel_tanks?:{tank_id:string;quantity_units:number}[] }[];
+    repairs?:string[];damage_controls?: {module_id:string; prepare:boolean;top_up?:boolean}[];fuel_tanks?:{tank_id:string;quantity_units:number}[] }[];
 }
 export interface Supply { ammunition_resources: number;fuel_units?:number; cargo: { good_id: string; quantity: number }[] }
-export interface PreparationResult { preparation_id: string; ships: SettlementShip[]; supply_before: Supply; supply_after: Supply }
+export interface PreparationResult { preparation_id: string; ships: (SettlementShip & {repairs?:{target_id:string;name:string;before:number;after:number;engineering_parts:number}[]})[]; supply_before: Supply; supply_after: Supply }
+export interface MaintenanceTarget {id:string;name:string;group:'weapon'|'magazine'|'damage_control'|'fuel'|null;category:string;maximum_points:number;current_points:number;repair_cost:number;repair_allowed:boolean}
 export interface PreparationShip {
   lift_reserve?: LiftReserveReading;
+  maintenance_targets?:MaintenanceTarget[];maintenance_policy?:{repair_points_per_engineering_part:number};
   instance_id: string; name: string; module_names: Record<string,string>;
   state: Omit<CombatRecord['state'], 'weapons'> & { fuel_units: number; crew: { crew_type: string; count: number }[];
     weapons: (CombatRecord['state']['weapons'][number] & { recipe_id: string | null })[] };

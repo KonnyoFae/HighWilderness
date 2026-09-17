@@ -186,7 +186,7 @@ class PropulsionKernel:
                 total = [a + b for a, b in zip(total, e.contribution_units)]
         return PropulsionState(tuple(slots), tuple(total), (0,) * 6, ())
 
-    def boundary(self, source, n, requested, events, *, load=None, profile=None, overg=False, crew_lock=True):
+    def boundary(self, source, n, requested, events, *, load=None, profile=None, overg=False, crew_lock=True, efficiencies=None):
         # Allocate engine arrays only when actual changes occur. A stable boundary
         # reads six totals and the earliest deadline, not the full engine set.
         slots, schedule = None, None
@@ -252,6 +252,7 @@ class PropulsionKernel:
                 targets[d] = 0
         governors = list(source.governors)
         current_outputs = tuple(outputs)
+        load_outputs = effective_outputs(self.resources,tuple(get(i) for i in range(len(source.engines))),efficiencies) if efficiencies else current_outputs
         due = []
         for step, i in source.schedule:
             if step > n:
@@ -270,8 +271,8 @@ class PropulsionKernel:
             def reasons(vector):
                 return _soft_reasons(load(vector), profile, overg=overg, crew_safety_lock_enabled=crew_lock)
 
-            current_load = load(current_outputs)
-            current_reasons = reasons(current_outputs)
+            current_load = load(load_outputs)
+            current_reasons = reasons(load_outputs)
             for d, old in enumerate(governors):
                 active = _active_reasons(old.reasons, overg=overg, crew_safety_lock_enabled=crew_lock)
                 if not active:
@@ -298,11 +299,11 @@ class PropulsionKernel:
                         allowed.discard(i)
 
             def projected(eligible):
-                vector = list(current_outputs)
+                vector = list(load_outputs)
                 for i, old, new, _ in due:
                     if i not in rising or i in eligible:
                         delta = new.actual_output_percent - old.actual_output_percent
-                        vector = [v + delta * c for v, c in zip(vector, self.resources.engines[i].contribution_units)]
+                        vector = [v + delta * c * (efficiencies[i] if efficiencies else 1) for v, c in zip(vector, self.resources.engines[i].contribution_units)]
                 return tuple(vector)
 
             committed = projected(allowed)
@@ -330,7 +331,7 @@ class PropulsionKernel:
                         if d is not None:
                             percent = min(value, targets[d], governors[d].ceiling, cap)
                             for axis, contribution in enumerate(self.resources.engines[i].contribution_units):
-                                vector[axis] += percent * contribution
+                                vector[axis] += percent * contribution * (efficiencies[i] if efficiencies else 1)
                     if not reasons(tuple(vector)):
                         selected = cap
                         break
@@ -365,6 +366,11 @@ class PropulsionKernel:
             source.schedule if schedule is None else tuple(sorted((step, i) for i, step in schedule.items())),
             effective, tuple(governors), phase_revision)
         return (source if result == source else result), tuple(emitted)
+
+
+def effective_outputs(contributions, engines, efficiencies):
+    return tuple(sum(slot.engine.actual_output_percent*e.contribution_units[axis]*(efficiencies[i] if efficiencies else 1)
+                     for i,(e,slot) in enumerate(zip(contributions.engines,engines))) for axis in range(6))
 
 
 def actuation(contributions, outputs):
@@ -616,7 +622,8 @@ class SimplifiedFlightSession:
                         return metrics
                     state, facts = kernel.boundary(ship.propulsion, n, requested, device_events,
                         load=load if phase == "closing" else None, profile=self._profile,
-                        overg=selected.overg_requested, crew_lock=model.runtime.crew_safety_lock_enabled)
+                        overg=selected.overg_requested, crew_lock=model.runtime.crew_safety_lock_enabled,
+                        efficiencies=rk.engine_efficiencies(ship.resources) if rk else None)
                     emitted.extend((ship.ship_id, phase, fact) for fact in facts)
                     if rk is not None:
                         # A command/due transition can change demand at this very boundary.
@@ -645,8 +652,10 @@ class SimplifiedFlightSession:
                             ship=replace(ship,motion=replace(ship.motion,fixed_step_index=n+1))
                             diagnostics.append((ship.ship_id,None))
                             continue
-                        delivery = actuation(seed.contributions, state.output_percent_units)
-                        metrics = load(state.output_percent_units)
+                        efficiencies = rk.engine_efficiencies(ship.resources) if rk else None
+                        outputs = effective_outputs(seed.contributions,state.engines,efficiencies) if efficiencies else state.output_percent_units
+                        delivery = actuation(seed.contributions, outputs)
+                        metrics = load(outputs)
                         motion, diagnostic = dynamics._integrate_delivered_actuation(model, ship.motion,
                             delivery, drag, 1.0, metrics, 1 / 60)
                         validate_motion(motion)
@@ -717,7 +726,10 @@ class SimplifiedFlightSession:
         require(type(refills) is tuple and len(set(refills)) == len(refills), 'Invalid emergency fuel refills')
         require(all(any(op.ship_id==sid and op.module_id==mid and op.kind=='emergency_lift_repair' for op in batch.device_operations)
             for sid,mid in refills), 'Refill must accompany successful emergency lift work')
-        affected = set(hull) | {op.ship_id for op in batch.device_operations}
+        casualties = batch.casualties if not repair else ()
+        require(type(casualties) is tuple and all(type(row) is tuple and len(row)==4 and row[0] in indexes for row in casualties), 'Invalid casualty batch')
+        require(len({(row[0],row[1]) for row in casualties})==len(casualties),'Duplicate casualty batch')
+        affected = set(hull) | {op.ship_id for op in batch.device_operations} | {row[0] for row in casualties}
         if not affected:
             return world, ()
         ships, emitted = list(world.ships), []
@@ -746,6 +758,12 @@ class SimplifiedFlightSession:
                         require(hp > 1e-8 and op.amount <= dk.seed.modules[idx].maximum_durability_points-hp+1e-8,
                                 'Repair cannot rebuild or exceed maximum durability')
             devices, updates, receipts, touched = dk.boundary(ship.devices, operations)
+            losses = tuple((kind,wounded,dead) for sid,kind,wounded,dead in casualties if sid==ship_id)
+            if losses:
+                resources = rk.casualties(ship.resources,losses)
+                ship = replace(ship,resources=resources,command=replace(ship.command,
+                    wounded_aboard=ship.command.wounded_aboard+sum(w for _,w,_ in losses)))
+                emitted.append((ship_id,'personnel','casualties',losses))
             fraction = min(1.0, ship.motion.hull_integrity_fraction+hull.get(ship_id, 0)) if repair else max(0.0, ship.motion.hull_integrity_fraction-hull.get(ship_id, 0))
             ship = replace(ship, devices=devices, motion=replace(ship.motion, hull_integrity_fraction=fraction))
             added_fuel = sum(float(rk.modules[mid].prototype.capability.to_dict()['fuel_capacity_units']) for sid,mid in refills if sid==ship_id)
@@ -788,6 +806,7 @@ class SimplifiedFlightSession:
 class ImpactBatch:
     device_operations: tuple = ()
     hull_damage: tuple = ()
+    casualties: tuple = ()
 
 
 @dataclass(frozen=True)

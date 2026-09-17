@@ -4,13 +4,16 @@ from . import battle_preparation as bp, persistent_ship as ps, outfit_documents,
 from .preparation_transactions import PreparationStore
 from .storage import read_json
 from .preparation_policy import load_current
+from . import preparation_maintenance as maintenance
 from 高天荒野舰艇数据契约 import canonical_sha256
 
-CAPABILITIES=tuple('tactical.preparation.'+s for s in ('library','import','open','read','draft','preview','commit','discard'))
+CAPABILITIES=tuple('tactical.preparation.'+s for s in ('library','import','open','read','draft','preview','commit','discard',
+    'scene_read','scene_save','scene_encounter','supply_replenish','maintenance'))
 SUPPLY_ID='supply.preparation.technical.v1'
 
 
 class PreparationService:
+    supply_id = SUPPLY_ID
     def __init__(self,editor,directory):
         self.editor=editor
         self.store=PreparationStore(directory,editor.index)
@@ -21,6 +24,7 @@ class PreparationService:
         db.execute('CREATE TABLE IF NOT EXISTS preparation_imports (id TEXT PRIMARY KEY, request_digest TEXT NOT NULL, payload TEXT NOT NULL, digest TEXT NOT NULL)')
 
     def provision(self):
+        from .tactical_test_scene import SUPPLY_DEFAULTS
         with self.store.connection() as db:
             old=db.execute('SELECT payload,digest FROM preparation_supplies WHERE id=?',(SUPPLY_ID,)).fetchone()
             if old:
@@ -37,8 +41,8 @@ class PreparationService:
                     self.store._write_supply(db,value['supply'],value['goods'])
                 return
             value=dict(supply=dict(interface=bp.SUPPLY_INTERFACE,supply_id=SUPPLY_ID,revision=0,
-                ammunition_resources=1000,cargo=[dict(good_id=g['id'],quantity=100) for g in self.policy['goods']]),goods=self.policy['goods'])
-            if self.policy['interface'] in bp.dc.FUEL_POLICY_INTERFACES:value['supply'].update(interface=bp.fuel.SUPPLY_INTERFACE,fuel_units=10000)
+                ammunition_resources=SUPPLY_DEFAULTS['ammunition_resources'],cargo=[dict(good_id=g['id'],quantity=SUPPLY_DEFAULTS['goods_quantity']) for g in self.policy['goods']]),goods=self.policy['goods'])
+            if self.policy['interface'] in bp.dc.FUEL_POLICY_INTERFACES:value['supply'].update(interface=bp.fuel.SUPPLY_INTERFACE,fuel_units=SUPPLY_DEFAULTS['fuel_units'])
             payload,digest=self.store._encoded(value)
             db.execute('INSERT INTO preparation_supplies VALUES (?,?,?)',(SUPPLY_ID,payload,digest))
 
@@ -116,16 +120,18 @@ class PreparationService:
                 if receipt is None: bp.validate_draft(draft,ships,supply,supply_goods=goods)
             except ps.ContractError as exc:
                 return dict(draft=draft,ships=[],supply=None,receipt=receipt,stale_error=exc.message)
-        details=[]
-        for design,record in ships:
-            definition=design.resources.definition()
-            names={m.id:m.prototype.name for m in design.resources.seed.resources.modules}
-            details.append(dict(instance_id=record['state']['instance_id'],name=design.archive()['document']['outfit']['name'],
-                state=record['state'],resources=definition,module_names=names,
-                lift_reserve=lift_reserve.prepared(design, record),
-                enabled_recipe_ids=design.archive()['policy']['enabled_recipe_ids'],
-                capacity=ps.inventory_summary(ps.parse_instance(record['state'],design.resources),design.resources)))
+        details=[self.ship_detail(design,record) for design,record in ships]
         return dict(draft=draft,ships=details,supply=supply,receipt=receipt,stale_error=None)
+
+    def ship_detail(self, design, record):
+        return dict(instance_id=record['state']['instance_id'],name=design.archive()['document']['outfit']['name'],
+            state=record['state'],resources=design.resources.definition(),
+            module_names={m.id:m.prototype.name for m in design.resources.seed.resources.modules},
+            lift_reserve=lift_reserve.prepared(design, record),
+            enabled_recipe_ids=design.archive()['policy']['enabled_recipe_ids'],
+            maintenance_targets=maintenance.targets(design,record),
+            maintenance_policy=maintenance.policy(),
+            capacity=ps.inventory_summary(ps.parse_instance(record['state'],design.resources),design.resources))
 
     def read_draft(self,key):
         ps.identifier(key,'$.preparation_id')
@@ -156,6 +162,15 @@ class PreparationService:
     def dispatch(self,request):
         ps.need(request['session_id'] is None and request['expected_revision'] is None,'$.session_id','准备操作不绑定编辑会话')
         p=request['params']; action=request['method'].removeprefix('tactical.preparation.')
+        if action=='maintenance':return maintenance.action(self,p)
+        if action.startswith('scene_') or action=='supply_replenish':
+            from . import tactical_test_scene as scene
+            if action=='scene_read': ps.obj(p,'','$.params'); return scene.packet(self)
+            if action=='scene_save':
+                ps.obj(p,'scene expected_revision','$.params'); return scene.save(self,p['scene'],p['expected_revision'])
+            if action=='scene_encounter':
+                ps.obj(p,'revision launch_id','$.params'); return scene.encounter(self,p['revision'],p['launch_id'])
+            if action=='supply_replenish': return scene.replenish(self,p)
         if action=='library': ps.obj(p,'','$.params'); return self.library()
         if action=='import': return self.import_ship(p)
         if action=='open':
@@ -175,17 +190,21 @@ class PreparationService:
             return self.packet(draft)
         if action in ('read','discard','commit','preview'):
             ps.obj(p,'preparation_id revision' if action in ('commit','preview','discard') else 'preparation_id','$.params')
+            if action=='discard':
+                ps.identifier(p['preparation_id'],'$.preparation_id');ps.integer(p['revision'],'$.revision')
+                with self.store.connection() as db:
+                    self.setup(db)
+                    row=db.execute('SELECT revision FROM preparation_drafts WHERE id=?',(p['preparation_id'],)).fetchone()
+                    if row is None:return dict(removed=True)
+                    ps.need(row[0]==p['revision'],'$.revision','草稿已变化，未移除入口')
+                    db.execute('DELETE FROM preparation_drafts WHERE id=?',(p['preparation_id'],))
+                return dict(removed=True)
             draft=self.read_draft(p['preparation_id'])
             if action!='read':
                 ps.integer(p['revision'],'$.revision')
                 ps.need(p['revision']==draft['revision'],'$.revision','草稿已变化，请重新读取后重试')
             if action=='preview': return self.store.preview(draft)
             if action=='commit': return self.store.commit(draft,require_saved=True)
-            if action=='discard':
-                with self.store.connection() as db:
-                    count=db.execute('DELETE FROM preparation_drafts WHERE id=? AND revision=?',(p['preparation_id'],p['revision'])).rowcount
-                    ps.need(count==1,'$.revision','草稿已变化，未移除入口')
-                return dict(removed=True)
             return self.packet(draft)
         ps.need(action=='draft','$.method','未知战前准备操作')
         ps.obj(p,'draft expected_saved_revision','$.params')

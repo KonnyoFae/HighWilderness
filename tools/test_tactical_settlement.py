@@ -176,8 +176,8 @@ s.save(sys.argv[2])
     def test_local_armor_wear_is_retained_in_contract_and_entry(self):
         from backend.high_wilderness_sidecar.tactical_damage import DamageKernel
         original = DamageKernel.__init__
-        def armored(kernel, scenario, session):
-            original(kernel, scenario, session)
+        def armored(kernel, scenario, session, seed=1):
+            original(kernel, scenario, session, seed)
             kernel.edges = [tuple(replace(e, maximum=100, thickness_mm=100000) for e in edges) for edges in kernel.edges]
             kernel.initial = replace(kernel.initial, armor=tuple(tuple(100. for e in edges) for edges in kernel.edges))
         # Scoped armor-kernel fixture across both entries; sample blueprints stay unchanged.

@@ -1,0 +1,9 @@
+{
+  "status": "TACTICAL_PREPARATION_5B_UI_PASS",
+  "checks": [
+    "Canvas selection opens guns; mixed-caliber same-ship top-up is durable/idempotent after lost reply; shortages block all saving and leave all three ships unchanged.",
+    "Explicit supply refill followed by one shared commit fills only flagship guns/DC, repairs living gun 39→100 for three parts, excludes destroyed generator and charges four total engineering parts; lost commit reply does not duplicate spending.",
+    "Backend/browser restart restores the exact saved receipt, repaired health, stock, unchanged other ships and enabled next-battle entry.",
+    "The repaired and refilled saved fleet deploys through the real three-ship tactical entry."
+  ]
+}

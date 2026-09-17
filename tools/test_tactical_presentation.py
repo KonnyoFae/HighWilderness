@@ -24,6 +24,7 @@ class PresentationTests(unittest.TestCase):
         with TemporaryDirectory() as folder:
             service = RealtimeViewService('backend.visual', clock=clock, settlement_dir=Path(folder))
             battle = fixtures.GunneryTests().battle(projectile_lifetime_steps=2)
+            fixtures.GunneryTests().send(battle, 'clear')
             service._attach(battle, render_static(fixtures.GunneryTests.scenario))
             service.scheduler.resume()
             for _ in range(30):

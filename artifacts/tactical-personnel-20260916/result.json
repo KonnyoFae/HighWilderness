@@ -1,0 +1,416 @@
+{
+  "status": "TACTICAL_PERSONNEL_UI_PASS",
+  "checks": [
+    "Six actual oblique shell hits destroy only the two crew quarters; 18 fit personnel become 9 fit, 8 wounded and 1 dead, while priority staffing retains CIC control and disables unstaffed manual reloading",
+    "Production UI distinguishes fit/wounded/dead personnel, per-type requirements, staffing efficiency and actual hit deck/cause; pause freezes all changes",
+    "Save, next preparation and another battle retain fit counts, typed injuries/deaths and fractional carries, with no free treatment, replacement crew or repeated casualty events"
+  ],
+  "totals": {
+    "dead": 1,
+    "fit": 9,
+    "modules": [
+      {
+        "functions": [
+          {
+            "crew_efficiency": 1,
+            "function_id": "cic.basic_control"
+          }
+        ],
+        "module_id": "cic",
+        "requirements": [
+          {
+            "assigned": 1,
+            "crew_type": "officer",
+            "minimum": 1,
+            "standard": 2
+          }
+        ],
+        "staffing_fraction": 0.5
+      },
+      {
+        "functions": [
+          {
+            "crew_efficiency": 0,
+            "function_id": "damage_control.firefighting"
+          }
+        ],
+        "module_id": "damage_control",
+        "requirements": [
+          {
+            "assigned": 0,
+            "crew_type": "veteran_damage_control",
+            "minimum": 1,
+            "standard": 2
+          }
+        ],
+        "staffing_fraction": 0
+      },
+      {
+        "functions": [
+          {
+            "crew_efficiency": 0.3333333333333333,
+            "function_id": "fire_control.guidance"
+          },
+          {
+            "crew_efficiency": 1,
+            "function_id": "fire_control.solution"
+          }
+        ],
+        "module_id": "fire_control",
+        "requirements": [
+          {
+            "assigned": 0.3333333333333333,
+            "crew_type": "technical_officer",
+            "minimum": 0,
+            "standard": 1
+          }
+        ],
+        "staffing_fraction": 0.3333333333333333
+      },
+      {
+        "functions": [
+          {
+            "crew_efficiency": 1,
+            "function_id": "generator.regulation"
+          }
+        ],
+        "module_id": "generator",
+        "requirements": [
+          {
+            "assigned": 1.3333333333333333,
+            "crew_type": "technical_officer",
+            "minimum": 1,
+            "standard": 2
+          }
+        ],
+        "staffing_fraction": 0.6666666666666666
+      },
+      {
+        "functions": [
+          {
+            "crew_efficiency": 1,
+            "function_id": "engine.throttle"
+          }
+        ],
+        "module_id": "main_engine_port",
+        "requirements": [
+          {
+            "assigned": 1,
+            "crew_type": "ordinary",
+            "minimum": 1,
+            "standard": 2
+          }
+        ],
+        "staffing_fraction": 0.5
+      },
+      {
+        "functions": [
+          {
+            "crew_efficiency": 1,
+            "function_id": "engine.throttle"
+          }
+        ],
+        "module_id": "main_engine_starboard",
+        "requirements": [
+          {
+            "assigned": 1,
+            "crew_type": "ordinary",
+            "minimum": 1,
+            "standard": 2
+          }
+        ],
+        "staffing_fraction": 0.5
+      },
+      {
+        "functions": [
+          {
+            "crew_efficiency": 1,
+            "function_id": "sensor.search"
+          },
+          {
+            "crew_efficiency": 0.3333333333333333,
+            "function_id": "sensor.track"
+          }
+        ],
+        "module_id": "sensor_upper_starboard",
+        "requirements": [
+          {
+            "assigned": 0.3333333333333333,
+            "crew_type": "technical_officer",
+            "minimum": 0,
+            "standard": 1
+          }
+        ],
+        "staffing_fraction": 0.3333333333333333
+      },
+      {
+        "functions": [
+          {
+            "crew_efficiency": 1,
+            "function_id": "thruster.throttle"
+          }
+        ],
+        "module_id": "thruster_port_aft",
+        "requirements": [
+          {
+            "assigned": 1,
+            "crew_type": "ordinary",
+            "minimum": 1,
+            "standard": 1
+          }
+        ],
+        "staffing_fraction": 1
+      },
+      {
+        "functions": [
+          {
+            "crew_efficiency": 1,
+            "function_id": "thruster.throttle"
+          }
+        ],
+        "module_id": "thruster_port_fore",
+        "requirements": [
+          {
+            "assigned": 1,
+            "crew_type": "ordinary",
+            "minimum": 1,
+            "standard": 1
+          }
+        ],
+        "staffing_fraction": 1
+      },
+      {
+        "functions": [
+          {
+            "crew_efficiency": 1,
+            "function_id": "thruster.throttle"
+          }
+        ],
+        "module_id": "thruster_starboard_aft",
+        "requirements": [
+          {
+            "assigned": 1,
+            "crew_type": "ordinary",
+            "minimum": 1,
+            "standard": 1
+          }
+        ],
+        "staffing_fraction": 1
+      },
+      {
+        "functions": [
+          {
+            "crew_efficiency": 1,
+            "function_id": "thruster.throttle"
+          }
+        ],
+        "module_id": "thruster_starboard_fore",
+        "requirements": [
+          {
+            "assigned": 0,
+            "crew_type": "ordinary",
+            "minimum": 1,
+            "standard": 1
+          }
+        ],
+        "staffing_fraction": 0
+      },
+      {
+        "functions": [
+          {
+            "crew_efficiency": 1,
+            "function_id": "weapon.aim"
+          },
+          {
+            "crew_efficiency": 1,
+            "function_id": "weapon.fire"
+          },
+          {
+            "crew_efficiency": 0,
+            "function_id": "weapon.reload"
+          }
+        ],
+        "module_id": "weapon_upper_port",
+        "requirements": [
+          {
+            "assigned": 0,
+            "crew_type": "ordinary",
+            "minimum": 0,
+            "standard": 2
+          }
+        ],
+        "staffing_fraction": 0
+      }
+    ],
+    "ship_id": "ship.ignition.player",
+    "types": [
+      {
+        "crew_type": "officer",
+        "dead": 0,
+        "fit": 1,
+        "wounded": 1
+      },
+      {
+        "crew_type": "ordinary",
+        "dead": 1,
+        "fit": 5,
+        "wounded": 4
+      },
+      {
+        "crew_type": "technical_officer",
+        "dead": 0,
+        "fit": 2,
+        "wounded": 2
+      },
+      {
+        "crew_type": "veteran_damage_control",
+        "dead": 0,
+        "fit": 1,
+        "wounded": 1
+      }
+    ],
+    "unclassified_wounded": 0,
+    "wounded": 8
+  },
+  "losses": [
+    {
+      "casualties": [
+        {
+          "crew_type": "ordinary",
+          "dead": 0,
+          "wounded": 1
+        }
+      ],
+      "cause": "projectile",
+      "deck_level": 0,
+      "height_layer": "upper",
+      "module_id": "crew_quarters_base",
+      "ship_id": "ship.ignition.player",
+      "step": 1
+    },
+    {
+      "casualties": [
+        {
+          "crew_type": "ordinary",
+          "dead": 0,
+          "wounded": 1
+        }
+      ],
+      "cause": "projectile",
+      "deck_level": 0,
+      "height_layer": "upper",
+      "module_id": "crew_quarters_base",
+      "ship_id": "ship.ignition.player",
+      "step": 1
+    },
+    {
+      "casualties": [
+        {
+          "crew_type": "technical_officer",
+          "dead": 0,
+          "wounded": 1
+        }
+      ],
+      "cause": "projectile",
+      "deck_level": 0,
+      "height_layer": "upper",
+      "module_id": "crew_quarters_base",
+      "ship_id": "ship.ignition.player",
+      "step": 1
+    },
+    {
+      "casualties": [
+        {
+          "crew_type": "ordinary",
+          "dead": 0,
+          "wounded": 1
+        }
+      ],
+      "cause": "projectile",
+      "deck_level": 1,
+      "height_layer": "upper",
+      "module_id": "crew_quarters_upper",
+      "ship_id": "ship.ignition.player",
+      "step": 1
+    },
+    {
+      "casualties": [
+        {
+          "crew_type": "ordinary",
+          "dead": 1,
+          "wounded": 0
+        }
+      ],
+      "cause": "projectile",
+      "deck_level": 1,
+      "height_layer": "upper",
+      "module_id": "crew_quarters_upper",
+      "ship_id": "ship.ignition.player",
+      "step": 1
+    },
+    {
+      "casualties": [
+        {
+          "crew_type": "officer",
+          "dead": 0,
+          "wounded": 1
+        },
+        {
+          "crew_type": "ordinary",
+          "dead": 0,
+          "wounded": 1
+        },
+        {
+          "crew_type": "technical_officer",
+          "dead": 0,
+          "wounded": 1
+        },
+        {
+          "crew_type": "veteran_damage_control",
+          "dead": 0,
+          "wounded": 1
+        }
+      ],
+      "cause": "projectile",
+      "deck_level": 1,
+      "height_layer": "upper",
+      "module_id": "crew_quarters_upper",
+      "ship_id": "ship.ignition.player",
+      "step": 1
+    }
+  ],
+  "persisted": {
+    "policy": "gaotian.personnel/quarters-damage-priority-staffing/3e-v1",
+    "statuses": [
+      {
+        "crew_type": "officer",
+        "dead": 0,
+        "death_fraction": 0.25,
+        "loss_fraction": 0,
+        "wounded": 1
+      },
+      {
+        "crew_type": "ordinary",
+        "dead": 1,
+        "death_fraction": 0.25,
+        "loss_fraction": 0,
+        "wounded": 4
+      },
+      {
+        "crew_type": "technical_officer",
+        "dead": 0,
+        "death_fraction": 0.5,
+        "loss_fraction": 0,
+        "wounded": 2
+      },
+      {
+        "crew_type": "veteran_damage_control",
+        "dead": 0,
+        "death_fraction": 0.25,
+        "loss_fraction": 0,
+        "wounded": 1
+      }
+    ]
+  },
+  "scope": "Production React/Python in isolated storage; six technical incoming rounds use real swept damage without forced personnel or durability changes."
+}

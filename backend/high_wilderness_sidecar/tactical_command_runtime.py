@@ -44,6 +44,7 @@ class CommandState:
     remote_control: bool = False
     lift_force_n: float = 0
     crew_lock: bool = True
+    wounded_aboard: int = 0
 
     @property
     def allowed(self):
@@ -85,10 +86,10 @@ class CommandKernel:
 
     def initial(self):
         return CommandState(TacticalShipLifecycleState('operational','scene_command',(),0),
-            fleet_phase='active' if self.direct else 'unassigned')
+            fleet_phase='active' if self.direct else 'unassigned',wounded_aboard=self.seed.wounded_aboard)
 
     def resolve(self,before,devices,resources,motion,*,mass,step,exit_reason=None,lift_crashed=False):
-        key=(devices.revision,resources.revision,motion.hull_integrity_fraction,mass,lift_crashed)
+        key=(devices.revision,resources.revision,motion.hull_integrity_fraction,mass,lift_crashed,before.wounded_aboard)
         if before.cache_key==key and exit_reason is None:
             return before
         dk=self.resources.devices
@@ -115,7 +116,7 @@ class CommandKernel:
         cic=results[self.cic].function_efficiency('cic.basic_control')>EPS
         remote=bool(self.seed.remote_core_id and cic and results[self.seed.remote_core_id].function_efficiency('remote_core.command_link')>EPS)
         lift=sum(force*results[name].function_efficiency('lift_tank.lift') for name,force in self.lift)
-        lock=sum(v for _,v in resources.crew)+self.seed.wounded_aboard>0
+        lock=sum(v for _,v in resources.crew)+before.wounded_aboard>0
         runtime=SimpleNamespace(current_hull_integrity_fraction=motion.hull_integrity_fraction,modules=tuple(results.values()),
             cic_control_available=cic,remote_control_available=remote,crew_safety_lock_enabled=lock,
             terminal_failures=('insufficient_lift',) if lift_crashed else ())
@@ -130,7 +131,7 @@ class CommandKernel:
         phase,loss,loss_step=before.fleet_phase,before.loss_reason,before.loss_step
         if self.direct and phase=='active' and reason is not None:
             phase,loss,loss_step='command_defeat_withdrawal',reason,step
-        return CommandState(lifecycle,phase,loss,loss_step,before.revision+1,key,cic,remote,lift,lock)
+        return CommandState(lifecycle,phase,loss,loss_step,before.revision+1,key,cic,remote,lift,lock,before.wounded_aboard)
 
 
 def seed_from_snapshot(snapshot,instance,sortie,contributions):

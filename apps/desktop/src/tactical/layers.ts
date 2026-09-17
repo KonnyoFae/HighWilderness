@@ -25,6 +25,10 @@ export function viewOnLayer(view: TacticalView, layer: HeightLayer): TacticalVie
         (g.effective_layer !== undefined && g.effective_layer !== layer) || (g.target_ship_id && !visible.has(g.target_ship_id))
           ? { ...g, aim_point_m: null, target_module_id: null } : g),
       projectiles: gunnery.projectiles.filter(p => belongs(p.height_layer, p.ship_id)),
+      point_defense: gunnery.point_defense && {...gunnery.point_defense,
+        recent:gunnery.point_defense.recent.filter(e=>belongs(e.height_layer,e.source_ship_id)),
+        threats:gunnery.point_defense.threats.filter(e=>belongs(e.height_layer,e.ship_id))},
       damage: gunnery.damage && { ...gunnery.damage,
+        magazine_explosions: gunnery.damage.magazine_explosions?.filter(event => belongs(event.height_layer, event.ship_id)),
         recent: gunnery.damage.recent.filter(hit => belongs(hit.height_layer, hit.ship_id)) } } } };
 }

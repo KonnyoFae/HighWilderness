@@ -18,6 +18,7 @@ from 高天荒野舰艇战术机动求解器 import build_tactical_ship_model, i
 from . import outfit_documents, outfits, persistent_ship as ps, tactical_settlement as ts, damage_control_resources as dc
 from .tactical_resources import compile_tactical_fuel_resources
 from . import tactical_fuel as fuel, tactical_ignition as ignition
+from . import preparation_maintenance as maintenance
 from .simplified_propulsion import compile_snapshot_contributions, direction_error
 from .tactical_devices import seed_from_snapshot as device_seed
 from .tactical_resources_runtime import seed_from_snapshot as resource_seed
@@ -205,6 +206,9 @@ def validate_record(record, design):
     ps.need(all(value[k] == reference[k] for k in ('interface', 'ship_id', 'design_sha256', 'resources')),
             '$.ship', '准备中的舰船与设计不匹配')
     value['state'] = ps.parse_instance(value['state'], design.resources).to_dict()
+    if any('zone_id' in fire for fire in value['state'].get('fires',())):
+        from .tactical_spatial_fire import compile_zones, validate_rows
+        validate_rows(value['state']['fires'],compile_zones(design.snapshot.hull,design.resources.seed.resources.modules))
     ps.need(all(w['reload'] is None for w in value['state']['weapons']), '$.reload', '先完成战后结算再准备')
     dc.require_settled(value['state'])
     ps.need(type(value['armor']) is list and len(value['armor']) == len(reference['armor']), '$.armor', '装甲记录缺失')
@@ -239,7 +243,8 @@ def parse_supply(value, goods):
 def new_draft(preparation_id, ships, supply, *, supply_goods=None):
     """ships is a sequence of (PreparedDesign, P3 record). Default is keep all."""
     ps.identifier(preparation_id, '$.preparation_id')
-    ps.need(0 < len(ships) <= 16, '$.ships', '需要 1—16 艘准备舰船')
+    from .tactical_limits import MAX_DEPLOYED_SHIPS
+    ps.need(0 < len(ships) <= MAX_DEPLOYED_SHIPS, '$.ships', f'需要 1—{MAX_DEPLOYED_SHIPS} 艘准备舰船')
     goods, rows, ids = {}, [], set()
     for design, raw in ships:
         record = validate_record(raw, design)
@@ -273,10 +278,14 @@ def new_draft(preparation_id, ships, supply, *, supply_goods=None):
 def validate_draft(value, ships, supply, *, supply_goods=None):
     """Strict stale-state/selection boundary; feasibility and spending are X1a.2."""
     v = ps.clone(value)
-    ps.obj(v, 'interface preparation_id revision swap_policy supply_id supply_revision supply_sha256 ships', '$.draft')
+    modern = v.get('interface') == maintenance.DRAFT_INTERFACE
+    ps.obj(v, 'interface preparation_id revision swap_policy supply_id supply_revision supply_sha256 ships'+(' maintenance_policy' if modern else ''), '$.draft')
     ps.integer(v['revision'], '$.draft.revision')
     ps.integer(v['supply_revision'], '$.supply_revision')
     baseline = new_draft(v['preparation_id'], ships, supply, supply_goods=supply_goods)
+    if modern:
+        baseline = maintenance.upgrade(baseline)
+        ps.need(v['maintenance_policy']==baseline['maintenance_policy'],'$.maintenance_policy','维修与补满规则已变化，请重新建立准备草稿')
     ps.need(all(v[k] == baseline[k] for k in ('interface', 'swap_policy', 'supply_id', 'supply_revision', 'supply_sha256')),
             '$.supply', '供给或准备政策已变化，请重新核对')
     actual = ps.rows(v['ships'], 'instance_id', '$.ships')
@@ -285,13 +294,19 @@ def validate_draft(value, ships, supply, *, supply_goods=None):
     designs = {r['state']['instance_id']: d for d, r in ships}
     for key, row in actual.items():
         ps.obj(row, 'instance_id revision record_sha256 design_sha256 magazines cargo weapons' +
-            (' damage_controls' if v['interface'] in (dc.DRAFT_INTERFACE,fuel.DRAFT_INTERFACE) else '')+
-            (' fuel_tanks' if v['interface']==fuel.DRAFT_INTERFACE else ''), '$.ships')
+            (' damage_controls' if modern or v['interface'] in (dc.DRAFT_INTERFACE,fuel.DRAFT_INTERFACE) else '')+
+            (' fuel_tanks' if modern or v['interface']==fuel.DRAFT_INTERFACE else '')+(' repairs' if modern else ''), '$.ships')
         ps.integer(row['revision'], '$.ships.revision')
         ps.need(all(row[k] == expected[key][k] for k in ('revision', 'record_sha256', 'design_sha256')),
                 '$.ships.'+key, '舰船已有新的战损、库存或设计版本，准备草稿不能覆盖')
         definition = designs[key].resources.definition()
-        if v['interface']==fuel.DRAFT_INTERFACE:
+        if modern:
+            record=next(r for _,r in ships if r['state']['instance_id']==key)
+            options={t['id']:t for t in maintenance.targets(designs[key],record)}
+            ps.need(type(row['repairs']) is list and all(type(t) is str for t in row['repairs']) and len(row['repairs'])==len(set(row['repairs'])),'$.repairs','维修部件列表无效')
+            ps.need(all(t in options and options[t]['repair_allowed'] for t in row['repairs']),'$.repairs','只能维修尚未摧毁的部件，残骸不能维修')
+            row['repairs'].sort()
+        if modern or v['interface']==fuel.DRAFT_INTERFACE:
             tanks=ps.rows(row['fuel_tanks'],'tank_id','$.fuel_tanks')
             ps.need(set(tanks)=={t['tank_id'] for t in definition.get('fuel_tanks',())},'$.fuel_tanks','Fuel storage identity mismatch')
             for t in tanks.values():
@@ -312,19 +327,20 @@ def validate_draft(value, ships, supply, *, supply_goods=None):
             choice = weapons[w['module_id']]
             ps.obj(choice, 'module_id action recipe_id batches', '$.weapons')
             ps.integer(choice['batches'], '$.weapons.batches', maximum=10000)
-            ps.need(choice['action'] in ('keep', 'preload', 'discard_and_preload'), '$.weapons.action', '不支持的战前武器动作')
+            ps.need(choice['action'] in ('keep', 'preload', 'discard_and_preload')+ (('top_up',) if modern else ()), '$.weapons.action', '不支持的战前武器动作')
             if choice['action'] == 'keep':
                 ps.need(choice['recipe_id'] is None and choice['batches'] == 0, '$.weapons', '保留现状不能隐含装填')
             else:
                 ps.need(type(choice['recipe_id']) is str and choice['recipe_id'] in w['recipe_ids']
-                    and choice['recipe_id'] in enabled and choice['batches'] > 0, '$.weapons', '弹种未启用、不兼容或批次数无效')
-        if v['interface'] in (dc.DRAFT_INTERFACE,fuel.DRAFT_INTERFACE):
+                    and choice['recipe_id'] in enabled and (choice['batches']==0 if choice['action']=='top_up' else choice['batches']>0), '$.weapons', '弹种未启用、不兼容或批次数无效')
+        if modern or v['interface'] in (dc.DRAFT_INTERFACE,fuel.DRAFT_INTERFACE):
             choices = ps.rows(row['damage_controls'], 'module_id', '$.damage_controls')
             ps.need(set(choices) == {d['module_id'] for d in definition.get('damage_controls', ())},
                     '$.damage_controls', '损管设备身份不匹配')
             for choice in choices.values():
-                ps.obj(choice, 'module_id prepare', '$.damage_controls')
+                ps.obj(choice, 'module_id prepare'+(' top_up' if modern and 'top_up' in choice else ''), '$.damage_controls')
                 ps.need(type(choice['prepare']) is bool, '$.damage_controls.prepare', '需要明确的准备选择')
+                if 'top_up' in choice:ps.need(type(choice['top_up']) is bool and not (choice['top_up'] and choice['prepare']),'$.damage_controls','损管补满不能同时安排整批准备')
             row['damage_controls'] = [choices[k] for k in sorted(choices)]
         for field, items in (('magazines', magazines), ('cargo', cargo), ('weapons', weapons)):
             row[field] = [items[k] for k in sorted(items)]

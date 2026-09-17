@@ -55,6 +55,9 @@ class TargetingTests(unittest.TestCase):
             rows.append((design,record))
         b=deployment.build(rows,rows[0][1]['state']['instance_id'],self.template,self.scenario)[0]
         b.enemy_fire=False
+        # This suite verifies ordinary ship targeting, independent of the new
+        # 30 mm default point-defense doctrine.
+        b.states=tuple(replace(s,point_defense=False) for s in b.states)
         return b
 
     def state(self,b,states=None):

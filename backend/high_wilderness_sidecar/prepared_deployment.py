@@ -71,7 +71,8 @@ def load_ship(design, record, *, x, y, heading=None, require_available=True):
 
 
 def build(ships, direct_instance_id, template, technical_scenario, *, allow_test_ignition=False):
-    ps.need(1 <= len(ships) <= 15, '$.ships', '本次交战支持 1—15 艘准备舰船及 1 艘测试敌舰')
+    from .tactical_limits import MAX_DEPLOYED_SHIPS
+    ps.need(1 <= len(ships) < MAX_DEPLOYED_SHIPS, '$.ships', f'本次交战支持 1—{MAX_DEPLOYED_SHIPS-1} 艘准备舰船及 1 艘测试敌舰')
     ps.need(direct_instance_id in {r['state']['instance_id'] for _,r in ships}, '$.direct_instance_id', '请选择参战舰船作为旗舰')
     seeds, bindings, instances, armors, latches, names = [], [], [], [], [], {}
     radii = [max((hypot(*p) for deck in d.snapshot.hull.normalized_blueprint.decks for region in deck.regions for p in region.vertices_m),default=50) for d,_ in ships]

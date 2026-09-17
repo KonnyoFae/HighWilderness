@@ -62,7 +62,8 @@ class TacticalTestResetTests(unittest.TestCase):
                 known_static_sha256=None, ack_inputs=[], ack_events=0)), mode='editor')
         self.prepare()
         packet = self.call('read', dict(preparation_id='preparation.reset'))
-        self.assertEqual(packet['supply']['ammunition_resources'], 1000)
+        from backend.high_wilderness_sidecar.tactical_test_scene import SUPPLY_DEFAULTS
+        self.assertEqual(packet['supply']['ammunition_resources'], SUPPLY_DEFAULTS['ammunition_resources'])
         self.assertFalse(self.call('library', {})['ships'][0]['blocked'])
 
     def test_unreadable_pending_rows_do_not_block_forced_clear(self):

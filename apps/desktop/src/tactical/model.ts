@@ -3,7 +3,7 @@ import type { LiftReserveReading } from '../LiftReserve';
 export const SCENARIO_ID = "gtw.sample.web.two_ship.v1";
 export interface TacticalRequest {
   backend_instance_id: string;
-  method: 'tactical.reset_test_state' | 'tactical.realtime.height' | 'tactical.realtime.damage_control' | `tactical.preparation.${"library" | "import" | "open" | "read" | "draft" | "preview" | "commit" | "discard"}` | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
+  method: 'tactical.realtime.deploy_encounter' | 'tactical.reset_test_state' | 'tactical.realtime.height' | 'tactical.realtime.damage_control' | `tactical.preparation.${"maintenance" | "scene_read" | "scene_save" | "scene_encounter" | "supply_replenish" | "library" | "import" | "open" | "read" | "draft" | "preview" | "commit" | "discard"}` | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
     | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.withdraw" | "tactical.realtime.gun" | "tactical.realtime.close";
   params: Record<string, unknown>;
   session_id: null;
@@ -70,6 +70,9 @@ export interface PausedControlState {
 }
 export interface TacticalView { snapshot: TacticalSnapshot; geometry: TacticalStatic }
 export interface GunView {
+  point_defense_capable?:boolean; point_defense?:boolean;
+  interception_target_id?:number|null; interception_priority?:number|null; interception_needed_rounds?:number;
+  incendiary_effect?:'surface'|'internal'|null;
   target_policy?: 'automatic' | 'assigned' | 'hold';
   attack_layer?: string | null; effective_layer?: string;
   ballistics?: { caliber_mm: number; speed_mps: number; effective_speed_mps: number; lifetime_s: number;
@@ -79,12 +82,22 @@ export interface GunView {
   target_ship_id: string | null; target_module_id: string | null;
   quality: "normal" | "degraded"; quality_reason: string; lock_sources: string[];
   status: string; shots: number; ready_rounds: number; reload_steps: number; cooldown_steps: number;
-  deck_level?: number; ammo_resources: number; batch_cost: number; batch_rounds: number;
+  deck_level?: number | null; aimed_deck_levels?: number[]; ammo_resources: number; batch_cost: number; batch_rounds: number;
   selected_recipe_id?: string; loaded_recipe_id?: string | null; loading_recipe_id?: string | null;
   recipe_options?: {id: string; ammo_cost: number; rounds: number; cargo_costs: {good_id: string; quantity: number}[]}[];
   cargo?: {good_id: string; quantity: number; reserved: number}[];
 }
 export interface GunneryView {
+  point_defense?:{hits:number;intercepted:number;recent:{step:number;impact_fraction:number;projectile_id:number;round_id:number;
+    source_ship_id:string;weapon_id:string;position_m:number[];height_layer:string;durability_before:number;durability_after:number;intercepted:boolean}[];
+    threats:{observer_ship_id:string;projectile_id:number;ship_id:string;remaining_s:number;durability:number;height_layer:string}[]};
+  personnel?: { ships: {ship_id:string;fit:number;wounded:number;dead:number;unclassified_wounded:number;
+    types:{crew_type:string;fit:number;wounded:number;dead:number}[];
+    modules:{module_id:string;staffing_fraction:number;requirements:{crew_type:string;assigned:number;minimum:number;standard:number}[];
+      functions:{function_id:string;crew_efficiency:number}[]}[] }[];
+    recent:{ship_id:string;module_id:string;step:number;deck_level:number;cause:string;
+      casualties:{crew_type:string;wounded:number;dead:number}[]}[] };
+  deck_hit_policy?: {id: string; base_weight: number; aim_bonus: number; spanning_module_bonus: 'split' | 'base'} | null;
   groups?: {ship_id: string; group_id: string; name: string; weapon_ids: string[]}[];
   fuel?:{ship_id:string;total_units:number;tanks:{tank_id:string;module_id:string|null;deck_id:string|null;deck_level:number;
     quantity_units:number;durability_points:number;capacity_units:number;maximum_points:number}[]}[];
@@ -94,8 +107,13 @@ export interface GunneryView {
   weapons: GunView[]; projectiles: DisplayProjectile[];
   policy_id: string; damage_enabled: boolean;
   ending?: { reason: string; step: number; removed_projectiles: number; saved: boolean } | null;
-  damage?: { hits: number; expired: number; recent: { projectile_id: number; step: number; source_ship_id: string;
-    ship_id: string; position_m: number[]; deck_level: number; outcome: string; module_ids: string[]; module_damage: number; projectile_type?: string; height_layer?: string | null }[] } | null;
+  damage?: { hits: number; expired: number; magazine_detonations?:number; magazine_explosions?:{
+    ship_id:string; module_id:string; step:number; deck_level:number; height_layer:string; cause:string;
+    ammunition_resources:number; radius_m:number; position_local_m:number[]; position_m:number[];
+    module_losses:{module_id:string;damage_points:number}[]; hull_damage_fraction:number;
+  }[]; recent: { projectile_id: number; step: number; source_ship_id: string;
+    ship_id: string; position_m: number[]; deck_level: number; outcome: string; module_ids: string[]; module_damage: number; projectile_type?: string; height_layer?: string | null;
+    deck_selection?: {policy: string; preferred_levels: number[]; probabilities: {deck_level: number; probability: number}[]; sample: number} }[] } | null;
 }
 export interface HeightNavigation {
   base_duration_s: number | null; duration_s: number | null; lift_loss_fraction: number;
@@ -103,6 +121,7 @@ export interface HeightNavigation {
   remaining_s: number | null; total_remaining_s: number | null; unavailable_reason: string | null;
 }
 export interface DisplayProjectile {
+  durability?:number|null;maximum_durability?:number|null;interception_target_id?:number|null;
   id: number; ship_id: string; position_m: number[]; previous_m: number[]; velocity_mps: number[];
   born_step?: number; origin_m?: number[]; expires_step?: number;
   height_layer?: string | null;

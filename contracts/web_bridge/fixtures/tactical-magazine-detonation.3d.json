@@ -1,0 +1,7 @@
+{
+  "id": "gaotian.magazine-detonation/destruction-no-chain/3d-v1",
+  "radius_m_per_cube_root_resource": 4,
+  "module_points_per_resource": 4,
+  "armor_points_per_resource": 2,
+  "hull_points_per_resource": 10
+}

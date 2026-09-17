@@ -51,12 +51,17 @@ class Attempt:
     projectile_id: int
     source_ship_id: str
     ship_index: int
-    module_id: str
+    module_id: str | None
+    deck_level: int | None = None
+    position_local: tuple | None = None
+    surface: bool = False
 
 
 def sample(seed, attempt, target_ship_id):
     # Independent from aiming RNG and process hash; identity survives failed-step retries.
     key = f'{seed}|{attempt.source_ship_id}|{attempt.projectile_id}|{target_ship_id}|{attempt.module_id}|ignition.0'
+    if attempt.position_local is not None:
+        key += f'|{attempt.deck_level}|{attempt.surface}|{attempt.position_local}'
     return (int.from_bytes(sha256(key.encode('utf-8')).digest()[:8], 'big') >> 11) / 2**53
 
 
@@ -76,7 +81,8 @@ class IgnitionRuntime:
 
     def apply(self, world, attempts, fires):
         from .tactical_fire import Fire
-        remaining = {(f.ship_index, f.module_id): f for f in fires}
+        from . import tactical_spatial_fire as spatial
+        remaining = {f.key: f for f in fires}
         events = []
         b = self.battle
         for a in attempts:
@@ -85,22 +91,36 @@ class IgnitionRuntime:
             ship = world.ships[n]
             if profile is None or ship.motion.hull_integrity_fraction <= 0 or ship.command.lifecycle.physical_status != 'operational':
                 continue
-            if ship.devices.modules[b._indices[n][a.module_id]].durability_points <= 0:
-                continue
-            level, multiplier = self.modules[n][a.module_id]
+            zone = None
+            if a.position_local is not None:
+                zone = spatial.nearest(b.fire.zones[n], a.deck_level, a.surface, a.position_local, a.module_id)
+                if zone is None:
+                    continue
+                level, multiplier = zone.level, 1.
+            else:
+                if ship.devices.modules[b._indices[n][a.module_id]].durability_points <= 0:
+                    continue
+                level, multiplier = self.modules[n][a.module_id]
+            if a.deck_level is not None:
+                level = a.deck_level
+                multiplier = next((d['multiplier'] for d in self.decks[n] if d['deck_level'] == level), 1.)
             probability = profile['ignition_probability'] * multiplier
             roll = sample(b.config['seed'], a, ship.ship_id)
             success = roll < probability
             events.append(dict(kind='projectile_ignition' if success else 'ignition_resisted',
                 ship_id=ship.ship_id, module_id=a.module_id, projectile_id=a.projectile_id,
-                step=world.fixed_step, deck_level=level, probability=probability, sample=roll))
+                step=world.fixed_step, deck_level=level, zone_id=zone.id if zone else None,
+                surface=zone.surface if zone else False, probability=probability, sample=roll))
             if success:
-                key = n, a.module_id
+                key = n, zone.id if zone else a.module_id
                 old = remaining.get(key)
                 fire = b.fire.profiles[n]
-                remaining[key] = Fire(n, a.module_id,
+                remaining[key] = Fire(n, (zone.modules[0] if zone.modules else None) if zone else a.module_id,
                     min(fire.max_intensity_units, profile['intensity_units']+(old.intensity_units if old else 0)),
-                    max(profile['duration_steps'], old.remaining_steps if old else 0))
+                    max(profile['duration_steps'], old.remaining_steps if old else 0),
+                    zone.id if zone else None,
+                    old.spread_steps if old else b.fire.spatial_policy['spread_interval_steps'] if zone else 0,
+                    old.random_state if old else spatial.seed(b.config['seed'],ship.ship_id,a.projectile_id,zone.id) if zone else 0)
         return tuple(remaining[k] for k in sorted(remaining)), tuple(events)
 
     def view(self):

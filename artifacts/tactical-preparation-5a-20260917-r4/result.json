@@ -1,0 +1,9 @@
+{
+  "status": "TACTICAL_PREPARATION_5A_UI_PASS",
+  "hits": 2,
+  "checks": [
+    "Slow file import shows loading; side switching preserves captured destination; lost reply retries once without duplicating ships. Both fleets are simultaneously visible.",
+    "Formation position and heading persist; invalid distance rejected; module selection opens matching tab; a shared all-ship preparation commits idempotently and deploys exactly three saved ships.",
+    "Real gunfire and three-ship settlement; return, sidecar restart and second entry retain both sides’ damage/ammunition, identity and formation while flagship distance changes from 600 m to 50 km."
+  ]
+}
