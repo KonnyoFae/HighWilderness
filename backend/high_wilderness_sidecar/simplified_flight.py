@@ -470,9 +470,10 @@ class SimplifiedFlightSession:
         ships = tuple(height.set_target(s, target_layer) if s.ship_id == ship_id else s for s in self._world.ships)
         self._world = replace(self._world, ships=ships)
 
-    def _requested(self, ship, state, control):
+    def _requested(self, ship, state, control, seed=None):
         if not ship.authority_allowed or ship.motion.hull_integrity_fraction <= 0:
             return (0,) * 6
+        yaw_brake = control.automatic_yaw_brake
         if control.automatic_brake:
             velocity = dynamics.world_to_body(ship.motion.velocity_world_mps, ship.motion.heading_rad)
             selection = automatic_linear_brake_control(lateral_velocity_body_mps=velocity.x,
@@ -480,7 +481,11 @@ class SimplifiedFlightSession:
                 available_translation_channels=tuple(DIRECTIONAL_CHANNELS[d] for d in range(4) if state.available_units[d]),
                 overg_requested=control.overg_requested)
             control = selection.control
-        return tuple(c.requested_percent for c in control.channel_commands)
+        values = tuple(c.requested_percent for c in control.channel_commands)
+        if yaw_brake and seed is not None:
+            from .tactical_yaw_brake import requested
+            values = values[:4]+requested(ship, state, seed)
+        return values
 
     def step(self, control=None, *, ship_id=None, events=(), authority_events=(), device_operations=(), resource_operations=(), exit_operations=(), impact_resolver=None, project=None, repair_resolver=None, repair_project=None, fuel_resolver=None):
         require(get_ident() == self._owner and not self._executing, "Single non-reentrant authority required")
@@ -610,7 +615,7 @@ class SimplifiedFlightSession:
                             device_events += tuple(AvailabilityEvent(before.epoch, ship.ship_id, e.instance_id,
                                 "lifecycle_unavailable", True, slot.versions[-1] + 1, n, phase)
                                 for e, slot in zip(seed.contributions.engines, ship.propulsion.engines))
-                    requested = self._requested(ship, ship.propulsion, selected)
+                    requested = self._requested(ship, ship.propulsion, selected, seed)
                     model=seed.model
                     if ck is not None and model.runtime.crew_safety_lock_enabled!=ship.command.crew_lock:
                         model=replace(model,runtime=replace(model.runtime,crew_safety_lock_enabled=ship.command.crew_lock))
@@ -658,6 +663,10 @@ class SimplifiedFlightSession:
                         metrics = load(outputs)
                         motion, diagnostic = dynamics._integrate_delivered_actuation(model, ship.motion,
                             delivery, drag, 1.0, metrics, 1 / 60)
+                        if selected.automatic_yaw_brake and not outputs[4] and not outputs[5]:
+                            from .tactical_yaw_brake import SETTLED_RATE
+                            if abs(motion.yaw_rate_radps) <= SETTLED_RATE:
+                                motion = replace(motion, yaw_rate_radps=0.)
                         validate_motion(motion)
                         require(all(isfinite(v) for v in (diagnostic.structure_ratio, diagnostic.crew_g,
                             diagnostic.hull_integrity_damage)), "Non-finite diagnostics")

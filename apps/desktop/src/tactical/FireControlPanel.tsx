@@ -16,8 +16,9 @@ const reasons:Record<string,string>={destroyed:'已损毁',mode_disabled:'已关
   power_unavailable:'供电不足',crew_unavailable:'缺少人员',control_unavailable:'舰艇失能',sensor_disabled:'内置传感器已关闭'};
 const layer:Record<string,string>={upper:'上层',cloud:'云层',rain:'雨层'};
 
-export function FireControlPanel({ship,tab,disabled,names,onCommand,onAssignMissile}:{ship?:ObservationShip;tab:'fire_control'|'devices';
-  disabled:boolean;names:Record<string,string>;onCommand:(v:FireControlIntent)=>void;onAssignMissile?:(target:string|number)=>void}) {
+export function FireControlPanel({ship,tab,disabled,names,onCommand,onAssignMissile,compact=false,onFocus}:{ship?:ObservationShip;tab:'fire_control'|'devices';
+  disabled:boolean;names:Record<string,string>;onCommand:(v:FireControlIntent)=>void;onAssignMissile?:(target:string|number)=>void;
+  compact?:boolean;onFocus?:(contact:ObservedContact)=>void}) {
   if(!ship)return <p>请选择己方舰艇查看火控与设备。</p>;
   if(tab==='devices')return <div className="observation-panel">
     <p className="muted">开启设备需要供电。数据链依赖宿主指挥机；备份设备不增加跟踪额度。</p>
@@ -35,6 +36,20 @@ export function FireControlPanel({ship,tab,disabled,names,onCommand,onAssignMiss
       {d.blocked_angle_deg!==undefined&&<p>上层舰体遮挡 {d.blocked_angle_deg.toFixed(1)}° · 水平可探测 {(360-d.blocked_angle_deg).toFixed(1)}°</p>}
     </section>)}
   </div>;
+  if(compact)return <section className="fire-control-targets" aria-label="火控目标列表">
+    <p>已知目标 <small>· 双击定位</small></p>
+    {!ship.contacts.length&&<p>暂无有效观测，请检查感知设备。</p>}
+    {[...ship.contacts].sort((a,b)=>Number(b.valid)-Number(a.valid)).map(c=><button type="button"
+      className={`fire-contact${c.valid?'':' lost'}`} key={c.id} aria-pressed={ship.locked_target_id===c.id}
+      onClick={()=>{if(!disabled&&c.valid&&c.status!=='no_computer'&&ship.locked_target_id!==c.id)onCommand({kind:'lock',target:c.id,value:null});}}
+      onDoubleClick={()=>onFocus?.(c)} title={c.valid?'为当前舰艇锁定目标；双击定位':'失联：双击查看最后观测位置'}>
+      <span>{c.kind==='ship'?(names[c.id]??'敌舰'):`${c.kind==='shell'?'炮弹':'导弹'} #${c.id}`}</span>
+      <span>{!c.valid?'已失联':ship.locked_target_id===c.id?(ship.lock_status==='locked'?'已锁定':'锁定中'):c.status==='no_computer'?'无舰级火控':'跟踪中'}</span>
+      <small>{layer[c.height_layer]} · {Math.hypot(...c.velocity_mps,c.vertical_speed_mps??0).toFixed(0)} m/s</small>
+      <small>{c.age_s.toFixed(1)} 秒前观测</small>
+    </button>)}
+    {ship.locked_target_id!==null&&<button disabled={disabled} onClick={()=>onCommand({kind:'lock',target:null,value:null})}>解除火控锁定</button>}
+  </section>;
   return <div className="observation-panel">
     <p className="muted">选择目标进行火控锁定。失联记录仅保留最后观测，不能用于实时火控。</p>
     {ship.locked_target_id!==null&&<button disabled={disabled} onClick={()=>onCommand({kind:'lock',target:null,value:null})}>解除火控锁定</button>}

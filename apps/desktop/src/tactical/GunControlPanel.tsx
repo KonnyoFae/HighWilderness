@@ -10,7 +10,8 @@ export function commonGunValue<T>(guns: GunView[], read: (gun: GunView) => T): T
   return guns.length && guns.every(g => read(g) === read(guns[0])) ? read(guns[0]) : undefined;
 }
 
-export function GunControlPanel({ view, shipId, weaponId, groupId, disabled, onWeapon, onGroup, onCommand }: {
+export function GunControlPanel({ view, shipId, weaponId, groupId, disabled, onWeapon, onGroup, onCommand, compact = false }: {
+  compact?: boolean;
   view: TacticalView; shipId: string; weaponId: string | null; groupId: string | null; disabled: boolean;
   onWeapon: (id: string) => void; onGroup: (id: string) => void; onCommand: (intent: GunIntent) => void;
 }) {
@@ -21,7 +22,9 @@ export function GunControlPanel({ view, shipId, weaponId, groupId, disabled, onW
   const first = guns[0];
   const geometry = view.geometry.ships.find(s => s.id === shipId);
   const ownLayer = view.snapshot.ships.find(s => s.id === shipId)?.height_layer;
+  const observed = view.snapshot.gunnery?.observation?.ships.find(s => s.ship_id === shipId)?.contacts;
   const enemies = view.geometry.ships.filter(s => s.side_id !== geometry?.side_id &&
+    (!compact || observed?.some(c => c.id === s.id && c.kind === 'ship' && c.valid)) &&
     view.snapshot.ships.some(p => p.id === s.id && p.hull_integrity > 0 && !p.wreck && p.physical_status !== 'exited'));
   const mode = commonGunValue(guns, g => g.mode);
   const layer = commonGunValue(guns, g => g.attack_layer ?? '');
@@ -35,7 +38,7 @@ export function GunControlPanel({ view, shipId, weaponId, groupId, disabled, onW
   const name = (g: GunView) => geometry?.modules.find(m => m.id === g.module_id)?.name ?? g.module_id;
   return <fieldset aria-label="普通火炮操作" className="gun-control-panel">
     <legend>旗舰武器组</legend>
-    <p>普通火炮自动选敌，30 毫米炮默认专注近防。选择武器组后可统一下令，指定敌舰目标会切回普通炮击。</p>
+    {!compact && <p>普通火炮自动选敌，30 毫米炮默认专注近防。选择武器组后可统一下令，指定敌舰目标会切回普通炮击。</p>}
     <div className="gun-group-list" aria-label="武器组">
       {groups.map(g => <button key={g.group_id} aria-pressed={groupId === g.group_id} onClick={() => onGroup(g.group_id)}>
         <strong>{g.name}</strong><span>{g.weapon_ids.length} 门</span>
@@ -52,7 +55,7 @@ export function GunControlPanel({ view, shipId, weaponId, groupId, disabled, onW
       <fieldset disabled={disabled} className="gun-orders" aria-label="所选武器命令">
       {guns.every(g=>g.point_defense_capable)&&<div aria-label="自动近防设置">
         <button aria-pressed={defense===true} onClick={()=>onCommand({kind:'point_defense',arguments:{enabled:defense!==true}})}>{defense===true?'关闭自动近防':'开启自动近防'}</button>
-        <p>自动近防仅拦截预计撞上本舰或友舰的大型弹体，无威胁时待机。作用层仍由下方设置；相邻层射击照常降速。</p>
+        {!compact && <p>自动近防仅拦截预计撞上本舰或友舰的大型弹体，无威胁时待机。作用层仍由下方设置；相邻层射击照常降速。</p>}
       </div>}
       <p className="gun-order-summary" role="status">{defense===true?'自动近防':mode === 'manual' ? '手动瞄准' : policy === 'automatic' ? '自动选敌' : policy === 'assigned' ? '指定目标' : policy === 'hold' ? '停止开火' : '组内指令不同'}
         {' · '}{targetId === undefined ? '成员目标不同' : targetGeometry?.name ?? '等待目标'}
@@ -66,7 +69,7 @@ export function GunControlPanel({ view, shipId, weaponId, groupId, disabled, onW
         </select></label>
       </div>
       {mode === 'auto' && <>
-        <p className="muted">点击敌舰指定整舰；点中模块则指定模块。指定目标会持续保留，超出射程时等待。</p>
+        {!compact && <p className="muted">点击敌舰指定整舰；点中模块则指定模块。指定目标会持续保留，超出射程时等待。</p>}
         <details><summary>从列表指定目标</summary>
           <div className="editor-row">{enemies.map(s => <button key={s.id} onClick={() => onCommand({kind:'target',arguments:{ship_id:s.id,module_id:null}})}>瞄准{s.name}</button>)}</div>
           {targetGeometry && <label>指定模块<select aria-label="指定目标模块" value={targetModule === undefined ? 'mixed' : targetModule ?? ''}
@@ -82,13 +85,13 @@ export function GunControlPanel({ view, shipId, weaponId, groupId, disabled, onW
         <option value="">不偏好特定甲板</option>
         {[...new Set(view.geometry.ships.flatMap(s=>s.decks.map(d=>d.level)))].sort((a,b)=>a-b).map(level=><option key={level} value={level}>第 {level} 甲板</option>)}
       </select></label>}
-      {view.snapshot.gunnery?.deck_hit_policy && <div className="gun-deck-preference" aria-label="甲板瞄准规则">
+      {view.snapshot.gunnery?.deck_hit_policy && <details className="gun-deck-preference" aria-label="甲板瞄准规则"><summary>甲板命中与瞄准偏好</summary>
         <p>炮弹接触舰艇时，按概率选择可命中的甲板；随后计算该甲板装甲和模块的实际受击。</p>
         <small>指定模块提高其所在甲板的命中权重，不保证命中该层或该模块。
           {view.snapshot.gunnery.deck_hit_policy.spanning_module_bonus === 'split' ? '跨甲板模块均分同一份加成。' : '跨甲板模块仅提高安装基底甲板的权重。'}</small>
         <p>{commonGunValue(guns,g=>JSON.stringify(g.aimed_deck_levels ?? [])) === undefined ? '成员的甲板瞄准偏好不同' :
           first.aimed_deck_levels?.length ? `当前偏好：${first.aimed_deck_levels.map(level=>`第 ${level} 甲板`).join('、')}` : '当前不偏好特定甲板'}</p>
-      </div>}
+      </details>}
       <div className="editor-row"><label>炮弹作用层<select aria-label="炮弹作用层" value={layer ?? 'mixed'}
         onChange={e => onCommand({kind:'layer',arguments:{layer:e.target.value || null}})}>
         {layer === undefined && <option value="mixed" disabled>成员设置不同</option>}
@@ -110,7 +113,7 @@ export function GunControlPanel({ view, shipId, weaponId, groupId, disabled, onW
       {recipe && first.recipe_options?.find(r=>r.id===recipe)?.cargo_costs.map(c=><p key={c.good_id}>{goodName(c.good_id)}每门每批 {c.quantity} 份
         （库存 {first.cargo?.find(g=>g.good_id===c.good_id)?.quantity ?? 0}，已预留 {first.cargo?.find(g=>g.good_id===c.good_id)?.reserved ?? 0}）</p>)}
       <small>命令作用于{group ? '整组' : '所选单炮'}。各炮独立转向、装填和开火；已装弹打空后换装。</small>
-      {sameFlight ? <GunBallisticsPanel gun={first} ownLayer={ownLayer} hideLayerControl onCommand={onCommand} /> : <p>成员当前弹道不同，请展开查看各炮状态。</p>}
+      {sameFlight ? <details open={compact ? undefined : true}><summary>弹道与装填参数</summary><GunBallisticsPanel gun={first} ownLayer={ownLayer} hideLayerControl onCommand={onCommand} /></details> : <p>成员当前弹道不同，请展开查看各炮状态。</p>}
       <details className="gun-members"><summary>查看各炮状态（{guns.length} 门）</summary>{guns.map(g=><div key={g.module_id}>
         <strong>{name(g)} · {g.module_id}</strong>
         <p>{gunStatus[g.status] ?? g.status} · {qualityLabel[g.quality_reason] ?? g.quality_reason}</p>

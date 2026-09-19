@@ -1,0 +1,126 @@
+.tactical-workspace .battle-workspace.canvas-workspace { padding: 0; border: 0; border-radius: 0; position: relative; }
+.canvas-workspace .battle-grid { display: block; position: relative; height: max(620px, calc(100dvh - 84px)); overflow: hidden; isolation: isolate; }
+.canvas-workspace .battle-field { position: absolute; inset: 0; height: auto; display: block; }
+.canvas-workspace .battle-field .tactical-viewport { position: absolute; inset: 0; display: block; border: 0; border-radius: 0; }
+.canvas-workspace .battle-field .tactical-canvas { position: absolute; inset: 0; height: 100%; min-height: 0; }
+.canvas-workspace .battle-field .tactical-canvas canvas { position: absolute; inset: 0; }
+.canvas-workspace .battle-dock { --dock-surface: #102a25bd; position: absolute; z-index: 5; min-width: 0; color: #e8f2ed; }
+.canvas-workspace .battle-dock-body { padding: 12px; background: var(--dock-surface); border: 1px solid #76998788; backdrop-filter: blur(3px); overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.canvas-workspace .battle-dock:hover > .battle-dock-body,
+.canvas-workspace .battle-dock:focus-within > .battle-dock-body { --dock-surface: #102a25e0; }
+.canvas-workspace .battle-dock-tab { position: absolute; padding: 3px; width: 28px; height: 35px; display: grid; place-items: center; border: 1px solid #76998788; background: #163b30dc; color: #d4eace; font-size: 17px; border-radius: 5px; }
+.canvas-workspace .dock-fleet { top: 64px; left: 0; width: 190px; }
+.canvas-workspace .dock-fleet .battle-dock-body { max-height: calc((100dvh - 120px) * .37); border-left: 0; border-radius: 0 0 5px 0; padding: 8px; }
+.canvas-workspace .dock-fleet .battle-dock-tab, .canvas-workspace .dock-service .battle-dock-tab { left: 100%; top: 0; border-radius: 0 5px 5px 0; border-left: 0; }
+.canvas-workspace .dock-fleet.is-collapsed, .canvas-workspace .dock-service.is-collapsed { transform: translateX(-100%); }
+.canvas-workspace .battle-fleet { display: grid; gap: 3px; padding: 0; overflow: visible; }
+.canvas-workspace .battle-fleet button { display: flex; align-items: center; gap: 7px; text-align: left; padding: 7px 5px; border: 0; border-radius: 3px; background: transparent; min-width: 0; font-size: 12px; }
+.canvas-workspace .battle-fleet button[aria-pressed=true] { background: #b5e49a22; box-shadow: inset 2px 0 #cae7a6; }
+.canvas-workspace .fleet-number { color: #abc8bb; font-variant-numeric: tabular-nums; }
+.canvas-workspace .fleet-flag { color: #eed398; }
+.canvas-workspace .fleet-name { overflow-wrap: anywhere; }
+.canvas-workspace .dock-service { left: 0; bottom: 62px; width: 270px; }
+.canvas-workspace .dock-service .battle-dock-body { max-height: min(390px, 43dvh); border-left: 0; border-radius: 0 5px 5px 0; }
+.canvas-workspace .dock-fire { right: 0; top: 64px; bottom: 30px; width: min(365px, calc(100% - 46px)); }
+.canvas-workspace .dock-fire .battle-dock-body { height: 100%; display: flex; flex-direction: column; overflow: hidden; border-right: 0; border-radius: 0 0 0 5px; }
+.canvas-workspace .dock-fire .battle-dock-tab { right: 100%; top: 0; border-radius: 5px 0 0 5px; border-right: 0; }
+.canvas-workspace .dock-fire.is-collapsed { transform: translateX(100%); }
+.canvas-workspace .battle-dock h3 { margin: 0 0 8px; font-size: 14px; }
+.canvas-workspace .dock-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; flex: none; }
+.canvas-workspace .dock-heading small { font-size: 12px; color: #cae7a6; overflow-wrap: anywhere; }
+.canvas-workspace .battle-inspector { background: transparent; border: 0; padding: 0; max-height: none; }
+.canvas-workspace .battle-subpanel { flex: 1; min-height: 90px; overflow: auto; overscroll-behavior: contain; scrollbar-width: thin; padding-right: 3px; }
+.canvas-workspace .battle-tabs { display: flex; gap: 4px; margin: 8px 0; padding-bottom: 8px; flex: none; }
+.canvas-workspace .battle-tabs button { padding: 6px; font-size: 12px; white-space: normal; }
+.canvas-workspace .battle-tabs button[aria-pressed=true] { border-color: #bddaa2; background: #70916b44; }
+.canvas-workspace .battle-messages { position: absolute; left: 225px; right: 400px; top: 65px; z-index: 6; max-height: 100px; overflow: auto; pointer-events: none; }
+.canvas-workspace .battle-messages p { font-size: 12px; padding: 4px 8px; background: #102a25e0; margin: 4px 0; }
+.canvas-workspace > .battle-toolbar { position: relative; padding: 10px 12px; margin: 0; min-height: 50px; }
+.canvas-workspace:has(.battle-grid) > .battle-toolbar { position: absolute; top: 0; left: 0; right: 0; z-index: 7; height: 50px; pointer-events: none; }
+.canvas-workspace .battle-toolbar > * { pointer-events: auto; background: #102a25c9; border-radius: 4px; padding: 5px 8px; }
+.canvas-workspace .battle-toolbar h2 { font-size: 14px; margin: 0; }
+.canvas-workspace .battle-toolbar .eyebrow { display: none; }
+.canvas-workspace .battle-toolbar button { padding: 5px 8px; font-size: 12px; }
+.canvas-workspace .dock-helm { bottom: 0; left: 50%; width: min(420px, calc(100% - 70px)); transform: translateX(-50%); }
+.canvas-workspace .dock-helm.is-collapsed { transform: translate(-50%, 100%); }
+.canvas-workspace .dock-helm .battle-dock-tab { bottom: 100%; left: calc(50% - 18px); width: 36px; height: 26px; border-radius: 5px 5px 0 0; border-bottom: 0; }
+.canvas-workspace .dock-helm .battle-dock-body { max-height: 45dvh; border-bottom: 0; border-radius: 5px 5px 0 0; }
+.canvas-workspace .battle-helm { margin: 0; padding: 0; border: 0; background: transparent; }
+.canvas-workspace .battle-helm .editor-row { flex-wrap: wrap; gap: 6px; }
+.canvas-workspace .battle-helm button, .canvas-workspace .battle-helm select { padding: 5px 7px; font-size: 12px; }
+.canvas-workspace .battle-helm label { font-size: 12px; }
+.canvas-workspace .battle-records { margin: 0; border: 0; padding: 8px 12px; }
+.canvas-workspace:has(.battle-grid) > .battle-records { position: absolute; left: 0; top: 8px; z-index: 9; max-width: min(560px,calc(100% - 40px)); max-height: calc(100% - 24px); overflow: auto; background: #102a25df; }
+.canvas-workspace:has(.battle-grid) > .battle-records:not([open]) { left: 50%; top: 8px; transform: translateX(-50%); }
+.canvas-workspace .battle-stage-note { margin: 8px 0; padding: 0 12px; }
+.canvas-workspace:has(.battle-grid) > .battle-stage-note { display: none; }
+.canvas-workspace .viewport-overlay-controls { position: absolute; top: 54px; left: 50%; transform: translateX(-50%); z-index: 4; max-width: calc(100% - 70px); background: #102a25d9; border-radius: 4px; }
+.canvas-workspace .viewport-overlay-controls > summary { cursor: pointer; font-size: 12px; padding: 5px 8px; }
+.canvas-workspace .viewport-overlay-controls:not([open]) > :not(summary) { display: none; }
+.canvas-workspace .viewport-overlay-controls .tactical-layer-bar { flex-wrap: wrap; }
+.canvas-workspace .viewport-overlay-controls .viewport-toolbar { flex-wrap: wrap; }
+.canvas-workspace .viewport-overlay-controls .launcher-arc-key { padding: 8px; }
+.canvas-workspace .viewport-help { position: absolute; bottom: 8px; left: 8px; z-index: 4; max-width: min(450px,calc(100% - 64px)); max-height: 35%; overflow: auto; background: #102a25d9; border-radius: 4px; padding: 5px 8px; }
+.canvas-workspace .tactical-layer-hint, .canvas-workspace .tactical-art-notice { position: absolute; bottom: 38px; left: 285px; right: 390px; z-index: 4; background: #102a25b9; font-size: 11px; margin: 0; }
+.canvas-workspace .fire-control-targets { flex: none; max-height: 30%; overflow: auto; scrollbar-width: thin; border-bottom: 1px solid #63857580; }
+.canvas-workspace .fire-control-targets > p { margin: 5px 0; font-size: 12px; }
+.canvas-workspace .fire-contact { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 4px; width: 100%; padding: 6px; border: 0; border-radius: 3px; background: transparent; text-align: left; font-size: 12px; margin-bottom: 2px; }
+.canvas-workspace .fire-contact[aria-pressed=true] { background: #f0a18c1f; box-shadow: inset 2px 0 #f0a18c; }
+.canvas-workspace .fire-contact small { color: #b3c9bd; font-size: 11px; }
+.canvas-workspace .fire-contact.lost { color: #adb7b1; }
+.canvas-workspace .battle-equipment { border-top: 1px solid #63857580; padding: 8px 0; }
+.canvas-workspace .battle-equipment > summary { cursor: pointer; font-size: 13px; }
+.canvas-workspace .battle-cargo p { overflow-wrap: anywhere; }
+.canvas-workspace .tactical-ship-marker { position: absolute; left: 0; top: 0; width: 26px; height: 26px; margin: -13px; padding: 0; border: 0; background: transparent; border-radius: 50%; color: #17674a; pointer-events: auto; z-index: 2; display: grid; place-items: center; }
+.canvas-workspace .tactical-ship-marker[aria-pressed=true] { outline: 1px solid currentColor; background: #a8ca862b; }
+.canvas-workspace .tactical-ship-marker[data-offscreen=true] { background: #e1ebd4cc; }
+.canvas-workspace .tactical-ship-marker .marker-bearing { position: absolute; left: 24px; top: 2px; font-size: 16px; }
+.canvas-workspace .tactical-viewport:not([data-observation-layer=upper]) .tactical-ship-marker { color: #cbe9b0; }
+.canvas-workspace .tactical-viewport:not([data-observation-layer=upper]) .tactical-ship-marker[data-offscreen=true] { background: #102a25dc; }
+@media(max-width:1100px) { .canvas-workspace .dock-fire { width: 315px; } .canvas-workspace .dock-fleet { width: 166px; } .canvas-workspace .dock-service { width: 245px; } .canvas-workspace .battle-messages { left: 205px; right: 350px; } }
+@media(max-width:700px) { .canvas-workspace .dock-fire { width: min(300px,calc(100% - 44px)); top: 78px; } .canvas-workspace .dock-service { width: 220px; } .canvas-workspace .battle-messages { left: 40px; right: 40px; top: 45px; } .canvas-workspace .battle-toolbar h2 { display: none; } .canvas-workspace .tactical-layer-hint { display: none; } }
+
+.canvas-workspace .dock-helm .battle-dock-body { opacity: .58; transition: opacity 120ms; }
+.canvas-workspace .dock-helm:hover .battle-dock-body, .canvas-workspace .dock-helm:focus-within .battle-dock-body { opacity: 1; }
+.canvas-workspace .flagship-helm fieldset { margin: 6px 0; padding: 0; border: 0; min-width: 0; }
+.canvas-workspace .flagship-helm legend { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; }
+.canvas-workspace .flagship-helm .dock-heading { align-items: baseline; }
+.canvas-workspace .flagship-helm .dock-heading h3 { margin-bottom: 2px; }
+.canvas-workspace .flagship-helm .dock-heading small { white-space: nowrap; }
+.canvas-workspace .helm-direction, .canvas-workspace .helm-notches, .canvas-workspace .helm-turn { display: flex; gap: 4px; margin: 5px 0; }
+.canvas-workspace .flagship-helm button { padding: 6px; font-size: 12px; flex: 1; }
+.canvas-workspace .flagship-helm button[aria-pressed=true] { background: #76995255; border-color: #c5dfa3; }
+.canvas-workspace .helm-direction .helm-brake { margin-left: 30px; }
+.canvas-workspace .helm-hint { display: block; font-size: 11px; color: #bfd4c9; }
+.canvas-workspace .height-compact { border-top: 1px solid #72978370; margin-top: 8px; padding-top: 6px; }
+.canvas-workspace .height-compact h4 { display: none; }
+.canvas-workspace .height-compact p { font-size: 12px; margin: 3px 0; }
+.canvas-workspace .height-compact .height-targets { display: flex; }
+.canvas-workspace .height-compact > button { width: 100%; margin-top: 4px; }
+.canvas-workspace .battle-cargo h4 { font-size: 13px; margin: 12px 0 5px; }
+.canvas-workspace .battle-cargo p, .canvas-workspace .battle-cargo summary { font-size: 12px; }
+.canvas-workspace .battle-cargo details { border-top: 1px solid #63857560; padding: 8px 0; }
+.canvas-workspace .battle-cargo button { font-size: 12px; padding: 6px; }
+.canvas-workspace .battle-cargo .tactical-stats { grid-template-columns: minmax(0,1fr) auto; font-size: 12px; gap: 5px; }
+.canvas-workspace .battle-subpanel fieldset { min-width: 0; padding: 8px; margin: 4px 0; }
+.canvas-workspace .battle-subpanel h4 { margin: 8px 0; font-size: 13px; }
+.canvas-workspace .battle-subpanel p, .canvas-workspace .battle-subpanel label, .canvas-workspace .battle-subpanel summary { font-size: 12px; }
+.canvas-workspace .battle-subpanel button { font-size: 12px; padding: 6px; }
+.canvas-workspace .battle-subpanel select { max-width: 100%; min-width: 0; font-size: 12px; }
+.canvas-workspace .gun-group-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 4px; }
+.canvas-workspace .gun-group-list button { min-width: 0; overflow-wrap: anywhere; }
+.canvas-workspace .battle-subpanel details > summary { cursor: pointer; padding: 7px 0; }
+.canvas-workspace .battle-alerts { position: absolute; z-index: 6; left: 225px; right: 400px; top: 106px; display: flex; flex-direction: column; align-items: flex-start; gap: 4px; pointer-events: none; }
+.canvas-workspace .battle-alerts button, .canvas-workspace .battle-alerts details { pointer-events: auto; color: #ffe1b6; background: #392a1ddd; border: 1px solid #b99c6666; font-size: 12px; padding: 5px 8px; }
+.canvas-workspace .canvas-order-hint { position: absolute; z-index: 8; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 8px; padding: 6px 10px; color: #ffe7b0; background: #392a1de8; border: 1px solid #a89670; border-radius: 4px; font-size: 12px; }
+.canvas-workspace .canvas-order-hint button { padding: 4px 7px; font-size: 12px; white-space: nowrap; }
+.canvas-workspace:has(.battle-grid) > .battle-records { top: auto; left: auto; right: 0; bottom: 0; max-height: 70%; }
+.canvas-workspace:has(.battle-grid) > .battle-records:not([open]) { top: auto; left: auto; right: 0; bottom: 0; transform: none; font-size: 12px; }
+.canvas-workspace .dock-helm { width: min(360px,calc(100% - 70px)); }
+.canvas-workspace .dock-helm .battle-dock-body { max-height: min(600px,75dvh); padding: 10px; }
+.canvas-workspace .helm-maneuver { display: grid; grid-template-columns: 1fr 1.15fr 1fr; align-items: center; gap: 12px; }
+.canvas-workspace .helm-notches { flex-direction: column; gap: 3px; }
+.canvas-workspace .helm-notches button { padding: 5px 7px; }
+.canvas-workspace .helm-turn-column { display: flex; flex-direction: column; gap: 6px; font-size: 12px; text-align: center; }
+.canvas-workspace .helm-turn-column button { padding: 10px 6px; }
+.canvas-workspace .helm-yaw-status { text-align: center; margin: 4px 0; font-size: 12px; color: #d5e8b6; }

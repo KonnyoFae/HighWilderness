@@ -1,0 +1,8 @@
+{
+  "status": "TACTICAL_UI_U1_PASS",
+  "checks": [
+    "Actual fire-control lock works; inspecting/focusing targets retains the own operating ship without implicit gun commands.",
+    "Panel open/close and tabs preserve canvas bounds, camera and all stationary marker coordinates; per-ship service/weapon pages restore. Fleet double-click pans first and zooms only on repetition.",
+    "1920×1080 and 1366×768 geometry checks pass; battle settlement saves and returns to preparation."
+  ]
+}

@@ -1,0 +1,2477 @@
+{
+  "scope": "Read-only latest local saved encounter designs and inventories. Isolated battle with controlled separation and starting speed. 30 warmup +120 measured steps (2s); publication/read every4steps. No actual browser/host queue; this is cost isolation, not reproduction of the live pause.",
+  "rows": [
+    {
+      "distance_m": 20000,
+      "initial_speed_mps": 0,
+      "auto_fire": false,
+      "accelerating": false,
+      "shots": 0,
+      "peak_projectiles": 0,
+      "step": {
+        "mean_ms": 1.3896491664733426,
+        "p95_ms": 1.8548000371083617,
+        "max_ms": 2.8542999643832445
+      },
+      "publish": {
+        "mean_ms": 1.872729999013245,
+        "p95_ms": 2.125500002875924,
+        "max_ms": 2.587999973911792
+      },
+      "read": {
+        "mean_ms": 2.9315166699234396,
+        "p95_ms": 3.3776999916881323,
+        "max_ms": 3.6899999831803143
+      },
+      "weapons": [
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.0",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.1",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.10",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.11",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.12",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.13",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.14",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.15",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.16",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.17",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.18",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.19",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.2",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.20",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.21",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.22",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.23",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.24",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.3",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.4",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.5",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.6",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.7",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.8",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.9",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.0",
+          "status": "defense_waiting",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.1",
+          "status": "holding_fire",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.2",
+          "status": "holding_fire",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.4",
+          "status": "defense_waiting",
+          "shots": 0
+        }
+      ]
+    },
+    {
+      "distance_m": 20000,
+      "initial_speed_mps": 100,
+      "auto_fire": false,
+      "accelerating": false,
+      "shots": 0,
+      "peak_projectiles": 0,
+      "step": {
+        "mean_ms": 1.4115366648184136,
+        "p95_ms": 1.8696000333875418,
+        "max_ms": 2.228099969215691
+      },
+      "publish": {
+        "mean_ms": 1.9816633372101933,
+        "p95_ms": 2.3454000474885106,
+        "max_ms": 2.626500034239143
+      },
+      "read": {
+        "mean_ms": 3.0310966656543314,
+        "p95_ms": 3.6282999790273607,
+        "max_ms": 3.7874000263400376
+      },
+      "weapons": [
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.0",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.1",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.10",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.11",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.12",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.13",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.14",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.15",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.16",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.17",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.18",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.19",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.2",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.20",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.21",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.22",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.23",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.24",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.3",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.4",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.5",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.6",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.7",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.8",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.9",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.0",
+          "status": "defense_waiting",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.1",
+          "status": "holding_fire",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.2",
+          "status": "holding_fire",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.4",
+          "status": "defense_waiting",
+          "shots": 0
+        }
+      ]
+    },
+    {
+      "distance_m": 20000,
+      "initial_speed_mps": 100,
+      "auto_fire": false,
+      "accelerating": true,
+      "shots": 0,
+      "peak_projectiles": 0,
+      "step": {
+        "mean_ms": 1.384302501780136,
+        "p95_ms": 1.7492000479251146,
+        "max_ms": 2.38979997811839
+      },
+      "publish": {
+        "mean_ms": 2.0378966660549245,
+        "p95_ms": 2.356800017878413,
+        "max_ms": 2.959699952043593
+      },
+      "read": {
+        "mean_ms": 3.119520000958194,
+        "p95_ms": 3.7252000183798373,
+        "max_ms": 3.840100020170212
+      },
+      "weapons": [
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.0",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.1",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.10",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.11",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.12",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.13",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.14",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.15",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.16",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.17",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.18",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.19",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.2",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.20",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.21",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.22",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.23",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.24",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.3",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.4",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.5",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.6",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.7",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.8",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.9",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.0",
+          "status": "defense_waiting",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.1",
+          "status": "holding_fire",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.2",
+          "status": "holding_fire",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.4",
+          "status": "defense_waiting",
+          "shots": 0
+        }
+      ]
+    },
+    {
+      "distance_m": 16000,
+      "initial_speed_mps": 0,
+      "auto_fire": true,
+      "accelerating": false,
+      "shots": 0,
+      "peak_projectiles": 0,
+      "step": {
+        "mean_ms": 1.4917683317131984,
+        "p95_ms": 1.9091999856755137,
+        "max_ms": 2.9397999751381576
+      },
+      "publish": {
+        "mean_ms": 1.931873328673343,
+        "p95_ms": 2.183399978093803,
+        "max_ms": 2.3999999975785613
+      },
+      "read": {
+        "mean_ms": 3.5547933386017876,
+        "p95_ms": 3.540900012012571,
+        "max_ms": 18.569500010926276
+      },
+      "weapons": [
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.0",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.1",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.10",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.11",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.12",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.13",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.14",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.15",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.16",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.17",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.18",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.19",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.2",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.20",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.21",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.22",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.23",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.24",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.3",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.4",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.5",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.6",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.7",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.8",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.9",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.0",
+          "status": "defense_waiting",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.1",
+          "status": "no_target",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.2",
+          "status": "no_target",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.4",
+          "status": "defense_waiting",
+          "shots": 0
+        }
+      ]
+    },
+    {
+      "distance_m": 16000,
+      "initial_speed_mps": 100,
+      "auto_fire": true,
+      "accelerating": false,
+      "shots": 3,
+      "peak_projectiles": 3,
+      "step": {
+        "mean_ms": 14.512855832193358,
+        "p95_ms": 23.828100005630404,
+        "max_ms": 27.188099978957325
+      },
+      "publish": {
+        "mean_ms": 2.2001133280961462,
+        "p95_ms": 2.5591999874450266,
+        "max_ms": 2.72910000057891
+      },
+      "read": {
+        "mean_ms": 3.601660003187135,
+        "p95_ms": 4.267700016498566,
+        "max_ms": 6.625099980738014
+      },
+      "weapons": [
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.0",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.1",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.10",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.11",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.12",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.13",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.14",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.15",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.16",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.17",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.18",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.19",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.2",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.20",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.21",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.22",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.23",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.24",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.3",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.4",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.5",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.6",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.7",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.8",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.9",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.0",
+          "status": "defense_waiting",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.1",
+          "status": "no_target",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.2",
+          "status": "cooldown",
+          "shots": 3
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.4",
+          "status": "defense_waiting",
+          "shots": 0
+        }
+      ]
+    },
+    {
+      "distance_m": 12000,
+      "initial_speed_mps": 0,
+      "auto_fire": true,
+      "accelerating": false,
+      "shots": 5,
+      "peak_projectiles": 5,
+      "step": {
+        "mean_ms": 21.698895003161546,
+        "p95_ms": 27.303600043524057,
+        "max_ms": 30.371800006832927
+      },
+      "publish": {
+        "mean_ms": 2.416743328406786,
+        "p95_ms": 2.70389998331666,
+        "max_ms": 2.888699993491173
+      },
+      "read": {
+        "mean_ms": 3.9824533392675225,
+        "p95_ms": 4.912799980957061,
+        "max_ms": 7.516699959523976
+      },
+      "weapons": [
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.0",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.1",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.10",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.11",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.12",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.13",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.14",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.15",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.16",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.17",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.18",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.19",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.2",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.20",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.21",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.22",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.23",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.24",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.3",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.4",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.5",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.6",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.7",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.8",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.9",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.0",
+          "status": "defense_waiting",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.1",
+          "status": "no_target",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.2",
+          "status": "cooldown",
+          "shots": 5
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.4",
+          "status": "defense_waiting",
+          "shots": 0
+        }
+      ]
+    },
+    {
+      "distance_m": 12000,
+      "initial_speed_mps": 100,
+      "auto_fire": true,
+      "accelerating": false,
+      "shots": 5,
+      "peak_projectiles": 5,
+      "step": {
+        "mean_ms": 33.643643331985615,
+        "p95_ms": 38.3731999900192,
+        "max_ms": 41.71999997925013
+      },
+      "publish": {
+        "mean_ms": 2.525970002170652,
+        "p95_ms": 3.3455999800935388,
+        "max_ms": 3.763000015169382
+      },
+      "read": {
+        "mean_ms": 5.077533334648858,
+        "p95_ms": 7.4095000163652,
+        "max_ms": 30.081299948506057
+      },
+      "weapons": [
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.0",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.1",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.10",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.11",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.12",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.13",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.14",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.15",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.16",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.17",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.18",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.19",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.2",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.20",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.21",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.22",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.23",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.24",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.3",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.4",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.5",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.6",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.7",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.8",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.9",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.0",
+          "status": "defense_waiting",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.1",
+          "status": "no_target",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.2",
+          "status": "cooldown",
+          "shots": 5
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.4",
+          "status": "defense_waiting",
+          "shots": 0
+        }
+      ]
+    },
+    {
+      "distance_m": 8000,
+      "initial_speed_mps": 0,
+      "auto_fire": true,
+      "accelerating": false,
+      "shots": 5,
+      "peak_projectiles": 5,
+      "step": {
+        "mean_ms": 18.545458334847353,
+        "p95_ms": 24.454800004605204,
+        "max_ms": 25.569999997969717
+      },
+      "publish": {
+        "mean_ms": 2.432960000199576,
+        "p95_ms": 2.8401000308804214,
+        "max_ms": 3.014699963387102
+      },
+      "read": {
+        "mean_ms": 4.228530003456399,
+        "p95_ms": 5.319699994288385,
+        "max_ms": 8.526399964466691
+      },
+      "weapons": [
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.0",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.1",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.10",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.11",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.12",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.13",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.14",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.15",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.16",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.17",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.18",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.19",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.2",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.20",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.21",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.22",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.23",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.24",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.3",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.4",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.5",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.6",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.7",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.8",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.9",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.0",
+          "status": "defense_waiting",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.1",
+          "status": "no_target",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.2",
+          "status": "cooldown",
+          "shots": 5
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.4",
+          "status": "defense_waiting",
+          "shots": 0
+        }
+      ]
+    },
+    {
+      "distance_m": 8000,
+      "initial_speed_mps": 100,
+      "auto_fire": true,
+      "accelerating": false,
+      "shots": 5,
+      "peak_projectiles": 5,
+      "step": {
+        "mean_ms": 28.28501833185631,
+        "p95_ms": 34.2843999969773,
+        "max_ms": 37.28270001010969
+      },
+      "publish": {
+        "mean_ms": 2.534763334551826,
+        "p95_ms": 2.921600011177361,
+        "max_ms": 3.8086000131443143
+      },
+      "read": {
+        "mean_ms": 4.607873334316537,
+        "p95_ms": 6.388399982824922,
+        "max_ms": 8.913600002415478
+      },
+      "weapons": [
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.0",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.1",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.10",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.11",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.12",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.13",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.14",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.15",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.16",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.17",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.18",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.19",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.2",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.20",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.21",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.22",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.23",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.24",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.3",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.4",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.5",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.6",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.7",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.8",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.9",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.0",
+          "status": "defense_waiting",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.1",
+          "status": "no_target",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.2",
+          "status": "cooldown",
+          "shots": 5
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.4",
+          "status": "defense_waiting",
+          "shots": 0
+        }
+      ]
+    },
+    {
+      "distance_m": 8000,
+      "initial_speed_mps": 100,
+      "auto_fire": true,
+      "accelerating": true,
+      "shots": 5,
+      "peak_projectiles": 5,
+      "step": {
+        "mean_ms": 35.57802667007005,
+        "p95_ms": 42.639899998903275,
+        "max_ms": 51.55490001197904
+      },
+      "publish": {
+        "mean_ms": 2.4786799990882478,
+        "p95_ms": 2.9251999803818762,
+        "max_ms": 3.854299953673035
+      },
+      "read": {
+        "mean_ms": 5.31184000428766,
+        "p95_ms": 6.133199960459024,
+        "max_ms": 32.17849996872246
+      },
+      "weapons": [
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.0",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.1",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.10",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.11",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.12",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.13",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.14",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.15",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.16",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.17",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.18",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.19",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.2",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.20",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.21",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.22",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.23",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.24",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.3",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.4",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.5",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.6",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.7",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.8",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.5784a96e188456b1ae0c8ece",
+          "id": "weapon.9",
+          "status": "no_ammunition",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.0",
+          "status": "defense_waiting",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.1",
+          "status": "no_target",
+          "shots": 0
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.2",
+          "status": "cooldown",
+          "shots": 5
+        },
+        {
+          "ship": "ship.preparation.e4c95d1c8443a51fe6d9341f",
+          "id": "weapon.4",
+          "status": "defense_waiting",
+          "shots": 0
+        }
+      ]
+    }
+  ],
+  "profile_top": [
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_gunnery.py",
+      "line": 484,
+      "name": "step",
+      "calls": 60,
+      "self_s": 0.0017497,
+      "cumulative_s": 4.217334800000001
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_inventory.py",
+      "line": 564,
+      "name": "step",
+      "calls": 60,
+      "self_s": 0.0026449000000000004,
+      "cumulative_s": 4.2148041
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\simplified_flight.py",
+      "line": 485,
+      "name": "step",
+      "calls": 60,
+      "self_s": 0.0076097000000000005,
+      "cumulative_s": 4.2103665
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_inventory.py",
+      "line": 576,
+      "name": "stage",
+      "calls": 60,
+      "self_s": 0.0009598,
+      "cumulative_s": 4.1244201
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_gunnery.py",
+      "line": 531,
+      "name": "simulate",
+      "calls": 60,
+      "self_s": 0.026773900000000003,
+      "cumulative_s": 4.106294800000001
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_targeting.py",
+      "line": 35,
+      "name": "solution",
+      "calls": 1200,
+      "self_s": 0.0056464,
+      "cumulative_s": 2.66004
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 146,
+      "name": "intercept",
+      "calls": 1200,
+      "self_s": 0.0352687,
+      "cumulative_s": 2.6531001
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 129,
+      "name": "time_to_distance",
+      "calls": 6295,
+      "self_s": 0.45295630000000003,
+      "cumulative_s": 2.5938708000000004
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 54,
+      "name": "step_coefficient",
+      "calls": 1297220,
+      "self_s": 0.4285141,
+      "cumulative_s": 2.2171493
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 43,
+      "name": "coefficient",
+      "calls": 2594440,
+      "self_s": 1.6250121000000002,
+      "cumulative_s": 1.7886352
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_targeting.py",
+      "line": 51,
+      "name": "acquire",
+      "calls": 60,
+      "self_s": 0.0181171,
+      "cumulative_s": 1.6572059000000001
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_point_defense.py",
+      "line": 84,
+      "name": "observe",
+      "calls": 60,
+      "self_s": 0.007564100000000001,
+      "cumulative_s": 1.2173471
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_point_defense.py",
+      "line": 118,
+      "name": "predict_collisions",
+      "calls": 148,
+      "self_s": 0.054240500000000004,
+      "cumulative_s": 1.1924350000000001
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_point_defense.py",
+      "line": 35,
+      "name": "predict",
+      "calls": 36544,
+      "self_s": 0.0940985,
+      "cumulative_s": 0.9488694000000001
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_point_defense.py",
+      "line": 16,
+      "name": "at",
+      "calls": 36544,
+      "self_s": 0.19206,
+      "cumulative_s": 0.8135822
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 60,
+      "name": "scalar",
+      "calls": 1410678,
+      "self_s": 0.3096334,
+      "cumulative_s": 0.4167072
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method builtins.max>",
+      "calls": 2792057,
+      "self_s": 0.1843834,
+      "cumulative_s": 0.189205
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+      "line": 184,
+      "name": "contacts_on_path",
+      "calls": 148,
+      "self_s": 0.055744400000000006,
+      "cumulative_s": 0.1520716
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method math.log1p>",
+      "calls": 1410678,
+      "self_s": 0.10707380000000001,
+      "cumulative_s": 0.10707380000000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method builtins.min>",
+      "calls": 1200374,
+      "self_s": 0.08616750000000001,
+      "cumulative_s": 0.0908037
+    },
+    {
+      "file": "C:\\Users\\Yichen\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\dataclasses.py",
+      "line": 1763,
+      "name": "replace",
+      "calls": 6847,
+      "self_s": 0.0073774,
+      "cumulative_s": 0.073191
+    },
+    {
+      "file": "C:\\Users\\Yichen\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\dataclasses.py",
+      "line": 1782,
+      "name": "_replace",
+      "calls": 6847,
+      "self_s": 0.037377,
+      "cumulative_s": 0.062068700000000004
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_missiles.py",
+      "line": 148,
+      "name": "advance",
+      "calls": 60,
+      "self_s": 0.0005474000000000001,
+      "cumulative_s": 0.050756
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\missile_logistics.py",
+      "line": 248,
+      "name": "advance",
+      "calls": 120,
+      "self_s": 0.0003311,
+      "cumulative_s": 0.048462000000000005
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<method 'append' of 'list' objects>",
+      "calls": 525796,
+      "self_s": 0.0473979,
+      "cumulative_s": 0.0473979
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+      "line": 82,
+      "name": "segment",
+      "calls": 35322,
+      "self_s": 0.0247723,
+      "cumulative_s": 0.0356324
+    },
+    {
+      "file": "C:\\Users\\Yichen\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\copy.py",
+      "line": 110,
+      "name": "deepcopy",
+      "calls": 59458,
+      "self_s": 0.011168500000000001,
+      "cumulative_s": 0.034686100000000004
+    },
+    {
+      "file": "C:\\Users\\Yichen\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\copy.py",
+      "line": 198,
+      "name": "_deepcopy_dict",
+      "calls": 7068,
+      "self_s": 0.0116343,
+      "cumulative_s": 0.0344623
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\missile_logistics.py",
+      "line": 13,
+      "name": "__init__",
+      "calls": 60,
+      "self_s": 0.0006377,
+      "cumulative_s": 0.0341899
+    },
+    {
+      "file": "C:\\Users\\Yichen\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\copy.py",
+      "line": 172,
+      "name": "_deepcopy_list",
+      "calls": 1426,
+      "self_s": 0.0026149000000000003,
+      "cumulative_s": 0.0313394
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇战术弹丸世界.py",
+      "line": 1005,
+      "name": "_segment_aabb_entry_fraction",
+      "calls": 26944,
+      "self_s": 0.019112800000000003,
+      "cumulative_s": 0.028604900000000003
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+      "line": 189,
+      "name": "<genexpr>",
+      "calls": 94225,
+      "self_s": 0.0185826,
+      "cumulative_s": 0.025017900000000003
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+      "line": 164,
+      "name": "plan",
+      "calls": 60,
+      "self_s": 0.0043714,
+      "cumulative_s": 0.022812100000000002
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method builtins.len>",
+      "calls": 256855,
+      "self_s": 0.017981200000000003,
+      "cumulative_s": 0.017981200000000003
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\simplified_flight.py",
+      "line": 189,
+      "name": "boundary",
+      "calls": 240,
+      "self_s": 0.0037429000000000004,
+      "cumulative_s": 0.017265700000000002
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_gunnery.py",
+      "line": 454,
+      "name": "crew_efficiency",
+      "calls": 4434,
+      "self_s": 0.0022081,
+      "cumulative_s": 0.0168915
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_gunnery.py",
+      "line": 513,
+      "name": "permissions",
+      "calls": 60,
+      "self_s": 0.0020528,
+      "cumulative_s": 0.016591500000000002
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\simplified_flight.py",
+      "line": 618,
+      "name": "load",
+      "calls": 480,
+      "self_s": 0.0007430000000000001,
+      "cumulative_s": 0.0162218
+    },
+    {
+      "file": "<string>",
+      "line": 27,
+      "name": "__hash__",
+      "calls": 39452,
+      "self_s": 0.010287600000000001,
+      "cumulative_s": 0.0161361
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_gunnery.py",
+      "line": 494,
+      "name": "impacts",
+      "calls": 60,
+      "self_s": 0.0006701000000000001,
+      "cumulative_s": 0.015905100000000002
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_resources_runtime.py",
+      "line": 90,
+      "name": "crew_efficiency",
+      "calls": 4434,
+      "self_s": 0.013339700000000001,
+      "cumulative_s": 0.014683400000000001
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇战术机动求解器.py",
+      "line": 733,
+      "name": "_load_metrics",
+      "calls": 480,
+      "self_s": 0.0015758,
+      "cumulative_s": 0.014213100000000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method builtins.sum>",
+      "calls": 13486,
+      "self_s": 0.009190700000000001,
+      "cumulative_s": 0.0141498
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_point_defense.py",
+      "line": 39,
+      "name": "<genexpr>",
+      "calls": 109632,
+      "self_s": 0.012937,
+      "cumulative_s": 0.012937
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+      "line": 236,
+      "name": "advance",
+      "calls": 60,
+      "self_s": 0.0029956,
+      "cumulative_s": 0.0128161
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method builtins.next>",
+      "calls": 11718,
+      "self_s": 0.0038745000000000003,
+      "cumulative_s": 0.0116278
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+      "line": 230,
+      "name": "controllers",
+      "calls": 508,
+      "self_s": 0.0033365,
+      "cumulative_s": 0.010973700000000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method builtins.getattr>",
+      "calls": 107696,
+      "self_s": 0.0109583,
+      "cumulative_s": 0.0109583
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+      "line": 239,
+      "name": "sources",
+      "calls": 328,
+      "self_s": 0.0011287,
+      "cumulative_s": 0.0108439
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_point_defense.py",
+      "line": 40,
+      "name": "<genexpr>",
+      "calls": 109632,
+      "self_s": 0.0103899,
+      "cumulative_s": 0.0103899
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇定向推进控制桥.py",
+      "line": 89,
+      "name": "directional_control",
+      "calls": 420,
+      "self_s": 0.0014127,
+      "cumulative_s": 0.0103145
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+      "line": 128,
+      "name": "effect",
+      "calls": 1732,
+      "self_s": 0.0044192,
+      "cumulative_s": 0.0097943
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇战术机动求解器.py",
+      "line": 707,
+      "name": "structure_ratio",
+      "calls": 480,
+      "self_s": 0.0070984,
+      "cumulative_s": 0.0096275
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_missiles.py",
+      "line": 158,
+      "name": "plan",
+      "calls": 60,
+      "self_s": 0.0041805,
+      "cumulative_s": 0.0093998
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\projectile_observation.py",
+      "line": 65,
+      "name": "extrapolate",
+      "calls": 148,
+      "self_s": 0.0011148,
+      "cumulative_s": 0.009068000000000001
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\missile_logistics.py",
+      "line": 164,
+      "name": "advance",
+      "calls": 60,
+      "self_s": 0.0013803,
+      "cumulative_s": 0.008517700000000001
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+      "line": 86,
+      "name": "<lambda>",
+      "calls": 105966,
+      "self_s": 0.0083622,
+      "cumulative_s": 0.0083622
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇战术机动求解器.py",
+      "line": 518,
+      "name": "calculate_tactical_drag",
+      "calls": 240,
+      "self_s": 0.0012217,
+      "cumulative_s": 0.0077692
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\simplified_flight.py",
+      "line": 271,
+      "name": "reasons",
+      "calls": 240,
+      "self_s": 0.0002224,
+      "cumulative_s": 0.0074961
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method math.hypot>",
+      "calls": 56734,
+      "self_s": 0.0067201000000000006,
+      "cumulative_s": 0.0067201000000000006
+    }
+  ]
+}

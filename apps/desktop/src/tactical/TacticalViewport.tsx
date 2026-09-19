@@ -16,9 +16,10 @@ import type { LauncherSelection } from './launcherArc';
 import { selectedLauncher } from './missiles';
 
 type ShipObjects = { root: Container; selection: Graphics; modules: { id: string; max: number; graphic: Graphics }[] };
-function buildShip(ship: ShipGeometry, light: boolean): ShipObjects {
+export type ViewportFocus = { sequence:number; shipId?:string; point?:Point; layer?:string; detail?:boolean };
+function buildShip(ship: ShipGeometry, light: boolean, friendlySide='side.blue'): ShipObjects {
   const root = new Container(), selection = new Graphics();
-  const color = ship.side_id === "side.blue" ? (light ? 0x205c7e : 0x70c9f1) : (light ? 0x963f35 : 0xf18e80);
+  const color = ship.side_id === friendlySide ? (light ? 0x205c7e : 0x70c9f1) : (light ? 0x963f35 : 0xf18e80);
   const modules: ShipObjects["modules"] = [];
   const footprints = ship.modules.map(m => ({ module: m, cells: moduleFootprints(m) }));
   const levels = [...new Set([...ship.decks.map(d => d.level), ...footprints.flatMap(m => m.cells.map(c => c.level))])].sort((a, b) => a - b);
@@ -46,12 +47,17 @@ function buildShip(ship: ShipGeometry, light: boolean): ShipObjects {
   return { root, selection, modules };
 }
 
-export function TacticalViewport({ view, active, selected, onSelect, gunControl, missileControl, launcherSelection, compact = false }: {
+export function TacticalViewport({ view, active, selected, onSelect, gunControl, missileControl, launcherSelection, compact = false,
+  overlay=false, focusRequest, onCameraInput, fleetRows }: {
   view: TacticalView; active: boolean; selected: string | null; onSelect: (id: string | null) => void;
   gunControl?: GunInteraction;
   missileControl?:{enabled:boolean;attackLayer:string;onPoint:(point:Point)=>void;onCancel:()=>void};
   launcherSelection?:LauncherSelection;
   compact?: boolean;
+  overlay?: boolean;
+  focusRequest?:ViewportFocus;
+  onCameraInput?:()=>void;
+  fleetRows?:Map<string,HTMLButtonElement>;
 }) {
   const host = useRef<HTMLDivElement>(null);
   const renderer = useRef<Application | null>(null);
@@ -73,12 +79,21 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
   const timeline = useRef(new PresentationTimeline());
   const displayed = useRef(view);
   const fullDisplay = useRef(view);
-  const labels = useRef(new Map<string, HTMLSpanElement>());
+  const labels = useRef(new Map<string, HTMLElement>());
   const draw = useRef<(now: number) => void>(() => {});
   const gridCache = useRef('');
   const latest = useRef({ view, camera, size, selected, gunControl, observationLayer, launcherSelection });
   latest.current = { view, camera, size, selected, gunControl, observationLayer, launcherSelection };
   const drag = useRef<{ pointer: number; start: Point; camera: Camera; moved: boolean; button: number } | null>(null);
+  useEffect(()=>{
+    if(!focusRequest)return;
+    const source=fullDisplay.current, pose=source.snapshot.ships.find(s=>s.id===focusRequest.shipId);
+    const layer=focusRequest.layer??pose?.height_layer;
+    if(isHeightLayer(layer))setObservationLayer(layer);
+    if(focusRequest.detail&&pose){setCamera(fitScene(source,size.width,size.height,pose.id));return;}
+    const at=focusRequest.point??(pose?{x:pose.position_m[0],y:pose.position_m[1]}:null);
+    if(at)setCamera(c=>({...c,x:size.width/2-at.x*c.scale,y:size.height/2+at.y*c.scale}));
+  },[focusRequest?.sequence]);
 
   useEffect(() => {
     fitted.current = false; setCandidates([]); drag.current = null;
@@ -137,7 +152,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     for (const child of scene.current.removeChildren()) child.destroy({ children: true, context: true });
     objects.current.clear();
     for (const ship of view.geometry.ships) {
-      const object = buildShip(ship, observationLayer === 'upper'); scene.current.addChild(object.root); objects.current.set(ship.id, object);
+      const object = buildShip(ship, observationLayer === 'upper',overlay?view.geometry.ships.find(s=>s.id===selected)?.side_id:undefined); scene.current.addChild(object.root); objects.current.set(ship.id, object);
     }
   }, [ready, view.geometry, observationLayer]);
 
@@ -181,7 +196,22 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
       object.root.position.set(pose.position_m[0], pose.position_m[1]); object.root.rotation = pose.heading_rad;
       if (label) {
         const at = screen({ x: pose.position_m[0], y: pose.position_m[1] }, camera);
-        label.style.transform = `translate(${at.x+18}px, ${at.y}px)`;
+        if(overlay){
+          const bounds=object.root.getBounds();
+          const marker={x:at.x,y:Math.min(at.y-18,bounds.minY-15)};
+          const off=marker.x<22||marker.x>size.width-22||marker.y<22||marker.y>size.height-22;
+          if(off){const dx=at.x-size.width/2,dy=at.y-size.height/2;
+            const k=Math.min((size.width/2-22)/Math.max(.001,Math.abs(dx)),(size.height/2-22)/Math.max(.001,Math.abs(dy)));
+            marker.x=size.width/2+dx*k;marker.y=size.height/2+dy*k;
+          }
+          label.style.transform=`translate(${marker.x}px, ${marker.y}px)`;label.dataset.offscreen=String(off);
+          const arrow=label.querySelector<HTMLElement>('.marker-bearing');if(arrow){arrow.hidden=!off;arrow.style.transform=`rotate(${Math.atan2(at.y-size.height/2,at.x-size.width/2)}rad)`;}
+          const row=fleetRows?.get(id), rect=host.current?.getBoundingClientRect();
+          if(row&&rect&&!row.closest('.is-collapsed')){const r=row.getBoundingClientRect();
+            v.moveTo(r.right-rect.left,r.top+r.height/2-rect.top).lineTo(marker.x,marker.y)
+              .stroke({color:id===selected?(light?0x30713e:0xcbe9b0):(light?0x456f6b:0x97c7be),width:1,alpha:id===selected ? .8 : .25});
+          }
+        }else label.style.transform = `translate(${at.x+18}px, ${at.y}px)`;
       }
       object.selection.visible = id === selected;
       for (const m of object.modules) {
@@ -289,6 +319,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     if (host.current) {
       host.current.dataset.displayStep = String(view.snapshot.fixed_step);
       host.current.dataset.snapshotStep = String(latest.current.view.snapshot.fixed_step);
+      host.current.dataset.camera=JSON.stringify(camera);
     }
   };
 
@@ -316,6 +347,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     const element = host.current!;
     const wheel = (event: WheelEvent) => {
       event.preventDefault();
+      onCameraInput?.();
       const rect = element.getBoundingClientRect();
       setCamera(c => zoomScene(c, { x: event.clientX - rect.left, y: event.clientY - rect.top }, Math.exp(-Math.max(-120, Math.min(120, event.deltaY)) * .003)));
     };
@@ -326,6 +358,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     const rect = host.current!.getBoundingClientRect(); return { x: e.clientX - rect.left, y: e.clientY - rect.top };
   };
   const fit = (id?: string) => {
+    onCameraInput?.();
     const source = fullDisplay.current, layer = source.snapshot.ships.find(s => s.id === id)?.height_layer;
     if (id && isHeightLayer(layer)) setObservationLayer(layer);
     setCamera(fitScene(id ? source : viewOnLayer(source, observationLayer), size.width, size.height, id));
@@ -348,6 +381,8 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     setCandidates([]);
   };
   return <div className="tactical-viewport" data-observation-layer={observationLayer}>
+    <details className={overlay?'viewport-overlay-controls':'viewport-controls'} open={!overlay}>
+    <summary hidden={!overlay}>视图与观察层</summary>
     <div className="tactical-layer-bar">
       <nav aria-label="观察高度层"><span>观察层</span>{HEIGHT_LAYERS.map(layer => <button key={layer}
         aria-label={`观察${LAYER_NAMES[layer]}`} aria-pressed={observationLayer === layer} onClick={() => setObservationLayer(layer)}>
@@ -380,6 +415,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
       <button onClick={() => setCandidates([])}>取消选择</button>
     </div>}
     {missileControl&&<p role="status">请在{layerName(missileControl.attackLayer)}画布点击发射地点，再在面板下达单发或自动发射指令。<button onClick={missileControl.onCancel}>取消选点</button></p>}
+    </details>
     <div ref={host} className="tactical-canvas" tabIndex={active ? 0 : -1} aria-label={missileControl?'战术画布，点击指定导弹发射地点':gunControl ? "战术画布，右键选择武器组，左键指定目标或射击，中键平移" : "战术画布，点击选舰，拖动平移，滚轮缩放"} onContextMenu={e => e.preventDefault()}
       onPointerDown={e => {
         if (![0, 1, 2].includes(e.button) || drag.current) return;
@@ -392,7 +428,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
         if (!d || d.pointer !== e.pointerId) return;
         const p = point(e), dx = p.x - d.start.x, dy = p.y - d.start.y;
         d.moved ||= Math.hypot(dx, dy) > 4;
-        if (d.moved && (!gunControl || d.button === 1)) setCamera({ ...d.camera, x: d.camera.x + dx, y: d.camera.y + dy });
+        if (d.moved && (!gunControl?.enabled || d.button === 1)) {onCameraInput?.();setCamera({ ...d.camera, x: d.camera.x + dx, y: d.camera.y + dy });}
       }}
       onPointerUp={e => {
         const d = drag.current; if (!d || d.pointer !== e.pointerId) return;
@@ -430,6 +466,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
       onPointerLeave={() => gunControl?.onLeave()}
       onPointerCancel={() => { drag.current = null; gunControl?.onLeave(); }} onLostPointerCapture={() => { drag.current = null; }} onBlur={() => { drag.current = null; gunControl?.onLeave(); }}
       onKeyDown={e => {
+        if(["ArrowLeft","ArrowRight","ArrowUp","ArrowDown","+","=","-","Home"].includes(e.key))onCameraInput?.();
         if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
           e.preventDefault(); setCamera(c => ({ ...c, x: c.x + (e.key === "ArrowLeft" ? 50 : e.key === "ArrowRight" ? -50 : 0), y: c.y + (e.key === "ArrowUp" ? 50 : e.key === "ArrowDown" ? -50 : 0) }));
         } else if (["+", "=", "-"].includes(e.key)) {
@@ -455,6 +492,13 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
         {!visibleCount && <p className="tactical-layer-empty" role="status">{LAYER_NAMES[observationLayer]}暂无已知舰艇</p>}
       </>}
       {ready && view.snapshot.ships.map(pose => {
+        if(overlay)return <button type="button" key={pose.id} className="tactical-ship-marker" data-ship-id={pose.id}
+          aria-label={`选择${view.geometry.ships.find(s=>s.id===pose.id)?.name??pose.id}`} aria-pressed={selected===pose.id}
+          title={`${view.geometry.ships.find(s=>s.id===pose.id)?.name??pose.id}${pose.wreck?' · 残骸':pose.descent?' · 下坠':''}`}
+          ref={el=>{if(el)labels.current.set(pose.id,el);else labels.current.delete(pose.id);}}
+          onPointerDown={e=>e.stopPropagation()} onPointerUp={e=>e.stopPropagation()} onClick={e=>{e.stopPropagation();onSelect(pose.id);}}>
+          <span aria-hidden="true">●</span><span className="marker-bearing" hidden aria-hidden="true">→</span>
+        </button>;
         return <span key={pose.id} className="tactical-ship-label" data-ship-id={pose.id}
           ref={element => { if (element) labels.current.set(pose.id, element); else labels.current.delete(pose.id); }}
           style={{ left: 0, top: 0 }}>

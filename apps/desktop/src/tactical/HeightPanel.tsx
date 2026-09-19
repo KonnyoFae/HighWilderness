@@ -12,13 +12,14 @@ export function heightTime(seconds: number | null) {
   return seconds >= 60 ? `${Math.floor(seconds / 60)} 分 ${(seconds % 60).toFixed(1)} 秒` : `${seconds.toFixed(1)} 秒`;
 }
 
-export function HeightPanel({ value, actualLayer, friendly, disabled, uncertain, onTarget, descent, wreck }: {
+export function HeightPanel({ value, actualLayer, friendly, disabled, uncertain, onTarget, descent, wreck, compact = false }: {
+  compact?: boolean;
   value?: HeightNavigation | null; actualLayer: string; friendly: boolean; disabled: boolean; uncertain: boolean;
   onTarget: (layer: HeightLayer | null) => void;
   descent?: TacticalSnapshot['ships'][number]['descent']; wreck?: TacticalSnapshot['ships'][number]['wreck'];
 }) {
   if (!value) return null;
-  return <section className="height-panel" aria-label="舰艇换层">
+  return <section className={`height-panel${compact ? ' height-compact' : ''}`} aria-label="舰艇换层">
     <h4>{friendly ? '换层指令' : '换层状态'}</h4>
     <p>实际高度：<strong>{layerName(actualLayer)}</strong></p>
     {wreck ? <p role="status">已坠毁 · 留下可打捞残骸</p> : descent && <div className="height-progress descent-warning" role="status" aria-label="强制下坠">
@@ -32,14 +33,14 @@ export function HeightPanel({ value, actualLayer, friendly, disabled, uncertain,
       <progress aria-label="相邻层换层进度" value={value.progress} max={1} />
       <p>最终目标：{layerName(value.target_layer)}{value.next_layer !== value.target_layer ? ` · 全程预计剩余 ${heightTime(value.total_remaining_s)}` : ''}</p>
     </div>}
-    {!descent && !wreck && <p className="muted">主动换层相邻层 5 公里 · 入战基准 {heightTime(value.base_duration_s)}<br />
+    {!compact && !descent && !wreck && <p className="muted">主动换层相邻层 5 公里 · 入战基准 {heightTime(value.base_duration_s)}<br />
       当前每段 {heightTime(value.duration_s)}{value.lift_loss_fraction > 0 ? `（升力损失 ${(value.lift_loss_fraction * 100).toFixed(1)}%，耗时增加同比例）` : ''}</p>}
     {friendly && <>
       <div className="height-targets">{HEIGHT_LAYERS.map(layer => <button key={layer}
         disabled={disabled || uncertain || !!descent || !!wreck || !!value.unavailable_reason || layer === actualLayer || layer === value.target_layer}
         aria-pressed={layer === value.target_layer} onClick={() => onTarget(layer)}>前往{layerName(layer)}</button>)}</div>
       <button disabled={disabled || uncertain || !value.target_layer} onClick={() => onTarget(null)}>取消换层</button>
-      <p className="muted">换层与移动、攻击同时执行。更改目标会重新开始本段；取消保留当前实际层。</p>
+      {!compact && <p className="muted">换层与移动、攻击同时执行。更改目标会重新开始本段；取消保留当前实际层。</p>}
       {value.unavailable_reason && <p>{reasons[value.unavailable_reason] ?? '当前无法换层'}</p>}
       {uncertain && <p role="status">换层状态待确认，正在读取；不会自动重复发令。</p>}
     </>}

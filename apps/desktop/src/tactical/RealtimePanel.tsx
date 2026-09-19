@@ -11,6 +11,14 @@ import { SettlementPanel } from "./SettlementPanel";
 import type { SettlementEnvelope, SettlementLibrary } from "./settlement";
 import { fuelTankName } from './settlement';
 import { TacticalViewport } from "./TacticalViewport";
+import type { ViewportFocus } from './TacticalViewport';
+import { BattleDock, DEFAULT_BATTLE_PAGES } from './BattleDock';
+import type { BattlePages } from './BattleDock';
+import { FlagshipHelm, NEUTRAL_HELM, readHelm, helmControl } from './FlagshipHelm';
+import type { HelmOrder } from './FlagshipHelm';
+import { ShipStoresPanel } from './ShipStoresPanel';
+import { BattleAlerts } from './BattleAlerts';
+import './battleWorkspace.css';
 import { GunControlPanel, commonGunValue } from './GunControlPanel';
 import type { GunIntent } from "./gunnery";
 import type { Point } from "../editor/viewport";
@@ -60,7 +68,17 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   const attemptedEntry=useRef(false);
   const [entryUncertain,setEntryUncertain]=useState(false);
   const [damageUncertain,setDamageUncertain]=useState(false);
-  const [inspectorTab, setInspectorTab] = useState<"ship" | "weapons" | "missiles" | "damage" | "fire_control" | "devices">("ship");
+  const [inspectorTab, setInspectorTab] = useState<'weapons'|'missiles'>('weapons');
+  const [serviceTab,setServiceTab]=useState<BattlePages['service']>('ship');
+  const [sensorsOpen,setSensorsOpen]=useState(false), [ewOpen,setEwOpen]=useState(false);
+  const [serviceOpen,setServiceOpen]=useState(true);
+  const [helmPending,setHelmPending]=useState<number|null>(null), helmPendingRef=useRef<number|null>(null);
+  const [helmDirection,setHelmDirection]=useState<HelmDraft['direction']>('forward');
+  const shipPages=useRef(new Map<string,BattlePages>());
+  const fleetRows=useRef(new Map<string,HTMLButtonElement>());
+  const focusedShip=useRef<string|null>(null), focusSequence=useRef(0);
+  const [focusRequest,setFocusRequest]=useState<ViewportFocus>();
+  const [canvasOrders,setCanvasOrders]=useState(false), [fireOpen,setFireOpen]=useState(true);
   const [sensorUncertain,setSensorUncertain]=useState(false);
   const unknownDamage=useRef(false);
   const [missileUncertain,setMissileUncertain]=useState(false);
@@ -69,7 +87,14 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   const [missilePicking,setMissilePicking]=useState(false);
   const [missileTargetHint,setMissileTargetHint]=useState<string|number|null>(null);
   useEffect(()=>{setMissilePicking(false);},[selected,inspectorTab,missileTab]);
+  useEffect(()=>{setCanvasOrders(false);setMissilePicking(false);pointerAim.current=queuedFire.current=null;},[selected,inspectorTab,fireOpen]);
   useEffect(()=>{setMissileTargetHint(null);},[selected]);
+  useEffect(()=>{
+    const cancel=(event:KeyboardEvent)=>{if(event.key==='Escape'&&(canvasOrders||missilePicking)){
+      setCanvasOrders(false);setMissilePicking(false);pointerAim.current=queuedFire.current=null;event.preventDefault();
+    }};
+    window.addEventListener('keydown',cancel);return()=>window.removeEventListener('keydown',cancel);
+  },[canvasOrders,missilePicking]);
   const unknownMissile=useRef(false);
   const unknownEW=useRef(false);
   const [ewUncertain,setEwUncertain]=useState(false);
@@ -132,6 +157,12 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     ack.current = { inputs: next.receipts.filter(r => r.status !== "accepted").map(r => r.sequence),
       event: next.events.at(-1)?.sequence ?? next.status.acknowledged_event_sequence };
     const last = next.receipts.at(-1);
+    if(helmPendingRef.current!==null){
+      const r=next.receipts.find(r=>r.sequence===helmPendingRef.current);
+      if(!next.status.running || r && r.status!=='accepted' || next.status.highest_input_sequence<helmPendingRef.current){
+        helmPendingRef.current=null;setHelmPending(null);
+      }
+    }
     if (last) setReceipt(`操纵 ${last.sequence}：${receiptLabel[last.status] ?? last.status}`);
     if (unknown.current !== null) {
       const found = next.receipts.find(r => r.sequence === unknown.current);
@@ -173,7 +204,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     return () => { stopped = true; window.clearInterval(timer); };
   }, [active]);
 
-  async function action(kind: "create" | "read" | "resume" | "pause" | "control" | "withdraw" | "close", turn: -1 | 0 | 1 = 0) {
+  async function action(kind: "create" | "read" | "resume" | "pause" | "control" | "withdraw" | "close", turn: -1 | 0 | 1 = 0, helm?: HelmOrder) {
     if (acting.current || !active) return;
     acting.current = true; setBusy(true); setError("");
     try {
@@ -197,7 +228,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       if (kind === "read") { await read(); return; }
       const scene_id = latest.current.state.status.epoch;
       if (kind === "control") {
-        if (unknown.current !== null) return;
+        if (unknown.current !== null || helm && helmPendingRef.current!==null) return;
         await read(); // fresh target; never retarget an input after sending it
         const current = latest.current.state!;
         if (!current.status.running || !current.available) throw new Error("请先开始试航，并确认旗舰仍可操纵。");
@@ -205,7 +236,8 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
         unknown.current = sequence; setUncertain(sequence);
         const input = { interface: "gaotian.tactical-scheduled-control/e3a-v1alpha1", epoch: scene_id,
           generation: current.status.generation, sequence, ship_id: current.direct_ship_id,
-          target_step: current.status.fixed_step + 2, control: makeHelmControl(draft, turn) };
+          target_step: current.status.fixed_step + 2, control: helm ? helmControl(helm) : makeHelmControl(draft, turn) };
+        if(helm){helmPendingRef.current=sequence;setHelmPending(sequence);}
         const result = await call<{ status: string }>("tactical.realtime.control", { scene_id, input });
         unknown.current = null; setUncertain(null);
         setReceipt(`操纵 ${sequence}：${receiptLabel[result.status] ?? result.status}`);
@@ -216,9 +248,8 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     } catch (e) { if (mounted.current) setError(normalizeHostFailure(e).message); }
     finally { acting.current = false; if (mounted.current) setBusy(false); }
   }
-  async function sendHeight(target: HeightLayer | null) {
-    if (acting.current || !active || unknownHeight.current || !selected) return;
-    const shipId = selected;
+  async function sendHeight(target: HeightLayer | null, shipId=selected) {
+    if (acting.current || !active || unknownHeight.current || !shipId) return;
     acting.current = true; setBusy(true); setError('');
     try {
       await pending.current;
@@ -335,6 +366,28 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   const pose = view?.snapshot.ships.find(s => s.id === selected);
   const friendlySelected = !!selected && !!view && view.geometry.ships.find(s => s.id === selected)?.side_id ===
     view.geometry.ships.find(s => s.id === state?.direct_ship_id)?.side_id;
+  const observation=view?.snapshot.gunnery?.observation?.ships.find(s=>s.ship_id===selected);
+  const fireTarget=observation?.contacts.find(c=>c.id===observation.locked_target_id&&c.valid);
+  const selectBattleShip=(id:string|null)=>{
+    if(!id||!view||!state)return;
+    const ownSide=view.geometry.ships.find(s=>s.id===state.direct_ship_id)?.side_id;
+    if(view.geometry.ships.find(s=>s.id===id)?.side_id!==ownSide){
+      const target=observation?.contacts.find(c=>c.id===id&&c.valid);
+      if(target)void sendFireControl({kind:'lock',target:id,value:null});
+      return;
+    }
+    if(id===selected)return;
+    if(selected)shipPages.current.set(selected,{service:serviceTab,weapon:inspectorTab,missile:missileTab,launcher:missileLauncher,sensors:sensorsOpen,ew:ewOpen});
+    const pages=shipPages.current.get(id)??DEFAULT_BATTLE_PAGES;
+    setServiceTab(pages.service);setInspectorTab(pages.weapon);setSelected(id);focusedShip.current=null;
+    setMissileTab(pages.missile);setMissileLauncher(pages.launcher);setSensorsOpen(pages.sensors);setEwOpen(pages.ew);
+    setMissileTargetHint(null);setMissilePicking(false);setCanvasOrders(false);pointerAim.current=queuedFire.current=null;
+  };
+  const focusFleetShip=(id:string)=>{
+    const detail=focusedShip.current===id;
+    selectBattleShip(id);focusedShip.current=id;
+    setFocusRequest({sequence:++focusSequence.current,shipId:id,detail});
+  };
   const durability = view?.geometry.ships.find(s=>s.id===selected)?.structural_durability;
   const ownGuns = view?.snapshot.gunnery?.weapons.filter(g => g.ship_id === state?.direct_ship_id) ?? [];
   const groups = view?.snapshot.gunnery?.groups?.filter(g => g.ship_id === state?.direct_ship_id) ?? [];
@@ -350,22 +403,22 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   }, [state?.status.epoch, weaponId, groupId, groups, ownGuns]);
   const chooseWeapon = (id: string) => {
     pointerAim.current = null; queuedFire.current = null; groupRef.current = null; setGroupId(null); weaponRef.current = id || null; setWeaponId(id || null);
-    if (battleLayout && state) { setSelected(state.direct_ship_id); setInspectorTab("weapons"); }
+    if (battleLayout && state) { selectBattleShip(state.direct_ship_id); setInspectorTab("weapons"); }
   };
   const chooseGroup = (id: string) => {
     const value = groups.find(g=>g.group_id===id);
     if (!value) return;
     pointerAim.current = queuedFire.current = null;
     groupRef.current = id; setGroupId(id); weaponRef.current = value.weapon_ids[0]; setWeaponId(weaponRef.current);
-    if (battleLayout && state) { setSelected(state.direct_ship_id); setInspectorTab('weapons'); }
+    if (battleLayout && state) { selectBattleShip(state.direct_ship_id); setInspectorTab('weapons'); }
   };
   const chooseCanvasWeapon = (id: string) => {
     const value = groups.find(g=>g.weapon_ids.includes(id));
     if (value) chooseGroup(value.group_id); else chooseWeapon(id);
   };
-  if (battleLayout) return <section className="panel tactical-panel battle-workspace" aria-label="战术战场">
+  if (battleLayout) return <section className="panel tactical-panel battle-workspace canvas-workspace" aria-label="战术战场">
     <header className="battle-toolbar">
-      <div><p className="eyebrow">TACTICAL OPERATIONS</p><h2>{view ? "舰队交战" : "正在部署舰队"}</h2></div>
+      <div><h2>{view ? "舰队交战" : "正在部署舰队"}</h2>{state&&<small>{state.status.running?'运行中':pauseLabel[state.status.pause_reason??'']??'已暂停'} · {(state.status.fixed_step/60).toFixed(1)} 秒</small>}</div>
       <div className="editor-row">
         {!state && <button disabled={busy || !active} onClick={() => void action("create")}>重试进入战场</button>}
         <button disabled={busy || !state || state.status.running || !!state.settlement || !state.available} onClick={() => void action("resume")}>开始交战</button>
@@ -374,59 +427,71 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
         {!state && <button disabled={busy || entryUncertain} onClick={() => void action("close")}>返回战前准备</button>}
       </div>
     </header>
-    <div className="battle-notices">
+    <div className={`battle-notices${view&&state&&!state.settlement?' battle-messages':''}`}>
     {entryUncertain && !busy && <p role="alert">入战结果尚未确认，请重试进入战场；会继续查询同一次入战。</p>}
     {error && <p role="alert">{error}</p>}
     {storeError && <p role="alert">{storeError}</p>}
     {receipt && <p role="status">{receipt}</p>}
     {uncertain !== null && <p role="alert">操纵 {uncertain} 的结果尚未确认，正在查询；不会自动重发。</p>}
     {gunUncertain !== null && <p role="alert">火炮命令 {gunUncertain} 尚待确认，正在查询；不会自动重发射击。</p>}
-    {state && <p className="editor-summary">{state.status.running ? "运行中" : pauseLabel[state.status.pause_reason ?? ""] ?? "已暂停"} · 第 {state.status.fixed_step} 步 · {(state.status.fixed_step / 60).toFixed(2)} 秒</p>}
     {state && !state.available && <p role="alert">旗舰已失去操纵权。{state.loss_reason === "direct_ship_falling" ? "舰艇正在坠落。" : "后续操纵已取消。"}</p>}
 
     </div>
     {view && state && !state.settlement && <div className="battle-grid">
+      <BattleAlerts view={view} directId={state.direct_ship_id} onInspect={alert=>{
+        selectBattleShip(alert.shipId);
+        if(alert.page==='fire'){setFireOpen(true);setSensorsOpen(true);}else{setServiceOpen(true);setServiceTab(alert.page);}
+        setFocusRequest({sequence:++focusSequence.current,shipId:alert.shipId});focusedShip.current=null;
+      }}/>
+      {(canvasOrders||missilePicking)&&<div className="canvas-order-hint" role="status">
+        <span>{missilePicking?'正在指定导弹发射地点':gunMode==='manual'?'手动炮击：点击画布开火':'正在为所选炮组指定目标'}</span>
+        <button onClick={()=>{setCanvasOrders(false);setMissilePicking(false);pointerAim.current=queuedFire.current=null;}}>退出瞄准 · Esc</button>
+      </div>}
       <div className="battle-field">
-        <nav className="battle-fleet" aria-label="战场舰艇">{view.geometry.ships.map(s => <button key={s.id}
-          aria-pressed={selected === s.id} className={s.side_id === view.geometry.ships.find(v => v.id === state.direct_ship_id)?.side_id ? "ship-blue" : "ship-red"}
-          onClick={() => { setSelected(s.id); setInspectorTab("ship"); }}>{s.name}{s.id === state.direct_ship_id ? " · 旗舰" : ""}{view.snapshot.ships.find(p=>p.id===s.id)?.wreck ? ' · 残骸' : view.snapshot.ships.find(p=>p.id===s.id)?.descent ? ' · 下坠' : ''}</button>)}</nav>
-        <TacticalViewport view={view} active={active} selected={selected} onSelect={setSelected} compact
-      launcherSelection={selected&&(inspectorTab==='missiles'||inspectorTab==='fire_control')?{shipId:selected,moduleId:missileLauncher}:undefined}
-      missileControl={missilePicking&&selected?{enabled:!busy&&!missileUncertain&&state.status.running&&state.available,
+        <BattleDock name="舰队" symbol="☷" position="fleet"><h3>舰队</h3>
+        <nav className="battle-fleet" aria-label="战场舰艇">{view.geometry.ships.filter(s=>s.side_id===view.geometry.ships.find(v=>v.id===state.direct_ship_id)?.side_id)
+          .sort((a,b)=>Number(b.id===state.direct_ship_id)-Number(a.id===state.direct_ship_id)).map((s,index) => <button key={s.id}
+          ref={el=>{if(el)fleetRows.current.set(s.id,el);else fleetRows.current.delete(s.id);}}
+          data-fleet-ship={s.id} aria-pressed={selected === s.id} onClick={() => selectBattleShip(s.id)} onDoubleClick={()=>focusFleetShip(s.id)}>
+          <span className="fleet-number">{String(index+1).padStart(2,'0')}</span><span className={s.id===state.direct_ship_id?'fleet-flag':''} aria-hidden="true">{s.id===state.direct_ship_id?'♛':'●'}</span>
+          <span className="fleet-name">{s.name}{s.id === state.direct_ship_id ? ' · 旗舰' : ''}{view.snapshot.ships.find(p=>p.id===s.id)?.wreck ? ' · 残骸' : view.snapshot.ships.find(p=>p.id===s.id)?.descent ? ' · 下坠' : ''}</span></button>)}</nav>
+        </BattleDock>
+        <TacticalViewport view={view} active={active} selected={selected} onSelect={selectBattleShip} compact overlay
+          focusRequest={focusRequest} onCameraInput={()=>{focusedShip.current=null;}} fleetRows={fleetRows.current}
+      launcherSelection={fireOpen&&selected&&inspectorTab==='missiles'?{shipId:selected,moduleId:missileLauncher}:undefined}
+      missileControl={fireOpen&&missilePicking&&selected?{enabled:!busy&&!missileUncertain&&state.status.running&&state.available,
         attackLayer:view.snapshot.gunnery?.missiles?.ships.find(s=>s.ship_id===selected)?.launchers?.find(l=>l.module_id===missileLauncher)?.attack_layer??pose?.height_layer??'upper',
         onPoint:point=>{if(missileLauncher){void sendMissile({module_id:missileLauncher,kind:'point',point_m:[point.x,point.y]});setMissilePicking(false);}},
         onCancel:()=>setMissilePicking(false)}:undefined}
-      gunControl={view.snapshot.gunnery && state && inspectorTab==='weapons' ? { ownShipId: state.direct_ship_id, weaponId, weaponIds: controlledGuns.map(g=>g.module_id), selectionKey: groupId ?? weaponId ?? "", mode: gunMode ?? "auto", attackLayer: gunLayer,
-        enabled: active && state.status.running && state.available && !busy && gunUncertain === null, canAim: !!gunMode && !!gunLayer,
+      gunControl={view.snapshot.gunnery && state && selected===state.direct_ship_id && inspectorTab==='weapons' ? { ownShipId: state.direct_ship_id, weaponId, weaponIds: controlledGuns.map(g=>g.module_id), selectionKey: groupId ?? weaponId ?? "", mode: gunMode ?? "auto", attackLayer: gunLayer,
+        enabled: fireOpen && canvasOrders && selected===state.direct_ship_id && active && state.status.running && state.available && !busy && gunUncertain === null, canAim: !!gunMode && !!gunLayer,
         onWeapon: chooseCanvasWeapon, onTarget: (shipId, moduleId) => { void sendGun({ kind: "target", arguments: { ship_id: shipId, module_id: moduleId } }); },
         onAim: point => { pointerAim.current = point; }, onFire: point => { pointerAim.current = null;
           if (acting.current && weaponRef.current) queuedFire.current = { weapon: groupRef.current ?? weaponRef.current, point };
           else void sendGun({ kind: "fire", arguments: { point: [point.x, point.y] } }); },
         onLeave: () => { pointerAim.current = null; queuedFire.current = null; },
       } : undefined} />
-        <section className="battle-helm" aria-label="旗舰操纵"><h3>旗舰操纵 · {view.geometry.ships.find(s => s.id === state.direct_ship_id)?.name}</h3>
-    <fieldset className="realtime-helm" disabled={busy || !active || !state?.status.running || !state.available || uncertain !== null}>
-      <div className="editor-row">
-      <label>实时车钟<select aria-label="实时车钟" value={draft.notch} onChange={e => setDraft({ ...draft, notch: e.target.value as Notch })}>{Object.entries(NOTCHES).map(([v,l]) => <option key={v} value={v}>{l}</option>)}</select></label>
-      <label>实时方向<select aria-label="实时方向" value={draft.direction} onChange={e => setDraft({ ...draft, direction: e.target.value as HelmDraft["direction"] })}><option value="forward">前进</option><option value="reverse">倒车</option></select></label>
-      <label><input type="checkbox" checked={draft.brake} onChange={e => setDraft({ ...draft, brake: e.target.checked })} />实时自动制动</label>
+        <BattleDock name="旗舰操纵" symbol="⌖" position="helm" initiallyOpen={false}>
+        {view.snapshot.ships.find(s=>s.id===state.direct_ship_id)&&<FlagshipHelm
+          name={view.geometry.ships.find(s=>s.id===state.direct_ship_id)?.name??'旗舰'}
+          pose={view.snapshot.ships.find(s=>s.id===state.direct_ship_id)!}
+          order={state.status.running?readHelm(state.requested_control,helmDirection):{...NEUTRAL_HELM,draft:{...NEUTRAL_HELM.draft,direction:helmDirection}}}
+          disabled={busy||!active||!state.status.running||!state.available}
+          uncertain={uncertain!==null||helmPending!==null} heightUncertain={heightUncertain}
+          yawStatus={state.yaw_brake_status}
+          onOrder={order=>{setHelmDirection(order.draft.direction);void action('control',order.turn,order);}}
+          onHeight={target=>void sendHeight(target,state.direct_ship_id)}/>}
+        </BattleDock>
       </div>
-      <div className="editor-row"><button onClick={() => void action("control")}>执行车钟 / 停止转向</button><button disabled={draft.brake} onClick={() => void action("control", -1)}>持续左转</button><button disabled={draft.brake} onClick={() => void action("control", 1)}>持续右转</button></div>
-    </fieldset>
-
-        </section>
-      </div>
-      <aside className="battle-inspector" aria-label="所选舰艇">
-        <h3>{view.geometry.ships.find(s => s.id === selected)?.name ?? "选择舰艇"}</h3>
+      <BattleDock name="舰务" symbol="▤" position="service" open={serviceOpen} onOpenChange={setServiceOpen}>
+      <div className="battle-inspector">
+        <div className="dock-heading"><h3>舰务</h3><small>{view.geometry.ships.find(s=>s.id===selected)?.name}</small></div>
         <nav className="battle-tabs" aria-label="舰艇面板">
-          <button aria-pressed={inspectorTab === "ship"} onClick={() => setInspectorTab("ship")}>舰况</button>
-          <button aria-pressed={inspectorTab === "weapons"} onClick={() => setInspectorTab("weapons")}>火炮</button>
-          <button aria-pressed={inspectorTab === "missiles"} onClick={() => setInspectorTab("missiles")}>导弹</button>
-          <button aria-pressed={inspectorTab === "fire_control"} onClick={() => setInspectorTab("fire_control")}>火控</button>
-          <button aria-pressed={inspectorTab === "devices"} onClick={() => setInspectorTab("devices")}>设备</button>
-          <button aria-pressed={inspectorTab === "damage"} onClick={() => setInspectorTab("damage")}>损管</button>
+          <button aria-pressed={serviceTab === 'ship'} onClick={() => setServiceTab('ship')}>舰况</button>
+          <button aria-pressed={serviceTab === 'damage'} onClick={() => setServiceTab('damage')}>损管</button>
+          <button aria-pressed={serviceTab === 'cargo'} onClick={() => setServiceTab('cargo')}>货舱</button>
         </nav>
-        {inspectorTab === "ship" && pose && <div className="battle-ship-state">
+        {serviceTab === "ship" && pose && <div className="battle-ship-state">
           <LiftReserve value={pose.lift_reserve} />
           <HeightPanel value={pose.height_navigation} actualLayer={pose.height_layer}
             descent={pose.descent} wreck={pose.wreck}
@@ -444,30 +509,37 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
           <PersonnelPanel view={view} shipId={pose.id}/>
           <details><summary>模块状态</summary>{pose.modules.map(m => <p key={m.id}>{view.geometry.ships.find(s => s.id === pose.id)?.modules.find(v => v.id === m.id)?.name ?? m.id}：{m.durability.toFixed(1)}{m.durability <= 0 ? " · 已损毁" : ""}</p>)}</details>
         </div>}
+        {serviceTab === 'damage' && friendlySelected && selected && <DamageControlPanel view={view} shipId={selected}
+          disabled={busy||!active||!state.status.running||!state.available||!!view.snapshot.gunnery?.ending||pose?.physical_status!=='operational'||pose.command_status!=='scene_command'}
+          uncertain={damageUncertain} onCommand={intent=>void sendDamageControl(intent,selected)}/>}
+        {serviceTab === 'cargo' && friendlySelected && selected && <ShipStoresPanel view={view} shipId={selected}
+          onMissiles={()=>{setInspectorTab('missiles');setMissileTab('stores');setFireOpen(true);}}
+          onDamage={()=>setServiceTab('damage')}/>}
+      </div></BattleDock>
+      <BattleDock name="火控" symbol="⊕" position="fire" open={fireOpen} onOpenChange={setFireOpen}>
+        <div className="dock-heading"><h3>火控</h3><small>操作舰 · {view.geometry.ships.find(s=>s.id===selected)?.name}</small></div>
+        {sensorUncertain&&<p role="status">正在确认火控命令…</p>}
+        <FireControlPanel tab="fire_control" compact ship={observation} names={Object.fromEntries(view.geometry.ships.map(s=>[s.id,s.name]))}
+          disabled={busy||!active||!state.status.running||!state.available||!friendlySelected||sensorUncertain||!!view.snapshot.gunnery?.ending}
+          onCommand={v=>void sendFireControl(v)} onFocus={contact=>{focusedShip.current=null;setFocusRequest({sequence:++focusSequence.current,
+            point:{x:contact.position_m[0],y:contact.position_m[1]},layer:contact.height_layer});}}/>
+        <nav className="battle-tabs" aria-label="武器面板">
+          <button aria-pressed={inspectorTab==='weapons'} onClick={()=>setInspectorTab('weapons')}>火炮</button>
+          <button aria-pressed={inspectorTab==='missiles'} onClick={()=>setInspectorTab('missiles')}>导弹</button>
+        </nav>
+        <div className="battle-inspector battle-subpanel">
         {selected === state.direct_ship_id ? <>
           {inspectorTab === "weapons" && <div className="battle-weapons">
-    {view?.snapshot.gunnery && state && <GunControlPanel view={view} shipId={state.direct_ship_id}
+    <label><input type="checkbox" checked={canvasOrders} onChange={e=>setCanvasOrders(e.target.checked)}/>在画布瞄准／指定目标</label>
+    {fireTarget?.kind==='ship'&&<button disabled={busy||!state.status.running||!state.available||!weaponId||gunUncertain!==null}
+      onClick={()=>void sendGun({kind:'target',arguments:{ship_id:fireTarget.id,module_id:null}})}>将火控目标分配给所选炮组／火炮</button>}
+    {view?.snapshot.gunnery && state && <GunControlPanel compact view={view} shipId={state.direct_ship_id}
       weaponId={weaponId} groupId={groupId} onWeapon={chooseWeapon} onGroup={chooseGroup}
       disabled={busy || !active || !state.status.running || !state.available || gunUncertain !== null}
       onCommand={intent=>void sendGun(intent)} />}
 
           </div>}
-        </> : inspectorTab === "weapons" && <p>当前火炮操作属于直控旗舰。<button onClick={() => setSelected(state.direct_ship_id)}>选择旗舰</button></p>}
-        {(inspectorTab==='fire_control'||inspectorTab==='devices')&&<>
-          {ewUncertain&&<p role="status">正在确认干扰投放命令…</p>}
-          <CountermeasurePanel view={view.snapshot.gunnery?.electronic_warfare} shipId={selected}
-            disabled={busy||!active||!state.status.running||!state.available||!friendlySelected||ewUncertain||!!view.snapshot.gunnery?.ending}
-            onDeploy={v=>void sendCountermeasure(v)}/>
-          {sensorUncertain&&<p role="status">正在确认设备与火控命令…</p>}
-          <FireControlPanel tab={inspectorTab} ship={view.snapshot.gunnery?.observation?.ships.find(s=>s.ship_id===selected)}
-            names={Object.fromEntries(view.geometry.ships.map(s=>[s.id,s.name]))}
-            disabled={busy||!active||!state.status.running||!state.available||!friendlySelected||sensorUncertain||!!view.snapshot.gunnery?.ending}
-            onCommand={v=>void sendFireControl(v)} onAssignMissile={target=>{setMissileTargetHint(target);
-              setInspectorTab('missiles');setMissileTab('launch');
-              const launchers=view.snapshot.gunnery?.missiles?.ships.find(s=>s.ship_id===selected)?.launchers??[];
-              const fitting=launchers.filter(l=>!!l.interceptor===(typeof target==='number'));
-              if(!fitting.some(l=>l.module_id===missileLauncher))setMissileLauncher(fitting[0]?.module_id??null);}}/>
-        </>}
+        </> : inspectorTab === "weapons" && <p>本舰由自动火控交战；当前手动炮组命令仅支持旗舰。可通过舰队列表的 01 项操作旗舰。</p>}
         {inspectorTab==='missiles'&&<nav className="battle-tabs missile-tabs" aria-label="导弹操作">
           <button aria-pressed={missileTab==='launch'} onClick={()=>setMissileTab('launch')}>发射控制</button>
           <button aria-pressed={missileTab==='flight'} onClick={()=>setMissileTab('flight')}>在途制导（{(view.snapshot.gunnery?.projectiles??[]).filter(p=>p.missile&&view.geometry.ships.some(s=>s.id===p.ship_id&&s.side_id===view.geometry.ships.find(v=>v.id===state.direct_ship_id)?.side_id)).length}）</button>
@@ -482,7 +554,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
           disabled={busy||!active||!state.status.running||!state.available||!friendlySelected||missileUncertain||!!view.snapshot.gunnery?.ending}
           picking={missilePicking} onPick={()=>{const m=view.snapshot.gunnery?.missiles?.ships.find(s=>s.ship_id===selected);
             setMissileLauncher(m?.launchers?.find(l=>l.module_id===missileLauncher)?.module_id??m?.launchers?.[0]?.module_id??null);setMissilePicking(!missilePicking);}}
-          onCommand={v=>void sendMissile(v)} targetHint={missileTargetHint??(typeof view.snapshot.gunnery?.observation?.ships.find(s=>s.ship_id===selected)?.locked_target_id==='string'?String(view.snapshot.gunnery?.observation?.ships.find(s=>s.ship_id===selected)?.locked_target_id):null)}/>}
+          onCommand={v=>void sendMissile(v)} targetHint={missileTargetHint??observation?.locked_target_id??null}/>}
         {inspectorTab==='missiles'&&missileTab==='flight'&&friendlySelected&&<InFlightMissiles
           projectiles={view.snapshot.gunnery?.projectiles??[]} observation={view.snapshot.gunnery?.observation?.ships.find(s=>s.ship_id===selected)}
           names={Object.fromEntries(view.geometry.ships.map(s=>[s.id,s.name]))}
@@ -496,13 +568,19 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
             onCommand={order=>void sendMissile(order)}/>
           {m?.over_capacity&&<p>返还材料已保留，当前货舱超容，不能继续新增装载。</p>}
         </section>;})()}
-        {inspectorTab === "damage" && (friendlySelected && selected ? <div className="battle-damage">
-          <DamageControlPanel view={view} shipId={selected}
-            disabled={busy || !active || !state.status.running || !state.available || !!view.snapshot.gunnery?.ending ||
-              pose?.physical_status !== 'operational' || pose.command_status !== 'scene_command'}
-            uncertain={damageUncertain} onCommand={intent => void sendDamageControl(intent, selected)} />
-        </div> : <p>请选择本方舰艇下达损管命令。</p>)}
-      </aside>
+        <details className="battle-equipment" key={`sensors:${selected}`} open={sensorsOpen} onToggle={e=>setSensorsOpen(e.currentTarget.open)}><summary>感知设备</summary>
+          <FireControlPanel tab="devices" ship={observation} names={Object.fromEntries(view.geometry.ships.map(s=>[s.id,s.name]))}
+            disabled={busy||!active||!state.status.running||!state.available||!friendlySelected||sensorUncertain||!!view.snapshot.gunnery?.ending}
+            onCommand={v=>void sendFireControl(v)}/>
+        </details>
+        <details className="battle-equipment" key={`ew:${selected}`} open={ewOpen} onToggle={e=>setEwOpen(e.currentTarget.open)}><summary>电子对抗</summary>
+          {ewUncertain&&<p role="status">正在确认干扰投放命令…</p>}
+          <CountermeasurePanel view={view.snapshot.gunnery?.electronic_warfare} shipId={selected}
+            disabled={busy||!active||!state.status.running||!state.available||!friendlySelected||ewUncertain||!!view.snapshot.gunnery?.ending}
+            onDeploy={v=>void sendCountermeasure(v)}/>
+        </details>
+        </div>
+      </BattleDock>
     </div>}
     {view?.snapshot.gunnery?.ending && <p role="status">交战已结束：{{ victory: "敌方失去作战能力", defeat: "本方失去作战能力", draw: "双方失去作战能力", withdrawal: "主动撤离" }[view.snapshot.gunnery.ending.reason] ?? view.snapshot.gunnery.ending.reason}。已完成有效火炮在装批次，导弹未完成作业保留进度，清除在途弹丸；{state?.settlement?.saved ? "战后结果已保存。" : "请在结算页面保存本场结果。"}</p>}
 
@@ -514,7 +592,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       onSave={id => void storedAction("save", id)} onInspect={id => void storedAction("inspect", id)}
       onRefresh={() => void storedAction("refresh")} onDeploy={(id, revision) => void storedAction("deploy", id, revision)} />}
 
-    {view && <details className="battle-records"><summary>战场记录与全舰资源</summary>
+    {view && <details className="battle-records"><summary>战场记录</summary>
     {view && <FireSummary view={view}/>}
 
     {view?.snapshot.gunnery?.fuel&&<section aria-label="燃料储备"><h3>燃料储备</h3><p>发动机运行不消耗燃料；仅燃料槽耐久归零时损失其中燃料。</p>

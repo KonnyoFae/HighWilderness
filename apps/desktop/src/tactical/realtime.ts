@@ -3,6 +3,8 @@ import { acceptSnapshot } from "./model";
 import type { TacticalSnapshot, TacticalView } from "./model";
 
 export interface RealtimeEnvelope {
+  requested_control?: import('./model').TacticalControlInput['arguments']['control'];
+  yaw_brake_status?: 'braking' | 'settled' | 'unavailable' | null;
   interface: "gaotian.realtime-view/e3b-v1alpha1";
   status: { epoch: string; fixed_step: number; running: boolean; generation: number; pause_reason: string | null;
     highest_input_sequence: number; acknowledged_event_sequence: number; debt_quanta: number };

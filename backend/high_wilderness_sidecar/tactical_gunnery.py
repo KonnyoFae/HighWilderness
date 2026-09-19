@@ -830,6 +830,7 @@ class GunneryBattle:
         return True
 
     def view(self):
+        from .tactical_stores_view import project as stores_view
         self._guard()
         weapons = []
         inventory_summaries = tuple(inv.summary() for inv in self.inventory.inventories)
@@ -873,6 +874,7 @@ class GunneryBattle:
                 cargo=[dict(good_id=c['good_id'], quantity=c['quantity'], reserved=inventory_summaries[gun.ship_index]['reserved_cargo'].get(c['good_id'],0))
                     for c in inv._value['cargo']]))
         return dict(interface='gaotian.gunnery-view/p2a-v1alpha1', command_sequence=self.sequence,
+            stores=stores_view(self, inventory_summaries),
             deck_hit_policy=asdict(self.damage.deck_policy) if self.damage else None,
             observation=self.observation.view(), missiles=self.missiles.view(), electronic_warfare=self.ew.view(), groups=ps.clone(list(self.groups)), weapons=weapons, projectiles=[dict(id=p.id, ship_id=p.ship_id, position_m=p.position,
                 previous_m=p.previous, velocity_mps=p.velocity, projectile_type=p.projectile_key[0], height_layer=p.height_layer,

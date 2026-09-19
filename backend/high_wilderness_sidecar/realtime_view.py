@@ -246,6 +246,7 @@ class RealtimeViewService:
             'Realtime response exceeds byte budget')
 
     def read(self, known=None):
+        from .tactical_yaw_brake import status as yaw_brake_status
         q = self.scheduler
         status = q.status
         view = deepcopy(self.latest)
@@ -255,6 +256,8 @@ class RealtimeViewService:
         events = [asdict(e) for e in q.read_events(status.epoch, after_sequence=status.acknowledged_event_sequence, limit=16)]
         direct = next(s for s in q.world.ships if s.ship_id == q._session._direct)
         result = dict(interface=INTERFACE, status=asdict(status), view=view, receipts=receipts, events=events,
+            requested_control=direct.control.to_dict(),
+            yaw_brake_status=yaw_brake_status(direct),
             direct_ship_id=direct.ship_id, available=direct.authority_allowed, loss_reason=direct.command.loss_reason,
             engines=[dict(id=s.engine.actuator_instance_id, phase=s.engine.phase, target=s.engine.target_output_percent,
                 actual=s.engine.actual_output_percent) for s in direct.propulsion.engines], error=self.error,

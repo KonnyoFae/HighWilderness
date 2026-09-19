@@ -31,7 +31,8 @@ export interface TacticalControlInput {
   interface: "gaotian.tactical-input/v1alpha1";
   scene_id: string; input_seq: number; target_step: number; command: "control";
   arguments: { ship_id: string; control: {
-    interface: "gaotian.tactical-propulsion-control/v2alpha1";
+    interface: "gaotian.tactical-propulsion-control/v2alpha1" | "gaotian.tactical-propulsion-control/v3alpha1";
+    automatic_yaw_brake?: boolean;
     automatic_brake_policy: "gaotian.propulsion-control/translation-only-quarter-brake/v2";
     main_engine_quantization_policy: "gaotian.propulsion-control/nearest-telegraph-ties-up/v1";
     maneuver_quantization_policy: "gaotian.propulsion-control/nearest-stage-ties-up/v1";
@@ -91,6 +92,7 @@ export interface GunView {
   cargo?: {good_id: string; quantity: number; reserved: number}[];
 }
 export interface GunneryView {
+  stores?: import('./ShipStoresPanel').ShipStores[];
   observation?:ObservationView;
   electronic_warfare?:ElectronicWarfareView;
   point_defense?:{hits:number;intercepted:number;recent:{step:number;impact_fraction:number;projectile_id:number;round_id:number;

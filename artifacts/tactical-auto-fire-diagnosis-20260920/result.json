@@ -1,0 +1,623 @@
+{
+  "scope": "Two fixture ships, three 30mm guns and one 75mm gun on own ship; enemy fire disabled; 60 warmup + 240 measured fixed steps. Motion cases start with 80m/s sideways velocity, not engine acceleration. No GUI or realtime scheduler. Gunnery view only, not full bridge.",
+  "rows": [
+    {
+      "distance_m": 1000,
+      "initial_speed_mps": 0,
+      "auto_fire": false,
+      "steps": 240,
+      "shots": 0,
+      "peak_projectiles": 0,
+      "final_statuses": [
+        "holding_fire",
+        "holding_fire",
+        "holding_fire",
+        "holding_fire",
+        "holding_fire"
+      ],
+      "step": {
+        "mean_ms": 0.5547362491294431,
+        "p50_ms": 0.5246999789960682,
+        "p95_ms": 0.762099982239306,
+        "max_ms": 0.971200002823025
+      },
+      "gunnery_view": {
+        "mean_ms": 0.3836516620746503,
+        "p50_ms": 0.35769998794421554,
+        "p95_ms": 0.5100999842397869,
+        "max_ms": 1.532500027678907
+      }
+    },
+    {
+      "distance_m": 1000,
+      "initial_speed_mps": 80,
+      "auto_fire": false,
+      "steps": 240,
+      "shots": 0,
+      "peak_projectiles": 0,
+      "final_statuses": [
+        "holding_fire",
+        "holding_fire",
+        "holding_fire",
+        "holding_fire",
+        "holding_fire"
+      ],
+      "step": {
+        "mean_ms": 0.5636704161588568,
+        "p50_ms": 0.5321999778971076,
+        "p95_ms": 0.7596000214107335,
+        "max_ms": 1.2909999932162464
+      },
+      "gunnery_view": {
+        "mean_ms": 0.35874500366238254,
+        "p50_ms": 0.3428999916650355,
+        "p95_ms": 0.4556999774649739,
+        "max_ms": 0.5317000322975218
+      }
+    },
+    {
+      "distance_m": 1000,
+      "initial_speed_mps": 0,
+      "auto_fire": true,
+      "steps": 240,
+      "shots": 455,
+      "peak_projectiles": 185,
+      "final_statuses": [
+        "reloading",
+        "cooldown",
+        "cooldown",
+        "cooldown",
+        "no_target"
+      ],
+      "step": {
+        "mean_ms": 5.265752083020439,
+        "p50_ms": 5.403899995144457,
+        "p95_ms": 6.21379999211058,
+        "max_ms": 6.865900009870529
+      },
+      "gunnery_view": {
+        "mean_ms": 1.0856716651081417,
+        "p50_ms": 1.090999983716756,
+        "p95_ms": 1.4303999487310648,
+        "max_ms": 1.7610000213608146
+      }
+    },
+    {
+      "distance_m": 1000,
+      "initial_speed_mps": 80,
+      "auto_fire": true,
+      "steps": 232,
+      "shots": 443,
+      "peak_projectiles": 188,
+      "final_statuses": [
+        "battle_finished",
+        "battle_finished",
+        "battle_finished",
+        "battle_finished",
+        "battle_finished"
+      ],
+      "step": {
+        "mean_ms": 5.504833622925899,
+        "p50_ms": 5.563900049310178,
+        "p95_ms": 6.571899983100593,
+        "max_ms": 7.597499992698431
+      },
+      "gunnery_view": {
+        "mean_ms": 1.0976327547064886,
+        "p50_ms": 1.1144999880343676,
+        "p95_ms": 1.3294999953359365,
+        "max_ms": 1.5998000162653625
+      }
+    },
+    {
+      "distance_m": 3000,
+      "initial_speed_mps": 0,
+      "auto_fire": false,
+      "steps": 240,
+      "shots": 0,
+      "peak_projectiles": 0,
+      "final_statuses": [
+        "holding_fire",
+        "holding_fire",
+        "holding_fire",
+        "holding_fire",
+        "holding_fire"
+      ],
+      "step": {
+        "mean_ms": 0.5509708309546113,
+        "p50_ms": 0.5197999998927116,
+        "p95_ms": 0.7231999770738184,
+        "max_ms": 1.2594999861903489
+      },
+      "gunnery_view": {
+        "mean_ms": 0.359318337480848,
+        "p50_ms": 0.3504999913275242,
+        "p95_ms": 0.4498999915085733,
+        "max_ms": 0.5600000149570405
+      }
+    },
+    {
+      "distance_m": 3000,
+      "initial_speed_mps": 80,
+      "auto_fire": false,
+      "steps": 240,
+      "shots": 0,
+      "peak_projectiles": 0,
+      "final_statuses": [
+        "holding_fire",
+        "holding_fire",
+        "holding_fire",
+        "holding_fire",
+        "holding_fire"
+      ],
+      "step": {
+        "mean_ms": 0.5563437494856771,
+        "p50_ms": 0.5289000109769404,
+        "p95_ms": 0.741700001526624,
+        "max_ms": 1.116700004786253
+      },
+      "gunnery_view": {
+        "mean_ms": 0.3684033319586888,
+        "p50_ms": 0.35770004615187645,
+        "p95_ms": 0.4810999962501228,
+        "max_ms": 0.5526000168174505
+      }
+    },
+    {
+      "distance_m": 3000,
+      "initial_speed_mps": 0,
+      "auto_fire": true,
+      "steps": 240,
+      "shots": 146,
+      "peak_projectiles": 116,
+      "final_statuses": [
+        "reloading",
+        "no_target",
+        "fired",
+        "no_target",
+        "no_target"
+      ],
+      "step": {
+        "mean_ms": 3.127961664722534,
+        "p50_ms": 3.1888000085018575,
+        "p95_ms": 4.298000014387071,
+        "max_ms": 6.0628000064753
+      },
+      "gunnery_view": {
+        "mean_ms": 0.7389549971170103,
+        "p50_ms": 0.7353000110015273,
+        "p95_ms": 0.9686000412330031,
+        "max_ms": 1.18090002797544
+      }
+    },
+    {
+      "distance_m": 3000,
+      "initial_speed_mps": 80,
+      "auto_fire": true,
+      "steps": 240,
+      "shots": 91,
+      "peak_projectiles": 91,
+      "final_statuses": [
+        "reloading",
+        "no_target",
+        "no_target",
+        "no_target",
+        "no_target"
+      ],
+      "step": {
+        "mean_ms": 2.738277083456827,
+        "p50_ms": 2.8440000023692846,
+        "p95_ms": 3.436999977566302,
+        "max_ms": 3.7764000007882714
+      },
+      "gunnery_view": {
+        "mean_ms": 0.6993616688608502,
+        "p50_ms": 0.701499986462295,
+        "p95_ms": 0.8782000513747334,
+        "max_ms": 1.040400005877018
+      }
+    }
+  ],
+  "profile_top": [
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_gunnery.py",
+      "line": 484,
+      "name": "step",
+      "calls": 60,
+      "self_s": 0.0020339,
+      "cumulative_s": 0.44054020000000005
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_inventory.py",
+      "line": 564,
+      "name": "step",
+      "calls": 60,
+      "self_s": 0.0010954,
+      "cumulative_s": 0.43799530000000003
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\simplified_flight.py",
+      "line": 485,
+      "name": "step",
+      "calls": 60,
+      "self_s": 0.0071056,
+      "cumulative_s": 0.4351955
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_gunnery.py",
+      "line": 494,
+      "name": "impacts",
+      "calls": 60,
+      "self_s": 0.0008181000000000001,
+      "cumulative_s": 0.25706300000000004
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+      "line": 236,
+      "name": "advance",
+      "calls": 60,
+      "self_s": 0.034229300000000004,
+      "cumulative_s": 0.2549281
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_inventory.py",
+      "line": 576,
+      "name": "stage",
+      "calls": 60,
+      "self_s": 0.0005944,
+      "cumulative_s": 0.118693
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_gunnery.py",
+      "line": 531,
+      "name": "simulate",
+      "calls": 60,
+      "self_s": 0.0059749,
+      "cumulative_s": 0.1139005
+    },
+    {
+      "file": "C:\\Users\\Yichen\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\dataclasses.py",
+      "line": 1763,
+      "name": "replace",
+      "calls": 10549,
+      "self_s": 0.006575200000000001,
+      "cumulative_s": 0.09612330000000001
+    },
+    {
+      "file": "C:\\Users\\Yichen\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\dataclasses.py",
+      "line": 1782,
+      "name": "_replace",
+      "calls": 10549,
+      "self_s": 0.047667100000000004,
+      "cumulative_s": 0.08600400000000001
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 102,
+      "name": "advance_projectile",
+      "calls": 4013,
+      "self_s": 0.004119,
+      "cumulative_s": 0.058983
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_interception.py",
+      "line": 56,
+      "name": "resolve",
+      "calls": 60,
+      "self_s": 0.005993900000000001,
+      "cumulative_s": 0.056879200000000005
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_targeting.py",
+      "line": 35,
+      "name": "solution",
+      "calls": 236,
+      "self_s": 0.0005854,
+      "cumulative_s": 0.052433400000000005
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 146,
+      "name": "intercept",
+      "calls": 236,
+      "self_s": 0.0030431000000000004,
+      "cumulative_s": 0.051693800000000005
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 54,
+      "name": "step_coefficient",
+      "calls": 24554,
+      "self_s": 0.009544,
+      "cumulative_s": 0.047412
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 129,
+      "name": "time_to_distance",
+      "calls": 472,
+      "self_s": 0.008934300000000001,
+      "cumulative_s": 0.0467349
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_interception.py",
+      "line": 66,
+      "name": "buckets",
+      "calls": 4013,
+      "self_s": 0.012293700000000001,
+      "cumulative_s": 0.044362200000000004
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 79,
+      "name": "at",
+      "calls": 12039,
+      "self_s": 0.024981100000000003,
+      "cumulative_s": 0.0405934
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 43,
+      "name": "coefficient",
+      "calls": 49108,
+      "self_s": 0.0344941,
+      "cumulative_s": 0.037868000000000006
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_targeting.py",
+      "line": 51,
+      "name": "acquire",
+      "calls": 60,
+      "self_s": 0.0031779,
+      "cumulative_s": 0.0367037
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 85,
+      "name": "flight_segment",
+      "calls": 8026,
+      "self_s": 0.0070739,
+      "cumulative_s": 0.0314634
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+      "line": 164,
+      "name": "plan",
+      "calls": 60,
+      "self_s": 0.0031715000000000003,
+      "cumulative_s": 0.023054400000000003
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method builtins.getattr>",
+      "calls": 231492,
+      "self_s": 0.0202207,
+      "cumulative_s": 0.0202207
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 60,
+      "name": "scalar",
+      "calls": 37063,
+      "self_s": 0.009232500000000001,
+      "cumulative_s": 0.0124785
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\simplified_flight.py",
+      "line": 189,
+      "name": "boundary",
+      "calls": 240,
+      "self_s": 0.0030209,
+      "cumulative_s": 0.0121855
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+      "line": 269,
+      "name": "<genexpr>",
+      "calls": 16052,
+      "self_s": 0.0034955000000000003,
+      "cumulative_s": 0.0116755
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇定向推进控制桥.py",
+      "line": 89,
+      "name": "directional_control",
+      "calls": 420,
+      "self_s": 0.0013280000000000002,
+      "cumulative_s": 0.0100496
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\simplified_flight.py",
+      "line": 618,
+      "name": "load",
+      "calls": 480,
+      "self_s": 0.0007138,
+      "cumulative_s": 0.0099726
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+      "line": 266,
+      "name": "same_layer",
+      "calls": 8026,
+      "self_s": 0.003406,
+      "cumulative_s": 0.00818
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇战术机动求解器.py",
+      "line": 733,
+      "name": "_load_metrics",
+      "calls": 480,
+      "self_s": 0.0014711000000000001,
+      "cumulative_s": 0.0081104
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_gunnery.py",
+      "line": 610,
+      "name": "transact",
+      "calls": 32,
+      "self_s": 0.00013220000000000001,
+      "cumulative_s": 0.0078426
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_inventory.py",
+      "line": 244,
+      "name": "command",
+      "calls": 32,
+      "self_s": 0.0005609,
+      "cumulative_s": 0.007690000000000001
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇战术弹丸世界.py",
+      "line": 1005,
+      "name": "_segment_aabb_entry_fraction",
+      "calls": 4013,
+      "self_s": 0.004868600000000001,
+      "cumulative_s": 0.007358000000000001
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇战术机动求解器.py",
+      "line": 518,
+      "name": "calculate_tactical_drag",
+      "calls": 240,
+      "self_s": 0.0011022,
+      "cumulative_s": 0.0071546000000000005
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+      "line": 117,
+      "name": "visible",
+      "calls": 440,
+      "self_s": 0.0019743,
+      "cumulative_s": 0.006930800000000001
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method builtins.max>",
+      "calls": 89083,
+      "self_s": 0.0066778,
+      "cumulative_s": 0.0066778
+    },
+    {
+      "file": "C:\\Users\\Yichen\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\copy.py",
+      "line": 110,
+      "name": "deepcopy",
+      "calls": 9312,
+      "self_s": 0.0020555,
+      "cumulative_s": 0.0062994
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+      "line": 135,
+      "name": "targets",
+      "calls": 60,
+      "self_s": 0.0029068,
+      "cumulative_s": 0.0062434000000000005
+    },
+    {
+      "file": "C:\\Users\\Yichen\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\copy.py",
+      "line": 198,
+      "name": "_deepcopy_dict",
+      "calls": 1152,
+      "self_s": 0.0020648000000000003,
+      "cumulative_s": 0.006181000000000001
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 99,
+      "name": "layer_breaks",
+      "calls": 8026,
+      "self_s": 0.0037922000000000003,
+      "cumulative_s": 0.005211
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_interception.py",
+      "line": 83,
+      "name": "<genexpr>",
+      "calls": 7851,
+      "self_s": 0.0026357000000000004,
+      "cumulative_s": 0.0048975
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\simplified_flight.py",
+      "line": 271,
+      "name": "reasons",
+      "calls": 240,
+      "self_s": 0.0001976,
+      "cumulative_s": 0.0046760000000000005
+    },
+    {
+      "file": "C:\\Users\\Yichen\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\copy.py",
+      "line": 172,
+      "name": "_deepcopy_list",
+      "calls": 448,
+      "self_s": 0.0005494,
+      "cumulative_s": 0.0045720000000000005
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇定向推进控制桥.py",
+      "line": 100,
+      "name": "<genexpr>",
+      "calls": 2940,
+      "self_s": 0.0014013,
+      "cumulative_s": 0.004533000000000001
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇气动缓存.py",
+      "line": 358,
+      "name": "calculate_drag",
+      "calls": 240,
+      "self_s": 0.0016715,
+      "cumulative_s": 0.0042415000000000005
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇定向推进控制桥.py",
+      "line": 46,
+      "name": "__post_init__",
+      "calls": 480,
+      "self_s": 0.0021858000000000003,
+      "cumulative_s": 0.0042126
+    },
+    {
+      "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+      "line": 82,
+      "name": "<genexpr>",
+      "calls": 36117,
+      "self_s": 0.0040344000000000005,
+      "cumulative_s": 0.0040344000000000005
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method builtins.sorted>",
+      "calls": 14319,
+      "self_s": 0.0034296,
+      "cumulative_s": 0.0040229
+    },
+    {
+      "file": "G:\\高天荒野\\高天荒野舰艇战术机动求解器.py",
+      "line": 707,
+      "name": "structure_ratio",
+      "calls": 480,
+      "self_s": 0.0028797000000000002,
+      "cumulative_s": 0.0039651
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method builtins.min>",
+      "calls": 46790,
+      "self_s": 0.0039264,
+      "cumulative_s": 0.0039264
+    },
+    {
+      "file": "~",
+      "line": 0,
+      "name": "<built-in method builtins.sum>",
+      "calls": 1824,
+      "self_s": 0.0016006000000000002,
+      "cumulative_s": 0.0037094000000000003
+    }
+  ]
+}

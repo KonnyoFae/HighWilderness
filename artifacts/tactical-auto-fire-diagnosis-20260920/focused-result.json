@@ -1,0 +1,78 @@
+[
+  {
+    "variant": "normal",
+    "wall_seconds": 2.6457588999764994,
+    "step_count": 143,
+    "step": {
+      "mean_ms": 11.379697202571336,
+      "p95_ms": 23.168799991253763,
+      "max_ms": 24.287400010507554
+    },
+    "reason": "overload",
+    "running": false,
+    "debt_steps": 15.229942,
+    "shots": 3,
+    "peak_projectiles": 3,
+    "components_total": {
+      "aim_seconds": 0.9495434004347771,
+      "aim_calls": 574,
+      "defense_seconds": 0.368509299994912,
+      "defense_calls": 143
+    },
+    "last30": {
+      "step": {
+        "mean_ms": 21.152426661380254,
+        "p95_ms": 23.866900010034442,
+        "max_ms": 24.287400010507554
+      },
+      "aim": {
+        "mean_ms": 11.877150020639721,
+        "p95_ms": 13.090799970086664,
+        "max_ms": 13.588999980129302
+      },
+      "defense": {
+        "mean_ms": 6.86252999973173,
+        "p95_ms": 8.863700029905885,
+        "max_ms": 9.570099995471537
+      }
+    }
+  },
+  {
+    "variant": "empty_guns_hold",
+    "wall_seconds": 4.2582040000124834,
+    "step_count": 240,
+    "step": {
+      "mean_ms": 9.011632499217134,
+      "p95_ms": 20.899800001643598,
+      "max_ms": 22.756799997296184
+    },
+    "reason": "overload",
+    "running": false,
+    "debt_steps": 15.351738,
+    "shots": 6,
+    "peak_projectiles": 6,
+    "components_total": {
+      "aim_seconds": 0.23974669992458075,
+      "aim_calls": 342,
+      "defense_seconds": 1.4366798999835737,
+      "defense_calls": 240
+    },
+    "last30": {
+      "step": {
+        "mean_ms": 20.09452000299158,
+        "p95_ms": 21.98390004923567,
+        "max_ms": 22.756799997296184
+      },
+      "aim": {
+        "mean_ms": 1.076569986374428,
+        "p95_ms": 1.1774000013247132,
+        "max_ms": 1.3237999519333243
+      },
+      "defense": {
+        "mean_ms": 16.883266668689124,
+        "p95_ms": 18.70540005620569,
+        "max_ms": 19.7141999960877
+      }
+    }
+  }
+]

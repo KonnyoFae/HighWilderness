@@ -42,13 +42,14 @@ class DirectionalPropulsionControlInput:
     automatic_brake: bool = False
     overg_requested: bool = False
     source_migration_id: str | None = None
+    automatic_yaw_brake: bool = False
 
     def __post_init__(self) -> None:
         if any(not isinstance(x, ChannelPropulsionCommand) for x in self.channel_commands):
             raise ValueError("channel_commands 只接受通道命令")
         if tuple(x.command_channel for x in self.channel_commands) != DIRECTIONAL_CHANNELS:
             raise ValueError("定向命令必须按规范顺序恰含六个物理通道")
-        if type(self.automatic_brake) is not bool or type(self.overg_requested) is not bool:
+        if type(self.automatic_brake) is not bool or type(self.overg_requested) is not bool or type(self.automatic_yaw_brake) is not bool:
             raise ValueError("控制开关必须是布尔值")
         if self.source_migration_id is not None and self.source_migration_id not in {x[0] for x in KNOWN_D2A_CONTROL_MIGRATIONS}:
             raise ValueError("未知的控制来源迁移 id")
@@ -57,14 +58,18 @@ class DirectionalPropulsionControlInput:
             raise ValueError("同轴对向请求尚未支持")
         if self.automatic_brake and any(requests[x] for x in YAW_CHANNELS):
             raise ValueError("自动线性制动不得请求转向推力")
+        if self.automatic_yaw_brake and any(requests[x] for x in YAW_CHANNELS):
+            raise ValueError("自动回正不能同时请求手动转向")
         if self.automatic_brake and any(x.commanded_notch not in ("stop", "quarter") for x in self.channel_commands[:4]):
             raise ValueError("自动线性制动只能请求 quarter 或 stop")
 
     @classmethod
     def parse(cls, value: Any, path: str = "$") -> "DirectionalPropulsionControlInput":
-        obj = exact_object(value, {"interface", "automatic_brake_policy", "main_engine_quantization_policy",
-            "maneuver_quantization_policy", "channel_commands", "automatic_brake", "overg_requested", "source_migration_id"}, path)
-        expected = {"interface": DIRECTIONAL_CONTROL_INTERFACE_ID, "automatic_brake_policy": LINEAR_BRAKE_POLICY_ID,
+        yaw_version = isinstance(value, dict) and value.get('interface') == 'gaotian.tactical-propulsion-control/v3alpha1'
+        keys = {"interface", "automatic_brake_policy", "main_engine_quantization_policy",
+            "maneuver_quantization_policy", "channel_commands", "automatic_brake", "overg_requested", "source_migration_id"}
+        obj = exact_object(value, keys | ({'automatic_yaw_brake'} if yaw_version else set()), path)
+        expected = {"interface": 'gaotian.tactical-propulsion-control/v3alpha1' if yaw_version else DIRECTIONAL_CONTROL_INTERFACE_ID, "automatic_brake_policy": LINEAR_BRAKE_POLICY_ID,
             "main_engine_quantization_policy": MAIN_ENGINE_QUANTIZATION_POLICY_ID,
             "maneuver_quantization_policy": MANEUVER_QUANTIZATION_POLICY_ID}
         if any(obj[key] != expected_value for key, expected_value in expected.items()):
@@ -74,21 +79,22 @@ class DirectionalPropulsionControlInput:
         try:
             return cls(tuple(ChannelPropulsionCommand.parse(x, f"{path}.channel_commands[{i}]")
                 for i, x in enumerate(obj["channel_commands"])), obj["automatic_brake"],
-                obj["overg_requested"], obj["source_migration_id"])
+                obj["overg_requested"], obj["source_migration_id"], obj.get('automatic_yaw_brake', False))
         except (TypeError, ValueError) as error:
             raise ContractError("propulsion_control.directional_invariant", path, str(error)) from error
 
     def to_dict(self) -> dict[str, Any]:
-        return {"interface": DIRECTIONAL_CONTROL_INTERFACE_ID, "automatic_brake_policy": LINEAR_BRAKE_POLICY_ID,
+        return {"interface": 'gaotian.tactical-propulsion-control/v3alpha1' if self.automatic_yaw_brake else DIRECTIONAL_CONTROL_INTERFACE_ID, "automatic_brake_policy": LINEAR_BRAKE_POLICY_ID,
             "main_engine_quantization_policy": MAIN_ENGINE_QUANTIZATION_POLICY_ID,
             "maneuver_quantization_policy": MANEUVER_QUANTIZATION_POLICY_ID,
             "channel_commands": [x.to_dict() for x in self.channel_commands], "automatic_brake": self.automatic_brake,
-            "overg_requested": self.overg_requested, "source_migration_id": self.source_migration_id}
+            "overg_requested": self.overg_requested, "source_migration_id": self.source_migration_id,
+            **({'automatic_yaw_brake': True} if self.automatic_yaw_brake else {})}
 
 
 def directional_control(
     commands: Iterable[ChannelPropulsionCommand] = (), *, automatic_brake: bool = False,
-    overg_requested: bool = False, source_migration_id: str | None = None,
+    overg_requested: bool = False, source_migration_id: str | None = None, automatic_yaw_brake: bool = False,
 ) -> DirectionalPropulsionControlInput:
     supplied = tuple(commands)
     if any(not isinstance(x, ChannelPropulsionCommand) for x in supplied):
@@ -98,7 +104,7 @@ def directional_control(
         raise ContractError("propulsion_control.duplicate_channel", "$.commands", "通道不得重复")
     try:
         return DirectionalPropulsionControlInput(tuple(by_channel.get(x, ChannelPropulsionCommand.stop(x))
-            for x in DIRECTIONAL_CHANNELS), automatic_brake, overg_requested, source_migration_id)
+            for x in DIRECTIONAL_CHANNELS), automatic_brake, overg_requested, source_migration_id, automatic_yaw_brake)
     except ValueError as error:
         raise ContractError("propulsion_control.directional_invariant", "$.commands", str(error)) from error
 
