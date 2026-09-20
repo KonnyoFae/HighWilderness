@@ -125,7 +125,7 @@ class ElectronicWarfare:
             states[key]=replace(state,requested=False,status=status or 'ready')
         return states,tuple(effects),sequence,tuple(events)
 
-    def environment(self,world,available,frame,effects,projectiles=()):
+    def environment(self,world,available,frame,effects,projectiles=(),*,prediction=None):
         from .projectile_observation import sample
         b=self.battle;contacts=[];links=[]
         sides={ship.ship_id:b._sides[n] for n,ship in enumerate(world.ships)}
@@ -147,7 +147,8 @@ class ElectronicWarfare:
             key=side,contact.id
             if key not in checked:
                 observer=next((n for n in range(len(world.ships)) if b._sides[n]==side),None)
-                checked[key]=bool(observer is not None and b.point_defense and b.point_defense.predict_collisions(observer,contact.payload,world))
+                checked[key]=bool(observer is not None and b.point_defense and b.point_defense.predict_collisions(
+                    observer,contact.payload,world,prediction=prediction))
             return checked[key]
         return Environment(tuple(contacts),tuple(e for e in effects if e.kind!='decoy'),tuple(links),tuple(b.missiles.retargets.items()),
                            policy()['decoy_takeover_ratio'],b.observation.policy['datalink_range_m'],threat_check)

@@ -1,0 +1,51 @@
+   Compiling high-wilderness-desktop v0.1.0 (G:\高天荒野\apps\desktop\src-tauri)
+warning: linker stdout: 正在创建库 G:\高天荒野\apps\desktop\src-tauri\target\debug\deps\high_wilderness_desktop_lib.dll.lib 和对象 G:\高天荒野\apps\desktop\src-tauri\target\debug\deps\high_wilderness_desktop_lib.dll.exp
+  |
+  = note: `#[warn(linker_messages)]` on by default
+
+warning: `high-wilderness-desktop` (lib) generated 1 warning
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 7.35s
+     Running unittests src\lib.rs (apps\desktop\src-tauri\target\debug\deps\high_wilderness_desktop_lib-7d14671ef9a022bb.exe)
+
+running 26 tests
+test bridge::protocol::tests::duplicate_keys_and_eof_poison_decoder ... ok
+test bridge::host::tests::spawn_failure_is_structured_and_bounded ... ok
+test bridge::protocol::tests::portable_negative_corpus_matches_expected_codes ... ok
+test bridge::protocol::tests::examples_round_trip_and_split_at_every_byte ... ok
+test bridge::host::tests::malformed_output_fails_closed ... ok
+test bridge::host::tests::domain_error_adapter_preserves_code_path_and_message ... ok
+test bridge::host::tests::in_flight_limit_rejects_the_thirty_third_request_before_write ... ok
+test bridge::host::tests::idle_heartbeat_timeout_fails_the_instance ... ok
+test bridge::host::tests::queued_byte_limit_rejects_before_writing_and_leaves_no_pending_request ... ok
+test bridge::host::tests::real_blank_hull_geometry_batch_and_undo ... ok
+test bridge::host::tests::stderr_flood_is_truncated_without_blocking_protocol ... ok
+test bridge::host::tests::real_sidecar_start_ping_and_stop ... ok
+test bridge::host::tests::real_paused_tactical_step_receipt_duplicates_and_permissions ... ok
+test bridge::host::tests::request_timeout_marks_unknown_outcome_and_fails_instance ... ok
+test bridge::host::tests::shutdown_uses_one_deadline_and_forces_only_owned_child ... ok
+test bridge::host::tests::real_tactical_scene_roundtrip_and_scope_rejection ... ok
+test bridge::host::tests::real_tactical_preview_advances_without_polling_and_pause_stops_worker ... ok
+test bridge::host::tests::crash_and_wrong_epoch_fail_only_the_owned_instance ... ok
+test bridge::host::tests::real_editor_scopes_conflicts_restart_and_concurrent_requests ... ok
+test bridge::host::tests::real_realtime_view_controls_and_editor_pause ... ok
+test bridge::host::tests::real_outfit_three_ship_file_roundtrips ... ok
+test bridge::host::tests::real_tactical_test_reset_routes_and_retry ... ok
+test bridge::host::tests::file_binding_is_host_only_and_recovery_survives_restart ... ok
+test bridge::host::tests::startup_timeout_and_shutdown_deadline_are_bounded ... ok
+test bridge::host::tests::real_preparation_routes_and_commit_retry ... ok
+test bridge::host::tests::real_persisted_encounter_routes_and_receipt ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 6.79s
+
+     Running unittests src\main.rs (apps\desktop\src-tauri\target\debug\deps\high_wilderness_desktop-35eec4dad49710d0.exe)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests high_wilderness_desktop_lib
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

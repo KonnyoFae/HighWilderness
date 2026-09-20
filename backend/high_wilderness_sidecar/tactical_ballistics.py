@@ -127,20 +127,8 @@ def reference_range(profile, ratio=1.):
 
 
 def time_to_distance(profile, speed, distance):
-    elapsed=0.;limit=profile.lifetime_steps/60
-    while elapsed<limit and distance>1e-6:
-        dt=min(.1,limit-elapsed);k=step_coefficient(profile,speed,dt)
-        dx,after=scalar(speed,dt,k)
-        if dx>=distance:
-            # Invert this final analytic segment by a small bounded bisection.
-            lo,hi=0.,dt
-            for _ in range(18):
-                mid=(lo+hi)/2
-                if scalar(speed,mid,k)[0]<distance:lo=mid
-                else:hi=mid
-            return elapsed+(lo+hi)/2
-        elapsed+=dt;distance-=dx;speed=after
-    return elapsed if distance<=1e-6 else None
+    from .tactical_drag_prediction import time_to_distance as inverse
+    return inverse(profile,speed,distance)
 
 
 def intercept(origin, inherited, position, velocity, profile, ratio):

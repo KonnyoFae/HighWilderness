@@ -1,0 +1,439 @@
+{
+  "case": "ciws",
+  "step": {
+    "mean_ms": 4.078272391056096,
+    "p50_ms": 2.0244999905116856,
+    "p95_ms": 12.304200034122914,
+    "p99_ms": 18.395200022496283,
+    "max_ms": 50.0280000269413
+  },
+  "publish": {
+    "mean_ms": 2.899496549123672,
+    "p50_ms": 2.596600039396435,
+    "p95_ms": 5.276300013065338,
+    "p99_ms": 11.67649996932596,
+    "max_ms": 26.343900011852384
+  },
+  "read": {
+    "mean_ms": 8.342686115828373,
+    "p50_ms": 7.846999971661717,
+    "p95_ms": 14.131799980532378,
+    "p99_ms": 26.871600013691932,
+    "max_ms": 44.05849997419864
+  },
+  "measured_steps": 7186,
+  "peak_projectiles": 38,
+  "incoming_waves": 24,
+  "shots": 1377,
+  "intercepted": 288,
+  "ending": null,
+  "fire_work": {
+    "requests": 0,
+    "solves": 0,
+    "cache_hits": 0,
+    "negative_cache_hits": 0,
+    "solution_age_steps": 0,
+    "searches": 0,
+    "search_requests": 0,
+    "search_queue": 0,
+    "solve_queue": 0,
+    "max_search_wait_steps": 0,
+    "max_solve_wait_steps": 0,
+    "reused_solutions": 0,
+    "tracking_only": 0,
+    "reproject_rejected": 0,
+    "refresh_observation": 0,
+    "refresh_motion": 0,
+    "invalidated": 0,
+    "solve_budget": 57488,
+    "search_budget": 57488,
+    "precise_requests": 0
+  },
+  "fire_work_max": {
+    "requests": 0,
+    "solves": 0,
+    "cache_hits": 0,
+    "negative_cache_hits": 0,
+    "solution_age_steps": 0,
+    "searches": 0,
+    "search_requests": 0,
+    "search_queue": 0,
+    "solve_queue": 0,
+    "max_search_wait_steps": 0,
+    "max_solve_wait_steps": 0,
+    "reused_solutions": 0,
+    "tracking_only": 0,
+    "reproject_rejected": 0,
+    "refresh_observation": 0,
+    "refresh_motion": 0,
+    "invalidated": 0,
+    "solve_budget": 8,
+    "search_budget": 8,
+    "precise_requests": 0
+  },
+  "prediction_work": {
+    "requests": 24665,
+    "computed": 11078,
+    "shared": 0,
+    "rolled": 13587,
+    "invalidated_motion": 0,
+    "broad_rejected": 0,
+    "hull_paths": 11078,
+    "path_points": 1775577,
+    "max_age_steps": 4327,
+    "entries": 24665,
+    "path_reused": 10790
+  },
+  "inventory": [
+    {
+      "cargo": [
+        {
+          "good_id": "cargo.high_energy_fuel",
+          "quantity": 5
+        },
+        {
+          "good_id": "cargo.special_alloy",
+          "quantity": 5
+        }
+      ],
+      "crew": [
+        {
+          "count": 2,
+          "crew_type": "officer"
+        },
+        {
+          "count": 10,
+          "crew_type": "ordinary"
+        },
+        {
+          "count": 4,
+          "crew_type": "technical_officer"
+        },
+        {
+          "count": 2,
+          "crew_type": "veteran_damage_control"
+        }
+      ],
+      "damage_controls": [
+        {
+          "module_id": "damage_control",
+          "preparation": null,
+          "quantity_units": 0
+        }
+      ],
+      "engine_latches": [],
+      "fires": [],
+      "fuel_tanks": [
+        {
+          "durability_points": 100.0,
+          "quantity_units": 800.0,
+          "tank_id": "tank.module.lift_tank"
+        }
+      ],
+      "fuel_units": 800.0,
+      "hull_integrity_fraction": 1.0,
+      "instance_id": "instance.caliber.30",
+      "interface": "gaotian.persistent-ship/5c-v1",
+      "magazines": [
+        {
+          "module_id": "ammunition_magazine",
+          "quantity": 100
+        }
+      ],
+      "missiles": {
+        "interface": "gaotian.missile-stores/5c-v1",
+        "launchers": [],
+        "magazines": [],
+        "next_serial": 1
+      },
+      "modules": [
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cic",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters_base",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters_upper",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "custom.cargo",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "damage_control",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "fire_control",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_tank",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "main_engine_port",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "main_engine_starboard",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "remote_core",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "sensor_upper_starboard",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "thruster_port_aft",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "thruster_port_fore",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "thruster_starboard_aft",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "thruster_starboard_fore",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon_upper_port",
+          "operating_mode": "standby"
+        }
+      ],
+      "power_policy": {
+        "allocation_mode": "strict_categories",
+        "category_order": [
+          "damage_control",
+          "weapons_and_active_defense",
+          "fire_control",
+          "sensors"
+        ],
+        "disabled_categories": []
+      },
+      "resources_sha256": "f9b71b4ca7ea5146df80bbdc7c954bfac9f24fed6069f14aced7ba3727b2a4e4",
+      "revision": 0,
+      "service": {
+        "reasons": [],
+        "status": "available"
+      },
+      "weapons": [
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon_upper_port",
+          "ready_rounds": 623,
+          "recipe_id": "recipe.3a.30mm.ordinary",
+          "reload": null
+        }
+      ],
+      "wounded_aboard": 0
+    },
+    {
+      "cargo": [
+        {
+          "good_id": "cargo.high_energy_fuel",
+          "quantity": 10
+        }
+      ],
+      "crew": [
+        {
+          "count": 2,
+          "crew_type": "officer"
+        },
+        {
+          "count": 10,
+          "crew_type": "ordinary"
+        },
+        {
+          "count": 4,
+          "crew_type": "technical_officer"
+        },
+        {
+          "count": 2,
+          "crew_type": "veteran_damage_control"
+        }
+      ],
+      "damage_controls": [
+        {
+          "module_id": "damage_control",
+          "preparation": null,
+          "quantity_units": 0
+        }
+      ],
+      "engine_latches": [],
+      "fires": [],
+      "fuel_tanks": [
+        {
+          "durability_points": 100.0,
+          "quantity_units": 800.0,
+          "tank_id": "tank.module.lift_tank"
+        }
+      ],
+      "fuel_units": 800.0,
+      "hull_integrity_fraction": 1.0,
+      "instance_id": "instance.p3.0cf848bea5fd4005b8b894b534115338.1",
+      "interface": "gaotian.persistent-ship/h5c-v1",
+      "magazines": [
+        {
+          "module_id": "ammunition_magazine",
+          "quantity": 80
+        }
+      ],
+      "modules": [
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cic",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters_base",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters_upper",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "damage_control",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "fire_control",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_tank",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "main_engine_port",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "main_engine_starboard",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "remote_core",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "sensor_upper_starboard",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "thruster_port_aft",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "thruster_port_fore",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "thruster_starboard_aft",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "thruster_starboard_fore",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon_upper_port",
+          "operating_mode": "active"
+        }
+      ],
+      "power_policy": {
+        "allocation_mode": "strict_categories",
+        "category_order": [
+          "damage_control",
+          "weapons_and_active_defense",
+          "fire_control",
+          "sensors"
+        ],
+        "disabled_categories": []
+      },
+      "resources_sha256": "fdc35f9b5b046c1435300cfa744fce1fb87df0f5e1355f26a446e908aec80a96",
+      "revision": 0,
+      "service": {
+        "reasons": [],
+        "status": "available"
+      },
+      "weapons": [
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon_upper_port",
+          "ready_rounds": 1,
+          "recipe_id": "recipe.h5d.incendiary",
+          "reload": null
+        }
+      ],
+      "wounded_aboard": 0
+    }
+  ]
+}

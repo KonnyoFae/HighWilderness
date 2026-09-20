@@ -1,0 +1,1695 @@
+{
+  "scope": "F3 ordinary guns; F4 point-defense prediction unchanged; fixed-step comparisons, not sustained realtime acceptance",
+  "fixture_sha256": "bd828c566275c65e856b30e4c1da422bed63a9ace5ce3e77b6445a46efbc7ffd",
+  "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "source_sha256": {
+    "backend\\high_wilderness_sidecar\\tactical_gunnery.py": "97054c0edd765184d5d756c7fc8ead98d7e5c67ce0f21fd6fcbcaf74a7c6cce9",
+    "backend\\high_wilderness_sidecar\\tactical_targeting.py": "25e1a3f3e4982f50e4ba45743de986c0d0ef3e791b6d47f31032801a8e9e1c10",
+    "backend\\high_wilderness_sidecar\\tactical_fire_control.py": "64cf514863cd1d51a8dccfdd117a1acdfb95ff733bf275dbb6078e55404d6297",
+    "backend\\high_wilderness_sidecar\\tactical_ballistics.py": "3908547296011ec62259668ec8b5edd82cf7ebad1c258a84036e57ddfce3f62b",
+    "backend\\high_wilderness_sidecar\\tactical_drag_prediction.py": "b73f32521791a44d97789566f3563efa9b9c74b69d30800be9601b271c1587e3",
+    "backend\\high_wilderness_sidecar\\tactical_point_defense.py": "2ae829d64025629d6d1b1b6dcdf5001e9a30dce2bab1358e84826f8d2392d8d4",
+    "tools\\profile_tactical_fire_control.py": "6a542e3c71db814790b59d6a089fcf669b47a16ac21a2acd066e5dddd380ebe9",
+    "tools\\profile_tactical_fire_control_f3.py": "c51b2adc73614e6afc1fef11fb3a5356d820702e49a4d3a799f5e065c8ebc6d9",
+    "tools\\fire_control_f2_reference.py": "3629cfc7e30d74f32d7b576675f4c40c9dd068ccad68d16de33625f0d561bf45"
+  },
+  "runs": [
+    {
+      "case": {
+        "name": "stationary_firing",
+        "speed": 0,
+        "accelerate": false,
+        "stock": "saved",
+        "distance": 12000
+      },
+      "f2": {
+        "case": {
+          "name": "stationary_firing",
+          "speed": 0,
+          "accelerate": false,
+          "stock": "saved",
+          "distance": 12000
+        },
+        "variant": "f2",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 8,
+        "peak_projectiles": 8,
+        "step": {
+          "mean_ms": 13.664672083541518,
+          "p50_ms": 12.547200021799654,
+          "p95_ms": 23.438200005330145,
+          "p99_ms": 24.966800003312528,
+          "max_ms": 25.575999985449016
+        },
+        "warm_step": {
+          "mean_ms": 14.8914457154682,
+          "p50_ms": 14.36999998986721,
+          "p95_ms": 23.59330002218485,
+          "p99_ms": 24.966800003312528,
+          "max_ms": 25.575999985449016
+        },
+        "aim": {
+          "mean_ms": 0.154110414829726,
+          "p50_ms": 0.14489999739453197,
+          "p95_ms": 0.21710002329200506,
+          "p99_ms": 0.23220008006319404,
+          "max_ms": 0.28430012753233314
+        },
+        "inverse": {
+          "mean_ms": 0.06032583478372544,
+          "p50_ms": 0.05609990330412984,
+          "p95_ms": 0.08870020974427462,
+          "p99_ms": 0.10359991574659944,
+          "max_ms": 0.13240007683634758
+        },
+        "defense": {
+          "mean_ms": 11.474553334361795,
+          "p50_ms": 10.607199976220727,
+          "p95_ms": 21.05650003068149,
+          "p99_ms": 22.45500002754852,
+          "max_ms": 22.946000040974468
+        },
+        "publish": {
+          "mean_ms": 2.14284500592233,
+          "p50_ms": 2.1617000456899405,
+          "p95_ms": 2.352899988181889,
+          "p99_ms": 2.5197999784722924,
+          "max_ms": 2.5562000228092074
+        },
+        "read": {
+          "mean_ms": 4.172098326186339,
+          "p50_ms": 3.7503999774344265,
+          "p95_ms": 6.527199991978705,
+          "p99_ms": 9.537499980069697,
+          "max_ms": 19.690000044647604
+        },
+        "costs": {
+          "solution_seconds": 0.036986499559134245,
+          "solution_calls": 2984,
+          "defense_seconds": 2.753892800246831,
+          "inverse_seconds": 0.014478200348094106,
+          "inverse_calls": 6198
+        },
+        "requests": 4800,
+        "cache_hits": 1816,
+        "solution_age_steps": 0,
+        "work_totals": {
+          "requests": 4800,
+          "solves": 2984,
+          "cache_hits": 1816,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0
+        },
+        "work_max": {
+          "requests": 20,
+          "solves": 20,
+          "cache_hits": 8,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 1,
+              "angle": 0.013089969389957472,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 31,
+              "angle": 0.05150873747962725,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 61,
+              "angle": -0.012310136653412924,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 91,
+              "angle": 0.011012731687416972,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 121,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 151,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 181,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 211,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        }
+      },
+      "f3": {
+        "case": {
+          "name": "stationary_firing",
+          "speed": 0,
+          "accelerate": false,
+          "stock": "saved",
+          "distance": 12000
+        },
+        "variant": "f3",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 8,
+        "peak_projectiles": 8,
+        "step": {
+          "mean_ms": 13.049389998923289,
+          "p50_ms": 11.235599988140166,
+          "p95_ms": 23.047100054100156,
+          "p99_ms": 23.943099949974567,
+          "max_ms": 24.61079997010529
+        },
+        "warm_step": {
+          "mean_ms": 14.22154190395737,
+          "p50_ms": 12.618999986443669,
+          "p95_ms": 23.172999965026975,
+          "p99_ms": 23.943099949974567,
+          "max_ms": 24.61079997010529
+        },
+        "aim": {
+          "mean_ms": 0.0010112499391349654,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.021899992134422064,
+          "max_ms": 0.029499991796910763
+        },
+        "inverse": {
+          "mean_ms": 0.0016266654711216688,
+          "p50_ms": 0.0,
+          "p95_ms": 0.00890000956133008,
+          "p99_ms": 0.01209997572004795,
+          "max_ms": 0.018499908037483692
+        },
+        "defense": {
+          "mean_ms": 10.943814583151834,
+          "p50_ms": 9.208500036038458,
+          "p95_ms": 20.541400008369237,
+          "p99_ms": 21.659899968653917,
+          "max_ms": 22.262799961026758
+        },
+        "publish": {
+          "mean_ms": 2.181693333356331,
+          "p50_ms": 2.1975000272504985,
+          "p95_ms": 2.384499995969236,
+          "p99_ms": 2.539200009778142,
+          "max_ms": 2.6466999552212656
+        },
+        "read": {
+          "mean_ms": 4.206861663260497,
+          "p50_ms": 3.705299983266741,
+          "p95_ms": 5.540099984500557,
+          "p99_ms": 8.708299952559173,
+          "max_ms": 25.408599991351366
+        },
+        "costs": {
+          "solution_seconds": 0.00024269998539239168,
+          "solution_calls": 12,
+          "defense_seconds": 2.62651549995644,
+          "inverse_seconds": 0.0003903997130692005,
+          "inverse_calls": 78
+        },
+        "requests": 12,
+        "cache_hits": 0,
+        "solution_age_steps": 6,
+        "work_totals": {
+          "requests": 12,
+          "solves": 12,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 147,
+          "searches": 188,
+          "search_requests": 198,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 42,
+          "tracking_only": 1865,
+          "reproject_rejected": 0,
+          "refresh_observation": 11,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 12
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 6,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 8,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 1,
+              "angle": 0.013089969389957472,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 31,
+              "angle": 0.051507892920615195,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 61,
+              "angle": -0.012309718832600753,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 91,
+              "angle": 0.011012663948239593,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 121,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 151,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 181,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 211,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        }
+      },
+      "comparison": {
+        "shots_f2": 8,
+        "shots_f3": 8,
+        "shot_steps": {
+          "27": {
+            "f2": [
+              1,
+              31,
+              61,
+              91,
+              121,
+              151,
+              181,
+              211
+            ],
+            "f3": [
+              1,
+              31,
+              61,
+              91,
+              121,
+              151,
+              181,
+              211
+            ],
+            "first_shot_delta_steps": 0
+          }
+        },
+        "same_inventory": true,
+        "precise_solves_f2": 2984,
+        "precise_solves_f3": 12
+      }
+    },
+    {
+      "case": {
+        "name": "moving_saved",
+        "speed": 100,
+        "accelerate": false,
+        "stock": "saved"
+      },
+      "f2": {
+        "case": {
+          "name": "moving_saved",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "saved"
+        },
+        "variant": "f2",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 6,
+        "peak_projectiles": 6,
+        "step": {
+          "mean_ms": 8.059786667339116,
+          "p50_ms": 7.231399999000132,
+          "p95_ms": 18.14360002754256,
+          "p99_ms": 19.253999984357506,
+          "max_ms": 19.555300008505583
+        },
+        "warm_step": {
+          "mean_ms": 8.995160477657226,
+          "p50_ms": 9.219500003382564,
+          "p95_ms": 18.16009997855872,
+          "p99_ms": 19.253999984357506,
+          "max_ms": 19.555300008505583
+        },
+        "aim": {
+          "mean_ms": 0.09370083813943589,
+          "p50_ms": 0.10849995305761695,
+          "p95_ms": 0.17260003369301558,
+          "p99_ms": 0.1900001079775393,
+          "max_ms": 0.2308000111952424
+        },
+        "inverse": {
+          "mean_ms": 0.040630416333442554,
+          "p50_ms": 0.049499969463795424,
+          "p95_ms": 0.07620011456310749,
+          "p99_ms": 0.08849980076774955,
+          "max_ms": 0.14899997040629387
+        },
+        "defense": {
+          "mean_ms": 6.243245419076023,
+          "p50_ms": 5.270000023301691,
+          "p95_ms": 15.995100024156272,
+          "p99_ms": 17.000899999402463,
+          "max_ms": 17.28749996982515
+        },
+        "publish": {
+          "mean_ms": 2.02804000582546,
+          "p50_ms": 2.069899986963719,
+          "p95_ms": 2.3609999916516244,
+          "p99_ms": 2.474399982020259,
+          "max_ms": 2.597499988041818
+        },
+        "read": {
+          "mean_ms": 3.675883332228598,
+          "p50_ms": 3.1784999882802367,
+          "p95_ms": 4.8726999666541815,
+          "p99_ms": 8.52360000135377,
+          "max_ms": 21.13070001360029
+        },
+        "costs": {
+          "solution_seconds": 0.022488201153464615,
+          "solution_calls": 821,
+          "defense_seconds": 1.4983789005782455,
+          "inverse_seconds": 0.009751299920026213,
+          "inverse_calls": 5210
+        },
+        "requests": 1350,
+        "cache_hits": 529,
+        "solution_age_steps": 0,
+        "work_totals": {
+          "requests": 1350,
+          "solves": 821,
+          "cache_hits": 529,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0
+        },
+        "work_max": {
+          "requests": 8,
+          "solves": 7,
+          "cache_hits": 3,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 70,
+              "angle": -0.011639279297423144,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 100,
+              "angle": 0.02397982854603331,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 130,
+              "angle": -0.032967994734097505,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 160,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 190,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 220,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        }
+      },
+      "f3": {
+        "case": {
+          "name": "moving_saved",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "saved"
+        },
+        "variant": "f3",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 6,
+        "peak_projectiles": 6,
+        "step": {
+          "mean_ms": 8.137644583378764,
+          "p50_ms": 7.415000000037253,
+          "p95_ms": 18.152899981942028,
+          "p99_ms": 18.57180002843961,
+          "max_ms": 19.71710001816973
+        },
+        "warm_step": {
+          "mean_ms": 9.07903333288795,
+          "p50_ms": 8.02890001796186,
+          "p95_ms": 18.160899984650314,
+          "p99_ms": 18.57180002843961,
+          "max_ms": 19.71710001816973
+        },
+        "aim": {
+          "mean_ms": 0.001001250105521952,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.025699962861835957,
+          "max_ms": 0.033100019209086895
+        },
+        "inverse": {
+          "mean_ms": 0.0014283340230273704,
+          "p50_ms": 0.0,
+          "p95_ms": 0.008600007276982069,
+          "p99_ms": 0.01479999627918005,
+          "max_ms": 0.02069998299703002
+        },
+        "defense": {
+          "mean_ms": 6.2872862491834285,
+          "p50_ms": 5.52790000801906,
+          "p95_ms": 16.054200008511543,
+          "p99_ms": 16.495799995027483,
+          "max_ms": 17.37210003193468
+        },
+        "publish": {
+          "mean_ms": 2.0289949975752584,
+          "p50_ms": 2.1317999926395714,
+          "p95_ms": 2.3241000017151237,
+          "p99_ms": 2.3560000117868185,
+          "max_ms": 2.443999983370304
+        },
+        "read": {
+          "mean_ms": 3.6600666673621163,
+          "p50_ms": 3.1627999851480126,
+          "p95_ms": 3.9846000145189464,
+          "p99_ms": 7.28800002252683,
+          "max_ms": 24.285999999847263
+        },
+        "costs": {
+          "solution_seconds": 0.0002403000253252685,
+          "solution_calls": 11,
+          "defense_seconds": 1.508948699804023,
+          "inverse_seconds": 0.0003428001655265689,
+          "inverse_calls": 70
+        },
+        "requests": 11,
+        "cache_hits": 0,
+        "solution_age_steps": 6,
+        "work_totals": {
+          "requests": 11,
+          "solves": 11,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 89,
+          "searches": 296,
+          "search_requests": 306,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 30,
+          "tracking_only": 508,
+          "reproject_rejected": 0,
+          "refresh_observation": 8,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 11
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 6,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 4,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 75,
+              "angle": 0.008444214482746126,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 105,
+              "angle": 0.03782156754380139,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 135,
+              "angle": -0.01911540776789522,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 165,
+              "angle": 0.0034149032572386613,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 195,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 225,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        }
+      },
+      "comparison": {
+        "shots_f2": 6,
+        "shots_f3": 6,
+        "shot_steps": {
+          "27": {
+            "f2": [
+              70,
+              100,
+              130,
+              160,
+              190,
+              220
+            ],
+            "f3": [
+              75,
+              105,
+              135,
+              165,
+              195,
+              225
+            ],
+            "first_shot_delta_steps": 5
+          }
+        },
+        "same_inventory": true,
+        "precise_solves_f2": 821,
+        "precise_solves_f3": 11
+      }
+    },
+    {
+      "case": {
+        "name": "accelerating_saved",
+        "speed": 100,
+        "accelerate": true,
+        "stock": "saved"
+      },
+      "f2": {
+        "case": {
+          "name": "accelerating_saved",
+          "speed": 100,
+          "accelerate": true,
+          "stock": "saved"
+        },
+        "variant": "f2",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 7,
+        "peak_projectiles": 7,
+        "step": {
+          "mean_ms": 9.229290000560772,
+          "p50_ms": 7.689699996262789,
+          "p95_ms": 19.3796000094153,
+          "p99_ms": 19.770000013522804,
+          "max_ms": 20.168300019577146
+        },
+        "warm_step": {
+          "mean_ms": 10.330708572430359,
+          "p50_ms": 9.966999990865588,
+          "p95_ms": 19.424600002821535,
+          "p99_ms": 19.770000013522804,
+          "max_ms": 20.168300019577146
+        },
+        "aim": {
+          "mean_ms": 0.20919791495543905,
+          "p50_ms": 0.22089993581175804,
+          "p95_ms": 0.5722998757846653,
+          "p99_ms": 0.6551999831572175,
+          "max_ms": 0.6930000381544232
+        },
+        "inverse": {
+          "mean_ms": 0.09631166588709068,
+          "p50_ms": 0.10170001769438386,
+          "p95_ms": 0.27300004148855805,
+          "p99_ms": 0.2880002139136195,
+          "max_ms": 0.32869999995455146
+        },
+        "defense": {
+          "mean_ms": 7.263044166999559,
+          "p50_ms": 5.662899988237768,
+          "p95_ms": 16.691099968738854,
+          "p99_ms": 16.941300011239946,
+          "max_ms": 17.217500018887222
+        },
+        "publish": {
+          "mean_ms": 2.069221667867775,
+          "p50_ms": 2.1226999815553427,
+          "p95_ms": 2.322100044693798,
+          "p99_ms": 2.3849999997764826,
+          "max_ms": 2.4115999694913626
+        },
+        "read": {
+          "mean_ms": 3.836559997095416,
+          "p50_ms": 3.3063999726437032,
+          "p95_ms": 5.347399972379208,
+          "p99_ms": 8.387600013520569,
+          "max_ms": 25.832300016190857
+        },
+        "costs": {
+          "solution_seconds": 0.05020749958930537,
+          "solution_calls": 1119,
+          "defense_seconds": 1.743130600079894,
+          "inverse_seconds": 0.023114799812901765,
+          "inverse_calls": 14215
+        },
+        "requests": 1464,
+        "cache_hits": 345,
+        "solution_age_steps": 0,
+        "work_totals": {
+          "requests": 1464,
+          "solves": 1119,
+          "cache_hits": 345,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0
+        },
+        "work_max": {
+          "requests": 13,
+          "solves": 13,
+          "cache_hits": 3,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 55,
+              "angle": -0.013089969389957472,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 85,
+              "angle": 0.008335968506608449,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 120,
+              "angle": -0.04062736649281185,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 150,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 180,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 210,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 240,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        }
+      },
+      "f3": {
+        "case": {
+          "name": "accelerating_saved",
+          "speed": 100,
+          "accelerate": true,
+          "stock": "saved"
+        },
+        "variant": "f3",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 6,
+        "peak_projectiles": 6,
+        "step": {
+          "mean_ms": 9.089189998000316,
+          "p50_ms": 7.872799993492663,
+          "p95_ms": 19.086899992544204,
+          "p99_ms": 19.683399994391948,
+          "max_ms": 19.992299959994853
+        },
+        "warm_step": {
+          "mean_ms": 10.149849521639268,
+          "p50_ms": 10.458500008098781,
+          "p95_ms": 19.116100040264428,
+          "p99_ms": 19.683399994391948,
+          "max_ms": 19.992299959994853
+        },
+        "aim": {
+          "mean_ms": 0.0017312500858679414,
+          "p50_ms": 0.0,
+          "p95_ms": 0.01479999627918005,
+          "p99_ms": 0.02300000051036477,
+          "max_ms": 0.030099996365606785
+        },
+        "inverse": {
+          "mean_ms": 0.0017216681347539027,
+          "p50_ms": 0.0,
+          "p95_ms": 0.01190003240481019,
+          "p99_ms": 0.014399993233382702,
+          "max_ms": 0.022900057956576347
+        },
+        "defense": {
+          "mean_ms": 7.1385220825807965,
+          "p50_ms": 5.778999999165535,
+          "p95_ms": 16.77919999929145,
+          "p99_ms": 17.35560002271086,
+          "max_ms": 17.628500005230308
+        },
+        "publish": {
+          "mean_ms": 2.1013616690955437,
+          "p50_ms": 2.1495000110007823,
+          "p95_ms": 2.4864000151865184,
+          "p99_ms": 2.703299978747964,
+          "max_ms": 2.7907000039704144
+        },
+        "read": {
+          "mean_ms": 3.849146666470915,
+          "p50_ms": 3.29209998017177,
+          "p95_ms": 4.937899997457862,
+          "p99_ms": 8.087800000794232,
+          "max_ms": 26.838099991437048
+        },
+        "costs": {
+          "solution_seconds": 0.00041550002060830593,
+          "solution_calls": 23,
+          "defense_seconds": 1.7132452998193912,
+          "inverse_seconds": 0.00041320035234093666,
+          "inverse_calls": 103
+        },
+        "requests": 23,
+        "cache_hits": 0,
+        "solution_age_steps": 2,
+        "work_totals": {
+          "requests": 23,
+          "solves": 23,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 49,
+          "searches": 259,
+          "search_requests": 269,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 33,
+          "tracking_only": 999,
+          "reproject_rejected": 0,
+          "refresh_observation": 9,
+          "refresh_motion": 22,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 23
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 2,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 10,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 1,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 63,
+              "angle": -0.011640434410618461,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 93,
+              "angle": 0.0240894701159049,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 123,
+              "angle": -0.03307845615999572,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 153,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 183,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 213,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        }
+      },
+      "comparison": {
+        "shots_f2": 7,
+        "shots_f3": 6,
+        "shot_steps": {
+          "27": {
+            "f2": [
+              55,
+              85,
+              120,
+              150,
+              180,
+              210,
+              240
+            ],
+            "f3": [
+              63,
+              93,
+              123,
+              153,
+              183,
+              213
+            ],
+            "first_shot_delta_steps": 8
+          }
+        },
+        "same_inventory": false,
+        "precise_solves_f2": 1119,
+        "precise_solves_f3": 23
+      }
+    },
+    {
+      "case": {
+        "name": "moving_loaded",
+        "speed": 100,
+        "accelerate": false,
+        "stock": "loaded"
+      },
+      "f2": {
+        "case": {
+          "name": "moving_loaded",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "loaded"
+        },
+        "variant": "f2",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 6,
+        "peak_projectiles": 6,
+        "step": {
+          "mean_ms": 8.26054458496704,
+          "p50_ms": 6.808500038459897,
+          "p95_ms": 19.863400026224554,
+          "p99_ms": 20.457300008274615,
+          "max_ms": 20.6700999988243
+        },
+        "warm_step": {
+          "mean_ms": 9.244787144762952,
+          "p50_ms": 9.178999986033887,
+          "p95_ms": 19.93189996574074,
+          "p99_ms": 20.457300008274615,
+          "max_ms": 20.6700999988243
+        },
+        "aim": {
+          "mean_ms": 0.017475417795746278,
+          "p50_ms": 0.022499996703118086,
+          "p95_ms": 0.02770003629848361,
+          "p99_ms": 0.04110002191737294,
+          "max_ms": 0.05420000525191426
+        },
+        "inverse": {
+          "mean_ms": 0.007394168642349541,
+          "p50_ms": 0.009500014130026102,
+          "p95_ms": 0.012599979527294636,
+          "p99_ms": 0.015399942640215158,
+          "max_ms": 0.02659996971487999
+        },
+        "defense": {
+          "mean_ms": 6.326275414661116,
+          "p50_ms": 5.137300002388656,
+          "p95_ms": 16.8781999964267,
+          "p99_ms": 17.292100004851818,
+          "max_ms": 17.53350003855303
+        },
+        "publish": {
+          "mean_ms": 2.0538966646806025,
+          "p50_ms": 2.067499968688935,
+          "p95_ms": 2.41650000680238,
+          "p99_ms": 2.4940999574027956,
+          "max_ms": 2.717200026381761
+        },
+        "read": {
+          "mean_ms": 3.8198200015661614,
+          "p50_ms": 3.2890000147745013,
+          "p95_ms": 4.628699971362948,
+          "p99_ms": 8.426200016401708,
+          "max_ms": 26.784699992276728
+        },
+        "costs": {
+          "solution_seconds": 0.004194100270979106,
+          "solution_calls": 179,
+          "defense_seconds": 1.518306099518668,
+          "inverse_seconds": 0.0017746004741638899,
+          "inverse_calls": 452
+        },
+        "requests": 342,
+        "cache_hits": 163,
+        "solution_age_steps": 0,
+        "work_totals": {
+          "requests": 342,
+          "solves": 179,
+          "cache_hits": 163,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0
+        },
+        "work_max": {
+          "requests": 2,
+          "solves": 2,
+          "cache_hits": 1,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 70,
+              "angle": -0.011639279297423144,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 100,
+              "angle": 0.02397982854603331,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 130,
+              "angle": -0.032967994734097505,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 160,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 190,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 220,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        }
+      },
+      "f3": {
+        "case": {
+          "name": "moving_loaded",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "loaded"
+        },
+        "variant": "f3",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 6,
+        "peak_projectiles": 6,
+        "step": {
+          "mean_ms": 8.140223331671828,
+          "p50_ms": 7.258199970237911,
+          "p95_ms": 18.855599977541715,
+          "p99_ms": 20.271900051739067,
+          "max_ms": 20.57789999525994
+        },
+        "warm_step": {
+          "mean_ms": 9.07585285631718,
+          "p50_ms": 8.497599977999926,
+          "p95_ms": 18.867300008423626,
+          "p99_ms": 20.271900051739067,
+          "max_ms": 20.57789999525994
+        },
+        "aim": {
+          "mean_ms": 0.0010208335879724473,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.025200017262250185,
+          "max_ms": 0.03330002073198557
+        },
+        "inverse": {
+          "mean_ms": 0.0014012492708085726,
+          "p50_ms": 0.0,
+          "p95_ms": 0.008600007276982069,
+          "p99_ms": 0.015099940355867147,
+          "max_ms": 0.02069998299703002
+        },
+        "defense": {
+          "mean_ms": 6.224655416493381,
+          "p50_ms": 5.477099970448762,
+          "p95_ms": 16.151999996509403,
+          "p99_ms": 17.388600041158497,
+          "max_ms": 17.564799985848367
+        },
+        "publish": {
+          "mean_ms": 2.058664999397782,
+          "p50_ms": 2.110700006596744,
+          "p95_ms": 2.3739999742247164,
+          "p99_ms": 2.466699981596321,
+          "max_ms": 2.7033999795094132
+        },
+        "read": {
+          "mean_ms": 3.3335483332242193,
+          "p50_ms": 3.2404999947175384,
+          "p95_ms": 4.123200022149831,
+          "p99_ms": 5.0555000198073685,
+          "max_ms": 7.532499963417649
+        },
+        "costs": {
+          "solution_seconds": 0.00024500006111338735,
+          "solution_calls": 11,
+          "defense_seconds": 1.4939172999584116,
+          "inverse_seconds": 0.0003362998249940574,
+          "inverse_calls": 70
+        },
+        "requests": 11,
+        "cache_hits": 0,
+        "solution_age_steps": 6,
+        "work_totals": {
+          "requests": 11,
+          "solves": 11,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 89,
+          "searches": 326,
+          "search_requests": 336,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 30,
+          "tracking_only": 130,
+          "reproject_rejected": 0,
+          "refresh_observation": 8,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 11
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 6,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 1,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 75,
+              "angle": 0.008444214482746126,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 105,
+              "angle": 0.03782156754380139,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 135,
+              "angle": -0.01911540776789522,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 165,
+              "angle": 0.0034149032572386613,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 195,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 225,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        }
+      },
+      "comparison": {
+        "shots_f2": 6,
+        "shots_f3": 6,
+        "shot_steps": {
+          "27": {
+            "f2": [
+              70,
+              100,
+              130,
+              160,
+              190,
+              220
+            ],
+            "f3": [
+              75,
+              105,
+              135,
+              165,
+              195,
+              225
+            ],
+            "first_shot_delta_steps": 5
+          }
+        },
+        "same_inventory": true,
+        "precise_solves_f2": 179,
+        "precise_solves_f3": 11
+      }
+    },
+    {
+      "case": {
+        "name": "moving_empty",
+        "speed": 100,
+        "accelerate": false,
+        "stock": "empty"
+      },
+      "f2": {
+        "case": {
+          "name": "moving_empty",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "empty"
+        },
+        "variant": "f2",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 0,
+        "peak_projectiles": 0,
+        "step": {
+          "mean_ms": 1.3843966652833237,
+          "p50_ms": 1.3324000174179673,
+          "p95_ms": 1.5866000321693718,
+          "p99_ms": 1.7377000185661018,
+          "max_ms": 5.688800010830164
+        },
+        "warm_step": {
+          "mean_ms": 1.376438093471474,
+          "p50_ms": 1.336999994236976,
+          "p95_ms": 1.5866000321693718,
+          "p99_ms": 1.711999997496605,
+          "max_ms": 1.8017999827861786
+        },
+        "aim": {
+          "mean_ms": 0.015115003285851952,
+          "p50_ms": 0.018600025214254856,
+          "p95_ms": 0.026499968953430653,
+          "p99_ms": 0.035699980799108744,
+          "max_ms": 0.05229999078437686
+        },
+        "inverse": {
+          "mean_ms": 0.0058891676114096,
+          "p50_ms": 0.007300055585801601,
+          "p95_ms": 0.010800024028867483,
+          "p99_ms": 0.013399985618889332,
+          "max_ms": 0.02529995981603861
+        },
+        "defense": {
+          "mean_ms": 0.005749999642527352,
+          "p50_ms": 0.005500041879713535,
+          "p95_ms": 0.006400048732757568,
+          "p99_ms": 0.006999995093792677,
+          "max_ms": 0.03239995567128062
+        },
+        "publish": {
+          "mean_ms": 1.7268033310150106,
+          "p50_ms": 1.6932999715209007,
+          "p95_ms": 1.9728000042960048,
+          "p99_ms": 2.0741000189445913,
+          "max_ms": 2.1407000022009015
+        },
+        "read": {
+          "mean_ms": 2.767223335104063,
+          "p50_ms": 2.7234999579377472,
+          "p95_ms": 3.0090999789536,
+          "p99_ms": 3.128600015770644,
+          "max_ms": 3.213199961464852
+        },
+        "costs": {
+          "solution_seconds": 0.003627600788604468,
+          "solution_calls": 179,
+          "defense_seconds": 0.0013799999142065644,
+          "inverse_seconds": 0.001413400226738304,
+          "inverse_calls": 452
+        },
+        "requests": 342,
+        "cache_hits": 163,
+        "solution_age_steps": 0,
+        "work_totals": {
+          "requests": 342,
+          "solves": 179,
+          "cache_hits": 163,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0
+        },
+        "work_max": {
+          "requests": 2,
+          "solves": 2,
+          "cache_hits": 1,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0
+        },
+        "shot_events": {}
+      },
+      "f3": {
+        "case": {
+          "name": "moving_empty",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "empty"
+        },
+        "variant": "f3",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 0,
+        "peak_projectiles": 0,
+        "step": {
+          "mean_ms": 1.505232917649361,
+          "p50_ms": 1.4192999806255102,
+          "p95_ms": 1.7728999955579638,
+          "p99_ms": 2.0609000348486006,
+          "max_ms": 6.4335999777540565
+        },
+        "warm_step": {
+          "mean_ms": 1.497921906688827,
+          "p50_ms": 1.4313999563455582,
+          "p95_ms": 1.7728999955579638,
+          "p99_ms": 2.057200006674975,
+          "max_ms": 2.21360003342852
+        },
+        "aim": {
+          "mean_ms": 0.0,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "inverse": {
+          "mean_ms": 0.0,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "defense": {
+          "mean_ms": 0.0060508333262987435,
+          "p50_ms": 0.005699985194951296,
+          "p95_ms": 0.006999995093792677,
+          "p99_ms": 0.008200004231184721,
+          "max_ms": 0.04210002953186631
+        },
+        "publish": {
+          "mean_ms": 1.7691883345833048,
+          "p50_ms": 1.7345999949611723,
+          "p95_ms": 2.0001999801024795,
+          "p99_ms": 2.4193000281229615,
+          "max_ms": 2.477699948940426
+        },
+        "read": {
+          "mean_ms": 2.810721663020862,
+          "p50_ms": 2.7523000026121736,
+          "p95_ms": 3.0849999748170376,
+          "p99_ms": 3.500100050587207,
+          "max_ms": 3.724199952557683
+        },
+        "costs": {
+          "solution_seconds": 0.0,
+          "solution_calls": 0,
+          "defense_seconds": 0.0014521999983116984,
+          "inverse_seconds": 0.0,
+          "inverse_calls": 0
+        },
+        "requests": 0,
+        "cache_hits": 0,
+        "solution_age_steps": 0,
+        "work_totals": {
+          "requests": 0,
+          "solves": 0,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0,
+          "searches": 326,
+          "search_requests": 336,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 0,
+          "tracking_only": 166,
+          "reproject_rejected": 0,
+          "refresh_observation": 0,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 0
+        },
+        "work_max": {
+          "requests": 0,
+          "solves": 0,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 0,
+          "tracking_only": 1,
+          "reproject_rejected": 0,
+          "refresh_observation": 0,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 0
+        },
+        "shot_events": {}
+      },
+      "comparison": {
+        "shots_f2": 0,
+        "shots_f3": 0,
+        "shot_steps": {},
+        "same_inventory": true,
+        "precise_solves_f2": 179,
+        "precise_solves_f3": 0
+      }
+    }
+  ]
+}

@@ -90,6 +90,12 @@ class GunneryTests(unittest.TestCase):
         b = self.battle()
         self.send(b, ship_id='ship.web.red', module_id='cic')
         self.advance(b, 105)
+        # F3 permits approximate low-cost tracking during cooldown. Check the
+        # precise firing aim here; waiting/traverse behavior has separate tests.
+        for _ in range(90):
+            if b.states[0].status=='fired':break
+            b.step()
+        self.assertEqual(b.states[0].status,'fired')
         gun = self.gun(b)
         self.assertEqual(gun['target_module_id'], 'cic')
         contact = b._contacts[(0, 1)]
@@ -134,6 +140,9 @@ class GunneryTests(unittest.TestCase):
         # the installed fire-control module as the explicit second radar fixture.
         b._radars[0] = ('sensor_upper_starboard', 'fire_control')
         b.observation.sensors[0]['fire_control']=dict(b.observation.sensors[0]['sensor_upper_starboard'])
+        # The synthetic second sensor also needs the geometry introduced by
+        # the sensor-arc contract; an internal computer is not a real radar.
+        b.observation.arcs[0,'fire_control']=dict(b.observation.arcs[0,'sensor_upper_starboard'])
         b._capabilities[0]['fire_control'] = dict(b._capabilities[0]['fire_control'], maximum_instrumented_range_m=50000)
         self.send(b); self.advance(b, 95)
         b.step(device_operations=(self.damage(b, 'sensor_upper_starboard'),))

@@ -1,0 +1,15 @@
+{
+  "poll_s": 0.06666666666666667,
+  "read_p99_ms": 100,
+  "read_max_ms": 500,
+  "pause_max_ms": 250,
+  "input_observed_max_ms": 750,
+  "view_lag_max_steps": 16,
+  "debt_max_steps": 15,
+  "normal_rate_min": 0.995,
+  "normal_rate_max": 1.005,
+  "pause_hold_s": 0.25,
+  "case": "saved",
+  "duration_s": 10.0,
+  "acceptance_minimum_s": 120
+}

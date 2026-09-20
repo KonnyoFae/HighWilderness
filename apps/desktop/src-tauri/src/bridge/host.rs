@@ -1724,7 +1724,11 @@ mod tests {
             .as_array()
             .unwrap()
             .iter()
-            .filter(|entry| entry["kind"] == "OutfitPlan")
+            // Keep this roundtrip fixture stable as the development catalog grows.
+            .filter(|entry| entry["kind"] == "OutfitPlan" && matches!(entry["id"].as_str(),
+                Some("gtw.outfit.fixture.stage_f.minimum_legal")
+                | Some("gtw.outfit.fixture.stage_f.conventional_crewed")
+                | Some("gtw.outfit.fixture.stage_f.unmanned_flagship")))
             .collect();
         assert_eq!(outfits.len(), 3);
         for (n, entry) in outfits.into_iter().enumerate() {

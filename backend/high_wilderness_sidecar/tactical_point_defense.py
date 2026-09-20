@@ -1,6 +1,6 @@
 """Observed incoming threats, shared in-flight commitments and real gun work."""
 from functools import lru_cache
-from math import atan2, ceil, cos, hypot, sin, sqrt
+from math import atan2, ceil, hypot, sqrt
 
 from . import tactical_ballistics as ballistics
 from .tactical_interception import policy
@@ -80,9 +80,11 @@ class PointDefense:
         self.battle=battle;self.policy=policy()
         self.capable=tuple(all(p.caliber_mm==30 for p in flights.values()) for flights in battle._gun_flights)
         self.contacts={};self.threats=();self.recent=();self.hits=0;self.kills=0
+        self.forecasts={};self.prediction_metrics={}
 
-    def observe(self,world,available,projectiles,frame=None):
-        b=self.battle;step=world.fixed_step;contacts={};threats=[];predictions={}
+    def observe(self,world,available,projectiles,frame=None,*,prediction=None):
+        b=self.battle;step=world.fixed_step;contacts={};threats=[]
+        prediction=prediction or self.begin(world)
         observers={g.ship_index for i,g in enumerate(b.guns) if self.capable[i] and b.states[i].point_defense
                    and (b.enemy_fire or b._sides[g.ship_index]==b._sides[b._direct_index])
                    and b._can_fire(world.ships[g.ship_index],g.ship_index)}
@@ -101,10 +103,8 @@ class PointDefense:
                 stamp,measured=track.step,track.target.payload
                 age=max(0,step-stamp)/60
                 current=observed.extrapolate(measured,age)
-                identity=b._sides[observer],stamp,measured
-                if identity not in predictions:
-                    predictions[identity]=tuple((sid,t+age) for sid,t in self.predict_collisions(observer,current,world))
-                collisions=predictions[identity]
+                collisions=tuple((sid,t+age) for sid,t in self.predict_collisions(
+                    observer,measured,world,prediction=prediction,stamp=stamp))
                 contacts[key]=(stamp,measured,collisions)
                 for sid,arrival in collisions:
                     endangered=next(s for s in world.ships if s.ship_id==sid)
@@ -115,54 +115,12 @@ class PointDefense:
                         impact_layer=endangered.motion.height_layer))
         return contacts,tuple(threats)
 
-    def predict_collisions(self,observer,p,world):
-        b=self.battle;p=observed.sample(p)
-        from .tactical_defense import policy as defense_policy
-        seconds=min(defense_policy()['prediction_seconds'],(p.expires-world.fixed_step)/60)
-        if seconds<=0:return ()
-        # Predicted world path uses the same drag law; ship orders are not future truth.
-        # With zero drag and no ship rotation the relative forecast is exactly
-        # a straight segment. Keep the same hull intersection, without 300
-        # redundant samples per missile per seeker per fixed step.
-        linear=p.flight_profile is None or not p.flight_profile.drag
-        sampled=None
-        collisions=[]
-        for n,ship in enumerate(world.ships):
-            if b._sides[n]!=b._sides[observer] or (
-                    ship.motion.hull_integrity_fraction<=0 or ship.command.lifecycle.physical_status!='operational'):continue
-            m=ship.motion;path=[];radius=b.damage.radius[n]
-            if linear and m.yaw_rate_radps==0:
-                points=((0.,p.position),(seconds,predict(p,seconds)[0]))
-            else:
-                if sampled is None:
-                    sampled=[(0.,p.position)];t=0.
-                    while t<seconds-1e-9:
-                        t=min(seconds,t+.1);sampled.append((t,predict(p,t)[0]))
-                points=sampled
-            for t,(x,y) in points:
-                x-=m.position_world_m.x+m.velocity_world_mps.x*t
-                y-=m.position_world_m.y+m.velocity_world_mps.y*t
-                angle=-m.heading_rad-m.yaw_rate_radps*t;c,s=cos(angle),sin(angle)
-                path.append((t,(c*x-s*y,s*x+c*y)))
-            if min(v[0] for _,v in path)>radius or max(v[0] for _,v in path)<-radius or (
-                    min(v[1] for _,v in path)>radius or max(v[1] for _,v in path)<-radius):continue
-            # Geometry is checked against all decks; only actual future impact
-            # will sample its damage deck. An inflated ship circle cannot qualify.
-            # Split at measured altitude crossings. Testing the entire XY path
-            # first could hide a later valid contact behind an earlier wrong-layer hit.
-            boundaries=observed.breaks(p,seconds)
-            for start,end in zip(boundaries,boundaries[1:]):
-                if observed.layer_at(p,(start+end)/2)!=m.height_layer:continue
-                def relative(t):
-                    x,y=predict(p,t)[0];x-=m.position_world_m.x+m.velocity_world_mps.x*t
-                    y-=m.position_world_m.y+m.velocity_world_mps.y*t
-                    angle=-m.heading_rad-m.yaw_rate_radps*t;c,s=cos(angle),sin(angle)
-                    return t,(c*x-s*y,s*x+c*y)
-                interval=[relative(start),*(r for r in path if start<r[0]<end),relative(end)]
-                hit=b.damage.contacts_on_path(n,ship,interval)
-                times=[h[0] for h in hit.values() if observed.layer_at(p,h[0])==m.height_layer]
-                if times:collisions.append((ship.ship_id,min(times)));break
-        return tuple(sorted(collisions,key=lambda row:(row[1],row[0])))[:1]
+    def begin(self,world):
+        from .tactical_defense_prediction import Plan
+        return Plan(self.battle,world,self.forecasts)
+
+    def predict_collisions(self,observer,p,world,*,prediction=None,stamp=None):
+        return (prediction or self.begin(world)).collisions(observer,p,stamp)
 
     def choose(self,index,state,world,available,projectiles,contacts,threats,channels,locks,inv,frame=None):
         from .tactical_gunnery import add,difference,rotate,wrap
@@ -217,8 +175,10 @@ class PointDefense:
                 needed_rounds=ceil(max(0.,p.durability-reserved)/self.policy['round_damage'])),None
         return None,reason
 
-    def commit(self,contacts,threats,events):
+    def commit(self,contacts,threats,events,*,prediction=None):
         self.contacts=contacts;self.threats=threats
+        if prediction is not None:
+            self.forecasts=prediction.values;self.prediction_metrics=dict(prediction.metrics)
         self.recent=(self.recent+events)[-32:];self.hits+=len(events);self.kills+=sum(e['intercepted'] for e in events)
 
     def view(self):

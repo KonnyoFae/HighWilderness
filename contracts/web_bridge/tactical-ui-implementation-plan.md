@@ -1,6 +1,6 @@
 # 战术 UI 重构优先实施计划
 
-2026-09-20 排期更新：本工作包 U 已完成本轮约定范围，下一步实施[火控优化 F](./tactical-fire-control-optimization-plan.md)，之后进入工作包 6。
+2026-09-20 排期更新：本工作包 U 与[火控优化 F](./tactical-fire-control-optimization-plan.md)均已完成本轮约定范围；[F5 联合验收](./tactical-fire-control-f5.md)通过原双舰与近防各 120 秒、四舰同层／跨层页面及连续两场保存恢复。下一步进入工作包 6 的 SCIC 与舰队指挥，最高编制与最终性能仍另验。
 
 日期：2026-09-20。状态：U1、U2a、U2b 与 U3 均完成范围内验证，见[U1 记录](./tactical-ui-u1-foundation.md)、[U2a 记录](./tactical-ui-u2a-controls-and-panels.md)、[U2b 记录](./tactical-ui-u2b-icons-and-observation.md)、[U3 联合验收](./tactical-ui-u3-joint-acceptance.md)。同层／跨层四舰攻防、损管、连续两场、保存重启及强制放弃通过；最高编制与后续舰队命令仍按各自工作包推进。本文将 UI 重构列为工作包 U，插在已完成的 5j 与工作包 6 之间。
 

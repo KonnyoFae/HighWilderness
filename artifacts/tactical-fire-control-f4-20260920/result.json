@@ -1,0 +1,3592 @@
+{
+  "scope": "F4 rolling hull threats; existing F3 ordinary fire control in both; not F5 sustained realtime acceptance",
+  "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "fixture_sha256": "bd828c566275c65e856b30e4c1da422bed63a9ace5ce3e77b6445a46efbc7ffd",
+  "source_sha256": {
+    "backend\\high_wilderness_sidecar\\tactical_point_defense.py": "dac065f90fc763abd13d4cf90cc836dbd4fe4cae65ec6ed7f0367c104d7657d9",
+    "backend\\high_wilderness_sidecar\\tactical_defense_prediction.py": "fdb7853b5fc85d4686fc867c4a0c4045c35065f73da7940439d11e5192ddf428",
+    "backend\\high_wilderness_sidecar\\tactical_gunnery.py": "9b310b93d36761bd182089cbb64eab6d84c1fd74b2fe3c3a1702ad29b0d853c3",
+    "backend\\high_wilderness_sidecar\\tactical_ew.py": "922e18380726b79165567b02f02e8558054dcb055b300bb9e51eda4a091f7b62",
+    "backend\\high_wilderness_sidecar\\tactical_ballistics.py": "3908547296011ec62259668ec8b5edd82cf7ebad1c258a84036e57ddfce3f62b",
+    "backend\\high_wilderness_sidecar\\projectile_observation.py": "6dc2567e45a284f8c3b8b3b50a95de4b753586b1bc44fa1c6039b191d67e1444",
+    "tools\\point_defense_reference.py": "97e43aa2c5f7fec44d83682c07fb25d10a70f2ef280e06fb0c1ff5b088bed763",
+    "tools\\profile_tactical_fire_control.py": "1d1540ad902cd1eb4a98b176ce6c0f3d2aaa80c3b715c7332ed4f4e623c35de3",
+    "tools\\profile_tactical_defense_prediction.py": "2ab6837abb5ca9dfb93da173d6698b7042eedbb9e55f4699f601e7ca107f0f19"
+  },
+  "runs": [
+    {
+      "case": {
+        "name": "stationary_firing",
+        "speed": 0,
+        "accelerate": false,
+        "stock": "saved",
+        "distance": 12000
+      },
+      "reference": {
+        "case": {
+          "name": "stationary_firing",
+          "speed": 0,
+          "accelerate": false,
+          "stock": "saved",
+          "distance": 12000
+        },
+        "variant": "optimized",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 8,
+        "peak_projectiles": 8,
+        "step": {
+          "mean_ms": 13.063047916512005,
+          "p50_ms": 11.387199978344142,
+          "p95_ms": 23.323700006585568,
+          "p99_ms": 24.778800026979297,
+          "max_ms": 26.239000027999282
+        },
+        "warm_step": {
+          "mean_ms": 14.237720952258401,
+          "p50_ms": 12.610999983735383,
+          "p95_ms": 23.367499990854412,
+          "p99_ms": 24.778800026979297,
+          "max_ms": 26.239000027999282
+        },
+        "aim": {
+          "mean_ms": 0.001061249834795793,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.02239999594166875,
+          "max_ms": 0.03850000211969018
+        },
+        "inverse": {
+          "mean_ms": 0.0017762509135839841,
+          "p50_ms": 0.0,
+          "p95_ms": 0.00990001717582345,
+          "p99_ms": 0.012899981811642647,
+          "max_ms": 0.024099950678646564
+        },
+        "defense": {
+          "mean_ms": 10.974265415764723,
+          "p50_ms": 9.412699961103499,
+          "p95_ms": 20.991800003685057,
+          "p99_ms": 22.4568999838084,
+          "max_ms": 23.897200007922947
+        },
+        "publish": {
+          "mean_ms": 2.1719366632169113,
+          "p50_ms": 2.1820999681949615,
+          "p95_ms": 2.3743000347167253,
+          "p99_ms": 2.5186999700963497,
+          "max_ms": 2.7289999998174608
+        },
+        "read": {
+          "mean_ms": 4.105938335609001,
+          "p50_ms": 3.7537000025622547,
+          "p95_ms": 5.26710000121966,
+          "p99_ms": 8.418700017500669,
+          "max_ms": 20.257399999536574
+        },
+        "costs": {
+          "solution_seconds": 0.0002546999603509903,
+          "solution_calls": 12,
+          "defense_seconds": 2.633823699783534,
+          "inverse_seconds": 0.00042630021926015615,
+          "inverse_calls": 78
+        },
+        "requests": 12,
+        "cache_hits": 0,
+        "solution_age_steps": 6,
+        "work_totals": {
+          "requests": 12,
+          "solves": 12,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 147,
+          "searches": 188,
+          "search_requests": 198,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 42,
+          "tracking_only": 1865,
+          "reproject_rejected": 0,
+          "refresh_observation": 11,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 12
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 6,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 8,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 1,
+              "angle": 0.013089969389957472,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 31,
+              "angle": 0.051507892920615195,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 61,
+              "angle": -0.012309718832600753,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 91,
+              "angle": 0.011012663948239593,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 121,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 151,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 181,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 211,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        },
+        "prediction_totals": {
+          "requests": 1072,
+          "computed": 1072,
+          "shared": 0,
+          "rolled": 0,
+          "entries": 0
+        },
+        "prediction_max": {
+          "requests": 8,
+          "computed": 8,
+          "shared": 0,
+          "rolled": 0,
+          "entries": 0
+        }
+      },
+      "f4": {
+        "case": {
+          "name": "stationary_firing",
+          "speed": 0,
+          "accelerate": false,
+          "stock": "saved",
+          "distance": 12000
+        },
+        "variant": "optimized",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 8,
+        "peak_projectiles": 8,
+        "step": {
+          "mean_ms": 3.9645283335024333,
+          "p50_ms": 2.2432999685406685,
+          "p95_ms": 15.34500002162531,
+          "p99_ms": 18.87890003854409,
+          "max_ms": 19.480399962048978
+        },
+        "warm_step": {
+          "mean_ms": 4.16150761967791,
+          "p50_ms": 2.307899994775653,
+          "p95_ms": 15.658800024539232,
+          "p99_ms": 18.87890003854409,
+          "max_ms": 19.480399962048978
+        },
+        "aim": {
+          "mean_ms": 0.0009824999627502014,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.021200045011937618,
+          "max_ms": 0.03029999788850546
+        },
+        "inverse": {
+          "mean_ms": 0.0013749988283962011,
+          "p50_ms": 0.0,
+          "p95_ms": 0.008200004231184721,
+          "p99_ms": 0.011400028597563505,
+          "max_ms": 0.019700033590197563
+        },
+        "defense": {
+          "mean_ms": 2.0669375012706346,
+          "p50_ms": 0.1770000089891255,
+          "p95_ms": 13.278800004627556,
+          "p99_ms": 16.76880003651604,
+          "max_ms": 17.48270000098273
+        },
+        "publish": {
+          "mean_ms": 1.9779683333278324,
+          "p50_ms": 1.9839000306092203,
+          "p95_ms": 2.1861999994143844,
+          "p99_ms": 2.2416000138036907,
+          "max_ms": 2.276000042911619
+        },
+        "read": {
+          "mean_ms": 3.6103533328666044,
+          "p50_ms": 3.284099977463484,
+          "p95_ms": 4.010099975857884,
+          "p99_ms": 4.366000008303672,
+          "max_ms": 19.26359999924898
+        },
+        "costs": {
+          "solution_seconds": 0.00023579999106004834,
+          "solution_calls": 12,
+          "defense_seconds": 0.49606500030495226,
+          "inverse_seconds": 0.00032999971881508827,
+          "inverse_calls": 78
+        },
+        "requests": 12,
+        "cache_hits": 0,
+        "solution_age_steps": 6,
+        "work_totals": {
+          "requests": 12,
+          "solves": 12,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 147,
+          "searches": 188,
+          "search_requests": 198,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 42,
+          "tracking_only": 1865,
+          "reproject_rejected": 0,
+          "refresh_observation": 11,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 12
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 6,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 8,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 1,
+              "angle": 0.013089969389957472,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 31,
+              "angle": 0.051507892920615195,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 61,
+              "angle": -0.012309718832600753,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 91,
+              "angle": 0.011012663948239593,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 121,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 151,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 181,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 211,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        },
+        "prediction_totals": {
+          "requests": 1072,
+          "computed": 248,
+          "shared": 0,
+          "rolled": 824,
+          "invalidated_motion": 0,
+          "broad_rejected": 0,
+          "hull_paths": 248,
+          "path_points": 58890,
+          "max_age_steps": 585,
+          "entries": 1072
+        },
+        "prediction_max": {
+          "requests": 8,
+          "computed": 8,
+          "shared": 0,
+          "rolled": 8,
+          "invalidated_motion": 0,
+          "broad_rejected": 0,
+          "hull_paths": 8,
+          "path_points": 1868,
+          "max_age_steps": 5,
+          "entries": 8
+        }
+      },
+      "comparison": {
+        "same_inventory": true,
+        "same_shots": true,
+        "missing_threats": 0,
+        "added_threats": 0,
+        "max_arrival_difference_s": 2.5779005717652126e-05
+      }
+    },
+    {
+      "case": {
+        "name": "moving_saved",
+        "speed": 100,
+        "accelerate": false,
+        "stock": "saved"
+      },
+      "reference": {
+        "case": {
+          "name": "moving_saved",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "saved"
+        },
+        "variant": "optimized",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 6,
+        "peak_projectiles": 6,
+        "step": {
+          "mean_ms": 8.211550831765635,
+          "p50_ms": 7.609599968418479,
+          "p95_ms": 19.042200001422316,
+          "p99_ms": 19.44579998962581,
+          "max_ms": 19.753100001253188
+        },
+        "warm_step": {
+          "mean_ms": 9.143909521489626,
+          "p50_ms": 8.131299982778728,
+          "p95_ms": 19.048499991185963,
+          "p99_ms": 19.44579998962581,
+          "max_ms": 19.753100001253188
+        },
+        "aim": {
+          "mean_ms": 0.0009983324465186645,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.025499961338937283,
+          "max_ms": 0.032599957194179296
+        },
+        "inverse": {
+          "mean_ms": 0.0014587497086419412,
+          "p50_ms": 0.0,
+          "p95_ms": 0.008700008038431406,
+          "p99_ms": 0.015300000086426735,
+          "max_ms": 0.020299979951232672
+        },
+        "defense": {
+          "mean_ms": 6.3531595837654695,
+          "p50_ms": 5.620500014629215,
+          "p95_ms": 16.75120001891628,
+          "p99_ms": 17.189300036989152,
+          "max_ms": 17.5734999938868
+        },
+        "publish": {
+          "mean_ms": 2.1039200063872463,
+          "p50_ms": 2.1254000021144748,
+          "p95_ms": 2.3790999548509717,
+          "p99_ms": 2.525899966713041,
+          "max_ms": 2.777799963951111
+        },
+        "read": {
+          "mean_ms": 3.7636133337703845,
+          "p50_ms": 3.229200025089085,
+          "p95_ms": 4.740500007756054,
+          "p99_ms": 8.374999975785613,
+          "max_ms": 21.735800022725016
+        },
+        "costs": {
+          "solution_seconds": 0.0002395997871644795,
+          "solution_calls": 11,
+          "defense_seconds": 1.5247583001037128,
+          "inverse_seconds": 0.0003500999300740659,
+          "inverse_calls": 70
+        },
+        "requests": 11,
+        "cache_hits": 0,
+        "solution_age_steps": 6,
+        "work_totals": {
+          "requests": 11,
+          "solves": 11,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 89,
+          "searches": 296,
+          "search_requests": 306,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 30,
+          "tracking_only": 508,
+          "reproject_rejected": 0,
+          "refresh_observation": 8,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 11
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 6,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 4,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 75,
+              "angle": 0.008444214482746126,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 105,
+              "angle": 0.03782156754380139,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 135,
+              "angle": -0.01911540776789522,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 165,
+              "angle": 0.0034149032572386613,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 195,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 225,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        },
+        "prediction_totals": {
+          "requests": 540,
+          "computed": 540,
+          "shared": 0,
+          "rolled": 0,
+          "entries": 0
+        },
+        "prediction_max": {
+          "requests": 6,
+          "computed": 6,
+          "shared": 0,
+          "rolled": 0,
+          "entries": 0
+        }
+      },
+      "f4": {
+        "case": {
+          "name": "moving_saved",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "saved"
+        },
+        "variant": "optimized",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 6,
+        "peak_projectiles": 6,
+        "step": {
+          "mean_ms": 2.957247082425359,
+          "p50_ms": 1.7777999746613204,
+          "p95_ms": 12.162700004409999,
+          "p99_ms": 15.986200014594942,
+          "max_ms": 18.71709997067228
+        },
+        "warm_step": {
+          "mean_ms": 3.143305237781966,
+          "p50_ms": 1.8213000148534775,
+          "p95_ms": 12.638999964110553,
+          "p99_ms": 15.986200014594942,
+          "max_ms": 18.71709997067228
+        },
+        "aim": {
+          "mean_ms": 0.0009641667323497436,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.025200017262250185,
+          "max_ms": 0.03260001540184021
+        },
+        "inverse": {
+          "mean_ms": 0.0011950010957662016,
+          "p50_ms": 0.0,
+          "p95_ms": 0.008400005754083395,
+          "p99_ms": 0.013699987903237343,
+          "max_ms": 0.020299979951232672
+        },
+        "defense": {
+          "mean_ms": 1.2570599984125388,
+          "p50_ms": 0.0776999513618648,
+          "p95_ms": 10.470899986103177,
+          "p99_ms": 13.986899983137846,
+          "max_ms": 16.686099988874048
+        },
+        "publish": {
+          "mean_ms": 1.8834033321278791,
+          "p50_ms": 1.8649999983608723,
+          "p95_ms": 2.119600016158074,
+          "p99_ms": 2.18250002944842,
+          "max_ms": 2.182600030209869
+        },
+        "read": {
+          "mean_ms": 3.304716670148385,
+          "p50_ms": 2.9477000352926552,
+          "p95_ms": 3.6379999946802855,
+          "p99_ms": 4.097099998034537,
+          "max_ms": 17.588499991688877
+        },
+        "costs": {
+          "solution_seconds": 0.00023140001576393843,
+          "solution_calls": 11,
+          "defense_seconds": 0.30169439961900935,
+          "inverse_seconds": 0.0002868002629838884,
+          "inverse_calls": 70
+        },
+        "requests": 11,
+        "cache_hits": 0,
+        "solution_age_steps": 6,
+        "work_totals": {
+          "requests": 11,
+          "solves": 11,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 89,
+          "searches": 296,
+          "search_requests": 306,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 30,
+          "tracking_only": 508,
+          "reproject_rejected": 0,
+          "refresh_observation": 8,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 11
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 6,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 4,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 75,
+              "angle": 0.008444214482746126,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 105,
+              "angle": 0.03782156754380139,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 135,
+              "angle": -0.01911540776789522,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 165,
+              "angle": 0.0034149032572386613,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 195,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 225,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        },
+        "prediction_totals": {
+          "requests": 540,
+          "computed": 130,
+          "shared": 0,
+          "rolled": 410,
+          "invalidated_motion": 0,
+          "broad_rejected": 0,
+          "hull_paths": 130,
+          "path_points": 31373,
+          "max_age_steps": 366,
+          "entries": 540
+        },
+        "prediction_max": {
+          "requests": 6,
+          "computed": 6,
+          "shared": 0,
+          "rolled": 6,
+          "invalidated_motion": 0,
+          "broad_rejected": 0,
+          "hull_paths": 6,
+          "path_points": 1431,
+          "max_age_steps": 5,
+          "entries": 6
+        }
+      },
+      "comparison": {
+        "same_inventory": true,
+        "same_shots": true,
+        "missing_threats": 0,
+        "added_threats": 0,
+        "max_arrival_difference_s": 2.927376834804818e-05
+      }
+    },
+    {
+      "case": {
+        "name": "accelerating_saved",
+        "speed": 100,
+        "accelerate": true,
+        "stock": "saved"
+      },
+      "reference": {
+        "case": {
+          "name": "accelerating_saved",
+          "speed": 100,
+          "accelerate": true,
+          "stock": "saved"
+        },
+        "variant": "optimized",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 6,
+        "peak_projectiles": 6,
+        "step": {
+          "mean_ms": 8.92229583308411,
+          "p50_ms": 7.317100011277944,
+          "p95_ms": 19.1437000175938,
+          "p99_ms": 19.691399997100234,
+          "max_ms": 20.35750000504777
+        },
+        "warm_step": {
+          "mean_ms": 9.969034761888906,
+          "p50_ms": 10.440499987453222,
+          "p95_ms": 19.174099958036095,
+          "p99_ms": 19.691399997100234,
+          "max_ms": 20.35750000504777
+        },
+        "aim": {
+          "mean_ms": 0.0016233328400024523,
+          "p50_ms": 0.0,
+          "p95_ms": 0.014499993994832039,
+          "p99_ms": 0.021799991372972727,
+          "max_ms": 0.028799986466765404
+        },
+        "inverse": {
+          "mean_ms": 0.0016945824124074231,
+          "p50_ms": 0.0,
+          "p95_ms": 0.011800031643360853,
+          "p99_ms": 0.013199984095990658,
+          "max_ms": 0.019599974621087313
+        },
+        "defense": {
+          "mean_ms": 7.030141669868802,
+          "p50_ms": 5.48190000699833,
+          "p95_ms": 16.86199998948723,
+          "p99_ms": 17.2500999760814,
+          "max_ms": 17.907600034959614
+        },
+        "publish": {
+          "mean_ms": 2.0891183317871764,
+          "p50_ms": 2.11430003400892,
+          "p95_ms": 2.441900025587529,
+          "p99_ms": 2.524099953006953,
+          "max_ms": 2.646499953698367
+        },
+        "read": {
+          "mean_ms": 3.83484999765642,
+          "p50_ms": 3.1668999581597745,
+          "p95_ms": 5.140799970831722,
+          "p99_ms": 8.540700015146285,
+          "max_ms": 26.11330000218004
+        },
+        "costs": {
+          "solution_seconds": 0.00038959988160058856,
+          "solution_calls": 23,
+          "defense_seconds": 1.6872340007685125,
+          "inverse_seconds": 0.00040669977897778153,
+          "inverse_calls": 103
+        },
+        "requests": 23,
+        "cache_hits": 0,
+        "solution_age_steps": 2,
+        "work_totals": {
+          "requests": 23,
+          "solves": 23,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 49,
+          "searches": 259,
+          "search_requests": 269,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 33,
+          "tracking_only": 999,
+          "reproject_rejected": 0,
+          "refresh_observation": 9,
+          "refresh_motion": 22,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 23
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 2,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 10,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 1,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 63,
+              "angle": -0.011640434410618461,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 93,
+              "angle": 0.0240894701159049,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 123,
+              "angle": -0.03307845615999572,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 153,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 183,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 213,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        },
+        "prediction_totals": {
+          "requests": 612,
+          "computed": 612,
+          "shared": 0,
+          "rolled": 0,
+          "entries": 0
+        },
+        "prediction_max": {
+          "requests": 6,
+          "computed": 6,
+          "shared": 0,
+          "rolled": 0,
+          "entries": 0
+        }
+      },
+      "f4": {
+        "case": {
+          "name": "accelerating_saved",
+          "speed": 100,
+          "accelerate": true,
+          "stock": "saved"
+        },
+        "variant": "optimized",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 6,
+        "peak_projectiles": 6,
+        "step": {
+          "mean_ms": 3.1467083337095874,
+          "p50_ms": 1.8177999882027507,
+          "p95_ms": 12.994299991987646,
+          "p99_ms": 18.06679996661842,
+          "max_ms": 19.897500053048134
+        },
+        "warm_step": {
+          "mean_ms": 3.3719257146696604,
+          "p50_ms": 1.8948999932035804,
+          "p95_ms": 13.142499956302345,
+          "p99_ms": 18.06679996661842,
+          "max_ms": 19.897500053048134
+        },
+        "aim": {
+          "mean_ms": 0.001598333134703959,
+          "p50_ms": 0.0,
+          "p95_ms": 0.014499993994832039,
+          "p99_ms": 0.021199986804276705,
+          "max_ms": 0.02859998494386673
+        },
+        "inverse": {
+          "mean_ms": 0.001468749299723034,
+          "p50_ms": 0.0,
+          "p95_ms": 0.01079996582120657,
+          "p99_ms": 0.012399978004395962,
+          "max_ms": 0.018499966245144606
+        },
+        "defense": {
+          "mean_ms": 1.4143349988444243,
+          "p50_ms": 0.08269998943433166,
+          "p95_ms": 11.066999984905124,
+          "p99_ms": 16.053799947258085,
+          "max_ms": 17.376900010276586
+        },
+        "publish": {
+          "mean_ms": 1.9020199960020059,
+          "p50_ms": 1.8631999846547842,
+          "p95_ms": 2.2347000194713473,
+          "p99_ms": 2.250300021842122,
+          "max_ms": 2.3648000205866992
+        },
+        "read": {
+          "mean_ms": 3.365519999836882,
+          "p50_ms": 3.0202000052668154,
+          "p95_ms": 3.6809000303037465,
+          "p99_ms": 4.035099991597235,
+          "max_ms": 20.209399983286858
+        },
+        "costs": {
+          "solution_seconds": 0.00038359995232895017,
+          "solution_calls": 23,
+          "defense_seconds": 0.3394403997226618,
+          "inverse_seconds": 0.0003524998319335282,
+          "inverse_calls": 103
+        },
+        "requests": 23,
+        "cache_hits": 0,
+        "solution_age_steps": 2,
+        "work_totals": {
+          "requests": 23,
+          "solves": 23,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 49,
+          "searches": 259,
+          "search_requests": 269,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 33,
+          "tracking_only": 999,
+          "reproject_rejected": 0,
+          "refresh_observation": 9,
+          "refresh_motion": 22,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 23
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 2,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 10,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 1,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 63,
+              "angle": -0.011640434410618461,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 93,
+              "angle": 0.0240894701159049,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 123,
+              "angle": -0.03307845615999572,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 153,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 183,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 213,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        },
+        "prediction_totals": {
+          "requests": 612,
+          "computed": 147,
+          "shared": 0,
+          "rolled": 465,
+          "invalidated_motion": 0,
+          "broad_rejected": 0,
+          "hull_paths": 147,
+          "path_points": 35370,
+          "max_age_steps": 396,
+          "entries": 612
+        },
+        "prediction_max": {
+          "requests": 6,
+          "computed": 6,
+          "shared": 0,
+          "rolled": 6,
+          "invalidated_motion": 0,
+          "broad_rejected": 0,
+          "hull_paths": 6,
+          "path_points": 1431,
+          "max_age_steps": 5,
+          "entries": 6
+        }
+      },
+      "comparison": {
+        "same_inventory": true,
+        "same_shots": true,
+        "missing_threats": 0,
+        "added_threats": 0,
+        "max_arrival_difference_s": 3.239745718275344e-05
+      }
+    },
+    {
+      "case": {
+        "name": "moving_loaded",
+        "speed": 100,
+        "accelerate": false,
+        "stock": "loaded"
+      },
+      "reference": {
+        "case": {
+          "name": "moving_loaded",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "loaded"
+        },
+        "variant": "optimized",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 6,
+        "peak_projectiles": 6,
+        "step": {
+          "mean_ms": 8.136568334884942,
+          "p50_ms": 7.209400006104261,
+          "p95_ms": 18.723599961958826,
+          "p99_ms": 20.171099982690066,
+          "max_ms": 20.787400018889457
+        },
+        "warm_step": {
+          "mean_ms": 9.075981906859116,
+          "p50_ms": 7.95769999967888,
+          "p95_ms": 18.749100039713085,
+          "p99_ms": 20.171099982690066,
+          "max_ms": 20.787400018889457
+        },
+        "aim": {
+          "mean_ms": 0.0010304162666822474,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.025499961338937283,
+          "max_ms": 0.03890000516548753
+        },
+        "inverse": {
+          "mean_ms": 0.0014662497657506417,
+          "p50_ms": 0.0,
+          "p95_ms": 0.009000010322779417,
+          "p99_ms": 0.014899997040629387,
+          "max_ms": 0.026500027161091566
+        },
+        "defense": {
+          "mean_ms": 6.244749997858889,
+          "p50_ms": 5.4502999992109835,
+          "p95_ms": 16.043299983721226,
+          "p99_ms": 17.278100014664233,
+          "max_ms": 17.43850001366809
+        },
+        "publish": {
+          "mean_ms": 2.054778332239948,
+          "p50_ms": 2.069300040602684,
+          "p95_ms": 2.3628000053577125,
+          "p99_ms": 2.4717000196687877,
+          "max_ms": 2.7867999742738903
+        },
+        "read": {
+          "mean_ms": 3.8137199987734975,
+          "p50_ms": 3.22410004446283,
+          "p95_ms": 4.753099987283349,
+          "p99_ms": 8.571300015319139,
+          "max_ms": 26.549600006546825
+        },
+        "costs": {
+          "solution_seconds": 0.00024729990400373936,
+          "solution_calls": 11,
+          "defense_seconds": 1.4987399994861335,
+          "inverse_seconds": 0.000351899943780154,
+          "inverse_calls": 70
+        },
+        "requests": 11,
+        "cache_hits": 0,
+        "solution_age_steps": 6,
+        "work_totals": {
+          "requests": 11,
+          "solves": 11,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 89,
+          "searches": 326,
+          "search_requests": 336,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 30,
+          "tracking_only": 130,
+          "reproject_rejected": 0,
+          "refresh_observation": 8,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 11
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 6,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 1,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 75,
+              "angle": 0.008444214482746126,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 105,
+              "angle": 0.03782156754380139,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 135,
+              "angle": -0.01911540776789522,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 165,
+              "angle": 0.0034149032572386613,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 195,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 225,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        },
+        "prediction_totals": {
+          "requests": 540,
+          "computed": 540,
+          "shared": 0,
+          "rolled": 0,
+          "entries": 0
+        },
+        "prediction_max": {
+          "requests": 6,
+          "computed": 6,
+          "shared": 0,
+          "rolled": 0,
+          "entries": 0
+        }
+      },
+      "f4": {
+        "case": {
+          "name": "moving_loaded",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "loaded"
+        },
+        "variant": "optimized",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 6,
+        "peak_projectiles": 6,
+        "step": {
+          "mean_ms": 3.018843329482479,
+          "p50_ms": 1.7675000126473606,
+          "p95_ms": 12.13879999704659,
+          "p99_ms": 16.774100018665195,
+          "max_ms": 19.429299980401993
+        },
+        "warm_step": {
+          "mean_ms": 3.222293329669074,
+          "p50_ms": 1.8087000353261828,
+          "p95_ms": 12.567400000989437,
+          "p99_ms": 16.774100018665195,
+          "max_ms": 19.429299980401993
+        },
+        "aim": {
+          "mean_ms": 0.0009745834783340495,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.02440001117065549,
+          "max_ms": 0.033400021493434906
+        },
+        "inverse": {
+          "mean_ms": 0.0011862500590117029,
+          "p50_ms": 0.0,
+          "p95_ms": 0.00790000194683671,
+          "p99_ms": 0.013699987903237343,
+          "max_ms": 0.02069998299703002
+        },
+        "defense": {
+          "mean_ms": 1.248388336049781,
+          "p50_ms": 0.07830001413822174,
+          "p95_ms": 10.461500030942261,
+          "p99_ms": 14.325800002552569,
+          "max_ms": 16.762399987783283
+        },
+        "publish": {
+          "mean_ms": 1.9332299988794452,
+          "p50_ms": 1.894499990157783,
+          "p95_ms": 2.297000028192997,
+          "p99_ms": 2.368799992837012,
+          "max_ms": 2.453699999023229
+        },
+        "read": {
+          "mean_ms": 3.0784533330006525,
+          "p50_ms": 2.9853000305593014,
+          "p95_ms": 3.5782000049948692,
+          "p99_ms": 3.709700016770512,
+          "max_ms": 4.173399996943772
+        },
+        "costs": {
+          "solution_seconds": 0.00023390003480017185,
+          "solution_calls": 11,
+          "defense_seconds": 0.2996132006519474,
+          "inverse_seconds": 0.00028470001416280866,
+          "inverse_calls": 70
+        },
+        "requests": 11,
+        "cache_hits": 0,
+        "solution_age_steps": 6,
+        "work_totals": {
+          "requests": 11,
+          "solves": 11,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 89,
+          "searches": 326,
+          "search_requests": 336,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 30,
+          "tracking_only": 130,
+          "reproject_rejected": 0,
+          "refresh_observation": 8,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 11
+        },
+        "work_max": {
+          "requests": 1,
+          "solves": 1,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 6,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 1,
+          "tracking_only": 1,
+          "reproject_rejected": 0,
+          "refresh_observation": 1,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 1
+        },
+        "shot_events": {
+          "27": [
+            {
+              "step": 75,
+              "angle": 0.008444214482746126,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 105,
+              "angle": 0.03782156754380139,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 135,
+              "angle": -0.01911540776789522,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 165,
+              "angle": 0.0034149032572386613,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 195,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            },
+            {
+              "step": 225,
+              "angle": 0.0,
+              "target": [
+                0,
+                null
+              ]
+            }
+          ]
+        },
+        "prediction_totals": {
+          "requests": 540,
+          "computed": 130,
+          "shared": 0,
+          "rolled": 410,
+          "invalidated_motion": 0,
+          "broad_rejected": 0,
+          "hull_paths": 130,
+          "path_points": 31373,
+          "max_age_steps": 366,
+          "entries": 540
+        },
+        "prediction_max": {
+          "requests": 6,
+          "computed": 6,
+          "shared": 0,
+          "rolled": 6,
+          "invalidated_motion": 0,
+          "broad_rejected": 0,
+          "hull_paths": 6,
+          "path_points": 1431,
+          "max_age_steps": 5,
+          "entries": 6
+        }
+      },
+      "comparison": {
+        "same_inventory": true,
+        "same_shots": true,
+        "missing_threats": 0,
+        "added_threats": 0,
+        "max_arrival_difference_s": 2.927376834804818e-05
+      }
+    },
+    {
+      "case": {
+        "name": "moving_empty",
+        "speed": 100,
+        "accelerate": false,
+        "stock": "empty"
+      },
+      "reference": {
+        "case": {
+          "name": "moving_empty",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "empty"
+        },
+        "variant": "optimized",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 0,
+        "peak_projectiles": 0,
+        "step": {
+          "mean_ms": 1.4569649996701628,
+          "p50_ms": 1.3974999892525375,
+          "p95_ms": 1.6444000066258013,
+          "p99_ms": 1.762300031259656,
+          "max_ms": 5.7604999747127295
+        },
+        "warm_step": {
+          "mean_ms": 1.446881428793339,
+          "p50_ms": 1.4039999805390835,
+          "p95_ms": 1.63569999858737,
+          "p99_ms": 1.698700012639165,
+          "max_ms": 1.8746000132523477
+        },
+        "aim": {
+          "mean_ms": 0.0,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "inverse": {
+          "mean_ms": 0.0,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "defense": {
+          "mean_ms": 0.006361248961184174,
+          "p50_ms": 0.005999987479299307,
+          "p95_ms": 0.007099995855242014,
+          "p99_ms": 0.009200011845678091,
+          "max_ms": 0.031100003980100155
+        },
+        "publish": {
+          "mean_ms": 1.7262516640281924,
+          "p50_ms": 1.7041999963112175,
+          "p95_ms": 1.879999996162951,
+          "p99_ms": 1.8968000076711178,
+          "max_ms": 2.13049998274073
+        },
+        "read": {
+          "mean_ms": 2.7963966655079275,
+          "p50_ms": 2.733500034082681,
+          "p95_ms": 3.2180999987758696,
+          "p99_ms": 3.335600020363927,
+          "max_ms": 3.3727000118233263
+        },
+        "costs": {
+          "solution_seconds": 0.0,
+          "solution_calls": 0,
+          "defense_seconds": 0.0015266997506842017,
+          "inverse_seconds": 0.0,
+          "inverse_calls": 0
+        },
+        "requests": 0,
+        "cache_hits": 0,
+        "solution_age_steps": 0,
+        "work_totals": {
+          "requests": 0,
+          "solves": 0,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0,
+          "searches": 326,
+          "search_requests": 336,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 0,
+          "tracking_only": 166,
+          "reproject_rejected": 0,
+          "refresh_observation": 0,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 0
+        },
+        "work_max": {
+          "requests": 0,
+          "solves": 0,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 0,
+          "tracking_only": 1,
+          "reproject_rejected": 0,
+          "refresh_observation": 0,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 0
+        },
+        "shot_events": {},
+        "prediction_totals": {
+          "requests": 0,
+          "computed": 0,
+          "shared": 0,
+          "rolled": 0,
+          "entries": 0
+        },
+        "prediction_max": {
+          "requests": 0,
+          "computed": 0,
+          "shared": 0,
+          "rolled": 0,
+          "entries": 0
+        }
+      },
+      "f4": {
+        "case": {
+          "name": "moving_empty",
+          "speed": 100,
+          "accelerate": false,
+          "stock": "empty"
+        },
+        "variant": "optimized",
+        "steps": 240,
+        "guns": 29,
+        "guns_per_ship": [
+          25,
+          4
+        ],
+        "shots": 0,
+        "peak_projectiles": 0,
+        "step": {
+          "mean_ms": 1.5441641665044397,
+          "p50_ms": 1.4641000307165086,
+          "p95_ms": 1.9844999769702554,
+          "p99_ms": 2.2676000371575356,
+          "max_ms": 5.890099972020835
+        },
+        "warm_step": {
+          "mean_ms": 1.5306690483287508,
+          "p50_ms": 1.4648999786004424,
+          "p95_ms": 1.9648000015877187,
+          "p99_ms": 2.2468999959528446,
+          "max_ms": 2.877200022339821
+        },
+        "aim": {
+          "mean_ms": 0.0,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "inverse": {
+          "mean_ms": 0.0,
+          "p50_ms": 0.0,
+          "p95_ms": 0.0,
+          "p99_ms": 0.0,
+          "max_ms": 0.0
+        },
+        "defense": {
+          "mean_ms": 0.00658708619691121,
+          "p50_ms": 0.006099988240748644,
+          "p95_ms": 0.008300004992634058,
+          "p99_ms": 0.012399978004395962,
+          "max_ms": 0.03170000854879618
+        },
+        "publish": {
+          "mean_ms": 1.7899800014371672,
+          "p50_ms": 1.7274999991059303,
+          "p95_ms": 1.9135999609716237,
+          "p99_ms": 2.483899996150285,
+          "max_ms": 3.7446999922394753
+        },
+        "read": {
+          "mean_ms": 2.879068333034714,
+          "p50_ms": 2.7921999571844935,
+          "p95_ms": 3.3503000158816576,
+          "p99_ms": 3.6991999950259924,
+          "max_ms": 4.715799994301051
+        },
+        "costs": {
+          "solution_seconds": 0.0,
+          "solution_calls": 0,
+          "defense_seconds": 0.0015809006872586906,
+          "inverse_seconds": 0.0,
+          "inverse_calls": 0
+        },
+        "requests": 0,
+        "cache_hits": 0,
+        "solution_age_steps": 0,
+        "work_totals": {
+          "requests": 0,
+          "solves": 0,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0,
+          "searches": 326,
+          "search_requests": 336,
+          "search_queue": 10,
+          "solve_queue": 0,
+          "max_search_wait_steps": 3,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 0,
+          "tracking_only": 166,
+          "reproject_rejected": 0,
+          "refresh_observation": 0,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 1920,
+          "search_budget": 1920,
+          "precise_requests": 0
+        },
+        "work_max": {
+          "requests": 0,
+          "solves": 0,
+          "cache_hits": 0,
+          "negative_cache_hits": 0,
+          "solution_age_steps": 0,
+          "searches": 8,
+          "search_requests": 17,
+          "search_queue": 9,
+          "solve_queue": 0,
+          "max_search_wait_steps": 2,
+          "max_solve_wait_steps": 0,
+          "reused_solutions": 0,
+          "tracking_only": 1,
+          "reproject_rejected": 0,
+          "refresh_observation": 0,
+          "refresh_motion": 0,
+          "invalidated": 0,
+          "solve_budget": 8,
+          "search_budget": 8,
+          "precise_requests": 0
+        },
+        "shot_events": {},
+        "prediction_totals": {
+          "requests": 0,
+          "computed": 0,
+          "shared": 0,
+          "rolled": 0,
+          "invalidated_motion": 0,
+          "broad_rejected": 0,
+          "hull_paths": 0,
+          "path_points": 0,
+          "max_age_steps": 0,
+          "entries": 0
+        },
+        "prediction_max": {
+          "requests": 0,
+          "computed": 0,
+          "shared": 0,
+          "rolled": 0,
+          "invalidated_motion": 0,
+          "broad_rejected": 0,
+          "hull_paths": 0,
+          "path_points": 0,
+          "max_age_steps": 0,
+          "entries": 0
+        }
+      },
+      "comparison": {
+        "same_inventory": true,
+        "same_shots": true,
+        "missing_threats": 0,
+        "added_threats": 0,
+        "max_arrival_difference_s": 0.0
+      }
+    }
+  ],
+  "salvo": {
+    "reference": {
+      "step": {
+        "mean_ms": 5.4122555570858015,
+        "p50_ms": 5.355500034056604,
+        "p95_ms": 10.309800039976835,
+        "p99_ms": 10.589500016067177,
+        "max_ms": 11.07039995258674
+      },
+      "cost": {
+        "observe": 0.7167612002813257,
+        "choose": 0.033348299795761704,
+        "calls": 180
+      },
+      "computed": 1008,
+      "rolled": 0,
+      "shot_events": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          10,
+          0
+        ],
+        [
+          12,
+          0
+        ],
+        [
+          14,
+          0
+        ],
+        [
+          16,
+          0
+        ],
+        [
+          18,
+          0
+        ],
+        [
+          20,
+          0
+        ],
+        [
+          22,
+          0
+        ],
+        [
+          24,
+          0
+        ],
+        [
+          26,
+          0
+        ],
+        [
+          28,
+          0
+        ],
+        [
+          30,
+          0
+        ],
+        [
+          32,
+          0
+        ],
+        [
+          34,
+          0
+        ],
+        [
+          36,
+          0
+        ],
+        [
+          38,
+          0
+        ],
+        [
+          40,
+          0
+        ],
+        [
+          42,
+          0
+        ],
+        [
+          44,
+          0
+        ],
+        [
+          46,
+          0
+        ],
+        [
+          48,
+          0
+        ],
+        [
+          50,
+          0
+        ],
+        [
+          52,
+          0
+        ],
+        [
+          54,
+          0
+        ],
+        [
+          56,
+          0
+        ],
+        [
+          58,
+          0
+        ],
+        [
+          60,
+          0
+        ],
+        [
+          62,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          66,
+          0
+        ],
+        [
+          68,
+          0
+        ],
+        [
+          70,
+          0
+        ],
+        [
+          72,
+          0
+        ],
+        [
+          74,
+          0
+        ],
+        [
+          76,
+          0
+        ],
+        [
+          78,
+          0
+        ],
+        [
+          80,
+          0
+        ],
+        [
+          82,
+          0
+        ],
+        [
+          84,
+          0
+        ],
+        [
+          86,
+          0
+        ],
+        [
+          88,
+          0
+        ],
+        [
+          90,
+          0
+        ],
+        [
+          92,
+          0
+        ],
+        [
+          94,
+          0
+        ],
+        [
+          96,
+          0
+        ],
+        [
+          98,
+          0
+        ],
+        [
+          100,
+          0
+        ],
+        [
+          102,
+          0
+        ],
+        [
+          104,
+          0
+        ],
+        [
+          106,
+          0
+        ],
+        [
+          113,
+          0
+        ],
+        [
+          122,
+          0
+        ]
+      ],
+      "interceptions": [
+        {
+          "step": 32,
+          "impact_fraction": 0.8144673359893779,
+          "projectile_id": 1001,
+          "round_id": 1013,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            227.19842235190646
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 34,
+          "impact_fraction": 0.9515876964278448,
+          "projectile_id": 1001,
+          "round_id": 1015,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            195.7511585011837
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 40,
+          "impact_fraction": 0.2594388019504848,
+          "projectile_id": 1002,
+          "round_id": 1017,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            217.81547647672244
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 46,
+          "impact_fraction": 0.6461305752095882,
+          "projectile_id": 1003,
+          "round_id": 1020,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            224.35551736721013
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 50,
+          "impact_fraction": 0.040158938469490965,
+          "projectile_id": 1001,
+          "round_id": 1029,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -25.171220477158204
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 51,
+          "impact_fraction": 0.9720285600348184,
+          "projectile_id": 1004,
+          "round_id": 1022,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            246.68152980990638
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 53,
+          "impact_fraction": 0.04459778112735422,
+          "projectile_id": 1004,
+          "round_id": 1023,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            231.06774925590742
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 54,
+          "impact_fraction": 0.11786955868273345,
+          "projectile_id": 1004,
+          "round_id": 1024,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            215.45337849600168
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 57,
+          "impact_fraction": 0.526495292274676,
+          "projectile_id": 1002,
+          "round_id": 1033,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -34.072811168384995
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 58,
+          "impact_fraction": 0.38115162689199866,
+          "projectile_id": 1005,
+          "round_id": 1025,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            253.52451036763182
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 58,
+          "impact_fraction": 0.6159564963107396,
+          "projectile_id": 1002,
+          "round_id": 1034,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -49.88188700819337
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 60,
+          "impact_fraction": 0.5292073739255795,
+          "projectile_id": 1005,
+          "round_id": 1027,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            222.37899753632982
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 63,
+          "impact_fraction": 0.9372381713648056,
+          "projectile_id": 1003,
+          "round_id": 1036,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -26.956780501670828
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 65,
+          "impact_fraction": 0.02759600132085046,
+          "projectile_id": 1003,
+          "round_id": 1037,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -42.72084163972273
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 68,
+          "impact_fraction": 0.029333503433502425,
+          "projectile_id": 1006,
+          "round_id": 1031,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            213.93171062223928
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 75,
+          "impact_fraction": 0.5434587786761028,
+          "projectile_id": 1007,
+          "round_id": 1035,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            205.7471075013304
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 76,
+          "impact_fraction": 0.7923377352057484,
+          "projectile_id": 1005,
+          "round_id": 1042,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -12.188749782898952
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 80,
+          "impact_fraction": 0.9619064201185474,
+          "projectile_id": 1007,
+          "round_id": 1040,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            128.02195992824963
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 84,
+          "impact_fraction": 0.2260198507568279,
+          "projectile_id": 1007,
+          "round_id": 1043,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            81.31518052173222
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 84,
+          "impact_fraction": 0.3295912635166319,
+          "projectile_id": 1006,
+          "round_id": 1046,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -20.165424709076227
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 85,
+          "impact_fraction": 0.42526087138931346,
+          "projectile_id": 1006,
+          "round_id": 1047,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -35.82324221137383
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 89,
+          "impact_fraction": 0.593533395645095,
+          "projectile_id": 1008,
+          "round_id": 1045,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            104.69830583033844
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 93,
+          "impact_fraction": 0.9636401709424858,
+          "projectile_id": 1008,
+          "round_id": 1049,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            42.490385085147324
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 96,
+          "impact_fraction": 0.15442477383728206,
+          "projectile_id": 1008,
+          "round_id": 1051,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            11.362638413253162
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 100,
+          "impact_fraction": 0.43647957575027196,
+          "projectile_id": 1009,
+          "round_id": 1052,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            50.632151133090254
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 101,
+          "impact_fraction": 0.5336739425379545,
+          "projectile_id": 1009,
+          "round_id": 1053,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            35.09471901573524
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 102,
+          "impact_fraction": 0.6310725383038689,
+          "projectile_id": 1009,
+          "round_id": 1054,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            19.56400019622167
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 106,
+          "impact_fraction": 0.921261265598445,
+          "projectile_id": 1010,
+          "round_id": 1055,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            58.939935138713416
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 108,
+          "impact_fraction": 0.018930506059748428,
+          "projectile_id": 1010,
+          "round_id": 1056,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            43.45241028382598
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 110,
+          "impact_fraction": 0.2178042637186994,
+          "projectile_id": 1010,
+          "round_id": 1058,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            12.456196503764236
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 114,
+          "impact_fraction": 0.5161343268454287,
+          "projectile_id": 1011,
+          "round_id": 1059,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            51.97556122962588
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 115,
+          "impact_fraction": 0.6156062178471597,
+          "projectile_id": 1011,
+          "round_id": 1060,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            36.52858582493131
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 116,
+          "impact_fraction": 0.718133992265254,
+          "projectile_id": 1011,
+          "round_id": 1061,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            21.048227056691573
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 121,
+          "impact_fraction": 0.023224000639092406,
+          "projectile_id": 1012,
+          "round_id": 1062,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            60.69275469016909
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 123,
+          "impact_fraction": 0.22732778753405908,
+          "projectile_id": 1012,
+          "round_id": 1064,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            29.848364735174915
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 124,
+          "impact_fraction": 0.3315621357560142,
+          "projectile_id": 1012,
+          "round_id": 1065,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            14.40989753863898
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        }
+      ],
+      "ship_hits": [],
+      "intercepted": 12
+    },
+    "f4": {
+      "step": {
+        "mean_ms": 2.979191112616617,
+        "p50_ms": 2.8725999873131514,
+        "p95_ms": 8.534800028428435,
+        "p99_ms": 10.077700018882751,
+        "max_ms": 10.426699998788536
+      },
+      "cost": {
+        "observe": 0.2876509999623522,
+        "choose": 0.034970400331076235,
+        "calls": 180
+      },
+      "computed": 446,
+      "rolled": 562,
+      "shot_events": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          6,
+          0
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          10,
+          0
+        ],
+        [
+          12,
+          0
+        ],
+        [
+          14,
+          0
+        ],
+        [
+          16,
+          0
+        ],
+        [
+          18,
+          0
+        ],
+        [
+          20,
+          0
+        ],
+        [
+          22,
+          0
+        ],
+        [
+          24,
+          0
+        ],
+        [
+          26,
+          0
+        ],
+        [
+          28,
+          0
+        ],
+        [
+          30,
+          0
+        ],
+        [
+          32,
+          0
+        ],
+        [
+          34,
+          0
+        ],
+        [
+          36,
+          0
+        ],
+        [
+          38,
+          0
+        ],
+        [
+          40,
+          0
+        ],
+        [
+          42,
+          0
+        ],
+        [
+          44,
+          0
+        ],
+        [
+          46,
+          0
+        ],
+        [
+          48,
+          0
+        ],
+        [
+          50,
+          0
+        ],
+        [
+          52,
+          0
+        ],
+        [
+          54,
+          0
+        ],
+        [
+          56,
+          0
+        ],
+        [
+          58,
+          0
+        ],
+        [
+          60,
+          0
+        ],
+        [
+          62,
+          0
+        ],
+        [
+          64,
+          0
+        ],
+        [
+          66,
+          0
+        ],
+        [
+          68,
+          0
+        ],
+        [
+          70,
+          0
+        ],
+        [
+          72,
+          0
+        ],
+        [
+          74,
+          0
+        ],
+        [
+          76,
+          0
+        ],
+        [
+          78,
+          0
+        ],
+        [
+          80,
+          0
+        ],
+        [
+          82,
+          0
+        ],
+        [
+          84,
+          0
+        ],
+        [
+          86,
+          0
+        ],
+        [
+          88,
+          0
+        ],
+        [
+          90,
+          0
+        ],
+        [
+          92,
+          0
+        ],
+        [
+          94,
+          0
+        ],
+        [
+          96,
+          0
+        ],
+        [
+          98,
+          0
+        ],
+        [
+          100,
+          0
+        ],
+        [
+          102,
+          0
+        ],
+        [
+          104,
+          0
+        ],
+        [
+          106,
+          0
+        ],
+        [
+          113,
+          0
+        ],
+        [
+          122,
+          0
+        ]
+      ],
+      "interceptions": [
+        {
+          "step": 32,
+          "impact_fraction": 0.8144673359893779,
+          "projectile_id": 1001,
+          "round_id": 1013,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            227.19842235190646
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 34,
+          "impact_fraction": 0.9515876964278448,
+          "projectile_id": 1001,
+          "round_id": 1015,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            195.7511585011837
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 40,
+          "impact_fraction": 0.2594388019504848,
+          "projectile_id": 1002,
+          "round_id": 1017,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            217.81547647672244
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 46,
+          "impact_fraction": 0.6461305752095882,
+          "projectile_id": 1003,
+          "round_id": 1020,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            224.35551736721013
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 50,
+          "impact_fraction": 0.040158938469490965,
+          "projectile_id": 1001,
+          "round_id": 1029,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -25.171220477158204
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 51,
+          "impact_fraction": 0.9720285600348184,
+          "projectile_id": 1004,
+          "round_id": 1022,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            246.68152980990638
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 53,
+          "impact_fraction": 0.04459778112735422,
+          "projectile_id": 1004,
+          "round_id": 1023,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            231.06774925590742
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 54,
+          "impact_fraction": 0.11786955868273345,
+          "projectile_id": 1004,
+          "round_id": 1024,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            215.45337849600168
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 57,
+          "impact_fraction": 0.526495292274676,
+          "projectile_id": 1002,
+          "round_id": 1033,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -34.072811168384995
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 58,
+          "impact_fraction": 0.38115162689199866,
+          "projectile_id": 1005,
+          "round_id": 1025,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            253.52451036763182
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 58,
+          "impact_fraction": 0.6159564963107396,
+          "projectile_id": 1002,
+          "round_id": 1034,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -49.88188700819337
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 60,
+          "impact_fraction": 0.5292073739255795,
+          "projectile_id": 1005,
+          "round_id": 1027,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            222.37899753632982
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 63,
+          "impact_fraction": 0.9372381713648056,
+          "projectile_id": 1003,
+          "round_id": 1036,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -26.956780501670828
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 65,
+          "impact_fraction": 0.02759600132085046,
+          "projectile_id": 1003,
+          "round_id": 1037,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -42.72084163972273
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 68,
+          "impact_fraction": 0.029333503433502425,
+          "projectile_id": 1006,
+          "round_id": 1031,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            213.93171062223928
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 75,
+          "impact_fraction": 0.5434587786761028,
+          "projectile_id": 1007,
+          "round_id": 1035,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            205.7471075013304
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 76,
+          "impact_fraction": 0.7923377352057484,
+          "projectile_id": 1005,
+          "round_id": 1042,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -12.188749782898952
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 80,
+          "impact_fraction": 0.9619064201185474,
+          "projectile_id": 1007,
+          "round_id": 1040,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            128.02195992824963
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 84,
+          "impact_fraction": 0.2260198507568279,
+          "projectile_id": 1007,
+          "round_id": 1043,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            81.31518052173222
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 84,
+          "impact_fraction": 0.3295912635166319,
+          "projectile_id": 1006,
+          "round_id": 1046,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -20.165424709076227
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 85,
+          "impact_fraction": 0.42526087138931346,
+          "projectile_id": 1006,
+          "round_id": 1047,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            -35.82324221137383
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 89,
+          "impact_fraction": 0.593533395645095,
+          "projectile_id": 1008,
+          "round_id": 1045,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            104.69830583033844
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 93,
+          "impact_fraction": 0.9636401709424858,
+          "projectile_id": 1008,
+          "round_id": 1049,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            42.490385085147324
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 96,
+          "impact_fraction": 0.15442477383728206,
+          "projectile_id": 1008,
+          "round_id": 1051,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            11.362638413253162
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 100,
+          "impact_fraction": 0.43647957575027196,
+          "projectile_id": 1009,
+          "round_id": 1052,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            50.632151133090254
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 101,
+          "impact_fraction": 0.5336739425379545,
+          "projectile_id": 1009,
+          "round_id": 1053,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            35.09471901573524
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 102,
+          "impact_fraction": 0.6310725383038689,
+          "projectile_id": 1009,
+          "round_id": 1054,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            19.56400019622167
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 106,
+          "impact_fraction": 0.921261265598445,
+          "projectile_id": 1010,
+          "round_id": 1055,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            58.939935138713416
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 108,
+          "impact_fraction": 0.018930506059748428,
+          "projectile_id": 1010,
+          "round_id": 1056,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            43.45241028382598
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 110,
+          "impact_fraction": 0.2178042637186994,
+          "projectile_id": 1010,
+          "round_id": 1058,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            12.456196503764236
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 114,
+          "impact_fraction": 0.5161343268454287,
+          "projectile_id": 1011,
+          "round_id": 1059,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            51.97556122962588
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 115,
+          "impact_fraction": 0.6156062178471597,
+          "projectile_id": 1011,
+          "round_id": 1060,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            36.52858582493131
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 116,
+          "impact_fraction": 0.718133992265254,
+          "projectile_id": 1011,
+          "round_id": 1061,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            21.048227056691573
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        },
+        {
+          "step": 121,
+          "impact_fraction": 0.023224000639092406,
+          "projectile_id": 1012,
+          "round_id": 1062,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            60.69275469016909
+          ],
+          "height_layer": "upper",
+          "durability_before": 3,
+          "durability_after": 2,
+          "intercepted": false
+        },
+        {
+          "step": 123,
+          "impact_fraction": 0.22732778753405908,
+          "projectile_id": 1012,
+          "round_id": 1064,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            29.848364735174915
+          ],
+          "height_layer": "upper",
+          "durability_before": 2,
+          "durability_after": 1,
+          "intercepted": false
+        },
+        {
+          "step": 124,
+          "impact_fraction": 0.3315621357560142,
+          "projectile_id": 1012,
+          "round_id": 1065,
+          "source_ship_id": "ship.caliber.30",
+          "weapon_id": "weapon_upper_port",
+          "position_m": [
+            0.0,
+            14.40989753863898
+          ],
+          "height_layer": "upper",
+          "durability_before": 1,
+          "durability_after": 0.0,
+          "intercepted": true
+        }
+      ],
+      "ship_hits": [],
+      "intercepted": 12
+    },
+    "comparison": {
+      "same_inventory": true,
+      "same_shots": true,
+      "missing_threats": 0,
+      "added_threats": 0,
+      "max_arrival_difference_s": 2.518405907059318e-05,
+      "same_interceptions": true,
+      "same_ship_hits": true
+    }
+  }
+}

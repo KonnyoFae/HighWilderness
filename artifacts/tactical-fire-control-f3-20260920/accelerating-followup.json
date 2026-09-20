@@ -1,0 +1,191 @@
+{
+  "case": {
+    "name": "accelerating_followup",
+    "speed": 100,
+    "accelerate": true,
+    "stock": "saved"
+  },
+  "variant": "optimized",
+  "steps": 250,
+  "guns": 29,
+  "guns_per_ship": [
+    25,
+    4
+  ],
+  "shots": 7,
+  "peak_projectiles": 7,
+  "step": {
+    "mean_ms": 9.384951600804925,
+    "p50_ms": 9.73270001122728,
+    "p95_ms": 18.630400008987635,
+    "p99_ms": 19.3169999984093,
+    "max_ms": 19.53350001713261
+  },
+  "warm_step": {
+    "mean_ms": 10.438505455121312,
+    "p50_ms": 10.38759999210015,
+    "p95_ms": 18.86410004226491,
+    "p99_ms": 19.3169999984093,
+    "max_ms": 19.53350001713261
+  },
+  "aim": {
+    "mean_ms": 0.001697999658063054,
+    "p50_ms": 0.0,
+    "p95_ms": 0.01479999627918005,
+    "p99_ms": 0.02169999061152339,
+    "max_ms": 0.029999995604157448
+  },
+  "inverse": {
+    "mean_ms": 0.0017147990874946117,
+    "p50_ms": 0.0,
+    "p95_ms": 0.012299977242946625,
+    "p99_ms": 0.013499986380338669,
+    "max_ms": 0.019300030544400215
+  },
+  "defense": {
+    "mean_ms": 7.464312400203198,
+    "p50_ms": 7.977299974299967,
+    "p95_ms": 16.46639994578436,
+    "p99_ms": 17.003600019961596,
+    "max_ms": 17.264599970076233
+  },
+  "publish": {
+    "mean_ms": 2.055419041656904,
+    "p50_ms": 2.0926999859511852,
+    "p95_ms": 2.3439000360667706,
+    "p99_ms": 2.525600022636354,
+    "max_ms": 2.532099955715239
+  },
+  "read": {
+    "mean_ms": 3.5828888917060953,
+    "p50_ms": 3.363700001500547,
+    "p95_ms": 4.748100007418543,
+    "p99_ms": 7.658099988475442,
+    "max_ms": 9.358200011774898
+  },
+  "costs": {
+    "solution_seconds": 0.0004244999145157635,
+    "solution_calls": 25,
+    "defense_seconds": 1.8660781000507995,
+    "inverse_seconds": 0.00042869977187365294,
+    "inverse_calls": 112
+  },
+  "requests": 25,
+  "cache_hits": 0,
+  "solution_age_steps": 2,
+  "work_totals": {
+    "requests": 25,
+    "solves": 25,
+    "cache_hits": 0,
+    "negative_cache_hits": 0,
+    "solution_age_steps": 54,
+    "searches": 265,
+    "search_requests": 275,
+    "search_queue": 10,
+    "solve_queue": 0,
+    "max_search_wait_steps": 3,
+    "max_solve_wait_steps": 0,
+    "reused_solutions": 36,
+    "tracking_only": 1112,
+    "reproject_rejected": 0,
+    "refresh_observation": 9,
+    "refresh_motion": 24,
+    "invalidated": 0,
+    "solve_budget": 2000,
+    "search_budget": 2000,
+    "precise_requests": 25
+  },
+  "work_max": {
+    "requests": 1,
+    "solves": 1,
+    "cache_hits": 0,
+    "negative_cache_hits": 0,
+    "solution_age_steps": 2,
+    "searches": 8,
+    "search_requests": 17,
+    "search_queue": 9,
+    "solve_queue": 0,
+    "max_search_wait_steps": 2,
+    "max_solve_wait_steps": 0,
+    "reused_solutions": 1,
+    "tracking_only": 12,
+    "reproject_rejected": 0,
+    "refresh_observation": 1,
+    "refresh_motion": 1,
+    "invalidated": 0,
+    "solve_budget": 8,
+    "search_budget": 8,
+    "precise_requests": 1
+  },
+  "shot_events": {
+    "27": [
+      {
+        "step": 63,
+        "angle": -0.011640434410618461,
+        "target": [
+          0,
+          null
+        ]
+      },
+      {
+        "step": 93,
+        "angle": 0.0240894701159049,
+        "target": [
+          0,
+          null
+        ]
+      },
+      {
+        "step": 123,
+        "angle": -0.03307845615999572,
+        "target": [
+          0,
+          null
+        ]
+      },
+      {
+        "step": 153,
+        "angle": 0.0,
+        "target": [
+          0,
+          null
+        ]
+      },
+      {
+        "step": 183,
+        "angle": 0.0,
+        "target": [
+          0,
+          null
+        ]
+      },
+      {
+        "step": 213,
+        "angle": 0.0,
+        "target": [
+          0,
+          null
+        ]
+      },
+      {
+        "step": 243,
+        "angle": 0.0,
+        "target": [
+          0,
+          null
+        ]
+      }
+    ]
+  },
+  "source_sha256": {
+    "backend\\high_wilderness_sidecar\\tactical_gunnery.py": "97054c0edd765184d5d756c7fc8ead98d7e5c67ce0f21fd6fcbcaf74a7c6cce9",
+    "backend\\high_wilderness_sidecar\\tactical_targeting.py": "25e1a3f3e4982f50e4ba45743de986c0d0ef3e791b6d47f31032801a8e9e1c10",
+    "backend\\high_wilderness_sidecar\\tactical_fire_control.py": "64cf514863cd1d51a8dccfdd117a1acdfb95ff733bf275dbb6078e55404d6297",
+    "backend\\high_wilderness_sidecar\\tactical_ballistics.py": "3908547296011ec62259668ec8b5edd82cf7ebad1c258a84036e57ddfce3f62b",
+    "backend\\high_wilderness_sidecar\\tactical_drag_prediction.py": "b73f32521791a44d97789566f3563efa9b9c74b69d30800be9601b271c1587e3",
+    "backend\\high_wilderness_sidecar\\tactical_point_defense.py": "2ae829d64025629d6d1b1b6dcdf5001e9a30dce2bab1358e84826f8d2392d8d4",
+    "tools\\profile_tactical_fire_control.py": "6a542e3c71db814790b59d6a089fcf669b47a16ac21a2acd066e5dddd380ebe9",
+    "tools\\profile_tactical_fire_control_f3.py": "c51b2adc73614e6afc1fef11fb3a5356d820702e49a4d3a799f5e065c8ebc6d9",
+    "tools\\fire_control_f2_reference.py": "3629cfc7e30d74f32d7b576675f4c40c9dd068ccad68d16de33625f0d561bf45"
+  }
+}

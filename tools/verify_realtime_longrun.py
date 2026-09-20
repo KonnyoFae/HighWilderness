@@ -65,9 +65,9 @@ def memory_gate(samples, rules):
 
 
 class Client:
-    def __init__(self, out):
+    def __init__(self, out, *, probe_module='tools.realtime_longrun_probe', probe_args=()):
         self.stderr = (out/'stderr.log').open('x', encoding='utf-8')
-        self.process = subprocess.Popen([sys.executable,'-X','utf8','-m','tools.realtime_longrun_probe','--out',str(out)],
+        self.process = subprocess.Popen([sys.executable,'-X','utf8','-m',probe_module,'--out',str(out),*probe_args],
             cwd=ROOT, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=self.stderr,
             creationflags=subprocess.CREATE_NO_WINDOW if sys.platform == 'win32' else 0)
         self.outputs = Queue(maxsize=8)

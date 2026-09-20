@@ -1,0 +1,1711 @@
+{
+  "case": "saved",
+  "step": {
+    "mean_ms": 3.213781002001926,
+    "p50_ms": 2.5935000157915056,
+    "p95_ms": 6.433500035200268,
+    "p99_ms": 11.886199994478375,
+    "max_ms": 19.12140002241358
+  },
+  "publish": {
+    "mean_ms": 3.2381234945091224,
+    "p50_ms": 2.973399998154491,
+    "p95_ms": 4.73079999210313,
+    "p99_ms": 7.992999977432191,
+    "max_ms": 11.793999990914017
+  },
+  "read": {
+    "mean_ms": 6.148687704122415,
+    "p50_ms": 5.844900035299361,
+    "p95_ms": 7.989600009750575,
+    "p99_ms": 10.69569995161146,
+    "max_ms": 30.661299999337643
+  },
+  "measured_steps": 7185,
+  "peak_projectiles": 31,
+  "incoming_waves": 0,
+  "shots": 35,
+  "intercepted": 0,
+  "ending": null,
+  "fire_work": {
+    "requests": 188,
+    "solves": 188,
+    "cache_hits": 0,
+    "negative_cache_hits": 0,
+    "solution_age_steps": 793,
+    "searches": 8694,
+    "search_requests": 8704,
+    "search_queue": 10,
+    "solve_queue": 0,
+    "max_search_wait_steps": 3,
+    "max_solve_wait_steps": 0,
+    "reused_solutions": 367,
+    "tracking_only": 17542,
+    "reproject_rejected": 2,
+    "refresh_observation": 55,
+    "refresh_motion": 123,
+    "invalidated": 32,
+    "solve_budget": 57480,
+    "search_budget": 57480,
+    "precise_requests": 188
+  },
+  "fire_work_max": {
+    "requests": 1,
+    "solves": 1,
+    "cache_hits": 0,
+    "negative_cache_hits": 0,
+    "solution_age_steps": 9,
+    "searches": 8,
+    "search_requests": 17,
+    "search_queue": 9,
+    "solve_queue": 0,
+    "max_search_wait_steps": 2,
+    "max_solve_wait_steps": 0,
+    "reused_solutions": 2,
+    "tracking_only": 17,
+    "reproject_rejected": 1,
+    "refresh_observation": 1,
+    "refresh_motion": 1,
+    "invalidated": 1,
+    "solve_budget": 8,
+    "search_budget": 8,
+    "precise_requests": 1
+  },
+  "prediction_work": {
+    "requests": 16179,
+    "computed": 4034,
+    "shared": 0,
+    "rolled": 12145,
+    "invalidated_motion": 0,
+    "broad_rejected": 2036,
+    "hull_paths": 1998,
+    "path_points": 340738,
+    "max_age_steps": 7944,
+    "entries": 16179,
+    "path_reused": 4018
+  },
+  "inventory": [
+    {
+      "cargo": [],
+      "crew": [
+        {
+          "count": 55,
+          "crew_type": "ordinary"
+        },
+        {
+          "count": 2,
+          "crew_type": "technical_officer"
+        }
+      ],
+      "damage_controls": [
+        {
+          "module_id": "damage_control.0",
+          "preparation": null,
+          "quantity_units": 0
+        },
+        {
+          "module_id": "damage_control.1",
+          "preparation": null,
+          "quantity_units": 0
+        }
+      ],
+      "engine_latches": [],
+      "fires": [],
+      "fuel_tanks": [
+        {
+          "durability_points": 0.0,
+          "quantity_units": 0,
+          "tank_id": "tank.filling.deck.2"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.0"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.1"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.10"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.11"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.12"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.13"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.14"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.15"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.2"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.3"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.4"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.5"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.6"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.7"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.8"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.9"
+        }
+      ],
+      "fuel_units": 16000.0,
+      "hull_integrity_fraction": 0.9771677029973472,
+      "instance_id": "instance.preparation.68fb640a-f969-4007-91de-f275c84bffa5",
+      "interface": "gaotian.persistent-ship/5c-v1",
+      "magazines": [
+        {
+          "module_id": "ammunition_magazine.0",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.1",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.10",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.11",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.12",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.2",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.3",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.4",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.5",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.6",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.7",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.8",
+          "quantity": 0
+        },
+        {
+          "module_id": "ammunition_magazine.9",
+          "quantity": 0
+        }
+      ],
+      "missiles": {
+        "interface": "gaotian.missile-stores/5c-v1",
+        "launchers": [],
+        "magazines": [],
+        "next_serial": 1
+      },
+      "modules": [
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.10",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.11",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.12",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.7",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.8",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.9",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.10",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.11",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.7",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.8",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.9",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 120.0,
+          "module_id": "cic.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters.7",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "damage_control.0",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "damage_control.1",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "fire_control.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "fire_control.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "fire_control.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "fire_control.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator.7",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.10",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.11",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.12",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.13",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.14",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.15",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.7",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.8",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.9",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 120.0,
+          "module_id": "main_engine.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 120.0,
+          "module_id": "main_engine.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 120.0,
+          "module_id": "main_engine.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "main_engine.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "main_engine.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "main_engine.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "main_engine.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.10",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.11",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.12",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.13",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.14",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.15",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.16",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.17",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.7",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.8",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.9",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "remote_core.0",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "sensor.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.10",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.11",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.12",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.13",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.14",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.15",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.16",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.17",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.18",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 9.106648199445956,
+          "module_id": "weapon.19",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.20",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.21",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 13.434903047091375,
+          "module_id": "weapon.22",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.23",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.24",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.7",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.8",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.9",
+          "operating_mode": "active"
+        }
+      ],
+      "power_policy": {
+        "allocation_mode": "strict_categories",
+        "category_order": [
+          "damage_control",
+          "weapons_and_active_defense",
+          "fire_control",
+          "sensors"
+        ],
+        "disabled_categories": []
+      },
+      "resources_sha256": "55327dd2a5eb83d0dc78409b02335bd7f2241ede5814a715e97a7e2ed56b0db2",
+      "revision": 4,
+      "service": {
+        "reasons": [],
+        "status": "available"
+      },
+      "weapons": [
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.0",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.1",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.10",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.11",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.12",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.13",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.14",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.15",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.16",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.17",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.18",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.19",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.2",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.20",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.21",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.22",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.23",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.24",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.3",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.4",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.5",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.6",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.7",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.8",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.9",
+          "ready_rounds": 0,
+          "recipe_id": null,
+          "reload": null
+        }
+      ],
+      "wounded_aboard": 0
+    },
+    {
+      "cargo": [
+        {
+          "good_id": "cargo.engineering_parts",
+          "quantity": 100
+        },
+        {
+          "good_id": "cargo.high_energy_fuel",
+          "quantity": 100
+        },
+        {
+          "good_id": "cargo.infrared_parts",
+          "quantity": 24
+        },
+        {
+          "good_id": "cargo.radar_parts",
+          "quantity": 64
+        },
+        {
+          "good_id": "cargo.rocket_parts",
+          "quantity": 64
+        },
+        {
+          "good_id": "cargo.special_alloy",
+          "quantity": 100
+        },
+        {
+          "good_id": "cargo.turbojet_parts",
+          "quantity": 4
+        }
+      ],
+      "crew": [
+        {
+          "count": 20,
+          "crew_type": "ordinary"
+        },
+        {
+          "count": 2,
+          "crew_type": "technical_officer"
+        },
+        {
+          "count": 2,
+          "crew_type": "veteran_damage_control"
+        }
+      ],
+      "damage_controls": [
+        {
+          "module_id": "damage_control.0",
+          "preparation": null,
+          "quantity_units": 0
+        }
+      ],
+      "engine_latches": [],
+      "fires": [],
+      "fuel_tanks": [
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.0"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.1"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.2"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.3"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.4"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.5"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.6"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.7"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.8"
+        },
+        {
+          "durability_points": 100.0,
+          "quantity_units": 1000.0,
+          "tank_id": "tank.module.lift_fuel_tank.9"
+        }
+      ],
+      "fuel_units": 10000.0,
+      "hull_integrity_fraction": 1.0,
+      "instance_id": "instance.preparation.d17742e1-bdb5-4678-be0b-308765b76739",
+      "interface": "gaotian.persistent-ship/5c-v1",
+      "magazines": [
+        {
+          "module_id": "ammunition_magazine.0",
+          "quantity": 9916
+        }
+      ],
+      "missiles": {
+        "interface": "gaotian.missile-stores/5c-v1",
+        "launchers": [
+          {
+            "auto_fire": true,
+            "cooldown_steps": 0,
+            "job": null,
+            "load_remaining": 5,
+            "model_id": "gtw.missile.5c.small.interceptor",
+            "module_id": "weapon.10",
+            "ready": [
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 5,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 11,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 17,
+                "source": "raw",
+                "warhead_id": "blast"
+              }
+            ],
+            "unload_remaining": 0,
+            "warhead_id": "blast"
+          },
+          {
+            "auto_fire": false,
+            "cooldown_steps": 0,
+            "job": null,
+            "load_remaining": 0,
+            "model_id": "gtw.missile.5c.medium.turbojet.infrared",
+            "module_id": "weapon.3",
+            "ready": [
+              {
+                "model_id": "gtw.missile.5c.medium.turbojet.infrared",
+                "serial": 1,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.medium.turbojet.infrared",
+                "serial": 2,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.medium.turbojet.infrared",
+                "serial": 3,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.medium.turbojet.infrared",
+                "serial": 4,
+                "source": "raw",
+                "warhead_id": "blast"
+              }
+            ],
+            "unload_remaining": 0,
+            "warhead_id": "blast"
+          },
+          {
+            "auto_fire": false,
+            "cooldown_steps": 0,
+            "job": null,
+            "load_remaining": 1,
+            "model_id": "gtw.missile.5c.small.rocket.active_radar",
+            "module_id": "weapon.5",
+            "ready": [
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 6,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 13,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 19,
+                "source": "raw",
+                "warhead_id": "blast"
+              }
+            ],
+            "unload_remaining": 0,
+            "warhead_id": "blast"
+          },
+          {
+            "auto_fire": false,
+            "cooldown_steps": 0,
+            "job": null,
+            "load_remaining": 1,
+            "model_id": "gtw.missile.5c.small.rocket.active_radar",
+            "module_id": "weapon.6",
+            "ready": [
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 7,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 14,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 20,
+                "source": "raw",
+                "warhead_id": "blast"
+              }
+            ],
+            "unload_remaining": 0,
+            "warhead_id": "blast"
+          },
+          {
+            "auto_fire": false,
+            "cooldown_steps": 0,
+            "job": null,
+            "load_remaining": 1,
+            "model_id": "gtw.missile.5c.small.rocket.active_radar",
+            "module_id": "weapon.7",
+            "ready": [
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 8,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 15,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 21,
+                "source": "raw",
+                "warhead_id": "blast"
+              }
+            ],
+            "unload_remaining": 0,
+            "warhead_id": "blast"
+          },
+          {
+            "auto_fire": false,
+            "cooldown_steps": 0,
+            "job": null,
+            "load_remaining": 1,
+            "model_id": "gtw.missile.5c.small.rocket.active_radar",
+            "module_id": "weapon.8",
+            "ready": [
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 9,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 16,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.rocket.active_radar",
+                "serial": 22,
+                "source": "raw",
+                "warhead_id": "blast"
+              }
+            ],
+            "unload_remaining": 0,
+            "warhead_id": "blast"
+          },
+          {
+            "auto_fire": true,
+            "cooldown_steps": 0,
+            "job": null,
+            "load_remaining": 5,
+            "model_id": "gtw.missile.5c.small.interceptor",
+            "module_id": "weapon.9",
+            "ready": [
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 10,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 12,
+                "source": "raw",
+                "warhead_id": "blast"
+              },
+              {
+                "model_id": "gtw.missile.5c.small.interceptor",
+                "serial": 18,
+                "source": "raw",
+                "warhead_id": "blast"
+              }
+            ],
+            "unload_remaining": 0,
+            "warhead_id": "blast"
+          }
+        ],
+        "magazines": [
+          {
+            "assembly_remaining": 0,
+            "jobs": [],
+            "model_id": "gtw.missile.5c.small.rocket.active_radar",
+            "module_id": "ammunition_magazine.1",
+            "stock": [],
+            "warhead_id": "blast"
+          }
+        ],
+        "next_serial": 23
+      },
+      "modules": [
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "ammunition_magazine.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.7",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.8",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "cargo_hold.9",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 120.0,
+          "module_id": "cic.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "crew_quarters.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "damage_control.0",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "datalink.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "fire_control.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "generator.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.7",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.8",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "lift_fuel_tank.9",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 120.0,
+          "module_id": "main_engine.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 120.0,
+          "module_id": "main_engine.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "maneuver_thruster.7",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "remote_core.0",
+          "operating_mode": "standby"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "sensor.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "sensor.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.0",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.1",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.10",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.2",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.3",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.4",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.5",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.6",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.7",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.8",
+          "operating_mode": "active"
+        },
+        {
+          "durability_points": 100.0,
+          "module_id": "weapon.9",
+          "operating_mode": "active"
+        }
+      ],
+      "power_policy": {
+        "allocation_mode": "strict_categories",
+        "category_order": [
+          "damage_control",
+          "weapons_and_active_defense",
+          "fire_control",
+          "sensors"
+        ],
+        "disabled_categories": []
+      },
+      "resources_sha256": "6290e4dddca225e9a7f40a80e14151de426f42f7f2d39f54557e42a2b9bf9012",
+      "revision": 4,
+      "service": {
+        "reasons": [],
+        "status": "available"
+      },
+      "weapons": [
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.0",
+          "ready_rounds": 2000,
+          "recipe_id": "recipe.3a.30mm.ordinary",
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.1",
+          "ready_rounds": 11,
+          "recipe_id": "recipe.3a.50mm.ordinary",
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.2",
+          "ready_rounds": 8,
+          "recipe_id": "recipe.3a.75mm.ordinary",
+          "reload": null
+        },
+        {
+          "cooldown_steps": 0,
+          "module_id": "weapon.4",
+          "ready_rounds": 2000,
+          "recipe_id": "recipe.3a.30mm.ordinary",
+          "reload": null
+        }
+      ],
+      "wounded_aboard": 0
+    }
+  ]
+}

@@ -12,7 +12,7 @@ export const gunStatus: Record<string, string> = {
   target_other_layer: "目标不在所选炮弹作用层",
   layer_out_of_reach: "作用层超出相邻层范围，请重新选择",
   no_special_materials: "特殊弹材料不足",
-  battle_finished: "交战已结束", no_target: "等待目标", tracking: "跟踪目标", target_unavailable: "目标信息失效", out_of_arc: "超出炮塔射界",
+  battle_finished: "交战已结束", no_target: "等待目标", tracking: "跟踪目标", fire_control_pending: "正在计算射击诸元", target_unavailable: "目标信息失效", out_of_arc: "超出炮塔射界",
   out_of_range: "超出射程", hull_blocked: "上层船壳遮挡", traversing: "炮塔转向中", reloading: "装填中",
   cooldown: "冷却中", no_ammunition: "弹药资源不足", ready: "就绪", fired: "已开火", destroyed: "武器损毁",
   host_unavailable: "宿主不可用", power_unavailable: "供电不足", crew_unavailable: "操作人员不足",

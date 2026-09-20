@@ -280,6 +280,9 @@ class GunneryBattle:
         self._gun_projectiles = tuple(gun_projectiles)
         self._gun_flights = tuple(gun_flights)
         self.states = tuple(GunState(rng=(config['seed']+n*65537) & 0xffffffff, reload_recipe_id=gun_recipes[n]) for n in range(len(guns)))
+        self.fire_control_metrics = targeting.StepSolutions(session.world.fixed_step).metrics()
+        from .tactical_fire_control import Runtime as FireControlRuntime
+        self.fire_control = FireControlRuntime()
         self.projectiles = ()
         self._contacts, self._lock_started = {}, {}
         self._availability_key, self._available = None, None
@@ -530,6 +533,12 @@ class GunneryBattle:
                     inv.command(epoch=inv.epoch, sequence=inv.sequence+1, kind='cancel_reload', target=gun.module_id)
         def simulate(world, result, inventories):
             step = world.fixed_step
+            solutions = targeting.StepSolutions(step)
+            staged['fire_control_solutions'] = solutions
+            fire_control = self.fire_control.begin(step)
+            staged['fire_control_plan'] = fire_control
+            defense_prediction = self.point_defense.begin(world) if self.point_defense else None
+            staged['defense_prediction'] = defense_prediction
             availability_key, available = staged['availability_key'], staged['available']
             self.missiles.advance(world,inventories,available)
             projectiles = list(staged['survivors']) if self.damage else [
@@ -543,12 +552,12 @@ class GunneryBattle:
             ew_plan=self.ew.plan(world,inventories,available,sensor_frame,effects,self._ending_reason(world) if self.damage else None)
             staged['ew_plan']=ew_plan
             if ew_plan[3]:sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,ew_plan[1]))
-            environment=self.ew.environment(world,available,sensor_frame,ew_plan[1],projectiles)
+            environment=self.ew.environment(world,available,sensor_frame,ew_plan[1],projectiles,prediction=defense_prediction)
             from .tactical_missile_defense import prepare_all
             projectiles=prepare_all(self,world,available,projectiles,environment,sensor_frame)
             staged['sensor_frame']=sensor_frame
             starts, contacts = {}, {}
-            working_states, search_contacts = targeting.acquire(self, world, available, inventories, sensor_frame)
+            working_states, search_contacts = fire_control.acquire(self, world, available, inventories, sensor_frame, solutions)
             staged['search_contacts'] = search_contacts
             manual_targets={(n,i) for n,key in self.observation.locks.items() for i,s in enumerate(world.ships) if s.ship_id==key}
             desired_targets = sorted({(g.ship_index, s.target[0]) for g, s in zip(self.guns, working_states) if s.mode == 'auto' and s.target}|manual_targets,
@@ -580,7 +589,8 @@ class GunneryBattle:
                     contacts[pair] = self.observation.contact(observer,world.ships[target].ship_id,world,quality,sensor_frame) or self._measure(observer,target,world,quality)
                 elif visible and previous and step-previous.step <= self.config['observation_expiry_steps']:
                     contacts[pair] = previous
-            defense_contacts,defense_threats = self.point_defense.observe(world,available,projectiles,sensor_frame) if self.point_defense else ({},())
+            fire_control.prepare(self,world,available,inventories,working_states,contacts,sensor_frame,solutions)
+            defense_contacts,defense_threats = self.point_defense.observe(world,available,projectiles,sensor_frame,prediction=defense_prediction) if self.point_defense else ({},())
             staged.update(defense_contacts=defense_contacts,defense_threats=defense_threats)
             defense_locks=set(manual_projectiles)
             states, projectile_sequence = [], self._projectile_sequence
@@ -607,6 +617,8 @@ class GunneryBattle:
                 flight=self._gun_flights[gun_index][w['recipe_id'] or state.reload_recipe_id]
                 maximum_range=min(gun.maximum_range,ballistics.reference_range(flight,speed_ratio))
                 if not cross_legal:status=status or 'layer_out_of_reach'
+                can_slew = status is None
+                fire_solution_ready = True
                 def transact(kind, **args):
                     inv.command(epoch=inv.epoch, sequence=inv.sequence+1, kind=kind, target=gun.module_id, **args)
                 # Empty guns can load without a target. The selected recipe never
@@ -642,7 +654,7 @@ class GunneryBattle:
                         quality, quality_reason, sources = qualities[pair]
                         contact = contacts.get(pair)
                         if contact:
-                            aim = targeting.solution(self, state, contact, step, origin, own_velocity, flight, speed_ratio)
+                            aim, fire_solution_ready = fire_control.aims.get(gun_index,(None,False))
                             bearing_error = contact.bearing_error
                         if aim is None:
                             status = status or 'target_unavailable'
@@ -660,7 +672,7 @@ class GunneryBattle:
                 desired = wrap(atan2(local[0], local[1])-gun.rotation+bearing_error)
                 constrained = min(gun.maximum, max(gun.minimum, desired))
                 slew = gun.slew*self.crew_efficiency(world,gun.ship_index,gun.module_id,'weapon.aim')
-                angle = state.angle if status else state.angle + min(slew, max(-slew, constrained-state.angle))
+                angle = state.angle if not can_slew else state.angle + min(slew, max(-slew, constrained-state.angle))
                 # Show the direction actually requested including degraded error.
                 aim_direction = rotate((sin(desired+gun.rotation), cos(desired+gun.rotation)), m.heading_rad)
                 display_aim = add(origin, (aim_direction[0]*hypot(*delta), aim_direction[1]*hypot(*delta)))
@@ -668,6 +680,10 @@ class GunneryBattle:
                     'out_of_range' if not gun.minimum_range <= hypot(*delta) <= maximum_range else
                     'hull_blocked' if self._hull_blocked(gun, angle) else
                     'traversing' if abs(desired-angle) > self.config['aligned_tolerance_mdeg']*RAD else None)
+                if state.target_policy == 'automatic' and state.target and fire_solution_ready and (
+                    not gun.minimum <= desired <= gun.maximum or not gun.minimum_range <= hypot(*delta) <= maximum_range
+                    or self._hull_blocked(gun,desired)):
+                    fire_control.reject(gun_index,state.target[0])
                 w = next(w for w in inv._value['weapons'] if w['module_id'] == gun.module_id)
                 if w['reload']:
                     status = status or 'reloading'
@@ -675,6 +691,8 @@ class GunneryBattle:
                     status = status or 'cooldown'
                 elif not w['ready_rounds']:
                     status = status or 'no_ammunition'
+                if not fire_solution_ready:
+                    status = status or fire_control.reasons.get(gun_index,'fire_control_pending')
                 shots, rng = state.shots, state.rng
                 if wanted and status is None:
                     if len(projectiles)+len(self.missiles.pending) >= self.config['max_projectiles']:
@@ -778,6 +796,8 @@ class GunneryBattle:
         self.observation.frame = staged['sensor_frame']
         self._contacts, self._lock_started = staged['contacts'], staged['starts']
         self._search_contacts = staged['search_contacts']
+        self.fire_control.commit(staged['fire_control_plan'])
+        self.fire_control_metrics = staged['fire_control_plan'].metrics(staged['fire_control_solutions'])
         self._availability_key, self._available = staged['availability_key'], staged['available']
         self._projectile_sequence = staged['projectile_sequence']
         self.missiles.commit(staged['missile_plan'],bool(staged.get('ending')))
@@ -787,7 +807,8 @@ class GunneryBattle:
             self.magazines.commit(staged['magazine_explosions'])
             self.personnel.records = staged['personnel_records']
             self.personnel.recent = (self.personnel.recent+staged['personnel_events'])[-32:]
-            self.point_defense.commit(staged['defense_contacts'],staged['defense_threats'],self.damage_state.interceptions)
+            self.point_defense.commit(staged['defense_contacts'],staged['defense_threats'],self.damage_state.interceptions,
+                prediction=staged['defense_prediction'])
             self.ending = staged.get('ending')
         if self.fire.enabled:
             self.fire.fires, self.fire.controllers = staged['fires'], staged['fire_controllers']

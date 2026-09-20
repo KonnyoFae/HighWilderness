@@ -1,11 +1,9 @@
 """Automatic gun target acquisition from sampled contacts and saved design groups."""
-from dataclasses import replace
-from math import atan2, hypot
+from math import hypot
 from types import SimpleNamespace
 
 from 高天荒野舰艇武器组 import weapon_groups
 from . import tactical_ballistics as ballistics
-from .tactical_layers import LAYERS
 
 
 def compile_groups(session, scenario):
@@ -48,8 +46,38 @@ def solution(battle, state, contact, step, origin, own_velocity, flight, ratio):
     return intercept(origin, own_velocity, position, velocity, flight.muzzle_speed_mps*ratio)
 
 
-def acquire(battle, world, available, inventories, frame=None):
-    from .tactical_gunnery import add, difference, rotate, wrap
+class StepSolutions:
+    """One transactional fixed-step cache, never a cross-step fire permission.
+
+    Search and aiming may share only identical sampled input, muzzle geometry,
+    inherited motion, module selection and flight profile. A changed observation
+    or lock quality with a different measured pose necessarily gets a new solve.
+    """
+    def __init__(self, step):
+        self.step = step
+        self.values = {}
+        self.requests = self.hits = self.negative_hits = 0
+
+    def solve(self, battle, state, contact, step, origin, own_velocity, flight, ratio):
+        if step != self.step:
+            raise ValueError('Fire-control solutions belong to one fixed step')
+        key = (state.target, contact, origin, own_velocity, flight, ratio)
+        self.requests += 1
+        if key in self.values:
+            self.hits += 1
+            self.negative_hits += self.values[key] is None
+            return self.values[key]
+        value = solution(battle, state, contact, step, origin, own_velocity, flight, ratio)
+        self.values[key] = value
+        return value
+
+    def metrics(self):
+        return dict(step=self.step, requests=self.requests, solves=len(self.values),
+                    cache_hits=self.hits, negative_cache_hits=self.negative_hits,
+                    solution_age_steps=0)
+
+
+def search_contacts(battle, world, available, frame=None):
     states, contacts = list(battle.states), {}
     own_side = battle._sides[battle._direct_index]
     automatic = [i for i, (gun, state) in enumerate(zip(battle.guns, states))
@@ -68,42 +96,11 @@ def acquire(battle, world, available, inventories, frame=None):
             previous = battle._contacts.get(pair) or battle._search_contacts.get(pair)
             contacts[pair] = previous if previous and world.fixed_step-previous.step < battle.config['observation_period_steps'] else (
                 battle.observation.contact(observer,world.ships[target].ship_id,world,'degraded',frame) or battle._measure(observer, target, world, 'degraded'))
-    for index in automatic:
-        gun, state = battle.guns[index], states[index]
-        ship = world.ships[gun.ship_index]
-        layer = state.attack_layer or ship.motion.height_layer
-        if gun.ship_index not in observers or available[gun.ship_index][gun.module_id] is not None or (
-                abs(LAYERS.index(layer)-LAYERS.index(ship.motion.height_layer)) > 1):
-            states[index] = replace(state, target=None)
-            continue
-        ratio = 1. if layer == ship.motion.height_layer else ballistics.CROSS_LAYER_SPEED
-        weapon = next(w for w in inventories[gun.ship_index]._value['weapons'] if w['module_id'] == gun.module_id)
-        flight = battle._gun_flights[index][weapon['recipe_id'] or state.reload_recipe_id]
-        maximum = min(gun.maximum_range, ballistics.reference_range(flight, ratio))
-        motion = ship.motion
-        offset = rotate(gun.anchor, motion.heading_rad)
-        origin = add(tuple(motion.position_world_m.to_list()), offset)
-        own_velocity = add(tuple(motion.velocity_world_mps.to_list()), (-motion.yaw_rate_radps*offset[1], motion.yaw_rate_radps*offset[0]))
-        candidates = []
-        for (observer, target), contact in contacts.items():
-            track=(frame or battle.observation.frame).tracks.get((observer,world.ships[target].ship_id))
-            target_layer=track.target.layer if track and track.valid else world.ships[target].motion.height_layer
-            if observer != gun.ship_index or target_layer != layer:
-                continue
-            distance = hypot(*difference(contact.position, origin))
-            if not gun.minimum_range <= distance <= maximum:
-                continue
-            candidates.append((0 if state.target == (target, None) else 1, distance, world.ships[target].ship_id, target, contact))
-        target_choice = None
-        for _, _, _, target, contact in sorted(candidates):
-            aim = solution(battle, replace(state, target=(target, None)), contact, world.fixed_step, origin, own_velocity, flight, ratio)
-            if aim is None:
-                continue
-            delta = difference(aim, origin)
-            local = rotate(delta, -motion.heading_rad)
-            desired = wrap(atan2(local[0], local[1])-gun.rotation+contact.bearing_error)
-            if gun.minimum <= desired <= gun.maximum and gun.minimum_range <= hypot(*delta) <= maximum and not battle._hull_blocked(gun, desired):
-                target_choice = (target, None)
-                break
-        states[index] = replace(state, target=target_choice)
-    return tuple(states), contacts
+    return contacts
+
+
+def acquire(battle, world, available, inventories, frame=None, *, solutions=None):
+    # Standalone callers use the same conservative search as the live planner.
+    from .tactical_fire_control import Plan
+    return Plan(world.fixed_step,{}).acquire(battle,world,available,inventories,
+        frame or battle.observation.frame,solutions)
