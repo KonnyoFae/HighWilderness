@@ -17,6 +17,8 @@ const labels: Record<string, string> = {
   side_clearance_half_cells: "侧挂净空（半格坐标）", exhaust_clearance_half_cells: "排气净空（半格坐标）",
   side_mount_length_steps: "侧挂长度 / 5 m 槽", allowed_rotations_deg: "允许旋转 / °", host_slot: "需要宿主槽",
   provided_slots: "提供嵌入槽", deck_rule: "甲板要求", kind: "能力类型",
+  thrust_n: "推力 / N", response_time_s: "响应时间 / s", fuel_units_per_s: "每秒燃料消耗",
+  fleet_companion_capacity: "SCIC 随伴舰上限 / 艘", fixed_to_cic_origin: "固定于基底原点",
   ready_round_capacity: "待发弹容量 / 发", weapon_class: "武器种类", minimum_range_m: "最小射程 / m",
   maximum_range_m: "最大射程 / m", fire_control_requirement: "火控要求", compatible_munition_ids: "原型兼容弹种",
 };
@@ -46,6 +48,7 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
   const [error, setError] = useState("");
   const g = option?.prototype.installation;
   const kind = instance?.placement.kind ?? (g?.host_slot ? "hosted" : g?.side_mount_length_steps ? "side" : "grid");
+  const core = modules.find(m => options.some(o => o.prototype.id === m.prototype.id && o.prototype.version === m.prototype.version && o.prototype.category === 'cic'));
   useEffect(() => { setFields(resetFields()); setDirty(false); setError(""); }, [session.revision, selected]);
   useEffect(() => { if (!instance && !dirty) setFields(f => ({ ...f, rotation: String(defaultRotation(option)) })); }, [option?.sha256]);
   useEffect(() => { onLocalDraft(dirty || canvasDraft || groupDraft); return () => onLocalDraft(false); }, [dirty, canvasDraft, groupDraft, onLocalDraft]);
@@ -81,9 +84,16 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
         {visible.map(o => <button className="module-card" key={o.sha256} aria-pressed={option?.sha256 === o.sha256} onClick={() => setPrototype(o.sha256)}>
           <strong>{o.prototype.name}</strong><span>{mounts(o).join(" / ")} · v{o.prototype.version}</span>
           <span>{o.prototype.mass_kg.toLocaleString()} kg · {Number(o.prototype.power.generation_kw) > 0 ? `发电 ${o.prototype.power.generation_kw}` : `耗电 ${o.prototype.power.active_load_kw ?? 0}`} kW</span>
+          {o.prototype.category === 'maneuver_thruster' && <span>推力 {Number(o.prototype.capability.thrust_n).toLocaleString()} N</span>}
+          {o.prototype.category === 'cic' && <span>{Number(o.prototype.capability.fleet_companion_capacity ?? 0) > 0 ? `随伴舰上限 ${o.prototype.capability.fleet_companion_capacity} 艘` : '独立单舰 / 编队随伴舰'}</span>}
         </button>)}
         {!visible.length && <p>当前类别没有部件。</p>}
       </div>
+      {option?.prototype.category === 'cic' && core && <div className="editor-summary">
+        <p>改装保留核心位置及已有嵌入设备。保存为新设计后再导入战术准备；不会自动改写旧舰战损与库存。</p>
+        <button disabled={busy||dirty||canvasDraft||groupDraft||(core.prototype.id===option.prototype.id&&core.prototype.version===option.prototype.version)}
+          onClick={()=>void onCommand('outfit.replace_cic',{instance_id:core.id,prototype:{id:option.prototype.id,version:option.prototype.version}})}>将舰艇核心替换为{option.prototype.name}</button>
+      </div>}
     </aside>
     <EditorNotice>{modules.length === 0 && <p>空白舾装：先在基底层原点安装 CIC，再补齐升力等条件。</p>}{error && <p className="editor-error">{error}</p>}</EditorNotice>
     <OutfitViewport session={session} options={options} option={option} selected={selected} mode={mode} onSelect={setSelected}
@@ -103,6 +113,7 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
     <h3>已安装模块</h3>
     <div className="editor-row"><label>选择实例<select aria-label="已安装模块" disabled={busy || dirty} value={selected} onChange={e => setSelected(e.target.value)}><option value="">新增模块</option>{modules.map(m => <option key={m.id} value={m.id}>{m.id} · {options.find(o => o.prototype.id === m.prototype.id && o.prototype.version === m.prototype.version)?.prototype.name ?? m.prototype.id}</option>)}</select></label></div>
     {instance && <p>当前原型：{instance.prototype.id} · v{instance.prototype.version}。目录浏览不会替换已安装模块。</p>}
+    {instance&&instance.prototype.version<3&&options.some(o=>o.prototype.id===instance.prototype.id&&o.prototype.category==='maneuver_thruster')&&<p>此设计保留旧转向发动机引用；导入新版战术准备后按 100,000 N 推力升级，安装位置和舰艇质量不变。</p>}
     <div className="editor-row">
       <label>实例名称<input aria-label="模块实例名称" value={fields.instance_id} disabled={busy || !!instance} onChange={e => edit("instance_id", e.target.value)} /></label>
       {kind === "hosted" ? <label>宿主模块<select aria-label="宿主模块" value={fields.host} disabled={busy} onChange={e => edit("host", e.target.value)}><option value="">请选择</option>{modules.filter(m => m.id !== selected).map(m => <option key={m.id}>{m.id}</option>)}</select></label> : <>

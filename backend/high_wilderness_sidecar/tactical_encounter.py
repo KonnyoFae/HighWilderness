@@ -5,7 +5,7 @@ this module never claims to have applied a result to a strategic world.
 """
 from math import pi
 from . import persistent_ship as ps, battle_preparation as bp
-from . import prepared_deployment as deployment
+from . import prepared_deployment as deployment, tactical_fleet
 from .tactical_damage import DamageState
 from .tactical import render_static
 from .tactical_limits import MAX_DEPLOYED_SHIPS
@@ -60,6 +60,9 @@ def load(store, request):
                 design = bp.restore_design(store._decode(*archive), store.index)
                 ships.append((side, member, design, bp.validate_record(record, design)))
     ps.need(len({r['ship_id'] for _, _, _, r in ships}) == len(ships), '$.ship_id', '场内舰船身份冲突')
+    for side in request['sides']:
+        tactical_fleet.validate([(d, r) for s, _, d, r in ships if s['side_id'] == side['side_id']],
+                                side['flagship_instance_id'], side['side_id'])
     return ships
 
 

@@ -74,6 +74,8 @@ def build(ships, direct_instance_id, template, technical_scenario, *, allow_test
     from .tactical_limits import MAX_DEPLOYED_SHIPS
     ps.need(1 <= len(ships) < MAX_DEPLOYED_SHIPS, '$.ships', f'本次交战支持 1—{MAX_DEPLOYED_SHIPS-1} 艘准备舰船及 1 艘测试敌舰')
     ps.need(direct_instance_id in {r['state']['instance_id'] for _,r in ships}, '$.direct_instance_id', '请选择参战舰船作为旗舰')
+    from .tactical_fleet import validate
+    validate(ships, direct_instance_id)
     seeds, bindings, instances, armors, latches, names = [], [], [], [], [], {}
     radii = [max((hypot(*p) for deck in d.snapshot.hull.normalized_blueprint.decks for region in deck.regions for p in region.vertices_m),default=50) for d,_ in ships]
     spacing=max(150,2*max(radii)+50)

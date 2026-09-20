@@ -19,20 +19,26 @@ AMMUNITION_SCALE_CATALOG = 'gtw.module_catalog.tactical.ammunition_scale'
 AMMUNITION_CALIBERS_CATALOG = 'gtw.module_catalog.tactical.ammunition_calibers'
 EW_CATALOG = 'gtw.module_catalog.tactical.ew'
 DEFENSE_CATALOG = 'gtw.module_catalog.tactical.defense'
+MANEUVER_CATALOG = 'gtw.module_catalog.tactical.maneuver'
+SCIC_CATALOG = 'gtw.module_catalog.tactical.scic'
 
 
 def before_tactical_guns(index):
     """Exact additive-catalog compatibility: old entries are never rewritten."""
     result = copy(index)
     result.resources = {k:v for k,v in index.resources.items()
-                        if v[0]['id'] not in (TACTICAL_GUN_CATALOG, TACTICAL_MISSILE_CATALOG, TACTICAL_SENSOR_CATALOG, SENSOR_GEOMETRY_CATALOG, AMMUNITION_SCALE_CATALOG, AMMUNITION_CALIBERS_CATALOG, EW_CATALOG, DEFENSE_CATALOG)}
+                        if v[0]['id'] not in (TACTICAL_GUN_CATALOG, TACTICAL_MISSILE_CATALOG, TACTICAL_SENSOR_CATALOG, SENSOR_GEOMETRY_CATALOG, AMMUNITION_SCALE_CATALOG, AMMUNITION_CALIBERS_CATALOG, EW_CATALOG, DEFENSE_CATALOG, SCIC_CATALOG, MANEUVER_CATALOG)}
     return result
 
 
 def catalog_generations(index):
     """Only the actual additive catalog generations, never arbitrary subsets."""
-    ew = copy(index)
-    ew.resources = {k:v for k,v in index.resources.items() if v[0]['id'] != DEFENSE_CATALOG}
+    scic = copy(index)
+    scic.resources = {k:v for k,v in index.resources.items() if v[0]['id'] != MANEUVER_CATALOG}
+    defense = copy(scic)
+    defense.resources = {k:v for k,v in scic.resources.items() if v[0]['id'] != SCIC_CATALOG}
+    ew = copy(defense)
+    ew.resources = {k:v for k,v in defense.resources.items() if v[0]['id'] != DEFENSE_CATALOG}
     calibers = copy(ew)
     calibers.resources = {k:v for k,v in ew.resources.items() if v[0]['id'] != EW_CATALOG}
     ammunition = copy(calibers)
@@ -45,7 +51,7 @@ def catalog_generations(index):
     missiles.resources = {k:v for k,v in sensors.resources.items() if v[0]['id'] != TACTICAL_SENSOR_CATALOG}
     previous = copy(missiles)
     previous.resources = {k:v for k,v in missiles.resources.items() if v[0]['id'] != TACTICAL_MISSILE_CATALOG}
-    return index, ew, calibers, ammunition, geometry, sensors, missiles, previous, before_tactical_guns(index)
+    return index, scic, defense, ew, calibers, ammunition, geometry, sensors, missiles, previous, before_tactical_guns(index)
 
 
 def fail(code, message):

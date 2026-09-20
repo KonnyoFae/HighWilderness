@@ -147,7 +147,8 @@ def validate_result(value):
     ps.need(v['settlement_id'] == 'settlement.'+v['scene_id'], '$.settlement_id', '结算身份不匹配')
     ps.need(v['reason'] in ('withdrawal', 'victory', 'defeat', 'draw'), '$.reason', '非法结束原因')
     ps.integer(v['fixed_step'], '$.fixed_step'); ps.integer(v['removed_projectiles'], '$.removed_projectiles')
-    ps.need(type(v['ships']) is list and 1 <= len(v['ships']) <= 16, '$.ships', '非法结算舰船列表')
+    from .tactical_limits import MAX_DEPLOYED_SHIPS
+    ps.need(type(v['ships']) is list and 1 <= len(v['ships']) <= MAX_DEPLOYED_SHIPS, '$.ships', '非法结算舰船列表')
     ids = set()
     for row in v['ships']:
         ps.obj(row, 'before after capacity_before capacity_after changes module_names'+

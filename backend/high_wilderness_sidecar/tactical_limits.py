@@ -1,2 +1,2 @@
-"""Current tested boundary; increasing this requires fleet-scale validation."""
-MAX_DEPLOYED_SHIPS = 16
+"""Engineering entry capacity for two 9-ship fleets, not a performance guarantee."""
+MAX_DEPLOYED_SHIPS = 18

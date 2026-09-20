@@ -17,12 +17,22 @@ from tools.defense_fixture import design as defense_design, record as defense_re
 from tools.ew_fixture import design as ew_design, record as ew_record
 
 
+def refit_flagship(d, index):
+    # 6a: new runs explicitly use SCIC flagships; historical evidence is intact.
+    archive=d.archive();document=ps.clone(archive['document'])
+    core=next(m.id for m in d.snapshot.outfit.instances if m.prototype.category=='cic')
+    next(m for m in document['outfit']['modules'] if m['id']==core)['prototype']=dict(id='gtw.module.scic.basic',version=1)
+    return bp.compile_design(document,index,archive['deployment'],archive['policy'],ship_id=archive['ship_id'])
+
+
 def create(directory):
     server=SidecarServer('backend.joint.fixture',settlement_dir=directory);service=server.preparation;service.provision()
     identities={}
     for key in ('player','ally','enemy','escort'):
         if key in ('player','escort'):
-            d=defense_design(server.editor.index,key,advanced=key=='player');r=defense_record(d,key)
+            d=defense_design(server.editor.index,key,advanced=key=='player')
+            if key=='player':d=refit_flagship(d,server.editor.index)
+            r=defense_record(d,key)
         else:
             d=ew_design(server.editor.index,key)
             if key=='ally':
@@ -32,6 +42,7 @@ def create(directory):
                     dict(id='joint.gun',prototype=dict(id='gtw.module.gun.50mm',version=2),placement=dict(kind='grid',deck_id='deck.1',anchor_half_cell=[-2,4],rotation_deg=0)),
                     dict(id='joint.ammo',prototype=dict(id='gtw.module.fixture.ammunition_magazine',version=2),placement=dict(kind='grid',deck_id='deck.0',anchor_half_cell=[-2,12],rotation_deg=0))])
                 d=bp.compile_design(outfit,server.editor.index,fixture(server.editor.index)[1],load_current(ROOT),ship_id='ship.ew.ally')
+            if key=='enemy':d=refit_flagship(d,server.editor.index)
             r=ew_record(d,key,model='gtw.missile.5c.medium.rocket.'+('radar_infrared' if key=='ally' else 'active_radar'),auto=key=='enemy')
         inv=InventorySession(d.resources,ps.parse_instance(r['state'],d.resources))
         # Keep this combined exercise's reserve magazines small: 2,000 ready

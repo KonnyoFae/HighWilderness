@@ -470,8 +470,13 @@ class SimplifiedFlightSession:
         ships = tuple(height.set_target(s, target_layer) if s.ship_id == ship_id else s for s in self._world.ships)
         self._world = replace(self._world, ships=ships)
 
-    def _requested(self, ship, state, control, seed=None):
-        if not ship.authority_allowed or ship.motion.hull_integrity_fraction <= 0:
+    @staticmethod
+    def can_navigate(ship, autonomous=False):
+        return ship.motion.hull_integrity_fraction > 0 and (ship.authority_allowed or
+            autonomous and ship.command is not None and not ship.command.suppress and ship.command.cic_control)
+
+    def _requested(self, ship, state, control, seed=None, *, autonomous=False):
+        if not self.can_navigate(ship, autonomous):
             return (0,) * 6
         yaw_brake = control.automatic_yaw_brake
         if control.automatic_brake:
@@ -487,7 +492,7 @@ class SimplifiedFlightSession:
             values = values[:4]+requested(ship, state, seed)
         return values
 
-    def step(self, control=None, *, ship_id=None, events=(), authority_events=(), device_operations=(), resource_operations=(), exit_operations=(), impact_resolver=None, project=None, repair_resolver=None, repair_project=None, fuel_resolver=None):
+    def step(self, control=None, *, ship_id=None, autonomous_controls=(), events=(), authority_events=(), device_operations=(), resource_operations=(), exit_operations=(), impact_resolver=None, project=None, repair_resolver=None, repair_project=None, fuel_resolver=None):
         require(get_ident() == self._owner and not self._executing, "Single non-reentrant authority required")
         before = self._world
         ship_id = self._direct if ship_id is None else ship_id
@@ -497,6 +502,10 @@ class SimplifiedFlightSession:
             control = DirectionalPropulsionControlInput.parse(control.to_dict() if isinstance(control, DirectionalPropulsionControlInput) else control)
         events, authority_events = tuple(events), tuple(authority_events)
         indexes = {s.ship_id: i for i, s in enumerate(before.ships)}
+        autonomous_controls = tuple(autonomous_controls)
+        navigation = dict(autonomous_controls)
+        require(len(navigation)==len(autonomous_controls) and all(k in indexes and k!=self._direct
+            and type(v) is DirectionalPropulsionControlInput for k,v in navigation.items()), 'Invalid autonomous control producer')
         device_operations = tuple(device_operations)
         resource_operations = tuple(resource_operations)
         exit_operations=tuple(exit_operations)
@@ -542,7 +551,8 @@ class SimplifiedFlightSession:
             candidates, emitted, diagnostics = [], [], []
             for seed, kernel, dk, rk, ck, original in zip(self._seeds, self._kernels, self._device_kernels, self._resource_kernels,self._command_kernels, before.ships):
                 ship = original
-                selected = control if control is not None and ship.ship_id == ship_id else ship.control
+                autonomous = ship.ship_id in navigation
+                selected = navigation[ship.ship_id] if autonomous else control if control is not None and ship.ship_id == ship_id else ship.control
                 for phase in ("opening", "closing"):
                     n = before.fixed_step + (phase == "closing")
                     if ship.command is not None and ship.command.lifecycle.physical_status=='exited':
@@ -559,7 +569,7 @@ class SimplifiedFlightSession:
                         if e.version > ship.authority_version:
                             ship = replace(ship, authority_allowed=e.allowed, authority_version=e.version)
                             emitted.append((n, "authority", ship.ship_id, e.allowed))
-                    if not ship.authority_allowed:
+                    if not self.can_navigate(ship, autonomous):
                         selected = directional_control()
                     device_events = tuple(e for e in events if e.ship_id == ship.ship_id and e.phase == phase)
                     if dk is not None:
@@ -606,7 +616,7 @@ class SimplifiedFlightSession:
                     device_events+=command_events
                     if ck is not None:
                         require(not resets or ship.authority_allowed,'Reset denied by current command state')
-                    if not ship.authority_allowed:
+                    if not self.can_navigate(ship, autonomous):
                         selected=directional_control()
                     if ship.motion.hull_integrity_fraction <= 0:
                         selected = directional_control()
@@ -615,7 +625,7 @@ class SimplifiedFlightSession:
                             device_events += tuple(AvailabilityEvent(before.epoch, ship.ship_id, e.instance_id,
                                 "lifecycle_unavailable", True, slot.versions[-1] + 1, n, phase)
                                 for e, slot in zip(seed.contributions.engines, ship.propulsion.engines))
-                    requested = self._requested(ship, ship.propulsion, selected, seed)
+                    requested = self._requested(ship, ship.propulsion, selected, seed, autonomous=autonomous)
                     model=seed.model
                     if ck is not None and model.runtime.crew_safety_lock_enabled!=ship.command.crew_lock:
                         model=replace(model,runtime=replace(model.runtime,crew_safety_lock_enabled=ship.command.crew_lock))
@@ -638,7 +648,7 @@ class SimplifiedFlightSession:
                             resources,resource_updates=rk.resolve(ship.resources,ship.devices,state)
                             ship=replace(ship,resources=resources)
                             ship,command_events=command_boundary(ship,state)
-                            if not ship.authority_allowed:
+                            if not self.can_navigate(ship, autonomous):
                                 selected=directional_control()
                                 requested=(0,)*6
                             if ck is not None:
@@ -675,7 +685,7 @@ class SimplifiedFlightSession:
                 candidates.append(ship)
             candidate = FlightWorld(before.epoch, before.fixed_step + 1, tuple(candidates))
             if impact_resolver is not None:
-                candidate, impact_events = self._impact_boundary(candidate, impact_resolver(before, candidate))
+                candidate, impact_events = self._impact_boundary(candidate, impact_resolver(before, candidate), autonomous_ids=navigation)
                 emitted.extend(impact_events)
             candidate = replace(candidate, ships=tuple(height.reconcile(s) for s in candidate.ships))
             result = StepResult(candidate.fixed_step, tuple(emitted), tuple(diagnostics))
@@ -694,14 +704,14 @@ class SimplifiedFlightSession:
             if project is not None:
                 project(candidate, result)
             if repair_resolver is not None:
-                candidate, repair_events = self._impact_boundary(candidate, repair_resolver(candidate, result), repair=True)
+                candidate, repair_events = self._impact_boundary(candidate, repair_resolver(candidate, result), repair=True, autonomous_ids=navigation)
                 candidate = replace(candidate, ships=tuple(height.reconcile(s) for s in candidate.ships))
                 result = replace(result, events=result.events + repair_events)
             finished = tuple(falling.finish(s, old, candidate.fixed_step) for s, old in zip(candidate.ships, before.ships))
             crashes = tuple((s.ship_id, 0.) for s, old in zip(finished, candidate.ships) if s.wreck is not None and old.wreck is None)
             candidate = replace(candidate, ships=finished)
             if crashes:
-                candidate, crash_events = self._impact_boundary(candidate, ImpactBatch(hull_damage=crashes))
+                candidate, crash_events = self._impact_boundary(candidate, ImpactBatch(hull_damage=crashes), autonomous_ids=navigation)
                 result = replace(result, events=result.events + crash_events)
             if repair_project is not None:
                 repair_project(candidate, result)
@@ -710,7 +720,7 @@ class SimplifiedFlightSession:
         finally:
             self._executing = False
 
-    def _impact_boundary(self, world, batch, *, repair=False):
+    def _impact_boundary(self, world, batch, *, repair=False, autonomous_ids=()):
         """Post-motion damage, before publication; only changed ships settle again.
 
         This repeats no integration and no safety-release timer. Device/resource/
@@ -797,11 +807,11 @@ class SimplifiedFlightSession:
                 if fraction <= 0:
                     changes += tuple(AvailabilityEvent(world.epoch, ship_id, e.instance_id, 'lifecycle_unavailable', True,
                         slot.versions[-1]+1, n, 'closing') for e, slot in zip(seed.contributions.engines, ship.propulsion.engines) if not slot.blocked[-1])
-                if not command.allowed:
+                if not self.can_navigate(ship,ship_id in autonomous_ids):
                     ship = replace(ship, control=directional_control())
                 if not changes:
                     break
-                propulsion, facts = kernel.boundary(ship.propulsion, n, self._requested(ship, ship.propulsion, ship.control), changes)
+                propulsion, facts = kernel.boundary(ship.propulsion, n, self._requested(ship, ship.propulsion, ship.control, seed, autonomous=ship_id in autonomous_ids), changes)
                 ship = replace(ship, propulsion=propulsion)
                 emitted.extend((ship_id, 'impact', fact) for fact in facts)
                 changes = ()

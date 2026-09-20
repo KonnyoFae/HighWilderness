@@ -6,7 +6,7 @@ import type { LiftReserveReading } from '../LiftReserve';
 export const SCENARIO_ID = "gtw.sample.web.two_ship.v1";
 export interface TacticalRequest {
   backend_instance_id: string;
-  method: 'tactical.realtime.deploy_encounter' | 'tactical.reset_test_state' | 'tactical.realtime.missile' | 'tactical.realtime.fire_control' | 'tactical.realtime.height' | 'tactical.realtime.damage_control' | `tactical.preparation.${"missile" | "maintenance" | "scene_read" | "scene_save" | "scene_encounter" | "supply_replenish" | "library" | "import" | "open" | "read" | "draft" | "preview" | "commit" | "discard"}` | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
+  method: 'tactical.realtime.navigation' | 'tactical.realtime.deploy_encounter' | 'tactical.reset_test_state' | 'tactical.realtime.missile' | 'tactical.realtime.fire_control' | 'tactical.realtime.height' | 'tactical.realtime.damage_control' | `tactical.preparation.${"missile" | "maintenance" | "scene_read" | "scene_save" | "scene_encounter" | "supply_replenish" | "library" | "import" | "open" | "read" | "draft" | "preview" | "commit" | "discard"}` | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
     | 'tactical.realtime.countermeasure' | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.withdraw" | "tactical.realtime.gun" | "tactical.realtime.close";
   params: Record<string, unknown>;
   session_id: null;
@@ -51,6 +51,7 @@ export interface TacticalSnapshot {
     descent?: {source_layer:string;next_layer:string|null;progress:number;duration_s:number;paused:boolean;remaining_s:number|null}|null;
     wreck?: {fixed_step:number;height_layer:string;position_m:number[];reason:string}|null;
     modules: { id: string; durability: number }[] }[];
+  navigation?: import('./FleetOrders').NavigationView;
   height_commands?: { command_sequence: number };
   events: TacticalVisualEvent[];
   presentation?: { interface: "gaotian.tactical-presentation/v1alpha1";

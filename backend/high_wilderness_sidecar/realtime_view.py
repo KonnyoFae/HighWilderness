@@ -20,7 +20,7 @@ from .tactical_scenario import build_two_ship_scenario, SCENARIO_ID
 from .tactical_gunnery import GunneryBattle, prepare_trial_session
 from .tactical_presentation import FlightHistory
 
-CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'height', 'missile', 'countermeasure', 'fire_control', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry', 'deploy_encounter', 'encounter'))
+CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'height', 'navigation', 'missile', 'countermeasure', 'fire_control', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry', 'deploy_encounter', 'encounter'))
 INTERFACE = 'gaotian.realtime-view/e3b-v1alpha1'
 VIEW_PERIOD_NS = 66_666_667
 LEASE_NS = 2_000_000_000
@@ -187,7 +187,7 @@ class RealtimeViewService:
         history = FlightHistory()
         history.record(battle.session.world.fixed_step, battle.projectiles)
         def stepper(control=None, **kwargs):
-            result = battle.step(control, **kwargs)
+            result = battle.step(control, manual_control=battle.session.world.fixed_step in scheduler._pending, **kwargs)
             history.record(battle.session.world.fixed_step, battle.projectiles,
                 () if battle.damage_state is None else battle.damage_state.recent,
                 () if battle.damage_state is None else battle.damage_state.expired_flights+tuple(
@@ -233,6 +233,7 @@ class RealtimeViewService:
             static_sha256=self.digest, static=None, ships=ships, events=[],
             height_commands=dict(command_sequence=self.gunnery.height_orders.sequence))
         if self.gunnery is not None:
+            view['navigation'] = self.gunnery.navigation.view()
             view['gunnery'] = self.gunnery.view()
             for projectile in view['gunnery']['projectiles']:
                 projectile.update(self.presentation.launch(projectile['id']))
@@ -334,7 +335,7 @@ class RealtimeViewService:
             battle = settlement.redeploy(record, template, scenario)
             return self._attach(battle, geometry, key)
         fields = {'scene_id', 'known_static_sha256', 'ack_inputs', 'ack_events'} if method == 'tactical.realtime.read' else \
-            {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun', 'tactical.realtime.height', 'tactical.realtime.missile', 'tactical.realtime.countermeasure', 'tactical.realtime.fire_control', 'tactical.realtime.damage_control') else {'scene_id'}
+            {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun', 'tactical.realtime.height', 'tactical.realtime.navigation', 'tactical.realtime.missile', 'tactical.realtime.countermeasure', 'tactical.realtime.fire_control', 'tactical.realtime.damage_control') else {'scene_id'}
         require(set(p) == fields, 'Unknown or missing realtime fields')
         if method == 'tactical.realtime.close' and self.scheduler is None and p['scene_id'] == self.last_closed and self.last_closed is not None:
             return dict(closed=True)
@@ -373,6 +374,14 @@ class RealtimeViewService:
         elif method == 'tactical.realtime.pause':
             q.pause()
             self.gunnery.suspend()
+        elif method == 'tactical.realtime.navigation':
+            value = p['input']
+            require(type(value) is dict, 'Invalid navigation input')
+            retry = value == self.gunnery.navigation.last
+            require(retry or q.status.running and value.get('generation') == q.status.generation and
+                next(s for s in q.world.ships if s.ship_id == q._session._direct).authority_allowed,
+                '航行指令需要运行中的当前场景及旗舰控制权')
+            self.gunnery.navigation.submit(value)
         elif method == 'tactical.realtime.height':
             value = p['input']
             require(type(value) is dict, 'Invalid height input')

@@ -5,6 +5,7 @@ from . import persistent_ship as ps, battle_preparation as bp
 from .tactical import render_static
 from .tactical_encounter import INTERFACE as ENCOUNTER_INTERFACE
 from .tactical_limits import MAX_DEPLOYED_SHIPS
+from . import tactical_fleet
 from 高天荒野舰艇统一战术场景 import TacticalSceneShipBinding
 
 INTERFACE = 'gaotian.tactical-test-scene/5a-v1'
@@ -74,7 +75,7 @@ def packet(service):
     service.provision()
     with service.store.connection() as db:
         scene = read(db, service.store)
-        bindings, names, details = [], {}, []
+        bindings, names, details, cores = [], {}, [], {}
         for side in scene['sides']:
             for member in side['ships']:
                 key = member['instance_id']
@@ -83,14 +84,15 @@ def packet(service):
                 ps.need(archive is not None and row is not None, '$.instance_id', '编队舰艇记录缺失')
                 design = bp.restore_design(service.store._decode(*archive), service.store.index)
                 record = bp.validate_record(service.store._decode(*row), design)
+                cores[key] = tactical_fleet.core_info(design, record)
                 names[key] = design.archive()['document']['outfit']['name']
                 bindings.append(TacticalSceneShipBinding(key, design.snapshot, design.sortie, side_id=side['id'], fleet_id='fleet.test.'+side['id']))
                 details.append(dict(instance_id=key, revision=record['state']['revision'], state=record['state'],
-                    lift_reserve=service.ship_detail(design, record)['lift_reserve']))
+                    lift_reserve=service.ship_detail(design, record)['lift_reserve'], fleet_core=cores[key]))
         raw = db.execute('SELECT payload,digest FROM preparation_supplies WHERE id=?', (service.supply_id,)).fetchone()
         supply = service.store._decode(*raw)['supply']
     geometry = render_static(SimpleNamespace(bindings=bindings, manifest=dict(ship_names=names, scenario_id='test.scene')))
-    return dict(scene=scene, geometry=geometry, ships=details, supply=supply,
+    return dict(scene=scene, geometry=geometry, ships=details, supply=supply, fleets=tactical_fleet.scene_fleets(scene, cores),
         supply_defaults=SUPPLY_DEFAULTS, limits=dict(max_ships=MAX_SHIPS, minimum_distance_m=1, maximum_distance_m=1_000_000))
 
 
@@ -102,6 +104,15 @@ def encounter(service, revision, identity):
         sides = []
         for side in scene['sides']:
             ps.need(bool(side['ships']), '$.ships', '双方至少各加入一艘舰艇')
+            ships = []
+            for member in side['ships']:
+                key = member['instance_id']
+                archive = db.execute('SELECT payload,digest FROM preparation_designs WHERE id=?', (key,)).fetchone()
+                raw = db.execute('SELECT payload,digest FROM ships WHERE id=?', (key,)).fetchone()
+                ps.need(archive is not None and raw is not None, '$.instance_id', '编队舰艇记录缺失')
+                design = bp.restore_design(service.store._decode(*archive), service.store.index)
+                ships.append((design, bp.validate_record(service.store._decode(*raw), design)))
+            tactical_fleet.validate(ships, side['flagship_instance_id'], '我方' if side['id']=='player' else '敌方')
             flagship = next(s for s in side['ships'] if s['instance_id'] == side['flagship_instance_id'])
             offset = scene['distance_m']/2 * (1 if side['id'] == 'enemy' else -1)
             members = []

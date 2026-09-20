@@ -46,7 +46,7 @@ def compile_design(document, index, deployment, policy, *, ship_id):
     """Host supplies an already granted/saved document, never a path from JSON.
 
     Arbitrary layouts using the supported exact editor catalogs are accepted;
-    no named outfit migration, sample ship replacement or thrust multiplier.
+    only explicit versioned propulsion/ammunition upgrades, without replacing layouts.
     """
     ps.identifier(ship_id, '$.ship_id')
     document, deployment, policy = map(ps.clone, (document, deployment, policy))
@@ -60,7 +60,7 @@ def compile_design(document, index, deployment, policy, *, ship_id):
     ps.obj(policy, 'interface id version modules propulsion_timing goods projectiles recipes fire_control enabled_recipe_ids' +
         (' continuous_damage' if policy.get('interface') in dc.FIRE_POLICY_INTERFACES else '') +
         (' repair' if policy.get('interface') in dc.REPAIR_POLICY_INTERFACES else '')+
-        (' fuel' if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else '')+(' ignition' if policy.get('interface') in dc.IGNITION_POLICY_INTERFACES else '')+(' missiles' if policy.get('interface')==missiles.POLICY_INTERFACE else '')+(' ammunition_resource_liters' if 'ammunition_resource_liters' in policy else ''), '$.policy')
+        (' fuel' if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else '')+(' ignition' if policy.get('interface') in dc.IGNITION_POLICY_INTERFACES else '')+(' missiles' if policy.get('interface')==missiles.POLICY_INTERFACE else '')+(' maneuver_thrust_revision' if 'maneuver_thrust_revision' in policy else '')+(' ammunition_resource_liters' if 'ammunition_resource_liters' in policy else ''), '$.policy')
     ps.need(policy['interface'] in (POLICY_INTERFACE, dc.POLICY_INTERFACE, *dc.FIRE_POLICY_INTERFACES), '$.policy.interface', '不支持的战前准备资源政策')
     # Make indexed legacy plans portable too, with an exact embedded hull.
     if binding is None:
@@ -93,7 +93,13 @@ def compile_design(document, index, deployment, policy, *, ship_id):
     ps.need(not issues, '$.modules', '以下设备尚不能进入战斗：' + '；'.join(issues))
     catalogs = [ModulePrototypeCatalog.parse(s) for d, s in index.resources.values()
                 if d['kind'] == 'ModulePrototypeCatalog']
-    migrated = [migrate_known_module_catalog_v1_to_v2(c) if c.schema == 'gaotian.ship/v1alpha1' else c for c in catalogs]
+    def propulsion_catalog(c):
+        if c.id==outfit_documents.MANEUVER_CATALOG:
+            value=c.to_dict();value['schema']='gaotian.module-prototype-catalog/v2'
+            for m in value['modules']:m['capability']['startup_time_s']=0
+            return ModulePrototypeCatalog.parse(value)
+        return migrate_known_module_catalog_v1_to_v2(c) if c.schema=='gaotian.ship/v1alpha1' else c
+    migrated = [propulsion_catalog(c) for c in catalogs]
     catalog = merge_module_prototype_catalogs(migrated, id='gtw.module_catalog.preparation', version=2,
         name='战前准备技术目录', fixture_level='contract_fixture', schema=migrated[0].schema)
     # Legacy 0.2 s thrusters cannot schedule all discrete thrust stages at 60 Hz.
@@ -109,6 +115,8 @@ def compile_design(document, index, deployment, policy, *, ship_id):
         timing[ref.id] = ps.number(row['response_time_s'], '$.response_time_s', minimum=0.000001)
     ps.need(set(timing) == {m.reference.id for m in catalog.modules if m.category in ('main_engine', 'maneuver_thruster')},
             '$.propulsion_timing', '推进时间适配表不完整')
+    if 'maneuver_thrust_revision' in policy:
+        ps.need(ps.integer(policy['maneuver_thrust_revision'],'$.maneuver_thrust_revision')==3,'$.maneuver_thrust_revision','不支持的转向推力版本')
     catalog_value = catalog.to_dict()
     catalog_value['id'] += '.timing'
     for m in catalog_value['modules']:
@@ -126,6 +134,8 @@ def compile_design(document, index, deployment, policy, *, ship_id):
         # Archived policies without the revised binding retain their old scale.
         if original.reference.id in ammunition_upgrades and version == 1 and (original.reference.id,2) in rules:
             version = 2
+        if original.category=='maneuver_thruster' and policy.get('maneuver_thrust_revision')==3 and original.reference.version in (1,2):
+            version=3
         target = catalog.module(ResourceReference(original.reference.id, version))
         module['prototype'] = target.reference.to_dict()
     for group in plan.get('weapon_groups',[]):

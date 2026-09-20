@@ -39,7 +39,8 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
   useEffect(()=>{alive.current=true;void run(refresh);return()=>{alive.current=false;};},[]);
   async function save(next:PreparationScene) {
     const saved=await call<PreparationScene>('scene_save',{scene:next,expected_revision:next.revision-1});
-    sceneRef.current=saved;if(alive.current)setPacket(p=>p?{...p,scene:saved}:p);
+    sceneRef.current=saved;if(alive.current)setPacket(p=>p?{...p,scene:saved,fleets:undefined}:p);
+    await refresh();
   }
   function edit(update:(next:PreparationScene)=>void) {
     if(!packet)return;const next=changeScene(packet.scene,update);void run(async()=>{await save(next);setNotice('编队配置已保存。');});
@@ -56,8 +57,8 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
     await call('import',{instance_id:task.instance_id,source:task.source});
     const current=sceneRef.current!;
     const next=addToScene(current,task.side,task.instance_id);
-    if(next!==current)await save(next);
-    await refresh();if(sideRef.current===task.side){setShipId(task.instance_id);setModuleId(null);}
+    if(next!==current)await save(next);else await refresh();
+    if(sideRef.current===task.side){setShipId(task.instance_id);setModuleId(null);}
     importing.current=null;setNotice(`已加入${sideName(task.side)}编队。可在画布拖动排布。`);
   }
   const lock=busy||editorBusy||!!retry||!active;
@@ -69,7 +70,7 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
   const ids=packet?.scene.sides.flatMap(s=>s.ships.map(m=>m.instance_id))??[];
   const preparation=packet?.scene.preparation_id;
   useEffect(()=>setReadyRevision(null),[preparation]);
-  const canAdd=!lock&&!preparation&&ids.length<(packet?.limits.max_ships??16);
+  const canAdd=!lock&&!preparation&&ids.length<(packet?.limits.max_ships??18);
   function select(id:string,module:string|null) {
     if(editorBusy)return;
     const fleet=packet?.scene.sides.find(s=>s.ships.some(m=>m.instance_id===id));if(fleet)setSide(fleet.id);
@@ -78,7 +79,7 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
   }
   const onEditorBusy=useCallback((value:boolean)=>setEditorBusy(value),[]);
   async function leavePreparation() {
-    const current=sceneRef.current!;await save(changeScene(current,s=>{s.preparation_id=null;}));await refresh();
+    const current=sceneRef.current!;await save(changeScene(current,s=>{s.preparation_id=null;}));
   }
   async function enter() {
     let current=sceneRef.current!;
@@ -91,7 +92,8 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
     const encounter=await call<Record<string,unknown>>('scene_encounter',{revision:current.revision,launch_id});
     onEnter({launch_id,encounter,preparation_id:'test.scene',direct_instance_id:current.sides.find(s=>s.id==='player')!.flagship_instance_id!});
   }
-  const ready=!!packet&&packet.scene.sides.every(s=>s.ships.length>0)&&(preparation?readyRevision!==null:packet.ships.every(s=>s.revision>0));
+  const fleetsValid=!!packet?.fleets&&packet.fleets.every(f=>f.valid);
+  const ready=!!packet&&fleetsValid&&packet.scene.sides.every(s=>s.ships.length>0)&&(preparation?readyRevision!==null:packet.ships.every(s=>s.revision>0));
   return <section className="preparation-workspace" aria-label="双方战前准备">
     <header className="preparation-toolbar"><div><small>战术测试 / 编队与补给</small><h2>战前准备</h2></div>
       <div className="formation-tabs" role="tablist" aria-label="编辑阵营">{(['player','enemy'] as const).map(id=><button key={id} role="tab" aria-selected={side===id} onClick={()=>{setSide(id);if(!editorBusy){setShipId(packet?.scene.sides.find(s=>s.id===id)?.ships[0]?.instance_id??'');setModuleId(null);}}}>{sideName(id)}</button>)}</div>
@@ -109,15 +111,19 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
     </div>
     <div className="preparation-stage">
       <aside className="preparation-float preparation-add" aria-label="加入舰船">
-        <h3>加入舰船</h3><p>加入到 <strong>{sideName(side)}</strong> · 共 {ids.length} / {packet?.limits.max_ships??16} 艘</p>
+        <h3>加入舰船</h3><p>加入到 <strong>{sideName(side)}</strong> · 共 {ids.length} / {packet?.limits.max_ships??18} 艘</p>
         <button disabled={!canAdd} onClick={()=>void run(()=>importShip(true))}>导入栖装文件</button>
         <label>目录设计<select aria-label="准备目录设计" value={source||library?.sources[0]?.key||''} onChange={e=>setSource(e.target.value)}>
           {library?.sources.map(s=><option key={s.key} value={s.key}>{s.name}</option>)}</select></label>
         <button disabled={!canAdd||!library?.sources.length} onClick={()=>void run(()=>importShip(false))}>从目录加入{sideName(side)}</button>
         {preparation&&<p className="muted">完成保存或放弃当前物资草稿后，可调整舰队成员。</p>}
         <details><summary>已有舰艇</summary>{library?.ships.filter(s=>!ids.includes(s.instance_id)).map(s=><button key={s.instance_id} disabled={!canAdd||s.blocked}
-          onClick={()=>void run(async()=>{await save(addToScene(sceneRef.current!,side,s.instance_id));await refresh();select(s.instance_id,null);})}>{s.name}{s.blocked?' · 占用中':''}</button>)}</details>
+          onClick={()=>void run(async()=>{await save(addToScene(sceneRef.current!,side,s.instance_id));setShipId(s.instance_id);setModuleId(null);})}>{s.name}{s.blocked?' · 占用中':''}</button>)}</details>
         <h3>双方舰队</h3>{packet?.scene.sides.map(f=><div key={f.id} className={`preparation-roster ${f.id}`}><strong>{sideName(f.id)}</strong>
+          {packet.fleets?.filter(q=>q.side_id===f.id).map(q=><div key={q.side_id} aria-label={`${sideName(f.id)}编队资格`}>
+            {q.ship_count>0&&<p>{q.companion_capacity>0?`${q.core_name} · 随伴舰 ${q.companion_count} / ${q.companion_capacity}`:q.ship_count===1?'单舰行动 · 无需 SCIC':'当前旗舰无 SCIC'}</p>}
+            {q.issues.map(message=><p key={message} className="editor-error">{message}</p>)}
+          </div>)}
           {f.ships.map((m,i)=><button key={m.instance_id} className={shipId===m.instance_id?'selected':''} disabled={editorBusy} onClick={()=>select(m.instance_id,null)}>
             {m.instance_id===f.flagship_instance_id?'★ ':''}{packet.geometry.ships.find(s=>s.id===m.instance_id)?.name??'舰艇'} <small>{i+1}</small></button>)}</div>)}
         <details className="test-supply"><summary>测试供给池</summary><p>仅显式补充；不改变舰内库存。</p>
@@ -143,15 +149,16 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
           <button disabled={lock||selectedFleet.flagship_instance_id===shipId} onClick={()=>edit(s=>{s.sides.find(f=>f.id===selectedFleet.id)!.flagship_instance_id=shipId;})}>设为{sideName(selectedFleet.id)}旗舰</button>
           <button disabled={lock||!!preparation} onClick={()=>void run(async()=>{
             await save(changeScene(sceneRef.current!,s=>{const f=s.sides.find(f=>f.id===selectedFleet.id)!;f.ships=f.ships.filter(m=>m.instance_id!==shipId);if(f.flagship_instance_id===shipId)f.flagship_instance_id=f.ships[0]?.instance_id??null;}));
-            setModuleId(null);await refresh();})}>移出编队</button></details>}
+            setModuleId(null);})}>移出编队</button></details>}
         <nav className="preparation-detail-tabs" aria-label="部件分类">{preparationTabs.map(t=><button key={t.id} aria-pressed={tab===t.id} onClick={()=>{setTab(t.id);setModuleId(null);}}>{t.name}</button>)}</nav>
         {selectedModule&&<div className="selected-preparation-module"><strong>{selectedModule.name}</strong><p>甲板 {selectedModule.deck_level} · 耐久 {selectedState?.state.modules.find(m=>m.module_id===moduleId)?.durability_points.toFixed(1)} / {selectedModule.max_durability}</p><button onClick={()=>setModuleId(null)}>查看本舰此页全部部件</button></div>}
         {!preparation&&<>
           {tab==='devices'&&<LiftReserve value={selectedState?.lift_reserve}/>}
+          {tab==='devices'&&selectedState?.fleet_core&&<p>{selectedState.fleet_core.name}：{selectedState.fleet_core.companion_capacity>0?`可作为旗舰指挥 ${selectedState.fleet_core.companion_capacity} 艘随伴舰`:'可单舰行动，或作为 SCIC 旗舰的随伴舰'}。</p>}
           {tab==='missiles'?<p>可选择发射器与导弹库的型号、战斗部并安排组装和装填。</p>:<p>点击画布上的部件查看。物资草稿同时保存双方配置，核对通过后统一扣料。</p>}
           <button disabled={lock||!ids.length} onClick={()=>{const next=changeScene(sceneRef.current!,s=>{s.preparation_id=`preparation.${crypto.randomUUID()}`;});void run(()=>save(next));}}>配置双方舰内物资</button>
           <p className="muted">进入物资准备后，可补满单个部件或本舰同类部件，并消耗工程零件修复未毁部件。</p>
-          {!ready&&ids.length>0&&<p>双方各加入至少一艘舰艇，并完成物资准备后可开始测试。</p>}
+          {!ready&&ids.length>0&&<p>双方各加入至少一艘舰艇；多舰须指定 SCIC 旗舰且不超容量，完成物资准备后可开始测试。旧舰可在舾装编辑器中明确改装核心、保存新设计后导入。</p>}
         </>}
         {preparation&&<PreparationPanel key={preparation} transport={transport} instance={instance} active={active} onBusy={onEditorBusy}
           embedded={{preparationId:preparation,instanceIds:ids,shipId,moduleId,tab,

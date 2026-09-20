@@ -95,6 +95,7 @@ class Gun:
 
 @dataclass(frozen=True)
 class GunState:
+    navigation_override: bool = False
     mode: str = 'auto'
     target_policy: str = 'automatic'
     target: tuple | None = None
@@ -304,6 +305,8 @@ class GunneryBattle:
         self.ignition = IgnitionRuntime(self)
         from .tactical_layers import HeightOrders
         self.height_orders = HeightOrders(self)
+        from .tactical_navigation import Navigation
+        self.navigation = Navigation(self, scenario)
         from .tactical_magazine import MagazineRuntime
         self.magazines = MagazineRuntime(self) if self.damage else None
         from .tactical_personnel import PersonnelRuntime
@@ -484,9 +487,15 @@ class GunneryBattle:
         from 高天荒野舰艇水平射界 import interval_blocks_bearing
         return interval_blocks_bearing(gun.blocked, (angle+gun.rotation)*180/pi)
 
-    def step(self, control=None, *, project=None, **flight_commands):
+    def step(self, control=None, *, project=None, manual_control=True, **flight_commands):
         self._guard()
         ps.need(self.ending is None, '$', 'Battle has ended')
+        direct_flag=self.navigation.flag_by_ship.get(self.session._direct)
+        navigation=self.navigation.plan(self.session.world,cancel_flag=direct_flag if control is not None and manual_control else None)
+        flight_commands['autonomous_controls']=tuple((k,v) for k,v in navigation[1].items() if k!=self.session._direct)
+        if (control is None or not manual_control) and self.session._direct in navigation[1]:
+            control=navigation[1].get(self.session._direct)
+
         if self.fire.pending_modes:
             existing = tuple(flight_commands.get('resource_operations', ()))
             flight_commands['resource_operations'] = existing+self.fire.mode_operations(existing)
@@ -557,7 +566,7 @@ class GunneryBattle:
             projectiles=prepare_all(self,world,available,projectiles,environment,sensor_frame)
             staged['sensor_frame']=sensor_frame
             starts, contacts = {}, {}
-            working_states, search_contacts = fire_control.acquire(self, world, available, inventories, sensor_frame, solutions)
+            working_states, search_contacts = fire_control.acquire(self, world, available, inventories, sensor_frame, solutions, self.navigation.gun_states(navigation[0],navigation[4]))
             staged['search_contacts'] = search_contacts
             manual_targets={(n,i) for n,key in self.observation.locks.items() for i,s in enumerate(world.ships) if s.ship_id==key}
             desired_targets = sorted({(g.ship_index, s.target[0]) for g, s in zip(self.guns, working_states) if s.mode == 'auto' and s.target}|manual_targets,
@@ -732,7 +741,7 @@ class GunneryBattle:
                 states.append(replace(state, angle=angle, aim_point=display_aim, fire_requested=False, quality=quality,
                     quality_reason=quality_reason, lock_sources=sources, status=status or 'ready', shots=shots, rng=rng))
             missile_plan=self.missiles.plan(world,inventories,available,projectiles,projectile_sequence,sensor_frame,ending,environment,
-                defense_contacts,defense_threats)
+                defense_contacts,defense_threats,navigation_orders={k:o for k,o in navigation[0].items() if self.navigation.flag_by_ship[k] not in navigation[4]})
             staged['missile_plan']=missile_plan
             projectile_sequence=missile_plan[2]
             if self.fire.enabled and not ending:
@@ -791,6 +800,7 @@ class GunneryBattle:
             inventory_project=simulate, inventory_repair=repairs if self.repair.enabled else None,
             inventory_finish=finish, project=project, impact_resolver=impacts if self.damage else None, **flight_commands)
         self.states, self.projectiles = staged['states'], staged['projectiles']
+        self.navigation.commit(navigation)
         self.fire.pending_modes = {}
         self.observation.pending_modes = {}
         self.observation.frame = staged['sensor_frame']

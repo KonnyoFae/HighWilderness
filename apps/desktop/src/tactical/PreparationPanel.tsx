@@ -159,7 +159,7 @@ export function PreparationPanel({transport,instance,active,onBusy,onEnter,embed
       {!library?.ships.length&&<p>尚无准备舰船，请先导入已保存的栖装设计。</p>}
       <div className="preparation-fleet">{library?.ships.map((s,i)=><label key={s.instance_id}><input type="checkbox" aria-label={`选择准备舰船 ${i+1}`} checked={selected.includes(s.instance_id)} disabled={s.blocked||!!pendingOpen.current}
         onChange={e=>setSelected(ids=>e.target.checked?[...ids,s.instance_id]:ids.filter(id=>id!==s.instance_id))}/>{s.name} · 舰船 {i+1} · 船壳 {(s.hull_integrity*100).toFixed(0)}%{s.blocked?' · 战斗或结算占用中':''}</label>)}</div>
-      <button disabled={selected.length===0||selected.length>16} onClick={()=>void run(open)}>准备所选舰船</button>
+      <button disabled={selected.length===0||selected.length>18} onClick={()=>void run(open)}>准备所选舰船</button>
       {pendingOpen.current&&<button onClick={()=>{pendingOpen.current=null;setStatus('可重新选择舰船；已创建的草稿仍在准备列表中。');void run(refresh);}}>重新选择舰船</button>}
       <h3>准备草稿与已保存记录</h3>
       {library?.drafts.map((d,i)=><p key={d.preparation_id}><button onClick={()=>void run(async()=>accept(await call<PreparationPacket>('read',{preparation_id:d.preparation_id})))}>打开准备 {i+1} · {d.saved?'已保存':'草稿'}</button></p>)}

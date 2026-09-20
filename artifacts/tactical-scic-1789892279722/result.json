@@ -1,0 +1,9 @@
+{
+  "status": "SCIC_UI_PASS",
+  "scope": "Real React/Python in Edge; injected file dialog, not native WebView",
+  "checks": [
+    "All four SCIC refits preserve the legacy remote core and origin; undo/redo retains exact versions.",
+    "SCIC and remote v2 placed from real catalog on canvas, saved and reopened with identical geometry and versions.",
+    "Over-capacity fleet remains editable; ordinary flagship blocks entry, restoring SCIC re-enables it; normal CIC enemy solo and three escorts pass real preparation and combat entry."
+  ]
+}

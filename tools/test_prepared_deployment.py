@@ -29,6 +29,12 @@ class PreparedDeploymentTests(unittest.TestCase):
         document,_,_=fixture(self.server.editor.index)
         file=Path(self.temp.name)/'custom.json';file.write_text(ps.encode(document),encoding='utf-8')
         for i in range(count):
+            # A multi-ship fixture explicitly refits its flagship. Solo fixtures
+            # retain ordinary CIC so compatibility remains exercised.
+            imported=ps.clone(document)
+            if count > 1 and i == 0:
+                next(m for m in imported['outfit']['modules'] if m['prototype']['id']=='gtw.module.fixture.cic')['prototype']=dict(id='gtw.module.scic.advanced',version=1)
+            file.write_text(ps.encode(imported),encoding='utf-8')
             grant=self.server.editor.store.bind(str(file),'open',None,None)
             self.call('import',dict(instance_id=f'instance.custom.{i}',source=dict(kind='file',value=grant['destination_handle'])))
         packet=self.call('open',dict(preparation_id='preparation.launch',instance_ids=[f'instance.custom.{i}' for i in range(count)]))

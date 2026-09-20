@@ -118,7 +118,9 @@ export function gridHint(layout: OutfitLayout, deckId: string, option: ModuleOpt
 export function compatibleHosts(option: ModuleOption, modules: OutfitInstance[], options: ModuleOption[], exclude = "") {
   const slot = option.prototype.installation.host_slot;
   return modules.filter(m => m.id !== exclude && options.some(o => o.prototype.id === m.prototype.id && o.prototype.version === m.prototype.version
-    && (o.prototype.installation.provided_slots as string[] | undefined)?.includes(slot ?? ""))
+    && (o.prototype.installation.provided_slots as string[] | undefined)?.includes(slot ?? "")
+    && (option.prototype.category !== 'remote_core' || Number(o.prototype.capability.fleet_companion_capacity ?? 0) > 0))
     && (slot === 'fire_control_datalink' && option.prototype.category === 'datalink' || !modules.some(child => child.id !== exclude && child.placement.host_instance_id === m.id
-      && options.some(o => o.prototype.id === child.prototype.id && o.prototype.version === child.prototype.version && o.prototype.installation.host_slot === slot))));
+      && options.some(o => o.prototype.id === child.prototype.id && o.prototype.version === child.prototype.version &&
+        (o.prototype.installation.host_slot === slot || option.prototype.category === 'remote_core' && o.prototype.category === 'remote_core')))));
 }

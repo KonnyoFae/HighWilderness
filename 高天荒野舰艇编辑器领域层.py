@@ -733,6 +733,7 @@ class OutfitEditorDocument:
         host_instance_id: str,
     ) -> "OutfitEditorDocument":
         self._require_new_instance_ids(instance_id)
+        self._validate_new_remote_host(prototype, host_instance_id)
         self._source["modules"].append(
             {
                 "id": instance_id,
@@ -797,11 +798,38 @@ class OutfitEditorDocument:
         module = candidate._module(instance_id)
         if module["placement"].get("kind") != "hosted":
             raise ContractError("editor.placement_kind", "$.modules", "只能为嵌入模块更换宿主")
+        candidate._validate_new_remote_host(module['prototype'], host_instance_id)
         module["placement"] = dict(kind="hosted", host_instance_id=host_instance_id)
         if allow_invalid_draft:
             candidate.validate_placement_edit(instance_id)
         else:
             candidate.compile()
+        self._source = candidate.source_dict()
+        return self
+
+    def _validate_new_remote_host(self, prototype, host_instance_id):
+        ref = prototype if isinstance(prototype, ResourceReference) else ResourceReference.parse(prototype, '$.prototype')
+        if self._module_catalog.module(ref).category != 'remote_core':
+            return
+        host = self._module(host_instance_id)
+        p = self._module_catalog.module(ResourceReference.parse(host['prototype'], '$.host'))
+        if not p.capability.to_dict().get('fleet_companion_capacity'):
+            raise ContractError('outfit.remote_core_scic', '$.host_instance_id', '新安装或更换遥控核心舱宿主需要 SCIC；旧 CIC 组合可保留读取')
+
+    def replace_cic(self, instance_id: str, prototype) -> "OutfitEditorDocument":
+        candidate = OutfitEditorDocument(self.source_dict(), self._hull, self._module_catalog, self._coating_catalog, launcher_kinds=self._launcher_kinds)
+        row = candidate._module(instance_id)
+        old = self._module_catalog.module(ResourceReference.parse(row['prototype'], '$.prototype'))
+        ref = prototype if isinstance(prototype, ResourceReference) else ResourceReference.parse(prototype, '$.prototype')
+        target = self._module_catalog.module(ref)
+        if old.category != 'cic' or target.category != 'cic':
+            raise ContractError('outfit.core_replacement', '$.prototype', '核心替换仅适用于 CIC / SCIC')
+        children = [m for m in candidate._source['modules'] if m['placement'].get('host_instance_id') == instance_id]
+        if not target.capability.to_dict().get('fleet_companion_capacity') and any(
+                self._module_catalog.module(ResourceReference.parse(m['prototype'], '$.prototype')).category == 'remote_core' for m in children):
+            raise ContractError('outfit.remote_core_scic', '$.prototype', '保留遥控核心舱时只能改装为 SCIC；如需普通 CIC，请先移除核心舱')
+        row['prototype'] = ref.to_dict()
+        candidate.validate_placement_edit(instance_id)
         self._source = candidate.source_dict()
         return self
 
@@ -820,7 +848,8 @@ class OutfitEditorDocument:
         slot_users = {}
         for module in self.parse().modules:
             host_id = getattr(module.placement, "host_instance_id", None)
-            slot = self._module_catalog.module(module.prototype).installation.host_slot
+            p = self._module_catalog.module(module.prototype)
+            slot = 'remote_core' if p.category == 'remote_core' else p.installation.host_slot
             if host_id is not None and slot is not None:
                 slot_users.setdefault((host_id, slot), []).append(module.id)
         for ids in slot_users.values():

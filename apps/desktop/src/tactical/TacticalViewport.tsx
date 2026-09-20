@@ -50,10 +50,11 @@ function buildShip(ship: ShipGeometry, light: boolean, friendlySide='side.blue')
   return { root, selection, modules };
 }
 
-export function TacticalViewport({ view, active, selected, onSelect, gunControl, missileControl, launcherSelection, compact = false,
+export function TacticalViewport({ view, active, selected, onSelect, gunControl, missileControl, navigationControl, launcherSelection, compact = false,
   overlay=false, focusRequest, onCameraInput, fleetRows }: {
   view: TacticalView; active: boolean; selected: string | null; onSelect: (id: string | null) => void;
   gunControl?: GunInteraction;
+  navigationControl?:{enabled:boolean;onPoint:(point:Point,append:boolean)=>void;onCancel:()=>void};
   missileControl?:{enabled:boolean;attackLayer:string;onPoint:(point:Point)=>void;onCancel:()=>void};
   launcherSelection?:LauncherSelection;
   compact?: boolean;
@@ -454,6 +455,10 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
         const released = point(e);
         if (released.x < 0 || released.y < 0 || released.x > size.width || released.y > size.height) return;
         const view = displayed.current;
+        if(navigationControl&&d.button===0){
+          if(navigationControl.enabled)navigationControl.onPoint(world(released,camera),e.shiftKey);
+          return;
+        }
         if(missileControl&&d.button===0){
           if(missileControl.enabled&&observationLayer===missileControl.attackLayer)missileControl.onPoint(world(released,camera));
           return;
@@ -489,10 +494,18 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
         } else if (["+", "=", "-"].includes(e.key)) {
           e.preventDefault(); setCamera(c => zoomScene(c, { x: size.width / 2, y: size.height / 2 }, e.key === "-" ? 1 / 1.3 : 1.3));
         } else if (e.key === "Home") { e.preventDefault(); fit(); }
-        else if (e.key === "Escape") { drag.current = null; if(missileControl)missileControl.onCancel();else onSelect(null); }
+        else if (e.key === "Escape") { drag.current = null; if(navigationControl)navigationControl.onCancel();else if(missileControl)missileControl.onCancel();else onSelect(null); }
       }}>
       {failure && <p role="alert" className="canvas-message editor-error">{failure}。舰艇列表仍可查看；可返回编辑再进入重试。</p>}
       {!ready && !failure && <p role="status" className="canvas-message">正在建立战术画布…</p>}
+      {ready&&view.snapshot.navigation?.ships.filter(s=>s.ship_id===selected&&s.kind==='move').map(s=>{
+        const pose=view.snapshot.ships.find(p=>p.id===s.ship_id);if(!pose||pose.height_layer!==observationLayer)return null;
+        const points=[pose.position_m,...s.points].map(p=>screen({x:p[0],y:p[1]},camera));
+        return <svg key={s.ship_id} className="tactical-route" width={size.width} height={size.height} aria-label="所选舰艇航线">
+          <polyline points={points.map(p=>`${p.x},${p.y}`).join(' ')} fill="none" stroke="#8ee9c0" strokeDasharray="6 5"/>
+          {points.slice(1).map((p,i)=><g key={i}><circle cx={p.x} cy={p.y} r={5} fill="#8ee9c0"/><text x={p.x+8} y={p.y-8} fill="#8ee9c0">{i+1}</text></g>)}
+        </svg>;
+      })}
       {ready && <div className="tactical-scale" style={{ width: step * camera.scale }}>{step} m</div>}
       {ready && <>
         {!!view.snapshot.gunnery?.electronic_warfare?.effects.some(e=>e.height_layer===observationLayer)&&<div className="tactical-ew-key" aria-label="本层电子对抗区域">

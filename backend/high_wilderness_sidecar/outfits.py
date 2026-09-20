@@ -59,6 +59,7 @@ def command(doc, name, arguments, index):
         "outfit.rehost": {"instance_id", "host_instance_id"},
         "outfit.remove": {"instance_id"},
         "outfit.upgrade_sensor": {"instance_id"},
+        "outfit.replace_cic": {"instance_id", "prototype"},
     }
     if not isinstance(name, str) or name not in fields or not isinstance(arguments, dict) or set(arguments) != fields[name]:
         raise ContractError("editor.invalid_arguments", "$.params.arguments", "舾装命令或字段不匹配")

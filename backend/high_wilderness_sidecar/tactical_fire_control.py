@@ -172,8 +172,8 @@ class Plan:
             reproject_rejected=0,solution_age_steps=0,refresh_observation=0,refresh_motion=0,
             invalidated=0,solve_budget=0,search_budget=0,precise_requests=0)
 
-    def acquire(self,battle,world,available,inventories,frame,solutions):
-        states=list(battle.states); contacts=targeting.search_contacts(battle,world,available,frame)
+    def acquire(self,battle,world,available,inventories,frame,solutions,initial_states=None):
+        states=list(battle.states if initial_states is None else initial_states); contacts=targeting.search_contacts(battle,world,available,frame)
         pending=[]; budget=max(MIN_BUDGET,ceil(len(battle.guns)/SEARCH_PERIOD))
         self.counters['search_budget']=budget
         for index,(gun,state) in enumerate(zip(battle.guns,states)):

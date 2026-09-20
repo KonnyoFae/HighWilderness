@@ -1,3 +1,5 @@
+import {FleetOrders} from './FleetOrders';
+import type {NavigationIntent} from './FleetOrders';
 import { useEffect, useMemo, useRef, useState } from "react";
 import { observedBattleView } from './observedView';
 import { shipIcon } from '../editor/shipIcons';
@@ -88,16 +90,20 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   const [missileLauncher,setMissileLauncher]=useState<string|null>(null);
   const [missileTab,setMissileTab]=useState<'launch'|'flight'|'stores'>('launch');
   const [missilePicking,setMissilePicking]=useState(false);
+  const [navigationPicking,setNavigationPicking]=useState(false);
+  const [navigationSpeed,setNavigationSpeed]=useState(100);
+  const [navigationHeading,setNavigationHeading]=useState<number|null>(null);
+  const [navigationUncertain,setNavigationUncertain]=useState(false);
   const [missileTargetHint,setMissileTargetHint]=useState<string|number|null>(null);
   useEffect(()=>{setMissilePicking(false);},[selected,inspectorTab,missileTab]);
-  useEffect(()=>{setCanvasOrders(false);setMissilePicking(false);pointerAim.current=queuedFire.current=null;},[selected,inspectorTab,fireOpen]);
+  useEffect(()=>{setCanvasOrders(false);setMissilePicking(false);setNavigationPicking(false);pointerAim.current=queuedFire.current=null;},[selected,inspectorTab,fireOpen]);
   useEffect(()=>{setMissileTargetHint(null);},[selected]);
   useEffect(()=>{
-    const cancel=(event:KeyboardEvent)=>{if(event.key==='Escape'&&(canvasOrders||missilePicking)){
-      setCanvasOrders(false);setMissilePicking(false);pointerAim.current=queuedFire.current=null;event.preventDefault();
+    const cancel=(event:KeyboardEvent)=>{if(event.key==='Escape'&&(canvasOrders||missilePicking||navigationPicking)){
+      setCanvasOrders(false);setMissilePicking(false);setNavigationPicking(false);pointerAim.current=queuedFire.current=null;event.preventDefault();
     }};
     window.addEventListener('keydown',cancel);return()=>window.removeEventListener('keydown',cancel);
-  },[canvasOrders,missilePicking]);
+  },[canvasOrders,missilePicking,navigationPicking]);
   const unknownMissile=useRef(false);
   const unknownEW=useRef(false);
   const [ewUncertain,setEwUncertain]=useState(false);
@@ -176,6 +182,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     }
     setError(next.error ?? "");
     if(next.view.gunnery?.observation)setSensorUncertain(false);
+    if(next.view.navigation)setNavigationUncertain(false);
     if (unknownHeight.current && next.view.height_commands) {
       unknownHeight.current = false; setHeightUncertain(false);
     }
@@ -250,6 +257,20 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       } else accept(await call<RealtimeEnvelope>(`tactical.realtime.${kind}`, { scene_id }));
     } catch (e) { if (mounted.current) setError(normalizeHostFailure(e).message); }
     finally { acting.current = false; if (mounted.current) setBusy(false); }
+  }
+  async function sendNavigation(intent:NavigationIntent) {
+    if(acting.current||!active||navigationUncertain||!selected)return;
+    const shipId=selected;acting.current=true;setBusy(true);setError('');
+    try {
+      await pending.current;
+      const current=latest.current.state;
+      if(!current?.status.running||!current.available||!current.view.navigation||current.view.gunnery?.ending)return;
+      setNavigationUncertain(true);
+      accept(await call<RealtimeEnvelope>('tactical.realtime.navigation',{scene_id:current.status.epoch,
+        input:{epoch:current.status.epoch,generation:current.status.generation,
+          sequence:current.view.navigation.command_sequence+1,ship_id:shipId,...intent}}));
+    }catch(e){if(mounted.current)setError(normalizeHostFailure(e).message);}
+    finally{acting.current=false;if(mounted.current)setBusy(false);}
   }
   async function sendHeight(target: HeightLayer | null, shipId=selected) {
     if (acting.current || !active || unknownHeight.current || !shipId) return;
@@ -382,6 +403,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     if(id===selected)return;
     if(selected)shipPages.current.set(selected,{service:serviceTab,weapon:inspectorTab,missile:missileTab,launcher:missileLauncher,sensors:sensorsOpen,ew:ewOpen});
     const pages=shipPages.current.get(id)??DEFAULT_BATTLE_PAGES;
+    setNavigationPicking(false);
     setServiceTab(pages.service);setInspectorTab(pages.weapon);setSelected(id);focusedShip.current=null;
     setMissileTab(pages.missile);setMissileLauncher(pages.launcher);setSensorsOpen(pages.sensors);setEwOpen(pages.ew);
     setMissileTargetHint(null);setMissilePicking(false);setCanvasOrders(false);pointerAim.current=queuedFire.current=null;
@@ -446,9 +468,9 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
         if(alert.page==='fire'){setFireOpen(true);setSensorsOpen(true);}else{setServiceOpen(true);setServiceTab(alert.page);}
         setFocusRequest({sequence:++focusSequence.current,shipId:alert.shipId});focusedShip.current=null;
       }}/>
-      {(canvasOrders||missilePicking)&&<div className="canvas-order-hint" role="status">
-        <span>{missilePicking?'正在指定导弹发射地点':gunMode==='manual'?'手动炮击：点击画布开火':'正在为所选炮组指定目标'}</span>
-        <button onClick={()=>{setCanvasOrders(false);setMissilePicking(false);pointerAim.current=queuedFire.current=null;}}>退出瞄准 · Esc</button>
+      {(canvasOrders||missilePicking||navigationPicking)&&<div className="canvas-order-hint" role="status">
+        <span>{navigationPicking?'设置随伴舰航点 · Shift 追加':missilePicking?'正在指定导弹发射地点':gunMode==='manual'?'手动炮击：点击画布开火':'正在为所选炮组指定目标'}</span>
+        <button onClick={()=>{setCanvasOrders(false);setMissilePicking(false);setNavigationPicking(false);pointerAim.current=queuedFire.current=null;}}>退出瞄准 · Esc</button>
       </div>}
       <div className="battle-field">
         <BattleDock name="舰队" symbol="☷" position="fleet"><h3>舰队</h3>
@@ -461,6 +483,9 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
         </BattleDock>
         <TacticalViewport view={view} active={active} selected={selected} onSelect={selectBattleShip} compact overlay
           focusRequest={focusRequest} onCameraInput={()=>{focusedShip.current=null;}} fleetRows={fleetRows.current}
+      navigationControl={navigationPicking?{enabled:!busy&&!navigationUncertain&&state.status.running&&state.available,
+        onPoint:(point,append)=>void sendNavigation({kind:'move',arguments:{point_m:[point.x,point.y],append,speed_mps:navigationSpeed,heading_deg:navigationHeading}}),
+        onCancel:()=>setNavigationPicking(false)}:undefined}
       launcherSelection={fireOpen&&selected&&inspectorTab==='missiles'?{shipId:selected,moduleId:missileLauncher}:undefined}
       missileControl={fireOpen&&missilePicking&&selected?{enabled:!busy&&!missileUncertain&&state.status.running&&state.available,
         attackLayer:view.snapshot.gunnery?.missiles?.ships.find(s=>s.ship_id===selected)?.launchers?.find(l=>l.module_id===missileLauncher)?.attack_layer??pose?.height_layer??'upper',
@@ -495,6 +520,11 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
           <button aria-pressed={serviceTab === 'cargo'} onClick={() => setServiceTab('cargo')}>货舱</button>
         </nav>
         {serviceTab === "ship" && pose && <div className="battle-ship-state">
+          {friendlySelected&&selected&&<FleetOrders view={view} shipId={selected} directId={state.direct_ship_id}
+            disabled={busy||!active||!state.status.running||!state.available||navigationUncertain||!!view.snapshot.gunnery?.ending||pose.physical_status!=='operational'||pose.command_status!=='scene_command'}
+            picking={navigationPicking} onPick={()=>{setNavigationPicking(!navigationPicking);setCanvasOrders(false);setMissilePicking(false);}}
+            onCommand={intent=>{setNavigationPicking(false);void sendNavigation(intent);}}
+            speed={navigationSpeed} onSpeed={setNavigationSpeed} heading={navigationHeading} onHeading={setNavigationHeading}/>}
           <LiftReserve value={pose.lift_reserve} />
           <HeightPanel value={pose.height_navigation} actualLayer={pose.height_layer}
             descent={pose.descent} wreck={pose.wreck}
@@ -555,7 +585,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
           names={Object.fromEntries(view.geometry.ships.map(s=>[s.id,s.name]))} selected={missileLauncher}
           onSelect={id=>{setMissileLauncher(id);setMissilePicking(false);}} ownLayer={pose?.height_layer??'upper'}
           disabled={busy||!active||!state.status.running||!state.available||!friendlySelected||missileUncertain||!!view.snapshot.gunnery?.ending}
-          picking={missilePicking} onPick={()=>{const m=view.snapshot.gunnery?.missiles?.ships.find(s=>s.ship_id===selected);
+          picking={missilePicking} onPick={()=>{setNavigationPicking(false);const m=view.snapshot.gunnery?.missiles?.ships.find(s=>s.ship_id===selected);
             setMissileLauncher(m?.launchers?.find(l=>l.module_id===missileLauncher)?.module_id??m?.launchers?.[0]?.module_id??null);setMissilePicking(!missilePicking);}}
           onCommand={v=>void sendMissile(v)} targetHint={missileTargetHint??observation?.locked_target_id??null}/>}
         {inspectorTab==='missiles'&&missileTab==='flight'&&friendlySelected&&<InFlightMissiles

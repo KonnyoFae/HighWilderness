@@ -155,7 +155,7 @@ class MissileRuntime:
                    for group in ('launchers','magazines') for s in profile[group]}
             logistics.advance(inv,1,rates)
 
-    def plan(self,world,inventories,available,projectiles,sequence,frame,ending,environment=None,defense_contacts=None,defense_threats=None):
+    def plan(self,world,inventories,available,projectiles,sequence,frame,ending,environment=None,defense_contacts=None,defense_threats=None,navigation_orders=None):
         """Only candidate inventories are mutated. Caller commits this result."""
         from .tactical_gunnery import Projectile,rotate,add,wrap
         from .tactical_missile_defense import select,reservation
@@ -177,9 +177,15 @@ class MissileRuntime:
             status=available[n][mid]
             if not b._can_fire(ship,n) or (b._sides[n]!=b._sides[b._direct_index] and not b.enemy_fire):status=status or 'control_unavailable'
             if not p:states[key]=replace(state,status='model_unavailable',fire_requested=False);continue
-            if abs(LAYERS.index(layer)-LAYERS.index(motion.height_layer))>1:status=status or 'layer_out_of_reach'
             origin=add(tuple(motion.position_world_m.to_list()),rotate(gun.anchor,motion.heading_rad))
             aim=state.point;velocity=(0.,0.);target=state.target
+            order=(navigation_orders or {}).get(ship.ship_id)
+            if order and order.kind=='attack' and row['auto_fire'] and not p.interceptor:
+                target=order.target;aim=None
+                track=frame.tracks.get((n,target))
+                if track and track.valid:
+                    layer=track.target.layer;ratio=1. if layer==motion.height_layer else CROSS_LAYER_SPEED
+            if abs(LAYERS.index(layer)-LAYERS.index(motion.height_layer))>1:status=status or 'layer_out_of_reach'
             sources_for=lambda identity:b.observation.defense_sources(n,identity,world,available,frame,mid) if p.interceptor else b.observation.sources(n,identity,world,available,frame)
             if p.interceptor and row['auto_fire'] and not state.fire_requested and not status:
                 rows=defense_threats if state.target is None else tuple(r for r in defense_threats if r['projectile_id']==state.target)

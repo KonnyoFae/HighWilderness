@@ -2,7 +2,7 @@
 import json
 from pathlib import Path
 
-CURRENT_PATH = Path('contracts/web_bridge/fixtures/ammunition-preparation-policy.v15.json')
+CURRENT_PATH = Path('contracts/web_bridge/fixtures/ammunition-preparation-policy.v16.json')
 
 
 def load_current(root):

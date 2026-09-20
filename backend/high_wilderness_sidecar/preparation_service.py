@@ -49,6 +49,8 @@ class PreparationService:
     def library(self):
         from .prepared_launch_store import recover,setup
         recover(self.store)
+        from .preparation_maneuver_upgrade import apply_idle
+        turning_upgrade=apply_idle(self.store,self.editor.root)
         with self.store.connection() as db:
             self.setup(db)
             setup(db)
@@ -64,7 +66,7 @@ class PreparationService:
             drafts=[dict(preparation_id=key,revision=revision,saved=bool(saved)) for key,revision,saved in db.execute(
                 'SELECT d.id,d.revision,EXISTS(SELECT 1 FROM preparations p WHERE p.id=d.id) FROM preparation_drafts d ORDER BY d.rowid DESC LIMIT 32')]
         sources=[dict(key=d['key'],name=d['name']) for d,_ in self.editor.index.resources.values() if d['kind']=='OutfitPlan']
-        return dict(ships=ships,drafts=drafts,sources=sources,interrupted_battles=interrupted)
+        return dict(ships=ships,drafts=drafts,sources=sources,interrupted_battles=interrupted,turning_upgrade=turning_upgrade)
 
     def import_ship(self,p):
         ps.obj(p,'instance_id source','$.params'); key=ps.identifier(p['instance_id'],'$.instance_id')

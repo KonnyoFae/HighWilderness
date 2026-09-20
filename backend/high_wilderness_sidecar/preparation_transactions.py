@@ -10,6 +10,8 @@ from . import battle_preparation as bp, persistent_ship as ps
 from . import preparation_maintenance as maintenance
 from .tactical_inventory import InventorySession
 from .tactical_settlement import SettlementStore
+from .tactical_limits import MAX_DEPLOYED_SHIPS
+from .tactical_fleet import preparation_issues
 
 RESULT_INTERFACE = 'gaotian.battle-preparation-result/x1a-v1'
 
@@ -193,7 +195,7 @@ class PreparationStore(SettlementStore):
             ps.need(key not in ids,'$.battle','舰船正被战斗使用，不能修改战前准备')
 
     def _inputs(self,db,ids,supply_id):
-        ps.need(type(ids) is list and 0<len(ids)<=16 and all(type(k) is str for k in ids)
+        ps.need(type(ids) is list and 0<len(ids)<=MAX_DEPLOYED_SHIPS and all(type(k) is str for k in ids)
             and len(set(ids))==len(ids),'$.ships','非法准备舰船集合')
         ps.identifier(supply_id,'$.supply_id')
         self._unavailable(db,set(ids))
@@ -231,7 +233,8 @@ class PreparationStore(SettlementStore):
         draft=ps.clone(draft)
         with self.connection() as db:
             ships,supply,goods=self._draft_inputs(db,draft)
-            return evaluate(draft,ships,supply,supply_goods=goods)
+            issues = preparation_issues(db, self, draft, ships)
+            return dict(can_commit=False, issues=issues, result=None) if issues else evaluate(draft,ships,supply,supply_goods=goods)
 
     def _write_supply(self,db,supply,goods):
         payload,digest=self._encoded(dict(supply=supply,goods=goods))
@@ -251,6 +254,8 @@ class PreparationStore(SettlementStore):
                 ps.need(old[0]==request,'$.preparation_id','此准备已提交，不能以同一身份提交不同内容')
                 return self._decode(old[1],old[2])
             ships,supply,goods=self._draft_inputs(db,draft)
+            issues = preparation_issues(db, self, draft, ships)
+            ps.need(not issues, '$.fleet', '；'.join(i['message'] for i in issues))
             candidate=evaluate(draft,ships,supply,supply_goods=goods)
             ps.need(candidate['can_commit'],'$.preparation',ps.encode(candidate['issues']))
             result=candidate['result']
@@ -276,7 +281,7 @@ class PreparationStore(SettlementStore):
         """
         ps.identifier(scene_id,'$.scene_id')
         rows=ps.rows(versions,'instance_id','$.ships')
-        ps.need(0<len(rows)<=16,'$.ships','非法入战舰船集合')
+        ps.need(0<len(rows)<=MAX_DEPLOYED_SHIPS,'$.ships','非法入战舰船集合')
         with self.connection() as db:
             self._unavailable(db,set(rows))
             records=[]

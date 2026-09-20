@@ -928,10 +928,15 @@ class ModuleCapability:
             raise ContractError("module.category", f"{path}.kind", kind)
         parsed: dict[str, Any] = {"kind": kind}
         if kind == "cic":
-            _keys(obj, path, ("kind", "fixed_to_cic_origin"))
+            _keys(obj, path, ("kind", "fixed_to_cic_origin"), ("fleet_companion_capacity",))
             if not _boolean(obj["fixed_to_cic_origin"], f"{path}.fixed_to_cic_origin"):
                 raise ContractError("module.cic_not_fixed", path, "CIC 必须固定在原点")
             parsed["fixed_to_cic_origin"] = True
+            if "fleet_companion_capacity" in obj:
+                capacity = _integer(obj["fleet_companion_capacity"], f"{path}.fleet_companion_capacity")
+                if not 1 <= capacity <= 64:
+                    raise ContractError("module.scic_capacity", path, "SCIC 随伴容量须为 1～64 艘")
+                parsed["fleet_companion_capacity"] = capacity
         elif kind == "lift_fuel_tank":
             _keys(obj, path, ("kind", "lift_force_n", "fuel_capacity_units"))
             parsed["lift_force_n"] = _number(obj["lift_force_n"], f"{path}.lift_force_n", 0.0)
@@ -1517,8 +1522,11 @@ class ModulePrototype:
             raise ContractError("module.internal_rcs_present", path, "纯内部模块不得填写外部 RCS")
         if category == "cic" and "cic_internal" not in installation.provided_slots:
             raise ContractError("module.cic_slot_missing", path, "CIC 必须提供 cic_internal 嵌入槽位")
-        if category == "remote_core" and installation.host_slot != "cic_internal":
-            raise ContractError("module.remote_core_host", path, "遥控核心舱必须嵌入 cic_internal")
+        is_scic = category == "cic" and "fleet_companion_capacity" in capability.to_dict()
+        if ("scic_internal" in installation.provided_slots) != is_scic:
+            raise ContractError("module.scic_slot", path, "仅具备舰队容量的 SCIC 必须提供 scic_internal 槽位")
+        if category == "remote_core" and installation.host_slot != ("cic_internal" if reference.version == 1 else "scic_internal"):
+            raise ContractError("module.remote_core_host", path, "新版遥控核心舱必须嵌入 SCIC；v1 保留历史 CIC 宿主")
         if category == "main_engine":
             if not installation.internal_footprint_half_cells or not installation.exhaust_clearance_half_cells:
                 raise ContractError("module.main_engine_geometry", path, "主发动机必须具有内部本体和尾焰净空")

@@ -1,0 +1,337 @@
+{
+  "fixture_level": "prototype_unbalanced",
+  "id": "gtw.module_catalog.tactical.scic",
+  "kind": "ModulePrototypeCatalog",
+  "name": "战术舰队核心目录",
+  "schema": "gaotian.module-prototype-catalog/v3",
+  "version": 3,
+  "modules": [
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "cic.basic_control"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "partial",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "fixed_to_cic_origin": true,
+        "kind": "cic",
+        "fleet_companion_capacity": 3
+      },
+      "category": "cic",
+      "counts_toward_departure_minimum": true,
+      "crew": [
+        {
+          "crew_type": "officer",
+          "minimum_operating": 2,
+          "standard": 4
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "cic.basic_control",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 150,
+      "id": "gtw.module.scic.basic",
+      "installation": {
+        "allowed_rotations_deg": [
+          0
+        ],
+        "deck_rule": "base_only",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [
+          "cic_internal",
+          "scic_internal"
+        ],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 2000,
+      "name": "基础SCIC",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "cic.basic_control"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "fixed_to_cic_origin": true,
+        "kind": "cic",
+        "fleet_companion_capacity": 3
+      },
+      "category": "cic",
+      "counts_toward_departure_minimum": true,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "cic.basic_control",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 150,
+      "id": "gtw.module.scic.basic.unmanned",
+      "installation": {
+        "allowed_rotations_deg": [
+          0
+        ],
+        "deck_rule": "base_only",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [
+          "cic_internal",
+          "scic_internal"
+        ],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 2400.0,
+      "name": "基础SCIC（无人化）",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "cic.basic_control"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "partial",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "fixed_to_cic_origin": true,
+        "kind": "cic",
+        "fleet_companion_capacity": 8
+      },
+      "category": "cic",
+      "counts_toward_departure_minimum": true,
+      "crew": [
+        {
+          "crew_type": "officer",
+          "minimum_operating": 4,
+          "standard": 8
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "cic.basic_control",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 200,
+      "id": "gtw.module.scic.advanced",
+      "installation": {
+        "allowed_rotations_deg": [
+          0
+        ],
+        "deck_rule": "base_only",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [
+          "cic_internal",
+          "scic_internal"
+        ],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 4000,
+      "name": "高级SCIC",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "cic.basic_control"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "fixed_to_cic_origin": true,
+        "kind": "cic",
+        "fleet_companion_capacity": 8
+      },
+      "category": "cic",
+      "counts_toward_departure_minimum": true,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "cic.basic_control",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 200,
+      "id": "gtw.module.scic.advanced.unmanned",
+      "installation": {
+        "allowed_rotations_deg": [
+          0
+        ],
+        "deck_rule": "base_only",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [
+          "cic_internal",
+          "scic_internal"
+        ],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 4800.0,
+      "name": "高级SCIC（无人化）",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [
+        "ship.remote_control_selected"
+      ],
+      "automation": {
+        "automated_functions": [],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "remote_core"
+      },
+      "category": "remote_core",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "remote_core.command_link",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "standby",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.remote_core",
+      "installation": {
+        "allowed_rotations_deg": [
+          0
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": "scic_internal",
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 100.0,
+      "name": "SCIC 遥控核心舱",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 2
+    }
+  ]
+}
