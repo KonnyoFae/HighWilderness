@@ -5,7 +5,7 @@ import {layerName} from './layers';
 export function HitLog({view, open=false}:{view:TacticalView;open?:boolean}) {
   const damage=view.snapshot.gunnery?.damage;
   if(!damage)return null;
-  return <details open={open} aria-label="甲板命中记录"><summary>毁伤记录 · 命中 {damage.hits} 次 · 殉爆 {damage.magazine_detonations ?? 0} 次</summary>
+  return <details open={open} aria-label="甲板命中记录"><summary>{view.snapshot.gunnery?.observed_only?'本方近期受击与殉爆记录':`毁伤记录 · 命中 ${damage.hits} 次 · 殉爆 ${damage.magazine_detonations ?? 0} 次`}</summary>
     {(damage.magazine_explosions ?? []).slice(-8).reverse().map(event=>{
       const ship=view.geometry.ships.find(s=>s.id===event.ship_id);
       const name=(id:string)=>ship?.modules.find(m=>m.id===id)?.name ?? id;

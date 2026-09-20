@@ -13,6 +13,13 @@ const view=(guns:GunView[]):TacticalView=>({snapshot:{ships:[{id:'own',height_la
 const render=(guns:GunView[],groupId:string|null='main',weaponId='a')=>renderToStaticMarkup(<GunControlPanel view={view(guns)} shipId="own"
   groupId={groupId} weaponId={weaponId} disabled={false} onWeapon={()=>{}} onGroup={()=>{}} onCommand={()=>{}}/>);
 describe('group gun controls',()=>{
+  it('can assign an observed enemy without reading its hidden health',()=>{
+    const v=view([weapon('a',0),weapon('b',0)]);
+    Object.assign(v.snapshot.ships[1],{physical_status:'observed',hull_integrity:0});
+    v.snapshot.gunnery!.observation={ships:[{ship_id:'own',contacts:[{id:'enemy',kind:'ship',valid:true}]}]} as never;
+    const html=renderToStaticMarkup(<GunControlPanel compact view={v} shipId="own" groupId="main" weaponId="a" disabled={false} onWeapon={()=>{}} onGroup={()=>{}} onCommand={()=>{}}/>);
+    expect(html).toContain('<button>瞄准敌舰</button>');
+  });
   it('shows saved groups first and totals only the selected group, keeping individual and list controls folded',()=>{
     const html=render([weapon('a',2),weapon('b',3),weapon('c',99)]);
     expect(html).toContain('前炮组 · 整组 2 门');expect(html).toContain('待发共 20 发 · 已射击 5 发');

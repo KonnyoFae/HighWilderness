@@ -838,6 +838,14 @@ class OutfitEditorDocument:
                 raise ContractError(codes[conflict["layer"]], f"$.modules[{instance_id}]",
                                     "安装占用或净空冲突：" + " / ".join(conflict["instance_ids"]))
 
+    def set_classification_icon(self, icon) -> "OutfitEditorDocument":
+        from 高天荒野舰艇数据契约 import OUTFIT_PLAN_V3_SCHEMA_ID
+        from 高天荒野舰艇武器组 import weapon_groups
+        candidate = dict(self._source, schema=OUTFIT_PLAN_V3_SCHEMA_ID, classification_icon=icon,
+                         weapon_groups=[g.to_dict() for g in weapon_groups(self.parse(), self._module_catalog)])
+        self._source = OutfitPlanInput.parse(candidate).to_dict()
+        return self
+
     def set_weapon_groups(self, groups) -> "OutfitEditorDocument":
         from 高天荒野舰艇武器组 import set_weapon_groups
         self._source = set_weapon_groups(self._source, groups, self._module_catalog)

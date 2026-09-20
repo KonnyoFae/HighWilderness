@@ -36,6 +36,9 @@ try{
  assert(!commands.some(r=>r.method==='tactical.realtime.gun'),'selecting fire-control contact must not command every weapon');
  await button('暂停交战').click();await page.waitForTimeout(300);
  const canvas=page.locator('.tactical-canvas');await canvas.locator('canvas').waitFor();
+ // Observed-only initial framing can already fit the friendly ships closely.
+ // Start farther out to verify the second double-click really restores detail.
+ await canvas.focus();await canvas.press('-');await canvas.press('-');await page.waitForTimeout(120);
  const snapshot=()=>canvas.evaluate(el=>({box:el.getBoundingClientRect().toJSON(),camera:JSON.parse(el.dataset.camera),ships:[...el.querySelectorAll('.tactical-ship-marker')].map(m=>({id:m.dataset.shipId,position:m.style.transform}))}));
  const first=await snapshot();assert.equal(await page.locator('.battle-fleet button').count(),2);assert.equal(await page.locator('.tactical-ship-label').count(),0);
  for(const name of ['舰队','火控','舰务']){await button('收起'+name).click();assert.deepEqual(await snapshot(),first,`${name} close changes canvas`);await button('展开'+name).click();assert.deepEqual(await snapshot(),first,`${name} open changes canvas`);}

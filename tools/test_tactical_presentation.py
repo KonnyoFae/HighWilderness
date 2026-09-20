@@ -79,6 +79,14 @@ class PresentationTests(unittest.TestCase):
         history.record(5, [p]); history.record(6, [])
         self.assertEqual(history.view()['finished_projectiles'][0]['height_layer'], 'cloud')
 
+    def test_finished_shells_keep_physical_visibility_classification(self):
+        history = FlightHistory()
+        small = Projectile(1, 'ship.red', 'weapon', (0, 0), (0, 0), (5000, 0), 100)
+        large = replace(small, id=2, durability=3, maximum_durability=3)
+        history.record(5, [small, large]); history.record(6, [])
+        self.assertEqual([(p['kind'], p['maximum_durability']) for p in history.view()['finished_projectiles']],
+                         [('shell', None), ('shell', 3)])
+
     def test_history_is_bounded_reports_overflow_and_expires_by_simulation_time(self):
         history = FlightHistory()
         shots = [Projectile(n, 'ship', 'gun', (0, 0), (0, 0), (5000, 0), 120) for n in range(MAX_FINISHED_FLIGHTS+4)]

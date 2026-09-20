@@ -16,7 +16,7 @@ export interface TacticalStatic {
   interface: "gaotian.tactical-render-static/v1alpha1";
   scenario_id: string;
   resources: Record<string, unknown>;
-  ships: { id: string; name: string; side_id: string; fleet_id: string; derived_snapshot_sha256: string;
+  ships: { id: string; name: string; side_id: string; fleet_id: string; derived_snapshot_sha256: string; classification_icon?: string;
     decks: { id: string; level: number; regions: { id: string; vertices_m: number[][] }[] }[];
     structural_durability?: { policy_id:string; maximum_points:number };
     modules: { id: string; name: string; category: string; equipment_kind?:string; anchor_m: number[]; rotation_deg: number; deck_level: number;
@@ -92,6 +92,7 @@ export interface GunView {
   cargo?: {good_id: string; quantity: number; reserved: number}[];
 }
 export interface GunneryView {
+  observed_only?: boolean;
   stores?: import('./ShipStoresPanel').ShipStores[];
   observation?:ObservationView;
   electronic_warfare?:ElectronicWarfareView;
@@ -137,6 +138,7 @@ export interface DisplayProjectile {
 }
 export interface FinishedProjectile {
   kind?:'shell'|'missile';trajectory?:number[][];
+  maximum_durability?:number|null;
   id: number; ship_id: string; born_step: number; origin_m: number[]; expires_step: number;
   position_m: number[]; velocity_mps: number[]; end_step: number; end_m: number[];
   impact: { ship_id: string; outcome: string } | null;

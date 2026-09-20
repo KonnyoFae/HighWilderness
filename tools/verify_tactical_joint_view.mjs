@@ -8,7 +8,7 @@ import path from 'node:path';
 const require=createRequire(path.join(process.env.HW_BROWSER_MODULES,'package.json'));
 const {chromium}=require('playwright');
 const layered=process.env.HW_JOINT_LAYERED==='1';
-const out=path.resolve(process.env.HW_JOINT_OUT??`artifacts/tactical-joint-5h-${Date.now()}`),store=path.join(out,`store-${Date.now()}`);
+const out=path.resolve(process.env.HW_JOINT_OUT??`artifacts/tactical-ui-u3-joint-${Date.now()}`),store=path.join(out,`store-${Date.now()}`);
 await mkdir(out,{recursive:true});
 const setup=spawnSync('python',['-X','utf8','-m','tools.joint_combat_fixture',store],{encoding:'utf8',windowsHide:true});assert.equal(setup.status,0,setup.stderr);
 let backend,browser,page,serial=0,live,packet;const pending=new Map(),errors=[],checks=[];
@@ -78,12 +78,14 @@ try{
   await button('配置双方舰内物资').click();await button('核对资源与预装填').click();await button('保存准备').click();await page.getByRole('heading',{name:'已保存准备结果',exact:true}).waitFor();
   await button('按当前编队进入交战').click();await button('开始交战').click();
   await page.evaluate(()=>{window.__qaFrameTimes=[];let last=performance.now();const frame=now=>{if(window.__qaFrameTimes.length<20000)window.__qaFrameTimes.push(now-last);last=now;requestAnimationFrame(frame);};requestAnimationFrame(frame);});
-  const inspector=page.getByRole('complementary',{name:'所选舰艇'}),tab=async name=>inspector.getByRole('button',{name,exact:true}).click();
+  const inspector=page.getByRole('complementary',{name:'火控',exact:true}),service=page.getByRole('complementary',{name:'舰务',exact:true});
+  const tab=async name=>(['舰况','损管','货舱'].includes(name)?service:inspector).getByRole('button',{name,exact:true}).click();
   const fleet=page.getByRole('navigation',{name:'战场舰艇'});
   const ally=()=>live.view.ships.find(s=>s.id==='ship.ew.ally');
-  await fleet.getByRole('button',{name:/电子对抗测试舰 · ally/}).click();await tab('火控');
-  const target=inspector.locator('.observation-card').filter({has:page.getByText('电子对抗测试舰 · enemy',{exact:true})});
-  await target.getByRole('button',{name:'分配导弹',exact:true}).click();
+  await fleet.getByRole('button',{name:/电子对抗测试舰 · ally/}).click();
+  const target=inspector.locator('.fire-contact').filter({hasText:'电子对抗测试舰 · enemy'});
+  await target.click();await until(()=>live.view.gunnery.observation.ships.find(s=>s.ship_id==='ship.ew.ally').locked_target_id==='ship.ew.enemy','selected ship locks parent-list target');
+  await tab('导弹');assert(await target.isVisible());
   await page.getByLabel('作战发射器',{exact:true}).waitFor();
   await button('将 电子对抗测试舰 · enemy 分配给此发射器').click();
   await until(()=>live.view.gunnery.missiles.ships.find(s=>s.ship_id==='ship.ew.ally').launchers[0].target_id==='ship.ew.enemy','fire control handoff retains selected target');
@@ -97,11 +99,15 @@ try{
     await until(()=>flights.size>0,'real cross-layer missile maneuver');
     await page.screenshot({path:path.join(out,'layer-pursuit.png'),fullPage:true});
   }
-  checks.push('Both sides have two saved ships; fire-control assignment opens launch controls with the chosen target; performance and flight have separate visible views.');
-  await tab('设备');await button('投放小型箔条').click();
+  checks.push('Both sides have two saved ships; parent fire-control target stays visible while switching to missiles; explicit assignment reaches the selected launcher without changing the operating ship. Performance and flight remain accessible.');
+  await inspector.locator('.battle-equipment').filter({has:page.getByText('电子对抗',{exact:true})}).locator('summary').click();await button('投放小型箔条').click();
   await until(()=>live.view.gunnery.electronic_warfare.devices.some(d=>d.ship_id==='ship.ew.ally'&&d.shots>0),'player electronic countermeasure');
   await until(()=>metrics.descent,'declared ally tank failure starts real descent',60000);
-  await tab('损管');await button('损管 1 启动').click();
+  await button('收起舰务').click();await fleet.locator('button').first().click();
+  await page.locator('.battle-alerts').getByRole('button',{name:/电子对抗测试舰 · ally · 正在下坠/}).click();
+  assert.equal(await service.getByRole('button',{name:'损管',exact:true}).getAttribute('aria-pressed'),'true');
+  assert.equal(await page.locator('[data-fleet-ship="ship.ew.ally"]').getAttribute('aria-pressed'),'true');
+  await button('损管 1 启动').click();
   await until(()=>live.view.gunnery.damage_control.devices.some(d=>d.ship_id==='ship.ew.ally'&&d.emergency_progress>.1),'real tank repair');
   await page.screenshot({path:path.join(out,'joint-repair.png'),fullPage:true});
   await until(()=>!ally().descent&&ally().modules.find(m=>m.id==='lift_tank').durability>=25,'tank restored while combat continues');
@@ -119,12 +125,35 @@ try{
   if(layered){assert(metrics.peak_maneuvering>0);assert(metrics.missile_layer_changes>0);checks.push('Actual four-ship combat includes a declared completed target layer change after lock; missiles maneuver and change collision layers without refreshing lifetime.');}
   const stockBefore=live.view.gunnery.missiles.ships.map(s=>({ship_id:s.ship_id,state:s.state}));
   checks.push('Real missiles, automatic defense contacts, 50mm gunfire, player and AI EW and data-link sharing coexist; a destroyed tank is rescued by a player order and finite damage-control resources.');
-  await page.setViewportSize({width:1280,height:860});await tab('导弹');await inspector.getByRole('button',{name:/在途制导/}).click();
-  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));await page.screenshot({path:path.join(out,'compact-flight.png'),fullPage:true});
+  assert(await button('损管 1 启动').isDisabled());
+  await tab('货舱');assert(await service.getByRole('region',{name:'本舰库存'}).isVisible());
+  await tab('导弹');await inspector.getByRole('button',{name:'发射控制',exact:true}).click();assert(await button('单发导弹').isDisabled());
+  await inspector.getByRole('button',{name:/在途制导/}).click();
+  const canvas=page.locator('.tactical-canvas');
+  const layout=()=>canvas.evaluate(el=>({box:el.getBoundingClientRect().toJSON(),camera:el.dataset.camera}));
+  for(const [width,height] of [[1920,1080],[1366,768]]){
+    await page.setViewportSize({width,height});await page.waitForTimeout(150);const before=await layout();
+    assert(before.box.top>=0&&before.box.bottom<=height,'battle canvas must fit inside the window');
+    for(const name of ['舰队','舰务','火控']){await button('收起'+name).click();assert.deepEqual(await layout(),before);await button('展开'+name).click();assert.deepEqual(await layout(),before);}
+    await button('展开旗舰操纵').click();assert.deepEqual(await layout(),before);await button('收起旗舰操纵').click();
+    assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1&&document.documentElement.scrollHeight<=innerHeight+1));await page.screenshot({path:path.join(out,`workspace-${width}.png`),fullPage:true});
+  }
+  const records=page.locator('.battle-records');await records.locator('summary').first().click();assert(await records.getByRole('region',{name:'近防拦截记录',exact:true}).isVisible());
+  await page.screenshot({path:path.join(out,'battle-records.png'),fullPage:true});await records.locator('summary').first().click();
+  checks.push('A real descent alert restores the collapsed service dock and selects the damaged ally. Paused missile/repair commands are disabled; cargo and records are reachable. Both resolutions preserve canvas bounds and camera when docks change.');
   const frames=await page.evaluate(()=>window.__qaFrameTimes);
   const drawCosts=await page.evaluate(()=>window.__qaDrawCosts);assert(drawCosts.length>100);
+  if(!layered){
+    await fleet.locator('button').first().click();await tab('火炮');await inspector.locator('.gun-group-list button').first().click();
+    assert(await button('关闭自动近防').isDisabled());await button('开始交战').click();await button('关闭自动近防').click();
+    const gun=()=>live.view.gunnery.weapons.find(w=>w.ship_id===live.direct_ship_id&&w.module_id==='defense.ciws');
+    await until(()=>gun()?.point_defense===false,'group disables actual point defense');
+    await button('开启自动近防').click();await until(()=>gun()?.point_defense===true,'group restores actual point defense');
+    await button('暂停交战').click();await fleet.getByRole('button',{name:/电子对抗测试舰 · ally/}).click();await tab('导弹');
+    checks.push('Flagship weapon-group controls remain reachable at 1366×768, reject paused commands, and actually disable/restore automatic CIWS without changing the operating ally afterwards.');
+  }
   await inspector.getByRole('button',{name:'装填与导弹库',exact:true}).click();await page.getByRole('region',{name:'战斗导弹后勤'}).waitFor();
-  await request('tactical.realtime.withdraw',{scene_id:live.status.epoch});await button('保存全部战后结果').click();await button('结算已保存').waitFor();
+  await button('结束本场交战').click();await button('保存全部战后结果').click();await button('结算已保存').waitFor();
   await button('管理战后库存与下一场准备').click();await button('配置双方舰内物资').waitFor();
   const saved=(await request('tactical.preparation.scene_read',{})).ships;assert.equal(saved.length,4);
   const restoredAlly=saved.find(s=>s.instance_id==='instance.ew.ally');assert(restoredAlly.state.damage_controls[0].quantity_units<100000);
@@ -132,6 +161,6 @@ try{
   checks.push('All four result records and finite missile/EW/repair costs survive save, return to preparation and a normal backend restart.');
   assert.deepEqual(errors,[]);assert.equal(metrics.overload_seen,false);
   const summary=values=>{const s=[...values].sort((a,b)=>a-b);return {count:s.length,p50_ms:s[Math.floor((s.length-1)*.5)]??0,p95_ms:s[Math.floor((s.length-1)*.95)]??0,max_ms:s.at(-1)??0};};
-  await writeFile(path.join(out,'result.json'),JSON.stringify({status:'TACTICAL_JOINT_5J4_UI_PASS',checks,scope:`Four ships; production engine and UI. Declared tank failure at 20 s${layered?', initial 10 s enemy EW cooldown, and completed enemy-layer change after acquisition':''}; no synthetic missile/impact or repair completion. Not a 15–30 ship stress test.`,metrics:report(),timing:{realtime_requests:summary(requestTimes),commands:summary(commandTimes),browser_animation_frames:summary(frames),canvas_callback:summary(drawCosts)},stockBefore},null,2));console.log(JSON.stringify({out,checks,peak_projectiles:metrics.peak_projectiles,peak_missiles:metrics.peak_missiles,peak_live_response_bytes:metrics.peak_live_response_bytes,overload_seen:metrics.overload_seen}));
+  await writeFile(path.join(out,'result.json'),JSON.stringify({status:'TACTICAL_UI_U3_JOINT_PASS',checks,scope:`Four ships; production engine and canvas workspace. Declared tank failure at 20 s${layered?', initial 10 s enemy EW cooldown, and completed enemy-layer change after acquisition':''}; no synthetic missile/impact or repair completion. Not SCIC capacity or maximum-fleet performance acceptance.`,metrics:report(),timing:{realtime_requests:summary(requestTimes),commands:summary(commandTimes),browser_animation_frames:summary(frames),canvas_callback:summary(drawCosts)},stockBefore},null,2));console.log(JSON.stringify({out,checks,peak_projectiles:metrics.peak_projectiles,peak_missiles:metrics.peak_missiles,peak_live_response_bytes:metrics.peak_live_response_bytes,overload_seen:metrics.overload_seen}));
 }catch(e){if(page){await page.screenshot({path:path.join(out,'failure.png'),fullPage:true});await writeFile(path.join(out,'failure.txt'),await page.locator('body').innerText());await writeFile(path.join(out,'debug.json'),JSON.stringify({metrics:report(),live},null,2));}throw e;}
-finally{await browser?.close();await stop();}
+finally{await browser?.close();await stop();for(const p of pending.values())clearTimeout(p.timer);}

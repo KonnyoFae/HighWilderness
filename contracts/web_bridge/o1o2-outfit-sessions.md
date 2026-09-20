@@ -1,5 +1,7 @@
 # O1/O2 舾装资源与最小命令
 
+2026-09-20 扩展：编辑器新增 `outfit.set_classification_icon`，参数 `{icon}`。显式设置六种内置图标之一时，舾装升级为 `gaotian.outfit-plan/v3alpha1`，保存必填 `classification_icon` 和原 v2 武器组；旧 v1／v2 不自动补字段，未知值拒绝，沿用原撤销／重做／保存／重开。详见[U2b 接口与兼容](./tactical-ui-u2b-icons-and-observation.md)。
+
 日期：2026-09-07。O1 与 O2 最小范围完成；O3 画布、用户船壳绑定与空白舾装、武器组设置及 O4 三舰真实 UI 门禁尚未完成。
 
 ## 资源与兼容范围
@@ -19,6 +21,7 @@
 | 命令 | arguments |
 | --- | --- |
 | `outfit.rename` | `name` |
+| `outfit.set_classification_icon` | `icon`（`circle/diamond/triangle/square/cross/star`） |
 | `outfit.place_grid`（内部/顶挂） | `instance_id, prototype, deck_id, anchor_half_cell, rotation_deg` |
 | `outfit.place_side` | `instance_id, prototype, deck_id, region_id, edge_index, start_slot_index, rotation_deg` |
 | `outfit.place_hosted` | `instance_id, prototype, host_instance_id` |

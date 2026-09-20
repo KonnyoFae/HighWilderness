@@ -1,0 +1,14 @@
+{
+  "steps": 1849,
+  "step_seconds": 7.973425999865867,
+  "max_step_s": 0.013608300010673702,
+  "max_gap_s": 0.04258589999517426,
+  "peak_maneuvering": 1,
+  "layer_changes": 1,
+  "target_change_step": 423,
+  "status": "battle_finished",
+  "fixture": "5j-layered",
+  "step_p50_ms": 3.8862000219523907,
+  "step_p95_ms": 6.779400049708784,
+  "step_p99_ms": 11.21709996368736
+}

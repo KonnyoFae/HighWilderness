@@ -37,7 +37,7 @@ export function MissileCombatPanel({ship,observation,missiles,names,selected,onS
       <p><strong>{model.name}</strong> · 待发 {row.ready.length} 枚</p>
       <p role="status">{statuses[launcher.status]??'暂不可用'}{launcher.fire_requested?' · 单发指令等待执行':''} · 已发射 {launcher.shots} 枚</p>
       <p className="muted">当前发射参考射程 {(launcher.maximum_range_m/1000).toFixed(1)} 公里，转向、上爬和下潜会改变实际航程。</p>
-      <details><summary>导弹性能与制导参数</summary><MissilePerformance value={ship.profile.flight_profiles?.[row.model_id]}/></details>
+      <MissilePerformance value={ship.profile.flight_profiles?.[row.model_id]}/>
       {launcher.interceptor&&<p>自动防御：外圈大型高速撞舰威胁优先，每目标先分配一枚。{launcher.active_target_id!==null&&launcher.active_target_id!==undefined?` 当前处理 ${targetName(launcher.active_target_id)}。`:''}</p>}
       <label>导弹作用层<select aria-label="导弹作用层" value={launcher.interceptor&&launcher.automatic_layer?'auto':launcher.attack_layer} onChange={e=>send('attack_layer',{layer:e.target.value==='auto'?null:e.target.value})}>
         {launcher.interceptor&&<option value="auto">自动选择本层／相邻层</option>}

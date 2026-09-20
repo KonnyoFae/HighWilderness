@@ -4,6 +4,7 @@ export interface ObservedContact {
   valid:boolean;age_s:number;sources:string[];status:string;radar_source_available:boolean;
   defense_weapon_ids?:string[];
   altitude_m?:number|null;vertical_speed_mps?:number;
+  heading_rad?:number;yaw_rate_radps?:number;
 }
 export interface ObservationShip {
   ship_id:string;locked_target_id:string|number|null;lock_status:string|null;contacts:ObservedContact[];

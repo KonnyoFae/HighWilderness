@@ -1,0 +1,13 @@
+{
+  "steps": 1875,
+  "step_seconds": 9.807451999688055,
+  "max_step_s": 0.014018699992448092,
+  "max_gap_s": 2.5264518999611028,
+  "peak_maneuvering": 0,
+  "layer_changes": 0,
+  "status": "battle_finished",
+  "fixture": "5i-flat-replay",
+  "step_p50_ms": 4.897400038316846,
+  "step_p95_ms": 8.15030001103878,
+  "step_p99_ms": 11.874200019519776
+}

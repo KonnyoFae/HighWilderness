@@ -25,7 +25,7 @@ export function GunControlPanel({ view, shipId, weaponId, groupId, disabled, onW
   const observed = view.snapshot.gunnery?.observation?.ships.find(s => s.ship_id === shipId)?.contacts;
   const enemies = view.geometry.ships.filter(s => s.side_id !== geometry?.side_id &&
     (!compact || observed?.some(c => c.id === s.id && c.kind === 'ship' && c.valid)) &&
-    view.snapshot.ships.some(p => p.id === s.id && p.hull_integrity > 0 && !p.wreck && p.physical_status !== 'exited'));
+    view.snapshot.ships.some(p => p.id === s.id && (p.physical_status === 'observed' || p.hull_integrity > 0 && !p.wreck && p.physical_status !== 'exited')));
   const mode = commonGunValue(guns, g => g.mode);
   const layer = commonGunValue(guns, g => g.attack_layer ?? '');
   const recipe = commonGunValue(guns, g => g.selected_recipe_id);

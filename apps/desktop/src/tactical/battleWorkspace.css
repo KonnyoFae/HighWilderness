@@ -1,5 +1,12 @@
 .tactical-workspace .battle-workspace.canvas-workspace { padding: 0; border: 0; border-radius: 0; position: relative; }
-.canvas-workspace .battle-grid { display: block; position: relative; height: max(620px, calc(100dvh - 84px)); overflow: hidden; isolation: isolate; }
+.app-shell.tactical-app:has(.battle-grid) { height: 100dvh; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
+.tactical-workspace:has(.battle-grid), .tactical-workspace:has(.battle-grid) .tactical-stage-content,
+.tactical-workspace:has(.battle-grid) .tactical-scene-slot { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.tactical-workspace:has(.battle-grid) > .tactical-journey { flex: none; }
+.tactical-workspace .canvas-workspace:has(.battle-grid) { display: flex; flex-direction: column; flex: 1; min-height: 0; }
+.canvas-workspace .battle-grid { display: block; position: relative; flex: 1; min-height: 0; overflow: hidden; isolation: isolate; }
+/* Diagnostic disclosure stays available without adding page scroll in combat. */
+.tactical-app:has(.battle-grid) > .workspace-diagnostics { position: absolute; z-index: 10; top: 18px; left: 50%; transform: translateX(-50%); margin: 0; max-width: min(560px,calc(100% - 48px)); max-height: calc(100dvh - 36px); overflow: auto; background: #102a25df; }
 .canvas-workspace .battle-field { position: absolute; inset: 0; height: auto; display: block; }
 .canvas-workspace .battle-field .tactical-viewport { position: absolute; inset: 0; display: block; border: 0; border-radius: 0; }
 .canvas-workspace .battle-field .tactical-canvas { position: absolute; inset: 0; height: 100%; min-height: 0; }
@@ -124,3 +131,9 @@
 .canvas-workspace .helm-turn-column { display: flex; flex-direction: column; gap: 6px; font-size: 12px; text-align: center; }
 .canvas-workspace .helm-turn-column button { padding: 10px 6px; }
 .canvas-workspace .helm-yaw-status { text-align: center; margin: 4px 0; font-size: 12px; color: #d5e8b6; }
+.canvas-workspace .tactical-ship-marker[hidden] { display: none; }
+.canvas-workspace .tactical-viewport .tactical-ship-marker.enemy { color: #ba5145; }
+.canvas-workspace .tactical-viewport:not([data-observation-layer=upper]) .tactical-ship-marker.enemy { color: #f1a398; }
+.canvas-workspace .tactical-ship-marker.lost { opacity: .6; border: 1px dashed currentColor; }
+.canvas-workspace .tactical-ship-marker[data-other-layer=true] { background: #102a25b3; color: #d3dec7; border: 1px dashed currentColor; }
+.canvas-workspace .marker-layer { position: absolute; top: 22px; font-size: 9px; white-space: nowrap; background: #102a25c9; border-radius: 3px; padding: 0 2px; color: #e0eacb; }

@@ -43,7 +43,7 @@ export interface SessionSnapshot {
   hull_binding?: HullBinding;
   backend_instance_id: string; session_id: string; revision: number;
   resource: ResourceEntry;
-  draft: { name: string; decks?: HullDeck[]; modules?: OutfitInstance[]; hull_blueprint?: { id: string; version: number } };
+  draft: { name: string; classification_icon?: string; decks?: HullDeck[]; modules?: OutfitInstance[]; hull_blueprint?: { id: string; version: number } };
   draft_sha256: string; dirty: boolean; can_undo: boolean; can_redo: boolean;
   preview: EditorPreview; last_valid_preview: EditorPreview | null;
   last_valid_revision: number | null;

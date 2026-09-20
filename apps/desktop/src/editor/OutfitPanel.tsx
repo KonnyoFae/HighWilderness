@@ -2,6 +2,7 @@ import { EditorNotice } from "./EditorFeedback";
 import { useEffect, useState } from "react";
 import { OutfitViewport } from "./OutfitViewport";
 import { WeaponGroupsPanel } from "./WeaponGroupsPanel";
+import { SHIP_ICONS } from './shipIcons';
 import type { HullCommand, ModuleOption, SessionSnapshot } from "./model";
 import { categories, instanceFields, mounts, outfitCommand } from "./outfit";
 import type { OutfitFields } from "./outfit";
@@ -59,6 +60,10 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
   return <section className="outfit-editor" aria-label="舾装模块工作台">
     <aside className="module-library" aria-label="部件选单">
       <header><h3>部件目录</h3><span>{options.length} 种部件</span></header>
+      <label>舰艇分类图标<select aria-label="舰艇分类图标" value={session.draft.classification_icon ?? 'circle'} disabled={busy || dirty || groupDraft || canvasDraft}
+        onChange={e=>void onCommand('outfit.set_classification_icon',{icon:e.target.value})}>
+        {Object.entries(SHIP_ICONS).map(([id,[symbol,name]])=><option key={id} value={id}>{symbol} {name}</option>)}
+      </select></label>
       <div className="module-mode" role="group" aria-label="部件操作模式">
         <button aria-pressed={mode === "place"} disabled={busy || dirty || groupDraft || canvasDraft} onClick={() => setMode("place")}>＋ 添加部件</button>
         <button aria-pressed={mode === "select"} disabled={busy || dirty || groupDraft || canvasDraft} onClick={() => setMode("select")}>↖ 拖动部件</button>

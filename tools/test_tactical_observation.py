@@ -173,6 +173,16 @@ class ObservationTests(unittest.TestCase):
         current=o.plan(replace(world,fixed_step=world.fixed_step+2),available,(),missiles=(t,))
         self.assertEqual(current.local[0,t.id],local)
 
+    def test_published_heading_is_sampled_and_stays_frozen_after_loss(self):
+        b=self.battle();b.step();o=b.observation
+        key=next(key for (n,key),track in o.frame.tracks.items() if n==0 and track.target.kind=='ship')
+        track=o.frame.tracks[0,key]
+        sampled=replace(track,target=replace(track.target,heading=1.23,yaw=.04),valid=False)
+        o.frame=replace(o.frame,tracks={**o.frame.tracks,(0,key):sampled})
+        row=next(c for c in o.view()['ships'][0]['contacts'] if c['id']==key)
+        self.assertEqual(row['heading_rad'],1.23);self.assertEqual(row['yaw_rate_radps'],.04)
+        self.assertFalse(row['valid'])
+
     def test_enemy_and_unobserved_orders_are_rejected_without_sequence_change(self):
         b=self.battle();enemy=next(n for n in range(len(b._sides)) if b._sides[n]!=b._sides[0])
         for args in [('mode',SENSOR,'off',enemy),('lock','unknown',None,0),('lock',[],None,0)]:

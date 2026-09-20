@@ -2036,6 +2036,8 @@ class OutfitModuleInstanceInput:
 
 
 OUTFIT_PLAN_V2_SCHEMA_ID = "gaotian.outfit-plan/v2alpha1"
+OUTFIT_PLAN_V3_SCHEMA_ID = "gaotian.outfit-plan/v3alpha1"
+SHIP_CLASSIFICATION_ICONS = ("circle", "diamond", "triangle", "square", "cross", "star")
 
 
 @dataclass(frozen=True)
@@ -2072,6 +2074,7 @@ class OutfitPlanInput:
     hull_coating: ResourceReference
     modules: tuple[OutfitModuleInstanceInput, ...]
     weapon_groups: tuple[WeaponGroupInput, ...] | None = None
+    classification_icon: str | None = None
 
     @classmethod
     def parse(cls, resource: Any, path: str = "$") -> "OutfitPlanInput":
@@ -2089,9 +2092,10 @@ class OutfitPlanInput:
                 "hull_blueprint",
                 "hull_coating",
                 "modules",
-            ) + (("weapon_groups",) if obj.get("schema") == OUTFIT_PLAN_V2_SCHEMA_ID else ()),
+            ) + (("weapon_groups",) if obj.get("schema") in (OUTFIT_PLAN_V2_SCHEMA_ID, OUTFIT_PLAN_V3_SCHEMA_ID) else ())
+              + (("classification_icon",) if obj.get("schema") == OUTFIT_PLAN_V3_SCHEMA_ID else ()),
         )
-        if obj["schema"] not in (SCHEMA_ID, OUTFIT_PLAN_V2_SCHEMA_ID):
+        if obj["schema"] not in (SCHEMA_ID, OUTFIT_PLAN_V2_SCHEMA_ID, OUTFIT_PLAN_V3_SCHEMA_ID):
             raise ContractError("schema.unsupported", f"{path}.schema", str(obj["schema"]))
         if obj["kind"] != "OutfitPlan":
             raise ContractError("resource.kind_mismatch", f"{path}.kind", "必须是 OutfitPlan")
@@ -2110,13 +2114,16 @@ class OutfitPlanInput:
         if len({instance.id for instance in modules}) != len(modules):
             raise ContractError("outfit.instance_id_duplicate", f"{path}.modules", "实例 id 不得重复")
         groups = None
-        if obj["schema"] == OUTFIT_PLAN_V2_SCHEMA_ID:
+        if obj["schema"] in (OUTFIT_PLAN_V2_SCHEMA_ID, OUTFIT_PLAN_V3_SCHEMA_ID):
             entries = _array(obj["weapon_groups"], f"{path}.weapon_groups")
             if len(entries) > 64:
                 raise ContractError("outfit.group_limit", path, "最多 64 个武器组")
             groups = tuple(sorted((WeaponGroupInput.parse(g, f"{path}.weapon_groups[{i}]") for i, g in enumerate(entries)), key=lambda g: g.id))
             if len({g.id for g in groups}) != len(groups):
                 raise ContractError("outfit.group_id_duplicate", path, "武器组 ID 不得重复")
+        icon = obj.get("classification_icon")
+        if obj["schema"] == OUTFIT_PLAN_V3_SCHEMA_ID and icon not in SHIP_CLASSIFICATION_ICONS:
+            raise ContractError("outfit.classification_icon", f"{path}.classification_icon", "不支持的舰艇分类图标")
         return cls(
             _resource_id(obj["id"], f"{path}.id"),
             _integer(obj["version"], f"{path}.version", 1),
@@ -2126,6 +2133,7 @@ class OutfitPlanInput:
             ResourceReference.parse(obj["hull_coating"], f"{path}.hull_coating"),
             modules,
             groups,
+            icon,
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -2138,7 +2146,8 @@ class OutfitPlanInput:
             "modules": [instance.to_dict() for instance in self.modules],
             **({"weapon_groups": [g.to_dict() for g in self.weapon_groups]} if self.weapon_groups is not None else {}),
             "name": self.name,
-            "schema": OUTFIT_PLAN_V2_SCHEMA_ID if self.weapon_groups is not None else SCHEMA_ID,
+            "schema": OUTFIT_PLAN_V3_SCHEMA_ID if self.classification_icon is not None else OUTFIT_PLAN_V2_SCHEMA_ID if self.weapon_groups is not None else SCHEMA_ID,
+            **({"classification_icon": self.classification_icon} if self.classification_icon is not None else {}),
             "version": self.version,
         }
 

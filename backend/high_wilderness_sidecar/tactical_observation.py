@@ -327,6 +327,7 @@ class ObservationRuntime:
                     defense_weapon_ids=[mid for i,mid,_ in track.sources if i==n and (n,mid) in self.integrated
                         and available[n][mid] is None and self.sensor_enabled.get((n,mid),True)] if track.valid else [],
                     velocity_mps=track.target.velocity,height_layer=track.target.layer,valid=track.valid,
+                    heading_rad=track.target.heading, yaw_rate_radps=track.target.yaw,
                     altitude_m=track.target.payload.altitude_m if track.target.payload else None,
                     vertical_speed_mps=track.target.payload.vertical_velocity_mps if track.target.payload else 0.,
                     age_s=max(0,world.fixed_step-track.step)/60,sources=list(sources),

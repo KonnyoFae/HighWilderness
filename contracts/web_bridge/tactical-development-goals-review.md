@@ -1,6 +1,6 @@
 # 战术模式开发目标复盘
 
-2026-09-20 接续更新：画布核心 UI 工作包 U 的 [U1 基础](./tactical-ui-u1-foundation.md)与 [U2a 操纵及面板](./tactical-ui-u2a-controls-and-panels.md)已完成范围内验证；下一阶段为 U2b 图标、观测与功能收尾，随后 U3 联合验收、[F 火控优化](./tactical-fire-control-optimization-plan.md)，再接工作包 6 的 SCIC／舰队指挥。完整排期见[UI 实施计划](./tactical-ui-implementation-plan.md)，覆盖下文历史“5j 后直接进入 6”的顺序。
+2026-09-20 接续更新：画布核心 UI 工作包 U 的 U1～U3 已完成本轮范围，见 [U3 联合验收](./tactical-ui-u3-joint-acceptance.md)。下一阶段为 [F 火控优化](./tactical-fire-control-optimization-plan.md)，再接工作包 6 的 SCIC／舰队指挥。四舰同层／跨层与两场保存验证不代替最大编制验收。完整排期见[UI 实施计划](./tactical-ui-implementation-plan.md)，覆盖下文历史“5j 后直接进入 6”的顺序。
 
 2026-09-19 编制目标更新：采用[SCIC（Stem CIC）舰队容量规则](./tactical-scic-fleet-capacity-design.md)。SCIC 在原点替代普通 CIC 并承担全舰核心与舰队指挥职责，遥控核心等核心舱设备限装 SCIC，敌我相同。首轮随伴容量示例为 3～8 艘，含旗舰的总数上限为 4～9 艘；不足额编成仍合法。工作包 6 先接入型号、宿主与编队校验，工作包 7 验证 4 对 4、非对称配置、9 对 9 及实际武器负载，覆盖下文历史 15～30 舰规模目标。本轮仅更新设计，SCIC 尚未实装。
 

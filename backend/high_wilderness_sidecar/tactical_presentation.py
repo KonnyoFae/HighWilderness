@@ -34,6 +34,7 @@ class FlightHistory:
             self.active.get(identity, dict(id=p.id, ship_id=p.ship_id, born_step=step,
                 origin_m=p.position, expires_step=p.expires, height_layer=p.height_layer)),
             position_m=p.position, velocity_mps=p.velocity,kind='missile' if getattr(p,'missile',None) else 'shell',
+            maximum_durability=p.maximum_durability,
             trajectory=[*self.active.get(identity,{}).get('trajectory',())[-PATH_STEPS:],(step,*p.position)]) for identity, p in current.items()}
         while self.finished and self.finished[0]['end_step'] < step-HISTORY_STEPS:
             self.finished.popleft()

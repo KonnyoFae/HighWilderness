@@ -1,6 +1,7 @@
 """Design-time weapon groups; exact prototypes, deterministic defaults, no runtime bypass."""
 from copy import deepcopy
-from 高天荒野舰艇数据契约 import ContractError, OutfitPlanInput, WeaponGroupInput, canonical_sha256, OUTFIT_PLAN_V2_SCHEMA_ID, SCHEMA_ID
+from dataclasses import replace
+from 高天荒野舰艇数据契约 import ContractError, OutfitPlanInput, WeaponGroupInput, canonical_sha256, OUTFIT_PLAN_V2_SCHEMA_ID, OUTFIT_PLAN_V3_SCHEMA_ID
 
 
 def weapon_groups(plan, catalog):
@@ -33,7 +34,7 @@ def weapon_groups(plan, catalog):
 
 
 def set_weapon_groups(source, groups, catalog):
-    candidate = dict(deepcopy(source), schema=OUTFIT_PLAN_V2_SCHEMA_ID, weapon_groups=deepcopy(groups))
+    candidate = dict(deepcopy(source), schema=OUTFIT_PLAN_V3_SCHEMA_ID if 'classification_icon' in source else OUTFIT_PLAN_V2_SCHEMA_ID, weapon_groups=deepcopy(groups))
     plan = OutfitPlanInput.parse(candidate)
     weapon_groups(plan, catalog)
     return plan.to_dict()
@@ -42,9 +43,8 @@ def set_weapon_groups(source, groups, catalog):
 def reconcile_weapon_groups(source, catalog):
     if "weapon_groups" not in source:
         return source
-    raw = dict(deepcopy(source), schema=SCHEMA_ID)
-    previous = raw.pop("weapon_groups")
-    plan = OutfitPlanInput.parse(raw)
+    previous = source['weapon_groups']
+    plan = replace(OutfitPlanInput.parse(source), weapon_groups=None)
     defaults = weapon_groups(plan, catalog)
     weapons = {m.id: m for m in plan.modules if catalog.module(m.prototype).category == "weapon"}
     groups = []

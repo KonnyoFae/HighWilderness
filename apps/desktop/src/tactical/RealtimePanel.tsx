@@ -1,4 +1,6 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { observedBattleView } from './observedView';
+import { shipIcon } from '../editor/shipIcons';
 import type { BridgeTransport } from "../bridge/transport";
 import { normalizeHostFailure } from "../bridge/model";
 import type { TacticalRequest, TacticalView } from "./model";
@@ -46,9 +48,10 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   preparedLaunch?:PreparedLaunch|null;
   battleLayout?: boolean;
 }) {
-  const [view, setView] = useState<TacticalView | null>(null), [state, setState] = useState<RealtimeEnvelope | null>(null);
+  const [rawView, setView] = useState<TacticalView | null>(null), [state, setState] = useState<RealtimeEnvelope | null>(null);
   const [busy, setBusy] = useState(false), [error, setError] = useState(""), [receipt, setReceipt] = useState("");
   const [uncertain, setUncertain] = useState<number | null>(null), [selected, setSelected] = useState<string | null>("ship.web.blue");
+  const view = useMemo(()=>battleLayout && rawView && state ? observedBattleView(rawView,selected??state.direct_ship_id,state.direct_ship_id) : rawView,[rawView,selected,state?.direct_ship_id,battleLayout]);
   const [draft, setDraft] = useState<HelmDraft>({ notch: "stop", direction: "forward", brake: false });
   const latest = useRef<{ state: RealtimeEnvelope | null; view: TacticalView | null }>({ state: null, view: null });
   const pending = useRef<Promise<unknown> | null>(null), acting = useRef(false), mounted = useRef(true);
@@ -453,7 +456,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
           .sort((a,b)=>Number(b.id===state.direct_ship_id)-Number(a.id===state.direct_ship_id)).map((s,index) => <button key={s.id}
           ref={el=>{if(el)fleetRows.current.set(s.id,el);else fleetRows.current.delete(s.id);}}
           data-fleet-ship={s.id} aria-pressed={selected === s.id} onClick={() => selectBattleShip(s.id)} onDoubleClick={()=>focusFleetShip(s.id)}>
-          <span className="fleet-number">{String(index+1).padStart(2,'0')}</span><span className={s.id===state.direct_ship_id?'fleet-flag':''} aria-hidden="true">{s.id===state.direct_ship_id?'♛':'●'}</span>
+          <span className="fleet-number">{String(index+1).padStart(2,'0')}</span><span className={s.id===state.direct_ship_id?'fleet-flag':''} aria-hidden="true">{shipIcon(s.classification_icon)[0]}</span>
           <span className="fleet-name">{s.name}{s.id === state.direct_ship_id ? ' · 旗舰' : ''}{view.snapshot.ships.find(p=>p.id===s.id)?.wreck ? ' · 残骸' : view.snapshot.ships.find(p=>p.id===s.id)?.descent ? ' · 下坠' : ''}</span></button>)}</nav>
         </BattleDock>
         <TacticalViewport view={view} active={active} selected={selected} onSelect={selectBattleShip} compact overlay

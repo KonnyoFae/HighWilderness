@@ -3,6 +3,7 @@ import type { TacticalStatic } from './model';
 import { moduleFootprints, shipPoints } from './viewport';
 import { sideName } from './preparationScene';
 import type { FormationShip, PreparationScene } from './preparationScene';
+import { shipIcon } from '../editor/shipIcons';
 
 type Box = {x:number;y:number;width:number;height:number};
 export function PreparationCanvas({fleet,geometry,selected,moduleId,disabled,onSelect,onMove}: {
@@ -81,7 +82,7 @@ export function PreparationCanvas({fleet,geometry,selected,moduleId,disabled,onS
             })}
           </g>
           <text y={Math.max(12,...shipPoints(shape).map(p=>Math.hypot(p.x,p.y)))+9} textAnchor="middle" fill={color}
-            fontSize={Math.max(4,Math.min(12,box.width/65))} pointerEvents="none">{fleet.flagship_instance_id===member.instance_id?'★ ':''}{shape.name}</text>
+            fontSize={Math.max(4,Math.min(12,box.width/65))} pointerEvents="none">{fleet.flagship_instance_id===member.instance_id?'♛ ':''}{shipIcon(shape.classification_icon)[0]} {shape.name}</text>
         </g>;
       })}
     </svg>

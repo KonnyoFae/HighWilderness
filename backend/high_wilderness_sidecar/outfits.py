@@ -48,6 +48,7 @@ def document(source, index, hull_source=None):
 def command(doc, name, arguments, index):
     fields = {
         "outfit.rename": {"name"},
+        "outfit.set_classification_icon": {"icon"},
         "outfit.set_weapon_groups": {"groups"},
         "outfit.place_grid": {"instance_id", "prototype", "deck_id", "anchor_half_cell", "rotation_deg"},
         "outfit.place_side": {"instance_id", "prototype", "deck_id", "region_id", "edge_index", "start_slot_index", "rotation_deg"},

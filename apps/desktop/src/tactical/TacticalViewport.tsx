@@ -14,6 +14,9 @@ import { TacticalAtmosphere } from './atmosphere';
 import { launcherArcLabel, launcherArcProjection } from './launcherArc';
 import type { LauncherSelection } from './launcherArc';
 import { selectedLauncher } from './missiles';
+import { shipIcon } from '../editor/shipIcons';
+import { placeShipMarkers } from './shipMarkers';
+import { clipObservationSample } from './observedView';
 
 type ShipObjects = { root: Container; selection: Graphics; modules: { id: string; max: number; graphic: Graphics }[] };
 export type ViewportFocus = { sequence:number; shipId?:string; point?:Point; layer?:string; detail?:boolean };
@@ -104,6 +107,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
   useEffect(() => {
     if (active) timeline.current.push(view, performance.now());
   }, [active, view]);
+  useEffect(()=>{if(overlay){timeline.current.clear();timeline.current.push(view,performance.now());setCandidates([]);}},[overlay,selected]);
 
   useEffect(() => {
     if (!active) return;
@@ -159,7 +163,8 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
   draw.current = (now: number) => {
     const app = renderer.current, root = scene.current, g = grid.current, v = vectors.current;
     if (!active || !ready || !app || !root || !g || !v) return;
-    const source = timeline.current.sample(now) ?? latest.current.view;
+    const sample = timeline.current.sample(now) ?? latest.current.view;
+    const source = overlay ? clipObservationSample(sample,latest.current.view) : sample;
     const { camera, size, selected, gunControl, observationLayer, launcherSelection } = latest.current;
     const view = viewOnLayer(source, observationLayer), light = observationLayer === 'upper';
     fullDisplay.current = source;
@@ -191,27 +196,12 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
       const pose = view.snapshot.ships.find(s => s.id === id);
       object.root.visible = !!pose;
       const label = labels.current.get(id);
-      if (label) label.hidden = !pose;
+      if (label && !overlay) label.hidden = !pose;
       if (!pose) continue;
       object.root.position.set(pose.position_m[0], pose.position_m[1]); object.root.rotation = pose.heading_rad;
-      if (label) {
+      if (label && !overlay) {
         const at = screen({ x: pose.position_m[0], y: pose.position_m[1] }, camera);
-        if(overlay){
-          const bounds=object.root.getBounds();
-          const marker={x:at.x,y:Math.min(at.y-18,bounds.minY-15)};
-          const off=marker.x<22||marker.x>size.width-22||marker.y<22||marker.y>size.height-22;
-          if(off){const dx=at.x-size.width/2,dy=at.y-size.height/2;
-            const k=Math.min((size.width/2-22)/Math.max(.001,Math.abs(dx)),(size.height/2-22)/Math.max(.001,Math.abs(dy)));
-            marker.x=size.width/2+dx*k;marker.y=size.height/2+dy*k;
-          }
-          label.style.transform=`translate(${marker.x}px, ${marker.y}px)`;label.dataset.offscreen=String(off);
-          const arrow=label.querySelector<HTMLElement>('.marker-bearing');if(arrow){arrow.hidden=!off;arrow.style.transform=`rotate(${Math.atan2(at.y-size.height/2,at.x-size.width/2)}rad)`;}
-          const row=fleetRows?.get(id), rect=host.current?.getBoundingClientRect();
-          if(row&&rect&&!row.closest('.is-collapsed')){const r=row.getBoundingClientRect();
-            v.moveTo(r.right-rect.left,r.top+r.height/2-rect.top).lineTo(marker.x,marker.y)
-              .stroke({color:id===selected?(light?0x30713e:0xcbe9b0):(light?0x456f6b:0x97c7be),width:1,alpha:id===selected ? .8 : .25});
-          }
-        }else label.style.transform = `translate(${at.x+18}px, ${at.y}px)`;
+        label.style.transform = `translate(${at.x+18}px, ${at.y}px)`;
       }
       object.selection.visible = id === selected;
       for (const m of object.modules) {
@@ -224,6 +214,28 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
         const a = Math.atan2(end.y - start.y, end.x - start.x);
         v.moveTo(start.x, start.y).lineTo(end.x, end.y).lineTo(end.x - 7 * Math.cos(a - .4), end.y - 7 * Math.sin(a - .4))
           .moveTo(end.x, end.y).lineTo(end.x - 7 * Math.cos(a + .4), end.y - 7 * Math.sin(a + .4)).stroke({ color: light ? 0x25624a : 0xa3efb9, width: 1.5 });
+      }
+    }
+    if(overlay){
+      const contacts=latest.current.view.snapshot.gunnery?.observation?.ships.find(s=>s.ship_id===selected)?.contacts??[];
+      const poses=[...source.snapshot.ships,...contacts.filter(c=>c.kind==='ship'&&!c.valid).map(c=>({id:String(c.id),position_m:c.position_m,height_layer:c.height_layer}))];
+      const entries=poses.map(p=>{const anchor=screen({x:p.position_m[0],y:p.position_m[1]},camera),object=objects.current.get(p.id);
+        const above=object?.root.visible?Math.min(anchor.y-18,object.root.getBounds().minY-15):anchor.y-18;
+        return {id:p.id,anchor,above,selected:p.id===selected};});
+      const markers=placeShipMarkers(entries,size.width,size.height);
+      for(const [id,label] of labels.current){
+        const marker=markers.find(m=>m.id===id),pose=poses.find(p=>p.id===id);
+        label.hidden=!marker;if(!marker||!pose)continue;
+        label.style.transform=`translate(${marker.point.x}px, ${marker.point.y}px)`;
+        label.dataset.worldPosition=JSON.stringify(pose.position_m);
+        label.dataset.offscreen=String(marker.offscreen);label.dataset.otherLayer=String(pose.height_layer!==observationLayer);
+        const arrow=label.querySelector<HTMLElement>('.marker-bearing');if(arrow){arrow.hidden=!marker.offscreen;arrow.style.transform=`rotate(${marker.bearing}rad)`;}
+        const badge=label.querySelector<HTMLElement>('.marker-layer');if(badge){badge.hidden=pose.height_layer===observationLayer;badge.textContent=layerName(pose.height_layer);}
+        const row=fleetRows?.get(id),rect=host.current?.getBoundingClientRect();
+        const color=id===selected?(light?0x30713e:0xcbe9b0):(light?0x456f6b:0x97c7be);
+        if(row&&rect&&!row.closest('.is-collapsed')){const r=row.getBoundingClientRect();
+          v.moveTo(r.right-rect.left,r.top+r.height/2-rect.top).lineTo(marker.point.x,marker.point.y).stroke({color,width:1,alpha:id===selected?.8:.25});}
+        if(marker.shifted&&!marker.offscreen)v.moveTo(marker.point.x,marker.point.y).lineTo(marker.anchor.x,marker.anchor.y).stroke({color,width:1,alpha:.4});
       }
     }
     const launcherArc=launcherArcProjection(view,launcherSelection,camera);
@@ -290,7 +302,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
           .lineTo(at.x+4*Math.cos(angle+2.5),at.y+4*Math.sin(angle+2.5))
           .lineTo(at.x+4*Math.cos(angle-2.5),at.y+4*Math.sin(angle-2.5))
           .closePath().fill(light?0x1d655e:0x7dffe1);
-        if(p.missile?.phase!=='coast')v.circle(at.x-6*Math.cos(angle),at.y-6*Math.sin(angle),2).fill(0xff9b40);
+        if(p.missile && p.missile.phase!=='coast')v.circle(at.x-6*Math.cos(angle),at.y-6*Math.sin(angle),2).fill(0xff9b40);
       }
     }
     for (const event of view.snapshot.gunnery?.point_defense?.recent ?? []) {
@@ -320,6 +332,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
       host.current.dataset.displayStep = String(view.snapshot.fixed_step);
       host.current.dataset.snapshotStep = String(latest.current.view.snapshot.fixed_step);
       host.current.dataset.camera=JSON.stringify(camera);
+      host.current.dataset.visibleShips=JSON.stringify(view.snapshot.ships.map(s=>s.id));
     }
   };
 
@@ -372,10 +385,14 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
   const launcherLayer=view.snapshot.ships.find(s=>s.id===launcherSelection?.shipId)?.height_layer;
   const ownLayer = view.snapshot.ships.find(s => s.id === gunControl?.ownShipId)?.height_layer;
   const visibleCount = view.snapshot.ships.filter(s => s.height_layer === observationLayer).length;
+  const markerContacts=view.snapshot.gunnery?.observation?.ships.find(s=>s.ship_id===selected)?.contacts??[];
+  const markerPoses=[...view.snapshot.ships.map(p=>({...p,lost:false})),...markerContacts.filter(c=>c.kind==='ship'&&!c.valid).map(c=>({id:String(c.id),height_layer:c.height_layer,lost:true,wreck:null,descent:null}))];
+  const friendlySide=view.geometry.ships.find(s=>s.id===selected)?.side_id;
   const attackLayer = gunControl?.attackLayer ?? ownLayer;
   const canvasWeaponsEnabled = gunControl?.enabled && gunControl.canAim !== false && attackLayer === observationLayer;
   const selectCandidate = (candidate: typeof candidates[number]) => {
     if (!gunControl?.enabled) return;
+    if (!latest.current.view.snapshot.ships.some(s=>s.id===candidate.shipId)) {setCandidates([]);return;}
     if (candidateMode.current === "weapon") gunControl.onWeapon(candidate.moduleId);
     else gunControl.onTarget(candidate.shipId, candidate.moduleId);
     setCandidates([]);
@@ -491,13 +508,17 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
         </span>)}
         {!visibleCount && <p className="tactical-layer-empty" role="status">{LAYER_NAMES[observationLayer]}暂无已知舰艇</p>}
       </>}
-      {ready && view.snapshot.ships.map(pose => {
-        if(overlay)return <button type="button" key={pose.id} className="tactical-ship-marker" data-ship-id={pose.id}
+      {ready && (overlay?markerPoses:view.snapshot.ships.map(p=>({...p,lost:false}))).map(pose => {
+        const geometry=view.geometry.ships.find(s=>s.id===pose.id), friendly=geometry?.side_id===friendlySide;
+        if(overlay)return <button type="button" key={pose.id} className={`tactical-ship-marker${friendly?'':' enemy'}${pose.lost?' lost':''}`} data-ship-id={pose.id}
+          data-contact-state={pose.lost?'lost':friendly?'friendly':'tracked'} hidden
           aria-label={`选择${view.geometry.ships.find(s=>s.id===pose.id)?.name??pose.id}`} aria-pressed={selected===pose.id}
-          title={`${view.geometry.ships.find(s=>s.id===pose.id)?.name??pose.id}${pose.wreck?' · 残骸':pose.descent?' · 下坠':''}`}
+          title={`${geometry?.name??pose.id}${pose.lost?' · 已失联，最后观测位置':pose.wreck?' · 残骸':pose.descent?' · 下坠':''} · ${layerName(pose.height_layer)} · 双击查看所在层`}
           ref={el=>{if(el)labels.current.set(pose.id,el);else labels.current.delete(pose.id);}}
-          onPointerDown={e=>e.stopPropagation()} onPointerUp={e=>e.stopPropagation()} onClick={e=>{e.stopPropagation();onSelect(pose.id);}}>
-          <span aria-hidden="true">●</span><span className="marker-bearing" hidden aria-hidden="true">→</span>
+          onPointerDown={e=>e.stopPropagation()} onPointerUp={e=>e.stopPropagation()} onClick={e=>{e.stopPropagation();if(!pose.lost)onSelect(pose.id);}}
+          onDoubleClick={e=>{e.stopPropagation();if(isHeightLayer(pose.height_layer))setObservationLayer(pose.height_layer);}}>
+          <span aria-hidden="true">{pose.lost?'◌':shipIcon(friendly?geometry?.classification_icon:undefined)[0]}</span><span className="marker-bearing" hidden aria-hidden="true">→</span>
+          <small className="marker-layer" hidden aria-hidden="true"/>
         </button>;
         return <span key={pose.id} className="tactical-ship-label" data-ship-id={pose.id}
           ref={element => { if (element) labels.current.set(pose.id, element); else labels.current.delete(pose.id); }}
@@ -513,6 +534,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     <details className="viewport-help" open={!compact}><summary>战场操作说明</summary>
       <p>{gunControl ? "右键本舰火炮选择；自动模式左键敌舰或模块指定目标，手动模式跟随鼠标、左键单发。中键拖动平移，滚轮缩放。黄色粗线是实际炮向，十字是瞄准点。" : "点击舰体或右侧列表选舰；拖动平移，滚轮缩放。"}画布获得焦点后可用方向键平移、＋/− 缩放、Home 查看全场。</p>
       <p>观察层切换只改变画面。先在火炮面板选择炮弹作用层，再切到该层瞄准；炮弹发射后固定在该层。舰内甲板叠加显示，“舰内点选甲板”仅区分重叠模块。网格固定为 50 米，缩远时淡出过密细线。箭头指向船艏，绿色线表示 5 秒速度向量。</p>
+      {overlay&&<p>敌方实形使用当前操作舰的有效观测，数据链共享也需实际可用。虚线圆为最后观测位置；异层图标带层级标签，双击只切换观察层。重叠图标错位显示，细线指回舰位。</p>}
     </details>
   </div>;
 }

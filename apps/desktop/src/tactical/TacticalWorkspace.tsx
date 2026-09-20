@@ -56,7 +56,7 @@ export function TacticalWorkspace({ transport, instance }: {
         onLocked={setResetLocked} onComplete={cleared} />
     </nav>
     {resetNotice && <p role="status">{resetNotice}</p>}
-    <div inert={resetLocked}>
+    <div className="tactical-stage-content" inert={resetLocked}>
     {error && <div className="tactical-transition-error" role="alert">
       <p>{error}</p>
       <button disabled={busy} onClick={() => retry && void changeScene(retry.launch)}>重试场景切换</button>
@@ -65,7 +65,7 @@ export function TacticalWorkspace({ transport, instance }: {
     {!launch && !recovered ? <PreparationRecovery key={preparationEpoch} transport={transport} instance={instance} onReady={() => setRecovered(true)} /> : !launch ? <div inert={busy || retry !== null}>
       <PreparationWorkspace key={preparationEpoch} transport={transport} instance={instance}
         active={!busy && !resetLocked && retry === null} onEnter={next => void changeScene(next)} />
-    </div> : <div inert={busy || retry !== null}>
+    </div> : <div className="tactical-scene-slot" inert={busy || retry !== null}>
       <RealtimePanel key={launch.launch_id} transport={transport} instance={instance}
         active={!busy && !resetLocked && retry === null} preparedLaunch={launch} battleLayout
         onClose={() => void changeScene(null)} />

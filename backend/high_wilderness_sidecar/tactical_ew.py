@@ -128,6 +128,7 @@ class ElectronicWarfare:
     def environment(self,world,available,frame,effects,projectiles=()):
         from .projectile_observation import sample
         b=self.battle;contacts=[];links=[]
+        sides={ship.ship_id:b._sides[n] for n,ship in enumerate(world.ships)}
         for n,s in enumerate(world.ships):
             if s.command.lifecycle.physical_status!='operational' or s.motion.hull_integrity_fraction<=0:continue
             contacts.append(Contact(s.ship_id,b._sides[n],tuple(s.motion.position_world_m.to_list()),tuple(s.motion.velocity_world_mps.to_list()),
@@ -139,7 +140,7 @@ class ElectronicWarfare:
                 t=track.target;links.append((b._sides[n],Measurement(t.id,t.position,t.velocity,track.step,t.layer,s.ship_id,tuple(s.motion.position_world_m.to_list()),
                     getattr(t.payload,'altitude_m',None),getattr(t.payload,'vertical_velocity_mps',0.))))
         contacts.extend(Contact(e.id,e.side,e.position,e.velocity,e.layer,emitting=True,decoy=True,signal=e.signal) for e in effects if e.kind=='decoy')
-        contacts.extend(Contact(p.id,b.damage.sides[p.ship_id],p.position,p.velocity,p.height_layer,
+        contacts.extend(Contact(p.id,sides[p.ship_id],p.position,p.velocity,p.height_layer,
             kind='projectile',durability=p.durability,payload=sample(p)) for p in projectiles if p.durability is not None and p.durability>0)
         checked={}
         def threat_check(side,contact):
