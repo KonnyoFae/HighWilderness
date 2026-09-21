@@ -1,0 +1,451 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "layer": "upper",
+      "dpr": 1,
+      "zoom": 0,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0023923444976077,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.004739336492891,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0050761421319796,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1.0026178010471205,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1.0047846889952152,
+          "changedRows": 2
+        }
+      ]
+    },
+    {
+      "layer": "upper",
+      "dpr": 1,
+      "zoom": 1,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0048780487804878,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0050761421319796,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0026737967914439,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0026737967914439,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1.0053475935828877,
+          "changedRows": 2
+        }
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 1,
+      "zoom": 0,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0097087378640777,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.003875968992248,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        }
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 1,
+      "zoom": 1,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0037037037037035,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0091743119266054,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0104177970699946,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0101010101010102,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1.0046728971962615,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1.004,
+          "changedRows": 2
+        }
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 1,
+      "zoom": 0,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0116279069767442,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0256410256410255,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0106382978723403,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1.0285714285714285,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1.02,
+          "changedRows": 2
+        }
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 1,
+      "zoom": 1,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.010204081632653,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0151515151515151,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0121951219512195,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1.0232558139534884,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        }
+      ]
+    },
+    {
+      "layer": "upper",
+      "dpr": 2,
+      "zoom": 0,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        }
+      ]
+    },
+    {
+      "layer": "upper",
+      "dpr": 2,
+      "zoom": 1,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        }
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 2,
+      "zoom": 0,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        }
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 2,
+      "zoom": 1,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        }
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 2,
+      "zoom": 0,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        }
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 2,
+      "zoom": 1,
+      "rows": [
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "shell",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "missile",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        },
+        {
+          "kind": "interceptor",
+          "coverageCssPixels": 1,
+          "changedRows": 2
+        }
+      ]
+    }
+  ],
+  "lifecycle": "synthetic visibility hide/resume, explicit empty/next scene, reused renderer",
+  "scope": "Actual production Pixi screenshot difference pixels: yellow 1 CSS px coverage for shells/missiles/interceptors; red/blue dots/frames remain. Three layers, two zoom levels, DPR 1/2."
+}

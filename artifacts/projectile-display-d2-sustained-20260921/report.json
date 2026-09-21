@@ -1,0 +1,85 @@
+{
+  "scope": "120 simulated seconds, finite real defense equipment, injected test threats.\n\nThis is an accelerated deterministic workload, not a real-time FPS acceptance.\n",
+  "runs": [
+    {
+      "mode": "legacy",
+      "steps": 7200,
+      "simulated_seconds": 120.0,
+      "injected_threats": 60,
+      "peak_projectiles": 9,
+      "shots": 222,
+      "missile_shots": 8,
+      "hits": 0,
+      "ending": null,
+      "authority_sha256": "1321b9f23c53469350514125f8f904e18787fb541c5c13edb4757aadddf89181",
+      "step": {
+        "mean_ms": 0.960582749987427,
+        "p50_ms": 0.9357000017189421,
+        "p95_ms": 1.295300004130695,
+        "p99_ms": 1.4433000033022836,
+        "max_ms": 1.8679999993764795
+      },
+      "publish": {
+        "mean_ms": 1.0319117776331646,
+        "p50_ms": 1.011500004096888,
+        "p95_ms": 1.3046000021859072,
+        "p99_ms": 1.4297000016085804,
+        "max_ms": 1.6729999988456257
+      },
+      "read": {
+        "mean_ms": 1.5493850555746274,
+        "p50_ms": 1.5343999984906986,
+        "p95_ms": 1.8976999999722466,
+        "p99_ms": 2.077500001178123,
+        "max_ms": 2.349599999433849
+      },
+      "bytes": {
+        "total": 97822460,
+        "projectile_total": 13212580,
+        "peak": 65894
+      },
+      "maximum_retained_event_bytes": 0,
+      "maximum_terminal_bytes": 0
+    },
+    {
+      "mode": "stream",
+      "steps": 7200,
+      "simulated_seconds": 120.0,
+      "injected_threats": 60,
+      "peak_projectiles": 9,
+      "shots": 222,
+      "missile_shots": 8,
+      "hits": 0,
+      "ending": null,
+      "authority_sha256": "1321b9f23c53469350514125f8f904e18787fb541c5c13edb4757aadddf89181",
+      "step": {
+        "mean_ms": 0.9632914444278463,
+        "p50_ms": 0.9347000013804063,
+        "p95_ms": 1.3029999972786754,
+        "p99_ms": 1.4962999994168058,
+        "max_ms": 1.9444999998086132
+      },
+      "publish": {
+        "mean_ms": 0.9841696666626376,
+        "p50_ms": 0.971200002823025,
+        "p95_ms": 1.1855999982799403,
+        "p99_ms": 1.279600000998471,
+        "max_ms": 1.4613000021199696
+      },
+      "read": {
+        "mean_ms": 1.330809222203647,
+        "p50_ms": 1.3223999994806945,
+        "p95_ms": 1.5652000001864508,
+        "p99_ms": 1.8159999963245355,
+        "max_ms": 2.2017000010237098
+      },
+      "bytes": {
+        "total": 87920893,
+        "projectile_total": 3262413,
+        "peak": 53774
+      },
+      "maximum_retained_event_bytes": 29541,
+      "maximum_terminal_bytes": 11792
+    }
+  ]
+}

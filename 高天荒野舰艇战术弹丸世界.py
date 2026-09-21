@@ -15,6 +15,7 @@ from 高天荒野舰艇炮弹与甲弹公式 import (
     ImpactOutcome,
     ImpactResult,
     PenetrationProjectileProfile,
+    armor_tilt_incidence_deg,
     incidence_angle_deg,
     integrate_ballistic_step,
     relative_impact_velocity_xy,
@@ -1114,6 +1115,10 @@ def _resolve_hit(
     relative_local = _rotate(relative_world, -hit.target_pose.heading_rad)
     relative_speed = hypot(*relative_local)
     angle = incidence_angle_deg(relative_local, hit.edge_start_local, hit.edge_end_local)
+    if edge_input.flare_angle_deg:
+        surface = next(r for r in target.snapshot.hull.armor_geometry.regions
+                       if r.deck_id == hit.deck_id and r.region_id == hit.region_id).edges[hit.edge_index]
+        angle = armor_tilt_incidence_deg(angle, surface.tilt_cosine)
     armor_result = resolve_armor_impact(
         profile.penetration,
         ArmorState(material.protection_coefficient, edge_input.thickness_m * 1000.0, armor_runtime.current_durability_proxy),

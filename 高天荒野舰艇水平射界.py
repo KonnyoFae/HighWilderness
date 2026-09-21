@@ -4,6 +4,7 @@ Angles are degrees clockwise from local bow (+Y). Tangency blocks firing.
 Higher deck footprints are opaque; modules and lower/same decks are excluded.
 """
 from math import atan2, cos, degrees, hypot, isfinite, radians, sin
+from dataclasses import replace
 from 高天荒野舰艇数据契约 import ContractError
 from 高天荒野舰艇无界面船壳编译器 import point_inside_or_on_polygon
 
@@ -24,7 +25,8 @@ def sensor_arc(hull, sensor):
 
 
 def higher_regions(hull, level):
-    return tuple((deck.id, region) for deck in hull.normalized_blueprint.decks
+    shapes = {(r.deck_id, r.region_id): r.outer_outline_m for r in hull.armor_geometry.regions} if hull.armor_geometry else {}
+    return tuple((deck.id, replace(region, vertices_m=shapes[(deck.id, region.id)]) if (deck.id, region.id) in shapes else region) for deck in hull.normalized_blueprint.decks
                  if deck.level > level for region in deck.regions)
 
 

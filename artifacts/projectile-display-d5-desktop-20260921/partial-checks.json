@@ -1,0 +1,19 @@
+{
+  "status": "FAIL",
+  "checks": [
+    {
+      "savedFirstScene": "7552fd80d2994fb79db40175b0f4a37d"
+    }
+  ],
+  "heap": [
+    {
+      "wallSeconds": 20.029,
+      "step": 1220,
+      "usedSize": 12263396,
+      "totalSize": 14098432,
+      "embedderHeapUsedSize": 3262088,
+      "backingStorageSize": 1446936
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,20 @@
+{
+  "withoutPlaywright": true,
+  "initialVisibility": {
+    "hidden": false,
+    "state": "visible"
+  },
+  "minimized": {
+    "pid": 7952,
+    "minimized": true,
+    "action": "Minimize"
+  },
+  "minimizedVisibility": {
+    "hidden": false,
+    "state": "visible"
+  },
+  "restoredVisibility": {
+    "hidden": false,
+    "state": "visible"
+  }
+}

@@ -1,0 +1,453 @@
+{
+  "status": "PASS",
+  "reports": [
+    {
+      "kind": "paired-dense",
+      "mode": "legacy",
+      "stats": {
+        "sampling": {
+          "count": 3958,
+          "meanMs": 0.06531076306809434,
+          "p95Ms": 0.19999998807907104,
+          "p99Ms": 0.20000000298023224,
+          "maxMs": 0.30000001192092896
+        },
+        "prepare": {
+          "count": 3958,
+          "meanMs": 0.222662960992822,
+          "p95Ms": 0.3999999910593033,
+          "p99Ms": 0.4000000059604645,
+          "maxMs": 0.7999999970197678
+        },
+        "renderSubmission": {
+          "count": 3958,
+          "meanMs": 0.5087923193072779,
+          "p95Ms": 0.7000000029802322,
+          "p99Ms": 1,
+          "maxMs": 1.699999988079071
+        },
+        "canvasTotal": {
+          "count": 3958,
+          "meanMs": 0.7967660433681942,
+          "p95Ms": 1.1000000089406967,
+          "p99Ms": 1.4000000059604645,
+          "maxMs": 2.1000000089406967
+        },
+        "frameInterval": {
+          "count": 3697,
+          "meanMs": 4.165593724641724,
+          "p95Ms": 4.299999999999272,
+          "p99Ms": 4.300000000001091,
+          "maxMs": 4.700000000000728
+        },
+        "parse": {
+          "count": 231,
+          "meanMs": 0.3610389611937783,
+          "p95Ms": 0.5,
+          "p99Ms": 0.5999999940395355,
+          "maxMs": 0.9000000059604645
+        },
+        "merge": {
+          "count": 231,
+          "meanMs": 0.0012987012857998605,
+          "p95Ms": 0,
+          "p99Ms": 0.09999999403953552,
+          "maxMs": 0.10000000894069672
+        },
+        "observation": {
+          "count": 231,
+          "meanMs": 0.00043290047160474766,
+          "p95Ms": 0,
+          "p99Ms": 0,
+          "maxMs": 0.10000000894069672
+        }
+      },
+      "maxFlights": 0,
+      "maxFrames": 8,
+      "maxDisplayed": 119,
+      "remainingFlights": 0,
+      "clockFrames": 7
+    },
+    {
+      "kind": "paired-dense",
+      "mode": "stream",
+      "stats": {
+        "sampling": {
+          "count": 3953,
+          "meanMs": 0.07536048580280534,
+          "p95Ms": 0.20000000298023224,
+          "p99Ms": 0.20000000298023224,
+          "maxMs": 1.4000000059604645
+        },
+        "prepare": {
+          "count": 3953,
+          "meanMs": 0.2361244622541626,
+          "p95Ms": 0.3999999910593033,
+          "p99Ms": 0.5,
+          "maxMs": 0.800000011920929
+        },
+        "renderSubmission": {
+          "count": 3953,
+          "meanMs": 0.5046799898207897,
+          "p95Ms": 0.7000000029802322,
+          "p99Ms": 0.8999999910593033,
+          "maxMs": 1.300000011920929
+        },
+        "canvasTotal": {
+          "count": 3953,
+          "meanMs": 0.8161649378777576,
+          "p95Ms": 1.1000000089406967,
+          "p99Ms": 1.300000011920929,
+          "maxMs": 2
+        },
+        "frameInterval": {
+          "count": 3692,
+          "meanMs": 4.165628385698808,
+          "p95Ms": 4.299999999999272,
+          "p99Ms": 4.30000000000291,
+          "maxMs": 4.400000000001455
+        },
+        "parse": {
+          "count": 231,
+          "meanMs": 0.29523809518648947,
+          "p95Ms": 0.4000000059604645,
+          "p99Ms": 0.5,
+          "maxMs": 0.5
+        },
+        "merge": {
+          "count": 231,
+          "meanMs": 0.1147186149121363,
+          "p95Ms": 0.20000000298023224,
+          "p99Ms": 0.20000000298023224,
+          "maxMs": 0.29999999701976776
+        },
+        "observation": {
+          "count": 231,
+          "meanMs": 0.0008658008141951127,
+          "p95Ms": 0,
+          "p99Ms": 0,
+          "maxMs": 0.09999999403953552
+        }
+      },
+      "maxFlights": 122,
+      "maxFrames": 8,
+      "maxDisplayed": 122,
+      "remainingFlights": 122,
+      "clockFrames": 7
+    },
+    {
+      "kind": "recorded-wall-clock",
+      "layer": "upper",
+      "wallSeconds": 120.0274288,
+      "stats": {
+        "sampling": {
+          "count": 30586,
+          "meanMs": 0.0555580985284589,
+          "p95Ms": 0.10000000894069672,
+          "p99Ms": 0.20000000298023224,
+          "maxMs": 0.9000000059604645
+        },
+        "prepare": {
+          "count": 30586,
+          "meanMs": 0.10754266650971535,
+          "p95Ms": 0.20000000298023224,
+          "p99Ms": 0.29999999701976776,
+          "maxMs": 1.0999999940395355
+        },
+        "renderSubmission": {
+          "count": 30586,
+          "meanMs": 0.24185248157514333,
+          "p95Ms": 0.4000000059604645,
+          "p99Ms": 0.5,
+          "maxMs": 1.7000000029802322
+        },
+        "canvasTotal": {
+          "count": 30586,
+          "meanMs": 0.40495324661331755,
+          "p95Ms": 0.6000000089406967,
+          "p99Ms": 0.7999999970197678,
+          "maxMs": 2
+        },
+        "frameInterval": {
+          "count": 28785,
+          "meanMs": 4.169675178044475,
+          "p95Ms": 4.2999999999883585,
+          "p99Ms": 4.30000000000291,
+          "maxMs": 37.599999999998545
+        },
+        "parse": {
+          "count": 1800,
+          "meanMs": 0.18649999989403618,
+          "p95Ms": 0.29999999701976776,
+          "p99Ms": 0.30000001192092896,
+          "maxMs": 0.4000000059604645
+        },
+        "merge": {
+          "count": 1800,
+          "meanMs": 0.05594444453716278,
+          "p95Ms": 0.10000000894069672,
+          "p99Ms": 0.20000000298023224,
+          "maxMs": 0.20000000298023224
+        },
+        "observation": {
+          "count": 1800,
+          "meanMs": 0.021611110932297176,
+          "p95Ms": 0.10000000894069672,
+          "p99Ms": 0.10000000894069672,
+          "maxMs": 0.29999999701976776
+        }
+      },
+      "maxFlights": 26,
+      "maxFrames": 17,
+      "maxDisplayed": 122,
+      "remainingFlights": 10,
+      "clockFrames": 17
+    },
+    {
+      "kind": "recorded-wall-clock",
+      "layer": "cloud",
+      "wallSeconds": 20.043911900000005,
+      "stats": {
+        "sampling": {
+          "count": 5107,
+          "meanMs": 0.04501664388172776,
+          "p95Ms": 0.10000000894069672,
+          "p99Ms": 0.20000000298023224,
+          "maxMs": 0.20000000298023224
+        },
+        "prepare": {
+          "count": 5107,
+          "meanMs": 0.10695124340076047,
+          "p95Ms": 0.20000000298023224,
+          "p99Ms": 0.29999999701976776,
+          "maxMs": 0.4000000059604645
+        },
+        "renderSubmission": {
+          "count": 5107,
+          "meanMs": 0.32890150776132576,
+          "p95Ms": 0.5,
+          "p99Ms": 0.6000000089406967,
+          "maxMs": 1.3999999910593033
+        },
+        "canvasTotal": {
+          "count": 5107,
+          "meanMs": 0.480869395043814,
+          "p95Ms": 0.7000000029802322,
+          "p99Ms": 0.8999999910593033,
+          "maxMs": 1.7999999970197678
+        },
+        "frameInterval": {
+          "count": 4806,
+          "meanMs": 4.169954223886806,
+          "p95Ms": 4.2999999999883585,
+          "p99Ms": 4.300000000017462,
+          "maxMs": 24.89999999999418
+        },
+        "parse": {
+          "count": 300,
+          "meanMs": 0.17899999996026358,
+          "p95Ms": 0.29999999701976776,
+          "p99Ms": 0.30000001192092896,
+          "maxMs": 0.4000000059604645
+        },
+        "merge": {
+          "count": 300,
+          "meanMs": 0.05833333343267441,
+          "p95Ms": 0.19999998807907104,
+          "p99Ms": 0.20000000298023224,
+          "maxMs": 0.20000000298023224
+        },
+        "observation": {
+          "count": 300,
+          "meanMs": 0.026000000089406967,
+          "p95Ms": 0.10000000894069672,
+          "p99Ms": 0.10000000894069672,
+          "maxMs": 0.20000000298023224
+        }
+      },
+      "maxFlights": 21,
+      "maxFrames": 17,
+      "maxDisplayed": 14,
+      "remainingFlights": 21,
+      "clockFrames": 17
+    },
+    {
+      "kind": "recorded-wall-clock",
+      "layer": "rain",
+      "wallSeconds": 20.03499099999998,
+      "stats": {
+        "sampling": {
+          "count": 5107,
+          "meanMs": 0.03863324844396018,
+          "p95Ms": 0.10000000894069672,
+          "p99Ms": 0.20000000298023224,
+          "maxMs": 0.20000000298023224
+        },
+        "prepare": {
+          "count": 5107,
+          "meanMs": 0.08778147646562447,
+          "p95Ms": 0.20000000298023224,
+          "p99Ms": 0.20000000298023224,
+          "maxMs": 0.4000000059604645
+        },
+        "renderSubmission": {
+          "count": 5107,
+          "meanMs": 0.08946543953260938,
+          "p95Ms": 0.20000000298023224,
+          "p99Ms": 0.20000000298023224,
+          "maxMs": 0.4000000059604645
+        },
+        "canvasTotal": {
+          "count": 5107,
+          "meanMs": 0.21588016444219402,
+          "p95Ms": 0.30000001192092896,
+          "p99Ms": 0.4000000059604645,
+          "maxMs": 0.5999999940395355
+        },
+        "frameInterval": {
+          "count": 4806,
+          "meanMs": 4.168227215980025,
+          "p95Ms": 4.2999999999883585,
+          "p99Ms": 4.300000000017462,
+          "maxMs": 16.800000000017462
+        },
+        "parse": {
+          "count": 300,
+          "meanMs": 0.17066666712363562,
+          "p95Ms": 0.29999999701976776,
+          "p99Ms": 0.29999999701976776,
+          "maxMs": 0.5
+        },
+        "merge": {
+          "count": 300,
+          "meanMs": 0.06666666621963183,
+          "p95Ms": 0.10000000894069672,
+          "p99Ms": 0.20000000298023224,
+          "maxMs": 0.20000000298023224
+        },
+        "observation": {
+          "count": 300,
+          "meanMs": 0.014666666835546493,
+          "p95Ms": 0.10000000894069672,
+          "p99Ms": 0.10000000894069672,
+          "maxMs": 0.10000000894069672
+        }
+      },
+      "maxFlights": 21,
+      "maxFrames": 17,
+      "maxDisplayed": 10,
+      "remainingFlights": 21,
+      "clockFrames": 17
+    }
+  ],
+  "heap": [
+    {
+      "label": "upper.20s",
+      "usedSize": 20351532,
+      "totalSize": 24317952,
+      "embedderHeapUsedSize": 1976024,
+      "backingStorageSize": 11315505,
+      "documents": 6,
+      "nodes": 167,
+      "jsEventListeners": 193
+    },
+    {
+      "label": "upper.40s",
+      "usedSize": 21135004,
+      "totalSize": 24580096,
+      "embedderHeapUsedSize": 1971920,
+      "backingStorageSize": 11315505,
+      "documents": 6,
+      "nodes": 167,
+      "jsEventListeners": 193
+    },
+    {
+      "label": "upper.60s",
+      "usedSize": 21555172,
+      "totalSize": 24268800,
+      "embedderHeapUsedSize": 2156952,
+      "backingStorageSize": 11315505,
+      "documents": 6,
+      "nodes": 167,
+      "jsEventListeners": 193
+    },
+    {
+      "label": "upper.80s",
+      "usedSize": 21574788,
+      "totalSize": 23666688,
+      "embedderHeapUsedSize": 2133592,
+      "backingStorageSize": 11315504,
+      "documents": 6,
+      "nodes": 167,
+      "jsEventListeners": 193
+    },
+    {
+      "label": "upper.100s",
+      "usedSize": 21213784,
+      "totalSize": 23068672,
+      "embedderHeapUsedSize": 2232568,
+      "backingStorageSize": 11315501,
+      "documents": 6,
+      "nodes": 167,
+      "jsEventListeners": 194
+    },
+    {
+      "label": "upper.120s",
+      "usedSize": 21336852,
+      "totalSize": 23855104,
+      "embedderHeapUsedSize": 2316312,
+      "backingStorageSize": 11315511,
+      "documents": 6,
+      "nodes": 169,
+      "jsEventListeners": 194
+    },
+    {
+      "label": "cloud.20s",
+      "usedSize": 20633416,
+      "totalSize": 24317952,
+      "embedderHeapUsedSize": 2386648,
+      "backingStorageSize": 11315543,
+      "documents": 6,
+      "nodes": 169,
+      "jsEventListeners": 193
+    },
+    {
+      "label": "rain.20s",
+      "usedSize": 19905784,
+      "totalSize": 21958656,
+      "embedderHeapUsedSize": 2536168,
+      "backingStorageSize": 11315547,
+      "documents": 6,
+      "nodes": 162,
+      "jsEventListeners": 193
+    },
+    {
+      "label": "empty-scene",
+      "usedSize": 18734468,
+      "totalSize": 20123648,
+      "embedderHeapUsedSize": 2238440,
+      "backingStorageSize": 11315558,
+      "documents": 6,
+      "nodes": 169,
+      "jsEventListeners": 192
+    },
+    {
+      "label": "unmounted",
+      "usedSize": 16302868,
+      "totalSize": 17502208,
+      "embedderHeapUsedSize": 1786432,
+      "backingStorageSize": 10663492,
+      "documents": 6,
+      "nodes": 55,
+      "jsEventListeners": 173
+    }
+  ],
+  "warmHeapGrowthBytes": 201848,
+  "thresholds": {
+    "sampling": 0.699999988079071,
+    "canvasTotal": 1.6000000089406967
+  },
+  "nativeWindow": null,
+  "errors": [],
+  "scope": "Same-input dense legacy/current display comparison and 120 s real-time paced upper-layer recorded combat plus cloud/rain. Parse, merge, legal observations, trajectory sample, CPU geometry preparation, CPU render submission, rAF intervals and GC-normalized JS heap. CPU render submission is not GPU time. No real-time backend or 9v9 claim; drawing baseline is current renderer with legacy data, not a preserved pre-D0 executable."
+}

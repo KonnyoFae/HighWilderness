@@ -301,6 +301,8 @@ def interpolate_direction(
     cache: AerodynamicGeometryCache, angle_deg: float
 ) -> AerodynamicDirectionSample:
     angle = angle_deg % 360.0
+    if angle >= 360.0:
+        angle = 0.0
     lower_index = floor(angle)
     upper_index = (lower_index + 1) % DIRECTION_COUNT
     amount = angle - lower_index

@@ -1,0 +1,8 @@
+{
+  "status": "PASS",
+  "checks": [
+    "Both real imported designs pass preparation; original hull and seven flared faces are visible on both canvases.",
+    "Battle accepts both designs; cached full armor outlines survive real fixed steps unchanged.",
+    "Actual all-side settlement saves and returns to preparation. Damage/depleted-edge restoration is separately tested by the Python suite."
+  ]
+}

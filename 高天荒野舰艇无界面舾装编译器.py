@@ -28,6 +28,7 @@ from 高天荒野舰艇无界面船壳编译器 import (
     CompiledDeckResult,
     CompiledHull,
     SideMountSlot,
+    cell_has_positive_overlap,
     point_inside_or_on_polygon,
     point_inside_polygon,
 )
@@ -1004,6 +1005,8 @@ class _OutfitCompiler:
                 mass_points.append(point)
             upper = self.deck_by_level.get(level + 1)
             upper_cells = set() if upper is None else set(upper.internal_cells)
+            flare_projections = tuple(e.projection_m for r in self.hull.armor_geometry.regions
+                if r.deck_level == level + 1 for e in r.edges if e.projection_m) if self.hull.armor_geometry else ()
             for index, offset in enumerate(geometry.top_clearance_half_cells):
                 cell = _grid_cell_from_half(
                     placement.anchor_half_cell,
@@ -1011,7 +1014,7 @@ class _OutfitCompiler:
                     placement.rotation_deg,
                     f"{path}.installation.top_clearance[{index}]",
                 )
-                if cell in upper_cells:
+                if cell in upper_cells or any(cell_has_positive_overlap(cell, p, CELL_SIZE_M) for p in flare_projections):
                     raise ContractError("outfit.top_clearance_hull_conflict", path, "顶挂净空与上层船壳冲突")
                 clearance_spatial.append(
                     _spatial_key(level + 1, (cell[0] * CELL_SIZE_M, cell[1] * CELL_SIZE_M))
@@ -1120,11 +1123,12 @@ class _OutfitCompiler:
             for offset in geometry.side_clearance_half_cells + geometry.exhaust_clearance_half_cells
         )
         deck_input = next(item for item in self.hull.normalized_blueprint.decks if item.id == deck.id)
+        outlines = tuple(r.outer_outline_m for r in self.hull.armor_geometry.regions if r.deck_id == deck.id) if self.hull.armor_geometry else tuple(r.vertices_m for r in deck_input.regions)
         for point in body_points:
-            if any(point_inside_polygon(point, region.vertices_m) for region in deck_input.regions):
+            if any(point_inside_polygon(point, outline) for outline in outlines):
                 raise ContractError("outfit.side_body_inside_hull", path, "侧挂本体进入船壳内部")
         for point in clearance_points:
-            if any(point_inside_or_on_polygon(point, region.vertices_m) for region in deck_input.regions):
+            if any(point_inside_or_on_polygon(point, outline) for outline in outlines):
                 raise ContractError("outfit.side_clearance_hull_conflict", path, "侧挂净空或尾焰穿过船壳")
 
         local_direction = _rotate_clockwise_vector((0.0, 1.0), placement.rotation_deg)
@@ -1303,6 +1307,7 @@ def preview_outfit_layout(plan, hull, module_catalog, coating_catalog):
                 conflicts.append(dict(layer="clearance", key=list(key), instance_ids=[instance.id, *ids]))
     return dict(interface="gaotian.outfit-layout/v1alpha1",
                 hull=hull.normalized_blueprint.to_dict(), decks=[d.to_dict() for d in hull.decks],
+                **({'armor_geometry': hull.armor_geometry.to_dict()} if hull.armor_geometry else {}),
                 modules=[i.to_dict() for i in instances], errors=errors, conflicts=conflicts)
 
 

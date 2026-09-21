@@ -1,0 +1,194 @@
+{
+  "status": "PASS",
+  "authority": "Three 120 s simulated legacy/stream pairs: full motion/damage/missile state, inventory and settlement hashes match",
+  "observed_flights": 904,
+  "transport": {
+    "baseline": {
+      "total": 46656836,
+      "projectile_total": 22537958,
+      "peak": 383483
+    },
+    "current": {
+      "total": 33498045,
+      "projectile_total": 9373767,
+      "peak": 226644
+    },
+    "projectile_reduction_percent": 58.40897831116732
+  },
+  "publication_cpu": {
+    "baseline_total_ms": 3530.1036999662756,
+    "current_total_ms": 1481.0558000899618,
+    "reduction_percent": 58.044977542611264
+  },
+  "frontend": {
+    "dense": [
+      {
+        "kind": "paired-dense",
+        "mode": "legacy",
+        "stats": {
+          "sampling": {
+            "count": 3958,
+            "meanMs": 0.06531076306809434,
+            "p95Ms": 0.19999998807907104,
+            "p99Ms": 0.20000000298023224,
+            "maxMs": 0.30000001192092896
+          },
+          "prepare": {
+            "count": 3958,
+            "meanMs": 0.222662960992822,
+            "p95Ms": 0.3999999910593033,
+            "p99Ms": 0.4000000059604645,
+            "maxMs": 0.7999999970197678
+          },
+          "renderSubmission": {
+            "count": 3958,
+            "meanMs": 0.5087923193072779,
+            "p95Ms": 0.7000000029802322,
+            "p99Ms": 1,
+            "maxMs": 1.699999988079071
+          },
+          "canvasTotal": {
+            "count": 3958,
+            "meanMs": 0.7967660433681942,
+            "p95Ms": 1.1000000089406967,
+            "p99Ms": 1.4000000059604645,
+            "maxMs": 2.1000000089406967
+          },
+          "frameInterval": {
+            "count": 3697,
+            "meanMs": 4.165593724641724,
+            "p95Ms": 4.299999999999272,
+            "p99Ms": 4.300000000001091,
+            "maxMs": 4.700000000000728
+          },
+          "parse": {
+            "count": 231,
+            "meanMs": 0.3610389611937783,
+            "p95Ms": 0.5,
+            "p99Ms": 0.5999999940395355,
+            "maxMs": 0.9000000059604645
+          },
+          "merge": {
+            "count": 231,
+            "meanMs": 0.0012987012857998605,
+            "p95Ms": 0,
+            "p99Ms": 0.09999999403953552,
+            "maxMs": 0.10000000894069672
+          },
+          "observation": {
+            "count": 231,
+            "meanMs": 0.00043290047160474766,
+            "p95Ms": 0,
+            "p99Ms": 0,
+            "maxMs": 0.10000000894069672
+          }
+        },
+        "maxFlights": 0,
+        "maxFrames": 8,
+        "maxDisplayed": 119,
+        "remainingFlights": 0,
+        "clockFrames": 7
+      },
+      {
+        "kind": "paired-dense",
+        "mode": "stream",
+        "stats": {
+          "sampling": {
+            "count": 3953,
+            "meanMs": 0.07536048580280534,
+            "p95Ms": 0.20000000298023224,
+            "p99Ms": 0.20000000298023224,
+            "maxMs": 1.4000000059604645
+          },
+          "prepare": {
+            "count": 3953,
+            "meanMs": 0.2361244622541626,
+            "p95Ms": 0.3999999910593033,
+            "p99Ms": 0.5,
+            "maxMs": 0.800000011920929
+          },
+          "renderSubmission": {
+            "count": 3953,
+            "meanMs": 0.5046799898207897,
+            "p95Ms": 0.7000000029802322,
+            "p99Ms": 0.8999999910593033,
+            "maxMs": 1.300000011920929
+          },
+          "canvasTotal": {
+            "count": 3953,
+            "meanMs": 0.8161649378777576,
+            "p95Ms": 1.1000000089406967,
+            "p99Ms": 1.300000011920929,
+            "maxMs": 2
+          },
+          "frameInterval": {
+            "count": 3692,
+            "meanMs": 4.165628385698808,
+            "p95Ms": 4.299999999999272,
+            "p99Ms": 4.30000000000291,
+            "maxMs": 4.400000000001455
+          },
+          "parse": {
+            "count": 231,
+            "meanMs": 0.29523809518648947,
+            "p95Ms": 0.4000000059604645,
+            "p99Ms": 0.5,
+            "maxMs": 0.5
+          },
+          "merge": {
+            "count": 231,
+            "meanMs": 0.1147186149121363,
+            "p95Ms": 0.20000000298023224,
+            "p99Ms": 0.20000000298023224,
+            "maxMs": 0.29999999701976776
+          },
+          "observation": {
+            "count": 231,
+            "meanMs": 0.0008658008141951127,
+            "p95Ms": 0,
+            "p99Ms": 0,
+            "maxMs": 0.09999999403953552
+          }
+        },
+        "maxFlights": 122,
+        "maxFrames": 8,
+        "maxDisplayed": 122,
+        "remainingFlights": 122,
+        "clockFrames": 7
+      }
+    ],
+    "warm_heap_growth_bytes": 201848,
+    "note": "Peak counters include setup/scene transition frames; sustained active-flight peaks come from backend evidence."
+  },
+  "native": {
+    "report": "artifacts\\projectile-display-d5-desktop-final-20260921\\normal-flow-report.json",
+    "status": "FLOW_VERIFIED_METRICS_UNAVAILABLE",
+    "scope": "Native UI completed two normal battle/save flows, corroborated by read-only verification of both committed SQLite results. The final telemetry-only assertion failed because the diagnostic read kind from compact active rows instead of projectile start definitions. No native missile performance counts are accepted, and no test is rerun.",
+    "metrics": {
+      "scenes": [
+        "d8d1ab0bead14ddfbe819e5c2d838107",
+        "da089f60a8c04b5fae6c5842d85833c5"
+      ],
+      "lastSaved": true
+    },
+    "checks": [
+      {
+        "savedFirstScene": "d8d1ab0bead14ddfbe819e5c2d838107"
+      },
+      {
+        "secondScene": {
+          "step": 0,
+          "ends": 0,
+          "projectiles": 0,
+          "scene": "da089f60a8c04b5fae6c5842d85833c5"
+        }
+      }
+    ]
+  },
+  "limits": [
+    "CPU numbers are one-machine diagnostics, not GPU timing or a universal frame-rate guarantee.",
+    "Browser recording is a separate display benchmark; native validation uses the packaged executable and real IPC.",
+    "Native visibility/minimization was excluded from this delivery at user request, not reported as passed.",
+    "9v9, hours-long stability, and point-defense prediction remain the overall work-package-7 scope."
+  ]
+}

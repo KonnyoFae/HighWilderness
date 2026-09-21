@@ -1,0 +1,3 @@
+AssertionError [ERR_ASSERTION]: Hidden native canvas kept scheduling frames
+
+923 !== 559

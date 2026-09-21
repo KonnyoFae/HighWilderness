@@ -1,0 +1,9 @@
+{
+  "status": "TACTICAL_UI_U2B_PASS",
+  "checks": [
+    "Actual editor selects, undoes, redoes, saves and reopens a versioned icon.",
+    "Prepared icons reach the battle; overlapping friendly ships on different layers have distinct markers and badges. Unknown enemies stay hidden; two window sizes preserve canvas geometry on panel changes.",
+    "Friendly datalink observation survives local sensor loss. Losing every source removes the live hull, keeps a non-targetable ghost at the last sample, and removes the ghost when memory expires.",
+    "All-side settlement saves and returns to preparation with icons preserved."
+  ]
+}

@@ -32,7 +32,7 @@ export function FireControlPanel({ship,tab,disabled,names,onCommand,onAssignMiss
         <button disabled={disabled||d.durability<=0} onClick={()=>onCommand({kind:'sensor_mode',target:d.module_id,value:d.sensor_enabled?'off':'active'})}>{d.sensor_enabled?'关闭内置传感器':'开启内置传感器'}</button></>}
       {d.capacity!==undefined&&<><p>跟踪额度 <strong>{d.used} / {d.capacity}</strong> · 跟踪 {d.tracked} 个 · 等待 {d.waiting} 个</p>
         <meter value={d.used??0} min={0} max={Math.max(1,d.capacity)}/>
-        <p className="muted">基础距离 {((d.range_m??0)/1000).toFixed(0)} 公里{d.channel==='infrared'&&` · 无动力弹体 ${((d.coasting_range_m??0)/1000).toFixed(0)} 公里`}，受高度层天气与战损影响。</p></>}
+        <p className="muted">基准距离 {((d.range_m??0)/1000).toFixed(0)} 公里{d.channel==='infrared'&&` · 无动力弹体 ${((d.coasting_range_m??0)/1000).toFixed(0)} 公里`}，受高度层天气与战损影响。{d.channel==='radar'&&'对舰距离还随朝向、外形和涂料变化；大反射目标可超过基准距离。'}</p></>}
       {d.host_id&&<p className="muted">安装于 {ship.devices.find(v=>v.module_id===d.host_id)?.name??d.host_id}</p>}
       {d.blocked_angle_deg!==undefined&&<p>上层舰体遮挡 {d.blocked_angle_deg.toFixed(1)}° · 水平可探测 {(360-d.blocked_angle_deg).toFixed(1)}°</p>}
     </section>)}

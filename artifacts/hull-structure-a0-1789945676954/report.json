@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "checks": [
+    "old 100 mm default; base conflict shown and single edit blocked; explicit bulk edit updates authoritative mass",
+    "per-deck input enforces 5 mm steps and base limit; undo/redo preserves independent choices",
+    "slider reaches 15 mm; filling keeps v3 thickness; save and reopen retain both layers and filling"
+  ],
+  "oldMass": 2207930,
+  "finalMass": 1063277,
+  "scope": "real browser React + Python backend; native dialog mocked"
+}

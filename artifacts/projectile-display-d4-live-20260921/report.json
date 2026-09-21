@@ -1,0 +1,150 @@
+{
+  "status": "PASS",
+  "interceptorIds": [
+    10001
+  ],
+  "packets": 190,
+  "phases": [
+    "boost",
+    "powered"
+  ],
+  "layers": [
+    "upper",
+    "cloud"
+  ],
+  "ends": [
+    {
+      "born_step": 0,
+      "end_m": [
+        4.5029491095580046e-13,
+        646.1260296550695
+      ],
+      "end_step": 485,
+      "expires_step": 1740,
+      "height_layer": "cloud",
+      "id": 10000,
+      "impact": null,
+      "kind": "missile",
+      "maximum_durability": 6,
+      "missile_identity": {
+        "born_step": -1200,
+        "interceptor": false,
+        "model_id": "gtw.missile.5c.medium.rocket.active_radar",
+        "warhead_id": "blast"
+      },
+      "origin_m": [
+        0,
+        8000
+      ],
+      "position_m": [
+        4.4951460387256736e-13,
+        658.8694114003426
+      ],
+      "ship_id": "ship.ew.enemy",
+      "velocity_mps": [
+        5.3641548217833657e-14,
+        -876.0329632214119
+      ]
+    },
+    {
+      "born_step": 1,
+      "end_m": [
+        4.5029491095580046e-13,
+        646.1260296550695
+      ],
+      "end_step": 485,
+      "expires_step": 1111,
+      "height_layer": "cloud",
+      "id": 10001,
+      "impact": null,
+      "kind": "missile",
+      "maximum_durability": 3,
+      "missile_identity": {
+        "born_step": 1,
+        "interceptor": true,
+        "model_id": "gtw.missile.5c.small.interceptor",
+        "warhead_id": "blast"
+      },
+      "origin_m": [
+        -4.999062011489886,
+        -8007.000000146637
+      ],
+      "position_m": [
+        -0.015357592799179774,
+        617.2018329127444
+      ],
+      "ship_id": "ship.defense.player",
+      "velocity_mps": [
+        0.849245303077509,
+        1428.1038753387343
+      ]
+    },
+    {
+      "born_step": 0,
+      "end_m": [
+        4.5029491095580046e-13,
+        646.1260296550695
+      ],
+      "end_step": 485,
+      "expires_step": 1740,
+      "height_layer": "cloud",
+      "id": 10000,
+      "impact": null,
+      "kind": "missile",
+      "maximum_durability": 6,
+      "missile_identity": {
+        "born_step": -1200,
+        "interceptor": false,
+        "model_id": "gtw.missile.5c.medium.rocket.active_radar",
+        "warhead_id": "blast"
+      },
+      "origin_m": [
+        0,
+        8000
+      ],
+      "position_m": [
+        4.4951460387256736e-13,
+        658.8694114003426
+      ],
+      "ship_id": "ship.ew.enemy",
+      "velocity_mps": [
+        5.3641548217833657e-14,
+        -876.0329632214119
+      ]
+    },
+    {
+      "born_step": 1,
+      "end_m": [
+        4.5029491095580046e-13,
+        646.1260296550695
+      ],
+      "end_step": 485,
+      "expires_step": 1111,
+      "height_layer": "cloud",
+      "id": 10001,
+      "impact": null,
+      "kind": "missile",
+      "maximum_durability": 3,
+      "missile_identity": {
+        "born_step": 1,
+        "interceptor": true,
+        "model_id": "gtw.missile.5c.small.interceptor",
+        "warhead_id": "blast"
+      },
+      "origin_m": [
+        -4.999062011489886,
+        -8007.000000146637
+      ],
+      "position_m": [
+        -0.015357592799179774,
+        617.2018329127444
+      ],
+      "ship_id": "ship.defense.player",
+      "velocity_mps": [
+        0.849245303077509,
+        1428.1038753387343
+      ]
+    }
+  ],
+  "scope": "A seeded incoming missile and real automatic interception, descent, actual contact, pause/resume and saved settlement through production UI. This is not a fleet load test."
+}

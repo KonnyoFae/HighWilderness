@@ -5,6 +5,16 @@ const armor = { material: {id: "armor", version: 1}, thickness_m: 0.1 };
 function region(vertices_m: [number,number][]): HullRegion { return {id:"r",vertices_m,edge_armor:vertices_m.map(()=>structuredClone(armor))}; }
 const square = region([[-12.5,-12.5],[12.5,-12.5],[12.5,12.5],[-12.5,12.5]]);
 describe("single-side hull authoring", () => {
+  it("preserves per-edge flare angles and does not erase differently flared collinear edges", () => {
+    const r = structuredClone(square);
+    r.edge_armor[1].flare_angle_deg = 60;
+    const mirrored = symmetrizeRegion(r, "right");
+    expect(mirrored.edge_armor.filter(a => a.flare_angle_deg === 60)).toHaveLength(2);
+    expect(sameBoundary(square, mirrored)).toBe(false);
+    const split = symmetricDrawing("r", [{x:0,y:-12.5},{x:12.5,y:-12.5},{x:12.5,y:12.5},{x:0,y:12.5}], armor);
+    split.edge_armor[0].flare_angle_deg = 30;
+    expect(sameBoundary(square, split)).toBe(false);
+  });
   it("builds one closed boundary with no central seam and independent mirrored armor", () => {
     const r = symmetricDrawing("r", [{x:0,y:-12.5},{x:12.5,y:-12.5},{x:12.5,y:12.5},{x:0,y:12.5}], armor);
     expect(r.vertices_m).toEqual([[0,-12.5],[12.5,-12.5],[12.5,12.5],[0,12.5],[-12.5,12.5],[-12.5,-12.5]]);

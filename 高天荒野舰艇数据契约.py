@@ -3713,18 +3713,23 @@ def parse_base_armor_material(value: Any, path: str) -> BaseArmorMaterial:
 class EdgeArmorInput:
     material: ResourceReference
     thickness_m: float
+    flare_angle_deg: int | None = None
 
     @classmethod
-    def parse(cls, value: Any, path: str) -> "EdgeArmorInput":
+    def parse(cls, value: Any, path: str, *, with_flare: bool = False) -> "EdgeArmorInput":
         obj = _object(value, path)
-        _keys(obj, path, ("material", "thickness_m"))
+        _keys(obj, path, ("material", "thickness_m") + (("flare_angle_deg",) if with_flare else ()))
+        thickness = _number(obj["thickness_m"], f"{path}.thickness_m", 0.0)
+        from 高天荒野舰艇装甲外飘 import validate_angle
+        angle = validate_angle(obj['flare_angle_deg'], thickness, f'{path}.flare_angle_deg') if with_flare else None
         return cls(
             ResourceReference.parse(obj["material"], f"{path}.material"),
-            _number(obj["thickness_m"], f"{path}.thickness_m", 0.0),
+            thickness, angle,
         )
 
     def to_dict(self) -> dict[str, Any]:
-        return {"material": self.material.to_dict(), "thickness_m": self.thickness_m}
+        return {"material": self.material.to_dict(), "thickness_m": self.thickness_m,
+                **({"flare_angle_deg": self.flare_angle_deg} if self.flare_angle_deg is not None else {})}
 
 
 Point = tuple[float, float]
@@ -3737,7 +3742,7 @@ class HullRegionInput:
     edge_armor: tuple[EdgeArmorInput, ...]
 
     @classmethod
-    def parse(cls, value: Any, path: str) -> "HullRegionInput":
+    def parse(cls, value: Any, path: str, *, with_flare: bool = False) -> "HullRegionInput":
         obj = _object(value, path)
         _keys(obj, path, ("id", "vertices_m", "edge_armor"))
         vertices_raw = _array(obj["vertices_m"], f"{path}.vertices_m")
@@ -3761,7 +3766,7 @@ class HullRegionInput:
             _resource_id(obj["id"], f"{path}.id"),
             tuple(vertices),
             tuple(
-                EdgeArmorInput.parse(item, f"{path}.edge_armor[{index}]")
+                EdgeArmorInput.parse(item, f"{path}.edge_armor[{index}]", with_flare=with_flare)
                 for index, item in enumerate(armor_raw)
             ),
         )
@@ -3782,11 +3787,15 @@ class DeckInput:
     structure_material: ResourceReference
     regions: tuple[HullRegionInput, ...]
     filling: ResourceReference | None = None
+    structure_thickness_m: float | None = None
 
     @classmethod
-    def parse(cls, value: Any, path: str, *, with_filling: bool = False) -> "DeckInput":
+    def parse(cls, value: Any, path: str, *, with_filling: bool = False, with_thickness: bool = False, with_flare: bool = False) -> "DeckInput":
         obj = _object(value, path)
-        _keys(obj, path, ("id", "level", "is_base", "structure_material", "regions") + (("filling",) if with_filling else ()))
+        _keys(obj, path, ("id", "level", "is_base", "structure_material", "regions")
+              + (("filling",) if with_filling else ()) + (("structure_thickness_m",) if with_thickness else ()))
+        from 高天荒野舰艇结构厚度 import validate_thickness
+        thickness = validate_thickness(obj['structure_thickness_m'], f'{path}.structure_thickness_m') if with_thickness else None
         filling = ResourceReference.parse(obj['filling'], f'{path}.filling') if with_filling else None
         if filling is not None:
             from 高天荒野舰艇边缘填充 import configuration
@@ -3800,10 +3809,11 @@ class DeckInput:
             _boolean(obj["is_base"], f"{path}.is_base"),
             ResourceReference.parse(obj["structure_material"], f"{path}.structure_material"),
             tuple(
-                HullRegionInput.parse(item, f"{path}.regions[{index}]")
+                HullRegionInput.parse(item, f"{path}.regions[{index}]", with_flare=with_flare)
                 for index, item in enumerate(regions_raw)
             ),
             filling,
+            thickness,
         )
 
     def to_dict(self) -> dict[str, Any]:
@@ -3814,6 +3824,7 @@ class DeckInput:
             "regions": [region.to_dict() for region in self.regions],
             "structure_material": self.structure_material.to_dict(),
             **({"filling": self.filling.to_dict()} if self.filling is not None else {}),
+            **({"structure_thickness_m": self.structure_thickness_m} if self.structure_thickness_m is not None else {}),
         }
 
 
@@ -3877,7 +3888,9 @@ class HullBlueprintInput:
             ("schema", "kind", "id", "version", "name", "fixture_level", "grid", "decks"),
         )
         from 高天荒野舰艇边缘填充 import HULL_FILLING_SCHEMA
-        if obj["schema"] not in (SCHEMA_ID, HULL_FILLING_SCHEMA):
+        from 高天荒野舰艇结构厚度 import HULL_STRUCTURE_SCHEMA, validate_deck_thicknesses
+        from 高天荒野舰艇装甲外飘 import HULL_ARMOR_SCHEMA
+        if obj["schema"] not in (SCHEMA_ID, HULL_FILLING_SCHEMA, HULL_STRUCTURE_SCHEMA, HULL_ARMOR_SCHEMA):
             raise ContractError("schema.unsupported", f"{path}.schema", str(obj["schema"]))
         if obj["kind"] != "HullBlueprint":
             raise ContractError(
@@ -3891,13 +3904,19 @@ class HullBlueprintInput:
         decks_raw = _array(obj["decks"], f"{path}.decks")
         if not decks_raw:
             raise ContractError("array.empty", f"{path}.decks", "至少需要一层甲板")
+        decks = tuple(DeckInput.parse(item, f"{path}.decks[{index}]",
+                      with_filling=obj['schema'] in (HULL_FILLING_SCHEMA, HULL_STRUCTURE_SCHEMA, HULL_ARMOR_SCHEMA),
+                      with_thickness=obj['schema'] in (HULL_STRUCTURE_SCHEMA, HULL_ARMOR_SCHEMA),
+                      with_flare=obj['schema'] == HULL_ARMOR_SCHEMA)
+                      for index, item in enumerate(decks_raw))
+        validate_deck_thicknesses(decks, f'{path}.decks', schema=obj['schema'])
         return cls(
             _resource_id(obj["id"], f"{path}.id"),
             _integer(obj["version"], f"{path}.version", 1),
             _string(obj["name"], f"{path}.name"),
             fixture_level,
             GridInput.parse(obj["grid"], f"{path}.grid"),
-            tuple(DeckInput.parse(item, f"{path}.decks[{index}]", with_filling=obj['schema'] == HULL_FILLING_SCHEMA) for index, item in enumerate(decks_raw)),
+            decks,
             obj['schema'],
         )
 

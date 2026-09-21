@@ -2,7 +2,7 @@ import type { HullDeck, HullRegion } from "./model";
 
 export type Point = { x: number; y: number };
 export type Camera = Point & { scale: number };
-export type Selection = { region: string; vertex: number | null };
+export type Selection = { region: string; vertex: number | null; edge?: number };
 export const screen = (p: Point, c: Camera): Point => ({ x: c.x + p.x * c.scale, y: c.y - p.y * c.scale });
 export const world = (p: Point, c: Camera): Point => ({ x: (p.x - c.x) / c.scale, y: (c.y - p.y) / c.scale });
 export const snap = (p: Point): Point => ({ x: Math.round(p.x / 2.5) * 2.5, y: Math.round(p.y / 2.5) * 2.5 });

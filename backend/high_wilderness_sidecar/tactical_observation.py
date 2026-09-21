@@ -4,12 +4,13 @@ Plans are published after the enclosing atomic battle step succeeds. Shared
 tracks preserve the originating sample; they never remeasure at the receiver.
 """
 from dataclasses import dataclass, replace, field
-from math import hypot, atan2, degrees
+from math import hypot, atan2, degrees, cos, sin
 from pathlib import Path
 import json
 
 from 高天荒野舰艇数据契约 import canonical_sha256
 from 高天荒野舰艇水平射界 import sensor_arc, interval_blocks_bearing
+from 高天荒野舰艇RCS缓存 import interpolate_hull_rcs, radar_range_ratio
 from . import persistent_ship as ps
 from .tactical_layers import LAYERS
 from . import projectile_observation as observed
@@ -55,10 +56,12 @@ def tracking_cost(target, high_speed=1000.):
     return (1 if target.large else 2)*(4 if speed>=high_speed else 1)
 
 
-def can_observe(sensor, own_position, own_layer, target, blocked=False):
+def can_observe(sensor, own_position, own_layer, target, blocked=False, *, ship_radar_factor=1.):
     if blocked or abs(LAYERS.index(own_layer)-LAYERS.index(target.layer))>1:return False
     maximum=sensor['range_m']
-    if target.kind=='ship':maximum=min(maximum,sensor['ship_range_m'])
+    if target.kind=='ship':
+        maximum=min(maximum,sensor['ship_range_m'])
+        if sensor['channel']=='radar':maximum*=ship_radar_factor
     elif not target.powered:maximum=min(maximum,sensor['coasting_range_m'])
     maximum*=sensor['weather'][LAYERS.index(target.layer)]*sensor['range_efficiency']
     return hypot(*(a-b for a,b in zip(own_position,target.position)))<=maximum
@@ -83,8 +86,17 @@ class ObservationRuntime:
     def __init__(self,battle,scenario):
         self.battle=battle
         self.policy=json.loads((Path(__file__).resolve().parents[2]/'contracts/web_bridge/fixtures/tactical-observation.5d.json').read_text(encoding='utf-8'))
+        signature=self.policy['ship_radar_signature']
+        ps.obj(signature,'policy reference_rcs_m2 range_exponent instrumented_range_cap elevation_policy external_module_policy','$.ship_radar_signature')
+        ps.need(signature['policy']=='gaotian.ship-radar-signature/a4-v1' and signature['range_exponent']==.25
+            and signature['instrumented_range_cap'] is False and signature['elevation_policy']=='level_cache_with_target_layer_weather'
+            and signature['external_module_policy']=='static_design_no_debris_removal','$.ship_radar_signature','不支持的雷达外形政策')
+        ps.number(signature['reference_rcs_m2'],'$.ship_radar_signature.reference_rcs_m2',minimum=.000001)
         profiles={(r['prototype']['id'],r['prototype']['version']):r for r in self.policy['sensor_profiles']}
         self.sensors=[];self.links=[];self.arcs={};self.integrated={};self.sensor_enabled={}
+        self.ship_signatures={binding.ship_id:(binding.snapshot.hull.hull_rcs_cache,
+            binding.snapshot.outfit.coating_rcs_multiplier,binding.snapshot.outfit.known_external_rcs_m2)
+            for binding in scenario.bindings}
         from .tactical_defense import integrated
         for n,modules in enumerate(battle._modules):
             sensors={};links=[]
@@ -118,12 +130,26 @@ class ObservationRuntime:
         from .tactical_gunnery import rotate, add
         arc=self.arcs[n,mid];position=tuple(ship.motion.position_world_m.to_list())
         origin=add(position,rotate(arc['origin_m'],ship.motion.heading_rad))
-        if not can_observe(effective,origin,ship.motion.height_layer,target):return False
+        factor=self.radar_factor(target,origin) if effective['channel']=='radar' and target.kind=='ship' else 1.
+        if not can_observe(effective,origin,ship.motion.height_layer,target,ship_radar_factor=factor):return False
         delta=tuple(a-b for a,b in zip(target.position,origin))
         if hypot(*delta)>1e-9:
             local=rotate(delta,-ship.motion.heading_rad)
             if interval_blocks_bearing(arc['blocked_intervals_deg'],degrees(atan2(local[0],local[1]))):return False
         return not (occluded and occluded(n,mid,target))
+
+    def radar_factor(self,target,origin):
+        """Observer-specific target bearing, sampled from an immutable design cache.
+
+        Cross-layer observations retain LEVEL RCS plus existing weather. Neither
+        infrared nor missile/shell detection inherits this ship-only signature.
+        """
+        cache,coating,external=self.ship_signatures[target.id]
+        dx,dy=origin[0]-target.position[0],origin[1]-target.position[1]
+        c,s=cos(target.heading),sin(target.heading)
+        bearing=degrees(atan2(dx*c+dy*s,-dx*s+dy*c))
+        rcs=interpolate_hull_rcs(cache,bearing).total_m2*coating+external
+        return radar_range_ratio(rcs/self.policy['ship_radar_signature']['reference_rcs_m2'])
 
     def effect(self,world,n,mid,function):
         b=self.battle;m=b._modules[n][mid]

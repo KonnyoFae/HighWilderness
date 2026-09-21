@@ -31,6 +31,9 @@ class ObservationTests(unittest.TestCase):
         cls.index=ResourceIndex(ROOT);cls.designs={}
         for kind in ('radar','infrared'):
             doc,dep=document(cls.index,kind)
+            # Current multi-ship fixture needs a real SCIC flagship; sensor and
+            # datalink tests must not bypass fleet qualification at entry.
+            if kind=='radar':next(m for m in doc['outfit']['modules'] if m['id']=='cic')['prototype']=dict(id='gtw.module.scic.basic',version=1)
             cls.designs[kind]=bp.compile_design(doc,cls.index,dep,load_current(ROOT),ship_id='ship.sensor.'+kind)
         doc,dep=document(cls.index)
         doc['outfit']['modules'].append(dict(id='sensor.second',prototype=dict(id='gtw.module.sensor.5d.radar',version=2),

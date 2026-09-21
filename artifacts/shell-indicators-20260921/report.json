@@ -1,0 +1,150 @@
+{
+  "status": "PASS",
+  "scope": "Real tactical canvas with synthetic paused projectile/observation states; three weather layers, two zoom levels, DPR 1 and 2; hidden large enemy shell excluded.",
+  "results": [
+    {
+      "layer": "upper",
+      "dpr": 1,
+      "zoom": 0,
+      "coloredPixels": [
+        1,
+        8,
+        1,
+        8,
+        0
+      ]
+    },
+    {
+      "layer": "upper",
+      "dpr": 1,
+      "zoom": 1,
+      "coloredPixels": [
+        1,
+        8,
+        1,
+        8,
+        0
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 1,
+      "zoom": 0,
+      "coloredPixels": [
+        1,
+        8,
+        1,
+        8,
+        0
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 1,
+      "zoom": 1,
+      "coloredPixels": [
+        1,
+        8,
+        1,
+        8,
+        0
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 1,
+      "zoom": 0,
+      "coloredPixels": [
+        1,
+        8,
+        1,
+        8,
+        0
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 1,
+      "zoom": 1,
+      "coloredPixels": [
+        1,
+        8,
+        1,
+        8,
+        0
+      ]
+    },
+    {
+      "layer": "upper",
+      "dpr": 2,
+      "zoom": 0,
+      "coloredPixels": [
+        4,
+        32,
+        4,
+        32,
+        0
+      ]
+    },
+    {
+      "layer": "upper",
+      "dpr": 2,
+      "zoom": 1,
+      "coloredPixels": [
+        4,
+        32,
+        4,
+        32,
+        0
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 2,
+      "zoom": 0,
+      "coloredPixels": [
+        4,
+        32,
+        4,
+        32,
+        0
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 2,
+      "zoom": 1,
+      "coloredPixels": [
+        4,
+        32,
+        4,
+        32,
+        0
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 2,
+      "zoom": 0,
+      "coloredPixels": [
+        4,
+        32,
+        4,
+        32,
+        0
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 2,
+      "zoom": 1,
+      "coloredPixels": [
+        4,
+        32,
+        4,
+        32,
+        0
+      ]
+    }
+  ]
+}

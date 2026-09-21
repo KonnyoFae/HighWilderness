@@ -6,6 +6,14 @@
   "memory_steps": 180,
   "datalink_range_m": 100000.0,
   "high_speed_mps": 1000.0,
+  "ship_radar_signature": {
+    "policy": "gaotian.ship-radar-signature/a4-v1",
+    "reference_rcs_m2": 1000.0,
+    "range_exponent": 0.25,
+    "instrumented_range_cap": false,
+    "elevation_policy": "level_cache_with_target_layer_weather",
+    "external_module_policy": "static_design_no_debris_removal"
+  },
   "sensor_profiles": [
     {
       "prototype": {

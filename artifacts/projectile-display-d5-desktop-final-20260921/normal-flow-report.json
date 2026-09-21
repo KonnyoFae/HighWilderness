@@ -1,0 +1,61 @@
+{
+  "status": "FLOW_VERIFIED_METRICS_UNAVAILABLE",
+  "scope": "Native UI completed two normal battle/save flows, corroborated by read-only verification of both committed SQLite results. The final telemetry-only assertion failed because the diagnostic read kind from compact active rows instead of projectile start definitions. No native missile performance counts are accepted, and no test is rerun.",
+  "requestedSustainedSeconds": 5,
+  "metrics": {
+    "scenes": [
+      "d8d1ab0bead14ddfbe819e5c2d838107",
+      "da089f60a8c04b5fae6c5842d85833c5"
+    ],
+    "lastSaved": true
+  },
+  "checks": [
+    {
+      "savedFirstScene": "d8d1ab0bead14ddfbe819e5c2d838107"
+    },
+    {
+      "secondScene": {
+        "step": 0,
+        "ends": 0,
+        "projectiles": 0,
+        "scene": "da089f60a8c04b5fae6c5842d85833c5"
+      }
+    }
+  ],
+  "saved_results": [
+    {
+      "id": "settlement.d8d1ab0bead14ddfbe819e5c2d838107",
+      "committed": 1,
+      "scene_id": "d8d1ab0bead14ddfbe819e5c2d838107",
+      "fixed_step": 331,
+      "removed_projectiles": 8
+    },
+    {
+      "id": "settlement.da089f60a8c04b5fae6c5842d85833c5",
+      "committed": 1,
+      "scene_id": "da089f60a8c04b5fae6c5842d85833c5",
+      "fixed_step": 39,
+      "removed_projectiles": 2
+    }
+  ],
+  "heap": [
+    {
+      "wallSeconds": 5.032,
+      "step": 322,
+      "usedSize": 11282156,
+      "totalSize": 12787712,
+      "embedderHeapUsedSize": 3033640,
+      "backingStorageSize": 1344650
+    },
+    {
+      "label": "back-to-preparation",
+      "usedSize": 8259768,
+      "totalSize": 9904128,
+      "embedderHeapUsedSize": 1872832,
+      "backingStorageSize": 1068174
+    }
+  ],
+  "errors": [],
+  "source_error": "error.txt",
+  "excluded": "OS visibility/minimization excluded at user request"
+}

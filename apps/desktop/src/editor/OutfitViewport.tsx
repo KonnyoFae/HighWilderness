@@ -12,6 +12,7 @@ import { arcVisibleAtLevel, WeaponArcOverlay } from "./WeaponArcOverlay";
 import type { WeaponControl, WeaponArc } from "./weaponGroups";
 import { FillingSummary } from "./FillingSummary";
 import type { FillingView } from "./FillingSummary";
+import { armorFitRegions } from './armorView';
 
 export function OutfitViewport({ session, options, option, selected, onSelect, busy, onCommand, onLocalDraft, operationError, mode }: {
   session: SessionSnapshot; options: ModuleOption[]; option?: ModuleOption; selected: string; onSelect: (id: string) => void;
@@ -26,6 +27,8 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
   const deck = decks.find(d => d.id === deckId) ?? decks[0];
   const filling = (session.preview.model.filling_decks as FillingView[] | undefined)?.find(d => d.deck_id === deck?.id);
   const below = lowerDeck(decks, deck);
+  const armorGeometry = layout?.armor_geometry;
+  const fitRegions = [...armorFitRegions(below?.regions ?? [],armorGeometry,below?.id), ...armorFitRegions(deck?.regions ?? [],armorGeometry,deck?.id)];
   const space = layout?.decks.find(d => d.id === deck?.id);
   const modules = session.draft.modules ?? [];
   const instance = modules.find(m => m.id === selected);
@@ -62,7 +65,7 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
   const locked = busy || pending;
   const local = moving !== null || pending;
   useEffect(() => { onLocalDraft(local); return () => onLocalDraft(false); }, [local, onLocalDraft]);
-  useEffect(() => { setCamera(fit([...(below?.regions ?? []), ...(deck?.regions ?? [])], WIDTH, HEIGHT)); setCursor(null); }, [deck?.id, session.session_id, WIDTH, HEIGHT]);
+  useEffect(() => { setCamera(fit(fitRegions, WIDTH, HEIGHT)); setCursor(null); }, [deck?.id, session.session_id, WIDTH, HEIGHT]);
   useEffect(() => { if (!relocating) setRotation(defaultRotation(option)); }, [option?.sha256]);
   useEffect(() => { setRelocating(false); setMoving(null); setCursor(null); setMessage(""); setRotation(defaultRotation(option)); }, [mode]);
   useEffect(() => { if (selected && !instance) { onSelect(""); setRelocating(false); } }, [session.revision]);
@@ -188,7 +191,7 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
       <label>{relocating ? "移动后朝向" : "放置朝向"} <select aria-label="画布放置朝向" value={rotation} disabled={locked} onChange={e => setRotation(Number(e.target.value))}>
         {(activeOption?.prototype.installation.allowed_rotations_deg ?? [0]).map(r => <option key={r} value={r}>{r}°</option>)}
       </select></label>
-      <button onClick={() => setCamera(fit(deck?.regions ?? [],WIDTH,HEIGHT))}>适应船壳</button>
+      <button onClick={() => setCamera(fit(fitRegions,WIDTH,HEIGHT))}>适应船壳</button>
       <button onClick={() => setCamera(c=>({...c,x:WIDTH/2,y:HEIGHT/2}))}>回到原点</button>
       <button aria-label="放大舾装画布" onClick={() => setCamera(c=>zoom(c,{x:WIDTH/2,y:HEIGHT/2},1.25))}>＋</button>
       <button aria-label="缩小舾装画布" onClick={() => setCamera(c=>zoom(c,{x:WIDTH/2,y:HEIGHT/2},.8))}>−</button>
@@ -238,9 +241,11 @@ export function OutfitViewport({ session, options, option, selected, onSelect, b
         <rect width={WIDTH} height={HEIGHT} fill="#081b20" />
         <GridOverlay camera={camera} width={WIDTH} height={HEIGHT} gridOnly />
         {below?.regions.map(r=><polygon key={`lower${r.id}`} points={poly(r.vertices_m)} fill="#88acd9" fillOpacity={.12} stroke="#88acd9" strokeOpacity={.45} />)}
+        {armorGeometry?.regions.filter(r=>r.deck_id===deck?.id || r.deck_level===(deck?.level ?? -2)+1).flatMap(r=>r.edges.filter(e=>e.projection_m.length).map(e=><polygon key={`armor${r.deck_id}${r.region_id}${e.edge_index}`} points={poly(e.projection_m)} fill="#809cee" fillOpacity={r.deck_id===deck?.id ? .3 : .12} stroke="#9fb4ff" strokeOpacity={.7} pointerEvents="none"><title>外飘装甲 · {e.flare_angle_deg}° · 此处禁止安装</title></polygon>))}
         {deck?.regions.map(r=><polygon key={r.id} points={poly(r.vertices_m)} fill="#397b72" fillOpacity={.13} stroke="#8fcab7" strokeWidth={2} />)}
+        {space?.armor_blocked_top_cells?.map(([x,y])=>{const p=screen({x:x*5-2.5,y:y*5+2.5},camera),s=camera.scale*5;return <g key={`armor-blocked${x},${y}`} pointerEvents="none"><rect x={p.x} y={p.y} width={s} height={s} fill="#f07a69" fillOpacity={.18} stroke="#f07a69" strokeOpacity={.6}/><path d={`M${p.x},${p.y}l${s},${s}`} stroke="#f07a69" strokeOpacity={.5}/><title>上层外飘覆盖：露天格禁装，内部格仍可用</title></g>;})}
         {filling?.configuration.id !== 'gtw.filling.none' && filling?.pieces?.map((p,i)=><polygon key={`filling${i}`} points={poly(p.vertices_m)} fill="#dfa552" fillOpacity={.25} pointerEvents="none"><title>本层边缘填充空间</title></polygon>)}
-        {showArc && arcVisible && selectedArc?.status === "hull_occlusion_resolved" && selectedArc.base_deck_level !== null && decks.filter(d=>d.level > selectedArc.base_deck_level!).flatMap(d=>d.regions.map(r=><polygon key={`obstruction${d.id}${r.id}`} points={poly(r.vertices_m)} fill="#ff6868" fillOpacity={.1} stroke="#ff8888" strokeOpacity={.8} strokeDasharray="5 4" pointerEvents="none"><title>上层船壳投影：第 {d.level} 层 · {r.id}</title></polygon>))}
+        {showArc && arcVisible && selectedArc?.status === "hull_occlusion_resolved" && selectedArc.base_deck_level !== null && decks.filter(d=>d.level > selectedArc.base_deck_level!).flatMap(d=>armorFitRegions(d.regions,armorGeometry,d.id).map(r=><polygon key={`obstruction${d.id}${r.id}`} points={poly(r.vertices_m)} fill="#ff6868" fillOpacity={.1} stroke="#ff8888" strokeOpacity={.8} strokeDasharray="5 4" pointerEvents="none"><title>上层船壳投影：第 {d.level} 层 · {r.id}</title></polygon>))}
         {space?.internal_cells.map(([x,y],i)=>cell(x*5,y*5,"#76d9ac",`space${i}`,.05))}
         {layers.top && space?.exposed_top_cells.map(([x,y],i)=>{const p=screen({x:x*5,y:y*5},camera);return <circle key={`top${i}`} cx={p.x} cy={p.y} r={1.8} fill="#d9bc71" />;})}
         {layers.side && space?.side_mount_slots.map((s,i)=><line key={`slot${i}`} x1={screen({x:s.start_m[0],y:s.start_m[1]},camera).x} y1={screen({x:s.start_m[0],y:s.start_m[1]},camera).y} x2={screen({x:s.end_m[0],y:s.end_m[1]},camera).x} y2={screen({x:s.end_m[0],y:s.end_m[1]},camera).y} stroke={s===slotHover?"#fff4b0":"#bc91d1"} strokeWidth={s===slotHover?7:3} strokeDasharray="8 2" />)}

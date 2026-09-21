@@ -17,7 +17,8 @@ export interface TacticalStatic {
   scenario_id: string;
   resources: Record<string, unknown>;
   ships: { id: string; name: string; side_id: string; fleet_id: string; derived_snapshot_sha256: string; classification_icon?: string;
-    decks: { id: string; level: number; regions: { id: string; vertices_m: number[][] }[] }[];
+    decks: { id: string; level: number; regions: { id: string; vertices_m: number[][]; armor_outline_m?: number[][];
+      armor_faces?: {edge_index:number; flare_angle_deg:number; projection_m:number[][]}[] }[] }[];
     structural_durability?: { policy_id:string; maximum_points:number };
     modules: { id: string; name: string; category: string; equipment_kind?:string; anchor_m: number[]; rotation_deg: number; deck_level: number;
       internal_cells: number[][]; top_cells: number[][]; body_points: number[][]; max_durability: number }[] }[];
@@ -41,6 +42,11 @@ export interface TacticalControlInput {
   } };
 }
 export interface TacticalSnapshot {
+  // Client-only display boundaries; never command or simulation inputs.
+  display_reset?:boolean;
+  display_effect_after_step?:number;
+  observation_source?:string;
+  projectile_stream?: import('./projectileStream').ProjectileStreamPacket;
   interface: "gaotian.tactical-render-snapshot/v1alpha1";
   backend_instance_id: string; scene_id: string; authority_interface: string;
   paused: boolean; fixed_step: number; fixed_step_s: number; time_s: number;
@@ -122,6 +128,8 @@ export interface GunneryView {
     module_losses:{module_id:string;damage_points:number}[]; hull_damage_fraction:number;
   }[]; recent: { projectile_id: number; step: number; source_ship_id: string;
     ship_id: string; position_m: number[]; deck_level: number; outcome: string; module_ids: string[]; module_damage: number; projectile_type?: string; height_layer?: string | null;
+    armor_profile?: {deck_id:string;region_id:string;edge_index:number;thickness_mm:number;flare_angle_deg:number;tilt_cosine:number;
+      impact_angle_deg:number;effective_angle_deg:number;required_penetration_mm:number;available_penetration_mm:number;active:boolean};
     deck_selection?: {policy: string; preferred_levels: number[]; probabilities: {deck_level: number; probability: number}[]; sample: number} }[] } | null;
 }
 export interface HeightNavigation {
@@ -130,7 +138,15 @@ export interface HeightNavigation {
   remaining_s: number | null; total_remaining_s: number | null; unavailable_reason: string | null;
 }
 export interface DisplayProjectile {
+  missile_samples?:import('./missileMotion').MissileSample[];
+  missile_states?:import('./missileMotion').MissileState[];
+  missile_identity?:import('./missileMotion').MissileIdentity;
+  heading_rad?:number;pitch_rad?:number;altitude_m?:number;vertical_speed_mps?:number;
+  shell_samples?:import('./shellMotion').ShellSample[];
+  trail_m?:number[][];
   kind?:'shell'|'missile';trajectory?:number[][];
+  // Display classification from a valid sensor contact; not an enemy HP reading.
+  has_durability?:boolean;
   missile?:{model_id:string;warhead_id:string;phase:string;seeker_state:string;target_id:string|number|null;age_s:number;remaining_s:number;speed_mps?:number;horizontal_speed_mps?:number;vertical_speed_mps?:number;altitude_m?:number;pitch_deg?:number;maneuver_state?:string;maneuver_reason?:string|null;maneuver_target_layer?:string|null;vertical_remaining_m?:number|null;failed_climb_targets?:(string|number)[];datalink?:boolean;original_target_id?:string|number|null;interceptor?:boolean;interception_damage?:number;interception_radius_m?:number;link_sender?:string|null}|null;
   durability?:number|null;maximum_durability?:number|null;interception_target_id?:number|null;
   id: number; ship_id: string; position_m: number[]; previous_m: number[]; velocity_mps: number[];
@@ -138,6 +154,10 @@ export interface DisplayProjectile {
   height_layer?: string | null;
 }
 export interface FinishedProjectile {
+  missile_samples?:import('./missileMotion').MissileSample[];
+  missile_states?:import('./missileMotion').MissileState[];
+  missile_identity?:import('./missileMotion').MissileIdentity;
+  shell_samples?:import('./shellMotion').ShellSample[];
   kind?:'shell'|'missile';trajectory?:number[][];
   maximum_durability?:number|null;
   id: number; ship_id: string; born_step: number; origin_m: number[]; expires_step: number;

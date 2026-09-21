@@ -395,6 +395,9 @@ def interpolate_hull_rcs(cache: HullRCSCache, bearing_deg: float) -> RCSDirectio
     if not isfinite(bearing_deg):
         raise ValueError("雷达相对方位必须是有限数")
     bearing = bearing_deg % 360.0
+    # A tiny negative angle can round to exactly 360 after modulo.
+    if bearing >= 360.0:
+        bearing = 0.0
     lower_index = floor(bearing)
     upper_index = (lower_index + 1) % DIRECTION_COUNT
     amount = bearing - lower_index

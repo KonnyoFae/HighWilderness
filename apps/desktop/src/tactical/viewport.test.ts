@@ -7,6 +7,20 @@ import snapshot from "./testing/snapshot.fixture.json";
 
 const view = acceptSnapshot(null, snapshot as TacticalSnapshot, "fixture.1");
 describe("tactical coordinates and camera", () => {
+  it("fits and selects the armor outline without inventing module cells", () => {
+    const altered = structuredClone(view), ship = altered.geometry.ships[0], pose = altered.snapshot.ships[0];
+    ship.decks[0].regions[0].armor_outline_m = [[-30,-100],[30,-100],[30,100],[-30,100]];
+    const camera = fitScene(altered,740,540,ship.id);
+    const point = screen(bodyToWorld({x:29,y:90},pose),camera);
+    expect(pickShip(altered,point,camera)).toBe(ship.id);
+    expect(pickModules(altered,point,camera,ship.id,false)).toEqual([]);
+    expect(shipPoints(ship)).toContainEqual({x:30,y:100});
+    for (const p of shipPoints(ship)) {
+      const pixel = screen(bodyToWorld(p,pose),camera);
+      expect(pixel.x).toBeGreaterThanOrEqual(49); expect(pixel.x).toBeLessThanOrEqual(691);
+      expect(pixel.y).toBeGreaterThanOrEqual(49); expect(pixel.y).toBeLessThanOrEqual(491);
+    }
+  });
   it("right-click candidates only include own weapons and resolve overlapping deck levels explicitly", () => {
     const camera = fitScene(view, 740, 540), ship = view.geometry.ships[0], pose = view.snapshot.ships[0];
     const gun = ship.modules.find(m => m.category === "weapon")!;

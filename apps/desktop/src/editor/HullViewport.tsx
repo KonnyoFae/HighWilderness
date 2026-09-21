@@ -12,6 +12,8 @@ import type { SourceSide } from "./symmetry";
 import type { HullCommand, HullRegion, MaterialOption, SessionSnapshot } from "./model";
 import { fit, gridLines, lowerDeck, pick, screen, snap, world, zoom } from "./viewport";
 import type { Camera, Point, Selection } from "./viewport";
+import { armorFitRegions, pickArmor, sourceEdgeIndex } from './armorView';
+import type { ArmorGeometryView } from './armorView';
 
 export function HullViewport({ session, busy, materials, onCommand, onLocalDraft, active = true }: {
   session: SessionSnapshot; busy: boolean; materials: MaterialOption[]; onCommand: HullCommand; onLocalDraft: (busy: boolean) => void; active?: boolean;
@@ -19,8 +21,11 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
   const [deckId, setDeckId] = useState((session.draft.decks ?? [])[0]?.id ?? "");
   const deck = (session.draft.decks ?? []).find(d => d.id === deckId) ?? (session.draft.decks ?? [])[0];
   const below = lowerDeck((session.draft.decks ?? []), deck);
-  const visibleRegions = [...(below?.regions ?? []), ...(deck?.regions ?? [])];
+  const geometry = session.preview.valid ? (session.preview.model.derived as {armor_geometry?: ArmorGeometryView} | undefined)?.armor_geometry : undefined;
+  const shapes = geometry?.regions.filter(g=>g.deck_id===deck?.id) ?? [];
+  const visibleRegions = [...armorFitRegions(below?.regions ?? [], geometry, below?.id), ...armorFitRegions(deck?.regions ?? [],geometry,deck?.id)];
   const [drawing, setDrawing] = useState(false);
+  const [armorMode, setArmorMode] = useState(false);
   const [symmetric, setSymmetric] = useState(true);
   const [editMessage, setEditMessage] = useState("");
   const [symmetryPreview, setSymmetryPreview] = useState<HullRegion | null>(null);
@@ -104,6 +109,9 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
   const currentCamera = useRef(camera); currentCamera.current = camera;
   const region = deck?.regions.find(r => r.id === selected?.region);
   const vertex = selected?.vertex != null ? region?.vertices_m[selected.vertex] : undefined;
+  const selectedEdge = selected?.edge ?? selected?.vertex;
+  const selectedSurface = shapes.find(g=>g.region_id===region?.id)?.edges.find(e=>region && sourceEdgeIndex(region,e)===selectedEdge);
+  const pickCurrent = (p: Point, c: Camera) => armorMode ? pickArmor(deck?.regions ?? [],shapes,p,c) : pick(deck?.regions ?? [],p,c);
 
   useEffect(() => {
     let disposed = false;
@@ -175,6 +183,24 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
       g.fill({ color: 0x88acd9, alpha: 0.12 });
       g.stroke({ color: 0xa4bddd, alpha: 0.5, width: 1.5 });
     }
+    if (!localDraft) for (const shape of shapes) {
+      const r=deck?.regions.find(r=>r.id===shape.region_id);
+      for (const e of shape.edges) {
+        const chosen=r && selected?.region===r.id && sourceEdgeIndex(r,e)===selectedEdge;
+        if (e.projection_m.length) g.poly(e.projection_m.flatMap(([x,y])=>{const p=screen({x,y},camera);return [p.x,p.y];}),true)
+          .fill({color:chosen ? 0xffd58b : 0x809cee,alpha:chosen ? .48 : .25}).stroke({color:0x9fb4ff,width:1});
+        if (chosen && armorMode) {
+          const [a,b]=e.upper_edge_m.map(([x,y])=>screen({x,y},camera));
+          g.moveTo(a.x,a.y).lineTo(b.x,b.y).stroke({color:0xffd58b,width:5});
+        }
+      }
+    }
+    // Raw drafts (including invalid shapes) still allow direct edge selection.
+    if (armorMode && region && selectedEdge != null) {
+      const a=region.vertices_m[selectedEdge], b=region.vertices_m[(selectedEdge+1)%region.vertices_m.length];
+      if (a && b) { const p=screen({x:a[0],y:a[1]},camera),q=screen({x:b[0],y:b[1]},camera);
+        g.moveTo(p.x,p.y).lineTo(q.x,q.y).stroke({color:0xffd58b,width:5}); }
+    }
     for (const r of deck?.regions ?? []) {
       const points = r.vertices_m.map(([x, y], i) => screen(moving?.region === r.id && moving.vertex === i ? moving.point : { x, y }, camera));
       if (points.length < 2) continue;
@@ -182,7 +208,7 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
       g.poly(points.flatMap(p => [p.x, p.y]), true);
       if (session.preview.valid) g.fill({ color: active ? 0x65ccb0 : 0x347c76, alpha: active ? 0.32 : 0.18 });
       g.stroke({ color: moving || !session.preview.valid ? 0xf7ab77 : active ? 0xa6ffe0 : r.id === hover?.region ? 0xe1d29a : 0x60a8a6, width: active ? 2.5 : 1.5 });
-      points.forEach((p, i) => g.circle(p.x, p.y, active && selected?.vertex === i ? 6 : 3).fill(active && selected?.vertex === i ? 0xffd58b : 0x96c9c0));
+      if (!armorMode) points.forEach((p, i) => g.circle(p.x, p.y, active && selected?.vertex === i ? 6 : 3).fill(active && selected?.vertex === i ? 0xffd58b : 0x96c9c0));
     }
     if (showEdgeSpace && edgeSpace) {
       for (const piece of edgeSpace.pieces) {
@@ -204,6 +230,12 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
       for (const slot of compiled?.side_mount_slots ?? []) {
         const a = screen({ x: slot.start_m[0], y: slot.start_m[1] }, camera), b = screen({ x: slot.end_m[0], y: slot.end_m[1] }, camera);
         g.moveTo(a.x, a.y).lineTo(b.x, b.y).stroke({ color: 0xd59cda, alpha: 0.6, width: 3 });
+      }
+      const blockedDecks=(session.preview.model.decks as DeckView[] | undefined)?.filter(d=>d.id===deck?.id || armorMode && d.id===below?.id) ?? [];
+      for (const d of blockedDecks) for (const [x,y] of d.compiled_installation_space.armor_blocked_top_cells ?? []) {
+        const p=screen({x:x*5-2.5,y:y*5+2.5},camera),s=5*camera.scale;
+        g.rect(p.x,p.y,s,s).fill({color:0xf07a69,alpha:.17}).stroke({color:0xf07a69,alpha:.65,width:1});
+        g.moveTo(p.x,p.y).lineTo(p.x+s,p.y+s).stroke({color:0xf07a69,alpha:.4,width:1});
       }
     }
     if (symmetryPreview) {
@@ -228,18 +260,20 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
       g.moveTo(p.x - 7, p.y).lineTo(p.x + 7, p.y).moveTo(p.x, p.y - 7).lineTo(p.x, p.y + 7).stroke({ color: 0xffd58b, width: 1.5 });
     }
     app.render();
-  }, [active, camera, deck, below, selected, hover, cursor, size, ready, session.preview, showSpace, showEdgeSpace, edgeSpace, localDraft, drawing, drawPoints, moving, symmetric, symmetryPreview]);
+  }, [active, camera, deck, below, selected, hover, cursor, size, ready, session.preview, showSpace, showEdgeSpace, edgeSpace, localDraft, drawing, drawPoints, moving, symmetric, symmetryPreview, armorMode]);
 
   function locate(path: string) {
     if (localDraft || locked) return;
-    const match = /decks\[(\d+)\](?:\.regions\[(\d+)\])?(?:\.vertices_m\[(\d+)\])?/.exec(path);
+    const match = /decks\[(\d+)\](?:\.regions\[(\d+)\])?(?:\.(vertices_m|edge_armor)\[(\d+)\])?/.exec(path);
     const target = match ? (session.draft.decks ?? [])[Number(match[1])] : undefined;
     if (!target) return;
     const r = target.regions[Number(match?.[2] ?? 0)];
     requestedFocus.current = target.id !== deck?.id ? r?.id ?? null : null;
     setDeckId(target.id);
     setCamera(fit(r ? [r] : target.regions, size.width, size.height));
-    select(r ? { region: r.id, vertex: match?.[3] ? Number(match[3]) : null } : null);
+    if (match?.[3]==='edge_armor') { setArmorMode(true); setDrawing(false); }
+    select(r ? { region: r.id, vertex: match?.[3]==='vertices_m' ? Number(match[4]) : null,
+      ...(match?.[3]==='edge_armor' ? {edge:Number(match[4])} : {}) } : null);
   }
   function point(event: React.PointerEvent): Point {
     const rect = event.currentTarget.getBoundingClientRect();
@@ -249,8 +283,10 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
   return <div className="hull-workspace">
     <div className="viewport-toolbar hull-toolbox" aria-label="船壳绘制工具"><h3>船壳工具</h3>
       <div className="module-mode" role="group" aria-label="船壳操作模式">
-        <button aria-pressed={drawing} disabled={locked || localDraft || !deck || !armorMaterial} onClick={() => { setDrawing(true); select(null); setEditMessage(""); }}>＋ 绘制区域</button>
-        <button aria-pressed={!drawing} disabled={locked || localDraft} onClick={() => { setDrawing(false); setEditMessage(""); }}>↖ 拖动端点</button>
+        <button aria-pressed={drawing} disabled={locked || localDraft || !deck || !armorMaterial} onClick={() => { setDrawing(true); setArmorMode(false); select(null); setEditMessage(""); }}>＋ 绘制区域</button>
+        <button aria-pressed={!drawing && !armorMode} disabled={locked || localDraft} onClick={() => { setDrawing(false); setArmorMode(false); setEditMessage(""); }}>↖ 拖动端点</button>
+        <button aria-pressed={armorMode} disabled={locked || localDraft} onClick={() => { setDrawing(false); setArmorMode(true); setEditMessage("");
+          const r=region ?? deck?.regions[0]; if(r) select({region:r.id,vertex:null,edge:0}); }}>◈ 装甲设计</button>
       </div>
       <label>当前甲板 <select aria-label="当前甲板" value={deck?.id ?? ""} disabled={localDraft || locked} onChange={e => { setDeckId(e.target.value); select(null); }}>
         {(session.draft.decks ?? []).map(d => <option key={d.id} value={d.id}>{d.id} · 第 {d.level} 层{d.is_base ? " · 基底" : ""}</option>)}
@@ -289,9 +325,9 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
             return;
           }
           e.currentTarget.setPointerCapture(e.pointerId);
-          const target = e.button === 0 ? pick(deck?.regions ?? [], point(e), camera) : null;
+          const target = e.button === 0 ? pickCurrent(point(e), camera) : null;
           drag.current = { point: point(e), camera, moved: false, button: e.button, target };
-          if (target?.vertex != null) select(target);
+          if (target?.vertex != null || target?.edge != null) select(target);
         }}
         onPointerMove={e => {
           const p = point(e), start = drag.current;
@@ -303,7 +339,7 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
               else setCamera({ ...start.camera, x: start.camera.x + dx, y: start.camera.y + dy });
             }
           }
-          setCursor(world(p, currentCamera.current)); setHover(pick(deck?.regions ?? [], p, currentCamera.current));
+          setCursor(world(p, currentCamera.current)); setHover(pickCurrent(p, currentCamera.current));
         }}
         onPointerUp={e => {
           const start = drag.current; drag.current = null;
@@ -313,7 +349,7 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
               setMoving({ region: target.region, vertex: target.vertex!, point: p }); setSubmitting(true);
               deferred.current.schedule(() => { void onCommand("hull.move_vertex", { deck_id: deck.id, region_id: target.region, vertex_index: target.vertex, point_m: [p.x, p.y] })
                 .finally(() => { if (alive.current) { setMoving(null); setSubmitting(false); } }); });
-            } else if (!start.moved && start.button === 0) select(pick(deck?.regions ?? [], point(e), camera));
+            } else if (!start.moved && start.button === 0) select(pickCurrent(point(e), camera));
           }
           if (e.currentTarget.hasPointerCapture(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
         }}
@@ -325,6 +361,7 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
           <span>{camera.scale.toFixed(1)} px/m · 安装格 5 m · 绘图步长 2.5 m{camera.scale * 2.5 < 3 ? "（远景简化）" : ""}</span></div>
         <EditorNotice>{drawing && symmetric && <p className="editor-summary">对称绘制：首点自动落在金色中线 X=0；沿左侧或右侧绘制，再回到中线另一点。紫色为自动镜像，最后点击“生成对称船壳”。</p>}
         {editMessage && <p role="status" className="editor-summary">{editMessage}</p>}
+        {armorMode && <p className="editor-summary">点击边线或蓝色斜面编辑装甲；金色为所选边，红色斜线格为外飘占用的露天空间。拖动平移画布，不会移动端点。</p>}
         <p className="muted viewport-help">滚轮缩放 · 拖动端点修改 · 拖动空白处/中键平移 · 绘图时点击落点、Enter 闭合、Esc 取消</p>
         {localDraft && <p role="status" className="editor-summary">{drawing ? `本地绘图：${drawPoints.length} 个点，闭合后提交` : symmetryPreview ? "对称替换预览，应用后提交" : "本地拖动草稿，松开后检查并提交"}。尚未持久保存；安装空间待提交后更新。</p>}
         {!session.preview.valid && <p className="editor-error">正在显示当前非法草稿轮廓；权威派生结果暂不可用。</p>}
@@ -336,9 +373,13 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
         {region ? <><strong>{region.id}</strong><p>{region.vertices_m.length} 个端点</p>
           {vertex && <p>端点 {(selected?.vertex ?? 0) + 1}<br />X {vertex[0]} m · Y {vertex[1]} m</p>}</> : <p className="muted">在画布中选择区域或端点，也可使用下方列表。</p>}
         <div className="region-list">{deck?.regions.map(r => <button className="secondary" key={r.id} aria-pressed={selected?.region === r.id}
-          disabled={localDraft || locked} onClick={() => select({ region: r.id, vertex: null })}>{r.id}</button>)}</div>
-        <HullInspector deck={deck} region={region} selection={selected} materials={materials} busy={locked || moving !== null || symmetryPreview !== null}
-          drawing={drawing} onCommand={onCommand} onPoint={appendPoint} onSymmetry={previewSymmetry} />
+          disabled={localDraft || locked} onClick={() => select({ region: r.id, vertex: null, ...(armorMode ? {edge:0} : {}) })}>{r.id}</button>)}</div>
+        {armorMode && region && <label>选择装甲边<select aria-label="选择装甲边" disabled={locked} value={selectedEdge ?? 0} onChange={e=>select({region:region.id,vertex:null,edge:Number(e.target.value)})}>
+          {region.vertices_m.map((_,i)=><option key={i} value={i}>边 {i+1} · {Math.round(region.edge_armor[i].thickness_m*1000)}毫米 · {region.edge_armor[i].flare_angle_deg ?? 0}°</option>)}
+        </select></label>}
+        {armorMode && selectedSurface && <p>实际板面积 {selectedSurface.area_m2.toFixed(2)} m²（包含归属本边的封口）</p>}
+        <HullInspector deck={deck} decks={session.draft.decks ?? []} region={region} selection={selected} materials={materials} busy={locked || moving !== null || symmetryPreview !== null}
+          drawing={drawing} armorMode={armorMode} onCommand={onCommand} onPoint={appendPoint} onSymmetry={previewSymmetry} />
         <HullDerived session={session} deckId={deck?.id} localDraft={localDraft} />
         <section aria-label="边缘填充空间"><h3>边缘填充空间</h3>
           {edgeSpace ? <>
@@ -360,16 +401,17 @@ export function HullViewport({ session, busy, materials, onCommand, onLocalDraft
   </div>;
 }
 
-interface DeckView { id: string; compiled_installation_space: { internal_cells: [number,number][]; exposed_top_cells: [number,number][]; side_mount_slots: { start_m: [number,number]; end_m: [number,number] }[] } }
+interface DeckView { id: string; compiled_installation_space: { internal_cells: [number,number][]; exposed_top_cells: [number,number][]; armor_blocked_top_cells?: [number,number][]; side_mount_slots: { start_m: [number,number]; end_m: [number,number] }[] } }
 function HullDerived({ session, deckId, localDraft }: { session: SessionSnapshot; deckId: string | undefined; localDraft: boolean }) {
   const preview = session.preview.valid ? session.preview : session.last_valid_preview;
   const model = preview?.model;
   const compiled = (model?.decks as DeckView[] | undefined)?.find(d => d.id === deckId)?.compiled_installation_space;
-  const derived = model?.derived as { hull_mass_kg?: number; hull_inertia_kg_m2?: number; geometry?: { length_m: number; beam_m: number } } | undefined;
+  const derived = model?.derived as { hull_mass_kg?: number; hull_inertia_kg_m2?: number; geometry?: { length_m: number; beam_m: number }; armor_geometry?: {has_flare: boolean; bounds_min_m: number[]; bounds_max_m: number[]} } | undefined;
   return <section aria-label="船壳派生性能"><h3>安装空间与派生</h3>
     <p className="muted">{localDraft || !session.preview.valid ? `最近合法结果 · 修订 ${session.last_valid_revision ?? "无"}` : `当前权威结果 · 修订 ${session.revision}`}</p>
-    {compiled ? <p>内部格 {compiled.internal_cells.length} · 露天格 {compiled.exposed_top_cells.length} · 侧挂槽 {compiled.side_mount_slots.length}</p> : <p>当前甲板暂无合法安装空间结果。</p>}
-    {derived && <><p>船壳质量 {((derived.hull_mass_kg ?? 0) / 1000).toFixed(2)} t</p><p>长 {derived.geometry?.length_m} m · 宽 {derived.geometry?.beam_m} m</p>
+    {compiled ? <p>内部格 {compiled.internal_cells.length} · 露天格 {compiled.exposed_top_cells.length} · 侧挂槽 {compiled.side_mount_slots.length}{compiled.armor_blocked_top_cells?.length ? ` · 外飘禁装 ${compiled.armor_blocked_top_cells.length} 格` : ''}</p> : <p>当前甲板暂无合法安装空间结果。</p>}
+    {derived && <><p>船壳质量 {((derived.hull_mass_kg ?? 0) / 1000).toFixed(2)} t</p><p>结构长 {derived.geometry?.length_m} m · 宽 {derived.geometry?.beam_m} m</p>
+      {derived.armor_geometry?.has_flare && <p>含装甲外形长 {(derived.armor_geometry.bounds_max_m[1]-derived.armor_geometry.bounds_min_m[1]).toFixed(2)} m · 宽 {(derived.armor_geometry.bounds_max_m[0]-derived.armor_geometry.bounds_min_m[0]).toFixed(2)} m</p>}
       <p>惯量 {derived.hull_inertia_kg_m2?.toLocaleString()} kg·m²</p></>}
   </section>;
 }

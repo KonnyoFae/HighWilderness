@@ -3,9 +3,11 @@ from copy import deepcopy
 from math import isfinite
 
 from 高天荒野舰艇数据契约 import (
-    ContractError, HullBlueprintInput, HullRegionInput, DeckInput, ResourceReference,
+    ContractError, HullBlueprintInput, HullRegionInput, DeckInput, EdgeArmorInput, ResourceReference,
 )
 from 高天荒野舰艇边缘填充 import HULL_FILLING_SCHEMA, NONE, configuration
+from 高天荒野舰艇结构厚度 import HULL_STRUCTURE_SCHEMA, DEFAULT_THICKNESS_M, validate_thickness, validate_deck_thicknesses
+from 高天荒野舰艇装甲外飘 import HULL_ARMOR_SCHEMA, upgrade_armor_source
 
 HULL_EDIT_COMMAND_INTERFACE_ID = "gaotian.hull-edit-commands/v1alpha1"
 
@@ -64,28 +66,38 @@ def validate_hull_draft(source):
     if not isinstance(source, dict) or not isinstance(source.get('decks'), list):
         fail('invalid_draft', '$.decks', '草稿必须含甲板列表')
     header = deepcopy(source)
-    with_filling = source.get('schema') == HULL_FILLING_SCHEMA
+    with_flare = source.get('schema') == HULL_ARMOR_SCHEMA
+    with_thickness = source.get('schema') in (HULL_STRUCTURE_SCHEMA, HULL_ARMOR_SCHEMA)
+    with_filling = source.get('schema') in (HULL_FILLING_SCHEMA, HULL_STRUCTURE_SCHEMA, HULL_ARMOR_SCHEMA)
     header['decks'] = [deepcopy(_WITNESS_DECK)]
     if with_filling:
         header['decks'][0]['filling'] = dict(id=NONE, version=1)
+    if with_thickness:
+        header['decks'][0]['structure_thickness_m'] = DEFAULT_THICKNESS_M
+    if with_flare:
+        for a in header['decks'][0]['regions'][0]['edge_armor']: a['flare_angle_deg'] = 0
     HullBlueprintInput.parse(header)
     if len(source['decks']) > MAX_DECKS:
         fail('draft_limit', '$.decks', '甲板超过 64 层')
-    ids, levels = set(), set()
+    ids, levels, parsed_decks = set(), set(), []
     for di, deck in enumerate(source['decks']):
         path = f'$.decks[{di}]'
-        exact(deck, {'id', 'level', 'is_base', 'structure_material', 'regions'} | ({'filling'} if with_filling else set()), path)
+        exact(deck, {'id', 'level', 'is_base', 'structure_material', 'regions'}
+              | ({'filling'} if with_filling else set()) | ({'structure_thickness_m'} if with_thickness else set()), path)
         if not isinstance(deck['regions'], list) or len(deck['regions']) > MAX_REGIONS:
             fail('draft_limit', path + '.regions', '区域必须为不超过 256 项的列表')
         probe = deepcopy(deck); probe['regions'] = [_WITNESS_REGION]
-        DeckInput.parse(probe, path, with_filling=with_filling)
+        probe['regions'] = deepcopy(probe['regions'])
+        if with_flare:
+            for a in probe['regions'][0]['edge_armor']: a['flare_angle_deg'] = 0
+        parsed_decks.append(DeckInput.parse(probe, path, with_filling=with_filling, with_thickness=with_thickness, with_flare=with_flare))
         if deck['id'] in ids or deck['level'] in levels:
             fail('duplicate_deck', path, '甲板标识及层级必须唯一')
         ids.add(deck['id']); levels.add(deck['level'])
         region_ids = set()
         for ri, region in enumerate(deck['regions']):
             rpath = f'{path}.regions[{ri}]'
-            HullRegionInput.parse(region, rpath)
+            HullRegionInput.parse(region, rpath, with_flare=with_flare)
             if len(region['vertices_m']) > MAX_VERTICES:
                 fail('draft_limit', rpath, '区域端点超过 4096 个')
             for p in region['vertices_m']:
@@ -93,6 +105,7 @@ def validate_hull_draft(source):
             if region['id'] in region_ids:
                 fail('duplicate_region', rpath, '区域标识必须唯一')
             region_ids.add(region['id'])
+    validate_deck_thicknesses(parsed_decks, schema=source['schema'])
 
 
 def blank_hull(resource_id, name):
@@ -139,6 +152,10 @@ def _apply(source, command, args):
         'hull.set_edge_armor': {'deck_id', 'region_id', 'edge_index', 'material', 'thickness_m'},
         'hull.set_structure_material': {'deck_id', 'material'}, 'hull.rename': {'name'},
         'hull.set_filling': {'deck_id', 'configuration'},
+        'hull.set_structure_thickness': {'deck_id', 'thickness_m'},
+        'hull.set_all_structure_thickness': {'thickness_m'},
+        'hull.set_edge_armor_profile': {'deck_id', 'region_id', 'edge_index', 'material', 'thickness_m', 'flare_angle_deg'},
+        'hull.set_deck_armor_profile': {'deck_id', 'material', 'thickness_m', 'flare_angle_deg'},
     }
     if command not in fields:
         fail('command_not_supported', '$.command', '未知船壳命令')
@@ -147,14 +164,38 @@ def _apply(source, command, args):
         source['name'] = args['name']; return
     if command == 'hull.add_deck':
         deck_id = identity(args['deck_id']); integer(args['level'], '$.arguments.level')
+        base = next((d for d in source['decks'] if d['is_base']), None)
         source['decks'].append({'id': deck_id, 'level': args['level'], 'is_base': not source['decks'],
             'structure_material': deepcopy(args['material']), 'regions': [],
-            **({'filling': dict(id=NONE, version=1)} if source['schema'] == HULL_FILLING_SCHEMA else {})})
+            **({'filling': dict(id=NONE, version=1)} if source['schema'] in (HULL_FILLING_SCHEMA, HULL_STRUCTURE_SCHEMA, HULL_ARMOR_SCHEMA) else {}),
+            **({'structure_thickness_m': base['structure_thickness_m'] if base else DEFAULT_THICKNESS_M}
+               if source['schema'] in (HULL_STRUCTURE_SCHEMA, HULL_ARMOR_SCHEMA) else {})})
+        return
+    if command in ('hull.set_structure_thickness', 'hull.set_all_structure_thickness'):
+        value = validate_thickness(args['thickness_m'], '$.arguments.thickness_m')
+        selected = find(source['decks'], args['deck_id']) if command == 'hull.set_structure_thickness' else None
+        if not source['decks']:
+            fail('item_missing', '$.decks', '请先添加甲板')
+        if source['schema'] != HULL_ARMOR_SCHEMA:
+            source['schema'] = HULL_STRUCTURE_SCHEMA
+        for row in source['decks']:
+            row.setdefault('filling', dict(id=NONE, version=1))
+            row.setdefault('structure_thickness_m', DEFAULT_THICKNESS_M)
+            if selected is None or row is selected:
+                row['structure_thickness_m'] = value
         return
     deck = find(source['decks'], args['deck_id'])
+    if command == 'hull.set_deck_armor_profile':
+        armor = {k: deepcopy(args[k]) for k in ('material', 'thickness_m', 'flare_angle_deg')}
+        EdgeArmorInput.parse(armor, '$.arguments', with_flare=True)
+        upgrade_armor_source(source)
+        for r in deck['regions']:
+            r['edge_armor'] = [deepcopy(armor) for _ in r['vertices_m']]
+        return
     if command == 'hull.set_filling':
         configuration(args['configuration'])
-        source['schema'] = HULL_FILLING_SCHEMA
+        if source['schema'] not in (HULL_STRUCTURE_SCHEMA, HULL_ARMOR_SCHEMA):
+            source['schema'] = HULL_FILLING_SCHEMA
         for row in source['decks']:
             row.setdefault('filling', dict(id=NONE, version=1))
         deck['filling'] = deepcopy(args['configuration'])
@@ -167,14 +208,17 @@ def _apply(source, command, args):
     if command == 'hull.set_structure_material':
         deck['structure_material'] = deepcopy(args['material']); return
     if command in ('hull.add_region', 'hull.replace_region'):
-        HullRegionInput.parse(args['region'], '$.arguments.region')
+        candidate = deepcopy(args['region'])
+        if command == 'hull.add_region' and source['schema'] == HULL_ARMOR_SCHEMA:
+            for a in candidate.get('edge_armor', []): a.setdefault('flare_angle_deg', 0)
+        HullRegionInput.parse(candidate, '$.arguments.region', with_flare=source['schema'] == HULL_ARMOR_SCHEMA)
         for p in args['region']['vertices_m']:
             point(p, require_grid=True)
         if command == 'hull.replace_region':
             original = find(deck['regions'], args['region']['id'])
-            deck['regions'][deck['regions'].index(original)] = deepcopy(args['region'])
+            deck['regions'][deck['regions'].index(original)] = candidate
         else:
-            deck['regions'].append(deepcopy(args['region']))
+            deck['regions'].append(candidate)
         return
     if command == 'hull.mirror_region':
         original = find(deck['regions'], args['source_region_id'])
@@ -194,6 +238,20 @@ def _apply(source, command, args):
     index = integer(args[key], '$.arguments.' + key)
     if index >= len(region['vertices_m']):
         fail('index_missing', '$.arguments.' + key, '端点或边不存在')
+    if command == 'hull.set_edge_armor_profile':
+        armor = {k: deepcopy(args[k]) for k in ('material', 'thickness_m', 'flare_angle_deg')}
+        EdgeArmorInput.parse(armor, '$.arguments', with_flare=True)
+        upgrade_armor_source(source)
+        a, b = region['vertices_m'][index], region['vertices_m'][(index+1)%len(region['vertices_m'])]
+        key = tuple(sorted((tuple(a), tuple(b))))
+        mirror = tuple(sorted(((-a[0], a[1]), (-b[0], b[1]))))
+        # One operation updates both original edge identities, including when
+        # the counterpart belongs to a separate region on this same deck.
+        for r in deck['regions']:
+            for j, (c, d) in enumerate(zip(r['vertices_m'], r['vertices_m'][1:]+r['vertices_m'][:1])):
+                if tuple(sorted((tuple(c), tuple(d)))) in (key, mirror):
+                    r['edge_armor'][j] = deepcopy(armor)
+        return
     if command == 'hull.move_vertex':
         region['vertices_m'][index] = point(args['point_m'], require_grid=True)
     elif command == 'hull.insert_vertex':
@@ -206,4 +264,4 @@ def _apply(source, command, args):
         region['edge_armor'][(index - 1) % len(region['vertices_m'])] = deepcopy(args['merged_armor'])
         region['vertices_m'].pop(index); region['edge_armor'].pop(index)
     elif command == 'hull.set_edge_armor':
-        region['edge_armor'][index] = {'material': deepcopy(args['material']), 'thickness_m': args['thickness_m']}
+        region['edge_armor'][index] = {**region['edge_armor'][index], 'material': deepcopy(args['material']), 'thickness_m': args['thickness_m']}

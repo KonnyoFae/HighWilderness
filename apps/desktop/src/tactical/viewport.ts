@@ -28,7 +28,7 @@ export function moduleFootprints(module: ModuleGeometry): Footprint[] {
 }
 export function shipPoints(ship: ShipGeometry): Point[] {
   return [
-    ...ship.decks.flatMap(d => d.regions.flatMap(r => r.vertices_m.map(([x, y]) => ({ x, y })))),
+    ...ship.decks.flatMap(d => d.regions.flatMap(r => (r.armor_outline_m ?? r.vertices_m).map(([x, y]) => ({ x, y })))),
     ...ship.modules.flatMap(m => moduleFootprints(m).flatMap(p => [
       { x: p.x - p.size / 2, y: p.y - p.size / 2 }, { x: p.x + p.size / 2, y: p.y + p.size / 2 },
     ])),
@@ -63,7 +63,7 @@ export function pickShip(view: TacticalView, point: Point, camera: Camera): stri
     const pose = view.snapshot.ships.find(s => s.id === ship.id);
     if (!pose) continue;
     const local = worldToBody(p, pose);
-    if (ship.decks.some(d => d.regions.some(r => contains(r.vertices_m, local))) ||
+    if (ship.decks.some(d => d.regions.some(r => contains(r.armor_outline_m ?? r.vertices_m, local))) ||
       ship.modules.some(m => moduleFootprints(m).some(f => Math.abs(local.x - f.x) <= f.size / 2 && Math.abs(local.y - f.y) <= f.size / 2))) return ship.id;
     // Small ships remain selectable when zoomed out; the list is a second accessible path.
     const center = screen({ x: pose.position_m[0], y: pose.position_m[1] }, camera);

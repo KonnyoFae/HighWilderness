@@ -102,7 +102,7 @@ def run(fixture,index,case,variant,steps,*,runtime='f2',prediction='current'):
         meter(ballistics,'time_to_distance','inverse_seconds','inverse_calls')
         meter(battle.point_defense,'observe','defense_seconds')
         control = directional_control((ChannelPropulsionCommand('translation.forward','full',None),)) if case['accelerate'] else directional_control()
-        durations=[]; components=[]; publications=[]; reads=[]; trace=[]; hits=0; requests=0; peak=0
+        durations=[]; components=[]; publications=[]; reads=[]; trace=[]; hits=0; requests=0; peak=0;peak_bytes=0
         work_totals={};work_max={};shot_events={};prediction_totals={};prediction_max={};threat_trace=[]
         for n in range(steps):
             before=dict(costs); start=perf_counter()
@@ -124,13 +124,14 @@ def run(fixture,index,case,variant,steps,*,runtime='f2',prediction='current'):
             trace.append([(s.target,s.status,s.shots,s.quality,s.angle) for s in battle.states])
             if n%4==0:
                 start=perf_counter();service.publish();publications.append(perf_counter()-start)
-                start=perf_counter();service.read(service.digest);reads.append(perf_counter()-start)
+                start=perf_counter();packet=service.read(service.digest);reads.append(perf_counter()-start)
+                peak_bytes=max(peak_bytes,len(json.dumps(packet,ensure_ascii=False).encode('utf-8')))
             if battle.ending:break
         # Timings use all steps and a separately reported warmed tail; no dropped
         # physical steps and no altered debt threshold. This is not a realtime run.
         return dict(case=case,variant=variant,steps=len(durations),guns=len(battle.guns),
             guns_per_ship=[sum(g.ship_index==i for g in battle.guns) for i in range(len(battle.session.world.ships))],
-            shots=sum(s.shots for s in battle.states),peak_projectiles=peak,
+            shots=sum(s.shots for s in battle.states),peak_projectiles=peak,peak_response_bytes=peak_bytes,
             step=stats(durations),warm_step=stats(durations[30:]),
             aim=stats([v['solution_seconds'] for v in components]),
             inverse=stats([v['inverse_seconds'] for v in components]),

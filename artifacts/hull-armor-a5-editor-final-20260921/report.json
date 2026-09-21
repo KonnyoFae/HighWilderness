@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "checks": [
+    "A5 joint design edits base 50 mm / upper 30 mm before adding sloped armor",
+    "direct canvas edge pick; explicit v4 migration; mirrored edge update and authoritative blocked lower cells",
+    "A4 compiled shape values are exposed by the collapsible shape and detection panel",
+    "armor-mode drag only pans; zero thickness disables flare; bulk edit, support diagnostic and undo/redo",
+    "save and reopen preserve all edge profiles and compiled surfaces",
+    "thin structure and sloped armor persist together; one tank already provides lift, second adds reserve; CIC and tanks save and reopen"
+  ],
+  "finalMass": 3000561.1171703036,
+  "scope": "real browser React + Python backend; native dialog mocked"
+}

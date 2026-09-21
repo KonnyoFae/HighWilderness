@@ -1,5 +1,6 @@
 import type { HullDeck, ModuleOption, OutfitInstance } from "./model";
 import type { Point } from "./viewport";
+import type { ArmorGeometryView } from './armorView';
 
 export type Cell = [number, number, number];
 export interface SideSlot { deck_id: string; region_id: string; edge_index: number; slot_index: number; start_m: [number, number]; end_m: [number, number] }
@@ -7,7 +8,8 @@ export interface LayoutModule { id: string; base_deck_level: number; anchor_m: [
   placement_kind: string; host_instance_id: string | null; internal_cells: Cell[]; top_cells: Cell[];
   body_spatial_keys: Cell[]; clearance_spatial_keys: Cell[]; side_slots: Omit<SideSlot, "start_m" | "end_m">[] }
 export interface OutfitLayout { interface: "gaotian.outfit-layout/v1alpha1"; hull: { decks: HullDeck[] };
-  decks: { id: string; level: number; internal_cells: number[][]; exposed_top_cells: number[][]; side_mount_slots: SideSlot[] }[];
+  armor_geometry?: ArmorGeometryView;
+  decks: { id: string; level: number; internal_cells: number[][]; exposed_top_cells: number[][]; armor_blocked_top_cells?: [number,number][]; side_mount_slots: SideSlot[] }[];
   modules: LayoutModule[]; errors: { instance_id: string; message: string; path: string }[];
   conflicts: { layer: string; key: (number | string)[]; instance_ids: string[] }[] }
 export function visibleAtLevel(v: LayoutModule, level: number) {

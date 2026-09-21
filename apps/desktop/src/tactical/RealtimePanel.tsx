@@ -2,6 +2,7 @@ import {FleetOrders} from './FleetOrders';
 import type {NavigationIntent} from './FleetOrders';
 import { useEffect, useMemo, useRef, useState } from "react";
 import { observedBattleView } from './observedView';
+import { ProjectileStreamCache, PROJECTILE_STREAM } from './projectileStream';
 import { shipIcon } from '../editor/shipIcons';
 import type { BridgeTransport } from "../bridge/transport";
 import { normalizeHostFailure } from "../bridge/model";
@@ -58,6 +59,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   const latest = useRef<{ state: RealtimeEnvelope | null; view: TacticalView | null }>({ state: null, view: null });
   const pending = useRef<Promise<unknown> | null>(null), acting = useRef(false), mounted = useRef(true);
   const ack = useRef({ inputs: [] as number[], event: 0 });
+  const projectileStream = useRef(new ProjectileStreamCache());
   const unknown = useRef<number | null>(null);
   const [groupId, setGroupId] = useState<string | null>(null);
   const groupRef = useRef(groupId); groupRef.current = groupId;
@@ -160,7 +162,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   }
   function accept(next: RealtimeEnvelope) {
     if (!mounted.current) return;
-    const accepted = acceptRealtime(latest.current.state, latest.current.view, next, instance);
+    const accepted = projectileStream.current.apply(acceptRealtime(latest.current.state, latest.current.view, next, instance));
     if(!latest.current.state)setSelected(next.direct_ship_id);
     latest.current = { state: next, view: accepted }; setState(next); setView(accepted);
     ack.current = { inputs: next.receipts.filter(r => r.status !== "accepted").map(r => r.sequence),
@@ -200,7 +202,8 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     const current = latest.current;
     if (!current.state) return;
     accept(await call<RealtimeEnvelope>("tactical.realtime.read", { scene_id: current.state.status.epoch,
-      known_static_sha256: current.view?.snapshot.static_sha256 ?? null, ack_inputs: ack.current.inputs, ack_events: ack.current.event }));
+      known_static_sha256: current.view?.snapshot.static_sha256 ?? null, ack_inputs: ack.current.inputs, ack_events: ack.current.event,
+      display:{interface:PROJECTILE_STREAM,after_sequence:projectileStream.current.cursor()} }));
   }
   useEffect(() => {
     if (!active) return;

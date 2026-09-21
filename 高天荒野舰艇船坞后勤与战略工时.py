@@ -17,11 +17,8 @@ from 高天荒野舰艇数据契约 import (
     ShipInstanceSnapshotInput,
     canonical_sha256,
 )
-from 高天荒野舰艇无界面船壳编译器 import (
-    DECK_EQUIVALENT_THICKNESS_M,
-    JOINT_EQUIVALENT_THICKNESS_M,
-    polygon_area,
-)
+from 高天荒野舰艇无界面船壳编译器 import polygon_area
+from 高天荒野舰艇结构厚度 import effective_thickness_m
 from 高天荒野舰艇无界面舾装编译器 import DerivedShipSnapshot
 from 高天荒野舰艇运行时参数编译器 import initialize_ship_instance_snapshot
 from 高天荒野舰艇实例设计状态 import (
@@ -950,13 +947,12 @@ def _hull_material_bill(
 ) -> tuple[dict[ResourceReference, int], float]:
     masses: dict[ResourceReference, float] = {}
     work_units = 0.0
+    surfaces = {(r.deck_id, r.region_id, e.edge_index): e for r in snapshot.hull.armor_geometry.regions for e in r.edges} if snapshot.hull.armor_geometry else {}
     for deck_index, deck in enumerate(snapshot.hull.normalized_blueprint.decks):
         structure = registry.structure(
             deck.structure_material, f"$.decks[{deck_index}].structure_material"
         )
-        thickness = DECK_EQUIVALENT_THICKNESS_M + (
-            JOINT_EQUIVALENT_THICKNESS_M if deck.level > 0 else 0.0
-        )
+        thickness = effective_thickness_m(deck)
         structure_mass = sum(
             polygon_area(region.vertices_m) * thickness * structure.density_kg_m3
             for region in deck.regions
@@ -981,6 +977,8 @@ def _hull_material_bill(
                     * edge_input.thickness_m
                     * armor.density_kg_m3
                 )
+                if edge_input.flare_angle_deg:
+                    edge_mass = surfaces[(deck.id, region.id, edge_index)].area_m2 * edge_input.thickness_m * armor.density_kg_m3
                 masses[armor.reference] = masses.get(armor.reference, 0.0) + edge_mass
                 work_units += edge_mass * armor.work_difficulty
     return (

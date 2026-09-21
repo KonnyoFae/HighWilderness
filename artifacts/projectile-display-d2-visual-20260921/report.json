@@ -1,0 +1,438 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "layer": "upper",
+      "dpr": 1,
+      "zoom": 0,
+      "camera": {
+        "x": 600,
+        "y": 270,
+        "scale": 1
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        },
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        }
+      ]
+    },
+    {
+      "layer": "upper",
+      "dpr": 1,
+      "zoom": 1,
+      "camera": {
+        "scale": 1.5,
+        "x": 600,
+        "y": 270
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        },
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        }
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 1,
+      "zoom": 0,
+      "camera": {
+        "scale": 1,
+        "x": 600,
+        "y": 270
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        },
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        }
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 1,
+      "zoom": 1,
+      "camera": {
+        "scale": 1.5,
+        "x": 600,
+        "y": 270
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        },
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        }
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 1,
+      "zoom": 0,
+      "camera": {
+        "scale": 1,
+        "x": 600,
+        "y": 270
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        },
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        }
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 1,
+      "zoom": 1,
+      "camera": {
+        "scale": 1.5,
+        "x": 600,
+        "y": 270
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        },
+        {
+          "size": 1,
+          "physicalPixels": 1,
+          "width": 1,
+          "height": 1
+        },
+        {
+          "size": 3,
+          "physicalPixels": 8,
+          "width": 3,
+          "height": 3
+        }
+      ]
+    },
+    {
+      "layer": "upper",
+      "dpr": 2,
+      "zoom": 0,
+      "camera": {
+        "x": 600,
+        "y": 270,
+        "scale": 1
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        }
+      ]
+    },
+    {
+      "layer": "upper",
+      "dpr": 2,
+      "zoom": 1,
+      "camera": {
+        "scale": 1.5,
+        "x": 600,
+        "y": 270
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        }
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 2,
+      "zoom": 0,
+      "camera": {
+        "scale": 1,
+        "x": 600,
+        "y": 270
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        }
+      ]
+    },
+    {
+      "layer": "cloud",
+      "dpr": 2,
+      "zoom": 1,
+      "camera": {
+        "scale": 1.5,
+        "x": 600,
+        "y": 270
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        }
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 2,
+      "zoom": 0,
+      "camera": {
+        "scale": 1,
+        "x": 600,
+        "y": 270
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        }
+      ]
+    },
+    {
+      "layer": "rain",
+      "dpr": 2,
+      "zoom": 1,
+      "camera": {
+        "scale": 1.5,
+        "x": 600,
+        "y": 270
+      },
+      "markers": [
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        },
+        {
+          "size": 1,
+          "physicalPixels": 4,
+          "width": 2,
+          "height": 2
+        },
+        {
+          "size": 3,
+          "physicalPixels": 32,
+          "width": 6,
+          "height": 6
+        }
+      ]
+    }
+  ],
+  "scope": "Production TacticalViewport with D2 local trails; three weather layers, two zoom levels and DPR 1/2. 1px dots and hollow 3x3 frames checked from rendered screenshot pixels."
+}

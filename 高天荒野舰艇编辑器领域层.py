@@ -7,6 +7,8 @@
 
 from __future__ import annotations
 
+from 高天荒野舰艇外形方向缓存 import shape_effect_view
+
 from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path
@@ -27,6 +29,16 @@ from 高天荒野舰艇数据契约 import (
 )
 from 高天荒野舰艇无界面船壳编译器 import CompiledHull, compile_hull
 from 高天荒野舰艇无界面舾装编译器 import CompiledOutfit, compile_outfit
+from 高天荒野舰艇结构厚度 import thickness_m
+
+
+def hull_configuration_view(hull: CompiledHull) -> dict[str, Any]:
+    """Expose authoritative weights and installation tradeoffs, not new formulas."""
+    return dict(structure_mass_kg=hull.structure_mass_kg, armor_mass_kg=hull.base_armor_mass_kg,
+        decks=[dict(id=d.id,level=d.level,is_base=d.is_base,thickness_mm=thickness_m(d)*1000)
+               for d in hull.normalized_blueprint.decks],
+        flared_edges=sum(bool(e.flare_angle_deg) for d in hull.normalized_blueprint.decks for r in d.regions for e in r.edge_armor),
+        blocked_exposed_cells=sum(len(d.armor_blocked_top_cells or ()) for d in hull.decks))
 
 
 SHIP_EDITOR_DOMAIN_INTERFACE_ID = "gaotian.ship-editor-domain/v1alpha1"
@@ -249,8 +261,8 @@ class HullEditorDocument:
     def parse(self) -> HullBlueprintInput:
         return HullBlueprintInput.parse(self._source)
 
-    def compile(self) -> CompiledHull:
-        return compile_hull(self.parse(), self._material_registry)
+    def compile(self, *, armor_shape_effects: bool = True) -> CompiledHull:
+        return compile_hull(self.parse(), self._material_registry, armor_shape_effects=armor_shape_effects)
 
     def validate(self) -> tuple[EditorDiagnostic, ...]:
         diagnostics = list(_preflight_hull(self._source))
@@ -345,6 +357,7 @@ class HullEditorDocument:
         if edge_index < 0 or edge_index >= len(region["edge_armor"]):
             raise ContractError("editor.edge_missing", "$.edge_index", str(edge_index))
         region["edge_armor"][edge_index] = {
+            **region["edge_armor"][edge_index],
             "material": (
                 material.to_dict()
                 if isinstance(material, ResourceReference)
@@ -384,6 +397,7 @@ class HullEditorDocument:
                     "level": deck["level"],
                     "regions": deepcopy(deck["regions"]),
                     "structure_material": deepcopy(deck["structure_material"]),
+                    **({"structure_thickness_m": deck["structure_thickness_m"]} if 'structure_thickness_m' in deck else {}),
                 }
             )
         if include_edge_space:
@@ -401,10 +415,14 @@ class HullEditorDocument:
                 "canonical_resource": normalized,
                 "decks": deck_views,
                 "derived": compiled.to_dict(),
+                "shape_effects": shape_effect_view(compiled),
+                "hull_configuration": hull_configuration_view(compiled),
                 "source_sha256": compiled.source_sha256,
                 "view_interface": view_interface,
             },
-            (),
+            ((EditorDiagnostic('warning', 'hull_compiler', 'hull.armor_shape_balance', '$.decks',
+                '外飘装甲已接通防护、气动与雷达外形；效果随朝向变化，数值仍待平衡。'),)
+             if compiled.armor_geometry is not None and compiled.armor_geometry.has_flare else ()),
         )
 
     def canonical_text(self) -> str:
@@ -1029,12 +1047,17 @@ class OutfitEditorDocument:
             EditorDiagnostic("warning", "outfit_compiler", item.code, item.path, item.message)
             for item in compiled.warnings
         )
+        if self._hull.armor_geometry is not None and self._hull.armor_geometry.has_flare:
+            diagnostics += (EditorDiagnostic('warning', 'outfit_compiler', 'hull.armor_shape_balance', '$.hull_blueprint',
+                '外飘装甲已接通防护、气动与雷达外形；外部设备仍增加雷达反射，红外探测规则不变。'),)
         return EditorPreview(
             "OutfitPlan",
             True,
             {
                 "canonical_resource": compiled.normalized_plan.to_dict(),
                 "derived": compiled.to_dict(),
+                "shape_effects": shape_effect_view(self._hull,compiled.coating_rcs_multiplier,compiled.known_external_rcs_m2),
+                "hull_configuration": hull_configuration_view(self._hull),
                 "hull_source_sha256": compiled.hull_source_sha256,
                 "modules": module_views,
                 "occupancy": occupancy,

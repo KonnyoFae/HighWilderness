@@ -59,6 +59,16 @@ def render_static(scenario):
         snapshot = binding.snapshot
         decks = [dict(id=d.id, level=d.level, regions=[dict(id=r.id, vertices_m=[list(p) for p in r.vertices_m])
                                                        for r in d.regions]) for d in snapshot.hull.normalized_blueprint.decks]
+        if snapshot.hull.armor_geometry and snapshot.hull.armor_geometry.has_flare:
+            shapes = {(r.deck_id, r.region_id): r for r in snapshot.hull.armor_geometry.regions}
+            for deck in decks:
+                for region in deck['regions']:
+                    shape = shapes[(deck['id'], region['id'])]
+                    if not any(e.flare_angle_deg for e in shape.edges):
+                        continue
+                    region.update(armor_outline_m=[list(p) for p in shape.outer_outline_m],
+                        armor_faces=[dict(edge_index=e.edge_index, flare_angle_deg=e.flare_angle_deg,
+                            projection_m=[list(p) for p in e.projection_m]) for e in shape.edges if e.flare_angle_deg])
         modules = [dict(id=m.id, name=m.prototype.name, category=m.prototype.category,
                         **(dict(equipment_kind='countermeasure') if m.prototype.capability.to_dict().get('weapon_class')=='active_defense' else {}),
                         **(dict(equipment_kind='missile_launcher' if m.prototype.category=='weapon' else 'missile_magazine') if any(k.startswith('gtw.missile.5c.') for k in m.prototype.capability.to_dict().get('compatible_munition_ids',())) else {}),

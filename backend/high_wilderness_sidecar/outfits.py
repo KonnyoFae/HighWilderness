@@ -32,7 +32,7 @@ def validate_draft(source):
     return OutfitPlanInput.parse(source)
 
 
-def document(source, index, hull_source=None):
+def document(source, index, hull_source=None, *, armor_shape_effects=True):
     plan = validate_draft(source)
     hulls = [hull_source] if hull_source is not None else [s for d, s in index.resources.values() if d["kind"] == "HullBlueprint"
              and d["id"] == plan.hull_blueprint.id and d["version"] == plan.hull_blueprint.version]
@@ -41,7 +41,7 @@ def document(source, index, hull_source=None):
     coatings = [HullCoatingCatalog.parse(s) for d, s in index.resources.values() if d["kind"] == "HullCoatingCatalog"]
     if len(coatings) != 1:
         raise ContractError("editor.outfit_coating_missing", "$.hull_coating", "涂料目录必须唯一")
-    return OutfitEditorDocument(source, HullEditorDocument(hulls[0], index.registry).compile(), module_catalog(index), coatings[0],
+    return OutfitEditorDocument(source, HullEditorDocument(hulls[0], index.registry).compile(armor_shape_effects=armor_shape_effects), module_catalog(index), coatings[0],
                                 launcher_kinds=index.launcher_kinds)
 
 

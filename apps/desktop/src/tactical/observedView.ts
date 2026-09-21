@@ -27,8 +27,14 @@ export function observedBattleView(view: TacticalView, observerId: string, direc
   for (const c of contacts) if(typeof c.id==='number' && !physicalIds.has(c.id) && (c.kind==='shell'||c.kind==='missile')) projectiles.push({
     id:c.id, kind:c.kind, ship_id:'observed.enemy', position_m:[...c.position_m], previous_m:[...c.position_m],
     velocity_mps:[...c.velocity_mps], height_layer:c.height_layer,
+    // Only measured kinematics, never enemy phase, seeker or intended turn.
+    heading_rad:Math.atan2(c.velocity_mps[1],c.velocity_mps[0]),
+    altitude_m:c.altitude_m??undefined,vertical_speed_mps:c.vertical_speed_mps,
+    pitch_rad:Math.atan2(c.vertical_speed_mps??0,Math.hypot(...c.velocity_mps)),
+    // The observation system only tracks durable shells. Do not read hidden HP.
+    has_durability:c.kind==='shell',
   });
-  return {...view, snapshot:{...view.snapshot, ships,
+  return {...view, snapshot:{...view.snapshot, ships,observation_source:observerId,
     events:view.snapshot.events.filter(e=>e.ship_ids.every(id=>own.has(id))),
     presentation:view.snapshot.presentation && {...view.snapshot.presentation,
       finished_projectiles:view.snapshot.presentation.finished_projectiles.filter(p=>own.has(p.ship_id)||physicalShell(p)).map(p=>({...p,impact:p.impact&&own.has(p.impact.ship_id)?p.impact:null}))},

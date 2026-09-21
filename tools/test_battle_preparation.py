@@ -61,9 +61,11 @@ class BattlePreparationTests(unittest.TestCase):
                 {k:v for k,v in original_modules[module['id']].items() if k!='prototype'})
 
     def test_projection_preserves_thrust_and_source_files(self):
-        original = self.index.listing(include_modules=True)['module_options']
-        by_id = {r['prototype']['id']: r['prototype'] for r in original}
-        source = {m['id']: by_id[m['prototype']['id']] for m in self.document['outfit']['modules']}
+        # A saved design keeps its bound version, even when the picker offers a
+        # newer engine with calibrated thrust. Compare against that exact source.
+        by_ref = {(m['id'], m['version']): m for descriptor, catalog in self.index.resources.values()
+            if descriptor['kind'] == 'ModulePrototypeCatalog' for m in catalog['modules']}
+        source = {m['id']: by_ref[(m['prototype']['id'], m['prototype']['version'])] for m in self.document['outfit']['modules']}
         for m in self.design.snapshot.outfit.instances:
             if m.actuator:
                 self.assertEqual(m.actuator.thrust_n, source[m.id]['capability']['thrust_n'])

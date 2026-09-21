@@ -42,7 +42,7 @@ class PreparedDesign:
         return ps.decode(self.archive_json)
 
 
-def compile_design(document, index, deployment, policy, *, ship_id):
+def compile_design(document, index, deployment, policy, *, ship_id, armor_shape_effects=True):
     """Host supplies an already granted/saved document, never a path from JSON.
 
     Arbitrary layouts using the supported exact editor catalogs are accepted;
@@ -51,16 +51,21 @@ def compile_design(document, index, deployment, policy, *, ship_id):
     ps.identifier(ship_id, '$.ship_id')
     document, deployment, policy = map(ps.clone, (document, deployment, policy))
     source, binding = outfit_documents.unpack(document, index)
-    doc = outfits.document(source, index, binding['hull'] if binding else None)
-    source_outfit = doc.compile()
+    doc = outfits.document(source, index, binding['hull'] if binding else None, armor_shape_effects=armor_shape_effects)
     hull = doc._hull
+    if armor_shape_effects and hull.armor_geometry and hull.armor_geometry.has_flare:
+        policy.setdefault('armor_shape_effects', 'gaotian.hull-shape/a4-v1')
+    if 'armor_shape_effects' in policy:
+        ps.need(armor_shape_effects and policy['armor_shape_effects']=='gaotian.hull-shape/a4-v1',
+                '$.policy.armor_shape_effects', '不支持的外飘外形计算政策')
+    source_outfit = doc.compile()
     allowed=('gtw.filling.none','gtw.filling.rack')+(('gtw.filling.spirit_fuel',) if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else ())+(('gtw.filling.fireproof',) if policy.get('interface') in dc.IGNITION_POLICY_INTERFACES else ())
     ps.need(all(d.filling is None or d.filling.config.id in allowed for d in hull.decks),
         '$.hull.filling', '当前旧配置尚未接入此填充效果；请使用支持对应效果的新配置')
     ps.obj(policy, 'interface id version modules propulsion_timing goods projectiles recipes fire_control enabled_recipe_ids' +
         (' continuous_damage' if policy.get('interface') in dc.FIRE_POLICY_INTERFACES else '') +
         (' repair' if policy.get('interface') in dc.REPAIR_POLICY_INTERFACES else '')+
-        (' fuel' if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else '')+(' ignition' if policy.get('interface') in dc.IGNITION_POLICY_INTERFACES else '')+(' missiles' if policy.get('interface')==missiles.POLICY_INTERFACE else '')+(' maneuver_thrust_revision' if 'maneuver_thrust_revision' in policy else '')+(' ammunition_resource_liters' if 'ammunition_resource_liters' in policy else ''), '$.policy')
+        (' fuel' if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else '')+(' ignition' if policy.get('interface') in dc.IGNITION_POLICY_INTERFACES else '')+(' missiles' if policy.get('interface')==missiles.POLICY_INTERFACE else '')+(' maneuver_thrust_revision' if 'maneuver_thrust_revision' in policy else '')+(' ammunition_resource_liters' if 'ammunition_resource_liters' in policy else '')+(' armor_shape_effects' if 'armor_shape_effects' in policy else ''), '$.policy')
     ps.need(policy['interface'] in (POLICY_INTERFACE, dc.POLICY_INTERFACE, *dc.FIRE_POLICY_INTERFACES), '$.policy.interface', '不支持的战前准备资源政策')
     # Make indexed legacy plans portable too, with an exact embedded hull.
     if binding is None:
@@ -217,7 +222,10 @@ def restore_design(archive, index):
     # Fresh imports use the extended catalog and current policy instead.
     index = next((i for i in outfit_documents.catalog_generations(index)
                   if value['catalog_dependencies_sha256'] == outfit_documents.catalog_hash(i)), index)
-    result = compile_design(value['document'], index, value['deployment'], value['policy'], ship_id=value['ship_id'])
+    # Archived A2/A3 ships keep their exact derived caches and damage binding.
+    # Fresh imports get A4; reading an existing ship is not a free refit.
+    result = compile_design(value['document'], index, value['deployment'], value['policy'], ship_id=value['ship_id'],
+                            armor_shape_effects='armor_shape_effects' in value['policy'])
     ps.need(result.archive() == value, '$.design', '设计、目录或资源政策已变化，不能自动重绑')
     return result
 

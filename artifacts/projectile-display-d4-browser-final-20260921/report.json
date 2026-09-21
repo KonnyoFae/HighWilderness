@@ -1,0 +1,339 @@
+{
+  "status": "PASS",
+  "streams": [
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 0,
+      "sequence": 1,
+      "base": null,
+      "reset": true
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 0,
+      "sequence": 1,
+      "base": 1,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 0,
+      "sequence": 1,
+      "base": 1,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 0,
+      "sequence": 3,
+      "base": null,
+      "reset": true
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 0,
+      "sequence": 3,
+      "base": 3,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 4,
+      "sequence": 4,
+      "base": 3,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 8,
+      "sequence": 5,
+      "base": 4,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 13,
+      "sequence": 6,
+      "base": 5,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 17,
+      "sequence": 7,
+      "base": 6,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 22,
+      "sequence": 8,
+      "base": 7,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 22,
+      "sequence": 8,
+      "base": 8,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 26,
+      "sequence": 9,
+      "base": 8,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 30,
+      "sequence": 10,
+      "base": 9,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 34,
+      "sequence": 11,
+      "base": 10,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 39,
+      "sequence": 12,
+      "base": 11,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 43,
+      "sequence": 13,
+      "base": 11,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 50,
+      "sequence": 15,
+      "base": null,
+      "reset": true
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 50,
+      "sequence": 15,
+      "base": 15,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 50,
+      "sequence": 17,
+      "base": null,
+      "reset": true
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 50,
+      "sequence": 18,
+      "base": 17,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 50,
+      "sequence": 18,
+      "base": 18,
+      "reset": false
+    },
+    {
+      "scene": "b449692046f1487584fbb661831637b4",
+      "step": 50,
+      "sequence": 20,
+      "base": 18,
+      "reset": false
+    },
+    {
+      "scene": "235b5e2b833843729dfd12c5ccf5bbde",
+      "step": 0,
+      "sequence": 1,
+      "base": null,
+      "reset": true
+    },
+    {
+      "scene": "235b5e2b833843729dfd12c5ccf5bbde",
+      "step": 0,
+      "sequence": 1,
+      "base": 1,
+      "reset": false
+    },
+    {
+      "scene": "235b5e2b833843729dfd12c5ccf5bbde",
+      "step": 0,
+      "sequence": 3,
+      "base": null,
+      "reset": true
+    },
+    {
+      "scene": "235b5e2b833843729dfd12c5ccf5bbde",
+      "step": 0,
+      "sequence": 3,
+      "base": 3,
+      "reset": false
+    },
+    {
+      "scene": "235b5e2b833843729dfd12c5ccf5bbde",
+      "step": 4,
+      "sequence": 4,
+      "base": 3,
+      "reset": false
+    },
+    {
+      "scene": "235b5e2b833843729dfd12c5ccf5bbde",
+      "step": 9,
+      "sequence": 5,
+      "base": 4,
+      "reset": false
+    }
+  ],
+  "lostResponseRecovered": true,
+  "lifecycle": [
+    {
+      "firstScene": "b449692046f1487584fbb661831637b4",
+      "nextScene": "235b5e2b833843729dfd12c5ccf5bbde",
+      "oldTerminals": 0
+    },
+    {
+      "forcedReset": true,
+      "remainingShips": 0,
+      "remainingBattleCanvases": 0
+    }
+  ],
+  "paired": {
+    "frames": 8,
+    "maximumActive": 119,
+    "maximumError": 0.04966904912527596,
+    "intermediateSamples": 18,
+    "timing": {
+      "legacyParse": [
+        0.8000000044703484,
+        0.6000000014901161,
+        0.5999999940395355,
+        0.6999999955296516,
+        0.7999999970197678,
+        0.8999999985098839,
+        1,
+        0.6000000014901161
+      ],
+      "streamParse": [
+        0.5999999940395355,
+        0.3999999985098839,
+        0.9000000059604645,
+        0.5,
+        0.6000000014901161,
+        0.8000000044703484,
+        0.8000000044703484,
+        0.30000000447034836
+      ],
+      "merge": [
+        1.5,
+        0.5,
+        0.3999999985098839,
+        0.5,
+        0.5,
+        1.1999999955296516,
+        0.7999999970197678,
+        0.20000000298023224
+      ],
+      "legacySample": [
+        0.7000000029802322,
+        0.20000000298023224,
+        0.30000000447034836,
+        0.20000000298023224,
+        0.20000000298023224,
+        0.29999999701976776,
+        0.20000000298023224,
+        0.19999999552965164,
+        0.19999999552965164,
+        0.10000000149011612,
+        0.30000000447034836,
+        0.29999999701976776,
+        0.30000000447034836,
+        0.19999999552965164,
+        0.29999999701976776,
+        0.19999999552965164,
+        0.29999999701976776,
+        0.29999999701976776,
+        0.29999999701976776,
+        0.3999999985098839,
+        0.5,
+        0.3999999985098839,
+        0.3999999985098839,
+        0.29999999701976776,
+        0.5,
+        0.30000000447034836,
+        0.30000000447034836,
+        0.3999999985098839,
+        0.20000000298023224,
+        0.10000000149011612,
+        0.09999999403953552,
+        0.10000000149011612
+      ],
+      "streamSample": [
+        0.6999999955296516,
+        0.29999999701976776,
+        0.19999999552965164,
+        0.3999999985098839,
+        0.3999999985098839,
+        0.20000000298023224,
+        0.29999999701976776,
+        0.20000000298023224,
+        0.4000000059604645,
+        0.30000000447034836,
+        0.3999999985098839,
+        0.20000000298023224,
+        0.3999999985098839,
+        0.20000000298023224,
+        0.10000000149011612,
+        0.30000000447034836,
+        0.5,
+        0.3999999985098839,
+        0.30000000447034836,
+        0.29999999701976776,
+        0.8000000044703484,
+        0.5,
+        0.29999999701976776,
+        0.3999999985098839,
+        0.7000000029802322,
+        0.3999999985098839,
+        0.3999999985098839,
+        0.29999999701976776,
+        0.19999999552965164,
+        0.10000000149011612,
+        0.10000000149011612,
+        0.10000000149011612
+      ]
+    },
+    "warmSampling": {
+      "legacy": {
+        "samples": 500,
+        "meanMs": 0.08600000017881393,
+        "p95Ms": 0.20000000298023224,
+        "p99Ms": 0.20000000298023224
+      },
+      "stream": {
+        "samples": 500,
+        "meanMs": 0.07239999981224537,
+        "p95Ms": 0.20000000298023224,
+        "p99Ms": 0.20000000298023224
+      }
+    },
+    "heapBefore": 67467139,
+    "heapAfter": 76617671
+  },
+  "curves": null,
+  "missiles": null,
+  "scope": "Production React + actual Python preparation/run/pause/lost-read/settlement flow; separate dense real publication replay. Timing samples are short browser diagnostics, not GPU or long-load acceptance."
+}

@@ -1,0 +1,4613 @@
+{
+  "scope": "Two isolated A5 29-gun real battles; end naturally, not a 120-second sustained test. Nested timings are not additive.",
+  "mode": "stream",
+  "source_hashes": {
+    "backend\\high_wilderness_sidecar\\tactical_presentation.py": "59a090feb7f9f5d24433bf558986fbfca4b5a71de930fcb52ad3a4ee8d493c16",
+    "backend\\high_wilderness_sidecar\\shell_presentation.py": "e9f36ad0a26891cd68366bacc197a7e522e95f035d60423baf7aeefd708367b6",
+    "backend\\high_wilderness_sidecar\\projectile_stream.py": "6d1ef365373caf9c5c9d23f8b68258583a453cb4aa85b58ff543ae8ced8adcf4",
+    "backend\\high_wilderness_sidecar\\realtime_view.py": "4c963cce187daacdba2215d6be3219eb9ce8d59c9aa7c8f8b420e7edb7439e77",
+    "backend\\high_wilderness_sidecar\\tactical_gunnery.py": "941394e37267201796e677f367f9920ddc49bbf852333346ce3cb591f9da7be5"
+  },
+  "timings": {
+    "view_deepcopy": {
+      "calls": 222,
+      "total_ms": 315.54510001296876,
+      "mean_ms": 1.4213743243827421,
+      "p50_ms": 1.393300000927411,
+      "p95_ms": 2.034699995419942,
+      "p99_ms": 2.4186000009649433,
+      "max_ms": 2.598999999463558
+    },
+    "history_record": {
+      "calls": 800,
+      "total_ms": 191.5214000182459,
+      "mean_ms": 0.2394017500228074,
+      "p50_ms": 0.2392999958829023,
+      "p95_ms": 0.44999999954598024,
+      "p99_ms": 0.5376000044634566,
+      "max_ms": 1.698799998848699
+    },
+    "publish": {
+      "calls": 204,
+      "total_ms": 1466.7963999600033,
+      "mean_ms": 7.190178431176487,
+      "p50_ms": 6.841399997938424,
+      "p95_ms": 11.357800001860596,
+      "p99_ms": 11.889699999301229,
+      "max_ms": 29.52509999886388
+    },
+    "read": {
+      "calls": 202,
+      "total_ms": 1139.158799975121,
+      "mean_ms": 5.6393999998768365,
+      "p50_ms": 5.45599999895785,
+      "p95_ms": 7.982999995874707,
+      "p99_ms": 8.725799998501316,
+      "max_ms": 8.928999995987397
+    },
+    "path_simplify": {
+      "calls": 906,
+      "total_ms": 23.9071999603766,
+      "mean_ms": 0.026387637925360488,
+      "p50_ms": 0.028100002964492887,
+      "p95_ms": 0.03529999958118424,
+      "p99_ms": 0.05220000457484275,
+      "max_ms": 0.11180000001331791
+    }
+  },
+  "bytes": {
+    "total": 33491445,
+    "projectile_total": 9367167,
+    "peak": 226611
+  },
+  "cases": [
+    {
+      "case": {
+        "name": "joint_0",
+        "speed": 100,
+        "accelerate": true,
+        "stock": "loaded",
+        "distance": 6000
+      },
+      "variant": "optimized",
+      "steps": 403,
+      "guns": 29,
+      "guns_per_ship": [
+        25,
+        4
+      ],
+      "shots": 215,
+      "peak_projectiles": 189,
+      "peak_response_bytes": 224868,
+      "step": {
+        "mean_ms": 16.744071463880243,
+        "p50_ms": 16.06750000064494,
+        "p95_ms": 28.64449999469798,
+        "p99_ms": 34.473400002752896,
+        "max_ms": 47.536999998555984
+      },
+      "warm_step": {
+        "mean_ms": 17.438241018680856,
+        "p50_ms": 16.61450000392506,
+        "p95_ms": 28.960899995581713,
+        "p99_ms": 35.1751999987755,
+        "max_ms": 47.536999998555984
+      },
+      "aim": {
+        "mean_ms": 0.1336486354238,
+        "p50_ms": 0.11419999646022916,
+        "p95_ms": 0.33120000443886966,
+        "p99_ms": 0.3835999814327806,
+        "max_ms": 0.4276000036043115
+      },
+      "inverse": {
+        "mean_ms": 0.08218015048195892,
+        "p50_ms": 0.06980002945056185,
+        "p95_ms": 0.18370000179857016,
+        "p99_ms": 0.20679993758676574,
+        "max_ms": 0.23000001237960532
+      },
+      "defense": {
+        "mean_ms": 9.443423573278547,
+        "p50_ms": 9.20159999805037,
+        "p95_ms": 17.970800006878562,
+        "p99_ms": 22.89829999790527,
+        "max_ms": 29.49819999776082
+      },
+      "publish": {
+        "mean_ms": 7.165391089254644,
+        "p50_ms": 6.70390000595944,
+        "p95_ms": 11.35939999949187,
+        "p99_ms": 12.260000003152527,
+        "max_ms": 13.101900003675837
+      },
+      "read": {
+        "mean_ms": 9.779705941123257,
+        "p50_ms": 7.866499996453058,
+        "p95_ms": 34.06270000414224,
+        "p99_ms": 37.582600001769606,
+        "max_ms": 59.85979999968549
+      },
+      "costs": {
+        "solution_seconds": 0.053860400075791404,
+        "solution_calls": 1557,
+        "defense_seconds": 3.805699700031255,
+        "inverse_seconds": 0.033118600644229446,
+        "inverse_calls": 20872
+      },
+      "requests": 1557,
+      "cache_hits": 0,
+      "solution_age_steps": 10,
+      "work_totals": {
+        "requests": 1557,
+        "solves": 1557,
+        "cache_hits": 0,
+        "negative_cache_hits": 0,
+        "solution_age_steps": 668,
+        "searches": 10,
+        "search_requests": 19,
+        "search_queue": 9,
+        "solve_queue": 94,
+        "max_search_wait_steps": 1,
+        "max_solve_wait_steps": 58,
+        "reused_solutions": 512,
+        "tracking_only": 3574,
+        "reproject_rejected": 1216,
+        "refresh_observation": 333,
+        "refresh_motion": 155,
+        "invalidated": 15,
+        "solve_budget": 3224,
+        "search_budget": 3224,
+        "precise_requests": 1651
+      },
+      "work_max": {
+        "requests": 8,
+        "solves": 8,
+        "cache_hits": 0,
+        "negative_cache_hits": 0,
+        "solution_age_steps": 10,
+        "searches": 8,
+        "search_requests": 17,
+        "search_queue": 9,
+        "solve_queue": 4,
+        "max_search_wait_steps": 1,
+        "max_solve_wait_steps": 2,
+        "reused_solutions": 11,
+        "tracking_only": 13,
+        "reproject_rejected": 10,
+        "refresh_observation": 10,
+        "refresh_motion": 2,
+        "invalidated": 15,
+        "solve_budget": 8,
+        "search_budget": 8,
+        "precise_requests": 12
+      },
+      "shot_events": {
+        "4": [
+          {
+            "step": 1,
+            "angle": 0.02181661564992912,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 13,
+            "angle": 0.04114179965404574,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 28,
+            "angle": -0.04545704893536184,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 40,
+            "angle": -0.02726885896385145,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 52,
+            "angle": -0.013859731128820219,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 64,
+            "angle": 0.00013589835026639463,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 76,
+            "angle": 0.018341924062926562,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 88,
+            "angle": 0.03657223976817958,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 100,
+            "angle": 0.003222139824577752,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 112,
+            "angle": 0.0032896329792060364,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 124,
+            "angle": 0.0033593455031142305,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 136,
+            "angle": 0.003431426307637153,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 148,
+            "angle": 0.0035059546265738817,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 160,
+            "angle": 0.0036070857214607344,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 172,
+            "angle": 0.0037119609201821113,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 184,
+            "angle": 0.0038207636721714344,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 196,
+            "angle": 0.0039338329465925526,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 208,
+            "angle": 0.004051405960248111,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 220,
+            "angle": 0.0041738519922520645,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 232,
+            "angle": 0.004301805322884711,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 244,
+            "angle": 0.004435823368222014,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "5": [
+          {
+            "step": 1,
+            "angle": 0.021665922854966713,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 13,
+            "angle": 0.035495230344103845,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 28,
+            "angle": -0.05120818276005101,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 40,
+            "angle": -0.033153191889871536,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 52,
+            "angle": -0.01985622230519901,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 64,
+            "angle": -0.005973350549462797,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 76,
+            "angle": 0.012093929590255126,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 88,
+            "angle": 0.030209344256489246,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 100,
+            "angle": -0.003222139824577308,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 112,
+            "angle": -0.0032896329792060364,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 124,
+            "angle": -0.0033593455031137864,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 136,
+            "angle": -0.003431426307636709,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 148,
+            "angle": -0.0035059546265734376,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 160,
+            "angle": -0.0036070857214602903,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 172,
+            "angle": -0.0037119609201816672,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 184,
+            "angle": -0.0038207636721709903,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 196,
+            "angle": -0.0039338329465925526,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 208,
+            "angle": -0.004051405960247667,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 220,
+            "angle": -0.00417385199225162,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 232,
+            "angle": -0.004301805322884267,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 244,
+            "angle": -0.00443582336822157,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "7": [
+          {
+            "step": 1,
+            "angle": 0.013089969389957472,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 31,
+            "angle": -0.051246759294047095,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 61,
+            "angle": -0.006735630756047401,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 92,
+            "angle": 0.004042224314650657,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 122,
+            "angle": -0.0033879981247917357,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 152,
+            "angle": -0.003625289182262126,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 182,
+            "angle": -0.0038677066436325624,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 212,
+            "angle": -0.00420238902923975,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "2": [
+          {
+            "step": 2,
+            "angle": 0.02181661564992912,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 14,
+            "angle": 0.04204780199775371,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 28,
+            "angle": -0.04453599517030682,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 40,
+            "angle": -0.02633332902859209,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 52,
+            "angle": -0.012873810838302191,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 64,
+            "angle": 0.001127287318474668,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 76,
+            "angle": 0.01934825228109327,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 88,
+            "angle": 0.037589226118284635,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 100,
+            "angle": 0.00425984290783088,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 112,
+            "angle": 0.004348796194913795,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 124,
+            "angle": 0.004440660766821036,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 136,
+            "angle": 0.0045355708883549894,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 148,
+            "angle": 0.00463368678725784,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 160,
+            "angle": 0.004766909090716531,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 172,
+            "angle": 0.00490499861410898,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 184,
+            "angle": 0.005048188229201056,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 196,
+            "angle": 0.005196918578915355,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 208,
+            "angle": 0.005351490873479303,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 220,
+            "angle": 0.005512382444976094,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 232,
+            "angle": 0.005680418704680168,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 244,
+            "angle": 0.005856316740406431,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "3": [
+          {
+            "step": 2,
+            "angle": 0.020782753957955702,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 14,
+            "angle": 0.03457835192217029,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 28,
+            "angle": -0.052141308019977295,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 40,
+            "angle": -0.03411444588772827,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 52,
+            "angle": -0.020803002836250695,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 64,
+            "angle": -0.00695077778927411,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 76,
+            "angle": 0.011087322586351256,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 88,
+            "angle": 0.029176668432076447,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 100,
+            "angle": -0.004259842907830436,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 112,
+            "angle": -0.004348796194913351,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 124,
+            "angle": -0.004440660766820592,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 136,
+            "angle": -0.0045355708883549894,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 148,
+            "angle": -0.004633686787257396,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 160,
+            "angle": -0.004766909090716087,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 172,
+            "angle": -0.0049049986141085355,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 184,
+            "angle": -0.005048188229200612,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 196,
+            "angle": -0.005196918578914911,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 208,
+            "angle": -0.005351490873478859,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 220,
+            "angle": -0.005512382444976094,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 232,
+            "angle": -0.005680418704680168,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 244,
+            "angle": -0.005856316740406431,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "6": [
+          {
+            "step": 2,
+            "angle": 0.026179938779914945,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 32,
+            "angle": -0.04545951135580495,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 62,
+            "angle": 0.00011612330653321123,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 92,
+            "angle": 0.010465729658457747,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 122,
+            "angle": 0.0033879981247921798,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 152,
+            "angle": 0.003625289182262126,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 182,
+            "angle": 0.0038677066436325624,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 212,
+            "angle": 0.004202389029240194,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "26": [
+          {
+            "step": 3,
+            "angle": 0.015769368533606,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 15,
+            "angle": 0.01576180064015409,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 27,
+            "angle": 0.02931376883743786,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 39,
+            "angle": 0.052520894236936844,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 51,
+            "angle": -0.03863715625710684,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 63,
+            "angle": -0.025112691854728197,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 75,
+            "angle": -0.011620645096163784,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 87,
+            "angle": 0.006837799603812034,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 99,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 111,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 123,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 135,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 147,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 159,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 171,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 183,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 195,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 207,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 219,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 231,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 243,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 255,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 267,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 279,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 291,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 303,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 315,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 327,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 339,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 351,
+            "angle": 0.04348797724280784,
+            "target": [
+              0,
+              null
+            ]
+          }
+        ],
+        "27": [
+          {
+            "step": 3,
+            "angle": 0.01576370277666328,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 33,
+            "angle": 0.0292475160473904,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 63,
+            "angle": -0.025111900667780684,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 93,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 123,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 153,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 183,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 213,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          }
+        ],
+        "11": [
+          {
+            "step": 4,
+            "angle": 0.0174532925199433,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "13": [
+          {
+            "step": 4,
+            "angle": 0.0174532925199433,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "14": [
+          {
+            "step": 4,
+            "angle": 0.0174532925199433,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "15": [
+          {
+            "step": 4,
+            "angle": 0.0174532925199433,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "16": [
+          {
+            "step": 4,
+            "angle": 0.0174532925199433,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "25": [
+          {
+            "step": 195,
+            "angle": 0.006302136981407802,
+            "target": null
+          },
+          {
+            "step": 197,
+            "angle": 0.006385375018079564,
+            "target": null
+          },
+          {
+            "step": 199,
+            "angle": 0.006471224545513188,
+            "target": null
+          },
+          {
+            "step": 237,
+            "angle": 0.004246601475711209,
+            "target": null
+          },
+          {
+            "step": 239,
+            "angle": 0.004291228078977749,
+            "target": null
+          },
+          {
+            "step": 241,
+            "angle": 0.004337268150984119,
+            "target": null
+          },
+          {
+            "step": 243,
+            "angle": -0.00563712328849153,
+            "target": null
+          },
+          {
+            "step": 245,
+            "angle": -0.005712078317046565,
+            "target": null
+          },
+          {
+            "step": 247,
+            "angle": -0.0057896206893808255,
+            "target": null
+          },
+          {
+            "step": 257,
+            "angle": 0.0026205073096119413,
+            "target": null
+          },
+          {
+            "step": 259,
+            "angle": 0.0026316927677556556,
+            "target": null
+          },
+          {
+            "step": 261,
+            "angle": 0.0026431364874448526,
+            "target": null
+          },
+          {
+            "step": 263,
+            "angle": -0.0008442071941057172,
+            "target": null
+          },
+          {
+            "step": 265,
+            "angle": -0.0008179014554170472,
+            "target": null
+          },
+          {
+            "step": 267,
+            "angle": -0.00079048103175694,
+            "target": null
+          },
+          {
+            "step": 275,
+            "angle": 0.01493257350962196,
+            "target": null
+          },
+          {
+            "step": 277,
+            "angle": 0.015531946006799302,
+            "target": null
+          },
+          {
+            "step": 279,
+            "angle": 0.01618602019301596,
+            "target": null
+          },
+          {
+            "step": 281,
+            "angle": 0.00847251905917279,
+            "target": null
+          },
+          {
+            "step": 283,
+            "angle": 0.008607294365209572,
+            "target": null
+          },
+          {
+            "step": 285,
+            "angle": 0.008746935449657212,
+            "target": null
+          },
+          {
+            "step": 296,
+            "angle": -0.006334558273622726,
+            "target": null
+          },
+          {
+            "step": 298,
+            "angle": -0.006420832716661273,
+            "target": null
+          },
+          {
+            "step": 300,
+            "angle": -0.006510096272017041,
+            "target": null
+          },
+          {
+            "step": 302,
+            "angle": -0.0006932129852437185,
+            "target": null
+          },
+          {
+            "step": 304,
+            "angle": -0.0007596418142883365,
+            "target": null
+          },
+          {
+            "step": 306,
+            "angle": 0.03411271463647299,
+            "target": null
+          },
+          {
+            "step": 308,
+            "angle": 0.045623213563237286,
+            "target": null
+          },
+          {
+            "step": 310,
+            "angle": -0.0009759515470069147,
+            "target": null
+          },
+          {
+            "step": 314,
+            "angle": 0.008661392258071388,
+            "target": null
+          },
+          {
+            "step": 316,
+            "angle": 0.008983263711386247,
+            "target": null
+          },
+          {
+            "step": 325,
+            "angle": -0.015760273910541134,
+            "target": null
+          },
+          {
+            "step": 327,
+            "angle": -0.0166666890254894,
+            "target": null
+          },
+          {
+            "step": 329,
+            "angle": -0.017695924042239408,
+            "target": null
+          },
+          {
+            "step": 336,
+            "angle": 0.00366352563943817,
+            "target": null
+          },
+          {
+            "step": 338,
+            "angle": 0.0037429838394706927,
+            "target": null
+          },
+          {
+            "step": 340,
+            "angle": 0.002563218741955975,
+            "target": null
+          },
+          {
+            "step": 342,
+            "angle": 0.002864713292082044,
+            "target": null
+          },
+          {
+            "step": 345,
+            "angle": -0.032041871747804554,
+            "target": null
+          }
+        ],
+        "0": [
+          {
+            "step": 248,
+            "angle": 0.0016787886939972907,
+            "target": null
+          },
+          {
+            "step": 266,
+            "angle": -0.0013586831913943165,
+            "target": null
+          },
+          {
+            "step": 282,
+            "angle": -0.0034167247792797895,
+            "target": null
+          },
+          {
+            "step": 298,
+            "angle": 0.0003947384982643243,
+            "target": null
+          },
+          {
+            "step": 314,
+            "angle": 0.003675187617856235,
+            "target": null
+          },
+          {
+            "step": 332,
+            "angle": 0.0036349895108278574,
+            "target": null
+          },
+          {
+            "step": 347,
+            "angle": -0.0029539261381854587,
+            "target": null
+          },
+          {
+            "step": 361,
+            "angle": -0.007570944569060156,
+            "target": null
+          },
+          {
+            "step": 363,
+            "angle": -0.00777494457447947,
+            "target": null
+          },
+          {
+            "step": 377,
+            "angle": 0.0009299251147814047,
+            "target": null
+          },
+          {
+            "step": 389,
+            "angle": 0.00866480066872155,
+            "target": null
+          },
+          {
+            "step": 391,
+            "angle": 0.008937432769257736,
+            "target": null
+          }
+        ],
+        "1": [
+          {
+            "step": 248,
+            "angle": 0.008100281934588338,
+            "target": null
+          },
+          {
+            "step": 266,
+            "angle": 0.005187012643943945,
+            "target": null
+          },
+          {
+            "step": 282,
+            "angle": 0.0032456780072513958,
+            "target": null
+          },
+          {
+            "step": 298,
+            "angle": 0.007232966398943219,
+            "target": null
+          },
+          {
+            "step": 314,
+            "angle": 0.01067843146806613,
+            "target": null
+          },
+          {
+            "step": 332,
+            "angle": 0.015430500113555734,
+            "target": null
+          },
+          {
+            "step": 347,
+            "angle": 0.009128937966277562,
+            "target": null
+          },
+          {
+            "step": 363,
+            "angle": 0.005007287532712734,
+            "target": null
+          },
+          {
+            "step": 377,
+            "angle": 0.014394052388869039,
+            "target": null
+          },
+          {
+            "step": 391,
+            "angle": 0.02303267989897595,
+            "target": null
+          }
+        ],
+        "12": [
+          {
+            "step": 248,
+            "angle": -0.00475013679066727,
+            "target": null
+          },
+          {
+            "step": 266,
+            "angle": -0.007898488704844109,
+            "target": null
+          },
+          {
+            "step": 282,
+            "angle": -0.01006484009991171,
+            "target": null
+          },
+          {
+            "step": 298,
+            "angle": -0.006445090244769691,
+            "target": null
+          },
+          {
+            "step": 314,
+            "angle": -0.0033423509975074595,
+            "target": null
+          },
+          {
+            "step": 332,
+            "angle": -0.008201108642882371,
+            "target": null
+          },
+          {
+            "step": 348,
+            "angle": -0.015168917795566728,
+            "target": null
+          },
+          {
+            "step": 377,
+            "angle": -0.012545245988926368,
+            "target": null
+          }
+        ],
+        "18": [
+          {
+            "step": 377,
+            "angle": 0.0349065850398866,
+            "target": null
+          }
+        ],
+        "19": [
+          {
+            "step": 377,
+            "angle": 0.0349065850398866,
+            "target": null
+          }
+        ],
+        "20": [
+          {
+            "step": 377,
+            "angle": -0.03277828735068633,
+            "target": null
+          }
+        ]
+      },
+      "prediction_totals": {
+        "requests": 8379,
+        "computed": 6730,
+        "shared": 0,
+        "rolled": 1649,
+        "invalidated_motion": 4981,
+        "broad_rejected": 1839,
+        "hull_paths": 4891,
+        "path_points": 970940,
+        "max_age_steps": 972,
+        "entries": 8379,
+        "path_reused": 6701
+      },
+      "prediction_max": {
+        "requests": 29,
+        "computed": 29,
+        "shared": 0,
+        "rolled": 8,
+        "invalidated_motion": 21,
+        "broad_rejected": 12,
+        "hull_paths": 24,
+        "path_points": 4954,
+        "max_age_steps": 5,
+        "entries": 29,
+        "path_reused": 29
+      },
+      "flared_edges_per_ship": [
+        0,
+        0
+      ]
+    },
+    {
+      "case": {
+        "name": "joint_45",
+        "speed": 100,
+        "accelerate": true,
+        "stock": "loaded",
+        "distance": 6000
+      },
+      "variant": "optimized",
+      "steps": 395,
+      "guns": 29,
+      "guns_per_ship": [
+        25,
+        4
+      ],
+      "shots": 211,
+      "peak_projectiles": 183,
+      "peak_response_bytes": 226611,
+      "step": {
+        "mean_ms": 16.90907772187264,
+        "p50_ms": 15.979000003426336,
+        "p95_ms": 29.649100004462525,
+        "p99_ms": 36.02089999913005,
+        "max_ms": 43.392499996116385
+      },
+      "warm_step": {
+        "mean_ms": 17.649792329119585,
+        "p50_ms": 16.65560000401456,
+        "p95_ms": 29.697899997700006,
+        "p99_ms": 36.02089999913005,
+        "max_ms": 43.392499996116385
+      },
+      "aim": {
+        "mean_ms": 0.13217974676679867,
+        "p50_ms": 0.10949999705189839,
+        "p95_ms": 0.35099998785881326,
+        "p99_ms": 0.4042000000481494,
+        "max_ms": 0.4600999891408719
+      },
+      "inverse": {
+        "mean_ms": 0.08033063206335389,
+        "p50_ms": 0.06339999526971951,
+        "p95_ms": 0.18270004511578009,
+        "p99_ms": 0.2160000367439352,
+        "max_ms": 0.26530006289249286
+      },
+      "defense": {
+        "mean_ms": 9.525887088708675,
+        "p50_ms": 9.526699999696575,
+        "p95_ms": 17.315500001132023,
+        "p99_ms": 22.41160000266973,
+        "max_ms": 29.0850999954273
+      },
+      "publish": {
+        "mean_ms": 7.401612121023878,
+        "p50_ms": 7.320199998503085,
+        "p95_ms": 11.411899999075104,
+        "p99_ms": 11.663500001304783,
+        "max_ms": 29.526500002248213
+      },
+      "read": {
+        "mean_ms": 7.571456565611615,
+        "p50_ms": 7.287899999937508,
+        "p95_ms": 11.025899999367539,
+        "p99_ms": 11.518600003910251,
+        "max_ms": 11.790399999881629
+      },
+      "costs": {
+        "solution_seconds": 0.052210999972885475,
+        "solution_calls": 1466,
+        "defense_seconds": 3.762725400039926,
+        "inverse_seconds": 0.03173059966502478,
+        "inverse_calls": 20171
+      },
+      "requests": 1466,
+      "cache_hits": 0,
+      "solution_age_steps": 10,
+      "work_totals": {
+        "requests": 1466,
+        "solves": 1466,
+        "cache_hits": 0,
+        "negative_cache_hits": 0,
+        "solution_age_steps": 642,
+        "searches": 10,
+        "search_requests": 19,
+        "search_queue": 9,
+        "solve_queue": 84,
+        "max_search_wait_steps": 1,
+        "max_solve_wait_steps": 49,
+        "reused_solutions": 460,
+        "tracking_only": 3460,
+        "reproject_rejected": 1092,
+        "refresh_observation": 333,
+        "refresh_motion": 152,
+        "invalidated": 15,
+        "solve_budget": 3160,
+        "search_budget": 3160,
+        "precise_requests": 1550
+      },
+      "work_max": {
+        "requests": 8,
+        "solves": 8,
+        "cache_hits": 0,
+        "negative_cache_hits": 0,
+        "solution_age_steps": 10,
+        "searches": 8,
+        "search_requests": 17,
+        "search_queue": 9,
+        "solve_queue": 4,
+        "max_search_wait_steps": 1,
+        "max_solve_wait_steps": 2,
+        "reused_solutions": 9,
+        "tracking_only": 13,
+        "reproject_rejected": 10,
+        "refresh_observation": 10,
+        "refresh_motion": 2,
+        "invalidated": 15,
+        "solve_budget": 8,
+        "search_budget": 8,
+        "precise_requests": 12
+      },
+      "shot_events": {
+        "4": [
+          {
+            "step": 1,
+            "angle": 0.02181661564992912,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 13,
+            "angle": 0.04114686875462015,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 28,
+            "angle": -0.04543095684276732,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 40,
+            "angle": -0.027221106533098283,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 52,
+            "angle": -0.01384973152754121,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 64,
+            "angle": 0.00018086822344720588,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 76,
+            "angle": 0.0184271558468474,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 88,
+            "angle": 0.03671135814532578,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 100,
+            "angle": 0.003340012947875781,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 112,
+            "angle": 0.0034278750521554713,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 124,
+            "angle": 0.0035188049473848793,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 136,
+            "angle": 0.0036130332638424356,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 148,
+            "angle": 0.0037107107084914936,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 160,
+            "angle": 0.0038121090693881143,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 172,
+            "angle": 0.0039175091586289845,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 184,
+            "angle": 0.004027130190050521,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 196,
+            "angle": 0.004141346795651479,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 208,
+            "angle": 0.0042607133578300704,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 220,
+            "angle": 0.004385647174774743,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "5": [
+          {
+            "step": 1,
+            "angle": 0.021665922854966713,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 13,
+            "angle": 0.035489958251817555,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 28,
+            "angle": -0.051223654246900896,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 40,
+            "angle": -0.03316783785782906,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 52,
+            "angle": -0.01993983087428086,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 64,
+            "angle": -0.006053230696458023,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 76,
+            "angle": 0.012009494259081155,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 88,
+            "angle": 0.030133616186581502,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 100,
+            "angle": -0.003340012947875337,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 112,
+            "angle": -0.0034278750521554713,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 124,
+            "angle": -0.0035188049473848793,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 136,
+            "angle": -0.0036130332638419915,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 148,
+            "angle": -0.0037107107084914936,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 160,
+            "angle": -0.0038121090693876702,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 172,
+            "angle": -0.0039175091586289845,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 184,
+            "angle": -0.004027130190050077,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 196,
+            "angle": -0.004141346795651035,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 208,
+            "angle": -0.0042607133578300704,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 220,
+            "angle": -0.004385647174774299,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "7": [
+          {
+            "step": 1,
+            "angle": 0.013089969389957472,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 31,
+            "angle": -0.05126348040295703,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 61,
+            "angle": -0.00682201603828821,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 92,
+            "angle": 0.0039647953806244765,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 122,
+            "angle": -0.003554265191854089,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 152,
+            "angle": -0.003834265587511876,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 182,
+            "angle": -0.004083528236386691,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 212,
+            "angle": -0.004417888464386621,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "2": [
+          {
+            "step": 2,
+            "angle": 0.02181661564992912,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 14,
+            "angle": 0.04205462596006404,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 28,
+            "angle": -0.044503193721006085,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 40,
+            "angle": -0.026275466578617568,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 52,
+            "angle": -0.012848530683235104,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 64,
+            "angle": 0.00119269190322413,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 76,
+            "angle": 0.019460840461902773,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 88,
+            "angle": 0.03776250950789972,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 100,
+            "angle": 0.004415565048177417,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 112,
+            "angle": 0.0045313490866685235,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 124,
+            "angle": 0.004651166356654635,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 136,
+            "angle": 0.004775255018313107,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 148,
+            "angle": 0.004903827123784232,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 160,
+            "angle": 0.0050372354784791185,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 172,
+            "angle": 0.005175843679103398,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 184,
+            "angle": 0.005319930001429718,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 196,
+            "angle": 0.005470011340626524,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 208,
+            "angle": 0.0056267168467747375,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 220,
+            "angle": 0.005790672578562361,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "3": [
+          {
+            "step": 2,
+            "angle": 0.020782753957955702,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 14,
+            "angle": 0.03457146764441177,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 28,
+            "angle": -0.0521635275665191,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 40,
+            "angle": -0.03413931276495141,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 52,
+            "angle": -0.020901578585053038,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 64,
+            "angle": -0.007050568779852995,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 76,
+            "angle": 0.010975573967771712,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 88,
+            "angle": 0.02906603415954523,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 100,
+            "angle": -0.004415565048177417,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 112,
+            "angle": -0.0045313490866685235,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 124,
+            "angle": -0.0046511663566541905,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 136,
+            "angle": -0.004775255018312663,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 148,
+            "angle": -0.004903827123784232,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 160,
+            "angle": -0.005037235478478674,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 172,
+            "angle": -0.005175843679102954,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 184,
+            "angle": -0.005319930001429274,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 196,
+            "angle": -0.00547001134062608,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 208,
+            "angle": -0.005626716846774293,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 220,
+            "angle": -0.005790672578562361,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "6": [
+          {
+            "step": 2,
+            "angle": 0.026179938779914945,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 32,
+            "angle": -0.045432637295583334,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 62,
+            "angle": 0.00016063889412665233,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 92,
+            "angle": 0.010615038923913613,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 122,
+            "angle": 0.003554265191854089,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 152,
+            "angle": 0.003834265587511876,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 182,
+            "angle": 0.004083528236386691,
+            "target": [
+              1,
+              null
+            ]
+          },
+          {
+            "step": 212,
+            "angle": 0.004417888464387065,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "26": [
+          {
+            "step": 3,
+            "angle": 0.015769377031852994,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 15,
+            "angle": 0.015761000990078156,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 27,
+            "angle": 0.02930363639270528,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 39,
+            "angle": 0.05257089408385207,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 51,
+            "angle": -0.03860696471370684,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 63,
+            "angle": -0.025113476562703685,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 75,
+            "angle": -0.01166421940304696,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 87,
+            "angle": 0.006788201893834334,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 99,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 111,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 123,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 135,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 147,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 159,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 171,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 183,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 195,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 207,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 219,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 231,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 243,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 255,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 267,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 279,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 291,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 303,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 315,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 327,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 339,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 351,
+            "angle": 0.043403358396330916,
+            "target": [
+              0,
+              null
+            ]
+          }
+        ],
+        "27": [
+          {
+            "step": 3,
+            "angle": 0.015763712401698715,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 33,
+            "angle": 0.029232448306438563,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 63,
+            "angle": -0.025112658837106228,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 93,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 123,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 153,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 183,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          },
+          {
+            "step": 213,
+            "angle": 0.0,
+            "target": [
+              0,
+              null
+            ]
+          }
+        ],
+        "11": [
+          {
+            "step": 4,
+            "angle": 0.0174532925199433,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "13": [
+          {
+            "step": 4,
+            "angle": 0.0174532925199433,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "14": [
+          {
+            "step": 4,
+            "angle": 0.0174532925199433,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "15": [
+          {
+            "step": 4,
+            "angle": 0.0174532925199433,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "16": [
+          {
+            "step": 4,
+            "angle": 0.0174532925199433,
+            "target": [
+              1,
+              null
+            ]
+          }
+        ],
+        "25": [
+          {
+            "step": 190,
+            "angle": 0.006421086543552779,
+            "target": null
+          },
+          {
+            "step": 192,
+            "angle": 0.006506423438455755,
+            "target": null
+          },
+          {
+            "step": 194,
+            "angle": 0.006594493021346182,
+            "target": null
+          },
+          {
+            "step": 231,
+            "angle": 0.0041273856715364765,
+            "target": null
+          },
+          {
+            "step": 233,
+            "angle": 0.004168332236088368,
+            "target": null
+          },
+          {
+            "step": 235,
+            "angle": 0.00421057916964207,
+            "target": null
+          },
+          {
+            "step": 237,
+            "angle": -0.0054758993831600655,
+            "target": null
+          },
+          {
+            "step": 239,
+            "angle": -0.005546422664961526,
+            "target": null
+          },
+          {
+            "step": 241,
+            "angle": -0.005621474410445693,
+            "target": null
+          },
+          {
+            "step": 251,
+            "angle": 0.0025044948342154427,
+            "target": null
+          },
+          {
+            "step": 253,
+            "angle": 0.0025147472641520174,
+            "target": null
+          },
+          {
+            "step": 255,
+            "angle": 0.0025252009411982357,
+            "target": null
+          },
+          {
+            "step": 257,
+            "angle": -0.0007682246388678315,
+            "target": null
+          },
+          {
+            "step": 259,
+            "angle": -0.0007405838717966517,
+            "target": null
+          },
+          {
+            "step": 261,
+            "angle": -0.0007117048176841223,
+            "target": null
+          },
+          {
+            "step": 269,
+            "angle": 0.015380785040414846,
+            "target": null
+          },
+          {
+            "step": 271,
+            "angle": 0.016027895678855764,
+            "target": null
+          },
+          {
+            "step": 273,
+            "angle": 0.016736693469995068,
+            "target": null
+          },
+          {
+            "step": 275,
+            "angle": 0.008298210860107513,
+            "target": null
+          },
+          {
+            "step": 277,
+            "angle": 0.008434925940359328,
+            "target": null
+          },
+          {
+            "step": 279,
+            "angle": 0.00857675077499831,
+            "target": null
+          },
+          {
+            "step": 281,
+            "angle": -0.009825463807417556,
+            "target": null
+          },
+          {
+            "step": 283,
+            "angle": -0.010004092688645105,
+            "target": null
+          },
+          {
+            "step": 285,
+            "angle": -0.010189855950922144,
+            "target": null
+          },
+          {
+            "step": 290,
+            "angle": -0.0063118343960337775,
+            "target": null
+          },
+          {
+            "step": 292,
+            "angle": -0.0064018906394345265,
+            "target": null
+          },
+          {
+            "step": 294,
+            "angle": -0.006495182573135416,
+            "target": null
+          },
+          {
+            "step": 296,
+            "angle": -0.0005405842641690306,
+            "target": null
+          },
+          {
+            "step": 298,
+            "angle": -0.000605631741754209,
+            "target": null
+          },
+          {
+            "step": 300,
+            "angle": 0.03426736961951034,
+            "target": null
+          },
+          {
+            "step": 302,
+            "angle": 0.05179456446001174,
+            "target": null
+          },
+          {
+            "step": 304,
+            "angle": -0.0008185921897458925,
+            "target": null
+          },
+          {
+            "step": 307,
+            "angle": 0.008461346565757033,
+            "target": null
+          },
+          {
+            "step": 309,
+            "angle": 0.00878862565308447,
+            "target": null
+          },
+          {
+            "step": 315,
+            "angle": -0.014459211986463938,
+            "target": null
+          },
+          {
+            "step": 317,
+            "angle": -0.015246082459328125,
+            "target": null
+          },
+          {
+            "step": 319,
+            "angle": -0.016135072955482332,
+            "target": null
+          },
+          {
+            "step": 326,
+            "angle": 0.0032804748018495644,
+            "target": null
+          },
+          {
+            "step": 329,
+            "angle": 0.003362783332698349,
+            "target": null
+          },
+          {
+            "step": 331,
+            "angle": 0.0026743386319947327,
+            "target": null
+          },
+          {
+            "step": 333,
+            "angle": 0.0029866654278056792,
+            "target": null
+          },
+          {
+            "step": 337,
+            "angle": -0.03191991961208092,
+            "target": null
+          }
+        ],
+        "0": [
+          {
+            "step": 241,
+            "angle": 0.0016457115187584748,
+            "target": null
+          },
+          {
+            "step": 257,
+            "angle": -0.0013220613356916822,
+            "target": null
+          },
+          {
+            "step": 273,
+            "angle": -0.003324474334843952,
+            "target": null
+          },
+          {
+            "step": 289,
+            "angle": 0.00038112400177858774,
+            "target": null
+          },
+          {
+            "step": 305,
+            "angle": 0.0035200626469249485,
+            "target": null
+          },
+          {
+            "step": 324,
+            "angle": 0.00364161887104153,
+            "target": null
+          },
+          {
+            "step": 336,
+            "angle": -0.002932135192817764,
+            "target": null
+          },
+          {
+            "step": 338,
+            "angle": -0.003011576112983416,
+            "target": null
+          },
+          {
+            "step": 350,
+            "angle": -0.007561119523186832,
+            "target": null
+          },
+          {
+            "step": 352,
+            "angle": -0.007780396156948033,
+            "target": null
+          },
+          {
+            "step": 366,
+            "angle": 0.0009139314402140108,
+            "target": null
+          },
+          {
+            "step": 368,
+            "angle": 0.007485986016320556,
+            "target": null
+          },
+          {
+            "step": 379,
+            "angle": 0.008486160459976855,
+            "target": null
+          },
+          {
+            "step": 381,
+            "angle": 0.0087663466781569,
+            "target": null
+          },
+          {
+            "step": 390,
+            "angle": -0.01594866470442513,
+            "target": null
+          }
+        ],
+        "1": [
+          {
+            "step": 241,
+            "angle": 0.008167415839211767,
+            "target": null
+          },
+          {
+            "step": 257,
+            "angle": 0.00536526325798059,
+            "target": null
+          },
+          {
+            "step": 273,
+            "angle": 0.0035189685605958587,
+            "target": null
+          },
+          {
+            "step": 289,
+            "angle": 0.007358359511239865,
+            "target": null
+          },
+          {
+            "step": 305,
+            "angle": 0.01062085512657962,
+            "target": null
+          },
+          {
+            "step": 324,
+            "angle": 0.015866032739108693,
+            "target": null
+          },
+          {
+            "step": 336,
+            "angle": 0.009648914452178747,
+            "target": null
+          },
+          {
+            "step": 366,
+            "angle": 0.014861584120118732,
+            "target": null
+          },
+          {
+            "step": 368,
+            "angle": 0.030552123837706446,
+            "target": null
+          },
+          {
+            "step": 381,
+            "angle": 0.02331911636241113,
+            "target": null
+          },
+          {
+            "step": 391,
+            "angle": 0.009851206417085034,
+            "target": null
+          }
+        ],
+        "12": [
+          {
+            "step": 241,
+            "angle": -0.0048832029325796,
+            "target": null
+          },
+          {
+            "step": 257,
+            "angle": -0.008003737068426275,
+            "target": null
+          },
+          {
+            "step": 273,
+            "angle": -0.010154167583407592,
+            "target": null
+          },
+          {
+            "step": 289,
+            "angle": -0.006597621643122054,
+            "target": null
+          },
+          {
+            "step": 305,
+            "angle": -0.003593916954740539,
+            "target": null
+          },
+          {
+            "step": 324,
+            "angle": -0.008624342027179654,
+            "target": null
+          },
+          {
+            "step": 366,
+            "angle": -0.013044726410371688,
+            "target": null
+          },
+          {
+            "step": 368,
+            "angle": -0.01576173833538652,
+            "target": null
+          }
+        ]
+      },
+      "prediction_totals": {
+        "requests": 8101,
+        "computed": 6498,
+        "shared": 0,
+        "rolled": 1603,
+        "invalidated_motion": 4808,
+        "broad_rejected": 1754,
+        "hull_paths": 4744,
+        "path_points": 945323,
+        "max_age_steps": 1024,
+        "entries": 8101,
+        "path_reused": 6469
+      },
+      "prediction_max": {
+        "requests": 29,
+        "computed": 28,
+        "shared": 0,
+        "rolled": 8,
+        "invalidated_motion": 21,
+        "broad_rejected": 12,
+        "hull_paths": 23,
+        "path_points": 4788,
+        "max_age_steps": 5,
+        "entries": 29,
+        "path_reused": 28
+      },
+      "flared_edges_per_ship": [
+        2,
+        2
+      ]
+    }
+  ],
+  "publications": [
+    {
+      "step": 1,
+      "bytes": 108450,
+      "projectile_bytes": 2126,
+      "active": 3
+    },
+    {
+      "step": 5,
+      "bytes": 119046,
+      "projectile_bytes": 8677,
+      "active": 13
+    },
+    {
+      "step": 9,
+      "bytes": 116221,
+      "projectile_bytes": 5759,
+      "active": 13
+    },
+    {
+      "step": 13,
+      "bytes": 117447,
+      "projectile_bytes": 7029,
+      "active": 15
+    },
+    {
+      "step": 17,
+      "bytes": 119149,
+      "projectile_bytes": 8770,
+      "active": 18
+    },
+    {
+      "step": 21,
+      "bytes": 118322,
+      "projectile_bytes": 7878,
+      "active": 18
+    },
+    {
+      "step": 25,
+      "bytes": 118278,
+      "projectile_bytes": 7870,
+      "active": 18
+    },
+    {
+      "step": 29,
+      "bytes": 121841,
+      "projectile_bytes": 11445,
+      "active": 23
+    },
+    {
+      "step": 33,
+      "bytes": 123243,
+      "projectile_bytes": 12052,
+      "active": 26
+    },
+    {
+      "step": 37,
+      "bytes": 122548,
+      "projectile_bytes": 11270,
+      "active": 26
+    },
+    {
+      "step": 41,
+      "bytes": 126027,
+      "projectile_bytes": 14849,
+      "active": 31
+    },
+    {
+      "step": 45,
+      "bytes": 124593,
+      "projectile_bytes": 13386,
+      "active": 31
+    },
+    {
+      "step": 49,
+      "bytes": 124671,
+      "projectile_bytes": 13390,
+      "active": 31
+    },
+    {
+      "step": 53,
+      "bytes": 128168,
+      "projectile_bytes": 16982,
+      "active": 36
+    },
+    {
+      "step": 57,
+      "bytes": 126732,
+      "projectile_bytes": 15532,
+      "active": 36
+    },
+    {
+      "step": 61,
+      "bytes": 127473,
+      "projectile_bytes": 16154,
+      "active": 37
+    },
+    {
+      "step": 65,
+      "bytes": 133420,
+      "projectile_bytes": 20981,
+      "active": 44
+    },
+    {
+      "step": 69,
+      "bytes": 131390,
+      "projectile_bytes": 18932,
+      "active": 44
+    },
+    {
+      "step": 73,
+      "bytes": 131387,
+      "projectile_bytes": 18920,
+      "active": 44
+    },
+    {
+      "step": 77,
+      "bytes": 134953,
+      "projectile_bytes": 22539,
+      "active": 49
+    },
+    {
+      "step": 81,
+      "bytes": 133477,
+      "projectile_bytes": 21043,
+      "active": 49
+    },
+    {
+      "step": 85,
+      "bytes": 133495,
+      "projectile_bytes": 21047,
+      "active": 49
+    },
+    {
+      "step": 89,
+      "bytes": 137067,
+      "projectile_bytes": 24640,
+      "active": 54
+    },
+    {
+      "step": 93,
+      "bytes": 138486,
+      "projectile_bytes": 25230,
+      "active": 57
+    },
+    {
+      "step": 97,
+      "bytes": 137739,
+      "projectile_bytes": 24433,
+      "active": 57
+    },
+    {
+      "step": 101,
+      "bytes": 141429,
+      "projectile_bytes": 28116,
+      "active": 62
+    },
+    {
+      "step": 105,
+      "bytes": 139901,
+      "projectile_bytes": 26616,
+      "active": 62
+    },
+    {
+      "step": 109,
+      "bytes": 139900,
+      "projectile_bytes": 26623,
+      "active": 62
+    },
+    {
+      "step": 113,
+      "bytes": 143546,
+      "projectile_bytes": 30234,
+      "active": 67
+    },
+    {
+      "step": 117,
+      "bytes": 142034,
+      "projectile_bytes": 28736,
+      "active": 67
+    },
+    {
+      "step": 121,
+      "bytes": 142005,
+      "projectile_bytes": 28768,
+      "active": 67
+    },
+    {
+      "step": 125,
+      "bytes": 149429,
+      "projectile_bytes": 34536,
+      "active": 75
+    },
+    {
+      "step": 129,
+      "bytes": 147077,
+      "projectile_bytes": 32184,
+      "active": 75
+    },
+    {
+      "step": 133,
+      "bytes": 147057,
+      "projectile_bytes": 32169,
+      "active": 75
+    },
+    {
+      "step": 137,
+      "bytes": 150719,
+      "projectile_bytes": 35816,
+      "active": 80
+    },
+    {
+      "step": 141,
+      "bytes": 149221,
+      "projectile_bytes": 34326,
+      "active": 80
+    },
+    {
+      "step": 145,
+      "bytes": 149199,
+      "projectile_bytes": 34319,
+      "active": 80
+    },
+    {
+      "step": 149,
+      "bytes": 152802,
+      "projectile_bytes": 37918,
+      "active": 85
+    },
+    {
+      "step": 153,
+      "bytes": 154701,
+      "projectile_bytes": 38506,
+      "active": 88
+    },
+    {
+      "step": 157,
+      "bytes": 154184,
+      "projectile_bytes": 37711,
+      "active": 88
+    },
+    {
+      "step": 161,
+      "bytes": 157875,
+      "projectile_bytes": 41379,
+      "active": 93
+    },
+    {
+      "step": 165,
+      "bytes": 156299,
+      "projectile_bytes": 39857,
+      "active": 93
+    },
+    {
+      "step": 169,
+      "bytes": 156409,
+      "projectile_bytes": 39917,
+      "active": 93
+    },
+    {
+      "step": 173,
+      "bytes": 160018,
+      "projectile_bytes": 43524,
+      "active": 98
+    },
+    {
+      "step": 177,
+      "bytes": 158481,
+      "projectile_bytes": 42026,
+      "active": 98
+    },
+    {
+      "step": 181,
+      "bytes": 158495,
+      "projectile_bytes": 42006,
+      "active": 98
+    },
+    {
+      "step": 185,
+      "bytes": 165903,
+      "projectile_bytes": 47836,
+      "active": 106
+    },
+    {
+      "step": 189,
+      "bytes": 163426,
+      "projectile_bytes": 45430,
+      "active": 106
+    },
+    {
+      "step": 193,
+      "bytes": 163574,
+      "projectile_bytes": 45456,
+      "active": 106
+    },
+    {
+      "step": 197,
+      "bytes": 168584,
+      "projectile_bytes": 50404,
+      "active": 113
+    },
+    {
+      "step": 201,
+      "bytes": 167187,
+      "projectile_bytes": 49132,
+      "active": 114
+    },
+    {
+      "step": 205,
+      "bytes": 166991,
+      "projectile_bytes": 48821,
+      "active": 114
+    },
+    {
+      "step": 209,
+      "bytes": 170586,
+      "projectile_bytes": 52460,
+      "active": 119
+    },
+    {
+      "step": 213,
+      "bytes": 172331,
+      "projectile_bytes": 53034,
+      "active": 122
+    },
+    {
+      "step": 217,
+      "bytes": 171950,
+      "projectile_bytes": 52229,
+      "active": 122
+    },
+    {
+      "step": 221,
+      "bytes": 175596,
+      "projectile_bytes": 55892,
+      "active": 127
+    },
+    {
+      "step": 225,
+      "bytes": 173948,
+      "projectile_bytes": 54380,
+      "active": 127
+    },
+    {
+      "step": 229,
+      "bytes": 173859,
+      "projectile_bytes": 54407,
+      "active": 127
+    },
+    {
+      "step": 233,
+      "bytes": 177469,
+      "projectile_bytes": 58020,
+      "active": 132
+    },
+    {
+      "step": 237,
+      "bytes": 176483,
+      "projectile_bytes": 57133,
+      "active": 133
+    },
+    {
+      "step": 241,
+      "bytes": 177774,
+      "projectile_bytes": 58277,
+      "active": 135
+    },
+    {
+      "step": 245,
+      "bytes": 182267,
+      "projectile_bytes": 62804,
+      "active": 142
+    },
+    {
+      "step": 249,
+      "bytes": 183142,
+      "projectile_bytes": 63711,
+      "active": 146
+    },
+    {
+      "step": 253,
+      "bytes": 182071,
+      "projectile_bytes": 62515,
+      "active": 146
+    },
+    {
+      "step": 257,
+      "bytes": 183458,
+      "projectile_bytes": 63863,
+      "active": 148
+    },
+    {
+      "step": 261,
+      "bytes": 184202,
+      "projectile_bytes": 64724,
+      "active": 150
+    },
+    {
+      "step": 265,
+      "bytes": 185189,
+      "projectile_bytes": 65561,
+      "active": 152
+    },
+    {
+      "step": 269,
+      "bytes": 188151,
+      "projectile_bytes": 68659,
+      "active": 157
+    },
+    {
+      "step": 273,
+      "bytes": 186630,
+      "projectile_bytes": 67164,
+      "active": 157
+    },
+    {
+      "step": 277,
+      "bytes": 188678,
+      "projectile_bytes": 68740,
+      "active": 158
+    },
+    {
+      "step": 281,
+      "bytes": 189533,
+      "projectile_bytes": 69663,
+      "active": 161
+    },
+    {
+      "step": 285,
+      "bytes": 192206,
+      "projectile_bytes": 72403,
+      "active": 166
+    },
+    {
+      "step": 289,
+      "bytes": 190868,
+      "projectile_bytes": 70958,
+      "active": 166
+    },
+    {
+      "step": 293,
+      "bytes": 191521,
+      "projectile_bytes": 71672,
+      "active": 167
+    },
+    {
+      "step": 297,
+      "bytes": 191938,
+      "projectile_bytes": 72096,
+      "active": 168
+    },
+    {
+      "step": 301,
+      "bytes": 195404,
+      "projectile_bytes": 75453,
+      "active": 173
+    },
+    {
+      "step": 305,
+      "bytes": 196036,
+      "projectile_bytes": 76133,
+      "active": 176
+    },
+    {
+      "step": 309,
+      "bytes": 196479,
+      "projectile_bytes": 76644,
+      "active": 178
+    },
+    {
+      "step": 313,
+      "bytes": 196707,
+      "projectile_bytes": 76784,
+      "active": 179
+    },
+    {
+      "step": 317,
+      "bytes": 202159,
+      "projectile_bytes": 81267,
+      "active": 182
+    },
+    {
+      "step": 321,
+      "bytes": 199752,
+      "projectile_bytes": 78018,
+      "active": 181
+    },
+    {
+      "step": 325,
+      "bytes": 200746,
+      "projectile_bytes": 78202,
+      "active": 181
+    },
+    {
+      "step": 329,
+      "bytes": 201877,
+      "projectile_bytes": 79404,
+      "active": 184
+    },
+    {
+      "step": 333,
+      "bytes": 203642,
+      "projectile_bytes": 80883,
+      "active": 186
+    },
+    {
+      "step": 337,
+      "bytes": 203669,
+      "projectile_bytes": 80368,
+      "active": 186
+    },
+    {
+      "step": 341,
+      "bytes": 209254,
+      "projectile_bytes": 82781,
+      "active": 184
+    },
+    {
+      "step": 345,
+      "bytes": 207962,
+      "projectile_bytes": 80294,
+      "active": 184
+    },
+    {
+      "step": 349,
+      "bytes": 215383,
+      "projectile_bytes": 82608,
+      "active": 178
+    },
+    {
+      "step": 353,
+      "bytes": 209294,
+      "projectile_bytes": 76646,
+      "active": 179
+    },
+    {
+      "step": 357,
+      "bytes": 213893,
+      "projectile_bytes": 77313,
+      "active": 175
+    },
+    {
+      "step": 361,
+      "bytes": 213429,
+      "projectile_bytes": 75775,
+      "active": 174
+    },
+    {
+      "step": 365,
+      "bytes": 218016,
+      "projectile_bytes": 76809,
+      "active": 170
+    },
+    {
+      "step": 369,
+      "bytes": 217393,
+      "projectile_bytes": 73382,
+      "active": 167
+    },
+    {
+      "step": 373,
+      "bytes": 214990,
+      "projectile_bytes": 71251,
+      "active": 167
+    },
+    {
+      "step": 377,
+      "bytes": 223786,
+      "projectile_bytes": 76282,
+      "active": 168
+    },
+    {
+      "step": 381,
+      "bytes": 220274,
+      "projectile_bytes": 71934,
+      "active": 167
+    },
+    {
+      "step": 385,
+      "bytes": 221928,
+      "projectile_bytes": 72044,
+      "active": 163
+    },
+    {
+      "step": 389,
+      "bytes": 224868,
+      "projectile_bytes": 71340,
+      "active": 158
+    },
+    {
+      "step": 393,
+      "bytes": 223045,
+      "projectile_bytes": 69573,
+      "active": 156
+    },
+    {
+      "step": 397,
+      "bytes": 220845,
+      "projectile_bytes": 67597,
+      "active": 151
+    },
+    {
+      "step": 401,
+      "bytes": 218199,
+      "projectile_bytes": 64733,
+      "active": 148
+    },
+    {
+      "step": 1,
+      "bytes": 108443,
+      "projectile_bytes": 2126,
+      "active": 3
+    },
+    {
+      "step": 5,
+      "bytes": 119031,
+      "projectile_bytes": 8674,
+      "active": 13
+    },
+    {
+      "step": 9,
+      "bytes": 116220,
+      "projectile_bytes": 5764,
+      "active": 13
+    },
+    {
+      "step": 13,
+      "bytes": 117426,
+      "projectile_bytes": 7025,
+      "active": 15
+    },
+    {
+      "step": 17,
+      "bytes": 119141,
+      "projectile_bytes": 8776,
+      "active": 18
+    },
+    {
+      "step": 21,
+      "bytes": 118310,
+      "projectile_bytes": 7878,
+      "active": 18
+    },
+    {
+      "step": 25,
+      "bytes": 118328,
+      "projectile_bytes": 7858,
+      "active": 18
+    },
+    {
+      "step": 29,
+      "bytes": 121775,
+      "projectile_bytes": 11442,
+      "active": 23
+    },
+    {
+      "step": 33,
+      "bytes": 123288,
+      "projectile_bytes": 12047,
+      "active": 26
+    },
+    {
+      "step": 37,
+      "bytes": 122534,
+      "projectile_bytes": 11262,
+      "active": 26
+    },
+    {
+      "step": 41,
+      "bytes": 125982,
+      "projectile_bytes": 14847,
+      "active": 31
+    },
+    {
+      "step": 45,
+      "bytes": 124646,
+      "projectile_bytes": 13397,
+      "active": 31
+    },
+    {
+      "step": 49,
+      "bytes": 124635,
+      "projectile_bytes": 13359,
+      "active": 31
+    },
+    {
+      "step": 53,
+      "bytes": 128108,
+      "projectile_bytes": 16978,
+      "active": 36
+    },
+    {
+      "step": 57,
+      "bytes": 126774,
+      "projectile_bytes": 15520,
+      "active": 36
+    },
+    {
+      "step": 61,
+      "bytes": 127462,
+      "projectile_bytes": 16144,
+      "active": 37
+    },
+    {
+      "step": 65,
+      "bytes": 133372,
+      "projectile_bytes": 20976,
+      "active": 44
+    },
+    {
+      "step": 69,
+      "bytes": 131427,
+      "projectile_bytes": 18932,
+      "active": 44
+    },
+    {
+      "step": 73,
+      "bytes": 131385,
+      "projectile_bytes": 18928,
+      "active": 44
+    },
+    {
+      "step": 77,
+      "bytes": 134863,
+      "projectile_bytes": 22509,
+      "active": 49
+    },
+    {
+      "step": 81,
+      "bytes": 133499,
+      "projectile_bytes": 21040,
+      "active": 49
+    },
+    {
+      "step": 85,
+      "bytes": 133497,
+      "projectile_bytes": 21062,
+      "active": 49
+    },
+    {
+      "step": 89,
+      "bytes": 137038,
+      "projectile_bytes": 24651,
+      "active": 54
+    },
+    {
+      "step": 93,
+      "bytes": 138484,
+      "projectile_bytes": 25253,
+      "active": 57
+    },
+    {
+      "step": 97,
+      "bytes": 137747,
+      "projectile_bytes": 24449,
+      "active": 57
+    },
+    {
+      "step": 101,
+      "bytes": 141415,
+      "projectile_bytes": 28124,
+      "active": 62
+    },
+    {
+      "step": 105,
+      "bytes": 139918,
+      "projectile_bytes": 26625,
+      "active": 62
+    },
+    {
+      "step": 109,
+      "bytes": 139914,
+      "projectile_bytes": 26625,
+      "active": 62
+    },
+    {
+      "step": 113,
+      "bytes": 143527,
+      "projectile_bytes": 30253,
+      "active": 67
+    },
+    {
+      "step": 117,
+      "bytes": 142082,
+      "projectile_bytes": 28777,
+      "active": 67
+    },
+    {
+      "step": 121,
+      "bytes": 141994,
+      "projectile_bytes": 28778,
+      "active": 67
+    },
+    {
+      "step": 125,
+      "bytes": 149435,
+      "projectile_bytes": 34559,
+      "active": 75
+    },
+    {
+      "step": 129,
+      "bytes": 147058,
+      "projectile_bytes": 32160,
+      "active": 75
+    },
+    {
+      "step": 133,
+      "bytes": 147060,
+      "projectile_bytes": 32184,
+      "active": 75
+    },
+    {
+      "step": 137,
+      "bytes": 150695,
+      "projectile_bytes": 35812,
+      "active": 80
+    },
+    {
+      "step": 141,
+      "bytes": 149213,
+      "projectile_bytes": 34310,
+      "active": 80
+    },
+    {
+      "step": 145,
+      "bytes": 149199,
+      "projectile_bytes": 34338,
+      "active": 80
+    },
+    {
+      "step": 149,
+      "bytes": 152794,
+      "projectile_bytes": 37933,
+      "active": 85
+    },
+    {
+      "step": 153,
+      "bytes": 154690,
+      "projectile_bytes": 38499,
+      "active": 88
+    },
+    {
+      "step": 157,
+      "bytes": 154202,
+      "projectile_bytes": 37732,
+      "active": 88
+    },
+    {
+      "step": 161,
+      "bytes": 157842,
+      "projectile_bytes": 41379,
+      "active": 93
+    },
+    {
+      "step": 165,
+      "bytes": 156338,
+      "projectile_bytes": 39881,
+      "active": 93
+    },
+    {
+      "step": 169,
+      "bytes": 156363,
+      "projectile_bytes": 39885,
+      "active": 93
+    },
+    {
+      "step": 173,
+      "bytes": 159994,
+      "projectile_bytes": 43515,
+      "active": 98
+    },
+    {
+      "step": 177,
+      "bytes": 158488,
+      "projectile_bytes": 42007,
+      "active": 98
+    },
+    {
+      "step": 181,
+      "bytes": 158473,
+      "projectile_bytes": 41987,
+      "active": 98
+    },
+    {
+      "step": 185,
+      "bytes": 165890,
+      "projectile_bytes": 47818,
+      "active": 106
+    },
+    {
+      "step": 189,
+      "bytes": 163408,
+      "projectile_bytes": 45403,
+      "active": 106
+    },
+    {
+      "step": 193,
+      "bytes": 165101,
+      "projectile_bytes": 46903,
+      "active": 108
+    },
+    {
+      "step": 197,
+      "bytes": 168768,
+      "projectile_bytes": 50645,
+      "active": 114
+    },
+    {
+      "step": 201,
+      "bytes": 166930,
+      "projectile_bytes": 48877,
+      "active": 114
+    },
+    {
+      "step": 205,
+      "bytes": 167004,
+      "projectile_bytes": 48849,
+      "active": 114
+    },
+    {
+      "step": 209,
+      "bytes": 170565,
+      "projectile_bytes": 52475,
+      "active": 119
+    },
+    {
+      "step": 213,
+      "bytes": 172370,
+      "projectile_bytes": 53081,
+      "active": 122
+    },
+    {
+      "step": 217,
+      "bytes": 172019,
+      "projectile_bytes": 52298,
+      "active": 122
+    },
+    {
+      "step": 221,
+      "bytes": 175592,
+      "projectile_bytes": 55910,
+      "active": 127
+    },
+    {
+      "step": 225,
+      "bytes": 173970,
+      "projectile_bytes": 54386,
+      "active": 127
+    },
+    {
+      "step": 229,
+      "bytes": 174114,
+      "projectile_bytes": 54390,
+      "active": 127
+    },
+    {
+      "step": 233,
+      "bytes": 176207,
+      "projectile_bytes": 56456,
+      "active": 130
+    },
+    {
+      "step": 237,
+      "bytes": 176645,
+      "projectile_bytes": 56990,
+      "active": 132
+    },
+    {
+      "step": 241,
+      "bytes": 179793,
+      "projectile_bytes": 59793,
+      "active": 137
+    },
+    {
+      "step": 245,
+      "bytes": 179206,
+      "projectile_bytes": 59388,
+      "active": 138
+    },
+    {
+      "step": 249,
+      "bytes": 178802,
+      "projectile_bytes": 59072,
+      "active": 138
+    },
+    {
+      "step": 253,
+      "bytes": 180308,
+      "projectile_bytes": 60417,
+      "active": 140
+    },
+    {
+      "step": 257,
+      "bytes": 183789,
+      "projectile_bytes": 63868,
+      "active": 146
+    },
+    {
+      "step": 261,
+      "bytes": 183608,
+      "projectile_bytes": 63854,
+      "active": 148
+    },
+    {
+      "step": 265,
+      "bytes": 183162,
+      "projectile_bytes": 63310,
+      "active": 148
+    },
+    {
+      "step": 269,
+      "bytes": 184947,
+      "projectile_bytes": 64867,
+      "active": 149
+    },
+    {
+      "step": 273,
+      "bytes": 187126,
+      "projectile_bytes": 66924,
+      "active": 154
+    },
+    {
+      "step": 277,
+      "bytes": 187316,
+      "projectile_bytes": 67112,
+      "active": 156
+    },
+    {
+      "step": 281,
+      "bytes": 188856,
+      "projectile_bytes": 68740,
+      "active": 159
+    },
+    {
+      "step": 285,
+      "bytes": 189458,
+      "projectile_bytes": 69309,
+      "active": 161
+    },
+    {
+      "step": 289,
+      "bytes": 190968,
+      "projectile_bytes": 70703,
+      "active": 164
+    },
+    {
+      "step": 293,
+      "bytes": 192374,
+      "projectile_bytes": 72252,
+      "active": 167
+    },
+    {
+      "step": 297,
+      "bytes": 192920,
+      "projectile_bytes": 72770,
+      "active": 169
+    },
+    {
+      "step": 301,
+      "bytes": 193829,
+      "projectile_bytes": 73632,
+      "active": 171
+    },
+    {
+      "step": 305,
+      "bytes": 197311,
+      "projectile_bytes": 77140,
+      "active": 177
+    },
+    {
+      "step": 309,
+      "bytes": 198081,
+      "projectile_bytes": 77290,
+      "active": 177
+    },
+    {
+      "step": 313,
+      "bytes": 198032,
+      "projectile_bytes": 75955,
+      "active": 175
+    },
+    {
+      "step": 317,
+      "bytes": 199803,
+      "projectile_bytes": 77088,
+      "active": 177
+    },
+    {
+      "step": 321,
+      "bytes": 199020,
+      "projectile_bytes": 76332,
+      "active": 178
+    },
+    {
+      "step": 325,
+      "bytes": 200967,
+      "projectile_bytes": 78164,
+      "active": 181
+    },
+    {
+      "step": 329,
+      "bytes": 203174,
+      "projectile_bytes": 79671,
+      "active": 182
+    },
+    {
+      "step": 333,
+      "bytes": 207202,
+      "projectile_bytes": 80219,
+      "active": 179
+    },
+    {
+      "step": 337,
+      "bytes": 208723,
+      "projectile_bytes": 79406,
+      "active": 177
+    },
+    {
+      "step": 341,
+      "bytes": 211685,
+      "projectile_bytes": 78136,
+      "active": 173
+    },
+    {
+      "step": 345,
+      "bytes": 209973,
+      "projectile_bytes": 74417,
+      "active": 171
+    },
+    {
+      "step": 349,
+      "bytes": 211501,
+      "projectile_bytes": 73490,
+      "active": 169
+    },
+    {
+      "step": 353,
+      "bytes": 218169,
+      "projectile_bytes": 75886,
+      "active": 164
+    },
+    {
+      "step": 357,
+      "bytes": 213657,
+      "projectile_bytes": 70410,
+      "active": 161
+    },
+    {
+      "step": 361,
+      "bytes": 217229,
+      "projectile_bytes": 69754,
+      "active": 157
+    },
+    {
+      "step": 365,
+      "bytes": 216322,
+      "projectile_bytes": 67455,
+      "active": 155
+    },
+    {
+      "step": 369,
+      "bytes": 222063,
+      "projectile_bytes": 71417,
+      "active": 157
+    },
+    {
+      "step": 373,
+      "bytes": 220347,
+      "projectile_bytes": 67522,
+      "active": 155
+    },
+    {
+      "step": 377,
+      "bytes": 220627,
+      "projectile_bytes": 66694,
+      "active": 152
+    },
+    {
+      "step": 381,
+      "bytes": 226611,
+      "projectile_bytes": 68163,
+      "active": 149
+    },
+    {
+      "step": 385,
+      "bytes": 222428,
+      "projectile_bytes": 64498,
+      "active": 145
+    },
+    {
+      "step": 389,
+      "bytes": 220522,
+      "projectile_bytes": 62929,
+      "active": 139
+    },
+    {
+      "step": 393,
+      "bytes": 219895,
+      "projectile_bytes": 61196,
+      "active": 136
+    }
+  ]
+}

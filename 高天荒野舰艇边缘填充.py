@@ -60,7 +60,7 @@ def compile_filling(deck, compiled_regions):
         space = build_deck_edge_space([region.input.to_dict()], region.internal_cells)
         volume = space['gross_volume_m3']
         reserve = volume * 0.2  # Explicit space budget, not the structure-equivalent thickness.
-        deduction = min(volume - reserve, region.armor_volume_m3)
+        deduction = min(volume - reserve, getattr(region, 'internal_armor_deduction_m3', region.armor_volume_m3))
         available = max(0.0, volume - reserve - deduction)
         region_mass = available * density
         surface_density = region_mass / space['area_m2'] if space['area_m2'] else 0.0

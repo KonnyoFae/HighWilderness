@@ -1,0 +1,3 @@
+AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:
+
+  assert(metrics.peakMissiles>0&&metrics.seen>0)

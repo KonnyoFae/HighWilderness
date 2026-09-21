@@ -19,12 +19,16 @@ from .tactical import render_static, RENDER_INTERFACE
 from .tactical_scenario import build_two_ship_scenario, SCENARIO_ID
 from .tactical_gunnery import GunneryBattle, prepare_trial_session
 from .tactical_presentation import FlightHistory
+from .projectile_stream import ProjectileStream, INTERFACE as DISPLAY_INTERFACE, compact_projectile
 
 CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'height', 'navigation', 'missile', 'countermeasure', 'fire_control', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry', 'deploy_encounter', 'encounter'))
 INTERFACE = 'gaotian.realtime-view/e3b-v1alpha1'
 VIEW_PERIOD_NS = 66_666_667
 LEASE_NS = 2_000_000_000
-MAX_RESPONSE_BYTES = 256*1024
+# A5: the original 256 KiB two-gun budget failed at 137 steps in the saved
+# 29-gun salvo. Paths are simplified within 5 cm; retain every live projectile.
+# This remains bounded below the bridge's 8 MiB frame / 16 MiB queue limits.
+MAX_RESPONSE_BYTES = 1024*1024
 # A settlement carries complete before/after records for both fleets, unlike
 # a realtime frame. Still bounded below the bridge's 8 MiB frame limit.
 MAX_SETTLEMENT_RESPONSE_BYTES = 4*1024*1024
@@ -49,6 +53,7 @@ class RealtimeViewService:
         self.preparation_store = None
         self._prepared_lease = None
         self.presentation = None
+        self.projectile_stream = None
 
     def deploy_prepared(self,p):
         from . import prepared_deployment as deployment, prepared_launch_store as launches, battle_preparation as bp
@@ -191,9 +196,12 @@ class RealtimeViewService:
             history.record(battle.session.world.fixed_step, battle.projectiles,
                 () if battle.damage_state is None else battle.damage_state.recent,
                 () if battle.damage_state is None else battle.damage_state.expired_flights+tuple(
-                    dict(projectile_id=pid,position_m=e['position_m'])
+                    dict(projectile_id=pid,position_m=e['position_m'],impact_fraction=e['impact_fraction'],height_layer=e['height_layer'])
                     for e in battle.damage_state.interceptions
                     for pid in ((e['round_id'],e['projectile_id']) if e['intercepted'] else (e['round_id'],))))
+            if self.projectile_stream is not None:
+                self.projectile_stream.record(battle.session.world.fixed_step, history.completed)
+                history.release_finished()
             return result
         scheduler = TacticalScheduler(battle.session, clock=self.clock, stepper=stepper, stop_when=lambda: battle.ending is not None)
         digest = canonical_sha256(geometry)
@@ -201,6 +209,7 @@ class RealtimeViewService:
         try:
             self.gunnery, self.scheduler = battle, scheduler
             self.presentation = history
+            self.projectile_stream = None
             self.geometry, self.digest = geometry, digest
             self.error = self._result = self._save_error = None
             self._result_saved, self._deployment_key = False, key
@@ -233,12 +242,20 @@ class RealtimeViewService:
             static_sha256=self.digest, static=None, ships=ships, events=[],
             height_commands=dict(command_sequence=self.gunnery.height_orders.sequence))
         if self.gunnery is not None:
+            self.presentation.publish_shells(world.fixed_step)
             view['navigation'] = self.gunnery.navigation.view()
             view['gunnery'] = self.gunnery.view()
-            for projectile in view['gunnery']['projectiles']:
-                projectile.update(self.presentation.launch(projectile['id']))
-            view['presentation'] = self.presentation.view()
-        self._size(view)
+            if self.projectile_stream is None:
+                for projectile in view['gunnery']['projectiles']:
+                    projectile.update(self.presentation.launch(projectile['id']))
+                view['presentation'] = self.presentation.view()
+            else:
+                view['gunnery']['projectiles'] = [compact_projectile(p) for p in view['gunnery']['projectiles']]
+                view['presentation'] = None
+        if self.projectile_stream is not None:
+            self.projectile_stream.publish(view, self.presentation)
+            self.presentation.release_finished()
+        else:self._size(view)
         self.latest, self.last_publish = view, self.clock()
 
     @staticmethod
@@ -246,13 +263,39 @@ class RealtimeViewService:
         require(len(json.dumps(value, ensure_ascii=False, allow_nan=False).encode('utf-8')) <= budget,
             'Realtime response exceeds byte budget')
 
-    def read(self, known=None):
+    def read(self, known=None, *, display=None, legacy=False):
         from .tactical_yaw_brake import status as yaw_brake_status
         q = self.scheduler
         status = q.status
-        view = deepcopy(self.latest)
+        if display is not None:
+            # Enable only for a client requesting the new protocol. Legacy
+            # consumers do not pay for retaining a second publication stream.
+            if self.projectile_stream is None:
+                self.projectile_stream = ProjectileStream()
+                self.presentation.enable_shell_stream(q.world.fixed_step)
+                self.presentation.enable_missile_stream(q.world.fixed_step,self.gunnery.projectiles)
+                # latest may be older than live authority; only seed the stream
+                # at a publication boundary so events never get ahead of poses.
+                self.publish()
+        # Negotiation persists for control/pause/save responses as well. These
+        # carry a self-contained reset without rewinding the presentation clock.
+        # Plain legacy clients never negotiate; profiling can request an explicit
+        # legacy adapter without enabling a second history generator.
+        view = dict(self.latest)
+        if self.projectile_stream is not None and not legacy:
+            view['projectile_stream'] = self.projectile_stream.read(display['after_sequence'] if display else None)
+        else:
+            if self.presentation.shells is not None:
+                from .shell_presentation import legacy_projectile
+                from .missile_display import legacy_projectile as legacy_missile
+                flights = {p['id']:p for p in self.projectile_stream.flights}
+                view['gunnery'] = {**view['gunnery'],'projectiles':[
+                    legacy_missile(legacy_projectile({**flights[p['id']],**p})) for p in view['gunnery']['projectiles']]}
+                view['presentation'] = dict(interface='gaotian.tactical-presentation/v1alpha1',
+                    finished_projectiles=[legacy_missile(legacy_projectile(p)) for p in self.projectile_stream.finished],
+                    dropped_projectiles=self.projectile_stream.dropped)
         if known != self.digest:
-            view['static'] = deepcopy(self.geometry)
+            view['static'] = self.geometry
         receipts = [asdict(q.query(status.epoch, seq)) for seq in q._records]
         events = [asdict(e) for e in q.read_events(status.epoch, after_sequence=status.acknowledged_event_sequence, limit=16)]
         direct = next(s for s in q.world.ships if s.ship_id == q._session._direct)
@@ -263,10 +306,12 @@ class RealtimeViewService:
             engines=[dict(id=s.engine.actuator_instance_id, phase=s.engine.phase, target=s.engine.target_output_percent,
                 actual=s.engine.actual_output_percent) for s in direct.propulsion.engines], error=self.error,
             settlement=None if self._result is None else dict(result=self._result, saved=self._result_saved, error=self._save_error))
-        self._size(result, MAX_SETTLEMENT_RESPONSE_BYTES if self._result is not None else MAX_RESPONSE_BYTES)
-        # Domain records contain immutable tuples. The bridge deliberately accepts
-        # only JSON arrays/objects; conversion occurs here, never in fixed steps.
-        return json.loads(json.dumps(result, ensure_ascii=False, allow_nan=False))
+        # One serialization validates the complete response budget and provides
+        # an owned JSON tree. No preceding full deep-copy or duplicate encoding.
+        encoded = json.dumps(result, ensure_ascii=False, allow_nan=False)
+        require(len(encoded.encode('utf-8')) <= (MAX_SETTLEMENT_RESPONSE_BYTES if self._result is not None else MAX_RESPONSE_BYTES),
+                'Realtime response exceeds byte budget')
+        return json.loads(encoded)
 
     def dispatch(self, request, *, mode):
         require(request.get('session_id') is None and request.get('expected_revision') is None, 'Realtime uses scene scope')
@@ -336,6 +381,12 @@ class RealtimeViewService:
             return self._attach(battle, geometry, key)
         fields = {'scene_id', 'known_static_sha256', 'ack_inputs', 'ack_events'} if method == 'tactical.realtime.read' else \
             {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun', 'tactical.realtime.height', 'tactical.realtime.navigation', 'tactical.realtime.missile', 'tactical.realtime.countermeasure', 'tactical.realtime.fire_control', 'tactical.realtime.damage_control') else {'scene_id'}
+        if method == 'tactical.realtime.read' and 'display' in p:
+            fields = fields | {'display'}
+            display = p['display']
+            require(type(display) is dict and set(display)=={'interface','after_sequence'}
+                and display['interface']==DISPLAY_INTERFACE and (display['after_sequence'] is None
+                    or count(display['after_sequence'],0)), 'Invalid display cursor')
         require(set(p) == fields, 'Unknown or missing realtime fields')
         if method == 'tactical.realtime.close' and self.scheduler is None and p['scene_id'] == self.last_closed and self.last_closed is not None:
             return dict(closed=True)
@@ -348,6 +399,7 @@ class RealtimeViewService:
             self.last_closed = p['scene_id']
             self.scheduler = self.gunnery = self.latest = self.geometry = self.digest = None
             self.presentation = None
+            self.projectile_stream = None
             if self._prepared_lease is not None:self._prepared_lease.close();self._prepared_lease=None
             return dict(closed=True)
         if method == 'tactical.realtime.read':
@@ -360,11 +412,13 @@ class RealtimeViewService:
             if self.error:
                 self.publish()  # rebuild display from committed authority, no step
                 self.error = None
-            return self.read(p['known_static_sha256'])
+            return self.read(p['known_static_sha256'], display=p.get('display'))
         require(mode == 'tactical' or method == 'tactical.realtime.pause', 'Enter tactical mode first')
         if method == 'tactical.realtime.withdraw':
             self.gunnery.withdraw()
             self.presentation.record(q.world.fixed_step, ())
+            if self.projectile_stream is not None:
+                self.projectile_stream.record(q.world.fixed_step, self.presentation.completed)
             q.pause('battle_finished')
         elif method == 'tactical.realtime.resume':
             require(self.gunnery.ending is None, 'Battle has ended; create a new scene')

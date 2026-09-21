@@ -67,8 +67,12 @@ export function PreparationCanvas({fleet,geometry,selected,moduleId,disabled,onS
         return <g key={member.instance_id} transform={`translate(${pose.x_m} ${-pose.y_m})`}>
           <g transform={`rotate(${-pose.heading_rad*180/Math.PI}) scale(1,-1)`} onPointerDown={e=>down(e,null)}
             role="button" aria-label={`选择${sideName(fleet.id)}舰艇 ${shape.name}`} tabIndex={0} onKeyDown={e=>{if(e.key==='Enter')onSelect(member.instance_id,null);}}>
-            {shape.decks.filter(d=>d.level===deck).flatMap(d=>d.regions.map(r=><polygon key={`${d.id}:${r.id}`} points={r.vertices_m.map(p=>p.join(',')).join(' ')}
-              fill={chosen?'#25434f':'#25303d'} stroke={color} strokeWidth={chosen?2:1} vectorEffect="non-scaling-stroke"/>))}
+            {shape.decks.filter(d=>d.level===deck).flatMap(d=>d.regions.map(r=><g key={`${d.id}:${r.id}`}>
+              {r.armor_faces?.map(f=><polygon key={f.edge_index} points={f.projection_m.map(p=>p.join(',')).join(' ')}
+                fill={color} fillOpacity={.3} stroke={color} strokeWidth={.6} vectorEffect="non-scaling-stroke"><title>外飘装甲 {f.flare_angle_deg}°</title></polygon>)}
+              <polygon points={r.vertices_m.map(p=>p.join(',')).join(' ')}
+                fill={chosen?'#25434f':'#25303d'} stroke={color} strokeWidth={chosen?2:1} vectorEffect="non-scaling-stroke"/>
+            </g>))}
             {shape.modules.map(m=>{
               const cells=moduleFootprints(m).filter(c=>c.level===deck);
               if(!cells.length&&m.deck_level!==deck)return null;

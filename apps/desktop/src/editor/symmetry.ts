@@ -7,7 +7,7 @@ type Armor = HullRegion["edge_armor"][number];
 export type SourceSide = "left" | "right";
 const equal = (a: Vertex, b: Vertex) => a[0] === b[0] && a[1] === b[1];
 const reflected = ([x, y]: Vertex): Vertex => [-x, y];
-const armorKey = (a: Armor) => JSON.stringify([a.material.id, a.material.version, a.thickness_m]);
+const armorKey = (a: Armor) => JSON.stringify([a.material.id, a.material.version, a.thickness_m, a.flare_angle_deg ?? 0]);
 
 // Authoring geometry only. The sidecar still validates and compiles the submitted region.
 function joinHalf(id: string, vertices: Vertex[], armor: Armor[]): HullRegion {

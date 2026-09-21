@@ -216,6 +216,18 @@ def available_penetration_mm(
     ) ** projectile.velocity_exponent
 
 
+def armor_tilt_incidence_deg(impact_angle_deg: float, tilt_cosine: float = 1.0) -> float:
+    """A3 orthogonal tilt approximation, applied once before normalization.
+
+    The caller retains true plate thickness. Vertical projectile speed, if any,
+    is already part of the original incidence; tilt does not change its energy.
+    Keep the exact old result when the design has no flare.
+    """
+    if tilt_cosine == 1.0:
+        return impact_angle_deg
+    return degrees(acos(clamp(cos(radians(impact_angle_deg)) * tilt_cosine, 0.0, 1.0)))
+
+
 def effective_angle_deg(
     projectile: PenetrationProjectileProfile, impact_angle_deg: float
 ) -> float:

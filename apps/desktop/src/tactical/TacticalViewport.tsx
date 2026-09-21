@@ -17,6 +17,7 @@ import { selectedLauncher } from './missiles';
 import { shipIcon } from '../editor/shipIcons';
 import { placeShipMarkers } from './shipMarkers';
 import { clipObservationSample } from './observedView';
+import { drawShellIndicators, shellIndicatorSize } from './shellIndicators';
 
 type ShipObjects = { root: Container; selection: Graphics; modules: { id: string; max: number; graphic: Graphics }[] };
 export type ViewportFocus = { sequence:number; shipId?:string; point?:Point; layer?:string; detail?:boolean };
@@ -29,8 +30,10 @@ function buildShip(ship: ShipGeometry, light: boolean, friendlySide='side.blue')
   for (const level of levels) {
     const hull = new Graphics(); root.addChild(hull);
     for (const region of ship.decks.filter(d => d.level === level).flatMap(d => d.regions)) {
+      for (const face of region.armor_faces ?? []) hull.poly(face.projection_m.flat(), true)
+        .fill({color,alpha:.38}).stroke({color,width:.45,alpha:.7});
       hull.poly(region.vertices_m.flat(), true).fill({ color, alpha: .22 }).stroke({ color, width: .65, alpha: .85 });
-      selection.poly(region.vertices_m.flat(), true).stroke({ color: light ? 0x896114 : 0xffe6a2, width: 1.6 });
+      selection.poly((region.armor_outline_m ?? region.vertices_m).flat(), true).stroke({ color: light ? 0x896114 : 0xffe6a2, width: 1.6 });
     }
     for (const { module, cells } of footprints) {
       const graphic = new Graphics();
@@ -106,9 +109,9 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
   }, [view.snapshot.backend_instance_id, view.snapshot.scene_id]);
   useEffect(() => { setCandidates([]); drag.current = null; latest.current.gunControl?.onLeave(); }, [observationLayer]);
   useEffect(() => {
-    if (active) timeline.current.push(view, performance.now());
+    if (active && !document.hidden) timeline.current.push(view, performance.now());
   }, [active, view]);
-  useEffect(()=>{if(overlay){timeline.current.clear();timeline.current.push(view,performance.now());setCandidates([]);}},[overlay,selected]);
+  useEffect(()=>{if(overlay){if(!document.hidden)timeline.current.push(view,performance.now());setCandidates([]);}},[overlay,selected]);
 
   useEffect(() => {
     if (!active) return;
@@ -294,12 +297,24 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     for (const p of view.snapshot.gunnery?.projectiles ?? []) {
       const at = screen({ x: p.position_m[0], y: p.position_m[1] }, camera);
       const before = screen({ x: p.previous_m[0], y: p.previous_m[1] }, camera);
-      if (light) v.moveTo(before.x, before.y).lineTo(at.x, at.y).stroke({ color: 0x544525, width: 4, alpha: .8 });
-      v.moveTo(before.x, before.y).lineTo(at.x, at.y).stroke({ color: 0xfff2b8, width: 2 });
-      v.circle(at.x, at.y, 2).fill(0xffffff);
+      const indicator = shellIndicatorSize(p), length = Math.hypot(at.x-before.x, at.y-before.y);
+      // Leave the indicator clear of the physical tracer, including its hollow centre.
+      const gap = indicator ? (indicator+1)/2+1 : 0;
+      if (length > gap) {
+        const end = {x:at.x+(before.x-at.x)*gap/length, y:at.y+(before.y-at.y)*gap/length};
+        const trail=p.trail_m?.map(point=>screen({x:point[0],y:point[1]},camera))??[before];
+        const drawTrail=()=>{
+          v.moveTo(trail[0].x,trail[0].y);
+          for(const point of trail.slice(1,-1))if(Math.hypot(point.x-at.x,point.y-at.y)>gap)v.lineTo(point.x,point.y);
+          v.lineTo(end.x,end.y);
+        };
+        drawTrail();v.stroke({ color: 0xffff00, width: 1 });
+      }
+      if (!indicator) v.circle(at.x, at.y, 2).fill(0xffffff);
       if(p.kind==='missile'){
-        const angle=Math.atan2(-p.velocity_mps[1],p.velocity_mps[0]);
-        v.moveTo(at.x+6*Math.cos(angle),at.y+6*Math.sin(angle))
+        const angle=p.heading_rad===undefined?Math.atan2(-p.velocity_mps[1],p.velocity_mps[0]):-p.heading_rad;
+        const length=6*Math.max(.35,Math.cos(p.pitch_rad??0));
+        v.moveTo(at.x+length*Math.cos(angle),at.y+length*Math.sin(angle))
           .lineTo(at.x+4*Math.cos(angle+2.5),at.y+4*Math.sin(angle+2.5))
           .lineTo(at.x+4*Math.cos(angle-2.5),at.y+4*Math.sin(angle-2.5))
           .closePath().fill(light?0x1d655e:0x7dffe1);
@@ -308,13 +323,13 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     }
     for (const event of view.snapshot.gunnery?.point_defense?.recent ?? []) {
       const age=view.snapshot.fixed_step-event.step;
-      if(age<0||age>35)continue;
+      if(view.snapshot.gunnery?.ending||event.step<=(view.snapshot.display_effect_after_step??-Infinity)||age<0||age>35)continue;
       const at=screen({x:event.position_m[0],y:event.position_m[1]},camera);
       v.circle(at.x,at.y,(event.intercepted?7:3)+age*.12).stroke({color:event.intercepted?0x80ffe0:0xffdc87,width:2,alpha:1-age/36});
     }
     for (const event of view.snapshot.gunnery?.damage?.magazine_explosions ?? []) {
       const age=view.snapshot.fixed_step-event.step;
-      if(age<0||age>90)continue;
+      if(view.snapshot.gunnery?.ending||event.step<=(view.snapshot.display_effect_after_step??-Infinity)||age<0||age>90)continue;
       const at=screen({x:event.position_m[0],y:event.position_m[1]},camera);
       const radius=Math.max(8,event.radius_m*camera.scale)*Math.min(1,.25+age/30);
       v.circle(at.x,at.y,radius).fill({color:0xff9d32,alpha:.3*(1-age/91)});
@@ -322,10 +337,14 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     }
     for (const hit of view.snapshot.gunnery?.damage?.recent ?? []) {
       const age = view.snapshot.fixed_step-hit.step;
-      if (age < 0 || age > 45) continue;
+      if (view.snapshot.gunnery?.ending||hit.step<=(view.snapshot.display_effect_after_step??-Infinity)||age < 0 || age > 45) continue;
       const at = screen({ x: hit.position_m[0], y: hit.position_m[1] }, camera);
       v.circle(at.x, at.y, 5+age*.15).stroke({ color: hit.outcome === "penetrated" || hit.outcome === "module" ? 0xff7040 : 0xaadfff, width: 2, alpha: 1-age/46 });
     }
+    const ownId = view.snapshot.control_state?.direct_ship_id ?? gunControl?.ownShipId ?? selected;
+    const ownSide = view.geometry.ships.find(s=>s.id===ownId)?.side_id ?? 'side.blue';
+    drawShellIndicators(v, view.snapshot.gunnery?.projectiles ?? [], camera,
+      new Set(view.geometry.ships.filter(s=>s.side_id===ownSide).map(s=>s.id)));
     app.render();
     // Lightweight display diagnostics also let browser checks compare frame and
     // publication cadence without feeding display positions back into commands.
@@ -334,6 +353,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
       host.current.dataset.snapshotStep = String(latest.current.view.snapshot.fixed_step);
       host.current.dataset.camera=JSON.stringify(camera);
       host.current.dataset.visibleShips=JSON.stringify(view.snapshot.ships.map(s=>s.id));
+      host.current.dataset.visibleProjectiles=JSON.stringify(view.snapshot.gunnery?.projectiles.map(p=>p.id)??[]);
     }
   };
 
@@ -546,7 +566,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
     </> : '观察切换不改变舰艇高度与火炮作用层。'}</div>}
     <details className="viewport-help" open={!compact}><summary>战场操作说明</summary>
       <p>{gunControl ? "右键本舰火炮选择；自动模式左键敌舰或模块指定目标，手动模式跟随鼠标、左键单发。中键拖动平移，滚轮缩放。黄色粗线是实际炮向，十字是瞄准点。" : "点击舰体或右侧列表选舰；拖动平移，滚轮缩放。"}画布获得焦点后可用方向键平移、＋/− 缩放、Home 查看全场。</p>
-      <p>观察层切换只改变画面。先在火炮面板选择炮弹作用层，再切到该层瞄准；炮弹发射后固定在该层。舰内甲板叠加显示，“舰内点选甲板”仅区分重叠模块。网格固定为 50 米，缩远时淡出过密细线。箭头指向船艏，绿色线表示 5 秒速度向量。</p>
+      <p>观察层切换只改变画面。先在火炮面板选择炮弹作用层，再切到该层瞄准；炮弹发射后固定在该层。舰内甲板叠加显示，“舰内点选甲板”仅区分重叠模块。网格固定为 50 米，缩远时淡出过密细线。箭头指向船艏，绿色线表示 5 秒速度向量。炮弹标记：我方蓝色、敌方红色；无耐久弹为 1 像素点，有耐久弹为 3×3 像素空心框。</p>
       {overlay&&<p>敌方实形使用当前操作舰的有效观测，数据链共享也需实际可用。虚线圆为最后观测位置；异层图标带层级标签，双击只切换观察层。重叠图标错位显示，细线指回舰位。</p>}
     </details>
   </div>;

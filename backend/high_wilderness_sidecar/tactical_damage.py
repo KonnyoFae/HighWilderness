@@ -9,7 +9,7 @@ from math import cos, sin, hypot, pi, ceil, sqrt, acos, degrees
 
 from 高天荒野舰艇战术弹丸世界 import compile_projectile_target_geometry, _segment_aabb_entry_fraction
 from 高天荒野舰艇炮弹与甲弹公式 import (ArmorState, ImpactOutcome, Aftereffect,
-    resolve_armor_impact, relative_impact_velocity_xy)
+    resolve_armor_impact, relative_impact_velocity_xy, armor_tilt_incidence_deg)
 from .simplified_flight import ImpactBatch
 from .tactical_devices import DeviceOperation
 from .structural_durability import compile_durability, REFERENCE_MAXIMUM_POINTS
@@ -70,13 +70,13 @@ def ship_layer_at(old,new,t,seconds):
 
 
 def impact_incidence(relative, edge, vertical_speed):
-    # Deck geometry is still planar. Its side-armor normal has zero vertical
+    # Deck geometry is still planar. Its original side-armor normal has zero vertical
     # component: use total speed once for energy and once to normalize the
     # incidence vector, without stretching the internal XY aftereffect ray.
     speed=hypot(*relative,vertical_speed)
     ex,ey=edge.end[0]-edge.start[0],edge.end[1]-edge.start[1]
     cosine=abs(-relative[0]*ey+relative[1]*ex)/(hypot(ex,ey)*speed) if speed else 0.
-    return degrees(acos(max(0.,min(1.,cosine))))
+    return armor_tilt_incidence_deg(degrees(acos(max(0.,min(1.,cosine)))), edge.tilt_cosine)
 
 
 def segment(a, b, c, d):
@@ -103,6 +103,8 @@ class Edge:
     protection: float
     thickness_mm: float
     maximum: float
+    tilt_cosine: float = 1.0
+    flare_angle_deg: int = 0
 
 
 @dataclass(frozen=True)
@@ -156,14 +158,18 @@ class DamageKernel:
             hull = binding.snapshot.hull
             geometry = compile_projectile_target_geometry(binding.snapshot)
             maxima = {v[:4]: v[4] for v in hull.local_armor_durability_proxy}
+            surfaces = {(r.deck_id, r.region_id, e.edge_index): e for r in hull.armor_geometry.regions
+                        for e in r.edges} if hull.armor_geometry else {}
             edges = []
             for deck in hull.normalized_blueprint.decks:
                 for region in deck.regions:
                     for n, spec in enumerate(region.edge_armor):
                         key = deck.id, deck.level, region.id, n
                         material = scenario.material_registry.base_armor(spec.material, '$.impact.armor')
+                        surface = surfaces.get((deck.id, region.id, n))
                         edges.append(Edge(key, region.vertices_m[n], region.vertices_m[(n+1) % len(region.vertices_m)],
-                            material.protection_coefficient, spec.thickness_m*1000, maxima[key]))
+                            material.protection_coefficient, spec.thickness_m*1000, maxima[key],
+                            surface.tilt_cosine if surface else 1., spec.flare_angle_deg or 0))
             cells = []
             for m in seed.resources.modules:
                 internal = {(level, x*5., y*5.) for level, x, y in m.internal_cells}
@@ -246,7 +252,7 @@ class DamageKernel:
         for p in sorted(projectiles, key=lambda p: p.id):
             if world.fixed_step > p.expires:
                 expired += 1
-                terminals.append(dict(projectile_id=p.id, position_m=p.position))
+                terminals.append(dict(projectile_id=p.id, position_m=p.position, impact_fraction=0.))
                 continue
             flight = flight_segment(p)
             end, _ = flight.at(1)
@@ -303,7 +309,7 @@ class DamageKernel:
             if not hits:
                 if world.fixed_step == p.expires:
                     expired += 1
-                    terminals.append(dict(projectile_id=p.id, position_m=end))
+                    terminals.append(dict(projectile_id=p.id, position_m=end, impact_fraction=1.))
                 else:
                     survivors.append(advance_projectile(p,flight))
                 continue
@@ -318,7 +324,7 @@ class DamageKernel:
         for (t,i,kind,n),p,flight in sorted(pending,key=lambda item:(item[0][0],item[1].id)):
             if p.id in removed:continue
             if kind==2:
-                terminals.append(dict(projectile_id=p.id,position_m=flight.at(t)[0],decoy_id=n))
+                terminals.append(dict(projectile_id=p.id,position_m=flight.at(t)[0],impact_fraction=t,decoy_id=n))
                 continue
             profile = self.profiles[p.projectile_key]
             incendiary=is_incendiary(p.projectile_key) or bool(p.missile and p.missile.warhead=='incendiary')
@@ -342,6 +348,7 @@ class DamageKernel:
             damage = profile.damage
             ids, amount, outcome, energy = [], damage.surface_module_damage_points, 'module', 0.
             armor_before = armor_after = None
+            armor_profile = None
             fuel_ids=[]
             internal_ids=set()
             internal_points={}
@@ -355,6 +362,13 @@ class DamageKernel:
                     impact_incidence(relative,edge,vertical_speed),
                     ricochet_roll=((p.id*2654435761+world.fixed_step*12345) & 0xffffffff)/0xffffffff)
                 outcome, energy = result.outcome.value, result.residual_energy_ratio
+                if edge.flare_angle_deg:
+                    armor_profile = dict(deck_id=edge.key[0], region_id=edge.key[2], edge_index=edge.key[3],
+                        thickness_mm=edge.thickness_mm, flare_angle_deg=edge.flare_angle_deg,
+                        tilt_cosine=edge.tilt_cosine, impact_angle_deg=result.impact_angle_deg,
+                        effective_angle_deg=result.effective_angle_deg,
+                        required_penetration_mm=result.required_penetration_mm,
+                        available_penetration_mm=result.available_penetration_mm, active=armor_before > 0)
                 armor_after = max(0., armor_before-result.armor_damage_formula_points*damage.armor_damage_to_local_durability_proxy)
                 if armor_after != armor_before:
                     values = list(armor[i]); values[n] = armor_after; armor[i] = tuple(values)
@@ -406,6 +420,7 @@ class DamageKernel:
                 position_m=position, deck_level=level, height_layer=layer_at(p,flight,t) or ship_layer_at(old.motion,ship.motion,t,flight.seconds), outcome=outcome, module_ids=ids,
                 module_damage=amount if ids else 0., armor_before=armor_before, armor_after=armor_after,
                 residual_energy_ratio=energy,
+                **(dict(armor_profile=armor_profile) if armor_profile else {}),
                 **(dict(deck_selection=dict(policy=self.deck_policy.id, preferred_levels=selection.preferred_levels,
                     probabilities=[dict(deck_level=deck, probability=weight/sum(w for _,w in selection.weights))
                         for deck,weight in selection.weights], sample=selection.roll)) if selection else {}),

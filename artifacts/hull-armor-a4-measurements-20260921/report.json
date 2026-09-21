@@ -1,0 +1,130 @@
+{
+  "status": "PASS",
+  "scope": "155m test hull, 15mm structure, 50mm armor, existing prototype drag; timings are local idle two-ship checks, not maximum-scale acceptance",
+  "reference_rcs_m2": 1000,
+  "old_a3_readonly_restoration": [
+    {
+      "instance_id": "instance.preparation.2f4257d1-dc9d-4880-bf4e-22705dc54ad6",
+      "design_sha256": "95155fe96c22cf67651c94638fc952edaa04415265d0057ea0a8c66217cdae3b",
+      "revision": 2
+    },
+    {
+      "instance_id": "instance.preparation.cddc5c1c-4d8e-40b1-ab41-7f6bb032a3e0",
+      "design_sha256": "95155fe96c22cf67651c94638fc952edaa04415265d0057ea0a8c66217cdae3b",
+      "revision": 2
+    }
+  ],
+  "measurements": [
+    {
+      "angle": 0,
+      "design_mass_kg": 982033.1128187114,
+      "shape_model": "gaotian.aero.geometry/v1alpha1",
+      "wet_surface_area_m2": 7820.365892531749,
+      "directions": [
+        {
+          "bearing_deg": 0,
+          "projected_area_m2": 150.0,
+          "rcs_m2": 946.1806448231015,
+          "radar_distance_factor": 0.9862647582569704,
+          "drag_at_100_mps_n": 474003.83962918917
+        },
+        {
+          "bearing_deg": 90,
+          "projected_area_m2": 975.0,
+          "rcs_m2": 27607.281624421434,
+          "radar_distance_factor": 2.2922179620801306,
+          "drag_at_100_mps_n": 4399094.265679474
+        }
+      ],
+      "idle_two_ship_600_steps_ms": {
+        "median": 0.44165000144857913,
+        "p95": 0.5248000015853904,
+        "maximum": 2.1686999971279874
+      }
+    },
+    {
+      "angle": 30,
+      "design_mass_kg": 1114335.8556924807,
+      "shape_model": "gaotian.hull-shape/a4-v1",
+      "wet_surface_area_m2": 9136.164416659161,
+      "directions": [
+        {
+          "bearing_deg": 0,
+          "projected_area_m2": 164.43375672974062,
+          "rcs_m2": 933.5643173114315,
+          "radar_distance_factor": 0.9829604881427718,
+          "drag_at_100_mps_n": 488013.88677155436
+        },
+        {
+          "bearing_deg": 90,
+          "projected_area_m2": 1005.0386515942522,
+          "rcs_m2": 20763.632721221526,
+          "radar_distance_factor": 2.1346458557401444,
+          "drag_at_100_mps_n": 3849026.9863377223
+        }
+      ],
+      "cold_shape_cache_ms": 298.2828000021982,
+      "idle_two_ship_600_steps_ms": {
+        "median": 0.44345000060275197,
+        "p95": 0.5262000049697235,
+        "maximum": 1.1799999992945231
+      }
+    },
+    {
+      "angle": 45,
+      "design_mass_kg": 1317413.1509690296,
+      "shape_model": "gaotian.hull-shape/a4-v1",
+      "wet_surface_area_m2": 10424.81158378386,
+      "directions": [
+        {
+          "bearing_deg": 0,
+          "projected_area_m2": 175.0,
+          "rcs_m2": 913.1986686918204,
+          "radar_distance_factor": 0.9775552611798203,
+          "drag_at_100_mps_n": 484537.4289039093
+        },
+        {
+          "bearing_deg": 90,
+          "projected_area_m2": 1027.0284707521048,
+          "rcs_m2": 14404.790283713208,
+          "radar_distance_factor": 1.9481694780018888,
+          "drag_at_100_mps_n": 3230105.011928523
+        }
+      ],
+      "cold_shape_cache_ms": 302.1956999946269,
+      "idle_two_ship_600_steps_ms": {
+        "median": 0.4485499994189013,
+        "p95": 0.5791000003227964,
+        "maximum": 1.3160000016796403
+      }
+    },
+    {
+      "angle": 60,
+      "design_mass_kg": 1794250.0187133136,
+      "shape_model": "gaotian.hull-shape/a4-v1",
+      "wet_surface_area_m2": 13085.089472476133,
+      "directions": [
+        {
+          "bearing_deg": 0,
+          "projected_area_m2": 193.3012701892219,
+          "rcs_m2": 898.9138693810281,
+          "radar_distance_factor": 0.9737097535407157,
+          "drag_at_100_mps_n": 491951.9160675972
+        },
+        {
+          "bearing_deg": 90,
+          "projected_area_m2": 1065.1159547827565,
+          "rcs_m2": 9235.809613443862,
+          "radar_distance_factor": 1.7432864034820827,
+          "drag_at_100_mps_n": 2614888.026938925
+        }
+      ],
+      "cold_shape_cache_ms": 312.7853999976651,
+      "idle_two_ship_600_steps_ms": {
+        "median": 0.44365000212565064,
+        "p95": 0.5403999966802076,
+        "maximum": 0.9806000016396865
+      }
+    }
+  ]
+}

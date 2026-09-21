@@ -1,0 +1,11 @@
+{
+  "status": "PASS",
+  "checks": [
+    "direct canvas edge pick; explicit v4 migration; mirrored edge update and authoritative blocked lower cells",
+    "armor-mode drag only pans; zero thickness disables flare; bulk edit, support diagnostic and undo/redo",
+    "save and reopen preserve all edge profiles and compiled surfaces",
+    "real outfit canvas shows blocked cells and slope; actual mass requires two lift tanks; install CIC and tanks, save and reopen portable outfit"
+  ],
+  "finalMass": 4789576.117170304,
+  "scope": "real browser React + Python backend; native dialog mocked"
+}

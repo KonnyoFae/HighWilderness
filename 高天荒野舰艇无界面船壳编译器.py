@@ -12,6 +12,8 @@ from math import ceil, floor, hypot, sqrt
 from statistics import median
 from typing import Any
 from 高天荒野舰艇边缘填充 import DeckFilling, FillingLoad, compile_filling
+from 高天荒野舰艇结构厚度 import effective_thickness_m, validate_deck_thicknesses, HULL_STRUCTURE_SCHEMA, STRUCTURE_INTERFACE
+from 高天荒野舰艇装甲外飘 import HULL_ARMOR_SCHEMA, ArmorGeometry, ArmorEdgeGeometry, compile_armor_geometry, validate_armor_version
 
 from 高天荒野舰艇RCS缓存 import HullRCSCache, build_hull_rcs_cache
 from 高天荒野舰艇气动缓存 import (
@@ -368,6 +370,7 @@ def validate_regions_y_symmetry(
         if (
             armor.material != mirror_armor.material
             or abs(armor.thickness_m - mirror_armor.thickness_m) > EPS
+            or armor.flare_angle_deg != mirror_armor.flare_angle_deg
         ):
             raise ContractError("hull.symmetry_armor", path, f"边 {key} 的装甲不对称")
 
@@ -449,6 +452,7 @@ class CompiledEdge:
     end: Point
     input: EdgeArmorInput
     material: BaseArmorMaterial
+    geometry: ArmorEdgeGeometry | None = None
 
     @property
     def length_m(self) -> float:
@@ -456,7 +460,8 @@ class CompiledEdge:
 
     @property
     def volume_m3(self) -> float:
-        return self.length_m * DECK_HEIGHT_M * self.input.thickness_m
+        area = self.geometry.area_m2 if self.geometry else self.length_m * DECK_HEIGHT_M
+        return area * self.input.thickness_m
 
     @property
     def mass_kg(self) -> float:
@@ -628,6 +633,10 @@ class CompiledRegion:
     def armor_mass_kg(self) -> float:
         return sum(edge.mass_kg for edge in self.edges)
 
+    @property
+    def internal_armor_deduction_m3(self) -> float:
+        return sum(edge.length_m * DECK_HEIGHT_M * edge.input.thickness_m for edge in self.edges)
+
 
 @dataclass(frozen=True)
 class StructureContext:
@@ -636,7 +645,9 @@ class StructureContext:
 
     @property
     def vertices(self) -> tuple[Point, ...]:
-        return tuple(point for region in self.regions for point in region.input.vertices_m)
+        return tuple(point for region in self.regions for point in region.input.vertices_m) + tuple(
+            p[:2] for region in self.regions for edge in region.edges if edge.geometry
+            for s in edge.geometry.surfaces for p in s.vertices_m)
 
     @property
     def structure_mass_kg(self) -> float:
@@ -656,7 +667,8 @@ def mass_less(context: StructureContext, axis: int, value: float) -> float:
         if len(clipped) >= 3:
             structure_mass += polygon_area(clipped) * region.structure_surface_density_kg_m2
     armor_mass = sum(
-        edge.mass_kg * segment_fraction_less(edge.start, edge.end, axis, value)
+        (sum(s.area_less(axis, value) for s in edge.geometry.surfaces) * edge.input.thickness_m * edge.material.density_kg_m3
+         if edge.geometry else edge.mass_kg * segment_fraction_less(edge.start, edge.end, axis, value))
         for region in context.regions
         for edge in region.edges
     )
@@ -676,6 +688,11 @@ def cut_capacity_n(context: StructureContext, axis: int, value: float) -> float:
     )
     for region in context.regions:
         for edge in region.edges:
+            if edge.geometry:
+                capacity += (SHELL_STRENGTH_EFFICIENCY * edge.material.shell_strength_coefficient
+                    * ARMOR_STEEL_EFFECTIVE_ALLOWABLE_STRESS_PA * edge.input.thickness_m
+                    * sum(s.load_cut_length(axis, value) for s in edge.geometry.surfaces))
+                continue
             a = edge.start[axis]
             b = edge.end[axis]
             if not ((a <= value < b) or (b <= value < a)):
@@ -754,6 +771,8 @@ def yaw_limits(
 
 
 def armor_edge_inertia(edge: CompiledEdge) -> float:
+    if edge.geometry:
+        return sum(s.polar_area_moment_m4 for s in edge.geometry.surfaces) * edge.input.thickness_m * edge.material.density_kg_m3
     midpoint_x = 0.5 * (edge.start[0] + edge.end[0])
     midpoint_y = 0.5 * (edge.start[1] + edge.end[1])
     return edge.mass_kg * (
@@ -776,6 +795,9 @@ class CompiledDeckResult:
     exposed_top_cells: tuple[tuple[int, int], ...]
     side_mount_slots: tuple[SideMountSlot, ...]
     filling: DeckFilling | None = None
+    structure_thickness_m: float | None = None
+    effective_structure_thickness_m: float | None = None
+    armor_blocked_top_cells: tuple[tuple[int, int], ...] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -785,6 +807,7 @@ class CompiledDeckResult:
             "exposed_top_cells": [list(cell) for cell in self.exposed_top_cells],
             "id": self.id,
             "internal_cells": [list(cell) for cell in self.internal_cells],
+            **({"armor_blocked_top_cells": [list(c) for c in self.armor_blocked_top_cells]} if self.armor_blocked_top_cells is not None else {}),
             "level": self.level,
             "perimeter_m": self.perimeter_m,
             "region_ids": list(self.region_ids),
@@ -792,6 +815,10 @@ class CompiledDeckResult:
             "structure_mass_kg": self.structure_mass_kg,
             "structure_volume_m3": self.structure_volume_m3,
             **({"filling": self.filling.to_dict()} if self.filling else {}),
+            **({"structure": {"interface": STRUCTURE_INTERFACE,
+                "thickness_m": self.structure_thickness_m,
+                "effective_thickness_m": self.effective_structure_thickness_m}}
+               if self.structure_thickness_m is not None else {}),
         }
 
 
@@ -823,6 +850,7 @@ class CompiledHull:
     decks: tuple[CompiledDeckResult, ...]
     aerodynamic_cache: AerodynamicGeometryCache
     hull_rcs_cache: HullRCSCache
+    armor_geometry: ArmorGeometry | None = None
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -842,7 +870,11 @@ class CompiledHull:
                 "directional_aerodynamic_geometry_cache",
                 "directional_baseline_hull_rcs_cache",
             ],
-            "compiler_interface": "gaotian.hull-compiler/h5b-v1" if any(d.filling for d in self.decks) else HULL_COMPILER_INTERFACE_ID,
+            "compiler_interface": ("gaotian.hull-compiler/a4-v1" if self.aerodynamic_cache.model == "gaotian.hull-shape/a4-v1"
+                else "gaotian.hull-compiler/a2-v1" if self.armor_geometry is not None
+                else "gaotian.hull-compiler/a0-v1" if self.normalized_blueprint.schema == HULL_STRUCTURE_SCHEMA
+                else "gaotian.hull-compiler/h5b-v1" if any(d.filling for d in self.decks) else HULL_COMPILER_INTERFACE_ID),
+            **({"armor_geometry": self.armor_geometry.to_dict()} if self.armor_geometry is not None else {}),
             "decks": [deck.to_dict() for deck in self.decks],
             "deferred_capabilities": [
                 "module_and_outfit_compilation",
@@ -932,16 +964,24 @@ def _normalize_and_validate_decks(blueprint: HullBlueprintInput) -> tuple[DeckIn
 
 
 def compile_hull(
-    blueprint: HullBlueprintInput, registry: MaterialRegistry
+    blueprint: HullBlueprintInput, registry: MaterialRegistry, *, armor_shape_effects: bool = True
 ) -> CompiledHull:
+    validate_deck_thicknesses(blueprint.decks, schema=blueprint.schema)
+    validate_armor_version(blueprint)
     normalized_decks = _normalize_and_validate_decks(blueprint)
     normalized_blueprint = replace(blueprint, decks=normalized_decks)
-    aerodynamic_cache = build_aerodynamic_geometry_cache(
-        normalized_decks, blueprint.grid.deck_height_m
-    )
-    hull_rcs_cache = build_hull_rcs_cache(
-        normalized_decks, blueprint.grid.deck_height_m
-    )
+    armor_geometry = compile_armor_geometry(normalized_decks, blueprint.grid.deck_height_m) if blueprint.schema == HULL_ARMOR_SCHEMA else None
+    armor_regions = {(r.deck_id, r.region_id): r for r in armor_geometry.regions} if armor_geometry else {}
+    if armor_shape_effects and armor_geometry and armor_geometry.has_flare:
+        from 高天荒野舰艇外形方向缓存 import build_shape_caches
+        aerodynamic_cache, hull_rcs_cache = build_shape_caches(armor_geometry, blueprint.grid.deck_height_m)
+    else:
+        aerodynamic_cache = build_aerodynamic_geometry_cache(
+            normalized_decks, blueprint.grid.deck_height_m
+        )
+        hull_rcs_cache = build_hull_rcs_cache(
+            normalized_decks, blueprint.grid.deck_height_m
+        )
     base_region = normalized_decks[0].regions[0]
     if not point_inside_polygon((0.0, 0.0), base_region.vertices_m):
         raise ContractError(
@@ -954,9 +994,7 @@ def compile_hull(
         structure_material = registry.structure(
             deck.structure_material, f"$.decks[{deck_index}].structure_material"
         )
-        effective_thickness = DECK_EQUIVALENT_THICKNESS_M + (
-            JOINT_EQUIVALENT_THICKNESS_M if deck.level > 0 else 0.0
-        )
+        effective_thickness = effective_thickness_m(deck)
         compiled_deck_regions: list[CompiledRegion] = []
         for region_index, region in enumerate(deck.regions):
             edges: list[CompiledEdge] = []
@@ -971,7 +1009,11 @@ def compile_hull(
                     armor_input.material,
                     f"$.decks[{deck_index}].regions[{region_index}].edge_armor[{edge_index}].material",
                 )
-                edges.append(CompiledEdge(start, end, armor_input, armor_material))
+                geometry = armor_regions.get((deck.id, region.id))
+                # Keep the exact legacy arithmetic for vertical plates, including
+                # v4 designs with every flare disabled.
+                edges.append(CompiledEdge(start, end, armor_input, armor_material,
+                    geometry.edges[edge_index] if geometry and armor_input.flare_angle_deg else None))
             compiled_region = CompiledRegion(
                 deck_id=deck.id,
                 deck_level=deck.level,
@@ -1014,6 +1056,12 @@ def compile_hull(
                 for upper in upper_regions
             )
         )
+        armor_blocked = tuple(cell for cell in exposed_cells if any(
+            cell_has_positive_overlap(cell, e.projection_m, blueprint.grid.cell_size_m)
+            for r in armor_regions.values() if r.deck_level == deck.level + 1
+            for e in r.edges if e.projection_m))
+        blocked_set = set(armor_blocked)
+        exposed_cells = tuple(cell for cell in exposed_cells if cell not in blocked_set)
         side_slots = tuple(
             slot
             for region in regions
@@ -1024,6 +1072,7 @@ def compile_hull(
                 region.input.id,
                 blueprint.grid.cell_size_m,
             )
+            if not region.input.edge_armor[slot.edge_index].flare_angle_deg
         )
         deck_results.append(
             CompiledDeckResult(
@@ -1039,7 +1088,10 @@ def compile_hull(
                 internal_cells=internal_cells,
                 exposed_top_cells=exposed_cells,
                 side_mount_slots=side_slots,
+                armor_blocked_top_cells=armor_blocked if armor_geometry else None,
                 filling=compile_filling(deck, regions) if deck.filling else None,
+                structure_thickness_m=deck.structure_thickness_m,
+                effective_structure_thickness_m=effective_thickness_m(deck) if deck.structure_thickness_m is not None else None,
             )
         )
 
@@ -1107,4 +1159,5 @@ def compile_hull(
         decks=tuple(deck_results),
         aerodynamic_cache=aerodynamic_cache,
         hull_rcs_cache=hull_rcs_cache,
+        armor_geometry=armor_geometry,
     )

@@ -1,0 +1,5 @@
+Error: Command failed: powershell -NoProfile -File tools/Set-DisplayTestWindow.ps1 -DesktopProcessId 25624 -Action Minimize
+�޷������ļ� G:\�����Ұ\tools\Set-DisplayTestWindow.ps1����Ϊ�ڴ�ϵͳ�Ͻ�ֹ���нű����й���ϸ��Ϣ������� https:/go.mic
+rosoft.com/fwlink/?LinkID=135170 �е� about_Execution_Policies��
+    + CategoryInfo          : SecurityError: (:) []��ParentContainsErrorRecordException
+    + FullyQualifiedErrorId : UnauthorizedAccess
