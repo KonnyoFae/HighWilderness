@@ -472,7 +472,7 @@ class SimplifiedFlightSession:
 
     @staticmethod
     def can_navigate(ship, autonomous=False):
-        return ship.motion.hull_integrity_fraction > 0 and (ship.authority_allowed or
+        return ship.wreck is None and ship.motion.hull_integrity_fraction > 0 and (ship.authority_allowed or
             autonomous and ship.command is not None and not ship.command.suppress and ship.command.cic_control)
 
     def _requested(self, ship, state, control, seed=None, *, autonomous=False):
@@ -714,7 +714,13 @@ class SimplifiedFlightSession:
                 candidate, crash_events = self._impact_boundary(candidate, ImpactBatch(hull_damage=crashes), autonomous_ids=navigation)
                 result = replace(result, events=result.events + crash_events)
             if repair_project is not None:
-                repair_project(candidate, result)
+                closed = repair_project(candidate, result)
+                if closed is not None:
+                    require(type(closed) is type(candidate) and closed.epoch == candidate.epoch
+                        and closed.fixed_step == candidate.fixed_step
+                        and tuple(s.ship_id for s in closed.ships) == tuple(s.ship_id for s in candidate.ships),
+                        'Closing projection changed scene identity or time')
+                    candidate = closed
             self._world, self._last = candidate, result
             return result
         finally:

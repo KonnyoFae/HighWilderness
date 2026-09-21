@@ -56,15 +56,19 @@ def tracking_cost(target, high_speed=1000.):
     return (1 if target.large else 2)*(4 if speed>=high_speed else 1)
 
 
-def can_observe(sensor, own_position, own_layer, target, blocked=False, *, ship_radar_factor=1.):
-    if blocked or abs(LAYERS.index(own_layer)-LAYERS.index(target.layer))>1:return False
+def observation_range(sensor, target, *, ship_radar_factor=1.):
     maximum=sensor['range_m']
     if target.kind=='ship':
         maximum=min(maximum,sensor['ship_range_m'])
         if sensor['channel']=='radar':maximum*=ship_radar_factor
     elif not target.powered:maximum=min(maximum,sensor['coasting_range_m'])
     maximum*=sensor['weather'][LAYERS.index(target.layer)]*sensor['range_efficiency']
-    return hypot(*(a-b for a,b in zip(own_position,target.position)))<=maximum
+    return maximum
+
+
+def can_observe(sensor, own_position, own_layer, target, blocked=False, *, ship_radar_factor=1.):
+    if blocked or abs(LAYERS.index(own_layer)-LAYERS.index(target.layer))>1:return False
+    return hypot(*(a-b for a,b in zip(own_position,target.position)))<=observation_range(sensor,target,ship_radar_factor=ship_radar_factor)
 
 
 def allocate(candidates, previous, capacity, priorities):

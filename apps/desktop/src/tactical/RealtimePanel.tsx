@@ -449,9 +449,9 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       <div><h2>{view ? "舰队交战" : "正在部署舰队"}</h2>{state&&<small>{state.status.running?'运行中':pauseLabel[state.status.pause_reason??'']??'已暂停'} · {(state.status.fixed_step/60).toFixed(1)} 秒</small>}</div>
       <div className="editor-row">
         {!state && <button disabled={busy || !active} onClick={() => void action("create")}>重试进入战场</button>}
-        <button disabled={busy || !state || state.status.running || !!state.settlement || !state.available} onClick={() => void action("resume")}>开始交战</button>
+        <button disabled={busy || !state || state.status.running || !!state.settlement} onClick={() => void action("resume")}>开始交战</button>
         <button disabled={busy || !state?.status.running} onClick={() => void action("pause")}>暂停交战</button>
-        <button className="secondary" disabled={busy || !state || !!state.settlement} onClick={() => void action("withdraw")}>结束本场交战</button>
+        <button className="secondary" disabled={busy || !state || !!state.settlement} onClick={() => void action("withdraw")}>结束本场交战（测试）</button>
         {!state && <button disabled={busy || entryUncertain} onClick={() => void action("close")}>返回战前准备</button>}
       </div>
     </header>
@@ -462,7 +462,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     {receipt && <p role="status">{receipt}</p>}
     {uncertain !== null && <p role="alert">操纵 {uncertain} 的结果尚未确认，正在查询；不会自动重发。</p>}
     {gunUncertain !== null && <p role="alert">火炮命令 {gunUncertain} 尚待确认，正在查询；不会自动重发射击。</p>}
-    {state && !state.available && <p role="alert">旗舰已失去操纵权。{state.loss_reason === "direct_ship_falling" ? "舰艇正在坠落。" : "后续操纵已取消。"}</p>}
+    {state && !state.available && !view?.snapshot.gunnery?.ending && !view?.snapshot.navigation?.disengagement?.departed_ship_ids.includes(state.direct_ship_id) && <p role="alert">旗舰已失去操纵权。{state.loss_reason === "direct_ship_falling" ? "舰艇正在坠落。" : "后续操纵已取消。"}</p>}
 
     </div>
     {view && state && !state.settlement && <div className="battle-grid">
@@ -618,7 +618,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
         </div>
       </BattleDock>
     </div>}
-    {view?.snapshot.gunnery?.ending && <p role="status">交战已结束：{{ victory: "敌方失去作战能力", defeat: "本方失去作战能力", draw: "双方失去作战能力", withdrawal: "主动撤离" }[view.snapshot.gunnery.ending.reason] ?? view.snapshot.gunnery.ending.reason}。已完成有效火炮在装批次，导弹未完成作业保留进度，清除在途弹丸；{state?.settlement?.saved ? "战后结果已保存。" : "请在结算页面保存本场结果。"}</p>}
+    {view?.snapshot.gunnery?.ending && <p role="status">交战已结束：{{ victory: "敌方失去作战能力", defeat: "本方失去作战能力", draw: "双方失去作战能力", withdrawal: "本方撤离", disengagement: "双方脱离接触" }[view.snapshot.gunnery.ending.reason] ?? view.snapshot.gunnery.ending.reason}。已完成有效火炮在装批次，导弹未完成作业保留进度，清除在途弹丸；{state?.settlement?.saved ? "战后结果已保存。" : "请在结算页面保存本场结果。"}</p>}
 
     {(state?.settlement || historyResult || !state) && <SettlementPanel
       current={state?.settlement && (!historyResult || historyResult.result.settlement_id === state.settlement.result.settlement_id) ? state.settlement : historyResult}
@@ -640,7 +640,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     {view && <InterceptionLog view={view}/>}
 
     </details>}
-    <p className="battle-stage-note">当前阶段可通过“结束本场交战”进入结算；按距离撤离将在后续阶段接入。</p>
+    <p className="battle-stage-note">正式撤离按距离判定；测试结束按钮会立即冻结本场。旗舰被毁立即终局，幸存舰按可调整的撤离概率处理。</p>
   </section>;
   return <section className="panel tactical-panel" aria-label="实时试航实验">
     <h2>{preparedLaunch?'准备舰船交战':'实时试航（实验）'}</h2>
@@ -658,7 +658,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     {uncertain !== null && <p role="alert">操纵 {uncertain} 的结果尚未确认，正在查询；不会自动重发。</p>}
     {gunUncertain !== null && <p role="alert">火炮命令 {gunUncertain} 尚待确认，正在查询；不会自动重发射击。</p>}
     {state && <p className="editor-summary">{state.status.running ? "运行中" : pauseLabel[state.status.pause_reason ?? ""] ?? "已暂停"} · 第 {state.status.fixed_step} 步 · {(state.status.fixed_step / 60).toFixed(2)} 秒</p>}
-    {state && !state.available && <p role="alert">旗舰已失去操纵权。{state.loss_reason === "direct_ship_falling" ? "舰艇正在坠落。" : "后续操纵已取消。"}</p>}
+    {state && !state.available && !view?.snapshot.gunnery?.ending && !view?.snapshot.navigation?.disengagement?.departed_ship_ids.includes(state.direct_ship_id) && <p role="alert">旗舰已失去操纵权。{state.loss_reason === "direct_ship_falling" ? "舰艇正在坠落。" : "后续操纵已取消。"}</p>}
     <fieldset className="realtime-helm" disabled={busy || !active || !state?.status.running || !state.available || uncertain !== null}>
       <div className="editor-row">
       <label>实时车钟<select aria-label="实时车钟" value={draft.notch} onChange={e => setDraft({ ...draft, notch: e.target.value as Notch })}>{Object.entries(NOTCHES).map(([v,l]) => <option key={v} value={v}>{l}</option>)}</select></label>
@@ -671,7 +671,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       weaponId={weaponId} groupId={groupId} onWeapon={chooseWeapon} onGroup={chooseGroup}
       disabled={busy || !active || !state.status.running || !state.available || gunUncertain !== null}
       onCommand={intent=>void sendGun(intent)} />}
-    {view?.snapshot.gunnery?.ending && <p role="status">交战已结束：{{ victory: "敌方失去作战能力", defeat: "本方失去作战能力", draw: "双方失去作战能力", withdrawal: "主动撤离" }[view.snapshot.gunnery.ending.reason] ?? view.snapshot.gunnery.ending.reason}。已完成有效火炮在装批次，导弹未完成作业保留进度，清除在途弹丸；{state?.settlement?.saved ? "战后结果已保存。" : "请在结算页面保存本场结果。"}</p>}
+    {view?.snapshot.gunnery?.ending && <p role="status">交战已结束：{{ victory: "敌方失去作战能力", defeat: "本方失去作战能力", draw: "双方失去作战能力", withdrawal: "本方撤离", disengagement: "双方脱离接触" }[view.snapshot.gunnery.ending.reason] ?? view.snapshot.gunnery.ending.reason}。已完成有效火炮在装批次，导弹未完成作业保留进度，清除在途弹丸；{state?.settlement?.saved ? "战后结果已保存。" : "请在结算页面保存本场结果。"}</p>}
     {view&&state&&<DamageControlPanel view={view} shipId={state.direct_ship_id}
       disabled={busy||!active||!state.status.running||!state.available||!!view.snapshot.gunnery?.ending}
       uncertain={damageUncertain} onCommand={intent=>void sendDamageControl(intent)}/>}

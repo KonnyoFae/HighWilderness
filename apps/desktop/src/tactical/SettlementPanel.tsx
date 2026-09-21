@@ -18,7 +18,9 @@ export function SettlementPanel({ current, library, busy, canDeploy, onSave, onI
       <button disabled={busy || current.saved} onClick={() => onSave(current.result.settlement_id)}>{current.saved ? "结算已保存" : "保存全部战后结果"}</button>
       <div className="settlement-ships">{current.result.ships.map(ship => <article key={ship.after.state.instance_id}>
         <h4>{settlementShipLabel(ship, current.result.player_side_id)} · {serviceLabel[ship.after.state.service.status]}</h4>
-        {current.result.wrecks?.some(w=>w.instance_id===ship.after.state.instance_id) && <p>已坠毁并留下可打捞残骸。位置已随战果保存，打捞功能将在战略模式接入。</p>}
+        {current.result.departures?.filter(d=>d.instance_id===ship.after.state.instance_id).map(d=><p key={d.ship_id}>{d.kind==='fleet'?'整队撤离成功':'撤离成功，交接为战略 NPC'} · {(d.fixed_step/60).toFixed(1)} 秒{d.strategic_control==='npc'?'；已保存舰况，当前不可直接部署。':''}</p>)}
+        {current.result.escape_outcomes?.filter(o=>o.instance_id===ship.after.state.instance_id).map(o=><p key={o.instance_id}>旗舰损失撤离判定：幸存率 {(o.probability*100).toFixed(0)}% · {o.survived?'成功撤离':'撤离损失'}。本场判定已固定。</p>)}
+        {current.result.wrecks?.filter(w=>w.instance_id===ship.after.state.instance_id).map(w=><p key={w.ship_id}>{w.reason==='withdrawal_loss'?'旗舰损失后的概率撤离失败，按最后战术位置登记损失残骸。':w.reason==='propulsion_abandoned'?'整队离场时推进仍未恢复，原地留下残骸。':'已坠毁并留下可打捞残骸。'}位置已随战果保存，打捞功能将在战略模式接入。</p>)}
         <p>船壳 {(ship.before.state.hull_integrity_fraction*100).toFixed(1)}% → {(ship.after.state.hull_integrity_fraction*100).toFixed(1)}%</p>
         <PersonnelSettlement before={ship.before} after={ship.after}/>
         {ship.after.state.missiles && (() => { const m = missileSettlement(ship); return <section aria-label="导弹结存">

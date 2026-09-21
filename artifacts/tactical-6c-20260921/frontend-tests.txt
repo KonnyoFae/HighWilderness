@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 G:/高天荒野/apps/desktop
+
+
+ Test Files  46 passed (46)
+      Tests  197 passed (197)
+   Start at  15:17:03
+   Duration  1.45s (transform 4.50s, setup 0ms, import 7.43s, tests 461ms, environment 3ms)
+

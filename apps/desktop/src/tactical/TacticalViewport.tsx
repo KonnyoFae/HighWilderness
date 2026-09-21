@@ -53,7 +53,7 @@ function buildShip(ship: ShipGeometry, light: boolean, friendlySide='side.blue')
   return { root, selection, modules };
 }
 
-export function TacticalViewport({ view, active, selected, onSelect, gunControl, missileControl, navigationControl, launcherSelection, compact = false,
+export function TacticalViewport({ view: suppliedView, active, selected, onSelect, gunControl, missileControl, navigationControl, launcherSelection, compact = false,
   overlay=false, focusRequest, onCameraInput, fleetRows }: {
   view: TacticalView; active: boolean; selected: string | null; onSelect: (id: string | null) => void;
   gunControl?: GunInteraction;
@@ -66,6 +66,7 @@ export function TacticalViewport({ view, active, selected, onSelect, gunControl,
   onCameraInput?:()=>void;
   fleetRows?:Map<string,HTMLButtonElement>;
 }) {
+  const view=useMemo(()=>({...suppliedView,snapshot:{...suppliedView.snapshot,ships:suppliedView.snapshot.ships.filter(s=>s.physical_status!=='exited')}}),[suppliedView]);
   const host = useRef<HTMLDivElement>(null);
   const renderer = useRef<Application | null>(null);
   const scene = useRef<Container | null>(null);

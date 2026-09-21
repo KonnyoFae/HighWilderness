@@ -28,13 +28,15 @@ export interface SettlementShip {
 export interface SettlementEnvelope {
   saved: boolean; error?: string | null;
   result: { settlement_id: string; reason: string; fixed_step: number; ships: SettlementShip[]; player_side_id?: string;
-    wrecks?:{instance_id:string;ship_id:string;position_m:number[];height_layer:string;reason:string}[] };
+    wrecks?:{instance_id:string;ship_id:string;position_m:number[];height_layer:string;reason:string}[];
+    departures?:{instance_id:string;ship_id:string;fixed_step:number;kind:string;strategic_control:string}[];
+    escape_outcomes?:{instance_id:string;probability:number;roll:number;survived:boolean}[] };
 }
 export interface SettlementLibrary {
   results: { settlement_id: string; saved: boolean; reason: string; fixed_step: number }[];
   ships: { instance_id: string; revision: number; hull_integrity: number; service: { status: string }; can_deploy: boolean }[];
 }
-export const endingLabel: Record<string, string> = { withdrawal: "主动撤离", victory: "本方胜利", defeat: "本方失去作战能力", draw: "双方失去作战能力" };
+export const endingLabel: Record<string, string> = { withdrawal: "本方撤离", disengagement:"双方脱离接触", victory: "本方胜利", defeat: "本方战败", draw: "双方战败" };
 export const serviceLabel: Record<string, string> = { available: "可入战", disabled: "失去作战能力", destroyed: "已毁坏", withdrawn: "已离场" };
 export function settlementShipLabel(ship: SettlementShip, playerSide?: string) {
   if (ship.side_id && playerSide) return `${ship.side_id === playerSide ? '我方' : '敌方'} · ${ship.ship_name ?? ship.after.ship_id}`;

@@ -1,0 +1,13 @@
+
+> high-wilderness-desktop@0.1.0 check
+> tsc -b && vitest run
+
+
+ RUN  v4.1.11 G:/高天荒野/apps/desktop
+
+
+ Test Files  47 passed (47)
+      Tests  200 passed (200)
+   Start at  15:59:21
+   Duration  1.46s (transform 4.66s, setup 0ms, import 7.47s, tests 449ms, environment 4ms)
+

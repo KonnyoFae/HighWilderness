@@ -17,7 +17,7 @@ class SceneTests(unittest.TestCase):
 
     def configured(self):
         self.prepare(3)
-        v=self.call('scene_read',{})['scene'];v['revision']+=1
+        v=self.call('scene_read',{})['scene'];v['revision']+=1;v['distance_mode']='manual'
         for side,ids in zip(v['sides'],([2],[0,1])):
             side['ships']=[dict(instance_id=f'instance.custom.{i}',x_m=i*120,y_m=i*35,heading_rad=i*.3) for i in ids]
             side['flagship_instance_id']=side['ships'][0]['instance_id']

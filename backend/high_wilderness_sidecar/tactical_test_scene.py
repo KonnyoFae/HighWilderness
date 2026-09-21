@@ -3,12 +3,13 @@ from math import pi
 from types import SimpleNamespace
 from . import persistent_ship as ps, battle_preparation as bp
 from .tactical import render_static
-from .tactical_encounter import INTERFACE as ENCOUNTER_INTERFACE
+from .tactical_encounter import DISTANCE_INTERFACE as ENCOUNTER_INTERFACE, CONTACT_INTERFACE
 from .tactical_limits import MAX_DEPLOYED_SHIPS
 from . import tactical_fleet
 from 高天荒野舰艇统一战术场景 import TacticalSceneShipBinding
 
 INTERFACE = 'gaotian.tactical-test-scene/5a-v1'
+CONTACT_SCENE_INTERFACE = 'gaotian.tactical-test-scene/7a-v2'
 MAX_SHIPS = MAX_DEPLOYED_SHIPS
 SIDES = ('enemy', 'player')
 SUPPLY_DEFAULTS = dict(ammunition_resources=1_000_000, goods_quantity=100_000, fuel_units=10_000_000)
@@ -20,7 +21,7 @@ def setup(db):
 
 
 def fresh():
-    return dict(interface=INTERFACE, revision=0, distance_m=1000, preparation_id=None,
+    return dict(interface=CONTACT_SCENE_INTERFACE, distance_mode='automatic', revision=0, distance_m=1000, preparation_id=None,
         sides=[dict(id=s, flagship_instance_id=None, ships=[]) for s in SIDES])
 
 
@@ -32,8 +33,10 @@ def read(db, store):
 
 def parse(value):
     v = ps.clone(value)
-    ps.obj(v, 'interface revision distance_m preparation_id sides', '$.scene')
-    ps.need(v['interface'] == INTERFACE, '$.interface', '不支持的测试编队版本')
+    automatic = v.get('interface') == CONTACT_SCENE_INTERFACE
+    ps.obj(v, 'interface revision distance_m preparation_id sides'+(' distance_mode' if automatic else ''), '$.scene')
+    ps.need(v['interface'] in (INTERFACE,CONTACT_SCENE_INTERFACE), '$.interface', '不支持的测试编队版本')
+    if automatic:ps.need(v['distance_mode'] in ('automatic','manual'),'$.distance_mode','请选择自动或手动交战距离')
     ps.integer(v['revision'], '$.revision')
     ps.number(v['distance_m'], '$.distance_m', 1, 1_000_000)
     if v['preparation_id'] is not None: ps.identifier(v['preparation_id'], '$.preparation_id')
@@ -75,7 +78,7 @@ def packet(service):
     service.provision()
     with service.store.connection() as db:
         scene = read(db, service.store)
-        bindings, names, details, cores = [], {}, [], {}
+        bindings, names, details, cores, loaded = [], {}, [], {}, {}
         for side in scene['sides']:
             for member in side['ships']:
                 key = member['instance_id']
@@ -84,6 +87,7 @@ def packet(service):
                 ps.need(archive is not None and row is not None, '$.instance_id', '编队舰艇记录缺失')
                 design = bp.restore_design(service.store._decode(*archive), service.store.index)
                 record = bp.validate_record(service.store._decode(*row), design)
+                loaded[key]=(design,record)
                 cores[key] = tactical_fleet.core_info(design, record)
                 names[key] = design.archive()['document']['outfit']['name']
                 bindings.append(TacticalSceneShipBinding(key, design.snapshot, design.sortie, side_id=side['id'], fleet_id='fleet.test.'+side['id']))
@@ -92,16 +96,38 @@ def packet(service):
         raw = db.execute('SELECT payload,digest FROM preparation_supplies WHERE id=?', (service.supply_id,)).fetchone()
         supply = service.store._decode(*raw)['supply']
     geometry = render_static(SimpleNamespace(bindings=bindings, manifest=dict(ship_names=names, scenario_id='test.scene')))
-    return dict(scene=scene, geometry=geometry, ships=details, supply=supply, fleets=tactical_fleet.scene_fleets(scene, cores),
+    fleets=tactical_fleet.scene_fleets(scene, cores)
+    contact=dict(status='manual',distance_m=scene['distance_m'])
+    if scene.get('distance_mode')=='automatic':
+        if not all(s['ships'] for s in scene['sides']):contact=dict(status='incomplete',distance_m=None)
+        elif not all(f['valid'] for f in fleets):contact=dict(status='invalid_fleet',distance_m=None)
+        else:
+            from .tactical_contact_start import preview
+            try:contact=preview(service,layout_rows(scene,loaded))
+            except ps.ContractError as exc:contact=dict(status='unavailable',distance_m=None,message=exc.message)
+    return dict(scene=scene, contact_start=contact, geometry=geometry, ships=details, supply=supply, fleets=fleets,
         supply_defaults=SUPPLY_DEFAULTS, limits=dict(max_ships=MAX_SHIPS, minimum_distance_m=1, maximum_distance_m=1_000_000))
 
 
-def encounter(service, revision, identity):
+def layout_rows(scene, loaded, distance=0.):
+    rows=[]
+    for side in scene['sides']:
+        flagship=next(m for m in side['ships'] if m['instance_id']==side['flagship_instance_id'])
+        fleet=dict(side_id='side.'+side['id'],fleet_id='fleet.test.'+side['id'],flagship_instance_id=side['flagship_instance_id'])
+        for m in side['ships']:
+            design,record=loaded[m['instance_id']]
+            member=dict(instance_id=m['instance_id'],revision=record['state']['revision'],deployment=dict(
+                x_m=m['x_m']-flagship['x_m'],y_m=m['y_m']-flagship['y_m']+distance/2*(1 if side['id']=='enemy' else -1),heading_rad=m['heading_rad']))
+            rows.append((fleet,member,design,record))
+    return rows
+
+
+def encounter(service, revision, identity, contact_input_sha256=None):
     ps.integer(revision, '$.revision'); ps.identifier(identity, '$.launch_id')
     with service.store.connection() as db:
         scene = parse(read(db, service.store))
         ps.need(scene['revision'] == revision, '$.revision', '编队配置已变化，请重新读取')
-        sides = []
+        loaded = {}
         for side in scene['sides']:
             ps.need(bool(side['ships']), '$.ships', '双方至少各加入一艘舰艇')
             ships = []
@@ -111,21 +137,24 @@ def encounter(service, revision, identity):
                 raw = db.execute('SELECT payload,digest FROM ships WHERE id=?', (key,)).fetchone()
                 ps.need(archive is not None and raw is not None, '$.instance_id', '编队舰艇记录缺失')
                 design = bp.restore_design(service.store._decode(*archive), service.store.index)
-                ships.append((design, bp.validate_record(service.store._decode(*raw), design)))
+                record=bp.validate_record(service.store._decode(*raw), design)
+                loaded[key]=(design,record)
+                ships.append((design, record))
             tactical_fleet.validate(ships, side['flagship_instance_id'], '我方' if side['id']=='player' else '敌方')
-            flagship = next(s for s in side['ships'] if s['instance_id'] == side['flagship_instance_id'])
-            offset = scene['distance_m']/2 * (1 if side['id'] == 'enemy' else -1)
-            members = []
-            for ship in side['ships']:
-                raw = db.execute('SELECT payload,digest FROM ships WHERE id=?', (ship['instance_id'],)).fetchone()
-                ps.need(raw is not None, '$.instance_id', '参战舰艇不存在')
-                record = service.store._decode(*raw)
-                members.append(dict(instance_id=ship['instance_id'], revision=record['state']['revision'],
-                    deployment=dict(x_m=ship['x_m']-flagship['x_m'], y_m=ship['y_m']-flagship['y_m']+offset, heading_rad=ship['heading_rad'])))
-            sides.append(dict(side_id='side.'+side['id'], fleet_id='fleet.test.'+side['id'],
-                flagship_instance_id=side['flagship_instance_id'], ships=members))
-    return dict(interface=ENCOUNTER_INTERFACE, encounter_id=identity, world_id='world.tactical-test',
-        world_revision=scene['revision'], player_side_id='side.player', sides=sides)
+    distance=scene['distance_m'];extra={}
+    if scene.get('distance_mode')=='automatic':
+        from .tactical_contact_start import preview
+        contact=preview(service,layout_rows(scene,loaded))
+        ps.need(contact['status']=='ready','$.contact_start','双方无法形成接触，请调整编队设备或使用手动测试距离')
+        ps.need(contact_input_sha256==contact['input_sha256'],'$.contact_start','开战距离预览已过期，请重新读取编队')
+        distance=contact['distance_m']
+        extra['contact_start']={k:contact[k] for k in ('policy','distance_m','threshold_m','input_sha256')}
+    sides=[]
+    for fleet,member,_,_ in layout_rows(scene,loaded,distance):
+        if not sides or sides[-1]['side_id']!=fleet['side_id']:sides.append(dict(fleet,ships=[]))
+        sides[-1]['ships'].append(member)
+    return dict(interface=CONTACT_INTERFACE if extra else ENCOUNTER_INTERFACE, encounter_id=identity, world_id='world.tactical-test',
+        world_revision=scene['revision'], player_side_id='side.player', defending_side_id='side.player', sides=sides,**extra)
 
 
 def replenish(service, p):

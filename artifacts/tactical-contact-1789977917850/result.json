@@ -1,0 +1,11 @@
+{
+  "status": "CONTACT_START_UI_PASS",
+  "scope": "Real React/Python in Edge; not native WebView",
+  "distance_m": 50000,
+  "first_contact_count": 1,
+  "checks": [
+    "New automatic mode and incomplete-layout gate; explicit manual distance; catalog ships and real preparation.",
+    "Computed distance equals deployment; initial observation at step 0 without shots; real simulation and pause.",
+    "All-ship save, actual Python restart, exact restored states, automatic reentry and second save."
+  ]
+}

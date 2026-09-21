@@ -1,0 +1,50 @@
+{
+  "scope": "Entry-only legal 9v9 with infrared, finite saved state; excludes sustained battle/render performance",
+  "ships": 18,
+  "compile_s": 4.6903705000004265,
+  "state_build_s": 0.5580575999920256,
+  "cases": [
+    {
+      "layer": "upper",
+      "seconds": [
+        0.03311499999836087,
+        0.03169790000538342,
+        0.03218810001271777
+      ],
+      "result": {
+        "status": "ready",
+        "distance_m": 12209.123481363058,
+        "threshold_m": 50000.0,
+        "policy": "gaotian.contact-start/7a-v1"
+      }
+    },
+    {
+      "layer": "cloud",
+      "seconds": [
+        0.025925900001311675,
+        0.028433100000256673,
+        0.029200599994510412
+      ],
+      "result": {
+        "status": "ready",
+        "distance_m": 3807.078438103199,
+        "threshold_m": 25000.0,
+        "policy": "gaotian.contact-start/7a-v1"
+      }
+    },
+    {
+      "layer": "rain",
+      "seconds": [
+        0.029938299994682893,
+        0.030809499992756173,
+        0.029798600007779896
+      ],
+      "result": {
+        "status": "ready",
+        "distance_m": 6208.24723303318,
+        "threshold_m": 25000.0,
+        "policy": "gaotian.contact-start/7a-v1"
+      }
+    }
+  ]
+}

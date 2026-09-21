@@ -15,8 +15,10 @@ class Runtime:
 
 class Plan:
     def __init__(self):self.aims={};self.reasons={}
-    def acquire(self,battle,world,available,inventories,frame,solutions):
-        return acquire(battle,world,available,inventories,frame,solutions=solutions)
+    def acquire(self,battle,world,available,inventories,frame,solutions,initial_states=None):
+        # 6b supplies navigation-adjusted gun state at the planner boundary.
+        # Keep the frozen F2 solver, but feed it the same incoming orders.
+        return acquire(battle,world,available,inventories,frame,solutions=solutions,initial_states=initial_states)
     def prepare(self,battle,world,available,inventories,states,contacts,frame,solutions):
         for index,(gun,state) in enumerate(zip(battle.guns,states)):
             if state.point_defense or state.mode!='auto' or state.target is None:continue
@@ -33,9 +35,9 @@ class Plan:
     def metrics(self,solutions):return solutions.metrics()
 
 
-def acquire(battle, world, available, inventories, frame=None, *, solutions=None):
+def acquire(battle, world, available, inventories, frame=None, *, solutions=None, initial_states=None):
     from backend.high_wilderness_sidecar.tactical_gunnery import add, difference, rotate, wrap
-    states, contacts = list(battle.states), {}
+    states, contacts = list(battle.states if initial_states is None else initial_states), {}
     own_side = battle._sides[battle._direct_index]
     automatic = [i for i, (gun, state) in enumerate(zip(battle.guns, states))
         if state.mode == 'auto' and state.target_policy == 'automatic' and not state.point_defense

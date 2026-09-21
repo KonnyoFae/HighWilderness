@@ -22,7 +22,8 @@ MAX_INT = 2**53 - 1
 MAX_BYTES = 8 * 1024 * 1024
 SERVICE_REASONS = frozenset(('cic_destroyed', 'hull_structure_collapsed', 'insufficient_lift',
     'cic_control_unavailable', 'remote_control_lost', 'direct_ship_falling',
-    'direct_ship_exited', 'direct_control_link_lost', 'scripted_transfer', 'fell_below_scene'))
+    'direct_ship_exited', 'direct_control_link_lost', 'scripted_transfer', 'fell_below_scene',
+    'individual_withdrawal', 'flagship_loss_withdrawal', 'propulsion_abandoned', 'withdrawal_loss'))
 
 
 def need(ok, path, message):

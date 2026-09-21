@@ -12,13 +12,19 @@ from .tactical_limits import MAX_DEPLOYED_SHIPS
 from 高天荒野舰艇统一战术场景 import TacticalSceneShipBinding
 
 INTERFACE = 'gaotian.tactical-encounter/st0-v1'
+DISTANCE_INTERFACE = 'gaotian.tactical-encounter/6c-v2'
+CONTACT_INTERFACE = 'gaotian.tactical-encounter/7a-v3'
+DISTANCE_INTERFACES = (DISTANCE_INTERFACE, CONTACT_INTERFACE)
 RECEIPT_INTERFACE = 'gaotian.encounter-receipt/st0-v1'
 
 
 def parse(value):
     v = ps.clone(value)
-    ps.obj(v, 'interface encounter_id world_id world_revision player_side_id sides', '$.encounter')
-    ps.need(v['interface'] == INTERFACE, '$.interface', '不支持的遭遇版本')
+    distance = v.get('interface') in DISTANCE_INTERFACES
+    contact = v.get('interface') == CONTACT_INTERFACE
+    ps.obj(v, 'interface encounter_id world_id world_revision player_side_id sides'+(' defending_side_id' if distance else '')+
+        (' withdrawal_policy' if distance and 'withdrawal_policy' in v else '')+(' contact_start' if contact else ''), '$.encounter')
+    ps.need(v['interface'] in (INTERFACE, *DISTANCE_INTERFACES), '$.interface', '不支持的遭遇版本')
     for k in ('encounter_id', 'world_id', 'player_side_id'): ps.identifier(v[k], '$.'+k)
     ps.integer(v['world_revision'], '$.world_revision')
     ps.need(type(v['sides']) is list and len(v['sides']) == 2, '$.sides', '遭遇需要两个明确阵营')
@@ -41,6 +47,19 @@ def parse(value):
             ps.number(pose['heading_rad'], '$.heading_rad', -pi, pi)
         ps.need(side['flagship_instance_id'] in members, '$.flagship_instance_id', '旗舰不在本方名单内')
     ps.need(v['player_side_id'] in sides and len(instances) <= MAX_DEPLOYED_SHIPS, '$.sides', f'玩家阵营缺失或超出当前 {MAX_DEPLOYED_SHIPS} 舰上限')
+    if distance:
+        ps.need(v['defending_side_id'] in sides, '$.defending_side_id', '被动应战阵营必须属于本次遭遇')
+        if 'withdrawal_policy' in v:
+            from .tactical_escape_policy import parse as parse_policy
+            parse_policy(v['withdrawal_policy'], instances)
+    if contact:
+        from .tactical_contact_start import POLICY
+        c=ps.obj(v['contact_start'],'policy distance_m threshold_m input_sha256','$.contact_start')
+        ps.need(c['policy']==POLICY,'$.contact_start.policy','不支持的自动接触规则')
+        ps.need(c['threshold_m'] in (25000.,50000.) and type(c['threshold_m']) in (int,float),'$.contact_start.threshold_m','无效的脱离边界')
+        ps.number(c['distance_m'],'$.contact_start.distance_m',1,c['threshold_m'])
+        ps.need(type(c['input_sha256']) is str and len(c['input_sha256'])==64 and
+            all(v in '0123456789abcdef' for v in c['input_sha256']),'$.contact_start.input_sha256','无效的接触输入摘要')
     return v
 
 
@@ -67,6 +86,9 @@ def load(store, request):
 
 
 def build(request, ships, template, technical_scenario):
+    if request['interface']==CONTACT_INTERFACE:
+        from .tactical_contact_start import input_digest
+        ps.need(input_digest(ships)==request['contact_start']['input_sha256'],'$.contact_start','接触输入与当前舰艇状态不一致，请重新读取编队')
     seeds, bindings, instances, latches, names, mapping = [], [], [], [], {}, []
     direct = None
     for side, member, design, record in ships:
@@ -96,6 +118,14 @@ def build(request, ships, template, technical_scenario):
         ps.need(set(values) == {e.key for e in battle.damage.edges[n]}, '$.armor', '装甲边身份不匹配')
         armor.append(tuple(values[e.key] for e in battle.damage.edges[n]))
     battle.damage_state = DamageState(tuple(armor)); battle.entry_armor = battle.damage_state.armor
+    if request['interface'] in DISTANCE_INTERFACES:
+        from .tactical_contact_start import initialize
+        initialize(battle)
+    if request['interface']==CONTACT_INTERFACE:
+        c=request['contact_start'];distance=battle.disengagement.view()['distance_m']
+        ps.need(abs(distance-c['distance_m'])<=1e-6 and c['threshold_m']==battle.disengagement.threshold,
+            '$.contact_start','实际部署与自动交战距离不一致')
+        ps.need(any(t.valid for t in battle.observation.frame.local.values()),'$.contact_start','实际入战未形成有效接触')
     return battle, render_static(scenario), mapping
 
 
@@ -123,6 +153,9 @@ def validate_association(db, store, result):
     launch = db.execute('SELECT status FROM prepared_launches WHERE scene_id=?', (result['scene_id'],)).fetchone()
     ps.need(launch is not None and launch[0] in ('active', 'pending'), '$.scene_id', '已中断的遭遇不能补交战果')
     association = store._decode(*row)
+    if 'withdrawal_policy' in result:
+        from .tactical_escape_policy import DEFAULT
+        ps.need(result['withdrawal_policy']==association['request'].get('withdrawal_policy',DEFAULT), '$.withdrawal_policy', '结算概率规则与入场规则不一致')
     if 'player_side_id' in result:
         ps.need(result['player_side_id'] == association['request']['player_side_id'], '$.player_side_id', '结算玩家阵营与遭遇不一致')
     mapping = {r['instance_id']: r for r in association['instance_mapping']}

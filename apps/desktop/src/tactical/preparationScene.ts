@@ -5,9 +5,11 @@ export type PreparationTab = 'guns' | 'missiles' | 'devices' | 'damage' | 'cargo
 export type FormationShip = {instance_id:string;x_m:number;y_m:number;heading_rad:number};
 export type FleetQualification = {side_id:FleetSide;flagship_instance_id:string|null;ship_count:number;companion_count:number;
   companion_capacity:number;core_name:string|null;valid:boolean;issues:string[]};
-export type PreparationScene = {interface:string;revision:number;distance_m:number;preparation_id:string|null;
+export type PreparationScene = {interface:string;revision:number;distance_m:number;distance_mode?:'automatic'|'manual';preparation_id:string|null;
   sides:{id:FleetSide;flagship_instance_id:string|null;ships:FormationShip[]}[]};
 export type ScenePacket = {scene:PreparationScene;geometry:TacticalStatic;
+  contact_start?:{status:'manual'|'ready'|'no_contact'|'incomplete'|'invalid_fleet'|'unavailable';distance_m:number|null;
+    threshold_m?:number;policy?:string;input_sha256?:string;message?:string};
   ships:{instance_id:string;revision:number;state:PreparationShip['state'];lift_reserve:PreparationShip['lift_reserve'];
     fleet_core?:{module_id:string;name:string;companion_capacity:number;available:boolean}}[];
   fleets?:FleetQualification[];

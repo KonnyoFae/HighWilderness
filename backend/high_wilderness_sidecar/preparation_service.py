@@ -175,7 +175,8 @@ class PreparationService:
             if action=='scene_save':
                 ps.obj(p,'scene expected_revision','$.params'); return scene.save(self,p['scene'],p['expected_revision'])
             if action=='scene_encounter':
-                ps.obj(p,'revision launch_id','$.params'); return scene.encounter(self,p['revision'],p['launch_id'])
+                ps.obj(p,'revision launch_id'+(' contact_input_sha256' if 'contact_input_sha256' in p else ''),'$.params')
+                return scene.encounter(self,p['revision'],p['launch_id'],p.get('contact_input_sha256'))
             if action=='supply_replenish': return scene.replenish(self,p)
         if action=='library': ps.obj(p,'','$.params'); return self.library()
         if action=='import': return self.import_ship(p)

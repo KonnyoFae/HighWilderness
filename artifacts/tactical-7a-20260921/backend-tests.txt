@@ -1,0 +1,113 @@
+......................................................................................................EE.E......E..
+======================================================================
+ERROR: test_loaded_high_rate_gun_keeps_first_shot_and_every_cooldown (tools.test_tactical_fire_control_scheduling.SchedulingTests.test_loaded_high_rate_gun_keeps_first_shot_and_every_cooldown) (drag=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\高天荒野\tools\test_tactical_fire_control_scheduling.py", line 37, in test_loaded_high_rate_gun_keeps_first_shot_and_every_cooldown
+    current.step();reference.step()
+                   ~~~~~~~~~~~~~~^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_gunnery.py", line 790, in step
+    result = self.inventory.step(control=control, inventory_before_advance=permissions,
+        inventory_fuel=fuel_losses if self.damage and any(i._fuel_tanks for i in self.inventory.inventories) else None,
+        inventory_project=simulate, inventory_repair=repairs if self.repair.enabled else None,
+        inventory_finish=finish, project=project, impact_resolver=impacts if self.damage else None, **flight_commands)
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_inventory.py", line 624, in step
+    result = session.step(project=stage, fuel_resolver=(lambda world:inventory_fuel(world,candidates)) if inventory_fuel else None,
+        repair_resolver=repair if inventory_repair else None,
+        repair_project=finish, **flight_commands)
+  File "G:\高天荒野\backend\high_wilderness_sidecar\simplified_flight.py", line 705, in step
+    project(candidate, result)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_inventory.py", line 597, in stage
+    inventory_project(world, flight_result, candidates)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_gunnery.py", line 535, in simulate
+    working_states, search_contacts = fire_control.acquire(self, world, available, inventories, sensor_frame, solutions, self.navigation.gun_states(navigation[0],navigation[4]))
+                                      ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Plan.acquire() takes 7 positional arguments but 8 were given
+
+======================================================================
+ERROR: test_loaded_high_rate_gun_keeps_first_shot_and_every_cooldown (tools.test_tactical_fire_control_scheduling.SchedulingTests.test_loaded_high_rate_gun_keeps_first_shot_and_every_cooldown) (drag=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\高天荒野\tools\test_tactical_fire_control_scheduling.py", line 37, in test_loaded_high_rate_gun_keeps_first_shot_and_every_cooldown
+    current.step();reference.step()
+                   ~~~~~~~~~~~~~~^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_gunnery.py", line 790, in step
+    result = self.inventory.step(control=control, inventory_before_advance=permissions,
+        inventory_fuel=fuel_losses if self.damage and any(i._fuel_tanks for i in self.inventory.inventories) else None,
+        inventory_project=simulate, inventory_repair=repairs if self.repair.enabled else None,
+        inventory_finish=finish, project=project, impact_resolver=impacts if self.damage else None, **flight_commands)
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_inventory.py", line 624, in step
+    result = session.step(project=stage, fuel_resolver=(lambda world:inventory_fuel(world,candidates)) if inventory_fuel else None,
+        repair_resolver=repair if inventory_repair else None,
+        repair_project=finish, **flight_commands)
+  File "G:\高天荒野\backend\high_wilderness_sidecar\simplified_flight.py", line 705, in step
+    project(candidate, result)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_inventory.py", line 597, in stage
+    inventory_project(world, flight_result, candidates)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_gunnery.py", line 535, in simulate
+    working_states, search_contacts = fire_control.acquire(self, world, available, inventories, sensor_frame, solutions, self.navigation.gun_states(navigation[0],navigation[4]))
+                                      ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Plan.acquire() takes 7 positional arguments but 8 were given
+
+======================================================================
+ERROR: test_moving_target_high_rate_does_not_turn_every_round_into_full_solve (tools.test_tactical_fire_control_scheduling.SchedulingTests.test_moving_target_high_rate_does_not_turn_every_round_into_full_solve)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\高天荒野\tools\test_tactical_fire_control_scheduling.py", line 206, in test_moving_target_high_rate_does_not_turn_every_round_into_full_solve
+    before=b.states[0].shots;old=reference.states[0].shots;b.step();reference.step()
+                                                                    ~~~~~~~~~~~~~~^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_gunnery.py", line 790, in step
+    result = self.inventory.step(control=control, inventory_before_advance=permissions,
+        inventory_fuel=fuel_losses if self.damage and any(i._fuel_tanks for i in self.inventory.inventories) else None,
+        inventory_project=simulate, inventory_repair=repairs if self.repair.enabled else None,
+        inventory_finish=finish, project=project, impact_resolver=impacts if self.damage else None, **flight_commands)
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_inventory.py", line 624, in step
+    result = session.step(project=stage, fuel_resolver=(lambda world:inventory_fuel(world,candidates)) if inventory_fuel else None,
+        repair_resolver=repair if inventory_repair else None,
+        repair_project=finish, **flight_commands)
+  File "G:\高天荒野\backend\high_wilderness_sidecar\simplified_flight.py", line 705, in step
+    project(candidate, result)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_inventory.py", line 597, in stage
+    inventory_project(world, flight_result, candidates)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_gunnery.py", line 535, in simulate
+    working_states, search_contacts = fire_control.acquire(self, world, available, inventories, sensor_frame, solutions, self.navigation.gun_states(navigation[0],navigation[4]))
+                                      ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Plan.acquire() takes 7 positional arguments but 8 were given
+
+======================================================================
+ERROR: test_cache_only_preserves_targets_shots_inventory_and_aim_exactly (tools.test_tactical_fire_control_optimization.ReuseTests.test_cache_only_preserves_targets_shots_inventory_and_aim_exactly)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "G:\高天荒野\tools\test_tactical_fire_control_optimization.py", line 121, in test_cache_only_preserves_targets_shots_inventory_and_aim_exactly
+    cached.step(); hits += cached.fire_control_metrics['cache_hits']
+    ~~~~~~~~~~~^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_gunnery.py", line 790, in step
+    result = self.inventory.step(control=control, inventory_before_advance=permissions,
+        inventory_fuel=fuel_losses if self.damage and any(i._fuel_tanks for i in self.inventory.inventories) else None,
+        inventory_project=simulate, inventory_repair=repairs if self.repair.enabled else None,
+        inventory_finish=finish, project=project, impact_resolver=impacts if self.damage else None, **flight_commands)
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_inventory.py", line 624, in step
+    result = session.step(project=stage, fuel_resolver=(lambda world:inventory_fuel(world,candidates)) if inventory_fuel else None,
+        repair_resolver=repair if inventory_repair else None,
+        repair_project=finish, **flight_commands)
+  File "G:\高天荒野\backend\high_wilderness_sidecar\simplified_flight.py", line 705, in step
+    project(candidate, result)
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_inventory.py", line 597, in stage
+    inventory_project(world, flight_result, candidates)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "G:\高天荒野\backend\high_wilderness_sidecar\tactical_gunnery.py", line 535, in simulate
+    working_states, search_contacts = fire_control.acquire(self, world, available, inventories, sensor_frame, solutions, self.navigation.gun_states(navigation[0],navigation[4]))
+                                      ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: Plan.acquire() takes 7 positional arguments but 8 were given
+
+----------------------------------------------------------------------
+Ran 114 tests in 367.899s
+
+FAILED (errors=4)

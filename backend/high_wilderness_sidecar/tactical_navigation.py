@@ -93,7 +93,19 @@ class Navigation:
         ps.need(n is not None and b._sides[n]==b._sides[b._direct_index] and key in self.flag_by_ship,'$.ship_id','只能指挥本方编队成员')
         ps.need(b.ending is None and b.session.can_navigate(world.ships[n],True),'$.ship_id','该舰当前无法执行航行命令')
         kind,args=v['kind'],v['arguments'];ship=world.ships[n]
-        if kind in ('withdraw','cancel_withdraw'):
+        if kind in ('detach','cancel_detach'):
+            ps.obj(args,'','$.arguments')
+            ps.need(b.disengagement.enabled and key!=self.flag_by_ship[key], '$.ship_id', '只有正式交战中的随伴舰可以单独撤离')
+            if kind=='detach':
+                enemy=next(s for s in world.ships if s.ship_id==next(f for f in self.members if f!=self.flag_by_ship[key]))
+                delta=ship.motion.position_world_m-enemy.motion.position_world_m
+                direction=delta*(1/delta.length) if delta.length>1 else body_to_world(Vec2(0,1),ship.motion.heading_rad)
+                order=Order('individual_withdrawal',(tuple(direction.to_list()),),status='individual_withdrawal')
+            else:
+                ps.need(self.orders.get(key,Order()).kind=='individual_withdrawal','$.kind','该舰未在单独撤离')
+                order=Order(status='returning')
+            self.orders={**self.orders,key:order};self.controls.pop(key,None)
+        elif kind in ('withdraw','cancel_withdraw'):
             ps.obj(args,'','$.arguments');flag=self.flag_by_ship[key]
             if kind=='withdraw':
                 enemy=next(s for s in world.ships if s.ship_id==next(f for f in self.members if f!=flag))
@@ -174,7 +186,8 @@ class Navigation:
         retreat={}
         for flag in withdrawals:
             speeds=[self.sustainable_speed(n,s,cache) for n,s in enumerate(world.ships)
-                    if s.ship_id in self.members[flag] and b.session.can_navigate(s,True)]
+                    if s.ship_id in self.members[flag] and b.session.can_navigate(s,True)
+                    and orders.get(s.ship_id,Order()).kind!='individual_withdrawal']
             retreat[flag]=min((v for v in speeds if v>.01),default=0.)
         for n,ship in enumerate(world.ships):
             key=ship.ship_id;flag=self.flag_by_ship.get(key)
@@ -187,7 +200,11 @@ class Navigation:
             if world.fixed_step%REFRESH_STEPS and key in controls:continue
             seed=b.session._seeds[n];order=orders.get(key,Order());anchor=by_id[flag]
             velocity=Vec2();heading=ship.motion.heading_rad;limit=order.speed
-            if flag in withdrawals:
+            if order.kind=='individual_withdrawal':
+                direction=Vec2(*order.points[0]);limit=self.sustainable_speed(n,ship,cache)
+                heading=atan2(-direction.x,direction.y)
+                destination=ship.motion.position_world_m;velocity=direction*limit
+            elif flag in withdrawals:
                 direction=Vec2(*withdrawals[flag]);limit=retreat[flag];heading=atan2(-direction.x,direction.y)
                 # Parallel retreat, same requested ground velocity. Disabled ships
                 # wait for repairs; they do not reduce the moving fleet to zero.
@@ -249,5 +266,6 @@ class Navigation:
         return dict(command_sequence=self.sequence,last=self.last,ships=[dict(ship_id=key,kind=o.kind,status=o.status,
             points=[list(p) for p in o.points],speed_mps=o.speed,heading_deg=None if o.heading is None else o.heading*180/pi,
             target_id=o.target,distance_m=o.distance) for key,o in self.orders.items() if key in members],
+            disengagement=self.battle.disengagement.view(),
             withdrawals=[dict(flagship_id=k,speed_mps=getattr(self,'retreat_speeds',{}).get(k,0.),members=list(self.members[k]))
                          for k in self.withdrawals if k==flag])

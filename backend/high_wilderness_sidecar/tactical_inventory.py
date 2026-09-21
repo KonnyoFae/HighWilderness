@@ -567,7 +567,8 @@ class InventoryBattle:
         candidates = tuple(i.fork() for i in self.inventories)
         for candidate in candidates:
             candidate._candidate = True
-        ps.need(all(i._settlement is None for i in candidates), '$', 'Battle inventory is settled')
+        ps.need(all(i._settlement is None or s.command.lifecycle.physical_status=='exited'
+                    for i,s in zip(candidates,session.world.ships)), '$', 'Battle inventory is settled')
         # Apply commands AFTER device changes. A
         # destroyed weapon cannot consume rounds on the same candidate boundary.
         commands = tuple(inventory_commands)
@@ -579,6 +580,11 @@ class InventoryBattle:
             if inventory_before_advance is not None:
                 inventory_before_advance(world, flight_result, candidates)
             for index, (i, ship, binding) in enumerate(zip(candidates, world.ships, self.prepared.bindings)):
+                if ship.command.lifecycle.physical_status=='exited' and i._settlement is not None:
+                    elapsed=world.fixed_step-i._step
+                    i._cooldown={k:v+elapsed for k,v in i._cooldown.items()}
+                    i._step=world.fixed_step
+                    continue
                 health = None
                 if revisions[index] != self._device_revisions[index]:
                     health = {m.instance_id: state.durability_points for m, state in
@@ -608,9 +614,12 @@ class InventoryBattle:
                     tactical_fuel.damage(inv,health,{})
             revisions = final_revisions
             if inventory_finish is not None:
-                inventory_finish(world, result, candidates)
+                closed = inventory_finish(world, result, candidates)
+                if closed is not None:
+                    world = closed
             if project is not None:
                 project(world, result)
+            return world
 
         result = session.step(project=stage, fuel_resolver=(lambda world:inventory_fuel(world,candidates)) if inventory_fuel else None,
             repair_resolver=repair if inventory_repair else None,

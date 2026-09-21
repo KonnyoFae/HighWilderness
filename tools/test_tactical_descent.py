@@ -188,6 +188,10 @@ class EmergencyLiftTests(unittest.TestCase):
     def test_existing_v1_settlements_remain_readable_and_idempotent(self):
         b=self.battle();b.withdraw();legacy=st.capture(b)
         legacy['interface']='gaotian.battle-settlement/p3-v1';legacy.pop('wrecks')
+        # A real v1 record predates contextual v3 identity labels too.
+        legacy.pop('player_side_id')
+        for row in legacy['ships']:
+            row.pop('side_id');row.pop('ship_name')
         self.assertEqual(st.validate_result(legacy),legacy)
         with TemporaryDirectory() as temp:
             store=st.SettlementStore(temp);store.stage(legacy);receipt=store.save(legacy['settlement_id'])
@@ -204,7 +208,9 @@ class EmergencyLiftTests(unittest.TestCase):
         self.assertEqual(self.fuel.tank(b,fuel_tests.MODULE)['quantity_units'],1000)
 
     def test_friendly_devices_with_same_module_id_have_separate_modes_and_costs(self):
-        first=self.fuel.design
+        document=ps.clone(self.fuel.doc)
+        next(m for m in document['outfit']['modules'] if m['id']=='cic')['prototype']=dict(id='gtw.module.scic.basic.unmanned',version=1)
+        first=bp.compile_design(document,self.f.index,self.f.loadout,self.fuel.policy,ship_id='ship.fuel.flagship')
         second=bp.compile_design(self.fuel.doc,self.f.index,self.f.loadout,self.fuel.policy,ship_id='ship.fuel.ally')
         records=[]
         for n,d in enumerate((first,second)):

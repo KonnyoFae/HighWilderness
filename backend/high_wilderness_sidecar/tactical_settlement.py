@@ -15,6 +15,7 @@ from .tactical_damage import DamageState
 
 SHIP_INTERFACE = 'gaotian.persistent-combat-ship/p3-v1'
 RESULT_INTERFACE = 'gaotian.battle-settlement/p3-v3'
+DEPARTURE_RESULT_INTERFACE = 'gaotian.battle-settlement/6c-v4'
 
 
 def armor_record(battle, index, values):
@@ -85,7 +86,13 @@ def capture(battle):
         reasons = set(lifecycle.failure_causes)
         if ship.command.loss_reason: reasons.add(ship.command.loss_reason)
         if lifecycle.exit_reason: reasons.add(lifecycle.exit_reason)
+        if ship.wreck is not None: reasons.add(ship.wreck.reason)
         status = 'destroyed' if ship.wreck is not None or value['hull_integrity_fraction'] <= 0 else 'withdrawn' if lifecycle.physical_status == 'exited' else 'disabled' if reasons else 'available'
+        departure = next((d for d in battle.disengagement.departures if d.ship_id == ship.ship_id), None)
+        if departure:
+            reasons.discard('scripted_transfer')
+            if departure.kind!='fleet': reasons.add(departure.kind+'_withdrawal')
+            status = 'withdrawn' if departure.kind != 'fleet' else 'disabled' if reasons else 'available'
         value['service'] = dict(status=status, reasons=sorted(reasons))
         if inv._fuel_tanks:
             value['fuel_tanks']=ps.clone(inv._value['fuel_tanks'])
@@ -99,12 +106,20 @@ def capture(battle):
             capacity_before=ps.inventory_summary(binding.instance, binding.resources),
             capacity_after=ps.inventory_summary(ps.parse_instance(value, binding.resources), binding.resources),
             changes=inv.changes(), module_names={m.id: m.prototype.name for m in seed.resources.modules}))
-    return ps.clone(dict(interface=RESULT_INTERFACE, settlement_id='settlement.'+battle.session.world.epoch,
+    result = dict(interface=RESULT_INTERFACE, settlement_id='settlement.'+battle.session.world.epoch,
         scene_id=battle.session.world.epoch, player_side_id=battle._sides[battle._direct_index],
         reason=battle.ending['reason'], fixed_step=battle.ending['step'],
         removed_projectiles=battle.ending['removed_projectiles'], ships=rows,
         wrecks=[dict(interface='gaotian.tactical-wreck/v1',ship_id=s.ship_id,instance_id=binding.instance.to_dict()['instance_id'],
-            side_id=battle._sides[n],**asdict(s.wreck)) for n,(s,binding) in enumerate(zip(battle.session.world.ships,battle.inventory.prepared.bindings)) if s.wreck is not None]))
+            side_id=battle._sides[n],**asdict(s.wreck)) for n,(s,binding) in enumerate(zip(battle.session.world.ships,battle.inventory.prepared.bindings)) if s.wreck is not None])
+    if battle.disengagement.enabled:
+        result.update(interface=DEPARTURE_RESULT_INTERFACE,
+            withdrawal_policy=battle.disengagement.policy, escape_outcomes=list(battle.disengagement.outcomes), departures=[dict(
+            interface='gaotian.tactical-departure/v1', **asdict(d),
+            instance_id=next(r['after']['state']['instance_id'] for r in rows if r['after']['ship_id']==d.ship_id),
+            side_id=next(r['side_id'] for r in rows if r['after']['ship_id']==d.ship_id),
+            strategic_control='fleet' if d.kind=='fleet' else 'npc') for d in battle.disengagement.departures])
+    return ps.clone(result)
 
 
 def redeploy(record, template, scenario):
@@ -138,14 +153,15 @@ def redeploy(record, template, scenario):
 def validate_result(value):
     v = ps.clone(value)
     legacy = v.get('interface') == 'gaotian.battle-settlement/p3-v1'
-    contextual = v.get('interface') == RESULT_INTERFACE
+    departures = v.get('interface') == DEPARTURE_RESULT_INTERFACE
+    contextual = v.get('interface') in (RESULT_INTERFACE, DEPARTURE_RESULT_INTERFACE)
     ps.obj(v, 'interface settlement_id scene_id reason fixed_step removed_projectiles ships'+
-        ('' if legacy else ' wrecks')+(' player_side_id' if contextual else ''), '$.settlement')
+        ('' if legacy else ' wrecks')+(' player_side_id' if contextual else '')+(' departures withdrawal_policy escape_outcomes' if departures else ''), '$.settlement')
     ps.need(legacy or contextual or v['interface'] == 'gaotian.battle-settlement/p3-v2', '$.interface', '不支持的结算版本')
     if contextual: ps.identifier(v['player_side_id'], '$.player_side_id')
     ps.identifier(v['settlement_id'], '$.settlement_id'); ps.identifier(v['scene_id'], '$.scene_id')
     ps.need(v['settlement_id'] == 'settlement.'+v['scene_id'], '$.settlement_id', '结算身份不匹配')
-    ps.need(v['reason'] in ('withdrawal', 'victory', 'defeat', 'draw'), '$.reason', '非法结束原因')
+    ps.need(v['reason'] in (('withdrawal', 'victory', 'defeat', 'draw', 'disengagement') if departures else ('withdrawal', 'victory', 'defeat', 'draw')), '$.reason', '非法结束原因')
     ps.integer(v['fixed_step'], '$.fixed_step'); ps.integer(v['removed_projectiles'], '$.removed_projectiles')
     from .tactical_limits import MAX_DEPLOYED_SHIPS
     ps.need(type(v['ships']) is list and 1 <= len(v['ships']) <= MAX_DEPLOYED_SHIPS, '$.ships', '非法结算舰船列表')
@@ -187,11 +203,42 @@ def validate_result(value):
         ps.need(w['ship_id']==record['ship_id'] and record['state']['service']['status']=='destroyed' and
             w['reason'] in record['state']['service']['reasons'], '$.wreck', '残骸与战后舰况不一致')
         ps.identifier(w['side_id'], '$.wreck.side_id'); ps.integer(w['fixed_step'], '$.wreck.step', maximum=v['fixed_step'])
-        ps.need(w['height_layer'] in ('upper','cloud','rain') and w['reason'] in ('insufficient_lift','cic_destroyed','hull_structure_collapsed'), '$.wreck', '非法坠毁位置或原因')
+        ps.need(w['height_layer'] in ('upper','cloud','rain') and w['reason'] in ('insufficient_lift','cic_destroyed','hull_structure_collapsed','propulsion_abandoned','withdrawal_loss'), '$.wreck', '非法坠毁位置或原因')
         ps.need(w['reason']!='insufficient_lift' or w['height_layer']=='rain', '$.wreck', '升力坠毁必须发生在雨层末段')
         ps.need(type(w['position_m']) is list and len(w['position_m'])==2, '$.wreck.position_m', '残骸位置缺失')
         for x in w['position_m']: ps.number(x,'$.wreck.position_m',minimum=-ps.MAX_INT)
         wreck_ids.add(w['instance_id'])
+    departed_ids = set()
+    ps.need(type(v.get('departures', [])) is list and len(v.get('departures', [])) <= len(v['ships']), '$.departures', '非法离场列表')
+    for d in v.get('departures', []):
+        ps.obj(d, 'interface ship_id instance_id side_id fixed_step height_layer position_m kind strategic_control', '$.departure')
+        ps.need(d['interface']=='gaotian.tactical-departure/v1' and d['instance_id'] in ids
+            and d['instance_id'] not in departed_ids|wreck_ids, '$.departure', '离场身份无效或重复')
+        row=next(r for r in v['ships'] if r['after']['state']['instance_id']==d['instance_id'])
+        ps.need(d['ship_id']==row['after']['ship_id'] and d['side_id']==row['side_id'], '$.departure', '离场舰船或阵营不匹配')
+        ps.need(d['kind'] in ('fleet','individual','flagship_loss') and
+            d['strategic_control']==('fleet' if d['kind']=='fleet' else 'npc'), '$.departure', '非法战略交接')
+        ps.need(row['after']['state']['service']['status'] in (('available','disabled') if d['kind']=='fleet' else ('withdrawn',)), '$.departure', '离场与舰况不一致')
+        ps.integer(d['fixed_step'], '$.departure.step', maximum=v['fixed_step'])
+        ps.need(d['height_layer'] in ('upper','cloud','rain') and type(d['position_m']) is list and len(d['position_m'])==2, '$.departure', '非法离场位置')
+        for x in d['position_m']: ps.number(x, '$.departure.position_m', minimum=-ps.MAX_INT)
+        departed_ids.add(d['instance_id'])
+    if departures:
+        from . import tactical_escape_policy as survival
+        policy=survival.parse(v['withdrawal_policy'], ids)
+        expected={d['instance_id'] for d in v['departures'] if d['kind']=='flagship_loss'}|{w['instance_id'] for w in v['wrecks'] if w['reason']=='withdrawal_loss'}
+        ps.need(type(v['escape_outcomes']) is list and len(v['escape_outcomes'])==len(expected), '$.escape_outcomes', '撤离判定数量不一致')
+        seen=set()
+        for outcome in v['escape_outcomes']:
+            ps.obj(outcome,'instance_id probability roll survived','$.escape_outcomes')
+            key=outcome['instance_id']
+            ps.identifier(key,'$.escape_outcomes.instance_id')
+            ps.number(outcome['probability'],'$.escape_outcomes.probability',0,1)
+            ps.number(outcome['roll'],'$.escape_outcomes.roll',0,1)
+            ps.need(key in expected and key not in seen, '$.escape_outcomes', '重复或缺失的撤离判定')
+            ps.need(type(outcome['survived']) is bool and outcome==survival.resolve(policy,v['scene_id'],key,v['fixed_step']), '$.escape_outcomes', '撤离概率或结果不匹配')
+            ps.need(outcome['survived']==(key in departed_ids), '$.escape_outcomes', '撤离判定与离场记录不匹配')
+            seen.add(key)
     return v
 
 

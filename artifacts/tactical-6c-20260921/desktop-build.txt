@@ -1,0 +1,32 @@
+正在更新舰艇编辑器，首次构建需要稍候…
+        Info Looking up installed tauri packages to check mismatched versions...
+     Running beforeBuildCommand `node ./node_modules/vite/bin/vite.js build`
+vite v8.2.2 building client environment for production...
+transforming...
+✓ 823 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                  0.72 kB │ gzip:   0.41 kB
+dist/assets/index-BcxljFTI.css                  55.44 kB │ gzip:  11.42 kB
+dist/assets/webworkerAll-yNmaSXJw.js             0.05 kB │ gzip:   0.06 kB
+dist/assets/GpuStencilModesToPixi-CQGRbnWe.js   11.03 kB │ gzip:   2.83 kB
+dist/assets/init-B1QZJzH4.js                    15.53 kB │ gzip:   4.87 kB
+dist/assets/browserAll-DdBGgrFA.js              42.65 kB │ gzip:  11.16 kB
+dist/assets/RenderTargetSystem-CzMgAvgj.js      76.69 kB │ gzip:  21.80 kB
+dist/assets/Filter-CVumk4Xf.js                 104.28 kB │ gzip:  31.90 kB
+dist/assets/index-CpVUfpsF.js                  836.69 kB │ gzip: 254.10 kB
+
+✓ built in 291ms
+[plugin builtin:vite-reporter] 
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+   Compiling high-wilderness-desktop v0.1.0 (G:\高天荒野\apps\desktop\src-tauri)
+warning: linker stdout: 正在创建库 G:\高天荒野\apps\desktop\src-tauri\target\debug\deps\high_wilderness_desktop_lib.dll.lib 和对象 G:\高天荒野\apps\desktop\src-tauri\target\debug\deps\high_wilderness_desktop_lib.dll.exp
+  |
+  = note: `#[warn(linker_messages)]` on by default
+
+warning: `high-wilderness-desktop` (lib) generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.83s
+       Built application at: G:\高天荒野\apps\desktop\src-tauri\target\debug\high-wilderness-desktop.exe

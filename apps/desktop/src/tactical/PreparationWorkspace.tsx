@@ -9,6 +9,7 @@ import { PreparationCanvas } from './PreparationCanvas';
 import { addToScene, changeScene, moduleTab, preparationTabs, sideName } from './preparationScene';
 import type { FleetSide, PreparationScene, PreparationTab, ScenePacket } from './preparationScene';
 import { LiftReserve } from '../LiftReserve';
+import { PreparationDistance, preparationDistanceText } from './PreparationDistance';
 
 export function PreparationWorkspace({transport,instance,active,onEnter}: {
   transport:BridgeTransport;instance:string;active:boolean;onEnter:(launch:PreparedLaunch)=>void;
@@ -20,7 +21,7 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
   const [distance,setDistance]=useState('1'),[supply,setSupply]=useState({ammunition_resources:1000000,goods_quantity:100000,fuel_units:10000000});
   const [retry,setRetry]=useState<(()=>Promise<void>)|null>(null);
   const [readyRevision,setReadyRevision]=useState<number|null>(null);
-  const pending=useRef(false),alive=useRef(true),sceneRef=useRef<PreparationScene|null>(null);
+  const pending=useRef(false),alive=useRef(true),sceneRef=useRef<PreparationScene|null>(null),packetRef=useRef<ScenePacket|null>(null);
   const sideRef=useRef(side);sideRef.current=side;
   const importing=useRef<{side:FleetSide;label:string;instance_id:string;source:{kind:string;value:string}}|null>(null);
   const call=<T,>(suffix:string,params:Record<string,unknown>={})=>transport.tactical<T>({backend_instance_id:instance,
@@ -28,7 +29,7 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
   async function refresh() {
     const p=await call<ScenePacket>('scene_read');const l=await call<PreparationLibrary>('library');
     if(!alive.current)return;
-    sceneRef.current=p.scene;setPacket(p);setLibrary(l);setDistance(String(p.scene.distance_m/1000));
+    sceneRef.current=p.scene;packetRef.current=p;setPacket(p);setLibrary(l);setDistance(String(p.scene.distance_m/1000));
     setShipId(id=>p.scene.sides.some(s=>s.ships.some(m=>m.instance_id===id))?id:p.scene.sides.find(s=>s.id===sideRef.current)?.ships[0]?.instance_id??'');
   }
   async function run(job:()=>Promise<void>) {
@@ -89,21 +90,26 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
       if(readyRevision!==null)await call('discard',{preparation_id:current.preparation_id,revision:readyRevision});
       current=changeScene(current,s=>{s.preparation_id=null;});await save(current);
     }
-    const encounter=await call<Record<string,unknown>>('scene_encounter',{revision:current.revision,launch_id});
+    const encounter=await call<Record<string,unknown>>('scene_encounter',{revision:current.revision,launch_id,
+      ...(current.distance_mode==='automatic'?{contact_input_sha256:packetRef.current?.contact_start?.input_sha256}:{})});
     onEnter({launch_id,encounter,preparation_id:'test.scene',direct_instance_id:current.sides.find(s=>s.id==='player')!.flagship_instance_id!});
   }
   const fleetsValid=!!packet?.fleets&&packet.fleets.every(f=>f.valid);
-  const ready=!!packet&&fleetsValid&&packet.scene.sides.every(s=>s.ships.length>0)&&(preparation?readyRevision!==null:packet.ships.every(s=>s.revision>0));
+  const automatic=packet?.scene.distance_mode==='automatic';
+  const ready=!!packet&&fleetsValid&&(!automatic||packet.contact_start?.status==='ready')&&packet.scene.sides.every(s=>s.ships.length>0)&&(preparation?readyRevision!==null:packet.ships.every(s=>s.revision>0));
   return <section className="preparation-workspace" aria-label="双方战前准备">
     <header className="preparation-toolbar"><div><small>战术测试 / 编队与补给</small><h2>战前准备</h2></div>
       <div className="formation-tabs" role="tablist" aria-label="编辑阵营">{(['player','enemy'] as const).map(id=><button key={id} role="tab" aria-selected={side===id} onClick={()=>{setSide(id);if(!editorBusy){setShipId(packet?.scene.sides.find(s=>s.id===id)?.ships[0]?.instance_id??'');setModuleId(null);}}}>{sideName(id)}</button>)}</div>
-      <label>初始交战距离 <input aria-label="初始交战距离（公里）" type="number" min=".001" max="1000" step=".1" value={distance} disabled={lock} onChange={e=>setDistance(e.target.value)}/> 公里</label>
+      <PreparationDistance packet={packet} disabled={lock} onMode={mode=>edit(s=>{s.interface='gaotian.tactical-test-scene/7a-v2';s.distance_mode=mode;})}
+        onRefresh={()=>void run(refresh)}/>
+      {!automatic&&<><label>初始交战距离 <input aria-label="初始交战距离（公里）" type="number" min=".001" max="1000" step=".1" value={distance} disabled={lock} onChange={e=>setDistance(e.target.value)}/> 公里</label>
       <button disabled={lock||!packet} onClick={()=>{
         const n=Number(distance);if(!distance.trim()||!Number.isFinite(n)||n<.001||n>1000){setError('初始交战距离须为 0.001—1000 公里。');return;}
-        edit(s=>{s.distance_m=n*1000;});}}>应用距离</button>
+        edit(s=>{s.distance_m=n*1000;});}}>应用距离</button></>}
       <button className="primary" disabled={lock||!ready} onClick={()=>void run(enter)}>按当前编队进入交战</button>
     </header>
-    <div className="preparation-feedback" aria-live="polite">{notice&&<p role="status">{notice}</p>}
+    <div className="preparation-feedback" aria-live="polite"><p data-contact-status={packet?.contact_start?.status}>{preparationDistanceText(packet)}</p>
+      {automatic&&<p>任意一方发现敌舰即可开战，双方不一定同时获得目标。发现距离不代表武器射程。</p>}{notice&&<p role="status">{notice}</p>}
       {busy&&!importing.current&&<p role="status">正在处理，请稍候…</p>}
       {error&&<p role="alert">{error} {retry&&<button disabled={busy} onClick={()=>void run(retry)}>重试本次操作</button>}</p>}
       {error&&importing.current&&<button disabled={busy} onClick={()=>{importing.current=null;setRetry(null);setError('');setNotice('已结束本次导入；可重新选择文件。');}}>取消本次导入</button>}
@@ -166,6 +172,6 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
             onLeave:()=>{void run(leavePreparation);}}}/>}
       </aside>
     </div>
-    <p className="formation-distance-note">旗舰间距：{((packet?.scene.distance_m??0)/1000).toLocaleString()} 公里。上下视区分别显示舰队局部排布，屏幕间隔不代表实际交战距离。</p>
+    <p className="formation-distance-note">{preparationDistanceText(packet)}。上下视区分别显示舰队局部排布，屏幕间隔不代表实际交战距离。</p>
   </section>;
 }

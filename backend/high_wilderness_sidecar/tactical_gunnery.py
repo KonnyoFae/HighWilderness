@@ -177,7 +177,10 @@ def resource_pack(seed, config):
     return ps.compile_resources(seed, definition)
 
 
-class GunneryBattle:
+from .tactical_sensor_state import SensorState
+
+
+class GunneryBattle(SensorState):
     def __init__(self, session, scenario, config, *, damage_enabled=False, enemy_fire=True, instance_bindings=None, instance_prefix='instance.p2a.', allow_test_ignition=False):
         config = ps.clone(config)
         ps.obj(config, 'interface id version description ammo_capacity initial_ammo ammo_cost rounds reload_steps cooldown_steps '
@@ -307,6 +310,8 @@ class GunneryBattle:
         self.height_orders = HeightOrders(self)
         from .tactical_navigation import Navigation
         self.navigation = Navigation(self, scenario)
+        from .tactical_disengagement import Disengagement
+        self.disengagement = Disengagement(self, scenario)
         from .tactical_magazine import MagazineRuntime
         self.magazines = MagazineRuntime(self) if self.damage else None
         from .tactical_personnel import PersonnelRuntime
@@ -420,45 +425,6 @@ class GunneryBattle:
     def suspend(self):
         self._guard()
         self.states = tuple(replace(s, fire_requested=False, manual_point=None) for s in self.states)
-
-    def _availability(self, world):
-        key = tuple((s.devices.revision, s.resources.revision) for s in world.ships)
-        if key == self._availability_key:
-            return key, self._available
-        result = []
-        for index, ship in enumerate(world.ships):
-            available = {}
-            powered, allocations = set(ship.resources.power.powered_instance_ids), dict(ship.resources.allocations)
-            def check(k):
-                if k in available:
-                    return available[k]
-                m, n = self._modules[index][k], self._indices[index][k]
-                functions = {'weapon': ('weapon.aim', 'weapon.fire'), 'sensor': ('sensor.search',),
-                             'fire_control': ('fire_control.solution',), 'damage_control': ('damage_control.firefighting',)}.get(m.prototype.category, ())
-                automatic = m.prototype.automation.level == 'full' or bool(functions) and all(
-                    f in m.prototype.automation.automated_functions for f in functions)
-                if ship.devices.modules[n].durability_points <= 1e-8:
-                    reason = 'destroyed'
-                elif ship.resources.modes[n] != 'active':
-                    reason = 'mode_disabled'
-                elif m.host_instance_id and check(m.host_instance_id):
-                    reason = 'host_unavailable'
-                elif m.prototype.power.active_load_kw > 0 and k not in powered:
-                    reason = 'power_unavailable'
-                elif not automatic and (any(dict(allocations.get(k, ())).get(r.crew_type, 0) < r.minimum_operating for r in m.prototype.crew)
-                    or functions and any(self.crew_efficiency(world,index,k,f)<=1e-8 for f in functions)):
-                    reason = 'crew_unavailable'
-                else:
-                    reason = None
-                available[k] = reason
-                return reason
-            for k in self._modules[index]:
-                check(k)
-            result.append(available)
-        return key, tuple(result)
-
-    def crew_efficiency(self,world,index,module_id,function):
-        return self.session._resource_kernels[index].crew_efficiency(world.ships[index].resources,module_id,function)
 
     def _sources(self, observer, target, world, available, frame=None):
         return self.observation.sources(observer,world.ships[target].ship_id,world,available,frame)
@@ -785,7 +751,32 @@ class GunneryBattle:
         def finish(world, result, inventories):
             # A rain-layer deadline is resolved after this tick's emergency work.
             # Only the final world may declare that formerly rescuable ship lost.
-            ending = self._ending_reason(world) if self.damage else None
+            if self.damage and self.disengagement.enabled:
+                departure_plan = self.disengagement.plan(world, navigation)
+                world, _, departures, ending, _ = departure_plan
+                staged['departure_plan'] = departure_plan
+                for s,inv in zip(world.ships,inventories):
+                    if s.command.lifecycle.physical_status=='exited':
+                        inv.prepare_settlement('ending.'+world.epoch)
+                removed={n for n,(old,s) in enumerate(zip(self.session.world.ships,world.ships))
+                    if old.command.lifecycle.physical_status!='exited' and s.command.lifecycle.physical_status=='exited'}
+                if removed:
+                    removed_ids={world.ships[n].ship_id for n in removed}
+                    frame=staged['sensor_frame']
+                    staged['sensor_frame']=replace(frame,
+                        tracks={k:v for k,v in frame.tracks.items() if k[0] not in removed and k[1] not in removed_ids},
+                        local={k:v for k,v in frame.local.items() if k[0] not in removed and k[1] not in removed_ids},
+                        assignments={k:tuple(v for v in values if v not in removed_ids) for k,values in frame.assignments.items() if k[0] not in removed})
+                if ending is None:
+                    from .tactical_disengagement import present
+                    live = {self._sides[n] for n,s in enumerate(world.ships) if present(s) and not s.command.suppress}
+                    own = self._sides[self._direct_index]
+                    if own not in live:
+                        ending = 'withdrawal' if any(self._sides[next(n for n,s in enumerate(world.ships) if s.ship_id==d.ship_id)]==own for d in departures) else 'defeat' if live else 'draw'
+                    elif live == {own}:
+                        ending = 'disengagement' if departures else 'victory'
+            else:
+                ending = self._ending_reason(world) if self.damage else None
             if ending and not staged.get('ending'):
                 for inv in inventories:
                     inv.prepare_settlement('ending.'+world.epoch)
@@ -795,12 +786,15 @@ class GunneryBattle:
                 staged['states'] = tuple(replace(s, target=None, manual_point=None, fire_requested=False,
                     aim_point=None, status='battle_finished') for s in staged['states'])
                 staged['fire_controllers'] = tuple(replace(c, enabled=False, status='battle_finished') for c in staged['fire_controllers'])
+            return world
         result = self.inventory.step(control=control, inventory_before_advance=permissions,
             inventory_fuel=fuel_losses if self.damage and any(i._fuel_tanks for i in self.inventory.inventories) else None,
             inventory_project=simulate, inventory_repair=repairs if self.repair.enabled else None,
             inventory_finish=finish, project=project, impact_resolver=impacts if self.damage else None, **flight_commands)
         self.states, self.projectiles = staged['states'], staged['projectiles']
         self.navigation.commit(navigation)
+        if 'departure_plan' in staged:
+            self.disengagement.commit(staged['departure_plan'])
         self.fire.pending_modes = {}
         self.observation.pending_modes = {}
         self.observation.frame = staged['sensor_frame']
@@ -826,9 +820,11 @@ class GunneryBattle:
         return result
 
     def _can_fire(self, ship, index):
-        return ship.authority_allowed if index == self._direct_index else not ship.command.suppress
+        return ship.wreck is None and (ship.authority_allowed if index == self._direct_index else not ship.command.suppress)
 
     def _ending_reason(self, world):
+        if self.disengagement.enabled:
+            return None  # Formal departures are resolved after repairs and descent.
         live = {self._sides[i] for i, s in enumerate(world.ships)
                 if s.motion.hull_integrity_fraction > 0 and s.command.lifecycle.physical_status == 'operational'
                 and not s.command.suppress}
