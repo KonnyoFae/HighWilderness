@@ -289,6 +289,7 @@ def persons_aboard_count(instance: ShipInstanceSnapshotInput) -> int:
 def validate_crew_casualty_capacity(
     instance: ShipInstanceSnapshotInput,
     crew_capacity: dict[str, int],
+    *, quarters=(),
 ) -> None:
     """校验可执勤与负伤人员仍能被当前设计的人员舱容纳。"""
 
@@ -305,6 +306,12 @@ def validate_crew_casualty_capacity(
                 f"$.crew_casualty_state.crew_statuses.{item.crew_type}",
                 f"在舰活人 {alive}，当前设计容量 {capacity}",
             )
+    from 高天荒野舰艇人员舱容量 import has_shared, allocate
+    if has_shared(quarters):
+        _, missing = allocate(quarters, {i.crew_type: i.fit_for_duty_count + i.wounded_count for i in state.crew_statuses})
+        if missing:
+            raise ContractError("crew_casualty.shared_capacity_exceeded", "$.crew_casualty_state",
+                                f"在舰活人超过共享床位，{sum(missing.values())} 人无法安置")
 
 
 def apply_crew_casualty_outcomes(

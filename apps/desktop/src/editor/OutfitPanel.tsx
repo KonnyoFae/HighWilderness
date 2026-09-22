@@ -4,7 +4,7 @@ import { OutfitViewport } from "./OutfitViewport";
 import { WeaponGroupsPanel } from "./WeaponGroupsPanel";
 import { SHIP_ICONS } from './shipIcons';
 import type { HullCommand, ModuleOption, SessionSnapshot } from "./model";
-import { categories, instanceFields, mounts, outfitCommand } from "./outfit";
+import { categories, capacityLabel, instanceFields, mounts, outfitCommand } from "./outfit";
 import type { OutfitFields } from "./outfit";
 import { defaultRotation, hostedDescendants } from "./outfitCanvas";
 
@@ -83,6 +83,7 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
       <div className="module-cards" id="module-page" role="tabpanel" aria-labelledby={`category-${category}`} tabIndex={0}>
         {visible.map(o => <button className="module-card" key={o.sha256} aria-pressed={option?.sha256 === o.sha256} onClick={() => setPrototype(o.sha256)}>
           <strong>{o.prototype.name}</strong><span>{mounts(o).join(" / ")} · v{o.prototype.version}</span>
+          {capacityLabel(o) && <span>{capacityLabel(o)}</span>}
           <span>{o.prototype.mass_kg.toLocaleString()} kg · {Number(o.prototype.power.generation_kw) > 0 ? `发电 ${o.prototype.power.generation_kw}` : `耗电 ${o.prototype.power.active_load_kw ?? 0}`} kW</span>
           {o.prototype.category === 'maneuver_thruster' && <span>推力 {Number(o.prototype.capability.thrust_n).toLocaleString()} N</span>}
           {o.prototype.category === 'cic' && <span>{Number(o.prototype.capability.fleet_companion_capacity ?? 0) > 0 ? `随伴舰上限 ${o.prototype.capability.fleet_companion_capacity} 艘` : '独立单舰 / 编队随伴舰'}</span>}
@@ -102,6 +103,8 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
     <WeaponGroupsPanel session={session} busy={busy || dirty || canvasDraft} onCommand={onCommand} onLocalDraft={setGroupDraft} onSelectWeapon={setSelected} />
     <fieldset className="outfit-detail-fields" disabled={groupDraft || canvasDraft}>
     {option ? <div className="editor-summary"><strong>{option.prototype.name}</strong><span>{mounts(option).join(" / ")}</span>
+      {capacityLabel(option) && <p>{capacityLabel(option)}</p>}
+      {['aircraft_hangar', 'aircraft_catapult', 'aircraft_arrester', 'aviation_command'].includes(option.prototype.category) && <p>可安装并保存航空设施；舰载机整备与出动功能正在接入。</p>}
       <span>质量 {option.prototype.mass_kg.toLocaleString()} kg · 耐久 {option.prototype.durability_points}</span>
       {option.prototype.id === "gtw.module.gun.30mm" && <p>当前可对舰炮击；自动识别威胁、协调火力与拦截将在近防阶段接入。</p>}
       <span>标定状态：{option.prototype.balance_status === "contract_fixture" ? "契约测试夹具" : option.prototype.balance_status === "prototype_unbalanced" ? "未标定原型" : "平衡参考"}</span>

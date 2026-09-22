@@ -1,6 +1,13 @@
 import type { ModuleOption, OutfitInstance } from "./model";
 
-export const categories: Record<string, string> = { cic: "CIC", main_engine: "主发动机", maneuver_thruster: "转向发动机", generator: "发电", damage_control: "损管", crew_quarters: "人员舱", lift_fuel_tank: "灵烷贮槽", cargo_hold: "货仓", ammunition_magazine: "弹药库", weapon: "武器", fire_control: "指挥机", datalink: "数据链", sensor: "探测", remote_core: "遥控核心" };
+export const categories: Record<string, string> = { cic: "CIC", main_engine: "主发动机", maneuver_thruster: "转向发动机", generator: "发电", damage_control: "损管", crew_quarters: "人员舱", lift_fuel_tank: "灵烷贮槽", cargo_hold: "货仓", ammunition_magazine: "弹药库", weapon: "武器", fire_control: "指挥机", datalink: "数据链", sensor: "探测", remote_core: "遥控核心", aircraft_hangar: "机库", aircraft_catapult: "弹射器", aircraft_arrester: "拦阻索", aviation_command: "航空指挥塔" };
+
+export function capacityLabel(option: ModuleOption): string | null {
+  const c = option.prototype.capability;
+  if (option.prototype.category === 'crew_quarters' && typeof c.shared_capacity === 'number') return `共 ${c.shared_capacity} 个床位，各兼容人员共享`;
+  if (option.prototype.category === 'aircraft_hangar') return `${c.ready_slots} 格待命泊位 · ${c.workstations} 个工位 · ${c.pilot_capacity} 名飞行员`;
+  return null;
+}
 export function mounts(option: ModuleOption): string[] {
   const g = option.prototype.installation;
   return [g.internal_footprint_half_cells.length ? "内部" : "", g.top_footprint_half_cells.length ? "顶挂" : "",

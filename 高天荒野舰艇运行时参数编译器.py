@@ -791,7 +791,7 @@ def _validate_runtime_cache_hit(
     _validate_sources(snapshot, sortie, instance)
     validate_crew_casualty_capacity(
         instance,
-        dict(snapshot.outfit.crew_capacity),
+        dict(snapshot.outfit.crew_capacity), quarters=snapshot.outfit.instances,
     )
     if instance.ammunition_state is not None:
         validate_ship_ammunition_state(
@@ -1094,7 +1094,7 @@ def compile_runtime_ship_parameters(
     _validate_sources(snapshot, sortie, instance)
     validate_crew_casualty_capacity(
         instance,
-        dict(snapshot.outfit.crew_capacity),
+        dict(snapshot.outfit.crew_capacity), quarters=snapshot.outfit.instances,
     )
     if instance.ammunition_state is not None:
         validate_ship_ammunition_state(

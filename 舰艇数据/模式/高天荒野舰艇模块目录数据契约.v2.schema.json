@@ -179,7 +179,11 @@
             "cargo_hold",
             "fire_control",
             "sensor",
-            "weapon"
+            "weapon",
+            "aircraft_hangar",
+            "aircraft_catapult",
+            "aircraft_arrester",
+            "aviation_command"
           ],
           "type": "string"
         },

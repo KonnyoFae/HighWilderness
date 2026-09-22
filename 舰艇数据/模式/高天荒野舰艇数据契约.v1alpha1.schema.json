@@ -577,6 +577,10 @@
             },
             "kind": {
               "const": "crew_quarters"
+            },
+            "shared_capacity": {
+              "type": "integer",
+              "minimum": 1
             }
           },
           "required": [
@@ -793,6 +797,119 @@
           },
           "required": [
             "kind"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "aircraft_hangar"
+            },
+            "ready_slots": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "workstations": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "pilot_capacity": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "repair_steps": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "prepare_steps": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "ready_slots",
+            "workstations",
+            "pilot_capacity",
+            "repair_steps",
+            "prepare_steps"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "aircraft_catapult"
+            },
+            "loading_steps": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "launch_speed_mps": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "maximum_berth_slots": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3
+            },
+            "local_launch_axis": {
+              "const": "+Y"
+            }
+          },
+          "required": [
+            "kind",
+            "loading_steps",
+            "launch_speed_mps",
+            "maximum_berth_slots",
+            "local_launch_axis"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "aircraft_arrester"
+            },
+            "maximum_berth_slots": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3
+            },
+            "capture_radius_m": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "recovery_steps": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "maximum_berth_slots",
+            "capture_radius_m",
+            "recovery_steps"
+          ]
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "aviation_command"
+            },
+            "scope": {
+              "const": "fleet"
+            }
+          },
+          "required": [
+            "kind",
+            "scope"
           ]
         }
       ]
@@ -1082,7 +1199,11 @@
             "fire_control",
             "sensor",
             "weapon",
-            "datalink"
+            "datalink",
+            "aircraft_hangar",
+            "aircraft_catapult",
+            "aircraft_arrester",
+            "aviation_command"
           ],
           "type": "string"
         },

@@ -132,6 +132,9 @@ class SCICFlowTests(unittest.TestCase):
     def layout(self,enemy,player,flagship=None,preparation_id=None):
         v=self.call('scene_read',{})['scene'];revision=v['revision'];v['revision']+=1
         v['preparation_id']=preparation_id
+        # These cases isolate fleet/core behavior; 7a automatic contact has its
+        # own preview-hash contract and separate integration tests.
+        v['distance_mode']='manual'
         for side,ids in zip(v['sides'],(enemy,player)):
             side['ships']=[dict(instance_id=key,x_m=i*200,y_m=0,heading_rad=0) for i,key in enumerate(ids)]
             side['flagship_instance_id']=flagship if side['id']=='player' and flagship else ids[0]

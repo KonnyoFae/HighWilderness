@@ -21,20 +21,23 @@ EW_CATALOG = 'gtw.module_catalog.tactical.ew'
 DEFENSE_CATALOG = 'gtw.module_catalog.tactical.defense'
 MANEUVER_CATALOG = 'gtw.module_catalog.tactical.maneuver'
 SCIC_CATALOG = 'gtw.module_catalog.tactical.scic'
+AVIATION_CATALOG = 'gtw.module_catalog.tactical.aviation'
 
 
 def before_tactical_guns(index):
     """Exact additive-catalog compatibility: old entries are never rewritten."""
     result = copy(index)
     result.resources = {k:v for k,v in index.resources.items()
-                        if v[0]['id'] not in (TACTICAL_GUN_CATALOG, TACTICAL_MISSILE_CATALOG, TACTICAL_SENSOR_CATALOG, SENSOR_GEOMETRY_CATALOG, AMMUNITION_SCALE_CATALOG, AMMUNITION_CALIBERS_CATALOG, EW_CATALOG, DEFENSE_CATALOG, SCIC_CATALOG, MANEUVER_CATALOG)}
+                        if v[0]['id'] not in (TACTICAL_GUN_CATALOG, TACTICAL_MISSILE_CATALOG, TACTICAL_SENSOR_CATALOG, SENSOR_GEOMETRY_CATALOG, AMMUNITION_SCALE_CATALOG, AMMUNITION_CALIBERS_CATALOG, EW_CATALOG, DEFENSE_CATALOG, SCIC_CATALOG, MANEUVER_CATALOG, AVIATION_CATALOG)}
     return result
 
 
 def catalog_generations(index):
     """Only the actual additive catalog generations, never arbitrary subsets."""
-    scic = copy(index)
-    scic.resources = {k:v for k,v in index.resources.items() if v[0]['id'] != MANEUVER_CATALOG}
+    maneuver = copy(index)
+    maneuver.resources = {k:v for k,v in index.resources.items() if v[0]['id'] != AVIATION_CATALOG}
+    scic = copy(maneuver)
+    scic.resources = {k:v for k,v in maneuver.resources.items() if v[0]['id'] != MANEUVER_CATALOG}
     defense = copy(scic)
     defense.resources = {k:v for k,v in scic.resources.items() if v[0]['id'] != SCIC_CATALOG}
     ew = copy(defense)
@@ -51,7 +54,7 @@ def catalog_generations(index):
     missiles.resources = {k:v for k,v in sensors.resources.items() if v[0]['id'] != TACTICAL_SENSOR_CATALOG}
     previous = copy(missiles)
     previous.resources = {k:v for k,v in missiles.resources.items() if v[0]['id'] != TACTICAL_MISSILE_CATALOG}
-    return index, scic, defense, ew, calibers, ammunition, geometry, sensors, missiles, previous, before_tactical_guns(index)
+    return index, maneuver, scic, defense, ew, calibers, ammunition, geometry, sensors, missiles, previous, before_tactical_guns(index)
 
 
 def fail(code, message):

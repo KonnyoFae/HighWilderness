@@ -374,6 +374,10 @@ MODULE_CATEGORIES = {
     "fire_control",
     "sensor",
     "weapon",
+    "aircraft_hangar",
+    "aircraft_catapult",
+    "aircraft_arrester",
+    "aviation_command",
 }
 CREW_TYPES = {
     "officer",
@@ -412,6 +416,10 @@ MODULE_FUNCTIONS_BY_CATEGORY = {
     "remote_core": ("remote_core.command_link",),
     "sensor": ("sensor.search", "sensor.track"),
     "weapon": ("weapon.aim", "weapon.fire", "weapon.reload"),
+    "aircraft_hangar": ("aviation.service",),
+    "aircraft_catapult": ("aviation.launch",),
+    "aircraft_arrester": ("aviation.recover",),
+    "aviation_command": ("aviation.command",),
 }
 
 WEAPON_CLASSES = {"active_defense", "gun", "missile_launcher"}
@@ -1041,7 +1049,7 @@ class ModuleCapability:
             parsed["team_capacity"] = teams
             parsed["simultaneous_incidents"] = simultaneous
         elif kind == "crew_quarters":
-            _keys(obj, path, ("kind", "capacities"))
+            _keys(obj, path, ("kind", "capacities"), ("shared_capacity",))
             capacities: list[dict[str, Any]] = []
             seen: set[str] = set()
             for index, item_value in enumerate(_array(obj["capacities"], f"{path}.capacities")):
@@ -1060,6 +1068,37 @@ class ModuleCapability:
             if not capacities:
                 raise ContractError("array.empty", f"{path}.capacities", "人员舱必须提供至少一种容量")
             parsed["capacities"] = sorted(capacities, key=lambda item: item["crew_type"])
+            if "shared_capacity" in obj:
+                shared = _integer(obj["shared_capacity"], f"{path}.shared_capacity", 1)
+                if any(c["capacity"] > shared for c in capacities):
+                    raise ContractError("module.shared_capacity", path, "分类上限不能超过共享床位总数")
+                parsed["shared_capacity"] = shared
+        elif kind == "aircraft_hangar":
+            fields = ("ready_slots", "workstations", "pilot_capacity", "repair_steps", "prepare_steps")
+            _keys(obj, path, ("kind", *fields))
+            parsed.update({key: _integer(obj[key], f"{path}.{key}", 1) for key in fields})
+        elif kind == "aircraft_catapult":
+            _keys(obj, path, ("kind", "loading_steps", "launch_speed_mps", "maximum_berth_slots", "local_launch_axis"))
+            parsed["loading_steps"] = _integer(obj["loading_steps"], f"{path}.loading_steps", 1)
+            parsed["maximum_berth_slots"] = _integer(obj["maximum_berth_slots"], f"{path}.maximum_berth_slots", 1)
+            if parsed["maximum_berth_slots"] > 3:
+                raise ContractError("module.aircraft_size", path, "机型泊位等级不得超过 3")
+            parsed["launch_speed_mps"] = _number(obj["launch_speed_mps"], f"{path}.launch_speed_mps", 0.001)
+            if obj["local_launch_axis"] != "+Y":
+                raise ContractError("module.launch_axis", path, "弹射正面须为本地 +Y，安装旋转决定世界朝向")
+            parsed["local_launch_axis"] = "+Y"
+        elif kind == "aircraft_arrester":
+            _keys(obj, path, ("kind", "maximum_berth_slots", "capture_radius_m", "recovery_steps"))
+            parsed["maximum_berth_slots"] = _integer(obj["maximum_berth_slots"], f"{path}.maximum_berth_slots", 1)
+            if parsed["maximum_berth_slots"] > 3:
+                raise ContractError("module.aircraft_size", path, "机型泊位等级不得超过 3")
+            parsed["capture_radius_m"] = _number(obj["capture_radius_m"], f"{path}.capture_radius_m", 0.001)
+            parsed["recovery_steps"] = _integer(obj["recovery_steps"], f"{path}.recovery_steps", 1)
+        elif kind == "aviation_command":
+            _keys(obj, path, ("kind", "scope"))
+            if obj["scope"] != "fleet":
+                raise ContractError("module.aviation_command_scope", path, "航空指挥塔由全舰队共享")
+            parsed["scope"] = "fleet"
         elif kind == "remote_core":
             _keys(obj, path, ("kind",))
         elif kind == "cargo_hold":
@@ -1597,6 +1636,12 @@ class ModulePrototype:
                 path,
                 "首版传感器必须具有顶挂外露部分",
             )
+        if category in {"aircraft_catapult", "aircraft_arrester", "aviation_command"} and not installation.top_footprint_half_cells:
+            raise ContractError("module.aviation_top_geometry", path, "航空起降与指挥设备须有顶挂外露部分")
+        if category == "aircraft_hangar" and not installation.internal_footprint_half_cells:
+            raise ContractError("module.hangar_geometry", path, "机库须占内部安装空间")
+        if category == "aircraft_catapult" and not installation.top_clearance_half_cells:
+            raise ContractError("module.catapult_clearance", path, "弹射器须提供前方顶挂净空")
         if category == "remote_core" and (
             default_mode != "standby"
             or "ship.remote_control_selected" not in activation_events

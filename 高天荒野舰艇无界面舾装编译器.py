@@ -10,6 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from math import hypot
 from typing import Any
+import 高天荒野舰艇人员舱容量 as housing
 
 from 高天荒野舰艇数据契约 import (
     ContractError,
@@ -523,6 +524,7 @@ class CompiledOutfit:
                 "capacity": dict(self.crew_capacity),
                 "minimum": dict(self.minimum_crew),
                 "standard": dict(self.standard_crew),
+                **({"housing": housing.summary(self.instances)} if housing.has_shared(self.instances) else {}),
             },
             "deferred_capabilities": [
                 "compound_internal_side_module_anchor_relation",
@@ -607,6 +609,7 @@ class DerivedShipSnapshot:
             },
             "crew": {
                 "capacity": dict(self.outfit.crew_capacity),
+                **({"housing": housing.summary(self.outfit.instances)} if housing.has_shared(self.outfit.instances) else {}),
                 "minimum": dict(self.outfit.minimum_crew),
                 "standard": dict(self.outfit.standard_crew),
             },
@@ -826,6 +829,12 @@ class _OutfitCompiler:
                         f"最低需求 {count}，人员容量 {crew_capacity.get(crew_type, 0)}",
                     )
                 )
+
+        if housing.has_shared(instances):
+            _, missing = housing.allocate(instances, minimum_crew)
+            if missing and not any(w.code == "outfit.minimum_crew_capacity_shortfall" for w in warnings):
+                warnings.append(OutfitWarning("outfit.minimum_shared_crew_capacity_shortfall", "$.crew",
+                    f"共享床位不足，最低配员仍有 {sum(missing.values())} 人无法安置"))
 
         actuators = tuple(
             instance.actuator for instance in instances if instance.actuator is not None

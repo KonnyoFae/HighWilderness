@@ -65,12 +65,15 @@ def compile_design(document, index, deployment, policy, *, ship_id, armor_shape_
     ps.obj(policy, 'interface id version modules propulsion_timing goods projectiles recipes fire_control enabled_recipe_ids' +
         (' continuous_damage' if policy.get('interface') in dc.FIRE_POLICY_INTERFACES else '') +
         (' repair' if policy.get('interface') in dc.REPAIR_POLICY_INTERFACES else '')+
-        (' fuel' if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else '')+(' ignition' if policy.get('interface') in dc.IGNITION_POLICY_INTERFACES else '')+(' missiles' if policy.get('interface')==missiles.POLICY_INTERFACE else '')+(' maneuver_thrust_revision' if 'maneuver_thrust_revision' in policy else '')+(' ammunition_resource_liters' if 'ammunition_resource_liters' in policy else '')+(' armor_shape_effects' if 'armor_shape_effects' in policy else ''), '$.policy')
+        (' fuel' if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else '')+(' ignition' if policy.get('interface') in dc.IGNITION_POLICY_INTERFACES else '')+(' missiles' if policy.get('interface')==missiles.POLICY_INTERFACE else '')+(' maneuver_thrust_revision' if 'maneuver_thrust_revision' in policy else '')+(' ammunition_resource_liters' if 'ammunition_resource_liters' in policy else '')+(' armor_shape_effects' if 'armor_shape_effects' in policy else '')+(' crew_quarters_revision' if 'crew_quarters_revision' in policy else ''), '$.policy')
     ps.need(policy['interface'] in (POLICY_INTERFACE, dc.POLICY_INTERFACE, *dc.FIRE_POLICY_INTERFACES), '$.policy.interface', '不支持的战前准备资源政策')
     # Make indexed legacy plans portable too, with an exact embedded hull.
     if binding is None:
         binding = outfit_documents.bind(hull.normalized_blueprint.to_dict(), index)
     saved_document = dict(interface=outfit_documents.DOCUMENT_INTERFACE, outfit=source, hull_binding=binding)
+    if 'crew_quarters_revision' in policy:
+        ps.need(ps.integer(policy['crew_quarters_revision'], '$.crew_quarters_revision') == 2,
+                '$.crew_quarters_revision', '不支持的船员舱版本')
     rules = {}
     ps.need(type(policy['modules']) is list, '$.policy.modules', '需要原型规则列表')
     for rule in policy['modules']:
@@ -141,6 +144,8 @@ def compile_design(document, index, deployment, policy, *, ship_id, armor_shape_
             version = 2
         if original.category=='maneuver_thruster' and policy.get('maneuver_thrust_revision')==3 and original.reference.version in (1,2):
             version=3
+        if original.reference.id=='gtw.module.fixture.crew_quarters' and policy.get('crew_quarters_revision')==2 and original.reference.version==1:
+            version=2
         target = catalog.module(ResourceReference(original.reference.id, version))
         module['prototype'] = target.reference.to_dict()
     for group in plan.get('weapon_groups',[]):

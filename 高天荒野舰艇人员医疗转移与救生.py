@@ -340,7 +340,7 @@ def apply_crew_medical_outcome(
         statuses,
         strategic_time_s=outcome.strategic_time_s,
     )
-    validate_crew_casualty_capacity(resulting, dict(snapshot.outfit.crew_capacity))
+    validate_crew_casualty_capacity(resulting, dict(snapshot.outfit.crew_capacity), quarters=snapshot.outfit.instances)
     return CrewMedicalResolution(source_sha256, resulting, tuple(events))
 
 
@@ -489,11 +489,11 @@ def transfer_crew_between_ships(
     )
     validate_crew_casualty_capacity(
         source_instance,
-        dict(source_snapshot.outfit.crew_capacity),
+        dict(source_snapshot.outfit.crew_capacity), quarters=source_snapshot.outfit.instances,
     )
     validate_crew_casualty_capacity(
         target_instance,
-        dict(target_snapshot.outfit.crew_capacity),
+        dict(target_snapshot.outfit.crew_capacity), quarters=target_snapshot.outfit.instances,
     )
     source_statuses = {item.crew_type: item for item in source_state.crew_statuses}
     target_statuses = {item.crew_type: item for item in target_state.crew_statuses}
@@ -556,11 +556,11 @@ def transfer_crew_between_ships(
     )
     validate_crew_casualty_capacity(
         resulting_source,
-        dict(source_snapshot.outfit.crew_capacity),
+        dict(source_snapshot.outfit.crew_capacity), quarters=source_snapshot.outfit.instances,
     )
     validate_crew_casualty_capacity(
         resulting_target,
-        dict(target_snapshot.outfit.crew_capacity),
+        dict(target_snapshot.outfit.crew_capacity), quarters=target_snapshot.outfit.instances,
     )
     return CrewTransferResolution(
         canonical_sha256(source_instance),
@@ -1181,7 +1181,7 @@ def resolve_crew_rescue_manifest(
         )
         validate_crew_casualty_capacity(
             resulting_target,
-            dict(target_snapshot.outfit.crew_capacity),
+            dict(target_snapshot.outfit.crew_capacity), quarters=target_snapshot.outfit.instances,
         )
         source_target_sha256 = canonical_sha256(target_instance)
         status = "recovered"

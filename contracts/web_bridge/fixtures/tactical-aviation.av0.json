@@ -1,0 +1,232 @@
+{
+  "interface": "gaotian.aviation-catalog/av0-v1",
+  "balance_status": "prototype_unbalanced",
+  "tuning_note": "已确认：泊位、人数、E1 两发自卫弹、体积和设施容量；性能、F1/B1 挂点、工时、质量、功耗、净空长度均为可调测试初值。载荷类别不是已实现的武器型号。",
+  "cargo_volume_m3": {
+    "1": 25,
+    "2": 50,
+    "3": 125
+  },
+  "aircraft": [
+    {
+      "id": "gtw.aircraft.e1",
+      "version": 1,
+      "name": "E1 预警/电子战机",
+      "berth_slots": 1,
+      "pilots_required": 2,
+      "speed_mps": 180.0,
+      "turn_rate_deg_s": 25.0,
+      "layer_change_steps": 300,
+      "durability_points": 60.0,
+      "radar_signature_m2": 8.0,
+      "infrared_signature": 5.0,
+      "radar_range_m": 60000.0,
+      "infrared_range_m": 12000.0,
+      "cannon_id": null,
+      "cannon_rounds": 0,
+      "hardpoints": [
+        {
+          "id": "p1",
+          "size": "ultra_small",
+          "compatible_payloads": [
+            "self_defense"
+          ]
+        },
+        {
+          "id": "p2",
+          "size": "ultra_small",
+          "compatible_payloads": [
+            "self_defense"
+          ]
+        }
+      ],
+      "required_payload": "self_defense",
+      "jammer_radius_m": 8000.0
+    },
+    {
+      "id": "gtw.aircraft.f1",
+      "version": 1,
+      "name": "F1 战斗机",
+      "berth_slots": 1,
+      "pilots_required": 1,
+      "speed_mps": 260.0,
+      "turn_rate_deg_s": 45.0,
+      "layer_change_steps": 300,
+      "durability_points": 80.0,
+      "radar_signature_m2": 3.0,
+      "infrared_signature": 4.0,
+      "radar_range_m": 25000.0,
+      "infrared_range_m": 15000.0,
+      "cannon_id": "cannon.20mm",
+      "cannon_rounds": 240,
+      "hardpoints": [
+        {
+          "id": "p1",
+          "size": "small",
+          "compatible_payloads": [
+            "self_defense",
+            "small_missile",
+            "small_bomb",
+            "small_guided_bomb"
+          ]
+        },
+        {
+          "id": "p2",
+          "size": "small",
+          "compatible_payloads": [
+            "self_defense",
+            "small_missile",
+            "small_bomb",
+            "small_guided_bomb"
+          ]
+        },
+        {
+          "id": "p3",
+          "size": "small",
+          "compatible_payloads": [
+            "self_defense",
+            "small_missile",
+            "small_bomb",
+            "small_guided_bomb"
+          ]
+        },
+        {
+          "id": "p4",
+          "size": "small",
+          "compatible_payloads": [
+            "self_defense",
+            "small_missile",
+            "small_bomb",
+            "small_guided_bomb"
+          ]
+        }
+      ],
+      "required_payload": null,
+      "jammer_radius_m": 0.0
+    },
+    {
+      "id": "gtw.aircraft.b1",
+      "version": 1,
+      "name": "B1 轰炸机",
+      "berth_slots": 2,
+      "pilots_required": 3,
+      "speed_mps": 200.0,
+      "turn_rate_deg_s": 25.0,
+      "layer_change_steps": 300,
+      "durability_points": 140.0,
+      "radar_signature_m2": 12.0,
+      "infrared_signature": 8.0,
+      "radar_range_m": 30000.0,
+      "infrared_range_m": 12000.0,
+      "cannon_id": "cannon.30mm",
+      "cannon_rounds": 120,
+      "hardpoints": [
+        {
+          "id": "p1",
+          "size": "large",
+          "compatible_payloads": [
+            "self_defense",
+            "small_missile",
+            "large_missile",
+            "small_bomb",
+            "large_bomb",
+            "small_guided_bomb",
+            "large_guided_bomb"
+          ]
+        },
+        {
+          "id": "p2",
+          "size": "large",
+          "compatible_payloads": [
+            "self_defense",
+            "small_missile",
+            "large_missile",
+            "small_bomb",
+            "large_bomb",
+            "small_guided_bomb",
+            "large_guided_bomb"
+          ]
+        },
+        {
+          "id": "p3",
+          "size": "large",
+          "compatible_payloads": [
+            "self_defense",
+            "small_missile",
+            "large_missile",
+            "small_bomb",
+            "large_bomb",
+            "small_guided_bomb",
+            "large_guided_bomb"
+          ]
+        },
+        {
+          "id": "p4",
+          "size": "large",
+          "compatible_payloads": [
+            "self_defense",
+            "small_missile",
+            "large_missile",
+            "small_bomb",
+            "large_bomb",
+            "small_guided_bomb",
+            "large_guided_bomb"
+          ]
+        }
+      ],
+      "required_payload": null,
+      "jammer_radius_m": 0.0
+    }
+  ],
+  "payloads": [
+    {
+      "id": "self_defense",
+      "size": "ultra_small",
+      "kind": "interceptor",
+      "powered": true,
+      "inherits_launch_velocity": false
+    },
+    {
+      "id": "small_missile",
+      "size": "small",
+      "kind": "missile",
+      "powered": true,
+      "inherits_launch_velocity": false
+    },
+    {
+      "id": "large_missile",
+      "size": "large",
+      "kind": "missile",
+      "powered": true,
+      "inherits_launch_velocity": false
+    },
+    {
+      "id": "small_bomb",
+      "size": "small",
+      "kind": "bomb",
+      "powered": false,
+      "inherits_launch_velocity": true
+    },
+    {
+      "id": "large_bomb",
+      "size": "large",
+      "kind": "bomb",
+      "powered": false,
+      "inherits_launch_velocity": true
+    },
+    {
+      "id": "small_guided_bomb",
+      "size": "small",
+      "kind": "guided_bomb",
+      "powered": false,
+      "inherits_launch_velocity": true
+    },
+    {
+      "id": "large_guided_bomb",
+      "size": "large",
+      "kind": "guided_bomb",
+      "powered": false,
+      "inherits_launch_velocity": true
+    }
+  ]
+}

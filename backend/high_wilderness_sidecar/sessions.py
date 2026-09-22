@@ -64,7 +64,7 @@ class ResourceIndex:
         entries = [(p, "MaterialCatalog", None) for p in materials]
         entries += [(data / "涂料" / "船体涂料.v1.json", "HullCoatingCatalog", HullCoatingCatalog.parse)]
         entries += [(data / "模块" / "测试夹具" / name, "ModulePrototypeCatalog", ModulePrototypeCatalog.parse)
-                    for name in ("最小模块目录.v1.json", "战斗系统模块目录.v1.json", "阶段F无人化模块目录.v1.json", "战术火炮目录.v2.json", "战术导弹目录.v2.json", "战术感知目录.v3.json", "战术探测安装修正目录.v3.json", "战术弹药库目录.v3.json", "战术火炮装填校准目录.v3.json", "战术电子对抗目录.v3.json", "战术进阶防御目录.v3.json", "战术舰队核心目录.v3.json", "战术转向推力校准目录.v3.json")]
+                    for name in ("最小模块目录.v1.json", "战斗系统模块目录.v1.json", "阶段F无人化模块目录.v1.json", "战术火炮目录.v2.json", "战术导弹目录.v2.json", "战术感知目录.v3.json", "战术探测安装修正目录.v3.json", "战术弹药库目录.v3.json", "战术火炮装填校准目录.v3.json", "战术电子对抗目录.v3.json", "战术进阶防御目录.v3.json", "战术舰队核心目录.v3.json", "战术转向推力校准目录.v3.json", "战术航空设施目录.v3.json")]
         for ship in ("最小合法舰", "常规有人战舰", "完全无人旗舰"):
             entries += [
                 (data / "船壳蓝图夹具" / f"阶段F{ship}船壳.v1.json", "HullBlueprint", HullBlueprintInput.parse),
@@ -72,7 +72,7 @@ class ResourceIndex:
             ]
         entries += [(data / "舾装方案夹具" / name, "OutfitPlan", OutfitPlanInput.parse)
                     for name in ("炮塔式导弹后勤测试舰.v1.json", "VLS导弹后勤测试舰.v1.json", "雷达数据链测试舰.v1.json", "红外数据链测试舰.v1.json",
-                                 "火箭雷达导弹交战测试舰.v1.json", "涡喷红外导弹交战测试舰.v1.json", "VLS导弹交战测试舰.v1.json", "电子对抗与复合制导测试舰.v1.json", "基础自动拦截测试舰.v1.json", "进阶自动防御测试舰.v1.json")]
+                                 "火箭雷达导弹交战测试舰.v1.json", "涡喷红外导弹交战测试舰.v1.json", "VLS导弹交战测试舰.v1.json", "电子对抗与复合制导测试舰.v1.json", "基础自动拦截测试舰.v1.json", "进阶自动防御测试舰.v1.json", "航空设施测试舰.v1.json")]
         self.resources: dict[str, tuple[dict, dict]] = {}
         for path, kind, parser in entries:
             source = load_json(path)

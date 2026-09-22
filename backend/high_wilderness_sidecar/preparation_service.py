@@ -6,6 +6,7 @@ from .storage import read_json
 from .preparation_policy import load_current
 from . import preparation_maintenance as maintenance
 from 高天荒野舰艇数据契约 import canonical_sha256
+import 高天荒野舰艇人员舱容量 as housing
 
 CAPABILITIES=tuple('tactical.preparation.'+s for s in ('library','import','open','read','draft','preview','commit','discard',
     'scene_read','scene_save','scene_encounter','supply_replenish','missile','maintenance'))
@@ -99,8 +100,7 @@ class PreparationService:
         compiled=outfits.document(source,self.editor.index,binding['hull'] if binding else None).compile()
         # Explicit technical provisioning policy: standard crew bounded by berths,
         # full existing fuel tanks, no loaded ammunition/cargo, no performance edits.
-        capacity=dict(compiled.crew_capacity)
-        crew=[dict(crew_type=k,count=min(v,capacity.get(k,0))) for k,v in compiled.standard_crew]
+        crew=[dict(crew_type=k,count=v) for k,v in housing.bounded_crew(compiled.instances, dict(compiled.standard_crew)).items()]
         remote=next((m.id for m in compiled.instances if m.prototype.category=='remote_core'),None)
         use_remote=not any(c['count'] for c in crew) and remote is not None
         deployment=dict(id='deployment.preparation.technical.v1',version=1,crew=crew,

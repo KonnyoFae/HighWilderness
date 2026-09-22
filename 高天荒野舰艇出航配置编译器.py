@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any
+import 高天荒野舰艇人员舱容量 as housing
 
 from 高天荒野舰艇数据契约 import (
     ContractError,
@@ -299,6 +300,11 @@ def _compile_load_state(
                 f"{path_prefix}.crew.{crew_type}",
                 f"配置 {count} 人，舱位容量仅 {capacity.get(crew_type, 0)}",
             )
+    if housing.has_shared(snapshot.outfit.instances):
+        _, missing = housing.allocate(snapshot.outfit.instances, crew)
+        if missing:
+            raise ContractError(f"{namespace}.shared_crew_capacity_exceeded", f"{path_prefix}.crew",
+                f"兼容人员共享床位不足，仍有 {sum(missing.values())} 人无法安置")
     if enforce_minimum_crew:
         for crew_type, required in minimum.items():
             if crew.get(crew_type, 0) < required:

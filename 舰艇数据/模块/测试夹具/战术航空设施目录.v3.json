@@ -1,0 +1,700 @@
+{
+  "fixture_level": "prototype_unbalanced",
+  "id": "gtw.module_catalog.tactical.aviation",
+  "kind": "ModulePrototypeCatalog",
+  "modules": [
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "aviation.recover"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": 2.0,
+      "capability": {
+        "capture_radius_m": 30.0,
+        "kind": "aircraft_arrester",
+        "maximum_berth_slots": 3,
+        "recovery_steps": 60
+      },
+      "category": "aircraft_arrester",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "aviation.recover",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.aviation.arrester",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": [
+          [
+            -1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ]
+      },
+      "mass_kg": 2000.0,
+      "name": "飞机拦阻索",
+      "power": {
+        "active_load_kw": 20.0,
+        "consumer_category": "weapons_and_active_defense",
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "aviation.launch"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": 2.0,
+      "capability": {
+        "kind": "aircraft_catapult",
+        "launch_speed_mps": 120.0,
+        "loading_steps": 600,
+        "local_launch_axis": "+Y",
+        "maximum_berth_slots": 3
+      },
+      "category": "aircraft_catapult",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "aviation.launch",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 150.0,
+      "id": "gtw.module.aviation.catapult",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [
+          [
+            0,
+            3
+          ],
+          [
+            0,
+            5
+          ],
+          [
+            0,
+            7
+          ]
+        ],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": [
+          [
+            0,
+            -1
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "mass_kg": 4000.0,
+      "name": "飞机弹射器",
+      "power": {
+        "active_load_kw": 100.0,
+        "consumer_category": "weapons_and_active_defense",
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [
+          "aviation.command"
+        ],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": 2.0,
+      "capability": {
+        "kind": "aviation_command",
+        "scope": "fleet"
+      },
+      "category": "aviation_command",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "aviation.command",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 150.0,
+      "id": "gtw.module.aviation.command",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 0,
+        "internal_footprint_half_cells": [],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ]
+      },
+      "mass_kg": 2000.0,
+      "name": "航空指挥塔",
+      "power": {
+        "active_load_kw": 20.0,
+        "consumer_category": "fire_control",
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [],
+        "engineering_microclusters_required": null,
+        "level": "manual",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "aircraft_hangar",
+        "pilot_capacity": 20,
+        "prepare_steps": 1800,
+        "ready_slots": 10,
+        "repair_steps": 3600,
+        "workstations": 3
+      },
+      "category": "aircraft_hangar",
+      "counts_toward_departure_minimum": false,
+      "crew": [
+        {
+          "crew_type": "ordinary",
+          "minimum_operating": 3,
+          "standard": 3
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "aviation.service",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 300.0,
+      "id": "gtw.module.aviation.hangar.advanced",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            -1,
+            -3
+          ],
+          [
+            1,
+            -3
+          ],
+          [
+            -1,
+            -1
+          ],
+          [
+            1,
+            -1
+          ],
+          [
+            -1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            -1,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 25000.0,
+      "name": "先进立体机库",
+      "power": {
+        "active_load_kw": 180.0,
+        "consumer_category": "weapons_and_active_defense",
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [],
+        "engineering_microclusters_required": null,
+        "level": "manual",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "aircraft_hangar",
+        "pilot_capacity": 16,
+        "prepare_steps": 1800,
+        "ready_slots": 8,
+        "repair_steps": 3600,
+        "workstations": 3
+      },
+      "category": "aircraft_hangar",
+      "counts_toward_departure_minimum": false,
+      "crew": [
+        {
+          "crew_type": "ordinary",
+          "minimum_operating": 3,
+          "standard": 3
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "aviation.service",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 300.0,
+      "id": "gtw.module.aviation.hangar.medium",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            -2,
+            -3
+          ],
+          [
+            0,
+            -3
+          ],
+          [
+            2,
+            -3
+          ],
+          [
+            -2,
+            -1
+          ],
+          [
+            0,
+            -1
+          ],
+          [
+            2,
+            -1
+          ],
+          [
+            -2,
+            1
+          ],
+          [
+            0,
+            1
+          ],
+          [
+            2,
+            1
+          ],
+          [
+            -2,
+            3
+          ],
+          [
+            0,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 35000.0,
+      "name": "中型机库",
+      "power": {
+        "active_load_kw": 180.0,
+        "consumer_category": "weapons_and_active_defense",
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [],
+        "engineering_microclusters_required": null,
+        "level": "manual",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "kind": "aircraft_hangar",
+        "pilot_capacity": 10,
+        "prepare_steps": 1800,
+        "ready_slots": 5,
+        "repair_steps": 3600,
+        "workstations": 1
+      },
+      "category": "aircraft_hangar",
+      "counts_toward_departure_minimum": false,
+      "crew": [
+        {
+          "crew_type": "ordinary",
+          "minimum_operating": 1,
+          "standard": 1
+        }
+      ],
+      "damage_responses": [
+        {
+          "function_id": "aviation.service",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 300.0,
+      "id": "gtw.module.aviation.hangar.small",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            -1,
+            -3
+          ],
+          [
+            1,
+            -3
+          ],
+          [
+            -1,
+            -1
+          ],
+          [
+            1,
+            -1
+          ],
+          [
+            -1,
+            1
+          ],
+          [
+            1,
+            1
+          ],
+          [
+            -1,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 20000.0,
+      "name": "小型机库",
+      "power": {
+        "active_load_kw": 60.0,
+        "consumer_category": "weapons_and_active_defense",
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "capacities": [
+          {
+            "capacity": 20,
+            "crew_type": "officer"
+          },
+          {
+            "capacity": 20,
+            "crew_type": "pilot"
+          },
+          {
+            "capacity": 20,
+            "crew_type": "technical_officer"
+          }
+        ],
+        "kind": "crew_quarters",
+        "shared_capacity": 20
+      },
+      "category": "crew_quarters",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "crew_quarters.habitation",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.aviation.officer_quarters",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1000.0,
+      "name": "军官舱（20 人）",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 1
+    },
+    {
+      "automatic_activation_events": [],
+      "automation": {
+        "automated_functions": [],
+        "engineering_microclusters_required": null,
+        "level": "full",
+        "unmanned_variant": null
+      },
+      "balance_status": "prototype_unbalanced",
+      "base_external_rcs_m2": null,
+      "capability": {
+        "capacities": [
+          {
+            "capacity": 40,
+            "crew_type": "officer"
+          },
+          {
+            "capacity": 40,
+            "crew_type": "ordinary"
+          },
+          {
+            "capacity": 40,
+            "crew_type": "technical_officer"
+          },
+          {
+            "capacity": 40,
+            "crew_type": "veteran_damage_control"
+          }
+        ],
+        "kind": "crew_quarters",
+        "shared_capacity": 40
+      },
+      "category": "crew_quarters",
+      "counts_toward_departure_minimum": false,
+      "crew": [],
+      "damage_responses": [
+        {
+          "function_id": "crew_quarters.habitation",
+          "model": "binary_until_destroyed",
+          "points": []
+        }
+      ],
+      "default_operating_mode": "active",
+      "durability_points": 100.0,
+      "id": "gtw.module.fixture.crew_quarters",
+      "installation": {
+        "allowed_rotations_deg": [
+          0,
+          90,
+          180,
+          270
+        ],
+        "deck_rule": "any",
+        "exhaust_clearance_half_cells": [],
+        "host_slot": null,
+        "internal_deck_span": 1,
+        "internal_footprint_half_cells": [
+          [
+            0,
+            0
+          ]
+        ],
+        "provided_slots": [],
+        "side_clearance_half_cells": [],
+        "side_external_footprint_half_cells": [],
+        "side_mount_length_steps": 0,
+        "top_clearance_half_cells": [],
+        "top_deck_offset": 0,
+        "top_footprint_half_cells": []
+      },
+      "mass_kg": 1000.0,
+      "name": "船员舱（40 人）",
+      "power": {
+        "active_load_kw": 0.0,
+        "consumer_category": null,
+        "generation_kw": 0.0,
+        "standby_load_kw": 0.0
+      },
+      "version": 2
+    }
+  ],
+  "name": "舰载航空设施与人员舱",
+  "schema": "gaotian.module-prototype-catalog/v3",
+  "version": 3
+}

@@ -5,6 +5,7 @@ from functools import lru_cache
 from math import floor
 from pathlib import Path
 import json
+import 高天荒野舰艇人员舱容量 as housing
 
 from . import persistent_ship as ps
 
@@ -47,7 +48,17 @@ class PersonnelRuntime:
             capacities = {k:{row['crew_type']:row['capacity'] for row in m.prototype.capability.to_dict()['capacities']} for k,m in quarters.items()}
             totals = {kind:sum(c.get(kind,0) for c in capacities.values()) for kind,_ in battle.session.world.ships[n].resources.crew}
             fit = dict(battle.session.world.ships[n].resources.crew)
-            self.exposure.append({mid:{kind:fit[kind]*cap/totals[kind] for kind,cap in caps.items() if totals.get(kind,0)>0} for mid,caps in capacities.items()})
+            if housing.has_shared(quarters.values()):
+                occupants = {mid:{kind:fit[kind]*cap/totals[kind] for kind,cap in caps.items() if totals.get(kind,0)>0} for mid,caps in capacities.items()}
+                # Keep the established proportional exposure where it fits.
+                # Restricted shared cabins may require an actual allocation.
+                if any(sum(occupants[mid].values()) > m.prototype.capability.to_dict().get('shared_capacity', float('inf')) + 1e-9
+                       for mid,m in quarters.items()):
+                    occupants, _ = housing.allocate(quarters.values(), fit)
+                self.exposure.append(occupants)
+            else:
+                # Exact historical exposure fractions for legacy typed cabins.
+                self.exposure.append({mid:{kind:fit[kind]*cap/totals[kind] for kind,cap in caps.items() if totals.get(kind,0)>0} for mid,caps in capacities.items()})
             self.maxima.append({mid:m.prototype.durability_points for mid,m in quarters.items()})
         self.records = tuple(self.records)
 

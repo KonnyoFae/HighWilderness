@@ -320,7 +320,7 @@ def transition_current_design(
     )
     validate_crew_casualty_capacity(
         embedded,
-        dict(target_snapshot.outfit.crew_capacity),
+        dict(target_snapshot.outfit.crew_capacity), quarters=target_snapshot.outfit.instances,
     )
     compile_ship_operational_state(target_snapshot, embedded.operational_state)
     old_state = embedded.design_state
