@@ -295,6 +295,14 @@ export function TacticalViewport({ view: suppliedView, active, selected, onSelec
       v.circle(at.x,at.y,radius).fill({color:fire.surface?0xef681c:0xc52d26,alpha:.7});
       v.circle(at.x,at.y,radius*.4).fill({color:0xffdc71,alpha:.9});
     }
+    const aviation=source.snapshot.gunnery?.aviation;
+    const aircraft=[...(aviation?.flights??[]).map(f=>({...f,friendly:true})),...(aviation?.contacts??[]).map(f=>({...f,friendly:false}))].filter(f=>f.height_layer===observationLayer);
+    for(const f of aircraft){
+      const at=screen({x:f.position_m[0],y:f.position_m[1]},camera),a=f.heading_rad;
+      const dx=Math.sin(a),dy=-Math.cos(a),color=f.friendly?(light?0x165777:0x6fdcfa):(light?0xb4312b:0xff8a77);
+      v.moveTo(at.x+dx*7,at.y+dy*7).lineTo(at.x-dx*4+dy*5,at.y-dy*4-dx*5).lineTo(at.x-dx*2,at.y-dy*2).lineTo(at.x-dx*4-dy*5,at.y-dy*4+dx*5).closePath().fill(color);
+    }
+    if(host.current)host.current.dataset.visibleAircraft=JSON.stringify(aircraft.map(f=>f.id));
     for (const p of view.snapshot.gunnery?.projectiles ?? []) {
       const at = screen({ x: p.position_m[0], y: p.position_m[1] }, camera);
       const before = screen({ x: p.previous_m[0], y: p.previous_m[1] }, camera);

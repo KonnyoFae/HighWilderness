@@ -37,6 +37,7 @@ import type { DamageControlIntent } from './DamageControlPanel';
 import { LiftReserve } from '../LiftReserve';
 import {AviationPanel} from './AviationPanel';
 import type {AviationOrder} from './aviation';
+import {AviationFlightPanel} from './AviationFlightPanel';
 import { MissileStoresPanel } from './MissileStoresPanel';
 import { MissileCombatPanel } from './MissileCombatPanel';
 import type { MissileOrder } from './missiles';
@@ -609,6 +610,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
         {inspectorTab==='aviation'&&(()=>{const a=view.snapshot.gunnery?.aviation?.ships.find(s=>s.ship_id===selected);return <>
           {aviationUncertain&&<p role="status">航空操作回执尚未确认。<button disabled={busy} onClick={()=>void sendAviation()}>重试航空操作</button></p>}
           <AviationPanel key={selected} profile={a?.profile} state={a?.state} names={a?.module_names??{}} disabled={busy||!active||!state.status.running||!state.available||!friendlySelected||aviationUncertain||!!view.snapshot.gunnery?.ending} onOrder={o=>void sendAviation(o)}/>
+          <AviationFlightPanel view={view.snapshot.gunnery?.aviation} disabled={busy||!active||!state.status.running||!state.available||!friendlySelected||aviationUncertain||!!view.snapshot.gunnery?.ending} onOrder={o=>void sendAviation(o)}/>
         </>;})()}
         {inspectorTab==='missiles'&&<nav className="battle-tabs missile-tabs" aria-label="导弹操作">
           <button aria-pressed={missileTab==='launch'} onClick={()=>setMissileTab('launch')}>发射控制</button>

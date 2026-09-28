@@ -59,5 +59,6 @@ export function clipObservationSample(sample: TacticalView, current: TacticalVie
   return {...sample,snapshot:{...sample.snapshot,ships:sample.snapshot.ships.filter(s=>ships.has(s.id)),
     gunnery:sample.snapshot.gunnery&&{...sample.snapshot.gunnery,
       observation:current.snapshot.gunnery?.observation,
+      aviation:current.snapshot.gunnery?.aviation,
       projectiles:sample.snapshot.gunnery.projectiles.filter(p=>p.ship_id!=='observed.enemy'||projectiles.has(p.id))}}};
 }

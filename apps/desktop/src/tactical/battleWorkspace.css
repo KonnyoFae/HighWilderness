@@ -143,3 +143,8 @@
 .aviation-aircraft { padding: 12px; border: 1px solid #455466; border-radius: 6px; }
 .aviation-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
 .aviation-aircraft fieldset { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px; }
+.aviation-flight-panel { display: grid; gap: 8px; margin-top: 16px; min-width: 0; }
+.aviation-flight-panel p { overflow-wrap: anywhere; line-height: 1.5; }
+.aviation-task-form { display: grid; gap: 8px; min-width: 0; }
+.aviation-task-form label { display: grid; gap: 4px; min-width: 0; }
+.aviation-task-form input, .aviation-task-form select { width: 100%; min-width: 0; box-sizing: border-box; }

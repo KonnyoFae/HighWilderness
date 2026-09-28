@@ -61,7 +61,7 @@ def resolve(projectiles, sides, deadlines, step):
     """
     active = {p.id:p for p in projectiles if step<=p.expires}
     targets = [p for p in active.values() if p.durability is not None and p.durability>0]
-    rounds = [p for p in active.values() if p.interception_damage>0]
+    rounds = [p for p in active.values() if p.interception_damage>0 or p.aircraft_damage>0]
     if not targets or not rounds:return active,set(),()
     def buckets(p,activation_radius=0.):
         path=flight_segment(p);end,_=path.at(1)
@@ -78,23 +78,28 @@ def resolve(projectiles, sides, deadlines, step):
         else:
             for key in cells:grid.setdefault(key,set()).add(target.id)
     pending = []
+    identity_order=lambda key:(0,key) if type(key) is int else (1,key)
     for shot in rounds:
         cells=buckets(shot,shot.interception_radius_m)
         candidates={p.id for p in targets} if cells is None else global_targets.union(*(grid.get(key,set()) for key in cells))
-        for identity in sorted(candidates):
+        for identity in sorted(candidates,key=identity_order):
             target=active[identity]
             if shot.id==target.id or sides.get(shot.ship_id)==sides.get(target.ship_id):
                 continue
+            if not target.aircraft_body and shot.interception_damage<=0:continue
+            if shot.missile:
+                from .aviation_weapons import can_target
+                if not can_target(shot.missile.profile,'aircraft' if target.aircraft_body else 'projectile'):continue
             t = contact_fraction(shot,target,activation_radius=shot.interception_radius_m)
             limit = min(deadlines.get(shot.id,float('inf')),deadlines.get(target.id,float('inf')),
                         1. if step==shot.expires or step==target.expires else 1.+1e-8)
             if t is not None and t < limit-1e-10:
                 pending.append((t,target.id,shot.id))
     removed,events = set(),[]
-    for t,tid,sid in sorted(pending):
+    for t,tid,sid in sorted(pending,key=lambda row:(row[0],identity_order(row[1]),row[2])):
         if tid in removed or sid in removed:continue
         target,shot = active[tid],active[sid]
-        after = max(0.,target.durability-shot.interception_damage)
+        after = max(0.,target.durability-(shot.aircraft_damage or shot.interception_damage if target.aircraft_body else shot.interception_damage))
         active[tid] = replace(target,durability=after)
         removed.add(sid)
         if after<=0:removed.add(tid)
@@ -102,5 +107,6 @@ def resolve(projectiles, sides, deadlines, step):
         events.append(dict(step=step,impact_fraction=t,projectile_id=tid,round_id=sid,
             source_ship_id=shot.ship_id,weapon_id=shot.weapon_id,position_m=point,
             height_layer=layer_at(target,flight_segment(target),t),durability_before=target.durability,
-            durability_after=after,intercepted=after<=0))
+            durability_after=after,intercepted=after<=0,target_kind='aircraft' if target.aircraft_body else 'projectile',
+            source_aircraft_id=shot.source_aircraft_id))
     return active,removed,tuple(events)

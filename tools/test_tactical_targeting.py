@@ -41,12 +41,15 @@ class TargetingTests(unittest.TestCase):
         cls.index = ResourceIndex(ROOT)
         cls.doc, cls.loadout = group_document(cls.index)
         cls.design = bp.compile_design(cls.doc,cls.index,cls.loadout,load_current(ROOT),ship_id='ship.groups')
+        # Multi-ship defense regressions must obey the current SCIC entry rule.
+        from tools.joint_combat_fixture import refit_flagship
+        cls.flagship = refit_flagship(cls.design,cls.index)
         cls.companion = bp.compile_design(cls.doc,cls.index,cls.loadout,load_current(ROOT),ship_id='ship.companion')
         cls.template, cls.scenario, _ = RealtimeViewService('backend.groups')._template()
 
     def battle(self, multi=False):
         rows=[]
-        for n,design in enumerate((self.design,self.companion) if multi else (self.design,)):
+        for n,design in enumerate((self.flagship,self.companion) if multi else (self.design,)):
             record=bp.new_record(design,f'instance.groups.{n}')
             for w in record['state']['weapons']:
                 cal=75 if w['module_id']=='gun.heavy' else 30

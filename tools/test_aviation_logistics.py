@@ -13,12 +13,16 @@ from backend.high_wilderness_sidecar.server import SidecarServer
 from tools.test_battle_preparation import fixture, ROOT
 
 
-def carrier():
+def carrier(ship_id='ship.carrier',links=False):
     index=ResourceIndex(ROOT)
     source=next(s for d,s in index.resources.values() if d['id']=='gtw.outfit.aviation.foundation')
+    if links:
+        source=deepcopy(source)
+        next(m for m in source['modules'] if m['id']=='fire_control')['prototype']=dict(id='gtw.module.command_computer.5d',version=1)
+        source['modules'].append(dict(id='aviation.datalink',prototype=dict(id='gtw.module.datalink.5d',version=1),placement=dict(kind='hosted',host_instance_id='fire_control')))
     compiled=outfits.document(source,index).compile();_,deployment,_=fixture(index)
     deployment['crew']=[dict(crew_type=k,count=v) for k,v in housing.bounded_crew(compiled.instances,dict(compiled.standard_crew)).items()]
-    return bp.compile_design(source,index,deployment,load_current(ROOT),ship_id='ship.carrier')
+    return bp.compile_design(source,index,deployment,load_current(ROOT),ship_id=ship_id)
 
 
 class LogisticsTests(unittest.TestCase):

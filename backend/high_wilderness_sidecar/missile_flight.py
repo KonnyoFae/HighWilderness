@@ -60,6 +60,8 @@ class Profile:
     interception_damage: float = 0.
     minimum_climb_speed_mps: float = 50.
     maximum_pitch_rad: float = pi/6
+    target_kinds: tuple = ()
+    allow_layer_change: bool = True
 
     def lifetime(self):
         return self.boost_steps+self.engine_steps+self.coast_steps
@@ -212,13 +214,19 @@ def prepare(projectile, world, sides, environment=None):
     f=projectile.missile;age=world.fixed_step-f.born_step
     heading=atan2(projectile.velocity[1],projectile.velocity[0]) if hypot(*projectile.velocity)>1e-6 else f.heading+f.angular_rate*max(0,age-f.age)*DT
     f=replace(f,age=age,heading=heading)
+    if f.profile.seeker=='none':
+        return replace(projectile,missile=steer(replace(f,seeker_state='unguided'),hypot(*projectile.velocity),None,projectile.position))
     from .missile_guidance import Environment,Contact,update
     if environment is None:
         environment=Environment(contacts=tuple(Contact(s.ship_id,sides[n],tuple(s.motion.position_world_m.to_list()),
             tuple(s.motion.velocity_world_mps.to_list()),s.motion.height_layer) for n,s in enumerate(world.ships)
             if s.command.lifecycle.physical_status=='operational' and s.motion.hull_integrity_fraction>0))
     side=sides[next(i for i,s in enumerate(world.ships) if s.ship_id==projectile.ship_id)]
+    if not f.profile.allow_layer_change:
+        environment=replace(environment,contacts=tuple(t for t in environment.contacts if t.layer==projectile.height_layer),
+                            links=tuple(v for v in environment.links if v[1].layer==projectile.height_layer))
     f,aim=update(f,projectile,world.fixed_step,side,environment)
+    if not f.profile.allow_layer_change:return replace(projectile,missile=steer(f,hypot(*projectile.velocity),aim,projectile.position))
     from .missile_maneuver import control
     return replace(projectile,missile=control(f,hypot(*projectile.velocity,f.vertical_velocity_mps),aim,projectile.position,projectile.height_layer))
 

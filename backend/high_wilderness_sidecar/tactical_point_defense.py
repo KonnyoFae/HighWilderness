@@ -103,6 +103,12 @@ class PointDefense:
                 stamp,measured=track.step,track.target.payload
                 age=max(0,step-stamp)/60
                 current=observed.extrapolate(measured,age)
+                if p.aircraft_body:
+                    contacts[key]=(stamp,measured,())
+                    threats.append(dict(observer=observer,projectile_id=p.id,ship_id=world.ships[observer].ship_id,
+                        remaining_s=self.policy['prediction_seconds'],durability=measured.durability,height_layer=current.height_layer,
+                        impact_layer=current.height_layer,target_kind='aircraft'))
+                    continue
                 collisions=tuple((sid,t+age) for sid,t in self.predict_collisions(
                     observer,measured,world,prediction=prediction,stamp=stamp))
                 contacts[key]=(stamp,measured,collisions)
@@ -150,7 +156,7 @@ class PointDefense:
         ratio=1. if layer==m.height_layer else ballistics.CROSS_LAYER_SPEED
         maximum=min(gun.maximum_range,ballistics.reference_range(profile,ratio))
         reason='defense_waiting'
-        for priority,distance,pid,row,p in sorted(candidates,key=lambda v:v[:3]):
+        for priority,distance,pid,row,p in sorted(candidates,key=lambda v:(v[0],v[1],(0,v[2]) if type(v[2]) is int else (1,v[2]))):
             from .tactical_defense import commitments
             reserved=sum(q.interception_damage for q in commitments(b,gun.ship_index,pid,projectiles,world,available,frame=frame))
             if reserved+1e-8>=p.durability:reason='defense_covered';continue

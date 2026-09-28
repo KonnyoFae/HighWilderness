@@ -1,0 +1,25 @@
+{
+  "status": "AVIATION_AV3_VERIFIED",
+  "date": "2026-09-28",
+  "backend": {
+    "passed": 270,
+    "aviation_combat_cases": 19,
+    "log": "backend-tests.txt"
+  },
+  "frontend": {
+    "passed": 123,
+    "files": 34
+  },
+  "typescript": "passed",
+  "vite_build": "passed; existing large-chunk advisory",
+  "browser": "real React/Python prepare, loadout, launch, attack, hit, consume, settlement/save/restart passed; result.json",
+  "scope": "AV3 small aviation combat samples, not fleet-scale performance or native WebView acceptance",
+  "versions": {
+    "new_preparation_policy": 19,
+    "old_preparation_policy": 18,
+    "old_archive_preserved": true,
+    "cross_catalog_recovery": "requires matching catalog; no implicit conversion"
+  },
+  "next": "AV4 electronic warfare",
+  "git": "working tree; not committed or pushed"
+}

@@ -1,0 +1,12 @@
+{
+  "interface": "gaotian.aviation-flight/av2-v1",
+  "patrol_radius_m": 800.0,
+  "maximum_pursuit_m": 20000.0,
+  "acceleration_mps2": 30.0,
+  "sample_steps": 6,
+  "tracking_capacity": 32,
+  "radar_reference_m2": 1000.0,
+  "infrared_reference": 10.0,
+  "weather_radar": [1.0, 0.7, 0.5],
+  "weather_infrared": [1.0, 0.4, 0.2]
+}

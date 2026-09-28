@@ -67,10 +67,12 @@ def blocked_channels(areas,origin,layer,target,target_layer):
 
 def contact(f,position,layer,own_side,t,environment,step):
     if t.side==own_side:return None
+    if f.profile.seeker=='none':return None
+    from .aviation_weapons import can_target
+    if not t.decoy and not can_target(f.profile,t.kind):return None
     if f.profile.interceptor:
-        if not t.decoy and (t.kind!='projectile' or t.durability is None or t.durability<=0):return None
+        if not t.decoy and (t.durability is None or t.durability<=0):return None
         if t.id in environment.unavailable_targets and t.id not in (f.original_target,f.target_id):return None
-    elif t.kind=='projectile':return None
     # First acquisition and new autonomous targets use the current collision
     # layer; an already acquired target may lead a real altitude pursuit.
     if t.layer!=layer and not (f.ever_locked and t.id in (f.original_target,f.target_id)):return None
@@ -82,7 +84,7 @@ def contact(f,position,layer,own_side,t,environment,step):
     if p.seeker=='infrared' and 'thermal' in blocked:return None
     if p.seeker=='composite' and {'chaff','thermal'}<=blocked:return None
     if p.seeker=='anti_radiation' and not t.emitting:return None
-    if p.interceptor and not t.decoy and environment.threat_check and not environment.threat_check(own_side,t):return None
+    if p.interceptor and t.kind=='projectile' and not t.decoy and environment.threat_check and not environment.threat_check(own_side,t):return None
     # A sample is copied only after every visibility gate above succeeds.
     return Measurement(t.id,t.position,t.velocity,step,t.layer,
                        altitude_m=getattr(t.payload,'altitude_m',None),

@@ -35,6 +35,13 @@ def normalize(value):
         if not isinstance(identity, str) or not identity or identity in seen:
             raise ValueError('Invalid or duplicate missile flight model')
         seen.add(identity)
+        if 'target_kinds' in row:
+            kinds=row['target_kinds']
+            if type(kinds) not in (list,tuple) or not kinds or len(set(kinds))!=len(kinds) or any(k not in ('ship','aircraft','projectile') for k in kinds):
+                raise ValueError(f'{identity}: invalid target_kinds')
+            row['target_kinds']=tuple(kinds)
+        if 'allow_layer_change' in row and type(row['allow_layer_change']) is not bool:
+            raise ValueError(f'{identity}: invalid allow_layer_change')
         if source in LEGACY_INTERFACES:
             family = LEGACY_MODELS.get(identity)
             if family is None:

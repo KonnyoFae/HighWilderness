@@ -1,0 +1,9 @@
+{
+  "status": "AVIATION_AV3_UI_PASS",
+  "checks": [
+    "Actual preparation UI receives two unique aircraft and pilots, services one, preloads it, and schedules the other; lost action/commit replies retry once without duplicating inventory.",
+    "Actual AV3 UI selects an anti-ship loadout, launches the preloaded F1, assigns sea patrol, records its missile release and real ship impact, and consumes the mounted weapon.",
+    "Real battle powers the hangar, begins only the queued job, accepts an immediate-completion cancel, and preserves both airframes and crew across ending, saving and backend restart.",
+    "Battle ending recovers the airborne aircraft and unique crew; expended payload remains spent after save and backend restart."
+  ]
+}

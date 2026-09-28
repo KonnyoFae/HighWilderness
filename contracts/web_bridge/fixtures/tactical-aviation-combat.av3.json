@@ -1,0 +1,21 @@
+{
+  "interface": "gaotian.aviation-combat/av3-v1",
+  "version": 1,
+  "balance_status": "prototype_unbalanced",
+  "aircraft_radius_m": {"gtw.aircraft.e1": 7.0, "gtw.aircraft.f1": 5.0, "gtw.aircraft.b1": 10.0},
+  "egress_steps": 180,
+  "cannons": {
+    "cannon.20mm": {"speed_mps": 950.0, "mass_kg": 0.13, "caliber_mm": 20.0, "range_m": 2200.0, "interval_steps": 6, "air_damage": 8.0, "ship_scale": 0.03, "penetration_mm": 12.0, "spread_mrad": 6.0},
+    "cannon.30mm": {"speed_mps": 900.0, "mass_kg": 0.4, "caliber_mm": 30.0, "range_m": 2600.0, "interval_steps": 10, "air_damage": 12.0, "ship_scale": 0.06, "penetration_mm": 25.0, "spread_mrad": 5.0}
+  },
+  "payloads": {
+    "self_defense": {"motion": "missile", "target_kinds": ["aircraft", "projectile"], "range_m": 3500.0, "interval_steps": 120, "launch_speed_mps": 300.0, "speed_mps": 800.0, "max_g": 30.0, "seeker": "infrared", "seeker_range_m": 3500.0, "air_damage": 45.0, "durability": 3.0, "diameter_mm": 35.0, "mass_kg": 15.0, "ship_scale": 0.1, "penetration_mm": 15.0},
+    "small_interceptor": {"motion": "missile", "target_kinds": ["aircraft", "projectile"], "range_m": 12000.0, "interval_steps": 120, "launch_speed_mps": 350.0, "speed_mps": 1500.0, "max_g": 35.0, "seeker": "radar", "seeker_range_m": 10000.0, "air_damage": 90.0, "durability": 6.0, "diameter_mm": 70.0, "mass_kg": 70.0, "ship_scale": 0.2, "penetration_mm": 30.0},
+    "small_missile": {"motion": "missile", "target_kinds": ["ship"], "range_m": 16000.0, "interval_steps": 180, "launch_speed_mps": 300.0, "speed_mps": 650.0, "max_g": 10.0, "seeker": "radar", "seeker_range_m": 16000.0, "air_damage": 0.0, "durability": 8.0, "diameter_mm": 90.0, "mass_kg": 150.0, "ship_scale": 2.0, "penetration_mm": 80.0},
+    "large_missile": {"motion": "missile", "target_kinds": ["ship"], "range_m": 28000.0, "interval_steps": 240, "launch_speed_mps": 280.0, "speed_mps": 550.0, "max_g": 6.0, "seeker": "radar", "seeker_range_m": 24000.0, "air_damage": 0.0, "durability": 20.0, "diameter_mm": 200.0, "mass_kg": 650.0, "ship_scale": 5.0, "penetration_mm": 160.0},
+    "small_bomb": {"motion": "bomb", "target_kinds": ["ship"], "range_m": 1400.0, "interval_steps": 60, "launch_speed_mps": 0.0, "speed_mps": 0.0, "max_g": 0.0, "seeker": "none", "seeker_range_m": 0.0, "air_damage": 0.0, "durability": 8.0, "diameter_mm": 160.0, "mass_kg": 250.0, "ship_scale": 5.0, "penetration_mm": 100.0},
+    "large_bomb": {"motion": "bomb", "target_kinds": ["ship"], "range_m": 1600.0, "interval_steps": 90, "launch_speed_mps": 0.0, "speed_mps": 0.0, "max_g": 0.0, "seeker": "none", "seeker_range_m": 0.0, "air_damage": 0.0, "durability": 20.0, "diameter_mm": 300.0, "mass_kg": 1000.0, "ship_scale": 12.0, "penetration_mm": 220.0},
+    "small_guided_bomb": {"motion": "guided_bomb", "target_kinds": ["ship"], "range_m": 2500.0, "interval_steps": 90, "launch_speed_mps": 0.0, "speed_mps": 0.0, "max_g": 1.5, "seeker": "infrared", "seeker_range_m": 5000.0, "air_damage": 0.0, "durability": 8.0, "diameter_mm": 160.0, "mass_kg": 250.0, "ship_scale": 5.0, "penetration_mm": 100.0},
+    "large_guided_bomb": {"motion": "guided_bomb", "target_kinds": ["ship"], "range_m": 3000.0, "interval_steps": 120, "launch_speed_mps": 0.0, "speed_mps": 0.0, "max_g": 1.0, "seeker": "infrared", "seeker_range_m": 6000.0, "air_damage": 0.0, "durability": 20.0, "diameter_mm": 300.0, "mass_kg": 1000.0, "ship_scale": 12.0, "penetration_mm": 220.0}
+  }
+}

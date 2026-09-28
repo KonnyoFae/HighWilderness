@@ -14,9 +14,17 @@ def bind(policy, instances):
 
 
 def validate_profile(p, goods, modules=None):
-    ps.obj(p, 'interface catalog facilities recipes temporary_person_volume_cm3', '$.aviation')
+    ps.obj(p, 'interface catalog facilities recipes temporary_person_volume_cm3'+(' combat' if 'combat' in p else ''), '$.aviation')
+    if 'combat' in p:
+        from .aviation_weapons import validate
+        validate(p['combat'])
     ps.need(p['interface']==INTERFACE, '$.aviation.interface', '未知航空后勤版本')
     ac.validate(p['catalog'])
+    if 'combat' in p:
+        c=p['combat'];models=p['catalog']['aircraft']
+        ps.need({m['id'] for m in models}<=set(c['aircraft_radius_m']) and
+            {m['cannon_id'] for m in models if m['cannon_id']}<=set(c['cannons']) and
+            {w['id'] for w in p['catalog']['payloads']}<=set(c['payloads']), '$.aviation.combat','机型或载荷缺少航空战斗配置')
     ps.integer(p['temporary_person_volume_cm3'], '$.temporary_person_volume_cm3', 1)
     specs = ps.rows(p['facilities'], 'module_id', '$.aviation.facilities')
     if modules is not None:
@@ -82,12 +90,16 @@ def quarters_available(value, pack):
 
 
 def validate_state(s, p, ship_id):
-    ps.obj(s, 'interface manifest next_serial jobs queue hangar_assignments casualty_remainders', '$.aviation')
+    ps.obj(s, 'interface manifest next_serial jobs queue hangar_assignments casualty_remainders'+(' departure_tasks' if 'departure_tasks' in s else ''), '$.aviation')
     ps.need(s['interface']==INTERFACE, '$.aviation.interface', '未知航空状态版本')
     am.validate(s['manifest'], p['catalog'])
     ps.integer(s['next_serial'], '$.aviation.next_serial', 1)
     facilities={f['module_id']:f for f in p['facilities']}
     planes={a['id']:a for a in s['manifest']['aircraft']}
+    if 'departure_tasks' in s:
+        from .aviation_tasks import validate
+        ps.need(type(s['departure_tasks']) is dict and set(s['departure_tasks'])<=set(planes), '$.departure_tasks', '起飞任务归属无效')
+        for task in s['departure_tasks'].values(): validate(task)
     people={x['id']:x for x in s['manifest']['personnel']}
     assignments=s['hangar_assignments']
     ps.need(type(assignments) is dict, '$.hangar_assignments', '需要机库归属')

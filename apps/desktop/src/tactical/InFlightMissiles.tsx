@@ -2,7 +2,7 @@ import type {DisplayProjectile} from './model';
 import type {ObservationShip} from './FireControlPanel';
 import {layerName} from './layers';
 const phases:Record<string,string>={boost:'助推',powered:'动力',coast:'滑行'};
-const states:Record<string,string>={midcourse:'中段飞行',search:'搜索',acquiring:'锁定确认',tracking:'追踪',lost:'失锁直飞',memory:'记忆跟踪',rescan:'8 字重搜',datalink:'数据链引导'};
+const states:Record<string,string>={unguided:'无制导',midcourse:'中段飞行',search:'搜索',acquiring:'锁定确认',tracking:'追踪',lost:'失锁直飞',memory:'记忆跟踪',rescan:'8 字重搜',datalink:'数据链引导'};
 const maneuvers:Record<string,string>={boost:'助推直飞',climbing:'上爬追击',diving:'下潜追击',returning:'上爬失败，回落中',leveling:'逐步拉平',level:'平飞'};
 function FlightSpeed({projectile:p}:{projectile:DisplayProjectile}) {
   const horizontal=p.missile?.horizontal_speed_mps??Math.hypot(...p.velocity_mps);
@@ -15,7 +15,7 @@ export function InFlightMissiles({projectiles,observation,names,friendlyIds,disa
   const linked=observation?.devices.some(d=>d.kind==='datalink'&&!d.reason&&d.durability>0);
   const contacts=observation?.contacts.filter(c=>c.valid&&c.status==='tracked')??[];
   return <section aria-label="在途导弹制导"><h3>友方在途导弹（{rows.length}）</h3>{rows.map(p=><article className="observation-card" key={p.id} data-flight={p.id}>
-    <strong>{p.missile!.interceptor?'拦截弹':'导弹'} #{p.id} · {names[p.ship_id]??'友舰'}</strong>
+    <strong>{p.missile!.model_id?.includes('guided_bomb')?'制导炸弹':p.missile!.model_id?.includes('bomb')?'炸弹':p.missile!.interceptor?'拦截弹':'导弹'} #{p.id} · {names[p.ship_id]??'友舰'}</strong>
     <p>{phases[p.missile!.phase]} · <span data-seeker-state={p.missile!.seeker_state}>{states[p.missile!.seeker_state]??p.missile!.seeker_state}</span> · 当前命中层 {layerName(p.height_layer??'upper')}</p>
     <p><FlightSpeed projectile={p}/> · 耐久 {p.durability} / {p.maximum_durability} · 剩余寿命 {p.missile!.remaining_s.toFixed(1)} 秒</p>
     {p.missile!.altitude_m!=null&&<p>相对雨层高度 {p.missile!.altitude_m.toFixed(0)} 米 · 垂直速度 {(p.missile!.vertical_speed_mps??0).toFixed(0)} 米/秒（向上为正）</p>}

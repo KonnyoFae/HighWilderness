@@ -106,7 +106,7 @@ export function GunControlPanel({ view, shipId, weaponId, groupId, disabled, onW
       </select></label>}
       <p>待发共 {guns.reduce((n,g)=>n+g.ready_rounds,0)} 发 · 已射击 {guns.reduce((n,g)=>n+g.shots,0)} 发</p>
       {guns.filter(g=>g.point_defense).map(g=><p key={g.module_id}>{name(g)}：{gunStatus[g.status]??g.status}
-        {g.interception_target_id!=null?` · 弹体 #${g.interception_target_id} · 第 ${(g.interception_priority??0)+1} 优先档 · 尚需约 ${g.interception_needed_rounds??0} 发命中`:''}</p>)}
+        {g.interception_target_id!=null?` · ${typeof g.interception_target_id==='string'?'敌机':'弹体'} #${g.interception_target_id} · 第 ${(g.interception_priority??0)+1} 优先档 · 尚需约 ${g.interception_needed_rounds??0} 发命中`:''}</p>)}
       {guns.some(g=>g.incendiary_effect==='surface')&&<p>表面燃烧弹：穿深很低，未击穿也可引燃舰外；火灾只在同一甲板相邻区域蔓延。</p>}
       {guns.some(g=>g.incendiary_effect==='internal')&&<p>旧型燃烧弹：击穿后尝试内部点燃。新导入舰船可装填表面燃烧弹。</p>}
       <p>本舰弹药资源 {first.ammo_resources} 点{recipe ? ` · 每门下一批消耗 ${first.batch_cost} 点，装填 ${first.batch_rounds} 发` : ''}</p>

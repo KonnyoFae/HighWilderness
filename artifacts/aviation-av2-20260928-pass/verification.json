@@ -1,0 +1,12 @@
+{
+  "stage": "AV2",
+  "date": "2026-09-28",
+  "backend_tests": 160,
+  "aviation_flight_tests": 17,
+  "tactical_frontend_tests": 123,
+  "typescript": "PASS",
+  "vite_build": "PASS (existing large-chunk notice)",
+  "browser": "result.json",
+  "native_webview": "not tested in this stage",
+  "scope": "Flight, group tasks, legal sensing, return and recovery. Aircraft weapons: AV3; electronic interference: AV4; independent salvage pool: AV5."
+}

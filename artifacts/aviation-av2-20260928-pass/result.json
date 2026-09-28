@@ -1,0 +1,8 @@
+{
+  "status": "AVIATION_AV2_UI_PASS",
+  "checks": [
+    "Actual preparation UI receives two unique aircraft and pilots, services one, preloads it, and schedules the other; lost action/commit replies retry once without duplicating inventory.",
+    "Actual AV2 UI launches exactly once after a lost reply, assigns a cloud-layer patrol, renders the aircraft on that layer, recalls it across layers, and recovers its airframe, crew and remaining ammunition.",
+    "Real battle powers the hangar, begins only the queued job, accepts an immediate-completion cancel, and preserves both airframes and crew across ending, saving and backend restart."
+  ]
+}

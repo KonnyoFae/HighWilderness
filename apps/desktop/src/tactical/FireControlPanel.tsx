@@ -44,7 +44,7 @@ export function FireControlPanel({ship,tab,disabled,names,onCommand,onAssignMiss
       className={`fire-contact${c.valid?'':' lost'}`} key={c.id} aria-pressed={ship.locked_target_id===c.id}
       onClick={()=>{if(!disabled&&c.valid&&c.status!=='no_computer'&&ship.locked_target_id!==c.id)onCommand({kind:'lock',target:c.id,value:null});}}
       onDoubleClick={()=>onFocus?.(c)} title={c.valid?'为当前舰艇锁定目标；双击定位':'失联：双击查看最后观测位置'}>
-      <span>{c.kind==='ship'?(names[c.id]??'敌舰'):`${c.kind==='shell'?'炮弹':'导弹'} #${c.id}`}</span>
+      <span>{c.kind==='ship'?(names[c.id]??'敌舰'):`${c.kind==='aircraft'?'敌机':c.kind==='shell'?'炮弹':'导弹'} #${c.id}`}</span>
       <span>{!c.valid?'已失联':ship.locked_target_id===c.id?(ship.lock_status==='locked'?'已锁定':'锁定中'):c.status==='no_computer'?'无舰级火控':'跟踪中'}</span>
       <small>{layer[c.height_layer]} · {Math.hypot(...c.velocity_mps,c.vertical_speed_mps??0).toFixed(0)} m/s</small>
       <small>{c.age_s.toFixed(1)} 秒前观测</small>
@@ -56,7 +56,7 @@ export function FireControlPanel({ship,tab,disabled,names,onCommand,onAssignMiss
     {ship.locked_target_id!==null&&<button disabled={disabled} onClick={()=>onCommand({kind:'lock',target:null,value:null})}>解除火控锁定</button>}
     {!ship.contacts.length&&<p>暂无传感器观测。请检查设备、距离和高度层。</p>}
     {[...ship.contacts].sort((a,b)=>Number(b.valid)-Number(a.valid)).map(c=><section key={c.id} className={`observation-card ${c.valid?'':'lost'}`}>
-      <div className="observation-heading"><strong>{c.kind==='ship'?(names[c.id]??'敌舰'):`${c.kind==='shell'?'来袭炮弹':'敌方导弹'} #${c.id}`}</strong>
+      <div className="observation-heading"><strong>{c.kind==='ship'?(names[c.id]??'敌舰'):`${c.kind==='aircraft'?'敌机':c.kind==='shell'?'来袭炮弹':'敌方导弹'} #${c.id}`}</strong>
         <span>{!c.valid?'已失联':c.status==='no_computer'?(c.defense_weapon_ids?.length?'仅进阶武器自持火控':'缺少指挥机'):ship.locked_target_id===c.id?(ship.lock_status==='locked'?'已锁定':'正在锁定'):'跟踪中'}</span></div>
       <p>{layer[c.height_layer]} · 总速度 {Math.hypot(...c.velocity_mps,c.vertical_speed_mps??0).toFixed(0)} 米/秒 · {c.age_s.toFixed(1)} 秒前观测</p>
       {c.kind==='missile'&&c.altitude_m!=null&&<p>观测高度 {c.altitude_m.toFixed(0)} 米 · {(c.vertical_speed_mps??0)>0?'上爬':(c.vertical_speed_mps??0)<0?'下潜':'平飞'} · 垂直速度 {Math.abs(c.vertical_speed_mps??0).toFixed(0)} 米/秒</p>}
@@ -65,6 +65,6 @@ export function FireControlPanel({ship,tab,disabled,names,onCommand,onAssignMiss
         onClick={()=>onCommand({kind:'lock',target:c.id,value:null})}>锁定此目标</button>}
       {c.valid&&onAssignMissile&&<button disabled={disabled||(c.status==='no_computer'&&!c.defense_weapon_ids?.length)} onClick={()=>onAssignMissile(c.id)}>{c.kind==='ship'?'分配导弹':'分配拦截弹'}</button>}
     </section>)}
-    <p className="muted">导弹发射控制与导弹页面共用目标分配。拦截弹只能选择有耐久的敌方弹体。</p>
+    <p className="muted">导弹发射控制与导弹页面共用目标分配。拦截弹可选择敌机及有耐久的敌方弹体，具体兼容类别由型号决定。</p>
   </div>;
 }

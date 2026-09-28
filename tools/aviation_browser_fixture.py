@@ -1,6 +1,7 @@
 """Empty carriers in a disposable store for real AV1 UI acceptance."""
 from pathlib import Path
 import sys
+import os
 from backend.high_wilderness_sidecar.server import SidecarServer
 from backend.high_wilderness_sidecar import tactical_test_scene as scene
 
@@ -11,7 +12,7 @@ def create(directory):
     for key in ('instance.aviation.player','instance.aviation.enemy'):
         service.import_ship(dict(instance_id=key,source=dict(kind='resource',value=source['key'])))
     service.provision()
-    v=scene.fresh();v.update(revision=1,distance_mode='manual',distance_m=30000)
+    v=scene.fresh();v.update(revision=1,distance_mode='manual',distance_m=2000 if os.environ.get('HW_AVIATION_COMBAT')=='1' else 30000)
     for side,key in zip(v['sides'],('instance.aviation.enemy','instance.aviation.player')):
         side['flagship_instance_id']=key
         side['ships']=[dict(instance_id=key,x_m=0,y_m=0,heading_rad=0)]

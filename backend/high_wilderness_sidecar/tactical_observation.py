@@ -31,6 +31,8 @@ class Target:
     durability: float | None = None
     payload: object = None
     threat: bool = False
+    radar_signature: float = 1000.
+    infrared_signature: float = 10.
 
 
 @dataclass(frozen=True)
@@ -62,6 +64,9 @@ def observation_range(sensor, target, *, ship_radar_factor=1.):
         maximum=min(maximum,sensor['ship_range_m'])
         if sensor['channel']=='radar':maximum*=ship_radar_factor
     elif not target.powered:maximum=min(maximum,sensor['coasting_range_m'])
+    if target.kind=='aircraft':
+        from .aviation_flight import policy
+        maximum*=(target.radar_signature/policy()['radar_reference_m2'])**.25 if sensor['channel']=='radar' else (target.infrared_signature/policy()['infrared_reference'])**.5
     maximum*=sensor['weather'][LAYERS.index(target.layer)]*sensor['range_efficiency']
     return maximum
 
@@ -191,8 +196,8 @@ class ObservationRuntime:
         result.extend(missiles)
         return tuple(result)
 
-    def plan(self,world,available,projectiles,*,missiles=(),occluded=None):
-        b=self.battle;step=world.fixed_step;targets=self.targets(world,projectiles,missiles)
+    def plan(self,world,available,projectiles,*,missiles=(),occluded=None,extra_targets=()):
+        b=self.battle;step=world.fixed_step;targets=self.targets(world,projectiles,missiles)+tuple(extra_targets)
         assignments={};local={};devices=[]
         for n,s in enumerate(world.ships):
             assigned=set()
@@ -300,6 +305,8 @@ class ObservationRuntime:
         if not self.controllers(n,world,available)[1]:return False
         if any(available[n][mid] is None and self.sensor_enabled.get((n,mid),True) for mid in self.sensors[n]):return True
         if not any(available[n][mid] is None for mid in self.links[n]):return False
+        if any(i==n and t.valid and any(source==n and channel.startswith('aircraft_') and available[n][mid] is None
+                for source,mid,channel in t.sources) for (i,_),t in self.frame.tracks.items()):return True
         return any(self.battle._sides[i]==self.battle._sides[n] and
             any(available[i][mid] is None for mid in self.links[i]) and
             any(available[i][mid] is None and self.sensor_enabled.get((i,mid),True) for mid in self.sensors[i]) and self.controllers(i,world,available)[1] and

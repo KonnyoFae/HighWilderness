@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import type {Aircraft,AviationOrder,AviationProfile,AviationState} from './aviation';
 import {aircraftLocation,payloadNames} from './aviation';
+import {AviationTaskForm,taskNames} from './AviationFlightPanel';
 
 export function AviationPanel({profile,state,names,disabled,onOrder,preparation=false,planned=0}:
   {profile?:AviationProfile;state?:AviationState;names:Record<string,string>;disabled:boolean;onOrder:(o:AviationOrder)=>void;preparation?:boolean;planned?:number}) {
@@ -13,7 +14,7 @@ export function AviationPanel({profile,state,names,disabled,onOrder,preparation=
   const aboard=state.manifest.aircraft.filter(a=>state.hangar_assignments[a.id]===selected?.module_id).reduce((n,a)=>n+a.crew.length,0);
   const occupied=state.manifest.aircraft.filter(a=>a.module_id===selected?.module_id&&['ready','preparing'].includes(a.location)).reduce((n,a)=>n+(profile.catalog.aircraft.find(m=>m.id===a.model_id)?.berth_slots??0),0);
   return <section className="aviation-panel" aria-label="舰载航空后勤">
-    <p>飞机可修复、整备和预装；起飞、巡逻与攻击将在后续阶段接入。战术航空整备不扣灵烷。</p>
+    <p>先整备至待命，再装载弹射器并起飞。战前预装的飞机开战即可弹射；战术航空不扣灵烷。</p>
     {!selected?<p>尚未安装机库，可在货舱存放备用机。</p>:<>
       <label>作业机库 <select aria-label="作业机库" value={selected.module_id} onChange={e=>setHangar(e.target.value)}>{hangars.map(f=><option key={f.module_id} value={f.module_id}>{names[f.module_id]??f.module_id}</option>)}</select></label>
       <p>泊位（含整备预留）{occupied} / {selected.ready_slots} 格 · 工位 {state.jobs.filter(j=>j.module_id===selected.module_id).length} / {selected.workstations}</p>
@@ -39,7 +40,8 @@ function AircraftCard({a,profile,state,names,hangar,catapult,disabled,preparatio
     <strong>{m.name} · #{a.id.split('.').at(-1)}</strong>
     <p>{a.condition==='damaged'?'受损机':'完好机'} · {aircraftLocation[a.location]??a.location}{a.module_id?` · ${names[a.module_id]??a.module_id}`:''} · {m.berth_slots} 格 · {m.pilots_required} 名机组{queued?' · 已预排开战后作业':''}</p>
     {job&&<p>剩余 {(job.remaining_steps/60).toFixed(1)} 秒 <button disabled={disabled} onClick={()=>onOrder({kind:'cancel',aircraft_id:a.id})}>取消并立即完工</button></p>}
-    {a.location==='catapult'&&!job&&<p>装载已完成，可供后续起飞流程使用。</p>}
+    {a.location==='catapult'&&!job&&<p>装载已完成。{!preparation&&<button disabled={disabled} onClick={()=>onOrder({kind:'launch',aircraft_ids:[a.id]})}>弹射起飞</button>}</p>}
+    {['cargo','repairing','preparing','ready','catapult'].includes(a.location)&&<details><summary>起飞任务{state.departure_tasks?.[a.id]?`：${taskNames[state.departure_tasks[a.id].kind]}`:'：默认前方盘旋'}</summary><AviationTaskForm initial={state.departure_tasks?.[a.id]} disabled={disabled} label="保存起飞任务" onSubmit={task=>onOrder({kind:'departure_task',aircraft_ids:[a.id],task})}/></details>}
     {!job&&!queued&&['cargo','ready'].includes(a.location)&&<>
       {a.condition==='intact'&&<fieldset disabled={disabled}><legend>本次挂载配置</legend>{m.hardpoints.map(p=><label key={p.id}>{p.id} <select aria-label={`${a.id} ${p.id} 挂载`} value={loadout[p.id]??''} onChange={e=>setLoadout(old=>{const next={...old};if(e.target.value)next[p.id]=e.target.value;else delete next[p.id];return next;})}>
         {!m.required_payload&&<option value="">空挂点</option>}{p.compatible_payloads.map(k=><option key={k} value={k}>{payloadNames[k]??k}</option>)}</select></label>)}</fieldset>}

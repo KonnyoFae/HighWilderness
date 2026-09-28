@@ -31,12 +31,15 @@ def select(b,n,mid,profile,layer,origin,world,available,inventories,projectiles,
         position,velocity=measured.position,measured.velocity
         launch_layer=layer or measured.height_layer
         if measured.height_layer!=launch_layer or abs(LAYERS.index(launch_layer)-LAYERS.index(world.ships[n].motion.height_layer))>1:continue
-        if observed.total_speed(measured)<policy()['high_speed_mps'] or not measured.flight_profile or measured.flight_profile.caliber_mm<75:continue
+        aircraft=row.get('target_kind')=='aircraft'
+        from .aviation_weapons import can_target
+        if not can_target(profile,'aircraft' if aircraft else 'projectile'):continue
+        if not aircraft and (observed.total_speed(measured)<policy()['high_speed_mps'] or not measured.flight_profile or measured.flight_profile.caliber_mm<75):continue
         sources,_=b.observation.defense_sources(n,measured.id,world,available,frame,mid)
         if not sources:reason='defense_sensor_unavailable';continue
         endangered=next(i for i,s in enumerate(world.ships) if s.ship_id==row['ship_id'])
         distance=hypot(*(a-c for a,c in zip(position,world.ships[endangered].motion.position_world_m.to_list())))
-        if distance<=inner_range(b,endangered,row.get('impact_layer',launch_layer),world,available,inventories):reason='defense_inner_circle';continue
+        if not aircraft and distance<=inner_range(b,endangered,row.get('impact_layer',launch_layer),world,available,inventories):reason='defense_inner_circle';continue
         ratio=1. if launch_layer==world.ships[n].motion.height_layer else ballistics.CROSS_LAYER_SPEED
         distance=hypot(*(a-c for a,c in zip(position,origin)))
         if distance>profile.range(ratio):continue
@@ -48,7 +51,7 @@ def select(b,n,mid,profile,layer,origin,world,available,inventories,projectiles,
         if distance/(profile.speed_cap*ratio+hypot(*velocity))>=row['remaining_s']:continue
         options.append((distance,measured.id,position,velocity,launch_layer))
     if not options:return None,reason
-    _,pid,position,velocity,launch_layer=min(options)
+    _,pid,position,velocity,launch_layer=min(options,key=lambda row:(row[0],(0,row[1]) if type(row[1]) is int else (1,row[1])))
     return dict(projectile_id=pid,position=position,velocity=velocity,layer=launch_layer),None
 
 
@@ -73,7 +76,7 @@ def reservation(projectile,step):
     # A short bounded reservation during temporary loss prevents immediate
     # duplicate salvos; a lost or decoy-locked missile no longer covers forever.
     if target is None and f.loss_step is not None and step-f.loss_step<=policy()['reservation_grace_steps']:target=f.original_target
-    if type(target) is not int:target=None
+    if type(target) not in (str,int):target=None
     from .tactical_defense import reachable
     measurement=f.last_sample if f.last_sample and f.last_sample.id==target else f.link_sample
     if target is not None and measurement and measurement.id==target and not reachable(projectile,measurement,step):target=None

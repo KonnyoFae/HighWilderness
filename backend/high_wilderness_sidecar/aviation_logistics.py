@@ -13,9 +13,12 @@ def validate_order(o, p, *, preparation=False):
     kind=o.get('kind')
     fields={'acquire':'model_id', 'pilots':'module_id quantity', 'repair':'aircraft_id module_id',
             'prepare':'aircraft_id module_id loadout', 'load':'aircraft_id module_id',
-            'store':'aircraft_id', 'cancel':'aircraft_id', 'queue':'order', 'clear_queue':''}
+            'store':'aircraft_id', 'cancel':'aircraft_id', 'queue':'order', 'clear_queue':'', 'departure_task':'aircraft_ids task'}
     ps.need(type(kind) is str and kind in fields, '$.kind', '未知航空指令')
     ps.obj(o,'kind '+fields[kind], '$.aviation.order')
+    if kind=='departure_task':
+        from . import aviation_tasks
+        aviation_tasks.identities(o['aircraft_ids']);aviation_tasks.validate(o['task'])
     if kind in ('acquire','pilots','queue'):
         ps.need(preparation, '$.kind', '此指令仅用于战前准备')
     if kind=='acquire': ac.model(p['catalog'],o['model_id'])
@@ -120,6 +123,12 @@ class Work:
             if queued['kind']=='prepare': ac.validate_loadout(self.p['catalog'],a['model_id'],queued['loadout'])
             self.s['queue'].append(ps.clone(queued));return
         if kind=='clear_queue':self.s['queue']=[];return
+        if kind=='departure_task':
+            for key in o['aircraft_ids']:
+                a=self.plane(key)
+                ps.need(a['location'] in ('cargo','repairing','preparing','ready','catapult'), '$.aircraft_ids', '起飞任务仅能预设给舰内飞机')
+                self.s.setdefault('departure_tasks',{})[key]=ps.clone(o['task'])
+            return
         a=self.plane(o['aircraft_id']);model=ac.model(self.p['catalog'],a['model_id'])
         job=next((j for j in self.s['jobs'] if j['aircraft_id']==a['id']),None)
         if kind=='cancel':

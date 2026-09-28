@@ -6,6 +6,12 @@ from . import persistent_ship as ps, missile_logistics as logistics
 from . import missile_flight as flight
 from .tactical_layers import LAYERS
 from .tactical_ballistics import CROSS_LAYER_SPEED
+from .aviation_weapons import can_target
+
+
+def compatible(profile,track):
+    return bool(profile and track and can_target(profile,track.target.kind)
+        and (not profile.interceptor or (track.target.durability or 0)>0))
 
 
 @dataclass(frozen=True)
@@ -97,7 +103,7 @@ class MissileRuntime:
             world=b.session.world;available=b._availability(world)[1]
             ps.need(any(available[index][mid] is None for mid in b.observation.links[index]),'$.ship_id','所选舰艇没有可用数据链')
             track=b.observation.frame.tracks.get((index,order['target_id']))
-            appropriate=track and ((track.target.kind in ('shell','missile') and track.target.durability is not None) if projectile.missile.profile.interceptor else track.target.kind=='ship')
+            appropriate=compatible(projectile.missile.profile,track)
             ps.need(track and track.valid and appropriate
                     and b.observation.sources(index,order['target_id'],world,available)[0],'$.target_id','需要对应敌方目标的有效火控观测')
             ps.need(hypot(*(a-c for a,c in zip(projectile.position,world.ships[index].motion.position_world_m.to_list())))<=b.observation.policy['datalink_range_m'],
@@ -113,8 +119,7 @@ class MissileRuntime:
                 row=next(r for r in b.inventory.inventories[index]._value['missiles']['launchers'] if r['module_id']==key[1])
                 profile=flight.profiles().get(row['model_id']);interceptor=bool(profile and profile.interceptor)
                 track=b.observation.frame.tracks.get((index,identity)) if type(identity) in (str,int) else None
-                ps.need(track and track.valid and ((track.target.kind in ('shell','missile') and track.target.durability is not None)
-                        if interceptor else track.target.kind=='ship'),'$.target_id','拦截弹需要有耐久的敌方弹体，反舰弹需要敌舰')
+                ps.need(track and track.valid and compatible(profile,track),'$.target_id','此导弹不能攻击该目标类别，或目标已不可用')
                 sources=b.observation.defense_sources(index,identity,b.session.world,b._availability(b.session.world)[1],weapon_id=key[1]) if interceptor else b.observation.sources(index,identity,b.session.world,b._availability(b.session.world)[1])
                 ps.need(sources[0],
                         '$.target_id','目标当前没有有效火控观测')
@@ -201,7 +206,7 @@ class MissileRuntime:
                 if candidates:target=min(candidates,key=lambda t:(not t.target.large,hypot(*(a-c for a,c in zip(t.target.position,origin))),t.target.id)).target.id
             if target is not None:
                 track=frame.tracks.get((n,target))
-                appropriate=track and ((track.target.kind in ('shell','missile') and track.target.durability is not None) if p.interceptor else track.target.kind=='ship')
+                appropriate=compatible(p,track)
                 if track and track.valid and appropriate and sources_for(target)[0]:
                     aim=tuple(a+v*(step-track.step)/60 for a,v in zip(track.target.position,track.target.velocity));velocity=track.target.velocity
                     from .projectile_observation import extrapolate
@@ -248,8 +253,8 @@ class MissileRuntime:
                     None,layer,(p.model_id+'.'+unit['warhead_id'],1),p.ballistics(ratio),aimed_ship_id=target if not p.interceptor else None,
                     durability=p.durability,maximum_durability=p.durability,collision_radius_m=p.diameter_mm/2000,missile=f,
                     interception_damage=p.interception_damage,interception_radius_m=p.interception_radius_m,
-                    interception_target_id=target if p.interceptor and type(target) is int else None,
-                    interception_expected_step=due+p.lifetime() if p.interceptor and type(target) is int else None)
+                    interception_target_id=target if p.interceptor and type(target) in (int,str) else None,
+                    interception_expected_step=due+p.lifetime() if p.interceptor and type(target) in (int,str) else None)
                 if due>step:pending.append(Departure(due,projectile));status='departed'
                 else:projectiles.append(reservation(flight.prepare(projectile,world,b._sides,environment),step));status='fired'
                 events.append(dict(kind='fired',step=step,projectile_id=sequence,ship_id=ship.ship_id,weapon_id=mid,model_id=p.model_id,
@@ -285,6 +290,7 @@ class MissileRuntime:
                 launchers=[dict(module_id=mid,target_id=s.target,point_m=s.point,attack_layer=s.layer or ship.motion.height_layer,
                     active_target_id=s.active_target,active_attack_layer=s.active_layer,automatic_layer=s.layer is None,
                     interceptor=bool((p:=flight.profiles().get(next(r['model_id'] for r in inv._value['missiles']['launchers'] if r['module_id']==mid))) and p.interceptor),
+                    target_kinds=list(p.target_kinds or (('aircraft','projectile') if p.interceptor else ('ship',))) if p else [],
                     integrated_fire_control=(i,mid) in b.observation.integrated,
                     fire_arc=ps.clone(self.fire_arcs[i,mid]),
                     angle_rad=s.angle,aim_point_m=s.aim,fire_requested=s.fire_requested,shots=s.shots,status=s.status,

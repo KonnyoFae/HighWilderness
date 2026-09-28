@@ -115,7 +115,7 @@ class GunState:
     reload_blocked_reason: str | None = None
     attack_layer: str | None = None
     point_defense: bool = False
-    interception_target_id: int | None = None
+    interception_target_id: int | str | None = None
     interception_priority: int | None = None
     interception_needed_rounds: int = 0
 
@@ -154,10 +154,13 @@ class Projectile:
     maximum_durability: float | None = None
     collision_radius_m: float = 0.
     interception_damage: float = 0.
-    interception_target_id: int | None = None
+    interception_target_id: int | str | None = None
     interception_expected_step: int | None = None
     missile: object | None = None
     interception_radius_m: float = 0.
+    aircraft_body: bool = False
+    aircraft_damage: float = 0.
+    source_aircraft_id: str | None = None
 
 
 def resource_pack(seed, config):
@@ -472,8 +475,10 @@ class GunneryBattle(SensorState):
             flight_commands['resource_operations']=existing+self.observation.mode_operations(existing)
         staged = {}
         def impacts(before, candidate):
+            from . import aviation_combat
             survivors, damage_state, batch = self.damage.advance(before, candidate, self.projectiles, self.damage_state,
-                tuple(e for e in self.ew.effects if e.kind=='decoy'))
+                tuple(e for e in self.ew.effects if e.kind=='decoy'),aviation_combat.bodies(self,before,self.inventory.inventories,self.aviation.flights))
+            staged['aviation_after_hits']=aviation_combat.apply_hits(self.aviation.flights,damage_state.interceptions)
             staged.update(survivors=survivors, damage_state=damage_state)
             if self.fire.enabled:
                 fires, events, batch, armor_losses = self.fire.damage(candidate, batch)
@@ -530,11 +535,19 @@ class GunneryBattle(SensorState):
             if self.damage:
                 consumed={r['decoy_id'] for r in staged['damage_state'].expired_flights if 'decoy_id' in r}
                 effects=tuple(e for e in effects if e.id not in consumed)
-            sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,effects))
+            from . import aviation_flight,aviation_combat
+            staged['aviation_flights']=aviation_flight.advance(self,world,inventories,staged.get('aviation_after_hits',self.aviation.flights),projectiles,effects)
+            aircraft_bodies=aviation_combat.bodies(self,world,inventories,staged['aviation_flights'])
+            aircraft_targets=aviation_flight.targets(staged['aviation_flights'],inventories,self._sides)
+            sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,effects),extra_targets=aircraft_targets)
+            sensor_frame=aviation_flight.share(self,world,available,sensor_frame,staged['aviation_flights'])
             ew_plan=self.ew.plan(world,inventories,available,sensor_frame,effects,self._ending_reason(world) if self.damage else None)
             staged['ew_plan']=ew_plan
-            if ew_plan[3]:sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,ew_plan[1]))
+            if ew_plan[3]:
+                sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,ew_plan[1]),extra_targets=aircraft_targets)
+                sensor_frame=aviation_flight.share(self,world,available,sensor_frame,staged['aviation_flights'])
             environment=self.ew.environment(world,available,sensor_frame,ew_plan[1],projectiles,prediction=defense_prediction)
+            environment=aviation_combat.environment(self,world,environment,staged['aviation_flights'],inventories)
             from .tactical_missile_defense import prepare_all
             projectiles=prepare_all(self,world,available,projectiles,environment,sensor_frame)
             staged['sensor_frame']=sensor_frame
@@ -572,7 +585,7 @@ class GunneryBattle(SensorState):
                 elif visible and previous and step-previous.step <= self.config['observation_expiry_steps']:
                     contacts[pair] = previous
             fire_control.prepare(self,world,available,inventories,working_states,contacts,sensor_frame,solutions)
-            defense_contacts,defense_threats = self.point_defense.observe(world,available,projectiles,sensor_frame,prediction=defense_prediction) if self.point_defense else ({},())
+            defense_contacts,defense_threats = self.point_defense.observe(world,available,[*projectiles,*aircraft_bodies],sensor_frame,prediction=defense_prediction) if self.point_defense else ({},())
             staged.update(defense_contacts=defense_contacts,defense_threats=defense_threats)
             defense_locks=set(manual_projectiles)
             states, projectile_sequence = [], self._projectile_sequence
@@ -621,7 +634,7 @@ class GunneryBattle(SensorState):
                     aim=None;wanted=False
                     quality,quality_reason,sources='normal','point_defense',()
                     if status is None:
-                        defense_assignment,reason=self.point_defense.choose(gun_index,state,world,available,projectiles,
+                        defense_assignment,reason=self.point_defense.choose(gun_index,state,world,available,[*projectiles,*aircraft_bodies],
                             defense_contacts,defense_threats,channel_use,defense_locks,inv,sensor_frame)
                         if defense_assignment:
                             aim=defense_assignment['aim'];wanted=True;sources=defense_assignment['sources']
@@ -717,6 +730,8 @@ class GunneryBattle(SensorState):
                 defense_contacts,defense_threats,navigation_orders={k:o for k,o in navigation[0].items() if self.navigation.flag_by_ship[k] not in navigation[4]})
             staged['missile_plan']=missile_plan
             projectile_sequence=missile_plan[2]
+            if not ending:
+                staged['aviation_flights'],projectile_sequence,staged['aviation_events']=aviation_combat.plan(self,world,inventories,staged['aviation_flights'],projectiles,projectile_sequence,environment)
             if self.fire.enabled and not ending:
                 fires, events = self.fire.spread(world,staged['fires'])
                 staged.update(fires=fires,fire_events=staged['fire_events']+events,
@@ -728,6 +743,7 @@ class GunneryBattle(SensorState):
                 fires, controllers, events = self.fire.work(world, inventories, staged['fires'], available, ending=ending)
                 staged.update(fires=fires, fire_controllers=controllers, fire_events=staged['fire_events']+events)
             if ending:
+                staged['aviation_flights']=aviation_flight.finish(self,world,inventories,staged['aviation_flights'],True)
                 for inv in inventories:
                     inv.prepare_settlement('ending.'+world.epoch)
                 staged['ending'] = dict(reason=ending, step=step, removed_projectiles=len(projectiles)+len(self.missiles.pending), saved=False)
@@ -762,9 +778,6 @@ class GunneryBattle(SensorState):
                 departure_plan = self.disengagement.plan(world, navigation)
                 world, _, departures, ending, _ = departure_plan
                 staged['departure_plan'] = departure_plan
-                for s,inv in zip(world.ships,inventories):
-                    if s.command.lifecycle.physical_status=='exited':
-                        inv.prepare_settlement('ending.'+world.epoch)
                 removed={n for n,(old,s) in enumerate(zip(self.session.world.ships,world.ships))
                     if old.command.lifecycle.physical_status!='exited' and s.command.lifecycle.physical_status=='exited'}
                 if removed:
@@ -788,6 +801,10 @@ class GunneryBattle(SensorState):
                 if s.wreck is not None:
                     from .aviation_logistics import advance as close_crashed_aviation
                     close_crashed_aviation(inv,0,crashed=True)
+            from . import aviation_flight
+            staged['aviation_flights']=aviation_flight.finish(self,world,inventories,staged['aviation_flights'],bool(ending))
+            for s,inv in zip(world.ships,inventories):
+                if s.command.lifecycle.physical_status=='exited':inv.prepare_settlement('ending.'+world.epoch)
             if ending and not staged.get('ending'):
                 for inv in inventories:
                     inv.prepare_settlement('ending.'+world.epoch)
@@ -803,6 +820,10 @@ class GunneryBattle(SensorState):
             inventory_project=simulate, inventory_repair=repairs if self.repair.enabled else None,
             inventory_finish=finish, project=project, impact_resolver=impacts if self.damage else None, **flight_commands)
         self.states, self.projectiles = staged['states'], staged['projectiles']
+        self.aviation.flights=staged['aviation_flights']
+        aviation_hits=tuple(dict(kind='destroyed' if e['intercepted'] else 'hit',aircraft_id=e['projectile_id'],step=e['step'],durability=e['durability_after'])
+            for e in staged.get('damage_state',self.damage_state).interceptions if e.get('target_kind')=='aircraft') if self.damage else ()
+        self.aviation.recent=(self.aviation.recent+staged.get('aviation_events',())+aviation_hits)[-64:]
         self.navigation.commit(navigation)
         if 'departure_plan' in staged:
             self.disengagement.commit(staged['departure_plan'])
@@ -848,15 +869,14 @@ class GunneryBattle(SensorState):
         self._guard()
         if self.ending:
             return False
+        candidates = tuple(i.fork() for i in self.inventory.inventories)
         if self.fire.enabled:
             _, available = self._availability(self.session.world)
-            candidates = tuple(i.fork() for i in self.inventory.inventories)
             self.fire.permissions(self.session.world, candidates, available)
-            for inv in candidates:
-                inv.prepare_settlement('ending.'+self.session.world.epoch)
-            self.inventory.inventories = candidates
-        else:
-            self.inventory.prepare_settlement('ending.'+self.session.world.epoch)
+        from . import aviation_flight
+        flights=aviation_flight.finish(self,self.session.world,candidates,self.aviation.flights,True)
+        for inv in candidates:inv.prepare_settlement('ending.'+self.session.world.epoch)
+        self.inventory.inventories=candidates;self.aviation.flights=flights
         if self.fire.enabled:
             self.fire.controllers = tuple(replace(c, enabled=False, status='battle_finished') for c in self.fire.controllers)
         self.ending = dict(reason='withdrawal', step=self.session.world.fixed_step,

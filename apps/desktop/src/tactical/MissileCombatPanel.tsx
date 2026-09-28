@@ -11,7 +11,7 @@ const statuses:Record<string,string>={no_target:'等待目标',ready:'可发射'
   reloading:'装填或换弹中',cooldown:'发射间隔',no_ammunition:'没有待发弹',model_unavailable:'此型号飞行尚待后续接入',
   projectile_limit:'在途弹药已达上限',destroyed:'发射器已毁',mode_disabled:'设备未开启',power_unavailable:'供电不足',
   crew_unavailable:'人手不足',host_unavailable:'宿主不可用',control_unavailable:'当前无法指挥',battle_finished:'交战已结束'};
-Object.assign(statuses,{defense_waiting:'等待外圈大型高速威胁',defense_covered:'目标已有在途拦截火力',defense_inner_circle:'目标已进入近防炮内圈',defense_sensor_unavailable:'缺少有效感知或火控计算'});
+Object.assign(statuses,{defense_waiting:'等待敌机或外圈大型高速威胁',defense_covered:'目标已有在途拦截火力',defense_inner_circle:'目标已进入近防炮内圈',defense_sensor_unavailable:'缺少有效感知或火控计算'});
 
 export function MissileCombatPanel({ship,observation,missiles,names,selected,onSelect,ownLayer,disabled,picking,onPick,onCommand,targetHint}:{
   ship?:MissileShipView;observation?:ObservationShip;missiles?:MissileView;projectiles:DisplayProjectile[];
@@ -23,10 +23,10 @@ export function MissileCombatPanel({ship,observation,missiles,names,selected,onS
   const row=ship.state.launchers.find(r=>r.module_id===launcher.module_id)!;
   const model=ship.profile.models.find(m=>m.id===row.model_id)!;
   const send=(kind:string,extra:Partial<MissileOrder>={})=>onCommand({module_id:launcher.module_id,kind,...extra});
-  const contacts=observation?.contacts.filter(c=>(launcher.interceptor?c.kind==='missile'||c.kind==='shell':c.kind==='ship')&&c.valid
+  const contacts=observation?.contacts.filter(c=>(launcher.target_kinds??(launcher.interceptor?['aircraft','projectile']:['ship'])).includes(c.kind==='shell'||c.kind==='missile'?'projectile':c.kind)&&c.valid
     &&(c.status!=='no_computer'||c.defense_weapon_ids?.includes(launcher.module_id)))??[];
   const hint=contacts.find(c=>c.id===targetHint);
-  const targetName=(id:string|number)=>names[id]??(typeof id==='number'?`来袭弹体 #${id}`:'原目标');
+  const targetName=(id:string|number)=>names[id]??(typeof id==='number'?`来袭弹体 #${id}`:contacts.find(c=>c.id===id)?.kind==='aircraft'?`敌机 #${id}`:'原目标');
   return <section className="missile-combat" aria-label="导弹作战">
       <label>发射器<select aria-label="作战发射器" value={launcher.module_id} onChange={e=>onSelect(e.target.value)}>
         {ship.launchers.map(l=><option key={l.module_id} value={l.module_id}>{ship.module_names[l.module_id]??l.module_id}</option>)}
@@ -38,7 +38,7 @@ export function MissileCombatPanel({ship,observation,missiles,names,selected,onS
       <p role="status">{statuses[launcher.status]??'暂不可用'}{launcher.fire_requested?' · 单发指令等待执行':''} · 已发射 {launcher.shots} 枚</p>
       <p className="muted">当前发射参考射程 {(launcher.maximum_range_m/1000).toFixed(1)} 公里，转向、上爬和下潜会改变实际航程。</p>
       <MissilePerformance value={ship.profile.flight_profiles?.[row.model_id]}/>
-      {launcher.interceptor&&<p>自动防御：外圈大型高速撞舰威胁优先，每目标先分配一枚。{launcher.active_target_id!==null&&launcher.active_target_id!==undefined?` 当前处理 ${targetName(launcher.active_target_id)}。`:''}</p>}
+      {launcher.interceptor&&<p>自动防御：拦截敌机及外圈大型高速撞舰威胁，每目标先分配一枚。{launcher.active_target_id!==null&&launcher.active_target_id!==undefined?` 当前处理 ${targetName(launcher.active_target_id)}。`:''}</p>}
       <label>导弹作用层<select aria-label="导弹作用层" value={launcher.interceptor&&launcher.automatic_layer?'auto':launcher.attack_layer} onChange={e=>send('attack_layer',{layer:e.target.value==='auto'?null:e.target.value})}>
         {launcher.interceptor&&<option value="auto">自动选择本层／相邻层</option>}
         {HEIGHT_LAYERS.map((layer,i)=><option key={layer} value={layer} disabled={Math.abs(i-HEIGHT_LAYERS.indexOf(ownLayer as typeof layer))>1}>{layerName(layer)}</option>)}

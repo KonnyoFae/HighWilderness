@@ -187,6 +187,12 @@ class DamageKernel:
             armor.append(tuple(e.maximum for e in edges))
         self.initial = DamageState(tuple(armor))
 
+    def register_profiles(self,profiles):
+        """Install versioned ammunition and its matching structural damage factors."""
+        self.profiles.update(profiles)
+        self.profile_hull_factors.update({key:tuple(p.damage.hull_integrity_damage_fraction * REFERENCE_MAXIMUM_POINTS * d.inverse_maximum_points
+            for d in self.structural_durability) for key,p in profiles.items()})
+
     def contacts_on_path(self, index, ship, path, level=None, accept=None):
         """Earliest physical contact on each deck, preserving the swept path."""
         contacts = {}
@@ -239,7 +245,7 @@ class DamageKernel:
         levels = self.module_levels[index].get(module_id, ())
         return (self.module_base_levels[index][module_id],) if levels and self.deck_policy.spanning_module_bonus == 'base' else levels
 
-    def advance(self, before, world, projectiles, state, decoys=()):
+    def advance(self, before, world, projectiles, state, decoys=(), aircraft=()):
         if not projectiles:
             return (), replace(state,fuel_damage=(),ignition_attempts=(),expired_flights=(),module_impacts=(),interceptions=()) if state.fuel_damage or state.ignition_attempts or state.expired_flights or state.module_impacts or state.interceptions else state, ImpactBatch()
         armor = list(state.armor)
@@ -315,7 +321,9 @@ class DamageKernel:
                 continue
             pending.append((min(hits),p,flight))
         from .tactical_interception import resolve as intercept_projectiles
-        updated,removed,interceptions = intercept_projectiles(projectiles,self.sides,
+        collision_rounds=tuple(replace(p,aircraft_damage=p.aircraft_damage or p.interception_damage or self.profiles[p.projectile_key].damage.surface_module_damage_points)
+            if aircraft and p.projectile_key in self.profiles else p for p in projectiles)
+        updated,removed,interceptions = intercept_projectiles((*collision_rounds,*aircraft),self.sides,
             {p.id:hit[0] for hit,p,_ in pending},world.fixed_step)
         survivors = [replace(p,durability=updated[p.id].durability) for p in survivors if p.id not in removed]
         terminals = [row for row in terminals if row['projectile_id'] not in removed]
