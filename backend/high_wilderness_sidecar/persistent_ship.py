@@ -126,7 +126,7 @@ def compile_resources(seed, definition):
     fuel_version = type(v) is dict and v.get('interface') in dc.FUEL_RESOURCE_INTERFACES
     filling_version = dc_version or type(v) is dict and v.get('interface') == FILLING_RESOURCE_INTERFACE
     obj(v, 'interface id version source_seed_sha256 goods holds magazines weapons projectiles recipes fire_control' +
-        (' filling_holds' if filling_version else '') + (' damage_controls' if dc_version else '') + (' continuous_damage' if fire_version else '') + (' repair' if repair_version else '')+(' fuel fuel_tanks' if fuel_version else '')+(' ignition ignition_decks' if v.get('interface') in dc.IGNITION_RESOURCE_INTERFACES else '')+(' missiles' if v.get('interface')==dc.MISSILE_RESOURCE_INTERFACE else '')+(' ammunition_resource_liters' if 'ammunition_resource_liters' in v else ''), '$.resources')
+        (' filling_holds' if filling_version else '') + (' damage_controls' if dc_version else '') + (' continuous_damage' if fire_version else '') + (' repair' if repair_version else '')+(' fuel fuel_tanks' if fuel_version else '')+(' ignition ignition_decks' if v.get('interface') in dc.IGNITION_RESOURCE_INTERFACES else '')+(' missiles' if v.get('interface')==dc.MISSILE_RESOURCE_INTERFACE else '')+(' ammunition_resource_liters' if 'ammunition_resource_liters' in v else '')+(' aviation' if 'aviation' in v else ''), '$.resources')
     if 'ammunition_resource_liters' in v:
         integer(v['ammunition_resource_liters'],'$.ammunition_resource_liters',1)
     need(v['interface'] in (RESOURCE_INTERFACE, FILLING_RESOURCE_INTERFACE, *dc.RESOURCE_INTERFACES), '$.interface', 'Unsupported resource interface')
@@ -161,6 +161,9 @@ def compile_resources(seed, definition):
     if v['interface'] in dc.IGNITION_RESOURCE_INTERFACES:
         from . import tactical_ignition
         tactical_ignition.validate_definition(v,modules)
+    if 'aviation' in v:
+        from . import aviation_resources
+        aviation_resources.validate_profile(v['aviation'],goods,modules)
     missile_ids = set()
     if v['interface']==dc.MISSILE_RESOURCE_INTERFACE:
         from . import missile_resources
@@ -247,7 +250,7 @@ def _validate(value, pack):
     fuel_version = definition['interface'] in dc.FUEL_RESOURCE_INTERFACES
     obj(v, 'interface instance_id revision resources_sha256 hull_integrity_fraction fuel_units modules '
         'crew wounded_aboard power_policy engine_latches service magazines weapons cargo' +
-        (' damage_controls' if dc_version else '') + (' fires' if fire_version else '')+(' fuel_tanks' if fuel_version else '')+(' personnel' if 'personnel' in v else '')+(' missiles' if definition['interface']==dc.MISSILE_RESOURCE_INTERFACE else ''), '$')
+        (' damage_controls' if dc_version else '') + (' fires' if fire_version else '')+(' fuel_tanks' if fuel_version else '')+(' personnel' if 'personnel' in v else '')+(' missiles' if definition['interface']==dc.MISSILE_RESOURCE_INTERFACE else '')+(' aviation' if 'aviation' in definition else ''), '$')
     need(v['interface'] == ('gaotian.persistent-ship/5c-v1' if definition['interface']==dc.MISSILE_RESOURCE_INTERFACE else 'gaotian.persistent-ship/h5c-v1' if fuel_version else dc.REPAIR_INSTANCE_INTERFACE if definition['interface'] == dc.REPAIR_RESOURCE_INTERFACE else dc.FIRE_INSTANCE_INTERFACE if fire_version else dc.INSTANCE_INTERFACE if dc_version else INTERFACE), '$.interface', 'Unsupported instance version; legacy import requires explicit conversion')
     identifier(v['instance_id'], '$.instance_id'); integer(v['revision'], '$.revision')
     need(v['resources_sha256'] == pack.source_sha256, '$.resources_sha256', 'Exact design/resource binding mismatch')
@@ -266,6 +269,10 @@ def _validate(value, pack):
     if fuel_version:
         from . import tactical_fuel
         tactical_fuel.validate_state(v,definition,modules)
+    if 'aviation' in definition:
+        from . import aviation_resources
+        aviation_resources.validate_state(v['aviation'],definition['aviation'],v['instance_id'])
+        need(set(v['aviation']['casualty_remainders'])<=set(module_designs),'$.aviation.casualty_remainders','未知人员暴露设备')
     crew = rows(v['crew'], 'crew_type', '$.crew')
     crew_types = set(dict(pack.seed.resources.crew)) | {r.crew_type for m in pack.seed.resources.modules for r in m.prototype.crew}
     need(set(crew) <= crew_types, '$.crew', 'Unknown personnel type')
@@ -273,6 +280,8 @@ def _validate(value, pack):
         obj(c, 'crew_type count', '$.crew'); integer(c['count'], '$.crew.count')
     from .tactical_personnel import validate as validate_personnel
     validate_personnel(v,crew_types)
+    if 'aviation' in definition:
+        aviation_resources.quarters_available(v,pack)
     v['power_policy'] = RuntimePowerPolicyInput.parse(v['power_policy'], '$.power_policy').to_dict()
     latches = v['engine_latches']
     need(type(latches) is list and all(type(k) is str for k in latches) and len(set(latches)) == len(latches)
@@ -296,6 +305,10 @@ def _validate(value, pack):
     cargo = rows(v['cargo'], 'good_id', '$.cargo')
     need(set(cargo) <= set(goods), '$.cargo', 'Unknown cargo resource')
     volume = mass = 0
+    if 'aviation' in definition:
+        from . import aviation_resources
+        need(not any(k.startswith(aviation_resources.STOCK_PREFIX) for k in cargo),'$.cargo','飞机与人员请通过航空接收操作入舰')
+        volume+=aviation_resources.cargo_volume(v['aviation'],definition['aviation'])
     for key, c in cargo.items():
         obj(c, 'good_id quantity', '$.cargo'); integer(c['quantity'], '$.cargo.quantity')
         volume += c['quantity'] * goods[key]['unit_volume_cm3']
@@ -406,6 +419,9 @@ def fresh_instance(pack, instance_id):
     if definition['interface']==dc.MISSILE_RESOURCE_INTERFACE:
         from . import missile_resources
         value.update(interface=missile_resources.INSTANCE_INTERFACE, missiles=missile_resources.fresh(definition['missiles']))
+    if 'aviation' in definition:
+        from . import aviation_resources
+        value['aviation']=aviation_resources.fresh(definition['aviation'])
     return parse_instance(value, pack)
 
 

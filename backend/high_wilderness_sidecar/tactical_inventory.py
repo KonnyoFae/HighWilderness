@@ -12,7 +12,7 @@ from math import ceil
 from . import persistent_ship as ps, damage_control_resources as dc
 
 CHECKPOINT_INTERFACE = 'gaotian.inventory-checkpoint/p1b-v1alpha1'
-REASONS = frozenset(('load', 'unload', 'consume', 'reload', 'discharge', 'discard', 'damage_control_preparation', 'damage_control_use', 'firefighting', 'module_repair', 'hull_repair','tank_destroyed','emergency_lift_repair','emergency_lift_refill','magazine_detonation','missile_logistics','missile_fired'))
+REASONS = frozenset(('load', 'unload', 'consume', 'reload', 'discharge', 'discard', 'damage_control_preparation', 'damage_control_use', 'firefighting', 'module_repair', 'hull_repair','tank_destroyed','emergency_lift_repair','emergency_lift_refill','magazine_detonation','missile_logistics','missile_fired','aviation_logistics'))
 
 
 class InventorySession:
@@ -96,6 +96,8 @@ class InventorySession:
         result.update({'fuel:'+t['tank_id']:t['quantity_units'] for t in value.get('fuel_tanks',())})
         from .missile_resources import totals
         result.update(totals(value.get('missiles')))
+        from .aviation_resources import totals as aviation_totals
+        result.update(aviation_totals(value.get('aviation')))
         return result
 
     def _record(self, ledger, resource, reason, delta):
@@ -132,6 +134,9 @@ class InventorySession:
     def _volume_mass(self, cargo):
         volume = sum(c['quantity'] * self._goods[c['good_id']]['unit_volume_cm3'] for c in cargo)
         mass = sum(c['quantity'] * self._goods[c['good_id']]['unit_mass_g'] for c in cargo)
+        if 'aviation' in self._definition:
+            from .aviation_resources import cargo_volume
+            volume+=cargo_volume(self._value['aviation'],self._definition['aviation'])
         ps.integer(volume, '$.cargo.volume'); ps.integer(mass, '$.cargo.mass')
         return volume, mass
 
@@ -291,6 +296,7 @@ class InventorySession:
                 self._record(ledger, 'damage_control:' + target, 'damage_control_use', -quantity)
         elif kind.endswith('_cargo'):
             ps.need(target in self._goods, '$.target', 'Unknown good')
+            ps.need(not target.startswith('supply.aviation.'), '$.target', '飞机与人员请通过航空接收操作入舰')
             cargo = {c['good_id']: c for c in value['cargo']}
             entry = cargo.setdefault(target, dict(good_id=target, quantity=0))
             if kind == 'load_cargo':
@@ -393,6 +399,7 @@ class InventorySession:
         if not changed and not hull_changed and (self._next_due is None or fixed_step < self._next_due):
             self._step = fixed_step
             return
+        previous_health=self._health
         health = dict(health) if changed else self._health
         value, ledger, due = deepcopy(self._value), dict(self._ledger), dict(self._due)
         if hull_changed:
@@ -432,6 +439,9 @@ class InventorySession:
             self._hull_integrity = hull_integrity
         self._next_due = min(due.values(), default=None)
         self._step = fixed_step
+        if changed or hull_changed:
+            from .aviation_logistics import advance
+            advance(self,0,previous_health=previous_health)
 
     def prepare_settlement(self, settlement_id):
         """Called by the legal-end coordinator; does not grant eligibility.
@@ -458,6 +468,8 @@ class InventorySession:
                 else:
                     d['preparation'] = None
         self._value, self._ledger, self._due, self._next_due = value, ledger, {}, None
+        from .aviation_logistics import advance
+        advance(self,0,ending=True)
         self._settlement = settlement_id
         return True
 
@@ -487,6 +499,8 @@ class InventorySession:
                 base[key] = value[key]
             if 'fires' in value:
                 base['fires'] = value['fires']
+            if 'aviation' in value:
+                base['aviation']=value['aviation']
             if 'missiles' in value:
                 base['missiles'] = value['missiles']
             if 'personnel' in value:
@@ -527,6 +541,8 @@ class InventorySession:
         if 'missiles' in result._definition:
             from .missile_resources import ledger_keys
             allowed |= ledger_keys(result._definition['missiles'])
+        if 'aviation' in result._definition:
+            allowed|={'aviation:airframes','aviation:pilots','aviation:cannon'}|{'aviation:payload:'+p['id'] for p in result._definition['aviation']['catalog']['payloads']}
         ps.need(type(v['baseline']) is dict and set(v['baseline']) <= allowed, '$.baseline', 'Unknown resource')
         for k,n in v['baseline'].items():
             (ps.number if k.startswith('fuel:') else ps.integer)(n, '$.baseline')

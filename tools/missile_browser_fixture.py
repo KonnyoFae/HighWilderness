@@ -19,7 +19,7 @@ def create(directory):
         # preparation; stocking is a fixture input, never a runtime free refill.
         record['state']['cargo']=[dict(good_id=g['id'],quantity=30 if g['id'] in
                                  ('cargo.rocket_parts','cargo.radar_parts','cargo.high_explosive') else 5)
-                                 for g in design.resources.definition()['goods']]
+                                 for g in design.resources.definition()['goods'] if not g['id'].startswith('supply.aviation.')]
         bp.validate_record(record,design)
         bp.ps.validate_initial_loading(bp.ps.parse_instance(record['state'],design.resources),design.resources)
         with service.store.connection() as db:service.store._write_ship(db,record)

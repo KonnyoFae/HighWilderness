@@ -103,6 +103,12 @@ def evaluate(draft, ships, supply, *, supply_goods=None):
             from .missile_logistics import prepare
             try: missile_times[key]=prepare(inv,row.get('missile_orders',()),stock)
             except ps.ContractError as exc: issue(key,'missiles',exc.message,code=exc.code)
+    for row in draft['ships']:
+        key=row['instance_id'];inv=candidates[key]
+        if 'aviation' in inv._definition:
+            from .aviation_logistics import prepare as prepare_aviation
+            try:missile_times[key]=missile_times.get(key,0)+prepare_aviation(inv,row.get('aviation_orders',()),stock)
+            except ps.ContractError as exc:issue(key,'aviation',exc.message,code=exc.code)
     for resource, amount in sorted(stock.items()):
         if amount < 0:issue(None,resource,'可用供给不足',missing=-amount)
         elif amount > ps.MAX_INT:issue(None,resource,'供给数量超出支持范围')

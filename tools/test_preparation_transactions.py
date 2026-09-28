@@ -181,7 +181,7 @@ Crash(directory,ResourceIndex(Path.cwd())).commit(ps.decode((directory/'draft.js
         with self.assertRaises(ps.ContractError): self.store.commit(before)
         # Matching P3 save releases the claim atomically and advances same ship rows.
         record=self.records[0]; after=ps.clone(record); after['state']['revision']=1
-        result=dict(interface=RESULT_INTERFACE,settlement_id='settlement.scene.test',scene_id='scene.test',reason='withdrawal',
+        result=dict(interface='gaotian.battle-settlement/p3-v2',settlement_id='settlement.scene.test',scene_id='scene.test',reason='withdrawal',
             fixed_step=1,removed_projectiles=0,wrecks=[],ships=[dict(before=record,after=after,capacity_before={},capacity_after={},changes=[],module_names={})])
         base=SettlementStore(self.directory); base.stage(result)
         with self.assertRaises(ps.ContractError): self.store.draft('preparation.blocked',['instance.0'],'supply.finite')

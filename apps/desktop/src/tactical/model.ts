@@ -1,3 +1,4 @@
+import type {AviationView} from './aviation';
 import type {MissileView} from './missiles';
 import type {ObservationView} from './FireControlPanel';
 import type {ElectronicWarfareView} from './CountermeasurePanel';
@@ -6,7 +7,7 @@ import type { LiftReserveReading } from '../LiftReserve';
 export const SCENARIO_ID = "gtw.sample.web.two_ship.v1";
 export interface TacticalRequest {
   backend_instance_id: string;
-  method: 'tactical.realtime.navigation' | 'tactical.realtime.deploy_encounter' | 'tactical.reset_test_state' | 'tactical.realtime.missile' | 'tactical.realtime.fire_control' | 'tactical.realtime.height' | 'tactical.realtime.damage_control' | `tactical.preparation.${"missile" | "maintenance" | "scene_read" | "scene_save" | "scene_encounter" | "supply_replenish" | "library" | "import" | "open" | "read" | "draft" | "preview" | "commit" | "discard"}` | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
+  method: 'tactical.realtime.aviation' | 'tactical.realtime.navigation' | 'tactical.realtime.deploy_encounter' | 'tactical.reset_test_state' | 'tactical.realtime.missile' | 'tactical.realtime.fire_control' | 'tactical.realtime.height' | 'tactical.realtime.damage_control' | `tactical.preparation.${"aviation" | "missile" | "maintenance" | "scene_read" | "scene_save" | "scene_encounter" | "supply_replenish" | "library" | "import" | "open" | "read" | "draft" | "preview" | "commit" | "discard"}` | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
     | 'tactical.realtime.countermeasure' | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.withdraw" | "tactical.realtime.gun" | "tactical.realtime.close";
   params: Record<string, unknown>;
   session_id: null;
@@ -119,7 +120,7 @@ export interface GunneryView {
   damage_control?:DamageControlView;
   fireproof?:{ship_id:string;decks:{deck_id:string;deck_level:number;multiplier:number}[]}[];
   interface: "gaotian.gunnery-view/p2a-v1alpha1"; command_sequence: number;
-  missiles?:MissileView;weapons: GunView[]; projectiles: DisplayProjectile[];
+  aviation?:AviationView;missiles?:MissileView;weapons: GunView[]; projectiles: DisplayProjectile[];
   policy_id: string; damage_enabled: boolean;
   ending?: { reason: string; step: number; removed_projectiles: number; saved: boolean } | null;
   damage?: { hits: number; expired: number; magazine_detonations?:number; magazine_explosions?:{

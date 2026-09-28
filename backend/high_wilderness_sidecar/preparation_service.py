@@ -9,7 +9,7 @@ from 高天荒野舰艇数据契约 import canonical_sha256
 import 高天荒野舰艇人员舱容量 as housing
 
 CAPABILITIES=tuple('tactical.preparation.'+s for s in ('library','import','open','read','draft','preview','commit','discard',
-    'scene_read','scene_save','scene_encounter','supply_replenish','missile','maintenance'))
+    'scene_read','scene_save','scene_encounter','supply_replenish','missile','aviation','maintenance'))
 SUPPLY_ID='supply.preparation.technical.v1'
 
 
@@ -165,6 +165,9 @@ class PreparationService:
     def dispatch(self,request):
         ps.need(request['session_id'] is None and request['expected_revision'] is None,'$.session_id','准备操作不绑定编辑会话')
         p=request['params']; action=request['method'].removeprefix('tactical.preparation.')
+        if action=='aviation':
+            from .preparation_aviation import action as aviation_action
+            return aviation_action(self,p)
         if action=='missile':
             from .preparation_missiles import action as missile_action
             return missile_action(self,p)

@@ -17,6 +17,6 @@ export function BattleDock({ name, symbol, position, children, initiallyOpen = t
   </aside>;
 }
 
-export type BattlePages = { service: 'ship' | 'damage' | 'cargo'; weapon: 'weapons' | 'missiles';
+export type BattlePages = { service: 'ship' | 'damage' | 'cargo'; weapon: 'weapons' | 'missiles' | 'aviation';
   missile: 'launch' | 'flight' | 'stores'; launcher: string | null; sensors: boolean; ew: boolean };
 export const DEFAULT_BATTLE_PAGES: BattlePages = { service: 'ship', weapon: 'weapons', missile: 'launch', launcher: null, sensors: false, ew: false };

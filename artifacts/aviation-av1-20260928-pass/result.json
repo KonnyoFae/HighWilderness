@@ -1,0 +1,7 @@
+{
+  "status": "AVIATION_AV1_UI_PASS",
+  "checks": [
+    "Actual preparation UI receives two unique aircraft and pilots, services one, preloads it, and schedules the other; lost action/commit replies retry once without duplicating inventory.",
+    "Real battle powers the hangar, begins only the queued job, accepts an immediate-completion cancel, and preserves both airframes and crew across ending, saving and backend restart."
+  ]
+}

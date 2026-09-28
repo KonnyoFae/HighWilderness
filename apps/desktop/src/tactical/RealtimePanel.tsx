@@ -35,6 +35,8 @@ import { FireSummary } from './FireSummary';
 import { DamageControlPanel } from './DamageControlPanel';
 import type { DamageControlIntent } from './DamageControlPanel';
 import { LiftReserve } from '../LiftReserve';
+import {AviationPanel} from './AviationPanel';
+import type {AviationOrder} from './aviation';
 import { MissileStoresPanel } from './MissileStoresPanel';
 import { MissileCombatPanel } from './MissileCombatPanel';
 import type { MissileOrder } from './missiles';
@@ -75,7 +77,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   const attemptedEntry=useRef(false);
   const [entryUncertain,setEntryUncertain]=useState(false);
   const [damageUncertain,setDamageUncertain]=useState(false);
-  const [inspectorTab, setInspectorTab] = useState<'weapons'|'missiles'>('weapons');
+  const [inspectorTab, setInspectorTab] = useState<'weapons'|'missiles'|'aviation'>('weapons');
   const [serviceTab,setServiceTab]=useState<BattlePages['service']>('ship');
   const [sensorsOpen,setSensorsOpen]=useState(false), [ewOpen,setEwOpen]=useState(false);
   const [serviceOpen,setServiceOpen]=useState(true);
@@ -88,6 +90,8 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   const [canvasOrders,setCanvasOrders]=useState(false), [fireOpen,setFireOpen]=useState(true);
   const [sensorUncertain,setSensorUncertain]=useState(false);
   const unknownDamage=useRef(false);
+  const aviationPending=useRef<Record<string,unknown>|null>(null);
+  const [aviationUncertain,setAviationUncertain]=useState(false);
   const [missileUncertain,setMissileUncertain]=useState(false);
   const [missileLauncher,setMissileLauncher]=useState<string|null>(null);
   const [missileTab,setMissileTab]=useState<'launch'|'flight'|'stores'>('launch');
@@ -187,6 +191,11 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     if(next.view.navigation)setNavigationUncertain(false);
     if (unknownHeight.current && next.view.height_commands) {
       unknownHeight.current = false; setHeightUncertain(false);
+    }
+    if(aviationPending.current){
+      const input=aviationPending.current.input as {epoch:string;generation:number;sequence:number};
+      if(input.epoch!==next.status.epoch||next.view.gunnery?.aviation&&next.view.gunnery.aviation.command_sequence>=input.sequence){aviationPending.current=null;setAviationUncertain(false);}
+      else if(input.generation!==next.status.generation){aviationPending.current=null;setAviationUncertain(false);setError('航空操作未被接受，请重新发令。');}
     }
     if(unknownMissile.current && next.view.gunnery?.missiles){unknownMissile.current=false;setMissileUncertain(false);}
     if(unknownEW.current&&next.view.gunnery?.electronic_warfare){unknownEW.current=false;setEwUncertain(false);}
@@ -301,6 +310,26 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
         input:{epoch:current.status.epoch,generation:current.status.generation,
           sequence:current.view.gunnery.observation.command_sequence+1,ship_id:shipId,...intent}}));
     }catch(e){if(mounted.current)setError(normalizeHostFailure(e).message);}
+    finally{acting.current=false;if(mounted.current)setBusy(false);}
+  }
+  async function sendAviation(order?:AviationOrder) {
+    if(acting.current||!active||!selected)return;
+    acting.current=true;setBusy(true);setError('');
+    try {
+      await pending.current;const current=latest.current.state;
+      if(!current?.status.running||!current.available||!current.view.gunnery?.aviation)return;
+      if(!aviationPending.current){
+        if(!order)return;
+        aviationPending.current={scene_id:current.status.epoch,input:{epoch:current.status.epoch,generation:current.status.generation,sequence:current.view.gunnery.aviation.command_sequence+1,ship_id:selected,order}};
+      }
+      setAviationUncertain(true);
+      accept(await call<RealtimeEnvelope>('tactical.realtime.aviation',aviationPending.current));
+      aviationPending.current=null;setAviationUncertain(false);
+    } catch(e){
+      const failure=normalizeHostFailure(e);
+      if(failure.source==='domain'){aviationPending.current=null;setAviationUncertain(false);}
+      if(mounted.current)setError(failure.message);
+    }
     finally{acting.current=false;if(mounted.current)setBusy(false);}
   }
   async function sendMissile(order:MissileOrder) {
@@ -561,6 +590,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
             point:{x:contact.position_m[0],y:contact.position_m[1]},layer:contact.height_layer});}}/>
         <nav className="battle-tabs" aria-label="武器面板">
           <button aria-pressed={inspectorTab==='weapons'} onClick={()=>setInspectorTab('weapons')}>火炮</button>
+          <button aria-pressed={inspectorTab==='aviation'} onClick={()=>setInspectorTab('aviation')}>航空</button>
           <button aria-pressed={inspectorTab==='missiles'} onClick={()=>setInspectorTab('missiles')}>导弹</button>
         </nav>
         <div className="battle-inspector battle-subpanel">
@@ -576,6 +606,10 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
 
           </div>}
         </> : inspectorTab === "weapons" && <p>本舰由自动火控交战；当前手动炮组命令仅支持旗舰。可通过舰队列表的 01 项操作旗舰。</p>}
+        {inspectorTab==='aviation'&&(()=>{const a=view.snapshot.gunnery?.aviation?.ships.find(s=>s.ship_id===selected);return <>
+          {aviationUncertain&&<p role="status">航空操作回执尚未确认。<button disabled={busy} onClick={()=>void sendAviation()}>重试航空操作</button></p>}
+          <AviationPanel key={selected} profile={a?.profile} state={a?.state} names={a?.module_names??{}} disabled={busy||!active||!state.status.running||!state.available||!friendlySelected||aviationUncertain||!!view.snapshot.gunnery?.ending} onOrder={o=>void sendAviation(o)}/>
+        </>;})()}
         {inspectorTab==='missiles'&&<nav className="battle-tabs missile-tabs" aria-label="导弹操作">
           <button aria-pressed={missileTab==='launch'} onClick={()=>setMissileTab('launch')}>发射控制</button>
           <button aria-pressed={missileTab==='flight'} onClick={()=>setMissileTab('flight')}>在途制导（{(view.snapshot.gunnery?.projectiles??[]).filter(p=>p.missile&&view.geometry.ships.some(s=>s.id===p.ship_id&&s.side_id===view.geometry.ships.find(v=>v.id===state.direct_ship_id)?.side_id)).length}）</button>

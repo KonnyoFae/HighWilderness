@@ -43,6 +43,7 @@ def parse_record(record, template, index):
     ps.need(all(pack.definition()[k] == reference[k] for k in ('weapons', 'recipes', 'projectiles', 'fire_control')),
             '$.resources', '当前战术入口仅支持已接通的普通炮资源版本')
     ps.need(pack.definition().get('missiles')==reference.get('missiles'), '$.resources.missiles', '导弹型号与后勤规则不能在重新入战时更换')
+    ps.need(pack.definition().get('aviation')==reference.get('aviation'),'$.resources.aviation','航空规则不能在重新入战时更换')
     instance = ps.parse_instance(v['state'], pack)
     if any('zone_id' in fire for fire in v['state'].get('fires',())):
         from .tactical_spatial_fire import validate_rows

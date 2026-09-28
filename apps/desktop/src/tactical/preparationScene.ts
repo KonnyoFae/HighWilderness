@@ -1,7 +1,7 @@
 import type { TacticalStatic } from './model';
 import type { PreparationShip, Supply } from './preparation';
 export type FleetSide = 'enemy' | 'player';
-export type PreparationTab = 'guns' | 'missiles' | 'devices' | 'damage' | 'cargo';
+export type PreparationTab = 'guns' | 'missiles' | 'devices' | 'damage' | 'cargo' | 'aviation';
 export type FormationShip = {instance_id:string;x_m:number;y_m:number;heading_rad:number};
 export type FleetQualification = {side_id:FleetSide;flagship_instance_id:string|null;ship_count:number;companion_count:number;
   companion_capacity:number;core_name:string|null;valid:boolean;issues:string[]};
@@ -17,8 +17,9 @@ export type ScenePacket = {scene:PreparationScene;geometry:TacticalStatic;
   limits:{max_ships:number;minimum_distance_m:number;maximum_distance_m:number}};
 export const sideName = (side:FleetSide) => side === 'player' ? '我方' : '敌方';
 export const preparationTabs: {id:PreparationTab;name:string}[] = [
-  {id:'guns',name:'火炮'},{id:'missiles',name:'导弹'},{id:'devices',name:'设备'},{id:'damage',name:'损管'},{id:'cargo',name:'货舱'}];
+  {id:'aviation',name:'航空'},{id:'guns',name:'火炮'},{id:'missiles',name:'导弹'},{id:'devices',name:'设备'},{id:'damage',name:'损管'},{id:'cargo',name:'货舱'}];
 export function moduleTab(category:string):PreparationTab {
+  if (/aircraft_|aviation_/.test(category)) return 'aviation';
   if (/missile|launcher/.test(category)) return 'missiles';
   if (category==='weapon') return 'guns';
   if (category==='damage_control') return 'damage';

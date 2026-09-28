@@ -104,7 +104,7 @@ export function OutfitPanel({ session, options, busy, onCommand, onLocalDraft, o
     <fieldset className="outfit-detail-fields" disabled={groupDraft || canvasDraft}>
     {option ? <div className="editor-summary"><strong>{option.prototype.name}</strong><span>{mounts(option).join(" / ")}</span>
       {capacityLabel(option) && <p>{capacityLabel(option)}</p>}
-      {['aircraft_hangar', 'aircraft_catapult', 'aircraft_arrester', 'aviation_command'].includes(option.prototype.category) && <p>可安装并保存航空设施；舰载机整备与出动功能正在接入。</p>}
+      {['aircraft_hangar', 'aircraft_catapult', 'aircraft_arrester', 'aviation_command'].includes(option.prototype.category) && <p>导入战前准备后，可在航空页接收、整备飞机并预装弹射器；飞行与作战功能尚待接入。</p>}
       <span>质量 {option.prototype.mass_kg.toLocaleString()} kg · 耐久 {option.prototype.durability_points}</span>
       {option.prototype.id === "gtw.module.gun.30mm" && <p>当前可对舰炮击；自动识别威胁、协调火力与拦截将在近防阶段接入。</p>}
       <span>标定状态：{option.prototype.balance_status === "contract_fixture" ? "契约测试夹具" : option.prototype.balance_status === "prototype_unbalanced" ? "未标定原型" : "平衡参考"}</span>

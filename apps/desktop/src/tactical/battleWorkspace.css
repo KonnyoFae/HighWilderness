@@ -137,3 +137,9 @@
 .canvas-workspace .tactical-ship-marker.lost { opacity: .6; border: 1px dashed currentColor; }
 .canvas-workspace .tactical-ship-marker[data-other-layer=true] { background: #102a25b3; color: #d3dec7; border: 1px dashed currentColor; }
 .canvas-workspace .marker-layer { position: absolute; top: 22px; font-size: 9px; white-space: nowrap; background: #102a25c9; border-radius: 3px; padding: 0 2px; color: #e0eacb; }
+.aviation-panel { display: grid; gap: 10px; min-width: 0; }
+.aviation-panel p { margin: 4px 0; line-height: 1.6; }
+.aviation-panel select { max-width: 100%; }
+.aviation-aircraft { padding: 12px; border: 1px solid #455466; border-radius: 6px; }
+.aviation-actions { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+.aviation-aircraft fieldset { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px; }

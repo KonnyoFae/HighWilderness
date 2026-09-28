@@ -21,7 +21,7 @@ from .tactical_gunnery import GunneryBattle, prepare_trial_session
 from .tactical_presentation import FlightHistory
 from .projectile_stream import ProjectileStream, INTERFACE as DISPLAY_INTERFACE, compact_projectile
 
-CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'height', 'navigation', 'missile', 'countermeasure', 'fire_control', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry', 'deploy_encounter', 'encounter'))
+CAPABILITIES = tuple('tactical.realtime.'+s for s in ('create', 'read', 'resume', 'pause', 'control', 'gun', 'height', 'navigation', 'missile', 'aviation', 'countermeasure', 'fire_control', 'damage_control', 'withdraw', 'close', 'settlements', 'settlement', 'save', 'deploy', 'deploy_prepared', 'prepared_entry', 'deploy_encounter', 'encounter'))
 INTERFACE = 'gaotian.realtime-view/e3b-v1alpha1'
 VIEW_PERIOD_NS = 66_666_667
 LEASE_NS = 2_000_000_000
@@ -380,7 +380,7 @@ class RealtimeViewService:
             battle = settlement.redeploy(record, template, scenario)
             return self._attach(battle, geometry, key)
         fields = {'scene_id', 'known_static_sha256', 'ack_inputs', 'ack_events'} if method == 'tactical.realtime.read' else \
-            {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun', 'tactical.realtime.height', 'tactical.realtime.navigation', 'tactical.realtime.missile', 'tactical.realtime.countermeasure', 'tactical.realtime.fire_control', 'tactical.realtime.damage_control') else {'scene_id'}
+            {'scene_id', 'input'} if method in ('tactical.realtime.control', 'tactical.realtime.gun', 'tactical.realtime.height', 'tactical.realtime.navigation', 'tactical.realtime.missile', 'tactical.realtime.aviation', 'tactical.realtime.countermeasure', 'tactical.realtime.fire_control', 'tactical.realtime.damage_control') else {'scene_id'}
         if method == 'tactical.realtime.read' and 'display' in p:
             fields = fields | {'display'}
             display = p['display']
@@ -470,6 +470,14 @@ class RealtimeViewService:
                     next(s for s in q.world.ships if s.ship_id==q._session._direct).authority_allowed,
                     '火控命令需要运行中的当前场景及旗舰控制权')
             self.gunnery.observation.submit(value)
+        elif method == 'tactical.realtime.aviation':
+            value=p['input']
+            require(type(value) is dict,'Invalid aviation input')
+            retry=value==self.gunnery.aviation.last
+            require(retry or q.status.running and value.get('generation')==q.status.generation and
+                    next(s for s in q.world.ships if s.ship_id==q._session._direct).authority_allowed,
+                    '航空命令需要运行中的当前场景及旗舰控制权')
+            self.gunnery.aviation.submit(value)
         elif method == 'tactical.realtime.missile':
             value=p['input']
             require(type(value) is dict,'Invalid missile input')

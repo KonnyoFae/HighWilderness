@@ -6,6 +6,8 @@ import type { PreparedLaunch, PreparationDraft, PreparationLibrary, PreparationP
 import type { TacticalRequest } from './model';
 import { resourceRows, fuelTankName } from './settlement';
 import { ammunitionName } from './ammunition';
+import {AviationPanel} from './AviationPanel';
+import type {AviationOrder} from './aviation';
 import { MissileStoresPanel } from './MissileStoresPanel';
 import type { MissileOrder } from './missiles';
 import { LiftReserve } from '../LiftReserve';
@@ -116,6 +118,12 @@ export function PreparationPanel({transport,instance,active,onBusy,onEnter,embed
     pendingAction.current={operation_id:`missile.${crypto.randomUUID()}`,preparation_id:draft.preparation_id,revision:draft.revision,instance_id:shipId,order};
     await maintenance();
   }
+  async function aviation(order:AviationOrder) {
+    if(!draft)return;
+    await saveDraft();pendingActionRoute.current='aviation';
+    pendingAction.current={operation_id:`aviation.${crypto.randomUUID()}`,preparation_id:draft.preparation_id,revision:draft.revision,instance_id:shipId,order};
+    await maintenance();
+  }
   const sourceShip=packet?.ships.find(s=>s.instance_id===shipId), row=draft?.ships.find(s=>s.instance_id===shipId);
   const savedShip=result?.ships.find(s=>s.after.state.instance_id===shipId);
   const ship=sourceShip&&savedShip?{...sourceShip,state:{...sourceShip.state,...savedShip.after.state,
@@ -201,7 +209,7 @@ export function PreparationPanel({transport,instance,active,onBusy,onEnter,embed
           <input aria-label={`弹药库 ${i+1} 装载目标`} type="number" min="0" step="1" value={m.quantity} onChange={e=>edit(r=>{r.magazines.find(v=>v.module_id===m.module_id)!.quantity=quantity(e.target.value);})}/></label>{!embedded?.moduleId&&maintenanceControls(m.module_id)}</div>)}
         {!row.magazines.length&&<p>本舰没有弹药库。</p>}
         <h3>货物</h3><p>当前已用 {(ship.capacity.used_volume_cm3/1e6).toFixed(1)} / {(ship.capacity.capacity_cm3/1e6).toFixed(1)} m³{ship.capacity.over_capacity?' · 战损超容，可保留或卸载现有货物':''}</p>
-        {ship.resources.goods.map(g=><label className="preparation-input" key={g.id}>{goodName(g.id)} · 每份 {g.unit_volume_cm3/1e6} m³
+        {ship.resources.goods.filter(g=>!g.id.startsWith('supply.aviation.')).map(g=><label className="preparation-input" key={g.id}>{goodName(g.id)} · 每份 {g.unit_volume_cm3/1e6} m³
           <input aria-label={`${goodName(g.id)}装载目标`} type="number" min="0" step="1" value={row.cargo.find(c=>c.good_id===g.id)?.quantity??0} onChange={e=>edit(r=>{const n=quantity(e.target.value),c=r.cargo.find(v=>v.good_id===g.id);if(c)c.quantity=n;else r.cargo.push({good_id:g.id,quantity:n});})}/></label>)}
         </>}
         {tab('damage')&&<><h3>损管设备准备</h3><p>一键补满保留现有余量，只支付缺少部分的工程零件。整批准备仍限空设备；战中资源耗尽会自动尝试再次准备。</p>
@@ -239,7 +247,8 @@ export function PreparationPanel({transport,instance,active,onBusy,onEnter,embed
         {!row.weapons.length&&<p>本舰没有可预装填武器。</p>}
         {!!row.weapons.length&&!ship.enabled_recipe_ids.includes('recipe.x1a.special_armor_piercing')&&<p>本舰沿用旧弹药配置。新导入的测试舰可选择穿甲弹，已有舰船的库存与战损继续保留。</p>}
         </>}
-        {tab('missiles')&&<>
+        {tab('aviation')&&<AviationPanel profile={ship.resources.aviation} state={output?.ships.find(s=>s.after.state.instance_id===shipId)?.after.state.aviation??ship.state.aviation} names={ship.module_names} disabled={locked} preparation planned={row?.aviation_orders?.length??0} onOrder={o=>void run(()=>aviation(o))}/>}
+      {tab('missiles')&&<>
           <MissileStoresPanel profile={ship.resources.missiles} state={output?.ships.find(s=>s.after.state.instance_id===shipId)?.after.state.missiles??ship.state.missiles}
             names={ship.module_names} selected={embedded?.moduleId} preparation disabled={locked} onCommand={order=>void run(()=>missile(order))}/>
           {!!row.missile_orders?.length&&<details open><summary>导弹准备计划（{row.missile_orders.length} 项）</summary>

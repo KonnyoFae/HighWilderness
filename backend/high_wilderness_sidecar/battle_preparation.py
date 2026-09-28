@@ -65,7 +65,7 @@ def compile_design(document, index, deployment, policy, *, ship_id, armor_shape_
     ps.obj(policy, 'interface id version modules propulsion_timing goods projectiles recipes fire_control enabled_recipe_ids' +
         (' continuous_damage' if policy.get('interface') in dc.FIRE_POLICY_INTERFACES else '') +
         (' repair' if policy.get('interface') in dc.REPAIR_POLICY_INTERFACES else '')+
-        (' fuel' if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else '')+(' ignition' if policy.get('interface') in dc.IGNITION_POLICY_INTERFACES else '')+(' missiles' if policy.get('interface')==missiles.POLICY_INTERFACE else '')+(' maneuver_thrust_revision' if 'maneuver_thrust_revision' in policy else '')+(' ammunition_resource_liters' if 'ammunition_resource_liters' in policy else '')+(' armor_shape_effects' if 'armor_shape_effects' in policy else '')+(' crew_quarters_revision' if 'crew_quarters_revision' in policy else ''), '$.policy')
+        (' fuel' if policy.get('interface') in dc.FUEL_POLICY_INTERFACES else '')+(' ignition' if policy.get('interface') in dc.IGNITION_POLICY_INTERFACES else '')+(' missiles' if policy.get('interface')==missiles.POLICY_INTERFACE else '')+(' maneuver_thrust_revision' if 'maneuver_thrust_revision' in policy else '')+(' ammunition_resource_liters' if 'ammunition_resource_liters' in policy else '')+(' armor_shape_effects' if 'armor_shape_effects' in policy else '')+(' crew_quarters_revision' if 'crew_quarters_revision' in policy else '')+(' aviation' if 'aviation' in policy else ''), '$.policy')
     ps.need(policy['interface'] in (POLICY_INTERFACE, dc.POLICY_INTERFACE, *dc.FIRE_POLICY_INTERFACES), '$.policy.interface', '不支持的战前准备资源政策')
     # Make indexed legacy plans portable too, with an exact embedded hull.
     if binding is None:
@@ -207,6 +207,10 @@ def compile_design(document, index, deployment, policy, *, ship_id, armor_shape_
         elif m.prototype.category in groups:
             key = m.prototype.reference.id, m.prototype.reference.version
             definition[groups[m.prototype.category]].append(dict(module_id=m.id, **rules[key]))
+    if 'aviation' in policy:
+        from . import aviation_resources
+        ps.need(not policy['aviation']['facilities'], '$.aviation', '政策不能预置航空设备实例')
+        definition['aviation'] = aviation_resources.bind(policy['aviation'], snapshot.outfit.instances)
     pack = ps.compile_resources(seed, definition)
     enabled = policy['enabled_recipe_ids']
     ps.need(type(enabled) is list and all(type(r) is str for r in enabled) and len(enabled) == len(set(enabled))
@@ -321,6 +325,9 @@ def new_draft(preparation_id, ships, supply, *, supply_goods=None):
     if any('missiles' in d.resources.definition() for d,_ in ships):
         result = maintenance.upgrade(result);result['interface']=maintenance.MISSILE_DRAFT_INTERFACE
         for row in result['ships']: row['missile_orders']=[]
+    for row in result['ships']:
+        design=next(d for d,r in ships if r['state']['instance_id']==row['instance_id'])
+        if 'aviation' in design.resources.definition():row['aviation_orders']=[]
     return result
 
 
@@ -344,7 +351,7 @@ def validate_draft(value, ships, supply, *, supply_goods=None):
     for key, row in actual.items():
         ps.obj(row, 'instance_id revision record_sha256 design_sha256 magazines cargo weapons' +
             (' damage_controls' if modern or v['interface'] in (dc.DRAFT_INTERFACE,fuel.DRAFT_INTERFACE) else '')+
-            (' fuel_tanks' if modern or v['interface']==fuel.DRAFT_INTERFACE else '')+(' repairs' if modern else '')+(' missile_orders' if v['interface']==maintenance.MISSILE_DRAFT_INTERFACE else ''), '$.ships')
+            (' fuel_tanks' if modern or v['interface']==fuel.DRAFT_INTERFACE else '')+(' repairs' if modern else '')+(' missile_orders' if v['interface']==maintenance.MISSILE_DRAFT_INTERFACE else '')+(' aviation_orders' if 'aviation_orders' in expected[key] else ''), '$.ships')
         ps.integer(row['revision'], '$.ships.revision')
         ps.need(all(row[k] == expected[key][k] for k in ('revision', 'record_sha256', 'design_sha256')),
                 '$.ships.'+key, '舰船已有新的战损、库存或设计版本，准备草稿不能覆盖')
@@ -354,6 +361,10 @@ def validate_draft(value, ships, supply, *, supply_goods=None):
             ps.need(type(row['missile_orders']) is list and len(row['missile_orders'])<=1000, '$.missile_orders', '导弹准备操作过多')
             ps.need(not row['missile_orders'] or 'missiles' in definition, '$.missile_orders', '此旧舰配置不支持导弹准备')
             for order in row['missile_orders']: validate_order(order,definition['missiles'],preparation=True)
+        if 'aviation_orders' in row:
+            from .aviation_logistics import validate_order as validate_aviation_order
+            ps.need(type(row['aviation_orders']) is list and len(row['aviation_orders'])<=1000,'$.aviation_orders','航空准备操作过多')
+            for order in row['aviation_orders']:validate_aviation_order(order,definition['aviation'],preparation=True)
         if modern:
             record=next(r for _,r in ships if r['state']['instance_id']==key)
             options={t['id']:t for t in maintenance.targets(designs[key],record)}

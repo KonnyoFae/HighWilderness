@@ -293,6 +293,8 @@ class GunneryBattle(SensorState):
         self.sequence, self._last, self._projectile_sequence = 0, None, 0
         from .tactical_missiles import MissileRuntime
         self.missiles = MissileRuntime(self,scenario)
+        from .tactical_aviation import AviationRuntime
+        self.aviation = AviationRuntime(self)
         self._direct_index = next(n for n, s in enumerate(session.world.ships) if s.ship_id == session._direct)
         # Prototype capabilities are copied only at entry, not parsed per step.
         self._capabilities = tuple({k: m.prototype.capability.to_dict() for k, m in modules.items()} for modules in self._modules)
@@ -516,6 +518,11 @@ class GunneryBattle(SensorState):
             staged['defense_prediction'] = defense_prediction
             availability_key, available = staged['availability_key'], staged['available']
             self.missiles.advance(world,inventories,available)
+            from .aviation_logistics import advance as advance_aviation
+            for n,inv in enumerate(inventories):
+                if 'aviation' in inv._definition and inv._settlement is None:
+                    rates={f['module_id']:0. if available[n][f['module_id']] else self.crew_efficiency(world,n,f['module_id'],'aviation.service' if f['kind']=='aircraft_hangar' else 'aviation.launch') for f in inv._definition['aviation']['facilities'] if f['kind'] in ('aircraft_hangar','aircraft_catapult')}
+                    advance_aviation(inv,1,rates,crashed=world.ships[n].wreck is not None)
             projectiles = list(staged['survivors']) if self.damage else [
                 ballistics.advance_projectile(p) for p in self.projectiles if step<p.expires]
             from .missile_flight import prepare as prepare_missile
@@ -777,6 +784,10 @@ class GunneryBattle(SensorState):
                         ending = 'disengagement' if departures else 'victory'
             else:
                 ending = self._ending_reason(world) if self.damage else None
+            for s,inv in zip(world.ships,inventories):
+                if s.wreck is not None:
+                    from .aviation_logistics import advance as close_crashed_aviation
+                    close_crashed_aviation(inv,0,crashed=True)
             if ending and not staged.get('ending'):
                 for inv in inventories:
                     inv.prepare_settlement('ending.'+world.epoch)
@@ -903,7 +914,7 @@ class GunneryBattle(SensorState):
         return dict(interface='gaotian.gunnery-view/p2a-v1alpha1', command_sequence=self.sequence,
             stores=stores_view(self, inventory_summaries),
             deck_hit_policy=asdict(self.damage.deck_policy) if self.damage else None,
-            observation=self.observation.view(), missiles=self.missiles.view(), electronic_warfare=self.ew.view(), groups=ps.clone(list(self.groups)), weapons=weapons, projectiles=[dict(id=p.id, ship_id=p.ship_id, position_m=p.position,
+            observation=self.observation.view(), missiles=self.missiles.view(), aviation=self.aviation.view(), electronic_warfare=self.ew.view(), groups=ps.clone(list(self.groups)), weapons=weapons, projectiles=[dict(id=p.id, ship_id=p.ship_id, position_m=p.position,
                 previous_m=p.previous, velocity_mps=p.velocity, projectile_type=p.projectile_key[0], height_layer=p.height_layer,
                 kind='missile' if p.missile else 'shell',
                 missile=None if not p.missile else dict(model_id=p.missile.profile.model_id,warhead_id=p.missile.warhead,
