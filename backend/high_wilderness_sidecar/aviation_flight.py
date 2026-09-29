@@ -6,6 +6,7 @@ from math import atan2, hypot, sin, cos, pi
 import json
 from . import aviation_catalog as ac, aviation_logistics as al, aviation_recovery as recovery
 from . import aviation_manifest as am, persistent_ship as ps
+from . import aviation_ew
 from .tactical_layers import LAYERS
 from .tactical_observation import Target, Track, can_observe, allocate
 from .missile_guidance import blocked_channels
@@ -47,7 +48,8 @@ def launch(b,world,inventories,flights,n,keys,group):
         flights[key]=dict(id=key,owner=n,group_id=group,task=task,position=at,heading=heading,speed=speed,
             velocity=(sin(heading)*speed,cos(heading)*speed),layer=world.ships[n].motion.height_layer,
             layer_progress=0,layer_goal=None,status='patrolling',target_id=None,contacts={},sample_step=-100000,
-            hp=model['durability_points'],modifiers=mods,had_payload=bool(a['loadout']),return_requested=False,receiver=None,recovery_progress=0,step=world.fixed_step)
+            hp=model['durability_points'],modifiers=mods,had_payload=bool(a['loadout']),return_requested=False,receiver=None,recovery_progress=0,step=world.fixed_step,
+            emissions=deepcopy(w.s.get('departure_emissions',{}).get(key,aviation_ew.defaults(model))))
         a.update(location='airborne',ship_id=None,module_id=None)
         w.s['hangar_assignments'].pop(key)
     w.commit()
@@ -68,24 +70,30 @@ def targets(flights,inventories,sides):
 
 
 def sample(b,world,f,model,all_targets,effects):
-    if world.fixed_step-f['sample_step']<policy()['sample_steps']:return
+    acquire=world.fixed_step-f['sample_step']>=policy()['sample_steps']
+    devices=aviation_ew.working(f,model)
+    if f['hp']<=0 or f['status']=='recovering':f['contacts']={};return
     sensors=[]
     for channel in ('radar','infrared'):
+        if channel=='radar' and not devices['radar']:continue
         r=model[channel+'_range_m']*f['modifiers'][channel+'_detection']
         sensors.append(dict(channel=channel,range_m=r,ship_range_m=r,coasting_range_m=r,
             range_efficiency=1.,weather=policy()['weather_'+channel]))
     seen={};sources={}
     for t in all_targets:
         if t.side==b._sides[f['owner']]:continue
-        blocked=blocked_channels(effects,f['position'],f['layer'],t.position,t.layer)
+        if not acquire and t.id not in f['contacts']:continue
+        blocked=blocked_channels(effects,f['position'],f['layer'],t.position,t.layer,observer_side=b._sides[f['owner']])
         for spec in sensors:
             channel=spec['channel']
+            if not acquire and channel not in f['contacts'][t.id][1]:continue
             if can_observe(spec,f['position'],f['layer'],t,('chaff' if channel=='radar' else 'thermal') in blocked,
                     ship_radar_factor=b.observation.radar_factor(t,f['position']) if t.kind=='ship' and channel=='radar' else 1.):
                 seen[t.id]=t;sources.setdefault(t.id,[]).append(channel)
     priorities={t.id:(0 if t.id==f['target_id'] else 1,hypot(t.position[0]-f['position'][0],t.position[1]-f['position'][1])) for t in seen.values()}
     ids,_=allocate(list(seen.values()),tuple(f['contacts']),policy()['tracking_capacity'],priorities)
-    f['contacts']={key:(seen[key],tuple(sources[key])) for key in ids};f['sample_step']=world.fixed_step
+    f['contacts']={key:(seen[key] if acquire else f['contacts'][key][0],tuple(sources[key])) for key in ids}
+    if acquire:f['sample_step']=world.fixed_step
 
 
 def candidates(b,world,inventories,f,key,*,ending=False):
@@ -105,8 +113,6 @@ def set_location(inventories,f,key,location):
 
 
 def move(f,aim,model):
-    # The incoming interval uses the last committed velocity, shared with swept collision.
-    f['position']=tuple(p+v/60 for p,v in zip(f['position'],f['velocity']))
     delta=(aim[0]-f['position'][0],aim[1]-f['position'][1])
     angle=atan2(*delta);error=(angle-f['heading']+pi)%(2*pi)-pi
     turn=model['turn_rate_deg_s']*pi/180*f['modifiers']['agility']/60
@@ -136,7 +142,11 @@ def orbit(f,point):
 
 def advance(b,world,inventories,flights,projectiles,effects):
     if not flights:return {}
-    flights=deepcopy(flights);all_targets=b.observation.targets(world,projectiles)+targets(flights,inventories,b._sides)
+    flights=deepcopy(flights)
+    # Integrate all poses together using the velocity of the incoming collision interval.
+    for f in flights.values():f['position']=tuple(p+v/60 for p,v in zip(f['position'],f['velocity']))
+    effects=(*effects,*aviation_ew.areas(b,world,inventories,flights))
+    all_targets=b.observation.targets(world,projectiles)+targets(flights,inventories,b._sides)
     _,available=b._availability(world);busy=set()
     for key,f in sorted(list(flights.items()),key=lambda row:(row[1]['recovery_progress']==0,row[0])):
         f['step']=world.fixed_step

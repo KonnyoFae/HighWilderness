@@ -1,9 +1,16 @@
 import {useState} from 'react';
-import {payloadNames,type AviationOrder,type AviationTask,type AviationView} from './aviation';
+import {payloadNames,type AviationEmissions,type AviationOrder,type AviationTask,type AviationView} from './aviation';
 
 const layers={upper:'上层',cloud:'云层',rain:'雨层'};
 export const taskNames={observe:'定点盘旋',air_patrol:'对空巡逻',sea_patrol:'反舰巡逻'};
 const statusNames:Record<string,string>={patrolling:'前往巡逻点 / 盘旋',pursuing:'追击已知目标',returning:'返航',recovering:'回收卸弹',waiting_recovery:'等待可用拦阻索'};
+
+export function AviationEmissionControls({value,capabilities,disabled,onChange,label}:{value:AviationEmissions;capabilities:AviationEmissions;disabled:boolean;onChange:(v:AviationEmissions)=>void;label:string}){
+  if(!capabilities.radar&&!capabilities.jammer)return null;
+  return <fieldset disabled={disabled}><legend>{label}</legend>
+    {(['radar','jammer'] as const).filter(k=>capabilities[k]).map(k=><button key={k} aria-pressed={value[k]} onClick={()=>onChange({...value,[k]:!value[k]})}>{value[k]?'关闭':'开启'}{k==='radar'?'雷达':'电子干扰'}</button>)}
+  </fieldset>;
+}
 
 export function AviationTaskForm({initial,disabled,label,onSubmit}:{initial?:AviationTask;disabled:boolean;label:string;onSubmit:(t:AviationTask)=>void}){
   const [task,setTask]=useState<AviationTask>(initial??{kind:'observe',layer:'upper',point_m:[0,1500]});
@@ -30,6 +37,8 @@ export function AviationFlightPanel({view,disabled,onOrder}:{view?:AviationView;
       <p>{taskNames[f.task.kind]} · {layers[f.task.layer]}（{f.task.point_m.map(n=>n.toFixed(0)).join(', ')}）</p>
       <p>机炮余弹 {f.cannon_rounds??0} · 挂载 {Object.values(f.loadout??{}).map(k=>payloadNames[k]??k).join('、')||'无'} · 已发射 {f.shots??0} 发</p>
       <p>当前位置（{f.position_m.map(n=>n.toFixed(0)).join(', ')}）· 航速 {Math.hypot(...f.velocity_mps).toFixed(0)} 米/秒 · 本机观测 {f.contacts.length} 个目标{f.target_id?` · 正在追击 ${f.target_id}`:''}</p>
+      {f.emissions&&f.emission_capabilities&&<AviationEmissionControls label="空中设备" value={f.emissions} capabilities={f.emission_capabilities} disabled={disabled||!view.command_available||f.status==='recovering'} onChange={emissions=>onOrder({kind:'emissions',aircraft_ids:[f.id],emissions})}/>}
+      {!!f.jammer_radius_m&&<p>电子干扰半径 {(f.jammer_radius_m/1000).toFixed(0)} 公里 · {f.emissions?.jammer&&f.status!=='recovering'?'干扰中':'未干扰'}。只影响敌方雷达；工作中的干扰源仍可被反辐射弹锁定。</p>}
       {f.receiver_ship_id&&<p>接收舰：{f.receiver_ship_id}</p>}
     </article>)}
     {!!view.recent?.length&&<p aria-label="航空交战记录">{view.recent.slice(-4).map((e,i)=><span key={i}>{e.kind==='hit'||e.kind==='destroyed'?`飞机 #${e.aircraft_id.split('.').at(-1)} ${e.kind==='destroyed'?'被击落':'中弹'}`:`飞机 #${e.aircraft_id.split('.').at(-1)} 发射 ${payloadNames[e.weapon??'']??(e.weapon?.startsWith('cannon.')?'机炮':e.weapon)}`}；</span>)}</p>}

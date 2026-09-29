@@ -10,6 +10,7 @@ def receiving(source, receiver, aircraft_id):
     if src.m['catalog_sha256']!=dst.m['catalog_sha256']:return None
     if dst is not src:
         src.m['aircraft'].remove(a);src.s.get('departure_tasks',{}).pop(a['id'],None)
+        src.s.get('departure_emissions',{}).pop(a['id'],None)
         dst.m['aircraft'].append(a)
     dst.unload(a)
     for person in a['crew']:
@@ -43,4 +44,5 @@ def salvage(inv, aircraft_id, *, destroyed=False):
     a.update(crew=[],location='destroyed' if destroyed else 'salvage',ship_id=None,module_id=None)
     if destroyed:a.update(condition='destroyed',loadout={},cannon_rounds=0)
     w.s.get('departure_tasks',{}).pop(aircraft_id,None)
+    w.s.get('departure_emissions',{}).pop(aircraft_id,None)
     w.commit()

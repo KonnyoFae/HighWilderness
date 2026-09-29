@@ -82,7 +82,7 @@ class ElectronicWarfare:
             ship=world.ships[n];arc=b.observation.arcs[n,mid]
             origin=add(tuple(ship.motion.position_world_m.to_list()),rotate(arc['origin_m'],ship.motion.heading_rad))
             channel='chaff' if b.observation.sensors[n][mid]['channel']=='radar' else 'thermal'
-            return channel in blocked_channels(effects,origin,ship.motion.height_layer,t.position,t.layer)
+            return channel in blocked_channels(effects,origin,ship.motion.height_layer,t.position,t.layer,observer_side=b._sides[n])
         return occluded
 
     def permissions(self,world,inventories,available):

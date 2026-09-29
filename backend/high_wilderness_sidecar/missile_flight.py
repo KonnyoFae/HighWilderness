@@ -21,7 +21,7 @@ DT = 1/60
 
 @lru_cache(maxsize=1)
 def catalog():
-    return normalize(json.loads((Path(__file__).resolve().parents[2]/'contracts/web_bridge/fixtures/tactical-missile-flight.5j.json').read_text(encoding='utf-8')))
+    return normalize(json.loads((Path(__file__).resolve().parents[2]/'contracts/web_bridge/fixtures/tactical-missile-flight.av4.json').read_text(encoding='utf-8')))
 
 
 @dataclass(frozen=True)

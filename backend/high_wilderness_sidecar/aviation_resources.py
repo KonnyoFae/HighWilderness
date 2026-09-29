@@ -90,7 +90,7 @@ def quarters_available(value, pack):
 
 
 def validate_state(s, p, ship_id):
-    ps.obj(s, 'interface manifest next_serial jobs queue hangar_assignments casualty_remainders'+(' departure_tasks' if 'departure_tasks' in s else ''), '$.aviation')
+    ps.obj(s, 'interface manifest next_serial jobs queue hangar_assignments casualty_remainders'+''.join(' '+k for k in ('departure_tasks','departure_emissions') if k in s), '$.aviation')
     ps.need(s['interface']==INTERFACE, '$.aviation.interface', '未知航空状态版本')
     am.validate(s['manifest'], p['catalog'])
     ps.integer(s['next_serial'], '$.aviation.next_serial', 1)
@@ -100,6 +100,10 @@ def validate_state(s, p, ship_id):
         from .aviation_tasks import validate
         ps.need(type(s['departure_tasks']) is dict and set(s['departure_tasks'])<=set(planes), '$.departure_tasks', '起飞任务归属无效')
         for task in s['departure_tasks'].values(): validate(task)
+    if 'departure_emissions' in s:
+        from . import aviation_ew,aviation_catalog
+        ps.need(type(s['departure_emissions']) is dict and set(s['departure_emissions'])<=set(planes), '$.departure_emissions', '起飞设备设置归属无效')
+        for key,value in s['departure_emissions'].items():aviation_ew.capabilities(aviation_catalog.model(p['catalog'],planes[key]['model_id']),value)
     people={x['id']:x for x in s['manifest']['personnel']}
     assignments=s['hangar_assignments']
     ps.need(type(assignments) is dict, '$.hangar_assignments', '需要机库归属')

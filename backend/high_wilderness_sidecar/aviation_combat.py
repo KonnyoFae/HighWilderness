@@ -26,22 +26,22 @@ def apply_hits(flights,events):
 
 
 def environment(b,world,base,flights,inventories):
-    from .missile_guidance import Contact,Measurement
+    from .missile_guidance import Contact
+    from . import aviation_ew
     actors=bodies(b,world,inventories,flights)
-    contacts=list(base.contacts);links=list(base.links)
+    contacts=list(base.contacts)
     for body in actors:
         f=flights[body.id];inv=inventories[f['owner']];model=catalog.model(inv._definition['aviation']['catalog'],flight.plane(inv,body.id)['model_id'])
+        active=aviation_ew.working(f,model)
         contacts.append(Contact(body.id,b._sides[f['owner']],body.position,body.velocity,body.height_layer,large=False,
-            emitting=model['radar_range_m']>0,kind='aircraft',durability=body.durability,payload=observed.sample(body)))
-        for target,_ in f['contacts'].values():
-            links.append((b._sides[f['owner']],Measurement(target.id,target.position,target.velocity,f['sample_step'],target.layer,
-                body.id,body.position)))
-    return replace(base,contacts=tuple(contacts),links=tuple(links))
+            emitting=any(active.values()),jamming=active['jammer'],kind='aircraft',durability=body.durability,payload=observed.sample(body)))
+    # Aircraft reports reach missile links only through the receiving ship's live datalink.
+    return replace(base,contacts=tuple(contacts))
 
 
-def known(b,world,available,f):
+def known(b,world,available,f,frame=None):
     result={key:t for key,(t,_) in f['contacts'].items()}
-    for (n,key),track in b.observation.frame.tracks.items():
+    for (n,key),track in (frame or b.observation.frame).tracks.items():
         if (track.valid and b._sides[n]==b._sides[f['owner']] and flight.active(world.ships[n])
             and any(available[n][mid] is None for mid in b.observation.links[n])
             and hypot(*(a-c for a,c in zip(world.ships[n].motion.position_world_m.to_list(),f['position'])))<=b.observation.policy['datalink_range_m']):result.setdefault(key,track.target)
@@ -60,7 +60,7 @@ def approach(f,target,inv):
     return aim_for(f,target,f['speed'])
 
 
-def plan(b,world,inventories,flights,projectiles,sequence,env):
+def plan(b,world,inventories,flights,projectiles,sequence,env,frame=None):
     from .tactical_gunnery import Projectile,noise,wrap,intercept
     from .tactical_ballistics import FlightProfile
     from .missile_flight import Flight,prepare
@@ -70,7 +70,7 @@ def plan(b,world,inventories,flights,projectiles,sequence,env):
         if f['hp']<=0 or f['status']=='recovering':continue
         if b._sides[f['owner']]!=b._sides[b._direct_index] and not b.enemy_fire:continue
         inv=inventories[f['owner']];a=flight.plane(inv,key);cfg=config(inv);model=catalog.model(inv._definition['aviation']['catalog'],a['model_id'])
-        tracks=known(b,world,available,f);same=[t for t in tracks.values() if t.layer==f['layer']]
+        tracks=known(b,world,available,f,frame);same=[t for t in tracks.values() if t.layer==f['layer']]
         cooldown=f.setdefault('weapon_cooldowns',{});f.setdefault('shots',0);f.setdefault('rng',sum(key.encode('utf-8')))
         if len(projectiles)>=b.config['max_projectiles']:continue
         point=tuple(f['position']);velocity=tuple(f['velocity']);heading=atan2(velocity[1],velocity[0])

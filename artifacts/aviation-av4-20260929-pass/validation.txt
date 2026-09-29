@@ -1,0 +1,37 @@
+AV4 verification record — 2026-09-29
+This file summarizes the actual tool outputs of this implementation turn.
+
+Backend, batch 1:
+python -X utf8 -m unittest tools.test_aviation_flight tools.test_aviation_combat tools.test_tactical_ew tools.test_missile_guidance tools.test_missile_catalog
+Ran 57 tests in 57.331s — OK
+
+Backend, batch 2:
+python -X utf8 -m unittest tools.test_aviation_logistics tools.test_missile_defense tools.test_tactical_damage tools.test_tactical_gunnery tools.test_missile_flight tools.test_tactical_interception tools.test_tactical_targeting tools.test_missile_maneuver tools.test_missile_layer_coordination tools.test_missile_display tools.test_projectile_stream tools.test_tactical_observation tools.test_preparation_transactions tools.test_prepared_deployment tools.test_tactical_settlement
+Ran 225 tests in 176.852s — OK
+
+AV4 targeted suite (final run, including real radar missile lock loss/reacquisition):
+python -X utf8 -m unittest tools.test_aviation_ew
+Ran 12 tests in 3.770s — OK
+Combined backend: 294 tests passed.
+
+Frontend (apps/desktop):
+node node_modules/vitest/vitest.mjs run src/tactical
+34 files, 123 tests passed; 2.21s.
+node node_modules/typescript/bin/tsc -b — passed
+node node_modules/vite/bin/vite.js build — passed, 827 modules transformed.
+Existing Vite warning: some chunks exceed 500 kB after minification.
+
+Real React/Python browser acceptance:
+HW_AVIATION_EW=1
+HW_AVIATION_OUT=artifacts/aviation-av4-20260929-pass
+node tools/verify_aviation_view.mjs
+AVIATION_AV4_UI_PASS; see result.json and screenshots.
+Independent preparation/airborne emission controls, E1 moving area, sensing,
+recovery, settlement, reply retry and backend restart verified.
+Browser uses an isolated store. This is not native WebView or maximum-fleet acceptance.
+
+Small simulation sample:
+python -X utf8 -m tools.measure_aviation_ew artifacts/aviation-av4-20260929-pass/small-load.json
+Two ships, one E1, 600 measured steps per setting; see JSON for scope and counts.
+
+git diff --check — passed

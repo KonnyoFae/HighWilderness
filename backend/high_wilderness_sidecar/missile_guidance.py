@@ -22,6 +22,7 @@ class Contact:
     kind: str = 'ship'
     durability: float | None = None
     payload: object = None
+    jamming: bool = False
 
 
 @dataclass(frozen=True)
@@ -58,11 +59,18 @@ def segment_circle(a,b,center,radius):
     return sum((x+d*t-c)**2 for x,d,c in zip(a,delta,center))<=radius*radius
 
 
-def blocked_channels(areas,origin,layer,target,target_layer):
+def blocked_channels(areas,origin,layer,target,target_layer,*,observer_side=None,seeker=None,target_jamming=False):
     # Only endpoint layers participate: a cloud is not projected through every
-    # altitude. Regions affect both sides and also block sensors inside them.
-    return frozenset(a.kind for a in areas if a.layer in (layer,target_layer)
-                     and a.kind in ('chaff','thermal') and segment_circle(origin,target,a.position,a.radius))
+    # altitude. Physical clouds affect both sides; electronic areas are hostile-only.
+    blocked=set()
+    for a in areas:
+        if a.layer not in (layer,target_layer) or not segment_circle(origin,target,a.position,a.radius):continue
+        if a.kind in ('chaff','thermal'):blocked.add(a.kind)
+        elif a.kind=='electronic' and observer_side is not None and a.side!=observer_side:
+            # Only active jammer targets bypass electronic fields, including overlap.
+            # Actual chaff remains a separate obstacle to anti-radiation seekers.
+            if not (seeker=='anti_radiation' and target_jamming):blocked.add('chaff')
+    return frozenset(blocked)
 
 
 def contact(f,position,layer,own_side,t,environment,step):
@@ -79,7 +87,8 @@ def contact(f,position,layer,own_side,t,environment,step):
     distance=hypot(*(a-b for a,b in zip(t.position,position)));p=f.profile
     if distance>p.seeker_range*p.weather[LAYERS.index(t.layer)]:return None
     if abs(wrap(atan2(t.position[1]-position[1],t.position[0]-position[0])-f.heading))>p.seeker_half_cone:return None
-    blocked=blocked_channels(environment.areas,position,layer,t.position,t.layer)
+    blocked=blocked_channels(environment.areas,position,layer,t.position,t.layer,
+        observer_side=own_side,seeker=p.seeker,target_jamming=t.jamming)
     if p.seeker in ('radar','anti_radiation') and 'chaff' in blocked:return None
     if p.seeker=='infrared' and 'thermal' in blocked:return None
     if p.seeker=='composite' and {'chaff','thermal'}<=blocked:return None

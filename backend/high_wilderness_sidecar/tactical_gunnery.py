@@ -535,18 +535,20 @@ class GunneryBattle(SensorState):
             if self.damage:
                 consumed={r['decoy_id'] for r in staged['damage_state'].expired_flights if 'decoy_id' in r}
                 effects=tuple(e for e in effects if e.id not in consumed)
-            from . import aviation_flight,aviation_combat
+            from . import aviation_flight,aviation_combat,aviation_ew
             staged['aviation_flights']=aviation_flight.advance(self,world,inventories,staged.get('aviation_after_hits',self.aviation.flights),projectiles,effects)
             aircraft_bodies=aviation_combat.bodies(self,world,inventories,staged['aviation_flights'])
             aircraft_targets=aviation_flight.targets(staged['aviation_flights'],inventories,self._sides)
-            sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,effects),extra_targets=aircraft_targets)
+            fields=aviation_ew.refresh(self,world,inventories,staged['aviation_flights'],projectiles,effects)
+            sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,fields),extra_targets=aircraft_targets)
             sensor_frame=aviation_flight.share(self,world,available,sensor_frame,staged['aviation_flights'])
             ew_plan=self.ew.plan(world,inventories,available,sensor_frame,effects,self._ending_reason(world) if self.damage else None)
             staged['ew_plan']=ew_plan
             if ew_plan[3]:
-                sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,ew_plan[1]),extra_targets=aircraft_targets)
+                fields=aviation_ew.refresh(self,world,inventories,staged['aviation_flights'],projectiles,ew_plan[1])
+                sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,fields),extra_targets=aircraft_targets)
                 sensor_frame=aviation_flight.share(self,world,available,sensor_frame,staged['aviation_flights'])
-            environment=self.ew.environment(world,available,sensor_frame,ew_plan[1],projectiles,prediction=defense_prediction)
+            environment=self.ew.environment(world,available,sensor_frame,fields,projectiles,prediction=defense_prediction)
             environment=aviation_combat.environment(self,world,environment,staged['aviation_flights'],inventories)
             from .tactical_missile_defense import prepare_all
             projectiles=prepare_all(self,world,available,projectiles,environment,sensor_frame)
@@ -731,7 +733,7 @@ class GunneryBattle(SensorState):
             staged['missile_plan']=missile_plan
             projectile_sequence=missile_plan[2]
             if not ending:
-                staged['aviation_flights'],projectile_sequence,staged['aviation_events']=aviation_combat.plan(self,world,inventories,staged['aviation_flights'],projectiles,projectile_sequence,environment)
+                staged['aviation_flights'],projectile_sequence,staged['aviation_events']=aviation_combat.plan(self,world,inventories,staged['aviation_flights'],projectiles,projectile_sequence,environment,sensor_frame)
             if self.fire.enabled and not ending:
                 fires, events = self.fire.spread(world,staged['fires'])
                 staged.update(fires=fires,fire_events=staged['fire_events']+events,

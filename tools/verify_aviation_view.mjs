@@ -13,6 +13,7 @@ const setup=spawnSync('python',['-X','utf8','-m','tools.aviation_browser_fixture
 assert.equal(setup.status,0,setup.stderr);
 const flightPhase=process.env.HW_AVIATION_FLIGHT==='1';
 const combatPhase=process.env.HW_AVIATION_COMBAT==='1';
+const ewPhase=process.env.HW_AVIATION_EW==='1';
 let backend,browser,page,serial=0,packet,form,receipt,live,loseAction=true,loseCommit=true,loseLaunch=flightPhase;
 const pending=new Map(),errors=[],checks=[];
 function start(){
@@ -50,15 +51,16 @@ try{
   await button('配置双方舰内物资').click();await until(()=>form?.ships.length===2,'draft opened');
   await controls.getByRole('button',{name:'航空',exact:true}).click();
   const before=structuredClone((await request('tactical.preparation.scene_read',{})).ships);
-  await button('接收 F1').click();await button('重试部件操作').click();
+  await button(ewPhase?'接收 E1':'接收 F1').click();await button('重试部件操作').click();
   await page.getByRole('heading',{name:'准备变动预览',exact:true}).waitFor();
   await button('接收 1 名飞行员').click();
+  if(ewPhase){await button('接收 1 名飞行员').click();await button('关闭雷达').click();}
   if(combatPhase)await page.getByRole('combobox',{name:/ p1 挂载$/}).selectOption('small_missile');
   await button('整备至待命').click();
   await button('战前预装弹射器').click();
   await button('接收 F1').click();await button('接收 1 名飞行员').click();
   await button('安排开战后整备').click();
-  await until(()=>form?.draft.revision===7,'seven aviation draft orders');
+  await until(()=>form?.draft.revision===(ewPhase?9:7),'aviation draft orders saved');
   assert.deepEqual((await request('tactical.preparation.scene_read',{})).ships,before);
   await page.screenshot({path:path.join(out,'preparation.png'),fullPage:true});
   await button('保存准备').click();await button('重试保存准备').click();
@@ -67,6 +69,7 @@ try{
   assert.equal(saved.manifest.aircraft.filter(a=>a.location==='catapult').length,1);
   assert.equal(saved.manifest.aircraft.filter(a=>a.location==='cargo').length,1);
   assert.equal(saved.queue.length,1);assert.equal(saved.jobs.length,0);
+  if(ewPhase)assert.deepEqual(Object.values(saved.departure_emissions),[{radar:false,jammer:true}]);
   checks.push('Actual preparation UI receives two unique aircraft and pilots, services one, preloads it, and schedules the other; lost action/commit replies retry once without duplicating inventory.');
   await page.waitForFunction(()=>[...document.querySelectorAll('button')].some(b=>b.textContent==='按当前编队进入交战'&&!b.disabled));
   console.log('enter button ready');await button('按当前编队进入交战').click();await button('开始交战').waitFor();
@@ -79,7 +82,31 @@ try{
   await page.screenshot({path:path.join(out,'battle.png'),fullPage:true});
   await button('取消并立即完工').click();
   await until(()=>player()?.state.manifest.aircraft.some(a=>a.location==='ready'),'cancel completes job');
-  if(combatPhase){
+  if(ewPhase){
+    await button('弹射起飞').click();
+    await until(()=>live?.view.gunnery.aviation.flights.length===1,'E1 launched');
+    const airborne=page.getByRole('region',{name:'空中航空编队'});
+    const aviation=()=>live.view.gunnery.aviation;
+    assert.deepEqual(aviation().flights[0].emissions,{radar:false,jammer:true});
+    await page.waitForFunction(()=>JSON.parse(document.querySelector('[data-visible-jammers]')?.getAttribute('data-visible-jammers')??'[]').length===1);
+    await airborne.getByRole('button',{name:'开启雷达',exact:true}).click();
+    await until(()=>aviation().flights[0].emissions.radar&&aviation().flights[0].contacts.length>0,'sensing while jamming');
+    assert.equal(aviation().jamming_areas.length,1);
+    await airborne.getByRole('button',{name:'关闭电子干扰',exact:true}).click();
+    await until(()=>aviation().jamming_areas.length===0,'jammer off removes field');
+    await page.waitForFunction(()=>document.querySelector('[data-visible-jammers]')?.getAttribute('data-visible-jammers')==='[]');
+    assert.equal(aviation().flights[0].emissions.radar,true);
+    await airborne.getByRole('button',{name:'开启电子干扰',exact:true}).click();
+    await until(()=>aviation().jamming_areas.length===1,'jammer restored');
+    const at=aviation().jamming_areas[0].position_m;
+    await until(()=>JSON.stringify(aviation().jamming_areas[0].position_m)!==JSON.stringify(at),'field follows E1');
+    await page.screenshot({path:path.join(out,'electronic-warfare.png'),fullPage:true});
+    await airborne.getByRole('button',{name:/选择编队/}).click();
+    await button('选中飞机返航').click();
+    await until(()=>aviation().flights.length===0,'E1 recovered');
+    assert.equal(aviation().jamming_areas.length,0);
+    checks.push('AV4 actual UI persists radar-off/jammer-on departure settings, launches E1 with those settings, senses while jamming, independently toggles devices, renders/removes its moving field, and recovers both pilots with no residual field.');
+  }else if(combatPhase){
     await button('弹射起飞').click();
     await until(()=>live?.view.gunnery.aviation.flights.length===1,'aircraft launched');
     const airborne=page.getByRole('region',{name:'空中航空编队'});
@@ -119,7 +146,7 @@ try{
   await button('管理战后库存与下一场准备').click();await button('配置双方舰内物资').waitFor();
   const settled=(await request('tactical.preparation.scene_read',{})).ships.find(s=>s.instance_id==='instance.aviation.player').state;
   assert.equal(settled.aviation.jobs.length,0);assert.equal(settled.aviation.manifest.aircraft.length,2);
-  assert.equal(settled.aviation.manifest.aircraft.flatMap(a=>a.crew).length+settled.aviation.manifest.personnel.length,2);
+  assert.equal(settled.aviation.manifest.aircraft.flatMap(a=>a.crew).length+settled.aviation.manifest.personnel.length,ewPhase?3:2);
   await stop();start();await hello();
   const restored=(await request('tactical.preparation.scene_read',{})).ships.find(s=>s.instance_id==='instance.aviation.player').state;
   assert.deepEqual(restored,settled);
@@ -129,6 +156,7 @@ try{
     assert(!restored.aviation.manifest.aircraft.some(a=>Object.values(a.loadout).includes('small_missile')));
     checks.push('Battle ending recovers the airborne aircraft and unique crew; expended payload remains spent after save and backend restart.');
   }
-  await writeFile(path.join(out,'result.json'),JSON.stringify({status:combatPhase?'AVIATION_AV3_UI_PASS':flightPhase?'AVIATION_AV2_UI_PASS':'AVIATION_AV1_UI_PASS',checks},null,2));console.log(JSON.stringify({out,checks}));
+  if(ewPhase)assert.deepEqual(restored.aviation.departure_emissions,saved.departure_emissions);
+  await writeFile(path.join(out,'result.json'),JSON.stringify({status:ewPhase?'AVIATION_AV4_UI_PASS':combatPhase?'AVIATION_AV3_UI_PASS':flightPhase?'AVIATION_AV2_UI_PASS':'AVIATION_AV1_UI_PASS',checks},null,2));console.log(JSON.stringify({out,checks}));
 }catch(e){if(page){await page.screenshot({path:path.join(out,'failure.png'),fullPage:true});await writeFile(path.join(out,'failure.txt'),await page.locator('body').innerText());}throw e;}
 finally{await browser?.close();await stop();}

@@ -1,0 +1,8 @@
+{
+  "status": "AVIATION_AV4_UI_PASS",
+  "checks": [
+    "Actual preparation UI receives two unique aircraft and pilots, services one, preloads it, and schedules the other; lost action/commit replies retry once without duplicating inventory.",
+    "AV4 actual UI persists radar-off/jammer-on departure settings, launches E1 with those settings, senses while jamming, independently toggles devices, renders/removes its moving field, and recovers both pilots with no residual field.",
+    "Real battle powers the hangar, begins only the queued job, accepts an immediate-completion cancel, and preserves both airframes and crew across ending, saving and backend restart."
+  ]
+}

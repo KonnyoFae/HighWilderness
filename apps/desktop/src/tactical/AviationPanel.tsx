@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import type {Aircraft,AviationOrder,AviationProfile,AviationState} from './aviation';
 import {aircraftLocation,payloadNames} from './aviation';
-import {AviationTaskForm,taskNames} from './AviationFlightPanel';
+import {AviationEmissionControls,AviationTaskForm,taskNames} from './AviationFlightPanel';
 
 export function AviationPanel({profile,state,names,disabled,onOrder,preparation=false,planned=0}:
   {profile?:AviationProfile;state?:AviationState;names:Record<string,string>;disabled:boolean;onOrder:(o:AviationOrder)=>void;preparation?:boolean;planned?:number}) {
@@ -35,6 +35,7 @@ function AircraftCard({a,profile,state,names,hangar,catapult,disabled,preparatio
   const m=profile.catalog.aircraft.find(m=>m.id===a.model_id)!;
   const [loadout,setLoadout]=useState<Record<string,string>>(()=>Object.keys(a.loadout).length?a.loadout:Object.fromEntries(m.hardpoints.filter(()=>m.required_payload).map(p=>[p.id,m.required_payload!])));
   const job=state.jobs.find(j=>j.aircraft_id===a.id),queued=state.queue.some(q=>'aircraft_id' in q&&q.aircraft_id===a.id);
+  const capabilities={radar:(m.radar_range_m??0)>0,jammer:(m.jammer_radius_m??0)>0};
   const order:AviationOrder|undefined=hangar?{kind:a.condition==='damaged'?'repair':'prepare',aircraft_id:a.id,module_id:hangar,...(a.condition==='damaged'?{}:{loadout})} as AviationOrder:undefined;
   return <article className="aviation-aircraft" aria-label={`${m.name} ${a.id.split('.').at(-1)}`}>
     <strong>{m.name} · #{a.id.split('.').at(-1)}</strong>
@@ -42,6 +43,7 @@ function AircraftCard({a,profile,state,names,hangar,catapult,disabled,preparatio
     {job&&<p>剩余 {(job.remaining_steps/60).toFixed(1)} 秒 <button disabled={disabled} onClick={()=>onOrder({kind:'cancel',aircraft_id:a.id})}>取消并立即完工</button></p>}
     {a.location==='catapult'&&!job&&<p>装载已完成。{!preparation&&<button disabled={disabled} onClick={()=>onOrder({kind:'launch',aircraft_ids:[a.id]})}>弹射起飞</button>}</p>}
     {['cargo','repairing','preparing','ready','catapult'].includes(a.location)&&<details><summary>起飞任务{state.departure_tasks?.[a.id]?`：${taskNames[state.departure_tasks[a.id].kind]}`:'：默认前方盘旋'}</summary><AviationTaskForm initial={state.departure_tasks?.[a.id]} disabled={disabled} label="保存起飞任务" onSubmit={task=>onOrder({kind:'departure_task',aircraft_ids:[a.id],task})}/></details>}
+    {['cargo','repairing','preparing','ready','catapult'].includes(a.location)&&<AviationEmissionControls label="起飞设备" value={state.departure_emissions?.[a.id]??capabilities} capabilities={capabilities} disabled={disabled} onChange={emissions=>onOrder({kind:'departure_emissions',aircraft_ids:[a.id],emissions})}/>}
     {!job&&!queued&&['cargo','ready'].includes(a.location)&&<>
       {a.condition==='intact'&&<fieldset disabled={disabled}><legend>本次挂载配置</legend>{m.hardpoints.map(p=><label key={p.id}>{p.id} <select aria-label={`${a.id} ${p.id} 挂载`} value={loadout[p.id]??''} onChange={e=>setLoadout(old=>{const next={...old};if(e.target.value)next[p.id]=e.target.value;else delete next[p.id];return next;})}>
         {!m.required_payload&&<option value="">空挂点</option>}{p.compatible_payloads.map(k=><option key={k} value={k}>{payloadNames[k]??k}</option>)}</select></label>)}</fieldset>}

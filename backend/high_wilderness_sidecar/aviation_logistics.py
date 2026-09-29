@@ -13,12 +13,15 @@ def validate_order(o, p, *, preparation=False):
     kind=o.get('kind')
     fields={'acquire':'model_id', 'pilots':'module_id quantity', 'repair':'aircraft_id module_id',
             'prepare':'aircraft_id module_id loadout', 'load':'aircraft_id module_id',
-            'store':'aircraft_id', 'cancel':'aircraft_id', 'queue':'order', 'clear_queue':'', 'departure_task':'aircraft_ids task'}
+            'store':'aircraft_id', 'cancel':'aircraft_id', 'queue':'order', 'clear_queue':'', 'departure_task':'aircraft_ids task', 'departure_emissions':'aircraft_ids emissions'}
     ps.need(type(kind) is str and kind in fields, '$.kind', '未知航空指令')
     ps.obj(o,'kind '+fields[kind], '$.aviation.order')
     if kind=='departure_task':
         from . import aviation_tasks
         aviation_tasks.identities(o['aircraft_ids']);aviation_tasks.validate(o['task'])
+    if kind=='departure_emissions':
+        from . import aviation_tasks,aviation_ew
+        aviation_tasks.identities(o['aircraft_ids']);aviation_ew.validate(o['emissions'])
     if kind in ('acquire','pilots','queue'):
         ps.need(preparation, '$.kind', '此指令仅用于战前准备')
     if kind=='acquire': ac.model(p['catalog'],o['model_id'])
@@ -123,11 +126,15 @@ class Work:
             if queued['kind']=='prepare': ac.validate_loadout(self.p['catalog'],a['model_id'],queued['loadout'])
             self.s['queue'].append(ps.clone(queued));return
         if kind=='clear_queue':self.s['queue']=[];return
-        if kind=='departure_task':
+        if kind in ('departure_task','departure_emissions'):
             for key in o['aircraft_ids']:
                 a=self.plane(key)
-                ps.need(a['location'] in ('cargo','repairing','preparing','ready','catapult'), '$.aircraft_ids', '起飞任务仅能预设给舰内飞机')
-                self.s.setdefault('departure_tasks',{})[key]=ps.clone(o['task'])
+                ps.need(a['location'] in ('cargo','repairing','preparing','ready','catapult'), '$.aircraft_ids', '起飞设置仅能预设给舰内飞机')
+                if kind=='departure_emissions':
+                    from . import aviation_ew
+                    aviation_ew.capabilities(ac.model(self.p['catalog'],a['model_id']),o['emissions'])
+                    self.s.setdefault('departure_emissions',{})[key]=ps.clone(o['emissions'])
+                else:self.s.setdefault('departure_tasks',{})[key]=ps.clone(o['task'])
             return
         a=self.plane(o['aircraft_id']);model=ac.model(self.p['catalog'],a['model_id'])
         job=next((j for j in self.s['jobs'] if j['aircraft_id']==a['id']),None)

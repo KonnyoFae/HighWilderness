@@ -187,6 +187,12 @@ export function TacticalViewport({ view: suppliedView, active, selected, onSelec
       }
     }
     v.clear();
+    const jammers=(source.snapshot.gunnery?.aviation?.jamming_areas??[]).filter(a=>a.height_layer===observationLayer);
+    if(host.current)host.current.dataset.visibleJammers=JSON.stringify(jammers.map(a=>a.source_id));
+    for(const area of jammers) {
+      const point=screen({x:area.position_m[0],y:area.position_m[1]},camera);
+      v.circle(point.x,point.y,area.radius_m*camera.scale).fill({color:0x43c5b4,alpha:.06}).stroke({color:0x43c5b4,width:1.5,alpha:.65});
+    }
     for(const effect of view.snapshot.gunnery?.electronic_warfare?.effects??[]) {
       if(effect.height_layer!==observationLayer)continue;
       const point=screen({x:effect.position_m[0],y:effect.position_m[1]},camera);
