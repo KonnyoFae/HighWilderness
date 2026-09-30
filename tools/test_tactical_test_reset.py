@@ -114,5 +114,19 @@ class TacticalTestResetTests(unittest.TestCase):
         with self.assertRaises(ps.ContractError): reset(self.server, dict(self.params, scope='editor'))
         self.assertEqual(len(self.call('library', {})['ships']), 1)
 
+    def test_reset_removes_independent_salvage_and_receipts(self):
+        from backend.high_wilderness_sidecar import aviation_salvage_store as salvage
+        with self.server.preparation.store.connection() as db:
+            salvage.setup(db)
+            db.execute("INSERT INTO aviation_salvage_pools VALUES ('old.pool','broken','bad')")
+            db.execute("INSERT INTO aviation_salvage_receipts VALUES ('old.receipt','request','broken','bad')")
+            db.execute('CREATE TABLE preparation_aviation_actions (id TEXT PRIMARY KEY, request_digest TEXT NOT NULL, payload TEXT NOT NULL, digest TEXT NOT NULL)')
+            db.execute("INSERT INTO preparation_aviation_actions VALUES ('old.order','request','broken','bad')")
+        receipt=reset(self.server,self.params)
+        self.assertEqual(receipt['removed']['aviation_salvage_pools'],1)
+        self.assertEqual(receipt['removed']['aviation_salvage_receipts'],1)
+        self.assertEqual(receipt['removed']['preparation_aviation_actions'],1)
+        self.assert_empty()
+
 
 if __name__ == '__main__': unittest.main()

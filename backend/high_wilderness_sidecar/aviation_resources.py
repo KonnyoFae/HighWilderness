@@ -90,7 +90,7 @@ def quarters_available(value, pack):
 
 
 def validate_state(s, p, ship_id):
-    ps.obj(s, 'interface manifest next_serial jobs queue hangar_assignments casualty_remainders'+''.join(' '+k for k in ('departure_tasks','departure_emissions') if k in s), '$.aviation')
+    ps.obj(s, 'interface manifest next_serial jobs queue hangar_assignments casualty_remainders'+''.join(' '+k for k in ('departure_tasks','departure_emissions','salvage_origins') if k in s), '$.aviation')
     ps.need(s['interface']==INTERFACE, '$.aviation.interface', '未知航空状态版本')
     am.validate(s['manifest'], p['catalog'])
     ps.integer(s['next_serial'], '$.aviation.next_serial', 1)
@@ -105,6 +105,10 @@ def validate_state(s, p, ship_id):
         ps.need(type(s['departure_emissions']) is dict and set(s['departure_emissions'])<=set(planes), '$.departure_emissions', '起飞设备设置归属无效')
         for key,value in s['departure_emissions'].items():aviation_ew.capabilities(aviation_catalog.model(p['catalog'],planes[key]['model_id']),value)
     people={x['id']:x for x in s['manifest']['personnel']}
+    if 'salvage_origins' in s:
+        from .aviation_salvage import validate_origin
+        ps.need(type(s['salvage_origins']) is dict and set(s['salvage_origins'])<=set(planes)|set(people),'$.salvage_origins','打捞位置归属无效')
+        for value in s['salvage_origins'].values():validate_origin(value)
     assignments=s['hangar_assignments']
     ps.need(type(assignments) is dict, '$.hangar_assignments', '需要机库归属')
     for pid, mid in assignments.items():

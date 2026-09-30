@@ -10,6 +10,7 @@ import { addToScene, changeScene, moduleTab, preparationTabs, sideName } from '.
 import type { FleetSide, PreparationScene, PreparationTab, ScenePacket } from './preparationScene';
 import { LiftReserve } from '../LiftReserve';
 import { PreparationDistance, preparationDistanceText } from './PreparationDistance';
+import {SalvagePanel} from './SalvagePanel';
 
 export function PreparationWorkspace({transport,instance,active,onEnter}: {
   transport:BridgeTransport;instance:string;active:boolean;onEnter:(launch:PreparedLaunch)=>void;
@@ -173,5 +174,6 @@ export function PreparationWorkspace({transport,instance,active,onEnter}: {
       </aside>
     </div>
     <p className="formation-distance-note">{preparationDistanceText(packet)}。上下视区分别显示舰队局部排布，屏幕间隔不代表实际交战距离。</p>
+    <SalvagePanel transport={transport} instance={instance} disabled={lock||!!preparation} onBusy={onEditorBusy} onChanged={refresh}/>
   </section>;
 }

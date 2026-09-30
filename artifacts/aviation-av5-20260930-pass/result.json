@@ -1,0 +1,7 @@
+{
+  "status": "AVIATION_AV5_UI_PASS",
+  "checks": [
+    "A real full-loss ending leaves one E1 and two unique pilots in an independent saved pool. Actual UI selects a new friendly rescue ship, previews without writes, receives all assets, and retries a lost reply without duplication; ace traits and remaining ammunition survive.",
+    "The recovered E1 and original crew are serviced and preloaded in the UI, launch in a second real encounter, return at ending, and persist through saving and backend restart. No old salvage entry is restored and no asset is duplicated."
+  ]
+}

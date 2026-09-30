@@ -16,6 +16,7 @@ from .tactical_damage import DamageState
 SHIP_INTERFACE = 'gaotian.persistent-combat-ship/p3-v1'
 RESULT_INTERFACE = 'gaotian.battle-settlement/p3-v3'
 DEPARTURE_RESULT_INTERFACE = 'gaotian.battle-settlement/6c-v4'
+AVIATION_RESULT_INTERFACE = 'gaotian.battle-settlement/av5-v1'
 
 
 def armor_record(battle, index, values):
@@ -71,10 +72,14 @@ def capture(battle):
     ps.need(battle.ending is not None and battle.damage is not None, '$.ending', '结束交战后才能结算')
     ps.need(not battle.projectiles and all(i._settlement is not None and not i._due for i in battle.inventory.inventories),
             '$.ending', '战斗活动过程尚未冻结')
-    rows = []
+    rows = [];salvage=[]
     for n, (ship, binding, inv) in enumerate(zip(battle.session.world.ships, battle.inventory.prepared.bindings, battle.inventory.inventories)):
+        from . import aviation_salvage
+        inv=inv.fork()
         seed = binding.resources.seed
         before = binding.instance.to_dict()
+        salvage.extend(aviation_salvage.extract(inv,before['instance_id'],battle._sides[n],
+            aviation_salvage.origin(battle.session.world,ship.motion.position_world_m.to_list(),ship.motion.height_layer,'battle_end'),before))
         value = ps.clone(before)
         value.update(hull_integrity_fraction=ship.motion.hull_integrity_fraction, fuel_units=ship.motion.fuel_units,
             modules=[dict(module_id=m.instance_id, durability_points=h.durability_points, operating_mode=mode)
@@ -120,6 +125,7 @@ def capture(battle):
             instance_id=next(r['after']['state']['instance_id'] for r in rows if r['after']['ship_id']==d.ship_id),
             side_id=next(r['side_id'] for r in rows if r['after']['ship_id']==d.ship_id),
             strategic_control='fleet' if d.kind=='fleet' else 'npc') for d in battle.disengagement.departures])
+    if salvage:result.update(interface=AVIATION_RESULT_INTERFACE,aviation_salvage=aviation_salvage.make_pool(result,salvage))
     return ps.clone(result)
 
 
@@ -154,10 +160,11 @@ def redeploy(record, template, scenario):
 def validate_result(value):
     v = ps.clone(value)
     legacy = v.get('interface') == 'gaotian.battle-settlement/p3-v1'
-    departures = v.get('interface') == DEPARTURE_RESULT_INTERFACE
-    contextual = v.get('interface') in (RESULT_INTERFACE, DEPARTURE_RESULT_INTERFACE)
+    aviation = v.get('interface') == AVIATION_RESULT_INTERFACE
+    departures = v.get('interface') == DEPARTURE_RESULT_INTERFACE or aviation and 'departures' in v
+    contextual = v.get('interface') in (RESULT_INTERFACE, DEPARTURE_RESULT_INTERFACE,AVIATION_RESULT_INTERFACE)
     ps.obj(v, 'interface settlement_id scene_id reason fixed_step removed_projectiles ships'+
-        ('' if legacy else ' wrecks')+(' player_side_id' if contextual else '')+(' departures withdrawal_policy escape_outcomes' if departures else ''), '$.settlement')
+        ('' if legacy else ' wrecks')+(' player_side_id' if contextual else '')+(' departures withdrawal_policy escape_outcomes' if departures else '')+(' aviation_salvage' if aviation else ''), '$.settlement')
     ps.need(legacy or contextual or v['interface'] == 'gaotian.battle-settlement/p3-v2', '$.interface', '不支持的结算版本')
     if contextual: ps.identifier(v['player_side_id'], '$.player_side_id')
     ps.identifier(v['settlement_id'], '$.settlement_id'); ps.identifier(v['scene_id'], '$.scene_id')
@@ -240,6 +247,9 @@ def validate_result(value):
             ps.need(type(outcome['survived']) is bool and outcome==survival.resolve(policy,v['scene_id'],key,v['fixed_step']), '$.escape_outcomes', '撤离概率或结果不匹配')
             ps.need(outcome['survived']==(key in departed_ids), '$.escape_outcomes', '撤离判定与离场记录不匹配')
             seen.add(key)
+    if aviation:
+        from .aviation_salvage import validate_result as validate_salvage
+        validate_salvage(v)
     return v
 
 
@@ -332,6 +342,9 @@ class SettlementStore:
                     self._write_ship(db, ship['after'])
                     db.execute('DELETE FROM battle_instance_claims WHERE instance_id=? AND scene_id=?',
                         (ship['before']['state']['instance_id'], result['scene_id']))
+                if 'aviation_salvage' in result:
+                    from .aviation_salvage_store import insert_pool
+                    insert_pool(db,self,result['aviation_salvage'])
                 db.execute('UPDATE results SET committed=1 WHERE id=?', (settlement_id,))
         return dict(result=result, saved=True)
 

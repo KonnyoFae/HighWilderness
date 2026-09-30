@@ -816,6 +816,8 @@ class GunneryBattle(SensorState):
                 staged['states'] = tuple(replace(s, target=None, manual_point=None, fire_requested=False,
                     aim_point=None, status='battle_finished') for s in staged['states'])
                 staged['fire_controllers'] = tuple(replace(c, enabled=False, status='battle_finished') for c in staged['fire_controllers'])
+            from .aviation_salvage import stamp_new
+            stamp_new(self,world,inventories)
             return world
         result = self.inventory.step(control=control, inventory_before_advance=permissions,
             inventory_fuel=fuel_losses if self.damage and any(i._fuel_tanks for i in self.inventory.inventories) else None,
@@ -878,6 +880,8 @@ class GunneryBattle(SensorState):
         from . import aviation_flight
         flights=aviation_flight.finish(self,self.session.world,candidates,self.aviation.flights,True)
         for inv in candidates:inv.prepare_settlement('ending.'+self.session.world.epoch)
+        from .aviation_salvage import stamp_new
+        stamp_new(self,self.session.world,candidates)
         self.inventory.inventories=candidates;self.aviation.flights=flights
         if self.fire.enabled:
             self.fire.controllers = tuple(replace(c, enabled=False, status='battle_finished') for c in self.fire.controllers)

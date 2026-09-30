@@ -30,6 +30,7 @@ export interface SettlementShip {
 export interface SettlementEnvelope {
   saved: boolean; error?: string | null;
   result: { settlement_id: string; reason: string; fixed_step: number; ships: SettlementShip[]; player_side_id?: string;
+    aviation_salvage?:{entries:{kind:string;side_id:string}[]};
     wrecks?:{instance_id:string;ship_id:string;position_m:number[];height_layer:string;reason:string}[];
     departures?:{instance_id:string;ship_id:string;fixed_step:number;kind:string;strategic_control:string}[];
     escape_outcomes?:{instance_id:string;probability:number;roll:number;survived:boolean}[] };

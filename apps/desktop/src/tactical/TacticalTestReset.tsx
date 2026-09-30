@@ -28,7 +28,7 @@ export function TacticalTestReset({ transport, instance, disabled, onLocked, onC
     {open && <div className="tactical-reset-backdrop">
       <section className="tactical-reset-dialog" role="alertdialog" aria-modal="true" aria-labelledby="tactical-reset-title">
         <h2 id="tactical-reset-title">放弃现有战术测试成果</h2>
-        <p>清空当前战斗、全部已保存及待保存战果、测试舰艇实例、准备记录和测试物资库存，然后返回全新的战前准备。</p>
+        <p>清空当前战斗、全部已保存及待保存战果、测试舰艇实例、准备记录、测试物资库存和航空打捞池，然后返回全新的战前准备。</p>
         <p>已保存的船壳、舾装设计文件与编辑器草稿会保留。清空后需重新导入舰艇，测试物资按初始配置重新建立。</p>
         <p><strong>这会永久删除战术测试进度，无需先保存或完成结算。</strong></p>
         {error && <p role="alert">{error}。清空结果尚未确认，请重试；重试不会重复清除新测试。</p>}

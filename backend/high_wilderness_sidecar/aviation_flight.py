@@ -7,6 +7,7 @@ import json
 from . import aviation_catalog as ac, aviation_logistics as al, aviation_recovery as recovery
 from . import aviation_manifest as am, persistent_ship as ps
 from . import aviation_ew
+from .aviation_salvage import origin as salvage_origin
 from .tactical_layers import LAYERS
 from .tactical_observation import Target, Track, can_observe, allocate
 from .missile_guidance import blocked_channels
@@ -152,7 +153,7 @@ def advance(b,world,inventories,flights,projectiles,effects):
         f['step']=world.fixed_step
         inv=inventories[f['owner']];a=plane(inv,key);model=ac.model(inv._definition['aviation']['catalog'],a['model_id'])
         if f['hp']<=0:
-            recovery.salvage(inv,key,destroyed=True);del flights[key];continue
+            recovery.salvage(inv,key,destroyed=True,origin=salvage_origin(world,f['position'],f['layer'],'aircraft_destroyed'));del flights[key];continue
         if f['hp']<model['durability_points'] or a['condition']=='damaged':
             if a['condition']!='damaged':
                 w=al.Work(inv);w.plane(key)['condition']='damaged';w.commit()
@@ -164,7 +165,7 @@ def advance(b,world,inventories,flights,projectiles,effects):
             f['target_id']=None
             eligible=list(candidates(b,world,inventories,f,key))
             if not eligible:
-                recovery.salvage(inv,key);del flights[key];continue
+                recovery.salvage(inv,key,origin=salvage_origin(world,f['position'],f['layer'],'no_capacity'));del flights[key];continue
             selected=None
             for n in eligible:
                 for spec in inventories[n]._definition['aviation']['facilities']:
@@ -219,7 +220,7 @@ def finish(b,world,inventories,flights,ending=False):
         departed=world.ships[f['owner']].command.lifecycle.physical_status=='exited'
         if not ending and not departed:continue
         if not any(recovery.recover(inventories,f['owner'],n,key) for n in candidates(b,world,inventories,f,key,ending=True)):
-            recovery.salvage(inventories[f['owner']],key)
+            recovery.salvage(inventories[f['owner']],key,origin=salvage_origin(world,f['position'],f['layer'],'battle_end'))
         del flights[key]
     return flights
 

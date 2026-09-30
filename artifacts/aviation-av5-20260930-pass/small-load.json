@@ -1,0 +1,38 @@
+{
+  "scope": "Two carriers, one airborne E1, both aircraft sensors active; 30 warmup steps. Simulation step only, excludes publication/rendering. No maximum-load or balance claim.",
+  "python": "3.14.7",
+  "samples": [
+    {
+      "jammer": false,
+      "ships": 2,
+      "steps": 600,
+      "simulated_seconds": 10.0,
+      "maximum": {
+        "aircraft": 1,
+        "aircraft_sensors": 2,
+        "areas": 0,
+        "projectiles": 0,
+        "queued_jobs": 0
+      },
+      "step_median_ms": 0.9264000109396875,
+      "step_p95_ms": 1.2330999597907066,
+      "step_total_ms": 587.8633989486843
+    },
+    {
+      "jammer": true,
+      "ships": 2,
+      "steps": 600,
+      "simulated_seconds": 10.0,
+      "maximum": {
+        "aircraft": 1,
+        "aircraft_sensors": 2,
+        "areas": 1,
+        "projectiles": 0,
+        "queued_jobs": 0
+      },
+      "step_median_ms": 1.1707500088959932,
+      "step_p95_ms": 1.3726999750360847,
+      "step_total_ms": 715.6667996896431
+    }
+  ]
+}

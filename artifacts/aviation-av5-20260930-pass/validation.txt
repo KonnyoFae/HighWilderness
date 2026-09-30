@@ -1,0 +1,50 @@
+AV5 verification record — 2026-09-30
+Actual outputs from this implementation turn. All stores used by verification are isolated.
+
+Backend joint regression:
+python -X utf8 -m unittest tools.test_aviation_salvage tools.test_aviation_logistics tools.test_aviation_flight tools.test_aviation_combat tools.test_aviation_ew tools.test_tactical_settlement tools.test_preparation_transactions tools.test_prepared_deployment tools.test_tactical_test_reset tools.test_tactical_disengagement
+Ran 148 tests in 326.925s — OK (AV5 had 12 cases at this point).
+
+Three subsequently added AV5 boundary cases:
+python -X utf8 -m unittest tools.test_aviation_salvage.SalvageTests.test_unloaded_ammunition_counts_toward_capacity_and_pilots_can_be_claimed_separately tools.test_aviation_salvage.SalvageTests.test_ground_airframe_crash_stays_damaged_after_ending_and_receipt
+Ran 2 tests in 5.848s — OK.
+python -X utf8 -m unittest tools.test_aviation_salvage.SalvageTests.test_no_hangar_pilot_receipt_uses_shared_officer_beds_and_rejects_dead_people
+Ran 1 test in 2.533s — OK.
+Combined coverage: 151 tests, including 15 AV5 cases. No broader weapon suite is claimed for this turn.
+Final reset follow-up, including pre-existing aviation action receipt cleanup:
+python -X utf8 -m unittest tools.test_tactical_test_reset
+Ran 7 tests in 25.323s — OK (included in the above 151, not counted again).
+
+Frontend (apps/desktop):
+node node_modules/vitest/vitest.mjs run src/tactical
+34 files, 123 tests passed, 2.46s.
+node node_modules/typescript/bin/tsc -b — passed (including final reset wording).
+node node_modules/vite/bin/vite.js build — passed, 828 modules, 502ms.
+
+Native bridge:
+C:\Users\Yichen\.cargo\bin\cargo.exe test --offline real_aviation_salvage_routes_and_migration_retry -- --nocapture
+1 passed, 26 filtered out; real Python sidecar capability/read/migration retry checked.
+Build emitted an informational Windows linker stdout warning. No Rust compile/test failure.
+The initial bare cargo command was unavailable on PATH; explicit installed executable used.
+
+Real browser acceptance:
+HW_AVIATION_OUT=artifacts/aviation-av5-20260930-pass
+node tools/verify_aviation_salvage_view.mjs
+AVIATION_AV5_UI_PASS — see result.json and four screenshots.
+Two-carrier full-loss fixture produces one salvage E1 and two pilots, one with ace modifiers;
+a fresh friendly ship receives them through the real React/Python UI. Preview does not write.
+A committed receipt is intentionally dropped and retried. Same airframe and crew then
+prepare, preload and launch in a second encounter, recover at ending, save and restart.
+Pool remains depleted; identities and ace modifier preserved.
+First failed attempt exposed delayed-open loading race, fixed in SalvagePanel.
+Second failed attempt used aircraft_id instead of the published flight id; corrected test.
+Failure materials remain in .local/aviation-av5-verification-20260930 and -b.
+Browser evidence does not replace native WebView operation or maximum-fleet acceptance.
+
+Small simulation sample after adding per-step salvage positions:
+python -X utf8 -m tools.measure_aviation_ew artifacts/aviation-av5-20260930-pass/small-load.json
+Two ships, one E1, two sensors, zero projectiles/queued jobs, 600 steps each after 30 warmup.
+Jammer off/on P95: 1.233 / 1.373 ms. Simulation only, no publication or rendering.
+This is a small-load check, not a same-machine controlled optimization comparison or 7b baseline.
+
+git diff --check — passed.

@@ -13,18 +13,23 @@ def receiving(source, receiver, aircraft_id):
         src.s.get('departure_emissions',{}).pop(a['id'],None)
         dst.m['aircraft'].append(a)
     dst.unload(a)
-    for person in a['crew']:
-        mid=None
-        for key,f in dst.specs.items():
-            if f['kind']!='aircraft_hangar' or not receiver._alive(key):continue
-            count=sum(x['housing']=='hangar' and x['module_id']==key and x['health']!='dead' for x in dst.m['personnel'])
-            count+=sum(len(x['crew']) for x in dst.m['aircraft'] if dst.s['hangar_assignments'].get(x['id'])==key)
-            if count<f['pilot_capacity']:mid=key;break
-        dst.m['personnel'].append(dict(person,housing='hangar' if mid else 'temporary_cargo',ship_id=dst.ship,module_id=mid))
+    receive_people(dst,a['crew'])
     a.update(location='cargo',ship_id=dst.ship,module_id=None,crew=[],home_ship_id=dst.ship)
     dst.house_displaced()
     if dst.volume()>receiver._capacity():return None
     return src,dst
+
+
+def receive_people(work,people):
+    for person in people:
+        mid=None
+        for key,f in work.specs.items():
+            if f['kind']!='aircraft_hangar' or not work.inv._alive(key):continue
+            count=sum(x['housing']=='hangar' and x['module_id']==key and x['health']!='dead' for x in work.m['personnel'])
+            count+=sum(len(x['crew']) for x in work.m['aircraft'] if work.s['hangar_assignments'].get(x['id'])==key)
+            if count<f['pilot_capacity']:mid=key;break
+        work.m['personnel'].append(dict(person,housing='hangar' if mid else 'temporary_cargo',ship_id=work.ship,module_id=mid))
+    work.house_displaced()
 
 
 def recover(inventories, source_index, receiver_index, aircraft_id):
@@ -37,12 +42,15 @@ def recover(inventories, source_index, receiver_index, aircraft_id):
     return True
 
 
-def salvage(inv, aircraft_id, *, destroyed=False):
+def salvage(inv, aircraft_id, *, destroyed=False, origin=None):
     w=al.Work(inv);a=w.plane(aircraft_id)
+    ids={aircraft_id,*[p['id'] for p in a['crew']]}
     for person in a['crew']:
         w.m['personnel'].append(dict(person,housing='salvage',ship_id=None,module_id=None))
     a.update(crew=[],location='destroyed' if destroyed else 'salvage',ship_id=None,module_id=None)
     if destroyed:a.update(condition='destroyed',loadout={},cannon_rounds=0)
     w.s.get('departure_tasks',{}).pop(aircraft_id,None)
     w.s.get('departure_emissions',{}).pop(aircraft_id,None)
+    from .aviation_salvage import stamp
+    stamp(w,origin,ids)
     w.commit()

@@ -942,6 +942,7 @@ impl BackendSupervisor {
 
     pub fn tactical_request(self: &Arc<Self>, request: EditorRequest) -> HostResult<Value> {
         if !matches!(request.method.as_str(), "tactical.reset_test_state" | "tactical.create" | "tactical.inspect" | "tactical.close" | "tactical.set_mode" | "tactical.step" | "tactical.advance" | "tactical.pause"
+            | "tactical.preparation.salvage_migrate" | "tactical.preparation.salvage_read" | "tactical.preparation.salvage_preview" | "tactical.preparation.salvage_claim"
             | "tactical.preparation.aviation" | "tactical.preparation.missile" | "tactical.preparation.maintenance" | "tactical.preparation.scene_read" | "tactical.preparation.scene_save" | "tactical.preparation.scene_encounter" | "tactical.preparation.supply_replenish"
             | "tactical.preparation.library" | "tactical.preparation.import" | "tactical.preparation.open" | "tactical.preparation.read" | "tactical.preparation.draft" | "tactical.preparation.preview" | "tactical.preparation.commit" | "tactical.preparation.discard"
             | "tactical.realtime.create" | "tactical.realtime.read" | "tactical.realtime.resume" | "tactical.realtime.pause" | "tactical.realtime.control" | "tactical.realtime.gun" | "tactical.realtime.navigation" | "tactical.realtime.height" | "tactical.realtime.aviation" | "tactical.realtime.missile" | "tactical.realtime.countermeasure" | "tactical.realtime.fire_control" | "tactical.realtime.damage_control" | "tactical.realtime.settlements" | "tactical.realtime.settlement" | "tactical.realtime.save" | "tactical.realtime.deploy" | "tactical.realtime.deploy_prepared" | "tactical.realtime.prepared_entry" | "tactical.realtime.deploy_encounter" | "tactical.realtime.encounter" | "tactical.realtime.withdraw" | "tactical.realtime.close") {
@@ -1422,6 +1423,28 @@ mod tests {
         supervisor.tactical_request(request("tactical.realtime.close",scene_args)).unwrap();
         supervisor.tactical_request(request("tactical.set_mode",json!({"mode":"editor"}))).unwrap();
         supervisor.tactical_request(request("tactical.preparation.discard", args)).unwrap();
+        supervisor.stop("user_exit").unwrap();
+    }
+
+    #[test]
+    fn real_aviation_salvage_routes_and_migration_retry() {
+        let supervisor = BackendSupervisor::new(repo_root());
+        let (events, _) = sink();
+        let status = supervisor.start(events).unwrap();
+        let instance = status.backend_instance_id.unwrap();
+        let request = |method: &str, params: Value| EditorRequest {
+            backend_instance_id: instance.clone(), method: method.into(), params,
+            session_id: None, expected_revision: None,
+        };
+        for method in ["salvage_read", "salvage_preview", "salvage_claim", "salvage_migrate"] {
+            assert!(status.capabilities.contains(&format!("tactical.preparation.{method}")));
+        }
+        let read = supervisor.tactical_request(request("tactical.preparation.salvage_read", json!({}))).unwrap();
+        assert!(read["pools"].as_array().unwrap().is_empty());
+        let params = json!({"request_id":"migration.native"});
+        let receipt = supervisor.tactical_request(request("tactical.preparation.salvage_migrate", params.clone())).unwrap();
+        assert_eq!(receipt["migrated"], 0);
+        assert_eq!(supervisor.tactical_request(request("tactical.preparation.salvage_migrate", params)).unwrap(), receipt);
         supervisor.stop("user_exit").unwrap();
     }
 

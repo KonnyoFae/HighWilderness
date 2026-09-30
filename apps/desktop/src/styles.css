@@ -470,6 +470,13 @@ h2 { margin: 7px 0 0; font-size: 19px; }
 .selected-preparation-module { padding: 10px; background: #314342; border-left: 3px solid #e9bd76; }
 .formation-properties input { width: 100%; }.formation-properties button { margin: 4px 4px 4px 0; }
 .formation-distance-note { margin: 0; padding: 8px 16px 12px; color: #9eb0be; font-size: 12px; }
+.salvage-panel { margin: 0 12px 12px; padding: 12px; border: 1px solid #344657; border-radius: 8px; font-size: 13px; line-height: 1.6; }
+.salvage-panel summary { cursor: pointer; font-weight: 600; }
+.salvage-panel p { margin: 8px 0; color: #b8cbd8; }
+.salvage-panel label { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
+.salvage-panel select { max-width: 100%; }
+.salvage-panel input[type=checkbox] { margin-right: 8px; }
+.salvage-panel [role=alert] { color: #f5aa9b; }
 .test-supply input { width: 100%; }.test-supply { margin-top: 12px; }
 .missile-stores { min-width: 0; font-size: 13px; }
 .missile-device { margin: 12px 0; padding: 10px; min-width: 0; border: 1px solid #49616f; border-radius: 6px; }

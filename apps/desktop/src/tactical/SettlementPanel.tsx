@@ -16,6 +16,7 @@ export function SettlementPanel({ current, library, busy, canDeploy, onSave, onI
       {!current.saved && <p>有效的火炮装填与损管准备批次已结算；导弹未完成作业保留进度。保存将一并记录双方战损和资源余量；{current.error ? "恢复记录写入失败，请保留当前场景并重试保存。" : "重启后可恢复待保存战果。"}</p>}
       {current.error && <p role="alert">{current.error}</p>}
       <button disabled={busy || current.saved} onClick={() => onSave(current.result.settlement_id)}>{current.saved ? "结算已保存" : "保存全部战后结果"}</button>
+      {!!current.result.aviation_salvage?.entries.length&&<p>航空打捞：{current.result.aviation_salvage.entries.filter(e=>e.kind==='aircraft').length} 架飞机、{current.result.aviation_salvage.entries.filter(e=>e.kind==='pilot').length} 名幸存飞行员。{current.saved?'已独立保存，可返回战前准备核对接收。':'随本次战果一并保存。'}此处为结算时的记录；当前余量请查看航空打捞池。</p>}
       <div className="settlement-ships">{current.result.ships.map(ship => <article key={ship.after.state.instance_id}>
         <h4>{settlementShipLabel(ship, current.result.player_side_id)} · {serviceLabel[ship.after.state.service.status]}</h4>
         {current.result.departures?.filter(d=>d.instance_id===ship.after.state.instance_id).map(d=><p key={d.ship_id}>{d.kind==='fleet'?'整队撤离成功':'撤离成功，交接为战略 NPC'} · {(d.fixed_step/60).toFixed(1)} 秒{d.strategic_control==='npc'?'；已保存舰况，当前不可直接部署。':''}</p>)}
