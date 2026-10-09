@@ -1,0 +1,100 @@
+{
+  "case": "mixed-4v9",
+  "mode": "fixed",
+  "metered": false,
+  "fixture_sha256": "bd76a24c0219bf4f104612231d2a85228527f9aeddb65f2607e339d196aae262",
+  "build_s": 4.315649800002575,
+  "steps": 900,
+  "simulated_s": 15.0,
+  "step": {
+    "mean_ms": 43.60857711147724,
+    "p50_ms": 48.50360006093979,
+    "p95_ms": 63.82559984922409,
+    "p99_ms": 66.45340006798506,
+    "max_ms": 230.7597000617534
+  },
+  "steady_after_30": {
+    "mean_ms": 44.525002988708344,
+    "p50_ms": 49.03630004264414,
+    "p95_ms": 63.90399998053908,
+    "p99_ms": 66.45340006798506,
+    "max_ms": 230.7597000617534
+  },
+  "publish": {
+    "mean_ms": 7.730361334979534,
+    "p50_ms": 5.775399971753359,
+    "p95_ms": 7.688899990171194,
+    "p99_ms": 95.35100008361042,
+    "max_ms": 148.31830002367496
+  },
+  "read": {
+    "mean_ms": 4.141031115626296,
+    "p50_ms": 4.236500011757016,
+    "p95_ms": 5.382499890401959,
+    "p99_ms": 6.041900021955371,
+    "max_ms": 6.759899901226163
+  },
+  "estimated_service_ms_per_sim_second": 2794.585513447722,
+  "parts_inclusive": {},
+  "parts_note": "Only steps invoking each part; inclusive, potentially nested. Do not sum. Separate metered run.",
+  "wire": {
+    "samples": 225,
+    "total_bytes": 64015596,
+    "max_bytes": 333722
+  },
+  "peak": {
+    "ships": 13,
+    "guns": 16,
+    "projectiles": 72,
+    "missiles": 35,
+    "airborne": 6,
+    "aircraft_sensors": 12,
+    "jammers": 2,
+    "jobs": 6,
+    "queued": 4,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 84,
+    "shared_tracks": 320,
+    "shots": 47,
+    "missile_shots": 54,
+    "hits": 12,
+    "interceptions": 4
+  },
+  "last": {
+    "ships": 13,
+    "guns": 16,
+    "projectiles": 71,
+    "missiles": 28,
+    "airborne": 5,
+    "aircraft_sensors": 8,
+    "jammers": 1,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 72,
+    "shared_tracks": 285,
+    "shots": 47,
+    "missile_shots": 54,
+    "hits": 12,
+    "interceptions": 4
+  },
+  "milestones_steps": {
+    "any_contact": 0,
+    "player_contact": 0,
+    "airborne": 1,
+    "missile_shots": 1,
+    "shots": 181,
+    "interceptions": 215,
+    "hits": 432
+  },
+  "ending": null,
+  "authority_tape_sha256": "b13b4378f0a38bdcea5586a31bfc4ee85ea23a3ead4d3fe9754854310525c6c5",
+  "aircrew_conserved": true,
+  "retained": {
+    "display_bytes": 283775,
+    "terminal_bytes": 34783
+  },
+  "scope": "Offline fixed-step sample, not wall-clock realtime, natural full battle, native GPU or maximum possible aircraft load."
+}

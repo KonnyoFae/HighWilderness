@@ -1,0 +1,136 @@
+{
+  "source": "G:\\高天荒野\\artifacts\\tactical-7b-20261009\\mixed-4v4",
+  "scope": "Headless Edge / Vite development build / Node stdio bridge; no native Tauri/GPU completion claim.",
+  "browser": "154.0.4258.62",
+  "wallMs": 1914.6182000000008,
+  "finalStatus": {
+    "acknowledged_event_sequence": 27,
+    "debt_quanta": 15042182000,
+    "epoch": "4bd7b2faa7b84c14bef36186807d2d1e",
+    "fixed_step": 97,
+    "generation": 1,
+    "highest_input_sequence": 0,
+    "pause_reason": "overload",
+    "pending_inputs": 0,
+    "reliable_events": 0,
+    "retained_receipts": 0,
+    "running": false
+  },
+  "selectionClickThroughTwoFramesMs": 28.200000047683716,
+  "metrics": {
+    "merge": {
+      "count": 14,
+      "meanMs": 0.1142857415335519,
+      "p95Ms": 0.20000004768371582,
+      "maxMs": 0.3000001907348633
+    },
+    "sampling": {
+      "count": 385,
+      "meanMs": 0.07766232862100973,
+      "p95Ms": 0.20000004768371582,
+      "maxMs": 0.7999999523162842
+    },
+    "renderSubmission": {
+      "count": 385,
+      "meanMs": 0.520519478290112,
+      "p95Ms": 0.8999998569488525,
+      "maxMs": 1.5
+    },
+    "frameCPU": {
+      "count": 371,
+      "meanMs": 1.5371967595863856,
+      "p95Ms": 2.3999998569488525,
+      "maxMs": 5.200000047683716
+    },
+    "frameInterval": {
+      "count": 370,
+      "meanMs": 5.370540540540541,
+      "p95Ms": 12.400000000001455,
+      "maxMs": 24.899999999999636
+    }
+  },
+  "requests": {
+    "tactical.realtime.settlements": {
+      "count": 2,
+      "meanMs": 7.163600000000315,
+      "p95Ms": 5.29490000000078,
+      "maxMs": 9.03229999999985
+    },
+    "tactical.preparation.scene_read": {
+      "count": 1,
+      "meanMs": 3616.995000000001,
+      "p95Ms": 3616.995000000001,
+      "maxMs": 3616.995000000001
+    },
+    "tactical.preparation.library": {
+      "count": 1,
+      "meanMs": 63.585800000000745,
+      "p95Ms": 63.585800000000745,
+      "maxMs": 63.585800000000745
+    },
+    "tactical.preparation.scene_encounter": {
+      "count": 1,
+      "meanMs": 2898.2762000000002,
+      "p95Ms": 2898.2762000000002,
+      "maxMs": 2898.2762000000002
+    },
+    "tactical.set_mode": {
+      "count": 1,
+      "meanMs": 0.3135999999994965,
+      "p95Ms": 0.3135999999994965,
+      "maxMs": 0.3135999999994965
+    },
+    "tactical.realtime.deploy_encounter": {
+      "count": 1,
+      "meanMs": 3493.6343000000015,
+      "p95Ms": 3493.6343000000015,
+      "maxMs": 3493.6343000000015
+    },
+    "tactical.realtime.read": {
+      "count": 19,
+      "meanMs": 53.66135263157891,
+      "p95Ms": 116.77890000000116,
+      "maxMs": 149.1231000000007
+    },
+    "tactical.realtime.resume": {
+      "count": 1,
+      "meanMs": 15.113699999998062,
+      "p95Ms": 15.113699999998062,
+      "maxMs": 15.113699999998062
+    }
+  },
+  "peakResponseBytes": 178328,
+  "heap": [
+    {
+      "label": "paused-entry",
+      "usedSize": 14991284,
+      "totalSize": 16154624,
+      "embedderHeapUsedSize": 1232480,
+      "backingStorageSize": 12745849,
+      "documents": 1,
+      "nodes": 87,
+      "jsEventListeners": 170
+    },
+    {
+      "label": "paused-end",
+      "usedSize": 25532412,
+      "totalSize": 26841088,
+      "embedderHeapUsedSize": 3189304,
+      "backingStorageSize": 13186886,
+      "documents": 6,
+      "nodes": 1472,
+      "jsEventListeners": 370
+    },
+    {
+      "label": "unmounted",
+      "usedSize": 1168732,
+      "totalSize": 2621440,
+      "embedderHeapUsedSize": 883848,
+      "backingStorageSize": 257,
+      "documents": 6,
+      "nodes": 48,
+      "jsEventListeners": 0
+    }
+  ],
+  "errors": []
+}

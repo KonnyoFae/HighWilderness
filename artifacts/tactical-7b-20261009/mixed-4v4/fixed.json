@@ -1,0 +1,1673 @@
+{
+  "case": "mixed-4v4",
+  "mode": "fixed",
+  "metered": false,
+  "fixture_sha256": "037a402facffbec2c4aa9586d0e90dbaf11eb2b5aa32916704935f7218a9fdbe",
+  "build_s": 2.8511208000127226,
+  "steps": 900,
+  "simulated_s": 15.0,
+  "step": {
+    "mean_ms": 26.202023998937673,
+    "p50_ms": 27.60850009508431,
+    "p95_ms": 39.81229988858104,
+    "p99_ms": 48.60120010562241,
+    "max_ms": 54.15910016745329
+  },
+  "steady_after_30": {
+    "mean_ms": 26.680680344833984,
+    "p50_ms": 27.767299907281995,
+    "p95_ms": 39.87609990872443,
+    "p99_ms": 48.60120010562241,
+    "max_ms": 54.15910016745329
+  },
+  "publish": {
+    "mean_ms": 4.884442226547334,
+    "p50_ms": 4.703799961134791,
+    "p95_ms": 6.83610001578927,
+    "p99_ms": 8.185300044715405,
+    "max_ms": 20.664599956944585
+  },
+  "read": {
+    "mean_ms": 3.8472342180709043,
+    "p50_ms": 3.5366001538932323,
+    "p95_ms": 5.659299902617931,
+    "p99_ms": 6.682700011879206,
+    "max_ms": 27.64529990963638
+  },
+  "estimated_service_ms_per_sim_second": 1703.096586605534,
+  "parts_inclusive": {},
+  "parts_note": "Only steps invoking each part; inclusive, potentially nested. Do not sum. Separate metered run.",
+  "wire": {
+    "samples": 225,
+    "total_bytes": 43795070,
+    "max_bytes": 237064
+  },
+  "peak": {
+    "ships": 8,
+    "guns": 6,
+    "projectiles": 64,
+    "missiles": 26,
+    "airborne": 6,
+    "aircraft_sensors": 12,
+    "jammers": 2,
+    "jobs": 6,
+    "queued": 4,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 38,
+    "shared_tracks": 152,
+    "shots": 47,
+    "missile_shots": 36,
+    "hits": 8,
+    "interceptions": 3
+  },
+  "last": {
+    "ships": 8,
+    "guns": 6,
+    "projectiles": 59,
+    "missiles": 20,
+    "airborne": 6,
+    "aircraft_sensors": 10,
+    "jammers": 2,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 20,
+    "shared_tracks": 144,
+    "shots": 47,
+    "missile_shots": 36,
+    "hits": 8,
+    "interceptions": 3
+  },
+  "milestones_steps": {
+    "any_contact": 0,
+    "player_contact": 0,
+    "airborne": 1,
+    "missile_shots": 1,
+    "shots": 169,
+    "interceptions": 215,
+    "hits": 551
+  },
+  "ending": null,
+  "authority_tape_sha256": "34904bd8d58c197364dc8e6dea6662439e44bbf5d9775a5541d13ca8b2039ee3",
+  "aircrew_conserved": true,
+  "aviation_events": [
+    {
+      "step": 1,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "small_interceptor",
+      "target_id": "instance.7b.player.2.aviation.aircraft.1",
+      "projectile_id": 3
+    },
+    {
+      "step": 1,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.player.3.aviation.aircraft.1",
+      "weapon": "small_interceptor",
+      "target_id": "instance.7b.enemy.2.aviation.aircraft.1",
+      "projectile_id": 4
+    },
+    {
+      "step": 121,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.player.2.aviation.aircraft.1",
+      "weapon": "self_defense",
+      "target_id": 5,
+      "projectile_id": 10
+    },
+    {
+      "step": 133,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.2.aviation.aircraft.1",
+      "weapon": "self_defense",
+      "target_id": 6,
+      "projectile_id": 11
+    },
+    {
+      "kind": "hit",
+      "aircraft_id": "instance.7b.player.3.aviation.aircraft.1",
+      "step": 229,
+      "durability": 74.0
+    },
+    {
+      "kind": "hit",
+      "aircraft_id": "instance.7b.player.2.aviation.aircraft.1",
+      "step": 239,
+      "durability": 54.0
+    },
+    {
+      "step": 259,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.2.aviation.aircraft.1",
+      "weapon": "self_defense",
+      "target_id": 4,
+      "projectile_id": 18
+    },
+    {
+      "step": 259,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.player.2.aviation.aircraft.1",
+      "weapon": "self_defense",
+      "target_id": 3,
+      "projectile_id": 19
+    },
+    {
+      "kind": "hit",
+      "aircraft_id": "instance.7b.player.2.aviation.aircraft.1",
+      "step": 429,
+      "durability": 48.0
+    },
+    {
+      "step": 439,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 2,
+      "projectile_id": 33
+    },
+    {
+      "step": 445,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 2,
+      "projectile_id": 34
+    },
+    {
+      "step": 451,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 2,
+      "projectile_id": 38
+    },
+    {
+      "step": 457,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 2,
+      "projectile_id": 39
+    },
+    {
+      "step": 463,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 2,
+      "projectile_id": 40
+    },
+    {
+      "step": 469,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 2,
+      "projectile_id": 41
+    },
+    {
+      "step": 475,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 2,
+      "projectile_id": 42
+    },
+    {
+      "step": 481,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 2,
+      "projectile_id": 43
+    },
+    {
+      "step": 532,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 25,
+      "projectile_id": 47
+    },
+    {
+      "step": 553,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 30,
+      "projectile_id": 51
+    },
+    {
+      "step": 559,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 30,
+      "projectile_id": 52
+    },
+    {
+      "step": 565,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 30,
+      "projectile_id": 53
+    },
+    {
+      "step": 571,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "weapon": "cannon.20mm",
+      "target_id": 30,
+      "projectile_id": 54
+    },
+    {
+      "step": 603,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.3",
+      "weapon": "large_missile",
+      "target_id": "ship.7b.player.1",
+      "projectile_id": 58
+    },
+    {
+      "step": 603,
+      "kind": "fired",
+      "aircraft_id": "instance.7b.player.3.aviation.aircraft.3",
+      "weapon": "large_missile",
+      "target_id": "ship.7b.enemy.2",
+      "projectile_id": 59
+    },
+    {
+      "kind": "hit",
+      "aircraft_id": "instance.7b.enemy.3.aviation.aircraft.1",
+      "step": 629,
+      "durability": 74.0
+    },
+    {
+      "kind": "hit",
+      "aircraft_id": "instance.7b.player.3.aviation.aircraft.1",
+      "step": 658,
+      "durability": 68.0
+    },
+    {
+      "kind": "hit",
+      "aircraft_id": "instance.7b.player.2.aviation.aircraft.1",
+      "step": 693,
+      "durability": 3.0
+    },
+    {
+      "kind": "hit",
+      "aircraft_id": "instance.7b.player.3.aviation.aircraft.3",
+      "step": 826,
+      "durability": 134.0
+    }
+  ],
+  "aviation_workloads": [
+    {
+      "step": 1,
+      "ships": [
+        {
+          "instance_id": "instance.7b.enemy.2",
+          "locations": {
+            "airborne": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.2.aviation.pilot.5",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.2"
+            },
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.2.aviation.pilot.6",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.2"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.enemy.3",
+          "locations": {
+            "airborne": 1,
+            "ready": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 3,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.3.aviation.pilot.8",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.3"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.player.2",
+          "locations": {
+            "airborne": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.2.aviation.pilot.5",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.2"
+            },
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.2.aviation.pilot.6",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.2"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.player.3",
+          "locations": {
+            "airborne": 1,
+            "ready": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 3,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.3.aviation.pilot.8",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "step": 2,
+      "ships": [
+        {
+          "instance_id": "instance.7b.enemy.2",
+          "locations": {
+            "airborne": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.2.aviation.pilot.5",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.2"
+            },
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.2.aviation.pilot.6",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.2"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.enemy.3",
+          "locations": {
+            "airborne": 1,
+            "catapult": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1,
+            "load": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.3.aviation.pilot.8",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.3"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.player.2",
+          "locations": {
+            "airborne": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.2.aviation.pilot.5",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.2"
+            },
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.2.aviation.pilot.6",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.2"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.player.3",
+          "locations": {
+            "airborne": 1,
+            "catapult": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1,
+            "load": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.3.aviation.pilot.8",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "step": 600,
+      "ships": [
+        {
+          "instance_id": "instance.7b.enemy.2",
+          "locations": {
+            "returning": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.2.aviation.pilot.5",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.2"
+            },
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.2.aviation.pilot.6",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.2"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.enemy.3",
+          "locations": {
+            "airborne": 1,
+            "catapult": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1,
+            "load": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.3.aviation.pilot.8",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.3"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.player.2",
+          "locations": {
+            "returning": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.2.aviation.pilot.5",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.2"
+            },
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.2.aviation.pilot.6",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.2"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.player.3",
+          "locations": {
+            "returning": 1,
+            "catapult": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1,
+            "load": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.3.aviation.pilot.8",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "step": 603,
+      "ships": [
+        {
+          "instance_id": "instance.7b.enemy.2",
+          "locations": {
+            "returning": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.2.aviation.pilot.5",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.2"
+            },
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.2.aviation.pilot.6",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.2"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.enemy.3",
+          "locations": {
+            "airborne": 2,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.3.aviation.pilot.8",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.3"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.player.2",
+          "locations": {
+            "returning": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.2.aviation.pilot.5",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.2"
+            },
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.2.aviation.pilot.6",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.2"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.player.3",
+          "locations": {
+            "returning": 1,
+            "airborne": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.3.aviation.pilot.8",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.3"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "step": 900,
+      "ships": [
+        {
+          "instance_id": "instance.7b.enemy.2",
+          "locations": {
+            "returning": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.2.aviation.pilot.5",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.2"
+            },
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.2.aviation.pilot.6",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.2"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.enemy.3",
+          "locations": {
+            "returning": 1,
+            "airborne": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.enemy.3.aviation.pilot.8",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.enemy.3"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.player.2",
+          "locations": {
+            "returning": 1,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.2.aviation.pilot.5",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.2"
+            },
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.2.aviation.pilot.6",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.2"
+            }
+          ]
+        },
+        {
+          "instance_id": "instance.7b.player.3",
+          "locations": {
+            "returning": 2,
+            "preparing": 1
+          },
+          "used_ready_slots": 1,
+          "jobs": {
+            "prepare": 1
+          },
+          "queue": 0,
+          "facilities": [
+            {
+              "capture_radius_m": 30.0,
+              "kind": "aircraft_arrester",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.arrester",
+              "recovery_steps": 60
+            },
+            {
+              "kind": "aircraft_catapult",
+              "launch_speed_mps": 120.0,
+              "loading_steps": 600,
+              "local_launch_axis": "+Y",
+              "maximum_berth_slots": 3,
+              "module_id": "aviation.catapult"
+            },
+            {
+              "kind": "aviation_command",
+              "module_id": "aviation.command",
+              "scope": "fleet"
+            },
+            {
+              "kind": "aircraft_hangar",
+              "module_id": "aviation.hangar.small",
+              "pilot_capacity": 10,
+              "prepare_steps": 1800,
+              "ready_slots": 5,
+              "repair_steps": 3600,
+              "workstations": 1
+            }
+          ],
+          "personnel": [
+            {
+              "health": "fit",
+              "housing": "hangar",
+              "id": "instance.7b.player.3.aviation.pilot.8",
+              "modifiers": {},
+              "module_id": "aviation.hangar.small",
+              "ship_id": "instance.7b.player.3"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "gun_states": [
+    {
+      "ship_id": "ship.7b.enemy.0",
+      "module_id": "defense.ciws",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": -1.154633803221583,
+        "aim_point": null,
+        "quality": "normal",
+        "quality_reason": "point_defense",
+        "lock_sources": [],
+        "status": "defense_covered",
+        "shots": 21,
+        "deck_level": null,
+        "rng": 3089888329,
+        "reload_recipe_id": "recipe.3a.30mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": true,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.2",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.013726713008997724,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 5,
+        "deck_level": null,
+        "rng": 1932228118,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.3",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 0,
+        "deck_level": null,
+        "rng": 20391984,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.0",
+      "module_id": "defense.ciws",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": -0.6418123940331637,
+        "aim_point": null,
+        "quality": "normal",
+        "quality_reason": "point_defense",
+        "lock_sources": [],
+        "status": "defense_covered",
+        "shots": 15,
+        "deck_level": null,
+        "rng": 3634649194,
+        "reload_recipe_id": "recipe.3a.30mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": true,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.2",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": [
+          2,
+          null
+        ],
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.012583219095365195,
+        "aim_point": [
+          770.2812735800688,
+          2972.356318138648
+        ],
+        "quality": "degraded",
+        "quality_reason": "acquiring",
+        "lock_sources": [],
+        "status": "cooldown",
+        "shots": 6,
+        "deck_level": null,
+        "rng": 490710696,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.3",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 0,
+        "deck_level": null,
+        "rng": 20588595,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    }
+  ],
+  "retained": {
+    "display_bytes": 239517,
+    "terminal_bytes": 36561
+  },
+  "scope": "Offline fixed-step sample, not wall-clock realtime, natural full battle, native GPU or maximum possible aircraft load."
+}

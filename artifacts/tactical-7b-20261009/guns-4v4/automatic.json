@@ -1,0 +1,113 @@
+{
+  "case": "guns-4v4",
+  "mode": "automatic",
+  "metered": false,
+  "fixture_sha256": "1c924936f9306372ea553054e9cf52781fb50f8f33b114e5dcc0057ceec3d6bd",
+  "build_s": 2.903443699935451,
+  "steps": 300,
+  "simulated_s": 5.0,
+  "step": {
+    "mean_ms": 2.451482678297907,
+    "p50_ms": 2.2568998392671347,
+    "p95_ms": 3.2445001415908337,
+    "p99_ms": 4.512700019404292,
+    "max_ms": 5.462400149554014
+  },
+  "steady_after_30": {
+    "mean_ms": 2.4719303836011224,
+    "p50_ms": 2.3354999721050262,
+    "p95_ms": 3.2445001415908337,
+    "p99_ms": 4.427600186318159,
+    "max_ms": 5.462400149554014
+  },
+  "publish": {
+    "mean_ms": 0.9239906848718723,
+    "p50_ms": 0.8944999426603317,
+    "p95_ms": 1.2103000190109015,
+    "p99_ms": 1.2846000026911497,
+    "max_ms": 1.4214001130312681
+  },
+  "read": {
+    "mean_ms": 1.377158658578992,
+    "p50_ms": 1.2542998883873224,
+    "p95_ms": 1.8710000440478325,
+    "p99_ms": 1.9302000291645527,
+    "max_ms": 2.028800081461668
+  },
+  "estimated_service_ms_per_sim_second": 181.6062008496374,
+  "parts_inclusive": {},
+  "parts_note": "Only steps invoking each part; inclusive, potentially nested. Do not sum. Separate metered run.",
+  "wire": {
+    "samples": 75,
+    "total_bytes": 7635222,
+    "max_bytes": 105040
+  },
+  "peak": {
+    "ships": 8,
+    "guns": 24,
+    "projectiles": 0,
+    "missiles": 0,
+    "airborne": 0,
+    "aircraft_sensors": 0,
+    "jammers": 0,
+    "jobs": 0,
+    "queued": 0,
+    "aircraft": 0,
+    "pilots": 0,
+    "local_tracks": 3,
+    "shared_tracks": 16,
+    "shots": 0,
+    "missile_shots": 0,
+    "hits": 0,
+    "interceptions": 0
+  },
+  "last": {
+    "ships": 8,
+    "guns": 24,
+    "projectiles": 0,
+    "missiles": 0,
+    "airborne": 0,
+    "aircraft_sensors": 0,
+    "jammers": 0,
+    "jobs": 0,
+    "queued": 0,
+    "aircraft": 0,
+    "pilots": 0,
+    "local_tracks": 3,
+    "shared_tracks": 16,
+    "shots": 0,
+    "missile_shots": 0,
+    "hits": 0,
+    "interceptions": 0
+  },
+  "milestones_steps": {
+    "any_contact": 0,
+    "player_contact": 0
+  },
+  "ending": null,
+  "authority_tape_sha256": "78f372707ebd167fbcc4e578b672047ae4c98e26fb548aead7b23b73a643c994",
+  "aircrew_conserved": true,
+  "retained": {
+    "display_bytes": 3472,
+    "terminal_bytes": 0
+  },
+  "scope": "Offline fixed-step sample, not wall-clock realtime, natural full battle, native GPU or maximum possible aircraft load.",
+  "contact_measurement": {
+    "state_build_s": 0.22509329998865724,
+    "solve": {
+      "mean_ms": 11.142299976199865,
+      "p50_ms": 11.108800070360303,
+      "p95_ms": 11.108800070360303,
+      "p99_ms": 11.108800070360303,
+      "max_ms": 11.486899806186557
+    },
+    "pair_calls": 32,
+    "result": {
+      "status": "ready",
+      "distance_m": 49599.16275391019,
+      "threshold_m": 50000.0,
+      "policy": "gaotian.contact-start/7a-v1"
+    },
+    "cold_state_plus_first_s": 0.2365801997948438
+  }
+}

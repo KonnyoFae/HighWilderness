@@ -1,0 +1,903 @@
+{
+  "case": "guns-4v4",
+  "mode": "fixed",
+  "metered": false,
+  "fixture_sha256": "1c924936f9306372ea553054e9cf52781fb50f8f33b114e5dcc0057ceec3d6bd",
+  "build_s": 2.819540600059554,
+  "steps": 900,
+  "simulated_s": 15.0,
+  "step": {
+    "mean_ms": 8.063500560044,
+    "p50_ms": 8.059500018134713,
+    "p95_ms": 11.26469997689128,
+    "p99_ms": 12.920100009068847,
+    "max_ms": 14.262599870562553
+  },
+  "steady_after_30": {
+    "mean_ms": 8.190876441129923,
+    "p50_ms": 8.1279999576509,
+    "p95_ms": 11.2809999845922,
+    "p99_ms": 12.920100009068847,
+    "max_ms": 14.262599870562553
+  },
+  "publish": {
+    "mean_ms": 5.316252896769179,
+    "p50_ms": 5.198200000450015,
+    "p95_ms": 8.111600065603852,
+    "p99_ms": 9.292399976402521,
+    "max_ms": 27.40969997830689
+  },
+  "read": {
+    "mean_ms": 3.586543995059199,
+    "p50_ms": 3.3454999793320894,
+    "p95_ms": 4.648000001907349,
+    "p99_ms": 5.4079999681562185,
+    "max_ms": 26.34829981252551
+  },
+  "estimated_service_ms_per_sim_second": 617.3519869800657,
+  "parts_inclusive": {},
+  "parts_note": "Only steps invoking each part; inclusive, potentially nested. Do not sum. Separate metered run.",
+  "wire": {
+    "samples": 225,
+    "total_bytes": 37557453,
+    "max_bytes": 192544
+  },
+  "peak": {
+    "ships": 8,
+    "guns": 24,
+    "projectiles": 191,
+    "missiles": 0,
+    "airborne": 0,
+    "aircraft_sensors": 0,
+    "jammers": 0,
+    "jobs": 0,
+    "queued": 0,
+    "aircraft": 0,
+    "pilots": 0,
+    "local_tracks": 32,
+    "shared_tracks": 32,
+    "shots": 310,
+    "missile_shots": 0,
+    "hits": 56,
+    "interceptions": 0
+  },
+  "last": {
+    "ships": 8,
+    "guns": 24,
+    "projectiles": 130,
+    "missiles": 0,
+    "airborne": 0,
+    "aircraft_sensors": 0,
+    "jammers": 0,
+    "jobs": 0,
+    "queued": 0,
+    "aircraft": 0,
+    "pilots": 0,
+    "local_tracks": 28,
+    "shared_tracks": 32,
+    "shots": 310,
+    "missile_shots": 0,
+    "hits": 56,
+    "interceptions": 0
+  },
+  "milestones_steps": {
+    "any_contact": 0,
+    "player_contact": 0,
+    "shots": 1,
+    "hits": 457
+  },
+  "ending": null,
+  "authority_tape_sha256": "9dffa599fc58920e19c78e4f131f8f9b14e3d059ad550e35cf4b336b72dbe2a2",
+  "aircrew_conserved": true,
+  "aviation_events": [],
+  "aviation_workloads": [
+    {
+      "step": 1,
+      "ships": []
+    },
+    {
+      "step": 2,
+      "ships": []
+    },
+    {
+      "step": 600,
+      "ships": []
+    },
+    {
+      "step": 603,
+      "ships": []
+    },
+    {
+      "step": 900,
+      "ships": []
+    }
+  ],
+  "gun_states": [
+    {
+      "ship_id": "ship.7b.enemy.0",
+      "module_id": "gun.7b.0",
+      "state": {
+        "navigation_override": true,
+        "mode": "auto",
+        "target_policy": "assigned",
+        "target": [
+          4,
+          null
+        ],
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.0008373925387044068,
+        "aim_point": [
+          -3.7214675785435247e-13,
+          -2990.3073401525844
+        ],
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "sensor_upper_starboard",
+          "ship.7b.enemy.1/sensor_upper_starboard",
+          "ship.7b.enemy.2/sensor_upper_starboard",
+          "ship.7b.enemy.3/sensor_upper_starboard"
+        ],
+        "status": "cooldown",
+        "shots": 56,
+        "deck_level": null,
+        "rng": 2615082758,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": "upper",
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.0",
+      "module_id": "gun.7b.1",
+      "state": {
+        "navigation_override": true,
+        "mode": "auto",
+        "target_policy": "assigned",
+        "target": [
+          4,
+          null
+        ],
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": -0.0008343299605120258,
+        "aim_point": [
+          3.2951419370874646e-13,
+          -2992.2248073373066
+        ],
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "sensor_upper_starboard",
+          "ship.7b.enemy.1/sensor_upper_starboard",
+          "ship.7b.enemy.2/sensor_upper_starboard",
+          "ship.7b.enemy.3/sensor_upper_starboard"
+        ],
+        "status": "target_unavailable",
+        "shots": 2,
+        "deck_level": null,
+        "rng": 2378798137,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": "upper",
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.0",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": true,
+        "mode": "auto",
+        "target_policy": "assigned",
+        "target": [
+          4,
+          null
+        ],
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.0008343299605120258,
+        "aim_point": [
+          1.1395329124752607e-12,
+          -2992.2248073373066
+        ],
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "sensor_upper_starboard",
+          "ship.7b.enemy.1/sensor_upper_starboard",
+          "ship.7b.enemy.2/sensor_upper_starboard",
+          "ship.7b.enemy.3/sensor_upper_starboard"
+        ],
+        "status": "target_unavailable",
+        "shots": 2,
+        "deck_level": null,
+        "rng": 27980002,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": "upper",
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.1",
+      "module_id": "gun.7b.0",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": [
+          5,
+          null
+        ],
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.0008366243729138745,
+        "aim_point": [
+          -700.005554442099,
+          -2999.9999953555966
+        ],
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "ship.7b.enemy.0/sensor_upper_starboard",
+          "sensor_upper_starboard",
+          "ship.7b.enemy.2/sensor_upper_starboard",
+          "ship.7b.enemy.3/sensor_upper_starboard"
+        ],
+        "status": "cooldown",
+        "shots": 46,
+        "deck_level": null,
+        "rng": 987769239,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.1",
+      "module_id": "gun.7b.1",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": -0.0104732745861402,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 3,
+        "deck_level": null,
+        "rng": 1743081475,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.1",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": -0.00880443124433936,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 3,
+        "deck_level": null,
+        "rng": 566450840,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.2",
+      "module_id": "gun.7b.0",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": [
+          6,
+          null
+        ],
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.0008368591315250917,
+        "aim_point": [
+          699.9999999999993,
+          -2991.684365775873
+        ],
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "ship.7b.enemy.0/sensor_upper_starboard",
+          "ship.7b.enemy.1/sensor_upper_starboard",
+          "sensor_upper_starboard",
+          "ship.7b.enemy.3/sensor_upper_starboard"
+        ],
+        "status": "cooldown",
+        "shots": 43,
+        "deck_level": null,
+        "rng": 3401996693,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.2",
+      "module_id": "gun.7b.1",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.0066137049201833165,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 3,
+        "deck_level": null,
+        "rng": 2508156866,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.2",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.008285008750892331,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 3,
+        "deck_level": null,
+        "rng": 1331526231,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.3",
+      "module_id": "gun.7b.0",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 0,
+        "deck_level": null,
+        "rng": 20850743,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.3",
+      "module_id": "gun.7b.1",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 0,
+        "deck_level": null,
+        "rng": 20916280,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.enemy.3",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 0,
+        "deck_level": null,
+        "rng": 20981817,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.0",
+      "module_id": "gun.7b.0",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": [
+          0,
+          null
+        ],
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.0008373821934219983,
+        "aim_point": [
+          -2.0694557179012918e-13,
+          2980.987764721227
+        ],
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "ship.7b.player.1/sensor_upper_starboard",
+          "ship.7b.player.2/sensor_upper_starboard",
+          "ship.7b.player.3/sensor_upper_starboard"
+        ],
+        "status": "cooldown",
+        "shots": 50,
+        "deck_level": null,
+        "rng": 2740540780,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.0",
+      "module_id": "gun.7b.1",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.014877719433235459,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 2,
+        "deck_level": null,
+        "rng": 4233751589,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.0",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.01654591564059338,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 2,
+        "deck_level": null,
+        "rng": 1882933454,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.1",
+      "module_id": "gun.7b.0",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": [
+          1,
+          null
+        ],
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.0008368490263275241,
+        "aim_point": [
+          -700.0000000000003,
+          2984.7919582914983
+        ],
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "sensor_upper_starboard",
+          "ship.7b.player.2/sensor_upper_starboard",
+          "ship.7b.player.3/sensor_upper_starboard"
+        ],
+        "status": "cooldown",
+        "shots": 40,
+        "deck_level": null,
+        "rng": 1119717029,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.1",
+      "module_id": "gun.7b.1",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.014470331288519489,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 4,
+        "deck_level": null,
+        "rng": 4257419346,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.1",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.01614204321864099,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 4,
+        "deck_level": null,
+        "rng": 4006475747,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.2",
+      "module_id": "gun.7b.0",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": [
+          2,
+          null
+        ],
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0.0008368585157376707,
+        "aim_point": [
+          700.0000000000003,
+          2984.7242081568056
+        ],
+        "quality": "normal",
+        "quality_reason": "locked",
+        "lock_sources": [
+          "ship.7b.player.1/sensor_upper_starboard",
+          "sensor_upper_starboard",
+          "ship.7b.player.3/sensor_upper_starboard"
+        ],
+        "status": "cooldown",
+        "shots": 45,
+        "deck_level": null,
+        "rng": 623793771,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.2",
+      "module_id": "gun.7b.1",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": -0.0528400950170167,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 1,
+        "deck_level": null,
+        "rng": 4219200684,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.2",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": -0.05117009629390301,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 1,
+        "deck_level": null,
+        "rng": 1638025913,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.3",
+      "module_id": "gun.7b.0",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 0,
+        "deck_level": null,
+        "rng": 21637187,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.3",
+      "module_id": "gun.7b.1",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 0,
+        "deck_level": null,
+        "rng": 21702724,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    },
+    {
+      "ship_id": "ship.7b.player.3",
+      "module_id": "weapon_upper_port",
+      "state": {
+        "navigation_override": false,
+        "mode": "auto",
+        "target_policy": "automatic",
+        "target": null,
+        "manual_point": null,
+        "fire_requested": false,
+        "angle": 0,
+        "aim_point": null,
+        "quality": "degraded",
+        "quality_reason": "manual",
+        "lock_sources": [],
+        "status": "no_target",
+        "shots": 0,
+        "deck_level": null,
+        "rng": 21768261,
+        "reload_recipe_id": "recipe.3a.50mm.ordinary",
+        "reload_blocked_key": null,
+        "reload_blocked_reason": null,
+        "attack_layer": null,
+        "point_defense": false,
+        "interception_target_id": null,
+        "interception_priority": null,
+        "interception_needed_rounds": 0
+      }
+    }
+  ],
+  "retained": {
+    "display_bytes": 400924,
+    "terminal_bytes": 59430
+  },
+  "scope": "Offline fixed-step sample, not wall-clock realtime, natural full battle, native GPU or maximum possible aircraft load."
+}

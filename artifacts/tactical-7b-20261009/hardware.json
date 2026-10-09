@@ -1,0 +1,28 @@
+{
+  "cpu": {
+    "Name": "Intel(R) Core(TM) Ultra 9 275HX",
+    "NumberOfCores": 24,
+    "NumberOfLogicalProcessors": 24
+  },
+  "gpu": [
+    {
+      "Name": "MuMu Virtual Display Adapter",
+      "DriverVersion": "20.36.41.498"
+    },
+    {
+      "Name": "Intel(R) Graphics",
+      "DriverVersion": "32.0.101.8826"
+    },
+    {
+      "Name": "NVIDIA GeForce RTX 5090 Laptop GPU",
+      "DriverVersion": "32.0.16.1062"
+    }
+  ],
+  "memory_bytes": 33690271744,
+  "date": "2026-10-09T16:44:07.6503034+08:00",
+  "os": {
+    "Caption": "Microsoft Windows 11 家庭版 中文版",
+    "Version": "10.0.26200",
+    "BuildNumber": "26200"
+  }
+}

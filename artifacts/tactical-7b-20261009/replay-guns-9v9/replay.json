@@ -1,0 +1,86 @@
+{
+  "input": "G:\\高天荒野\\artifacts\\tactical-7b-20261009\\guns-9v9\\fixed-frames.json.gz",
+  "scope": "15 Hz recorded production viewport / legal player observation / headless Edge / Vite dev; excludes live backend and native GPU.",
+  "browser": "154.0.4258.62",
+  "metrics": {
+    "sampling": {
+      "count": 3810,
+      "meanMs": 0.11774278369162652,
+      "p95Ms": 0.20000004768371582,
+      "maxMs": 1
+    },
+    "renderSubmission": {
+      "count": 3810,
+      "meanMs": 0.6333333317689069,
+      "p95Ms": 0.8999998569488525,
+      "maxMs": 2.200000047683716
+    },
+    "frameCPU": {
+      "count": 3586,
+      "meanMs": 1.3312325710300885,
+      "p95Ms": 1.7999999523162842,
+      "maxMs": 6
+    },
+    "frameInterval": {
+      "count": 3585,
+      "meanMs": 4.169121338912253,
+      "p95Ms": 4.299999999999272,
+      "maxMs": 8.399999999999636
+    },
+    "parse": {
+      "count": 225,
+      "meanMs": 0.4857777796851264,
+      "p95Ms": 0.6000001430511475,
+      "maxMs": 0.7000000476837158
+    },
+    "merge": {
+      "count": 225,
+      "meanMs": 0.18711111280653211,
+      "p95Ms": 0.3000001907348633,
+      "maxMs": 0.5
+    },
+    "observation": {
+      "count": 225,
+      "meanMs": 0.04177777290344238,
+      "p95Ms": 0.10000014305114746,
+      "maxMs": 0.20000004768371582
+    }
+  },
+  "maxFlights": 196,
+  "maxFrames": 17,
+  "maxDisplayed": 190,
+  "remainingFlights": 189,
+  "heap": [
+    {
+      "label": "before",
+      "usedSize": 18837132,
+      "totalSize": 20324352,
+      "embedderHeapUsedSize": 1702808,
+      "backingStorageSize": 10934047,
+      "documents": 6,
+      "nodes": 280,
+      "jsEventListeners": 188
+    },
+    {
+      "label": "last",
+      "usedSize": 26309096,
+      "totalSize": 28848128,
+      "embedderHeapUsedSize": 1835064,
+      "backingStorageSize": 11070603,
+      "documents": 6,
+      "nodes": 280,
+      "jsEventListeners": 188
+    },
+    {
+      "label": "released",
+      "usedSize": 15542940,
+      "totalSize": 17575936,
+      "embedderHeapUsedSize": 1024616,
+      "backingStorageSize": 10668732,
+      "documents": 6,
+      "nodes": 55,
+      "jsEventListeners": 160
+    }
+  ],
+  "errors": []
+}

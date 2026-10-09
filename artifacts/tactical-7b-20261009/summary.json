@@ -1,0 +1,764 @@
+{
+  "cases": [
+    {
+      "case": "guns-4v4",
+      "fixture_sha256": "1c924936f9306372ea553054e9cf52781fb50f8f33b114e5dcc0057ceec3d6bd",
+      "ships": 8,
+      "roles": {
+        "gun": 8
+      },
+      "step": {
+        "mean_ms": 8.063500560044,
+        "p50_ms": 8.059500018134713,
+        "p95_ms": 11.26469997689128,
+        "p99_ms": 12.920100009068847,
+        "max_ms": 14.262599870562553
+      },
+      "publish": {
+        "mean_ms": 5.316252896769179,
+        "p50_ms": 5.198200000450015,
+        "p95_ms": 8.111600065603852,
+        "p99_ms": 9.292399976402521,
+        "max_ms": 27.40969997830689
+      },
+      "read": {
+        "mean_ms": 3.586543995059199,
+        "p50_ms": 3.3454999793320894,
+        "p95_ms": 4.648000001907349,
+        "p99_ms": 5.4079999681562185,
+        "max_ms": 26.34829981252551
+      },
+      "peak": {
+        "ships": 8,
+        "guns": 24,
+        "projectiles": 191,
+        "missiles": 0,
+        "airborne": 0,
+        "aircraft_sensors": 0,
+        "jammers": 0,
+        "jobs": 0,
+        "queued": 0,
+        "aircraft": 0,
+        "pilots": 0,
+        "local_tracks": 32,
+        "shared_tracks": 32,
+        "shots": 310,
+        "missile_shots": 0,
+        "hits": 56,
+        "interceptions": 0
+      },
+      "wire": {
+        "samples": 225,
+        "total_bytes": 37557453,
+        "max_bytes": 192544
+      },
+      "retained": {
+        "display_bytes": 400924,
+        "terminal_bytes": 59430
+      },
+      "fixed_milestones": {
+        "any_contact": 0,
+        "player_contact": 0,
+        "shots": 1,
+        "hits": 457
+      },
+      "auto_milestones": {
+        "any_contact": 0,
+        "player_contact": 0
+      },
+      "contact": {
+        "state_build_s": 0.22509329998865724,
+        "solve": {
+          "mean_ms": 11.142299976199865,
+          "p50_ms": 11.108800070360303,
+          "p95_ms": 11.108800070360303,
+          "p99_ms": 11.108800070360303,
+          "max_ms": 11.486899806186557
+        },
+        "pair_calls": 32,
+        "result": {
+          "status": "ready",
+          "distance_m": 49599.16275391019,
+          "threshold_m": 50000.0,
+          "policy": "gaotian.contact-start/7a-v1"
+        },
+        "cold_state_plus_first_s": 0.2365801997948438
+      },
+      "build_s": 2.819540600059554,
+      "authority_comparisons": [],
+      "step_budget_pass": true
+    },
+    {
+      "case": "mixed-4v4",
+      "fixture_sha256": "037a402facffbec2c4aa9586d0e90dbaf11eb2b5aa32916704935f7218a9fdbe",
+      "ships": 8,
+      "roles": {
+        "defense": 2,
+        "missile": 2,
+        "e1": 2,
+        "strike": 2
+      },
+      "step": {
+        "mean_ms": 26.202023998937673,
+        "p50_ms": 27.60850009508431,
+        "p95_ms": 39.81229988858104,
+        "p99_ms": 48.60120010562241,
+        "max_ms": 54.15910016745329
+      },
+      "publish": {
+        "mean_ms": 4.884442226547334,
+        "p50_ms": 4.703799961134791,
+        "p95_ms": 6.83610001578927,
+        "p99_ms": 8.185300044715405,
+        "max_ms": 20.664599956944585
+      },
+      "read": {
+        "mean_ms": 3.8472342180709043,
+        "p50_ms": 3.5366001538932323,
+        "p95_ms": 5.659299902617931,
+        "p99_ms": 6.682700011879206,
+        "max_ms": 27.64529990963638
+      },
+      "peak": {
+        "ships": 8,
+        "guns": 6,
+        "projectiles": 64,
+        "missiles": 26,
+        "airborne": 6,
+        "aircraft_sensors": 12,
+        "jammers": 2,
+        "jobs": 6,
+        "queued": 4,
+        "aircraft": 10,
+        "pilots": 18,
+        "local_tracks": 38,
+        "shared_tracks": 152,
+        "shots": 47,
+        "missile_shots": 36,
+        "hits": 8,
+        "interceptions": 3
+      },
+      "wire": {
+        "samples": 225,
+        "total_bytes": 43795070,
+        "max_bytes": 237064
+      },
+      "retained": {
+        "display_bytes": 239517,
+        "terminal_bytes": 36561
+      },
+      "fixed_milestones": {
+        "any_contact": 0,
+        "player_contact": 0,
+        "airborne": 1,
+        "missile_shots": 1,
+        "shots": 169,
+        "interceptions": 215,
+        "hits": 551
+      },
+      "auto_milestones": {
+        "any_contact": 0,
+        "airborne": 1
+      },
+      "contact": {
+        "state_build_s": 0.25867899996228516,
+        "solve": {
+          "mean_ms": 16.978933320691187,
+          "p50_ms": 15.77490009367466,
+          "p95_ms": 15.77490009367466,
+          "p99_ms": 15.77490009367466,
+          "max_ms": 21.37929992750287
+        },
+        "pair_calls": 56,
+        "result": {
+          "status": "ready",
+          "distance_m": 49650.077157803134,
+          "threshold_m": 50000.0,
+          "policy": "gaotian.contact-start/7a-v1"
+        },
+        "cold_state_plus_first_s": 0.28005829988978803
+      },
+      "build_s": 2.8511208000127226,
+      "authority_comparisons": [
+        "recorded",
+        "fixed-metered"
+      ],
+      "step_budget_pass": false
+    },
+    {
+      "case": "mixed-4v9",
+      "fixture_sha256": "bd76a24c0219bf4f104612231d2a85228527f9aeddb65f2607e339d196aae262",
+      "ships": 13,
+      "roles": {
+        "defense": 3,
+        "missile": 3,
+        "e1": 2,
+        "strike": 2,
+        "gun": 3
+      },
+      "step": {
+        "mean_ms": 51.67600710772806,
+        "p50_ms": 56.43979995511472,
+        "p95_ms": 78.21960002183914,
+        "p99_ms": 86.4019999280572,
+        "max_ms": 104.7010999172926
+      },
+      "publish": {
+        "mean_ms": 6.824684001298414,
+        "p50_ms": 6.803700001910329,
+        "p95_ms": 8.868000004440546,
+        "p99_ms": 9.85219981521368,
+        "max_ms": 32.35120000317693
+      },
+      "read": {
+        "mean_ms": 5.728395119723347,
+        "p50_ms": 5.454699974507093,
+        "p95_ms": 7.679799804463983,
+        "p99_ms": 9.381500072777271,
+        "max_ms": 36.84030007570982
+      },
+      "peak": {
+        "ships": 13,
+        "guns": 16,
+        "projectiles": 72,
+        "missiles": 35,
+        "airborne": 6,
+        "aircraft_sensors": 12,
+        "jammers": 2,
+        "jobs": 6,
+        "queued": 4,
+        "aircraft": 10,
+        "pilots": 18,
+        "local_tracks": 84,
+        "shared_tracks": 320,
+        "shots": 47,
+        "missile_shots": 54,
+        "hits": 12,
+        "interceptions": 4
+      },
+      "wire": {
+        "samples": 225,
+        "total_bytes": 64015596,
+        "max_bytes": 333722
+      },
+      "retained": {
+        "display_bytes": 283775,
+        "terminal_bytes": 34783
+      },
+      "fixed_milestones": {
+        "any_contact": 0,
+        "player_contact": 0,
+        "airborne": 1,
+        "missile_shots": 1,
+        "shots": 181,
+        "interceptions": 215,
+        "hits": 432
+      },
+      "auto_milestones": {
+        "any_contact": 0,
+        "airborne": 1
+      },
+      "contact": {
+        "state_build_s": 0.43613000004552305,
+        "solve": {
+          "mean_ms": 34.87499997330209,
+          "p50_ms": 34.69750005751848,
+          "p95_ms": 34.69750005751848,
+          "p99_ms": 34.69750005751848,
+          "max_ms": 35.26040003634989
+        },
+        "pair_calls": 123,
+        "result": {
+          "status": "ready",
+          "distance_m": 49650.077157803134,
+          "threshold_m": 50000.0,
+          "policy": "gaotian.contact-start/7a-v1"
+        },
+        "cold_state_plus_first_s": 0.47139040008187294
+      },
+      "build_s": 4.51608069986105,
+      "authority_comparisons": [
+        "recorded"
+      ],
+      "step_budget_pass": false
+    },
+    {
+      "case": "mixed-4v9-reversed",
+      "fixture_sha256": "35c4372b74ac69bda8b92d4a0f2fa2dd3527aab4a2d18e6d651b88dd94e3ce59",
+      "ships": 13,
+      "roles": {
+        "defense": 3,
+        "missile": 3,
+        "e1": 2,
+        "strike": 2,
+        "gun": 3
+      },
+      "step": {
+        "mean_ms": 43.21203155261981,
+        "p50_ms": 46.908200019970536,
+        "p95_ms": 64.604900078848,
+        "p99_ms": 77.12779985740781,
+        "max_ms": 85.59230016544461
+      },
+      "publish": {
+        "mean_ms": 8.546737338312798,
+        "p50_ms": 7.968300022184849,
+        "p95_ms": 10.880800196900964,
+        "p99_ms": 40.811399929225445,
+        "max_ms": 47.81650006771088
+      },
+      "read": {
+        "mean_ms": 5.586133340580596,
+        "p50_ms": 5.450599826872349,
+        "p95_ms": 7.527400040999055,
+        "p99_ms": 8.413000032305717,
+        "max_ms": 9.071800159290433
+      },
+      "peak": {
+        "ships": 13,
+        "guns": 16,
+        "projectiles": 80,
+        "missiles": 38,
+        "airborne": 6,
+        "aircraft_sensors": 12,
+        "jammers": 2,
+        "jobs": 6,
+        "queued": 4,
+        "aircraft": 10,
+        "pilots": 18,
+        "local_tracks": 72,
+        "shared_tracks": 279,
+        "shots": 59,
+        "missile_shots": 54,
+        "hits": 13,
+        "interceptions": 4
+      },
+      "wire": {
+        "samples": 225,
+        "total_bytes": 68963888,
+        "max_bytes": 362335
+      },
+      "retained": {
+        "display_bytes": 306572,
+        "terminal_bytes": 36850
+      },
+      "fixed_milestones": {
+        "any_contact": 0,
+        "player_contact": 0,
+        "airborne": 1,
+        "missile_shots": 1,
+        "shots": 181,
+        "interceptions": 331,
+        "hits": 551
+      },
+      "auto_milestones": {
+        "any_contact": 0,
+        "player_contact": 0,
+        "airborne": 1
+      },
+      "contact": {
+        "state_build_s": 0.4791331999003887,
+        "solve": {
+          "mean_ms": 42.6884333913525,
+          "p50_ms": 45.48550001345575,
+          "p95_ms": 45.48550001345575,
+          "p99_ms": 45.48550001345575,
+          "max_ms": 47.31270018965006
+        },
+        "pair_calls": 123,
+        "result": {
+          "status": "ready",
+          "distance_m": 49650.077157803134,
+          "threshold_m": 50000.0,
+          "policy": "gaotian.contact-start/7a-v1"
+        },
+        "cold_state_plus_first_s": 0.5246186999138445
+      },
+      "build_s": 4.570030299946666,
+      "authority_comparisons": [
+        "recorded"
+      ],
+      "step_budget_pass": false
+    },
+    {
+      "case": "guns-9v9",
+      "fixture_sha256": "9a2b174acddbbaadec41db5d3f5e81f912f3aac53b18902c2a8c914c7d1229ff",
+      "ships": 18,
+      "roles": {
+        "gun": 18
+      },
+      "step": {
+        "mean_ms": 22.03545088853894,
+        "p50_ms": 21.962899947538972,
+        "p95_ms": 30.5804000236094,
+        "p99_ms": 32.68409986048937,
+        "max_ms": 33.5941999219358
+      },
+      "publish": {
+        "mean_ms": 10.535566667094827,
+        "p50_ms": 10.265300050377846,
+        "p95_ms": 14.455800177529454,
+        "p99_ms": 16.006899997591972,
+        "max_ms": 39.24349998123944
+      },
+      "read": {
+        "mean_ms": 6.924270220721762,
+        "p50_ms": 6.872700061649084,
+        "p95_ms": 8.744599996134639,
+        "p99_ms": 10.16659988090396,
+        "max_ms": 37.34669997356832
+      },
+      "peak": {
+        "ships": 18,
+        "guns": 54,
+        "projectiles": 190,
+        "missiles": 0,
+        "airborne": 0,
+        "aircraft_sensors": 0,
+        "jammers": 0,
+        "jobs": 0,
+        "queued": 0,
+        "aircraft": 0,
+        "pilots": 0,
+        "local_tracks": 162,
+        "shared_tracks": 162,
+        "shots": 320,
+        "missile_shots": 0,
+        "hits": 56,
+        "interceptions": 0
+      },
+      "wire": {
+        "samples": 225,
+        "total_bytes": 76045054,
+        "max_bytes": 365825
+      },
+      "retained": {
+        "display_bytes": 434610,
+        "terminal_bytes": 67923
+      },
+      "fixed_milestones": {
+        "any_contact": 0,
+        "player_contact": 0,
+        "shots": 1,
+        "hits": 505
+      },
+      "auto_milestones": {
+        "any_contact": 0,
+        "player_contact": 0
+      },
+      "contact": {
+        "state_build_s": 0.48012070008553565,
+        "solve": {
+          "mean_ms": 44.51783335146805,
+          "p50_ms": 41.758800158277154,
+          "p95_ms": 41.758800158277154,
+          "p99_ms": 41.758800158277154,
+          "max_ms": 50.13259989209473
+        },
+        "pair_calls": 162,
+        "result": {
+          "status": "ready",
+          "distance_m": 49599.16275391019,
+          "threshold_m": 50000.0,
+          "policy": "gaotian.contact-start/7a-v1"
+        },
+        "cold_state_plus_first_s": 0.5218795002438128
+      },
+      "build_s": 6.209146199980751,
+      "authority_comparisons": [
+        "recorded"
+      ],
+      "step_budget_pass": false
+    },
+    {
+      "case": "mixed-9v9",
+      "fixture_sha256": "4f7770f4510d15746f7714ae487bca5ff7cc13778ef25dd73207aec0f19f2ce9",
+      "ships": 18,
+      "roles": {
+        "defense": 4,
+        "missile": 4,
+        "e1": 2,
+        "strike": 2,
+        "gun": 6
+      },
+      "step": {
+        "mean_ms": 74.12987544253055,
+        "p50_ms": 81.14450005814433,
+        "p95_ms": 112.4028000049293,
+        "p99_ms": 148.44510005787015,
+        "max_ms": 160.89699999429286
+      },
+      "publish": {
+        "mean_ms": 10.73351555607385,
+        "p50_ms": 10.651799850165844,
+        "p95_ms": 15.336500015109777,
+        "p99_ms": 34.282200038433075,
+        "max_ms": 54.49569993652403
+      },
+      "read": {
+        "mean_ms": 7.814472890976403,
+        "p50_ms": 7.820300059393048,
+        "p95_ms": 11.094900080934167,
+        "p99_ms": 12.657599989324808,
+        "max_ms": 31.659899977967143
+      },
+      "peak": {
+        "ships": 18,
+        "guns": 26,
+        "projectiles": 99,
+        "missiles": 49,
+        "airborne": 6,
+        "aircraft_sensors": 12,
+        "jammers": 2,
+        "jobs": 6,
+        "queued": 4,
+        "aircraft": 10,
+        "pilots": 18,
+        "local_tracks": 162,
+        "shared_tracks": 621,
+        "shots": 63,
+        "missile_shots": 69,
+        "hits": 11,
+        "interceptions": 5
+      },
+      "wire": {
+        "samples": 225,
+        "total_bytes": 92612996,
+        "max_bytes": 487641
+      },
+      "retained": {
+        "display_bytes": 380273,
+        "terminal_bytes": 36189
+      },
+      "fixed_milestones": {
+        "any_contact": 0,
+        "player_contact": 0,
+        "airborne": 1,
+        "missile_shots": 1,
+        "shots": 181,
+        "interceptions": 215,
+        "hits": 551
+      },
+      "auto_milestones": {
+        "any_contact": 0,
+        "airborne": 1
+      },
+      "contact": {
+        "state_build_s": 0.5714609001297504,
+        "solve": {
+          "mean_ms": 77.19730003736913,
+          "p50_ms": 77.08650012500584,
+          "p95_ms": 77.08650012500584,
+          "p99_ms": 77.08650012500584,
+          "max_ms": 77.4980999995023
+        },
+        "pair_calls": 270,
+        "result": {
+          "status": "ready",
+          "distance_m": 49650.077157803134,
+          "threshold_m": 50000.0,
+          "policy": "gaotian.contact-start/7a-v1"
+        },
+        "cold_state_plus_first_s": 0.6485474002547562
+      },
+      "build_s": 6.313738299999386,
+      "authority_comparisons": [
+        "recorded",
+        "fixed-metered"
+      ],
+      "step_budget_pass": false
+    }
+  ],
+  "live": [
+    {
+      "case": "guns-4v4",
+      "status": "overload",
+      "steps": 461,
+      "wall_s": 7.940791300032288,
+      "debt_steps": 15.171838
+    },
+    {
+      "case": "mixed-4v4-r2",
+      "status": "overload",
+      "steps": 97,
+      "wall_s": 1.857249699998647,
+      "debt_steps": 15.042182
+    },
+    {
+      "case": "guns-9v9",
+      "status": "overload",
+      "steps": 37,
+      "wall_s": 0.8467154998797923,
+      "debt_steps": 15.058028
+    },
+    {
+      "case": "mixed-9v9",
+      "status": "overload",
+      "steps": 10,
+      "wall_s": 0.4705996001139283,
+      "debt_steps": 15.6431
+    }
+  ],
+  "replay": [
+    {
+      "case": "mixed-4v4",
+      "metrics": {
+        "sampling": {
+          "count": 3813,
+          "meanMs": 0.07353789525616053,
+          "p95Ms": 0.20000004768371582,
+          "maxMs": 0.5999999046325684
+        },
+        "renderSubmission": {
+          "count": 3813,
+          "meanMs": 0.5414634151718856,
+          "p95Ms": 0.7000000476837158,
+          "maxMs": 1.8999998569488525
+        },
+        "frameCPU": {
+          "count": 3589,
+          "meanMs": 0.9354973524916833,
+          "p95Ms": 1.2999999523162842,
+          "maxMs": 3.200000047683716
+        },
+        "frameInterval": {
+          "count": 3588,
+          "meanMs": 4.165635451505134,
+          "p95Ms": 4.299999999999272,
+          "maxMs": 5.300000000000182
+        },
+        "parse": {
+          "count": 225,
+          "meanMs": 0.41688888549804687,
+          "p95Ms": 0.5,
+          "maxMs": 0.5999999046325684
+        },
+        "merge": {
+          "count": 225,
+          "meanMs": 0.10666666560702853,
+          "p95Ms": 0.20000004768371582,
+          "maxMs": 0.3000001907348633
+        },
+        "observation": {
+          "count": 225,
+          "meanMs": 0.03911111725701226,
+          "p95Ms": 0.10000014305114746,
+          "maxMs": 0.20000004768371582
+        }
+      },
+      "maxFlights": 81,
+      "maxFrames": 17,
+      "maxDisplayed": 49
+    },
+    {
+      "case": "guns-9v9",
+      "metrics": {
+        "sampling": {
+          "count": 3810,
+          "meanMs": 0.11774278369162652,
+          "p95Ms": 0.20000004768371582,
+          "maxMs": 1
+        },
+        "renderSubmission": {
+          "count": 3810,
+          "meanMs": 0.6333333317689069,
+          "p95Ms": 0.8999998569488525,
+          "maxMs": 2.200000047683716
+        },
+        "frameCPU": {
+          "count": 3586,
+          "meanMs": 1.3312325710300885,
+          "p95Ms": 1.7999999523162842,
+          "maxMs": 6
+        },
+        "frameInterval": {
+          "count": 3585,
+          "meanMs": 4.169121338912253,
+          "p95Ms": 4.299999999999272,
+          "maxMs": 8.399999999999636
+        },
+        "parse": {
+          "count": 225,
+          "meanMs": 0.4857777796851264,
+          "p95Ms": 0.6000001430511475,
+          "maxMs": 0.7000000476837158
+        },
+        "merge": {
+          "count": 225,
+          "meanMs": 0.18711111280653211,
+          "p95Ms": 0.3000001907348633,
+          "maxMs": 0.5
+        },
+        "observation": {
+          "count": 225,
+          "meanMs": 0.04177777290344238,
+          "p95Ms": 0.10000014305114746,
+          "maxMs": 0.20000004768371582
+        }
+      },
+      "maxFlights": 196,
+      "maxFrames": 17,
+      "maxDisplayed": 190
+    },
+    {
+      "case": "mixed-9v9",
+      "metrics": {
+        "sampling": {
+          "count": 3721,
+          "meanMs": 0.09303950693170988,
+          "p95Ms": 0.20000004768371582,
+          "maxMs": 0.5
+        },
+        "renderSubmission": {
+          "count": 3721,
+          "meanMs": 0.7152915887696805,
+          "p95Ms": 1,
+          "maxMs": 2.299999952316284
+        },
+        "frameCPU": {
+          "count": 3497,
+          "meanMs": 1.2776093798635482,
+          "p95Ms": 1.8000001907348633,
+          "maxMs": 4.300000190734863
+        },
+        "frameInterval": {
+          "count": 3496,
+          "meanMs": 4.277631578947469,
+          "p95Ms": 4.299999999999272,
+          "maxMs": 124.89999999999964
+        },
+        "parse": {
+          "count": 225,
+          "meanMs": 0.6053333229488796,
+          "p95Ms": 0.7999999523162842,
+          "maxMs": 1.6999998092651367
+        },
+        "merge": {
+          "count": 225,
+          "meanMs": 0.13599999957614475,
+          "p95Ms": 0.2999999523162842,
+          "maxMs": 0.40000009536743164
+        },
+        "observation": {
+          "count": 225,
+          "meanMs": 0.031555557250976564,
+          "p95Ms": 0.10000014305114746,
+          "maxMs": 0.20000004768371582
+        }
+      },
+      "maxFlights": 114,
+      "maxFrames": 17,
+      "maxDisplayed": 71
+    }
+  ],
+  "viewport": {
+    "width": 1440,
+    "height": 1000,
+    "screenshot_pixels": [
+      1440,
+      1000
+    ]
+  },
+  "production_source_sha256": "1ac6b0575c17398c41ed4a7c4f9b57065d62d684077cbeccab0036223cffd06b",
+  "scope": "Baseline correctness audit. Performance failures remain failures; not complete-battle/native acceptance."
+}

@@ -1,0 +1,11 @@
+01 战前准备
+02 交战与结算
+
+准备舰队 · 指定旗舰 · 保存战果
+
+清空战术测试数据
+恢复战后结果
+
+此前交战已经结束。保存待处理战果后，继续准备舰队。
+
+{"code":"bridge.handshake_required","details":{},"message":"首条请求必须是 system.hello","path":"$.method","retryable":false,"source":"bridge"}重试读取战果

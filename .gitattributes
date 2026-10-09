@@ -18,3 +18,7 @@ artifacts/t3a-realtime-experiment/**/tracked-python.patch -diff -whitespace
 # Fire-control fixture and measurement hashes also cover exact artifact bytes.
 artifacts/tactical-fire-control-*/** -text !eol whitespace=cr-at-eol
 artifacts/tactical-fire-control-*/**/*.txt whitespace=cr-at-eol,-blank-at-eof
+
+# 7b evidence index records original bytes, including Windows line endings.
+artifacts/tactical-7b-20261009/** -text !eol whitespace=cr-at-eol
+artifacts/tactical-7b-20261009/**/*.txt whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
