@@ -1,0 +1,6 @@
+{
+  "backend/high_wilderness_sidecar/missile_guidance.py": "dcb5952bd44e97078fb0b6629ee128c315af38cd14677a6957b8f8e0b5b7abfa",
+  "tools/tactical_7c_reference.py": "cd238533a47f5b2885dc048fd87dc4c517aa0f19195ba029cd03b763595570c7",
+  "tools/tactical_7c_oracle.py": "4675d46d3d99a788aad2fa9775360cb351c3d6f1f647f7df7fa38b2c069a98ad",
+  "tools/test_tactical_7c.py": "0a1fb344df863d426397cf9745599f5ee29f09c1a0506dfb4503bd2a8e973f4f"
+}

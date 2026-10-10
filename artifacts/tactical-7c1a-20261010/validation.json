@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-10",
+  "command": "python -X utf8 -m unittest tools.test_tactical_7c tools.test_missile_guidance tools.test_aviation_ew tools.test_tactical_ew tools.test_tactical_observation tools.test_tactical_defense_prediction tools.test_missile_defense",
+  "tests": 76,
+  "elapsed_seconds": 38.793,
+  "exit_code": 0,
+  "result": "OK",
+  "geometry_random_cases": 20000,
+  "geometry_tangent_cases": 15000,
+  "occlusion_combinations": 3000,
+  "production_scope": "missile_guidance.segment_circle and blocked_channels only"
+}

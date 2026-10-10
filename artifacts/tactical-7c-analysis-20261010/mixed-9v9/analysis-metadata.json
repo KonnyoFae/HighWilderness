@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-10",
+  "source_head": "79db27e563d9901f5ef14716ce16e9cc5d831cac",
+  "command": "python -X utf8 -m tools.profile_tactical_7c_hotspots artifacts/tactical-7b-20261009/mixed-9v9 artifacts/tactical-7c-analysis-20261010/mixed-9v9",
+  "collected_tool_sha256": "615c4b809f0a539cfcb2e41ff756c8a93eeaf5b4629675033ff0ddd8bf30d625",
+  "corrected_tool_sha256": "a5f0844ae579ff928ca7986e7a793cdc84a3367519528175fea3011d1fb8784e",
+  "report_before_label_correction_sha256": "5918f270be39d6d4fb9c33ad90209b49c4d4e84ce9b8b4704f9e29cb94e842b4",
+  "report_sha256": "4a5607bd2be4104838fcfb6927a7e4c9eac313c91e401a35d7e01ffeba21930b",
+  "correction": "Corrected swapped primitive_calls/total_calls labels in cProfile caller entries after collection. Measurements, function-row counts and 900-step comparison are unchanged; no timing rerun. Current tool writes corrected labels and its own source hash."
+}

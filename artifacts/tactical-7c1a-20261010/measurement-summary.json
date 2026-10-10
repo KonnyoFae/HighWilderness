@@ -1,0 +1,80 @@
+[
+  {
+    "case": "mixed-9v9",
+    "pair": 1,
+    "reference_mean_ms": 58.22524788894548,
+    "candidate_mean_ms": 44.76787677774862,
+    "mean_change_percent": -23.112604238052292,
+    "reference_p95_ms": 83.25449999756529,
+    "candidate_p95_ms": 64.11750000188476,
+    "p95_change_percent": -22.986144888552772,
+    "reference_service_s": 55.74764340006368,
+    "candidate_service_s": 43.53730200004429,
+    "service_change_percent": -21.902883521719307
+  },
+  {
+    "case": "mixed-9v9",
+    "pair": 2,
+    "reference_mean_ms": 65.398933555504,
+    "candidate_mean_ms": 44.934518888771386,
+    "mean_change_percent": -31.291664181900593,
+    "reference_p95_ms": 106.6934999980731,
+    "candidate_p95_ms": 64.26819999978761,
+    "p95_change_percent": -39.76371568938285,
+    "reference_service_s": 62.63907179997477,
+    "candidate_service_s": 43.70970809998107,
+    "service_change_percent": -30.21973850513111
+  },
+  {
+    "case": "mixed-9v9",
+    "pair": 3,
+    "reference_mean_ms": 74.987248555614,
+    "candidate_mean_ms": 55.14376344448263,
+    "mean_change_percent": -26.462479279279773,
+    "reference_p95_ms": 125.45049999971525,
+    "candidate_p95_ms": 84.18750000055297,
+    "p95_change_percent": -32.891857744095034,
+    "reference_service_s": 71.75436000009358,
+    "candidate_service_s": 53.807149500076775,
+    "service_change_percent": -25.01201390409363
+  },
+  {
+    "case": "guns-9v9",
+    "pair": 1,
+    "reference_mean_ms": 19.06577688888016,
+    "candidate_mean_ms": 20.68662533335252,
+    "mean_change_percent": 8.501350109775485,
+    "reference_p95_ms": 26.410599999508122,
+    "candidate_p95_ms": 28.048300002410542,
+    "p95_change_percent": 6.200919338950728,
+    "reference_service_s": 20.657421300034912,
+    "candidate_service_s": 22.381809600035922,
+    "service_change_percent": 8.347548684588691
+  },
+  {
+    "case": "guns-9v9",
+    "pair": 2,
+    "reference_mean_ms": 20.15284311114455,
+    "candidate_mean_ms": 20.22205522224491,
+    "mean_change_percent": 0.3434359644376439,
+    "reference_p95_ms": 26.58299999893643,
+    "candidate_p95_ms": 27.763900001446018,
+    "p95_change_percent": 4.44231276589111,
+    "reference_service_s": 21.847354399989854,
+    "candidate_service_s": 21.869424599986814,
+    "service_change_percent": 0.1010200118187754
+  },
+  {
+    "case": "guns-9v9",
+    "pair": 3,
+    "reference_mean_ms": 20.376844111095934,
+    "candidate_mean_ms": 21.27734633331986,
+    "mean_change_percent": 4.41924282933277,
+    "reference_p95_ms": 27.37360000173794,
+    "candidate_p95_ms": 26.40600000086124,
+    "p95_change_percent": -3.5347926499081916,
+    "reference_service_s": 22.039962499980902,
+    "candidate_service_s": 23.044463700025517,
+    "service_change_percent": 4.557635703987639
+  }
+]

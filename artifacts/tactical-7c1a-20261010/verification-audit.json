@@ -1,0 +1,16 @@
+[
+  {
+    "case": "mixed-9v9",
+    "steps": 900,
+    "sections": 18,
+    "expanded_tape_sha256": "a0b8eda53fffacb6dbfafaea185242fb87b0da2cf152631fec266d48539d5234",
+    "fixture_matches_7b": true
+  },
+  {
+    "case": "guns-9v9",
+    "steps": 900,
+    "sections": 18,
+    "expanded_tape_sha256": "691cbd11ef88429773829ca22c24a311db0eedf9b8f52b3bfdab9612fefb010b",
+    "fixture_matches_7b": true
+  }
+]

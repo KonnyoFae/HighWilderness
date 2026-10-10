@@ -22,3 +22,7 @@ artifacts/tactical-fire-control-*/**/*.txt whitespace=cr-at-eol,-blank-at-eof
 # 7b evidence index records original bytes, including Windows line endings.
 artifacts/tactical-7b-20261009/** -text !eol whitespace=cr-at-eol
 artifacts/tactical-7b-20261009/**/*.txt whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+
+# 7c attribution provenance also records exact report bytes.
+artifacts/tactical-7c-analysis-20261010/** -text !eol whitespace=cr-at-eol
+artifacts/tactical-7c1a-20261010/** -text !eol whitespace=cr-at-eol

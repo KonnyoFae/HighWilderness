@@ -54,9 +54,12 @@ def wrap(a):return (a+pi)%(2*pi)-pi
 
 
 def segment_circle(a,b,center,radius):
-    delta=tuple(y-x for x,y in zip(a,b));length=sum(x*x for x in delta)
-    t=max(0.,min(1.,sum((c-x)*d for c,x,d in zip(center,a,delta))/length)) if length else 0.
-    return sum((x+d*t-c)**2 for x,d,c in zip(a,delta,center))<=radius*radius
+    # Tactical positions are two-dimensional. Preserve the original projection,
+    # clamp and squared-distance operations, including tangency/zero length.
+    ax,ay=a;cx,cy=center
+    dx=b[0]-ax;dy=b[1]-ay;length=dx*dx+dy*dy
+    t=max(0.,min(1.,((cx-ax)*dx+(cy-ay)*dy)/length)) if length else 0.
+    return (ax+dx*t-cx)**2+(ay+dy*t-cy)**2<=radius*radius
 
 
 def blocked_channels(areas,origin,layer,target,target_layer,*,observer_side=None,seeker=None,target_jamming=False):
@@ -64,12 +67,19 @@ def blocked_channels(areas,origin,layer,target,target_layer,*,observer_side=None
     # altitude. Physical clouds affect both sides; electronic areas are hostile-only.
     blocked=set()
     for a in areas:
-        if a.layer not in (layer,target_layer) or not segment_circle(origin,target,a.position,a.radius):continue
-        if a.kind in ('chaff','thermal'):blocked.add(a.kind)
-        elif a.kind=='electronic' and observer_side is not None and a.side!=observer_side:
+        if a.layer not in (layer,target_layer):continue
+        channel=a.kind
+        if channel=='electronic':
             # Only active jammer targets bypass electronic fields, including overlap.
             # Actual chaff remains a separate obstacle to anti-radiation seekers.
-            if not (seeker=='anti_radiation' and target_jamming):blocked.add('chaff')
+            if observer_side is None or a.side==observer_side or (seeker=='anti_radiation' and target_jamming):continue
+            channel='chaff'
+        elif channel not in ('chaff','thermal'):continue
+        # Occlusion is a union of channels: once blocked, another region cannot
+        # change that channel's result. Filter before the expensive geometry.
+        if channel in blocked or not segment_circle(origin,target,a.position,a.radius):continue
+        blocked.add(channel)
+        if len(blocked)==2:break
     return frozenset(blocked)
 
 
