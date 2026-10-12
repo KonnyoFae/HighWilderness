@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-12",
+  "unique_tests": 136,
+  "test_runs_total": 146,
+  "repeated_tests": 10,
+  "runs": [
+    {
+      "command": "python -X utf8 -m unittest tools.test_tactical_7c2 tools.test_aviation_logistics tools.test_aviation_flight tools.test_aviation_combat tools.test_aviation_ew tools.test_aviation_salvage tools.test_tactical_7c1b tools.test_tactical_7c",
+      "tests": 103,
+      "elapsed_seconds": 53.898,
+      "exit_code": 0,
+      "result": "OK"
+    },
+    {
+      "command": "python -X utf8 -m unittest tools.test_tactical_7c2 tools.test_tactical_inventory tools.test_realtime_view",
+      "tests": 43,
+      "elapsed_seconds": 8.096,
+      "exit_code": 0,
+      "result": "OK"
+    }
+  ],
+  "notes": "Second run adds the repair-completion capacity regression and repeats the first ten 7c.2 tests. Production code is unchanged between runs. Diagnostic test duration is not performance evidence."
+}

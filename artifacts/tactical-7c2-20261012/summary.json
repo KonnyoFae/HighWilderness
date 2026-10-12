@@ -1,0 +1,869 @@
+{
+  "date": "2026-10-12",
+  "reference_head": "c0554da2beb88aff9a50268080559e43ddaf0e94",
+  "comparison": "Incremental 7c.2; both variants retain 7c.1a and 7c.1b",
+  "validated_source_unchanged": true,
+  "verification": [
+    {
+      "case": "guns-4v4",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "699846656a4dbe9b6bea3151e3c597bc4849f588ea9a1e39514cdf839654c6ca",
+      "rehash_verified": true,
+      "matches_7c1b_expanded_tape": true,
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "aviation_combat.deepcopy": 1800,
+          "aviation_flight.deepcopy": 900,
+          "Work": 56,
+          "aviation_logistics.deepcopy": 56
+        },
+        "candidate": {
+          "aviation_combat.deepcopy": 900,
+          "Work": 56,
+          "aviation_logistics.deepcopy": 56
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "aviation_combat.deepcopy": 120,
+          "aviation_flight.deepcopy": 60,
+          "Work": 11,
+          "aviation_logistics.deepcopy": 11
+        },
+        "candidate": {
+          "aviation_combat.deepcopy": 60,
+          "Work": 11,
+          "aviation_logistics.deepcopy": 11
+        }
+      },
+      "final_load": {
+        "ships": 8,
+        "guns": 24,
+        "projectiles": 130,
+        "missiles": 0,
+        "airborne": 0,
+        "aircraft_sensors": 0,
+        "jammers": 0,
+        "jobs": 0,
+        "queued": 0,
+        "aircraft": 0,
+        "pilots": 0,
+        "local_tracks": 28,
+        "shared_tracks": 32,
+        "shots": 310,
+        "missile_shots": 0,
+        "hits": 56,
+        "interceptions": 0
+      }
+    },
+    {
+      "case": "mixed-4v4",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "b3d1403297dd9d2ca2036297ee9c6c501678041469c21758e79f27d0cd4af7a6",
+      "rehash_verified": true,
+      "matches_7c1b_expanded_tape": true,
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "Work": 19900,
+          "aviation_logistics.deepcopy": 19904,
+          "aviation_flight.deepcopy": 1812,
+          "aviation_combat.deepcopy": 1800,
+          "receiving": 9288
+        },
+        "candidate": {
+          "Work": 52,
+          "aviation_logistics.deepcopy": 56,
+          "aviation_flight.deepcopy": 912,
+          "countdown": 3600,
+          "aviation_combat.deepcopy": 907,
+          "can_receive": 9288
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "aviation_combat.deepcopy": 120,
+          "Work": 1731,
+          "aviation_logistics.deepcopy": 1731,
+          "aviation_flight.deepcopy": 124,
+          "receiving": 848
+        },
+        "candidate": {
+          "countdown": 240,
+          "Work": 9,
+          "aviation_logistics.deepcopy": 9,
+          "aviation_flight.deepcopy": 64,
+          "can_receive": 848,
+          "aviation_combat.deepcopy": 62
+        }
+      },
+      "final_load": {
+        "ships": 8,
+        "guns": 6,
+        "projectiles": 59,
+        "missiles": 20,
+        "airborne": 6,
+        "aircraft_sensors": 10,
+        "jammers": 2,
+        "jobs": 4,
+        "queued": 0,
+        "aircraft": 10,
+        "pilots": 18,
+        "local_tracks": 20,
+        "shared_tracks": 144,
+        "shots": 47,
+        "missile_shots": 36,
+        "hits": 8,
+        "interceptions": 3
+      }
+    },
+    {
+      "case": "mixed-4v9",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "4707fc0a1d1601e7793ee1351273f10bf4ca69f0a2628564d979fef131ab16b5",
+      "rehash_verified": true,
+      "matches_7c1b_expanded_tape": true,
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "Work": 22752,
+          "aviation_logistics.deepcopy": 22756,
+          "aviation_flight.deepcopy": 1812,
+          "aviation_combat.deepcopy": 1800,
+          "receiving": 10457
+        },
+        "candidate": {
+          "Work": 57,
+          "aviation_logistics.deepcopy": 61,
+          "aviation_flight.deepcopy": 912,
+          "countdown": 3600,
+          "aviation_combat.deepcopy": 912,
+          "can_receive": 10457
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "aviation_combat.deepcopy": 120,
+          "Work": 2105,
+          "aviation_logistics.deepcopy": 2105,
+          "aviation_flight.deepcopy": 124,
+          "receiving": 1020
+        },
+        "candidate": {
+          "countdown": 240,
+          "Work": 7,
+          "aviation_logistics.deepcopy": 7,
+          "aviation_flight.deepcopy": 64,
+          "can_receive": 1020,
+          "aviation_combat.deepcopy": 61
+        }
+      },
+      "final_load": {
+        "ships": 13,
+        "guns": 16,
+        "projectiles": 71,
+        "missiles": 28,
+        "airborne": 5,
+        "aircraft_sensors": 8,
+        "jammers": 1,
+        "jobs": 4,
+        "queued": 0,
+        "aircraft": 10,
+        "pilots": 18,
+        "local_tracks": 72,
+        "shared_tracks": 285,
+        "shots": 47,
+        "missile_shots": 54,
+        "hits": 12,
+        "interceptions": 4
+      }
+    },
+    {
+      "case": "mixed-4v9-reversed",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "79ab3eb517b2ae171102dd0f579453a9fdef48720cc5bc9339aff905a653521c",
+      "rehash_verified": true,
+      "matches_7c1b_expanded_tape": true,
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "Work": 31553,
+          "aviation_logistics.deepcopy": 31557,
+          "aviation_flight.deepcopy": 1812,
+          "aviation_combat.deepcopy": 1800,
+          "receiving": 15032
+        },
+        "candidate": {
+          "Work": 48,
+          "aviation_logistics.deepcopy": 52,
+          "aviation_flight.deepcopy": 912,
+          "countdown": 3600,
+          "aviation_combat.deepcopy": 911,
+          "can_receive": 15032
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "aviation_combat.deepcopy": 120,
+          "Work": 2714,
+          "aviation_logistics.deepcopy": 2714,
+          "aviation_flight.deepcopy": 124,
+          "receiving": 1324
+        },
+        "candidate": {
+          "countdown": 240,
+          "Work": 9,
+          "aviation_logistics.deepcopy": 9,
+          "aviation_flight.deepcopy": 64,
+          "can_receive": 1324,
+          "aviation_combat.deepcopy": 62
+        }
+      },
+      "final_load": {
+        "ships": 13,
+        "guns": 16,
+        "projectiles": 70,
+        "missiles": 29,
+        "airborne": 5,
+        "aircraft_sensors": 8,
+        "jammers": 1,
+        "jobs": 4,
+        "queued": 0,
+        "aircraft": 10,
+        "pilots": 18,
+        "local_tracks": 40,
+        "shared_tracks": 245,
+        "shots": 59,
+        "missile_shots": 54,
+        "hits": 13,
+        "interceptions": 4
+      }
+    },
+    {
+      "case": "guns-9v9",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "691cbd11ef88429773829ca22c24a311db0eedf9b8f52b3bfdab9612fefb010b",
+      "rehash_verified": true,
+      "matches_7c1b_expanded_tape": true,
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "aviation_combat.deepcopy": 1800,
+          "aviation_flight.deepcopy": 900,
+          "Work": 56,
+          "aviation_logistics.deepcopy": 56
+        },
+        "candidate": {
+          "aviation_combat.deepcopy": 900,
+          "Work": 56,
+          "aviation_logistics.deepcopy": 56
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "aviation_combat.deepcopy": 120,
+          "aviation_flight.deepcopy": 60,
+          "Work": 12,
+          "aviation_logistics.deepcopy": 12
+        },
+        "candidate": {
+          "aviation_combat.deepcopy": 60,
+          "Work": 12,
+          "aviation_logistics.deepcopy": 12
+        }
+      },
+      "final_load": {
+        "ships": 18,
+        "guns": 54,
+        "projectiles": 140,
+        "missiles": 0,
+        "airborne": 0,
+        "aircraft_sensors": 0,
+        "jammers": 0,
+        "jobs": 0,
+        "queued": 0,
+        "aircraft": 0,
+        "pilots": 0,
+        "local_tracks": 153,
+        "shared_tracks": 162,
+        "shots": 320,
+        "missile_shots": 0,
+        "hits": 56,
+        "interceptions": 0
+      }
+    },
+    {
+      "case": "mixed-9v9",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "a0b8eda53fffacb6dbfafaea185242fb87b0da2cf152631fec266d48539d5234",
+      "rehash_verified": true,
+      "matches_7c1b_expanded_tape": true,
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "Work": 45687,
+          "aviation_logistics.deepcopy": 45691,
+          "aviation_flight.deepcopy": 1812,
+          "aviation_combat.deepcopy": 1800,
+          "receiving": 22257
+        },
+        "candidate": {
+          "Work": 52,
+          "aviation_logistics.deepcopy": 56,
+          "aviation_flight.deepcopy": 912,
+          "countdown": 3600,
+          "aviation_combat.deepcopy": 911,
+          "can_receive": 22257
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "aviation_combat.deepcopy": 120,
+          "Work": 4600,
+          "aviation_logistics.deepcopy": 4600,
+          "aviation_flight.deepcopy": 124,
+          "receiving": 2304
+        },
+        "candidate": {
+          "countdown": 240,
+          "Work": 10,
+          "aviation_logistics.deepcopy": 10,
+          "aviation_flight.deepcopy": 64,
+          "can_receive": 2304,
+          "aviation_combat.deepcopy": 62
+        }
+      },
+      "final_load": {
+        "ships": 18,
+        "guns": 26,
+        "projectiles": 91,
+        "missiles": 42,
+        "airborne": 5,
+        "aircraft_sensors": 8,
+        "jammers": 1,
+        "jobs": 4,
+        "queued": 0,
+        "aircraft": 10,
+        "pilots": 18,
+        "local_tracks": 83,
+        "shared_tracks": 558,
+        "shots": 63,
+        "missile_shots": 69,
+        "hits": 11,
+        "interceptions": 5
+      }
+    }
+  ],
+  "paired_timing": [
+    {
+      "case": "mixed-9v9",
+      "pair": 1,
+      "reference_step": {
+        "mean_ms": 53.258408555605754,
+        "p50_ms": 56.884200021158904,
+        "p95_ms": 78.01229998585768,
+        "p99_ms": 85.944099992048,
+        "max_ms": 110.48400000436231
+      },
+      "candidate_step": {
+        "mean_ms": 45.26234611108925,
+        "p50_ms": 47.27350000757724,
+        "p95_ms": 68.99459997657686,
+        "p99_ms": 74.20360000105575,
+        "max_ms": 102.66999999294057
+      },
+      "step_mean_change_pct": -15.013708936060333,
+      "step_p95_change_pct": -11.559331042560695,
+      "reference_service_wall_s": 51.72415470023407,
+      "candidate_service_wall_s": 44.410713300225325,
+      "service_wall_change_pct": -14.139315455986845,
+      "reference_service_cpu_s": 51.3125,
+      "candidate_service_cpu_s": 44.09375,
+      "service_cpu_change_pct": -14.068209500609008,
+      "reference_publish": {
+        "mean_ms": 9.206928443939736,
+        "p50_ms": 9.051300003193319,
+        "p95_ms": 13.298400008352473,
+        "p99_ms": 13.901700003771111,
+        "max_ms": 37.37550001824275
+      },
+      "candidate_publish": {
+        "mean_ms": 8.780113333810327,
+        "p50_ms": 7.7800999861210585,
+        "p95_ms": 13.117800001055002,
+        "p99_ms": 14.492100017378107,
+        "max_ms": 36.42519999993965
+      },
+      "reference_read": {
+        "mean_ms": 7.644569334677524,
+        "p50_ms": 7.4155000038445,
+        "p95_ms": 10.29430000926368,
+        "p99_ms": 12.335500010522082,
+        "max_ms": 26.700699992943555
+      },
+      "candidate_read": {
+        "mean_ms": 7.551450222834117,
+        "p50_ms": 6.686200009426102,
+        "p95_ms": 10.44539999566041,
+        "p99_ms": 11.634599999524653,
+        "max_ms": 82.68240001052618
+      },
+      "expanded_final_match": true,
+      "final_load": {
+        "ships": 18,
+        "guns": 26,
+        "projectiles": 91,
+        "missiles": 42,
+        "airborne": 5,
+        "aircraft_sensors": 8,
+        "jammers": 1,
+        "jobs": 4,
+        "queued": 0,
+        "aircraft": 10,
+        "pilots": 18,
+        "local_tracks": 83,
+        "shared_tracks": 558,
+        "shots": 63,
+        "missile_shots": 69,
+        "hits": 11,
+        "interceptions": 5
+      }
+    },
+    {
+      "case": "mixed-9v9",
+      "pair": 2,
+      "reference_step": {
+        "mean_ms": 53.30933788920649,
+        "p50_ms": 56.73809998552315,
+        "p95_ms": 80.5083999875933,
+        "p99_ms": 89.38429999398068,
+        "max_ms": 101.96289999294095
+      },
+      "candidate_step": {
+        "mean_ms": 46.59209455576881,
+        "p50_ms": 48.0915000080131,
+        "p95_ms": 69.68590000178665,
+        "p99_ms": 76.6171999857761,
+        "max_ms": 99.58589999587275
+      },
+      "step_mean_change_pct": -12.60050039900742,
+      "step_p95_change_pct": -13.44269664715041,
+      "reference_service_wall_s": 51.85670350046712,
+      "candidate_service_wall_s": 45.78133020037785,
+      "service_wall_change_pct": -11.715695156045813,
+      "reference_service_cpu_s": 51.75,
+      "candidate_service_cpu_s": 45.21875,
+      "service_cpu_change_pct": -12.620772946859905,
+      "reference_publish": {
+        "mean_ms": 9.339818221827349,
+        "p50_ms": 9.00960000581108,
+        "p95_ms": 13.04699998581782,
+        "p99_ms": 14.26039999932982,
+        "max_ms": 46.8037000100594
+      },
+      "candidate_publish": {
+        "mean_ms": 9.2363133339677,
+        "p50_ms": 8.720500016352162,
+        "p95_ms": 12.777099997038022,
+        "p99_ms": 14.273400011006743,
+        "max_ms": 39.535899995826185
+      },
+      "reference_read": {
+        "mean_ms": 7.897068001200548,
+        "p50_ms": 7.345599995460361,
+        "p95_ms": 10.639200016157702,
+        "p99_ms": 12.720300001092255,
+        "max_ms": 40.10089999064803
+      },
+      "candidate_read": {
+        "mean_ms": 7.8678871113030855,
+        "p50_ms": 7.658800022909418,
+        "p95_ms": 10.06450000568293,
+        "p99_ms": 11.786499992012978,
+        "max_ms": 46.653299999888986
+      },
+      "expanded_final_match": true,
+      "final_load": {
+        "ships": 18,
+        "guns": 26,
+        "projectiles": 91,
+        "missiles": 42,
+        "airborne": 5,
+        "aircraft_sensors": 8,
+        "jammers": 1,
+        "jobs": 4,
+        "queued": 0,
+        "aircraft": 10,
+        "pilots": 18,
+        "local_tracks": 83,
+        "shared_tracks": 558,
+        "shots": 63,
+        "missile_shots": 69,
+        "hits": 11,
+        "interceptions": 5
+      }
+    },
+    {
+      "case": "mixed-9v9",
+      "pair": 3,
+      "reference_step": {
+        "mean_ms": 52.993392555864475,
+        "p50_ms": 54.86070000915788,
+        "p95_ms": 79.5862999802921,
+        "p99_ms": 85.22439998341724,
+        "max_ms": 95.4708999779541
+      },
+      "candidate_step": {
+        "mean_ms": 47.00757922213395,
+        "p50_ms": 49.37120000249706,
+        "p95_ms": 69.11110001965426,
+        "p99_ms": 78.17690001684241,
+        "max_ms": 97.58110000984743
+      },
+      "step_mean_change_pct": -11.295395605066073,
+      "step_p95_change_pct": -13.162064278942232,
+      "reference_service_wall_s": 51.589191099919844,
+      "candidate_service_wall_s": 46.07777879945934,
+      "service_wall_change_pct": -10.683269465857293,
+      "reference_service_cpu_s": 51.3125,
+      "candidate_service_cpu_s": 45.734375,
+      "service_cpu_change_pct": -10.870889159561514,
+      "reference_publish": {
+        "mean_ms": 9.576729332071006,
+        "p50_ms": 8.680200000526384,
+        "p95_ms": 12.944899994181469,
+        "p99_ms": 30.741099995793775,
+        "max_ms": 47.75699999299832
+      },
+      "candidate_publish": {
+        "mean_ms": 9.011670221160683,
+        "p50_ms": 8.810300001641735,
+        "p95_ms": 12.581000017235056,
+        "p99_ms": 14.112500008195639,
+        "max_ms": 37.15869999723509
+      },
+      "reference_read": {
+        "mean_ms": 7.734994221892622,
+        "p50_ms": 7.2570999909657985,
+        "p95_ms": 10.206999984802678,
+        "p99_ms": 11.924399994313717,
+        "max_ms": 36.97680000914261
+      },
+      "candidate_read": {
+        "mean_ms": 7.748140887900566,
+        "p50_ms": 7.391300023300573,
+        "p95_ms": 10.043099988251925,
+        "p99_ms": 11.321199999656528,
+        "max_ms": 58.21829999331385
+      },
+      "expanded_final_match": true,
+      "final_load": {
+        "ships": 18,
+        "guns": 26,
+        "projectiles": 91,
+        "missiles": 42,
+        "airborne": 5,
+        "aircraft_sensors": 8,
+        "jammers": 1,
+        "jobs": 4,
+        "queued": 0,
+        "aircraft": 10,
+        "pilots": 18,
+        "local_tracks": 83,
+        "shared_tracks": 558,
+        "shots": 63,
+        "missile_shots": 69,
+        "hits": 11,
+        "interceptions": 5
+      }
+    },
+    {
+      "case": "guns-9v9",
+      "pair": 1,
+      "reference_step": {
+        "mean_ms": 15.615023000055873,
+        "p50_ms": 15.845500020077452,
+        "p95_ms": 18.91429998795502,
+        "p99_ms": 19.621799991000444,
+        "max_ms": 20.36159997805953
+      },
+      "candidate_step": {
+        "mean_ms": 15.613690111333401,
+        "p50_ms": 15.99830001941882,
+        "p95_ms": 18.83559999987483,
+        "p99_ms": 19.616999983554706,
+        "max_ms": 20.304599980590865
+      },
+      "step_mean_change_pct": -0.008535938259368603,
+      "step_p95_change_pct": -0.4160872362725887,
+      "reference_service_wall_s": 16.73081990025821,
+      "candidate_service_wall_s": 16.745003000396537,
+      "service_wall_change_pct": 0.0847722958162267,
+      "reference_service_cpu_s": 16.515625,
+      "candidate_service_cpu_s": 16.625,
+      "service_cpu_change_pct": 0.6622516556291425,
+      "reference_publish": {
+        "mean_ms": 6.680684890468709,
+        "p50_ms": 6.708300003083423,
+        "p95_ms": 8.398800011491403,
+        "p99_ms": 9.400100010680035,
+        "max_ms": 27.3254000057932
+      },
+      "candidate_publish": {
+        "mean_ms": 6.879911111124481,
+        "p50_ms": 6.675299984635785,
+        "p95_ms": 8.670899987919256,
+        "p99_ms": 9.435699990717694,
+        "max_ms": 43.38550000102259
+      },
+      "reference_read": {
+        "mean_ms": 5.218422666010965,
+        "p50_ms": 5.085299984784797,
+        "p95_ms": 5.9668000030796975,
+        "p99_ms": 6.54430000577122,
+        "max_ms": 30.240599997341633
+      },
+      "candidate_read": {
+        "mean_ms": 5.087564000859857,
+        "p50_ms": 4.9909999943338335,
+        "p95_ms": 5.873899994185194,
+        "p99_ms": 6.4922000165097415,
+        "max_ms": 26.416699984110892
+      },
+      "expanded_final_match": true,
+      "final_load": {
+        "ships": 18,
+        "guns": 54,
+        "projectiles": 140,
+        "missiles": 0,
+        "airborne": 0,
+        "aircraft_sensors": 0,
+        "jammers": 0,
+        "jobs": 0,
+        "queued": 0,
+        "aircraft": 0,
+        "pilots": 0,
+        "local_tracks": 153,
+        "shared_tracks": 162,
+        "shots": 320,
+        "missile_shots": 0,
+        "hits": 56,
+        "interceptions": 0
+      }
+    },
+    {
+      "case": "guns-9v9",
+      "pair": 2,
+      "reference_step": {
+        "mean_ms": 15.69784211111255,
+        "p50_ms": 16.13750000251457,
+        "p95_ms": 18.838000018149614,
+        "p99_ms": 19.829099997878075,
+        "max_ms": 20.685700001195073
+      },
+      "candidate_step": {
+        "mean_ms": 15.64326666660943,
+        "p50_ms": 16.03670002077706,
+        "p95_ms": 19.051599985687062,
+        "p99_ms": 19.77919999626465,
+        "max_ms": 20.501999999396503
+      },
+      "step_mean_change_pct": -0.3476620806657671,
+      "step_p95_change_pct": 1.133878157615742,
+      "reference_service_wall_s": 16.833847599918954,
+      "candidate_service_wall_s": 16.7792442998325,
+      "service_wall_change_pct": -0.32436613057325037,
+      "reference_service_cpu_s": 16.46875,
+      "candidate_service_cpu_s": 16.828125,
+      "service_cpu_change_pct": 2.182163187855779,
+      "reference_publish": {
+        "mean_ms": 6.8942519995228695,
+        "p50_ms": 6.71610000426881,
+        "p95_ms": 8.484499994665384,
+        "p99_ms": 9.47050002287142,
+        "max_ms": 47.26349998963997
+      },
+      "candidate_publish": {
+        "mean_ms": 6.7973026672067745,
+        "p50_ms": 6.647400005022064,
+        "p95_ms": 8.714499999769032,
+        "p99_ms": 10.392700001830235,
+        "max_ms": 26.18590000201948
+      },
+      "reference_read": {
+        "mean_ms": 5.1314800001111704,
+        "p50_ms": 5.069299979368225,
+        "p95_ms": 5.832800001371652,
+        "p99_ms": 6.319800013443455,
+        "max_ms": 26.061900018248707
+      },
+      "candidate_read": {
+        "mean_ms": 5.204049776722159,
+        "p50_ms": 5.058700015069917,
+        "p95_ms": 5.900400021346286,
+        "p99_ms": 6.357699981890619,
+        "max_ms": 47.01729997759685
+      },
+      "expanded_final_match": true,
+      "final_load": {
+        "ships": 18,
+        "guns": 54,
+        "projectiles": 140,
+        "missiles": 0,
+        "airborne": 0,
+        "aircraft_sensors": 0,
+        "jammers": 0,
+        "jobs": 0,
+        "queued": 0,
+        "aircraft": 0,
+        "pilots": 0,
+        "local_tracks": 153,
+        "shared_tracks": 162,
+        "shots": 320,
+        "missile_shots": 0,
+        "hits": 56,
+        "interceptions": 0
+      }
+    },
+    {
+      "case": "guns-9v9",
+      "pair": 3,
+      "reference_step": {
+        "mean_ms": 15.781065555832658,
+        "p50_ms": 16.107200004626065,
+        "p95_ms": 19.150799984345213,
+        "p99_ms": 20.078300003660843,
+        "max_ms": 21.993700007442385
+      },
+      "candidate_step": {
+        "mean_ms": 15.683353333248911,
+        "p50_ms": 16.117599996505305,
+        "p95_ms": 19.057600002270192,
+        "p99_ms": 19.65499998186715,
+        "max_ms": 21.047999995062128
+      },
+      "step_mean_change_pct": -0.6191737955719478,
+      "step_p95_change_pct": -0.48666364930555206,
+      "reference_service_wall_s": 16.946023900381988,
+      "candidate_service_wall_s": 16.840948099765228,
+      "service_wall_change_pct": -0.6200616807485515,
+      "reference_service_cpu_s": 16.6875,
+      "candidate_service_cpu_s": 16.703125,
+      "service_cpu_change_pct": 0.0936329588014928,
+      "reference_publish": {
+        "mean_ms": 6.945218220482477,
+        "p50_ms": 6.816399982199073,
+        "p95_ms": 8.540500013623387,
+        "p99_ms": 10.196699993684888,
+        "max_ms": 31.351399986306205
+      },
+      "candidate_publish": {
+        "mean_ms": 6.883063554737924,
+        "p50_ms": 6.808699981775135,
+        "p95_ms": 8.418599987635389,
+        "p99_ms": 8.967400004621595,
+        "max_ms": 33.12830001232214
+      },
+      "reference_read": {
+        "mean_ms": 5.2461813356623885,
+        "p50_ms": 5.094099993584678,
+        "p95_ms": 6.036800012225285,
+        "p99_ms": 6.65830000070855,
+        "max_ms": 46.86719999881461
+      },
+      "candidate_read": {
+        "mean_ms": 5.232181333445219,
+        "p50_ms": 5.105399992316961,
+        "p95_ms": 5.920900002820417,
+        "p99_ms": 6.361900013871491,
+        "max_ms": 45.92340000090189
+      },
+      "expanded_final_match": true,
+      "final_load": {
+        "ships": 18,
+        "guns": 54,
+        "projectiles": 140,
+        "missiles": 0,
+        "airborne": 0,
+        "aircraft_sensors": 0,
+        "jammers": 0,
+        "jobs": 0,
+        "queued": 0,
+        "aircraft": 0,
+        "pilots": 0,
+        "local_tracks": 153,
+        "shared_tracks": 162,
+        "shots": 320,
+        "missile_shots": 0,
+        "hits": 56,
+        "interceptions": 0
+      }
+    }
+  ],
+  "provenance": [
+    {
+      "run": "measure-guns-9v9",
+      "production_fingerprints_match": true,
+      "reference_methods_ast_verified": true,
+      "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+      "final_test_fingerprint_match": true
+    },
+    {
+      "run": "measure-mixed-9v9",
+      "production_fingerprints_match": true,
+      "reference_methods_ast_verified": true,
+      "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+      "final_test_fingerprint_match": true
+    },
+    {
+      "run": "verify-guns-4v4",
+      "production_fingerprints_match": true,
+      "reference_methods_ast_verified": true,
+      "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+      "final_test_fingerprint_match": true
+    },
+    {
+      "run": "verify-guns-9v9",
+      "production_fingerprints_match": true,
+      "reference_methods_ast_verified": true,
+      "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+      "final_test_fingerprint_match": true
+    },
+    {
+      "run": "verify-mixed-4v4",
+      "production_fingerprints_match": true,
+      "reference_methods_ast_verified": true,
+      "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+      "final_test_fingerprint_match": true
+    },
+    {
+      "run": "verify-mixed-4v9",
+      "production_fingerprints_match": true,
+      "reference_methods_ast_verified": true,
+      "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+      "final_test_fingerprint_match": true
+    },
+    {
+      "run": "verify-mixed-4v9-reversed",
+      "production_fingerprints_match": true,
+      "reference_methods_ast_verified": true,
+      "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+      "final_test_fingerprint_match": true
+    },
+    {
+      "run": "verify-mixed-9v9",
+      "production_fingerprints_match": true,
+      "reference_methods_ast_verified": true,
+      "python": "3.14.7 (tags/v3.14.7:823f032, Aug  5 2026, 10:51:32) [MSC v.1944 64 bit (AMD64)]",
+      "final_test_fingerprint_match": false
+    }
+  ],
+  "scope": "Offline 900-step windows. Diagnostic counts separate from uninstrumented serial AB/BA/AB timing. Positive percentages mean increased time. Not real-time, native rendering, full battle or adaptive speed acceptance."
+}

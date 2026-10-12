@@ -36,6 +36,15 @@ def validate_order(o, p, *, preparation=False):
         ps.need(o['order']['kind'] in ('repair','prepare'), '$.queue','只能预排修复或整备')
 
 
+def unload_costs(p,a):
+    costs={};r=p['recipes']
+    for payload in a['loadout'].values():
+        key=r['payload_goods'][payload];costs[key]=costs.get(key,0)+1
+    model=ac.model(p['catalog'],a['model_id'])
+    if a['cannon_rounds']:costs[r['cannon_goods'][model['cannon_id']]]=a['cannon_rounds']
+    return costs
+
+
 class Work:
     def __init__(self, inv):
         self.inv=inv
@@ -80,12 +89,7 @@ class Work:
         ps.need(self.volume()<=self.inv._capacity(),'$.aviation.cargo','航空库存超过有效货舱容积')
 
     def unload(self,a):
-        costs={}
-        for payload in a['loadout'].values():
-            key=self.r['payload_goods'][payload];costs[key]=costs.get(key,0)+1
-        model=ac.model(self.p['catalog'],a['model_id'])
-        if a['cannon_rounds']:costs[self.r['cannon_goods'][model['cannon_id']]]=a['cannon_rounds']
-        self.cargo(costs,1);a.update(loadout={},cannon_rounds=0)
+        self.cargo(unload_costs(self.p,a),1);a.update(loadout={},cannon_rounds=0)
 
     def disembark(self,a,mid):
         for person in a['crew']:
@@ -258,10 +262,35 @@ def apply(inv, order):
     w=Work(inv);w.order(order);w.commit()
 
 
+def countdown(inv,steps,rates):
+    """Copy only job records when damage/placement/completion cannot change.
+
+    Inventory forks share their value until replacement. Retained manifests,
+    queues and resource rows are read-only here; all mutating work uses Work.
+    """
+    s=inv._value['aviation'];m=s['manifest'];p=inv._definition['aviation']
+    if s['queue'] or inv._hull_integrity<=0:return False
+    jobs=[dict(j,remaining_steps=j['remaining_steps']-steps*(rates or {}).get(j['module_id'],1.)) for j in s['jobs']]
+    if any(j['remaining_steps']<=1e-8 for j in jobs):return False
+    for a in m['aircraft']:
+        if a['module_id'] is not None and (not inv._alive(a['module_id']) or any(x['health']!='fit' for x in a['crew'])):return False
+    people={x['id']:x for x in m['personnel']}
+    for x in people.values():
+        if x['housing']=='temporary_cargo' and x['health']!='dead':return False
+        if x['housing'] in ('hangar','quarters') and not inv._alive(x['module_id']):return False
+    if any(people[key]['health']!='fit' for j in jobs for key in j['pilot_ids']):return False
+    ar.quarters_available(inv._value,inv.pack)
+    candidate=dict(s,jobs=jobs)
+    ar.validate_state(candidate,p,inv._value['instance_id'])
+    inv._value=dict(inv._value,aviation=candidate)
+    return True
+
+
 def advance(inv,steps=1,rates=None,previous_health=None,*,ending=False,crashed=False):
     if 'aviation' not in inv._definition:return
     s=inv._value['aviation']
     if not (s['jobs'] or s['queue'] or previous_health is not None or ending or crashed):return
+    if previous_health is None and not ending and not crashed and countdown(inv,steps,rates):return
     w=Work(inv);w.damage(previous_health,crashed=crashed)
     for j in list(w.s['jobs']):
         j['remaining_steps']-=steps*(rates or {}).get(j['module_id'],1.)

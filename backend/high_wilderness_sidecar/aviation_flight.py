@@ -104,7 +104,7 @@ def candidates(b,world,inventories,f,key,*,ending=False):
     for n in order:
         ship=world.ships[n];inv=inventories[n]
         if b._sides[n]!=b._sides[source] or ship.wreck is not None or ship.command.lifecycle.physical_status not in (('operational','exited') if ending else ('operational',)):continue
-        if recovery.receiving(inventories[source],inv,key) is not None:yield n
+        if recovery.can_receive(inventories[source],inv,key):yield n
 
 
 def set_location(inventories,f,key,location):
@@ -215,6 +215,9 @@ def advance(b,world,inventories,flights,projectiles,effects):
 
 def finish(b,world,inventories,flights,ending=False):
     """Resolve 6c ship outcomes first; aircraft and crew never enter that lottery."""
+    # A no-op phase may share its input. It never mutates a flight; advance and
+    # commands own deep copies before mutation, including nested contact data.
+    if not ending and not any(world.ships[f['owner']].command.lifecycle.physical_status=='exited' for f in flights.values()):return flights
     flights=deepcopy(flights)
     for key,f in list(flights.items()):
         departed=world.ships[f['owner']].command.lifecycle.physical_status=='exited'

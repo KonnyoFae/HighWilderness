@@ -91,6 +91,31 @@ def allocate(candidates, previous, capacity, priorities):
     return tuple(result),used
 
 
+class _Inputs:
+    """Scratch inputs for one plan/view call; never retained by the runtime.
+
+    Even two plans at the same fixed step get fresh inputs. Target range and
+    visibility are still checked individually against that call's world.
+    """
+    def __init__(self,runtime,world,available):
+        self.runtime=runtime;self.world=world;self.available=available
+        self.positions=tuple(tuple(s.motion.position_world_m.to_list()) for s in world.ships)
+        self.controls={}
+
+    def controllers(self,n,position):
+        if n not in self.controls:
+            b=self.runtime.battle
+            self.controls[n]=tuple((mid,b._capabilities[n][mid]['maximum_lock_range_m'],
+                int(b._capabilities[n][mid]['simultaneous_channels']*self.runtime.effect(self.world,n,mid,'fire_control.solution')))
+                for mid in b._controllers[n] if not self.available[n][mid])
+        distance=None if position is None else hypot(*(a-c for a,c in zip(position,self.positions[n])))
+        controls=[];channels=0
+        for mid,maximum,count in self.controls[n]:
+            if distance is not None and distance>maximum:continue
+            controls.append(mid);channels+=count
+        return tuple(controls),channels
+
+
 class ObservationRuntime:
     def __init__(self,battle,scenario):
         self.battle=battle
@@ -135,10 +160,11 @@ class ObservationRuntime:
         self.frame=Frame({}, {}, (), -1)
         self.sequence=0;self.last=None;self.locks={};self.pending_modes={}
 
-    def visible(self,n,mid,ship,target,effective,occluded):
+    def visible(self,n,mid,ship,target,effective,occluded,*,origin=None):
         from .tactical_gunnery import rotate, add
-        arc=self.arcs[n,mid];position=tuple(ship.motion.position_world_m.to_list())
-        origin=add(position,rotate(arc['origin_m'],ship.motion.heading_rad))
+        arc=self.arcs[n,mid]
+        if origin is None:
+            origin=add(tuple(ship.motion.position_world_m.to_list()),rotate(arc['origin_m'],ship.motion.heading_rad))
         factor=self.radar_factor(target,origin) if effective['channel']=='radar' and target.kind=='ship' else 1.
         if not can_observe(effective,origin,ship.motion.height_layer,target,ship_radar_factor=factor):return False
         delta=tuple(a-b for a,b in zip(target.position,origin))
@@ -197,10 +223,11 @@ class ObservationRuntime:
         return tuple(result)
 
     def plan(self,world,available,projectiles,*,missiles=(),occluded=None,extra_targets=()):
+        from .tactical_gunnery import rotate, add
         b=self.battle;step=world.fixed_step;targets=self.targets(world,projectiles,missiles)+tuple(extra_targets)
-        assignments={};local={};devices=[]
+        assignments={};local={};devices=[];inputs=_Inputs(self,world,available)
         for n,s in enumerate(world.ships):
-            assigned=set()
+            assigned=set();distances={};position=inputs.positions[n]
             ordered=sorted(self.sensors[n],key=lambda mid:((n,mid) not in self.integrated,not bool(self.frame.assignments.get((n,mid))),mid))
             for mid in ordered:
                 spec=self.sensors[n][mid];reason=available[n][mid]
@@ -209,10 +236,14 @@ class ObservationRuntime:
                 if s.command.lifecycle.physical_status!='operational':reason=reason or 'control_unavailable'
                 capacity=int(spec['tracking_capacity']*self.effect(world,n,mid,'sensor.track')) if not reason else 0
                 effective=dict(spec,range_efficiency=self.effect(world,n,mid,'sensor.search'))
+                origin=add(position,rotate(self.arcs[n,mid]['origin_m'],s.motion.heading_rad)) if not reason else None
                 candidates=[t for t in targets if t.side!=b._sides[n] and (own or t.id not in assigned) and not reason
-                    and self.visible(n,mid,s,t,effective,occluded)]
-                priorities={t.id:(0 if self.locks.get(n)==t.id else 1 if t.threat else 2,
-                    hypot(*(a-c for a,c in zip(t.position,s.motion.position_world_m.to_list())))) for t in candidates}
+                    and self.visible(n,mid,s,t,effective,occluded,origin=origin)]
+                priorities={}
+                for t in candidates:
+                    at=tuple(t.position)
+                    if at not in distances:distances[at]=hypot(*(a-c for a,c in zip(at,position)))
+                    priorities[t.id]=(0 if self.locks.get(n)==t.id else 1 if t.threat else 2,distances[at])
                 own_target=next((v.interception_target_id for g,v in zip(b.guns,b.states) if g.ship_index==n and g.module_id==mid),None)
                 launcher=getattr(b,'missiles',None)
                 if launcher and (n,mid) in launcher.states:own_target=launcher.states[n,mid].active_target
@@ -240,11 +271,14 @@ class ObservationRuntime:
                     blocked_angle_deg=sum(b-a for a,b in self.arcs[n,mid]['blocked_intervals_deg'])))
         tracks=dict(local)
         linked=[n for n,s in enumerate(world.ships) if s.command.lifecycle.physical_status=='operational'
-            and any(available[n][mid] is None for mid in self.links[n]) and self.controllers(n,world,available)[1]>0]
+            and any(available[n][mid] is None for mid in self.links[n]) and self.controllers(n,world,available,inputs=inputs)[1]>0]
+        # Eligibility depends on the ship pair, not the number of its tracks.
+        senders={receiver:{sender for sender in linked if sender!=receiver and b._sides[sender]==b._sides[receiver]
+            and hypot(*(a-c for a,c in zip(inputs.positions[sender],inputs.positions[receiver])))<=self.policy['datalink_range_m']}
+            for receiver in linked}
         for receiver in linked:
             for (sender,key),track in local.items():
-                if sender==receiver or sender not in linked or b._sides[sender]!=b._sides[receiver]:continue
-                if hypot(*(a-c for a,c in zip(world.ships[sender].motion.position_world_m.to_list(),world.ships[receiver].motion.position_world_m.to_list())))>self.policy['datalink_range_m']:continue
+                if sender not in senders[receiver]:continue
                 old=tracks.get((receiver,key))
                 latest=track if old is None or track.step>old.step else old
                 tracks[receiver,key]=replace(latest,sources=tuple(sorted(set(track.sources+(old.sources if old else ())))))
@@ -255,14 +289,15 @@ class ObservationRuntime:
         locks={}
         for n,key in self.locks.items():
             if key is None:continue
-            sources,_=self.sources(n,key,world,available,frame)
+            sources,_=self.sources(n,key,world,available,frame,inputs=inputs)
             previous=self.frame.locks.get(n)
             start=previous['start'] if previous and previous['target']==key and previous['status']!='lost' else step
             status='lost' if not sources else 'locked' if step-start>=b.config['lock_acquisition_steps'] else 'acquiring'
             locks[n]=dict(target=key,start=start,status=status)
         return replace(frame,locks=locks)
 
-    def controllers(self,n,world,available,position=None):
+    def controllers(self,n,world,available,position=None,*,inputs=None):
+        if inputs is not None:return inputs.controllers(n,position)
         b=self.battle;controls=[];channels=0
         for mid in b._controllers[n]:
             if available[n][mid]:continue
@@ -271,14 +306,14 @@ class ObservationRuntime:
             controls.append(mid);channels+=int(cap['simultaneous_channels']*eff)
         return tuple(controls),channels
 
-    def sources(self,n,key,world,available,frame=None,*,radar_only=False):
+    def sources(self,n,key,world,available,frame=None,*,radar_only=False,inputs=None):
         track=(frame or self.frame).tracks.get((n,key))
         if not track or not track.valid:return (),0
-        _,channels=self.controllers(n,world,available,track.target.position)
+        _,channels=self.controllers(n,world,available,track.target.position,inputs=inputs)
         sources=tuple(mid if i==n else f'{world.ships[i].ship_id}/{mid}' for i,mid,channel in track.sources
             if available[i][mid] is None and world.ships[i].command.lifecycle.physical_status=='operational'
             and self.sensor_enabled.get((i,mid),True)
-            and (i==n or self.controllers(i,world,available)[1] and
+            and (i==n or self.controllers(i,world,available,inputs=inputs)[1] and
                 any(available[n][link] is None for link in self.links[n]) and any(available[i][link] is None for link in self.links[i]))
             and (not radar_only or channel=='radar' and i==n))
         return sources if channels else (),channels
@@ -353,13 +388,13 @@ class ObservationRuntime:
         return tuple(result)
 
     def view(self):
-        b=self.battle;world=b.session.world;_,available=b._availability(world);ships=[]
+        b=self.battle;world=b.session.world;_,available=b._availability(world);ships=[];inputs=_Inputs(self,world,available)
         for n,s in enumerate(world.ships):
             if b._sides[n]!=b._sides[b._direct_index]:continue
             rows=[]
             for (observer,key),track in self.frame.tracks.items():
                 if observer!=n:continue
-                sources,channels=self.sources(n,key,world,available)
+                sources,channels=self.sources(n,key,world,available,inputs=inputs)
                 rows.append(dict(id=key,kind=track.target.kind,position_m=track.target.position,
                     defense_weapon_ids=[mid for i,mid,_ in track.sources if i==n and (n,mid) in self.integrated
                         and available[n][mid] is None and self.sensor_enabled.get((n,mid),True)] if track.valid else [],
@@ -369,7 +404,7 @@ class ObservationRuntime:
                     vertical_speed_mps=track.target.payload.vertical_velocity_mps if track.target.payload else 0.,
                     age_s=max(0,world.fixed_step-track.step)/60,sources=list(sources),
                     status='lost' if not track.valid else 'tracked' if sources else 'no_computer',
-                    radar_source_available=bool(self.sources(n,key,world,available,radar_only=True)[0])))
+                    radar_source_available=bool(self.sources(n,key,world,available,radar_only=True,inputs=inputs)[0])))
             stats={d['module_id']:d for d in self.frame.devices if d['ship_index']==n}
             devices=[]
             for mid in (*self.sensors[n],*b._controllers[n],*self.links[n]):

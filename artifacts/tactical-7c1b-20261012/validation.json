@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-12",
+  "unique_tests": 112,
+  "test_runs_total": 118,
+  "repeated_tests": 6,
+  "runs": [
+    {
+      "command": "python -X utf8 -m unittest tools.test_tactical_7c1b tools.test_tactical_observation tools.test_tactical_contact_start tools.test_aviation_ew tools.test_tactical_ew",
+      "tests": 48,
+      "elapsed_seconds": 44.324,
+      "exit_code": 0,
+      "result": "OK"
+    },
+    {
+      "command": "python -X utf8 -m unittest tools.test_tactical_7c1b tools.test_sloped_armor_shape tools.test_tactical_fire_control_scheduling tools.test_tactical_defense_prediction tools.test_missile_defense tools.test_realtime_view tools.test_tactical_7c",
+      "tests": 70,
+      "elapsed_seconds": 33.586,
+      "exit_code": 0,
+      "result": "OK"
+    }
+  ],
+  "notes": "After the first run, the 7c.1b suite added multiple-controller range boundaries and strengthened the datalink boundary assertion; all seven final 7c.1b tests passed in the second run. Production source did not change between these runs. Test duration is not performance evidence."
+}

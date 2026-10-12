@@ -19,8 +19,11 @@ def bodies(b,world,inventories,flights):
 
 
 def apply_hits(flights,events):
+    # The following advance phase detaches all nested flight data before writes.
+    hits=tuple(row for row in events if row['projectile_id'] in flights)
+    if not hits:return flights
     result=deepcopy(flights)
-    for row in events:
+    for row in hits:
         if row['projectile_id'] in result:result[row['projectile_id']]['hp']=row['durability_after']
     return result
 

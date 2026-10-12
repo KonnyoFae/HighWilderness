@@ -76,12 +76,16 @@ class ElectronicWarfare:
                      for e in self.effects if step<e.expires)
 
     def sensor_blocker(self,world,effects):
-        b=self.battle
+        from .tactical_gunnery import rotate,add
+        b=self.battle;origins={}
         def occluded(n,mid,t):
-            from .tactical_gunnery import rotate,add
-            ship=world.ships[n];arc=b.observation.arcs[n,mid]
-            origin=add(tuple(ship.motion.position_world_m.to_list()),rotate(arc['origin_m'],ship.motion.heading_rad))
-            channel='chaff' if b.observation.sensors[n][mid]['channel']=='radar' else 'thermal'
+            ship=world.ships[n]
+            # Closure belongs to one world/field candidate, not a fixed-step cache.
+            if (n,mid) not in origins:
+                arc=b.observation.arcs[n,mid]
+                origins[n,mid]=(add(tuple(ship.motion.position_world_m.to_list()),rotate(arc['origin_m'],ship.motion.heading_rad)),
+                    'chaff' if b.observation.sensors[n][mid]['channel']=='radar' else 'thermal')
+            origin,channel=origins[n,mid]
             return channel in blocked_channels(effects,origin,ship.motion.height_layer,t.position,t.layer,observer_side=b._sides[n])
         return occluded
 

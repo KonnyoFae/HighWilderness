@@ -1,0 +1,292 @@
+{
+  "date": "2026-10-12",
+  "reference_head": "c0554da2beb88aff9a50268080559e43ddaf0e94",
+  "validated_source_unchanged": true,
+  "verification": [
+    {
+      "case": "guns-4v4",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "699846656a4dbe9b6bea3151e3c597bc4849f588ea9a1e39514cdf839654c6ca",
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "plan": 900,
+          "effect": 181209,
+          "visible": 28800,
+          "observation_hypot": 240555,
+          "controllers": 166809,
+          "sources": 40563,
+          "view": 225
+        },
+        "candidate": {
+          "plan": 900,
+          "effect": 154101,
+          "visible": 28800,
+          "observation_hypot": 177363,
+          "controllers": 166809,
+          "sources": 40563,
+          "view": 225
+        }
+      },
+      "hypot_change_pct": -26.269252353931538,
+      "effect_change_pct": -14.959521878052417,
+      "visible_calls_equal": true
+    },
+    {
+      "case": "mixed-4v4",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "b3d1403297dd9d2ca2036297ee9c6c501678041469c21758e79f27d0cd4af7a6",
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "observation_hypot": 776847,
+          "plan": 901,
+          "effect": 350217,
+          "visible": 173090,
+          "controllers": 325063,
+          "sources": 149517,
+          "view": 225
+        },
+        "candidate": {
+          "observation_hypot": 722523,
+          "plan": 901,
+          "effect": 316493,
+          "visible": 173090,
+          "controllers": 325063,
+          "sources": 149517,
+          "view": 225
+        }
+      },
+      "hypot_change_pct": -6.992882768421582,
+      "effect_change_pct": -9.62945830727806,
+      "visible_calls_equal": true
+    },
+    {
+      "case": "mixed-4v9",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "4707fc0a1d1601e7793ee1351273f10bf4ca69f0a2628564d979fef131ab16b5",
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "observation_hypot": 1550450,
+          "plan": 901,
+          "effect": 764901,
+          "visible": 347911,
+          "controllers": 725275,
+          "sources": 282329,
+          "view": 225
+        },
+        "candidate": {
+          "observation_hypot": 1384970,
+          "plan": 901,
+          "effect": 717383,
+          "visible": 347911,
+          "controllers": 725275,
+          "sources": 282329,
+          "view": 225
+        }
+      },
+      "hypot_change_pct": -10.673030410525975,
+      "effect_change_pct": -6.212307213613267,
+      "visible_calls_equal": true
+    },
+    {
+      "case": "mixed-4v9-reversed",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "79ab3eb517b2ae171102dd0f579453a9fdef48720cc5bc9339aff905a653521c",
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "observation_hypot": 1460612,
+          "plan": 901,
+          "effect": 740192,
+          "visible": 336946,
+          "controllers": 704569,
+          "sources": 253400,
+          "view": 225
+        },
+        "candidate": {
+          "observation_hypot": 1304001,
+          "plan": 901,
+          "effect": 611777,
+          "visible": 336946,
+          "controllers": 704569,
+          "sources": 253400,
+          "view": 225
+        }
+      },
+      "hypot_change_pct": -10.722286274520542,
+      "effect_change_pct": -17.348877048117252,
+      "visible_calls_equal": true
+    },
+    {
+      "case": "guns-9v9",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "691cbd11ef88429773829ca22c24a311db0eedf9b8f52b3bfdab9612fefb010b",
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "plan": 900,
+          "effect": 1702864,
+          "visible": 145800,
+          "observation_hypot": 1915304,
+          "controllers": 1670464,
+          "sources": 186890,
+          "view": 225
+        },
+        "candidate": {
+          "plan": 900,
+          "effect": 1385911,
+          "visible": 145800,
+          "observation_hypot": 896720,
+          "controllers": 1670464,
+          "sources": 186890,
+          "view": 225
+        }
+      },
+      "hypot_change_pct": -53.18132265165217,
+      "effect_change_pct": -18.61293679354311,
+      "visible_calls_equal": true
+    },
+    {
+      "case": "mixed-9v9",
+      "steps": 900,
+      "sections": 18,
+      "expanded_tape_sha256": "a0b8eda53fffacb6dbfafaea185242fb87b0da2cf152631fec266d48539d5234",
+      "frozen_7b_digest_match": true,
+      "counters": {
+        "reference": {
+          "observation_hypot": 2754035,
+          "plan": 901,
+          "effect": 1333691,
+          "visible": 680313,
+          "controllers": 1279653,
+          "sources": 499497,
+          "view": 225
+        },
+        "candidate": {
+          "observation_hypot": 2462993,
+          "plan": 901,
+          "effect": 1169780,
+          "visible": 680313,
+          "controllers": 1279653,
+          "sources": 499497,
+          "view": 225
+        }
+      },
+      "hypot_change_pct": -10.56783955178493,
+      "effect_change_pct": -12.290028199935366,
+      "visible_calls_equal": true
+    }
+  ],
+  "measurements": [
+    {
+      "case": "mixed-9v9",
+      "pair": 1,
+      "old_mean_ms": 44.592248555563856,
+      "new_mean_ms": 43.94017755461391,
+      "mean_change_pct": -1.4622967490357408,
+      "old_p95_ms": 63.91609998536296,
+      "new_p95_ms": 63.19049999001436,
+      "p95_change_pct": -1.1352382193449917,
+      "old_publish_mean_ms": 8.134868001151416,
+      "new_publish_mean_ms": 7.398266666956867,
+      "old_read_mean_ms": 6.204654220879698,
+      "new_read_mean_ms": 6.227742666766669,
+      "old_service_wall_s": 43.35941619996447,
+      "new_service_wall_s": 42.612011899240315,
+      "service_wall_change_pct": -1.7237416142258155
+    },
+    {
+      "case": "mixed-9v9",
+      "pair": 2,
+      "old_mean_ms": 44.82156177782195,
+      "new_mean_ms": 44.16523611140696,
+      "mean_change_pct": -1.4643078919658326,
+      "old_p95_ms": 64.0951999812387,
+      "new_p95_ms": 63.34349999087863,
+      "p95_change_pct": -1.1727867150427729,
+      "old_publish_mean_ms": 8.46489155626235,
+      "new_publish_mean_ms": 7.786992000053741,
+      "old_read_mean_ms": 6.536195111823165,
+      "new_read_mean_ms": 6.371176888157303,
+      "old_service_wall_s": 43.714650100358995,
+      "new_service_wall_s": 42.93430050011375,
+      "service_wall_change_pct": -1.7850985846935452
+    },
+    {
+      "case": "mixed-9v9",
+      "pair": 3,
+      "old_mean_ms": 45.060519666941325,
+      "new_mean_ms": 44.52474644472306,
+      "mean_change_pct": -1.1890080855222362,
+      "old_p95_ms": 64.8024000111036,
+      "new_p95_ms": 63.76339998678304,
+      "p95_change_pct": -1.6033357161810868,
+      "old_publish_mean_ms": 8.49253555539892,
+      "new_publish_mean_ms": 7.575789778363994,
+      "old_read_mean_ms": 6.117138667678875,
+      "new_read_mean_ms": 6.608615111585499,
+      "old_service_wall_s": 43.84164440043969,
+      "new_service_wall_s": 43.26376290048938,
+      "service_wall_change_pct": -1.3181109145269931
+    },
+    {
+      "case": "guns-9v9",
+      "pair": 1,
+      "old_mean_ms": 16.559647666775465,
+      "new_mean_ms": 15.6718318891621,
+      "mean_change_pct": -5.361320454870788,
+      "old_p95_ms": 19.992500019725412,
+      "new_p95_ms": 19.04310000827536,
+      "p95_change_pct": -4.748780845383694,
+      "old_publish_mean_ms": 7.924088889914048,
+      "new_publish_mean_ms": 6.9053635550921575,
+      "old_read_mean_ms": 5.5912359992766545,
+      "new_read_mean_ms": 5.312152888703471,
+      "old_service_wall_s": 17.944631000165828,
+      "new_service_wall_s": 16.853589900099905,
+      "service_wall_change_pct": -6.080041991701246
+    },
+    {
+      "case": "guns-9v9",
+      "pair": 2,
+      "old_mean_ms": 16.847562222230607,
+      "new_mean_ms": 15.78445766635317,
+      "mean_change_pct": -6.310138771736695,
+      "old_p95_ms": 20.236100011970848,
+      "new_p95_ms": 19.060399994486943,
+      "p95_change_pct": -5.809914048598341,
+      "old_publish_mean_ms": 8.24918444527106,
+      "new_publish_mean_ms": 6.852031556190923,
+      "old_read_mean_ms": 5.279163110535592,
+      "new_read_mean_ms": 5.37599777828695,
+      "old_service_wall_s": 18.206684200064046,
+      "new_service_wall_s": 16.957318499975372,
+      "service_wall_change_pct": -6.8621264935450395
+    },
+    {
+      "case": "guns-9v9",
+      "pair": 3,
+      "old_mean_ms": 16.921303222673792,
+      "new_mean_ms": 15.980096000291978,
+      "mean_change_pct": -5.562262019633568,
+      "old_p95_ms": 20.711799996206537,
+      "new_p95_ms": 19.359199999598786,
+      "p95_change_pct": -6.530576757478757,
+      "old_publish_mean_ms": 8.343021776656515,
+      "new_publish_mean_ms": 6.948756444293799,
+      "old_read_mean_ms": 5.406900445232168,
+      "new_read_mean_ms": 5.344937332233207,
+      "old_service_wall_s": 18.322905400331365,
+      "new_service_wall_s": 17.148167499981355,
+      "service_wall_change_pct": -6.411308003198912
+    }
+  ],
+  "scope": "Six frozen cases verified; two 9v9 cases timed offline in three independent alternating pairs each. No real-time, native UI, or full-battle acceptance."
+}

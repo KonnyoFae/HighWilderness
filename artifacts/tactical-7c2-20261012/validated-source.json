@@ -1,0 +1,15 @@
+{
+  "backend/high_wilderness_sidecar/aviation_recovery.py": "9914c40f82da9c7f909e87d26948b50059285c818c1a0d701abf2d45584f4c26",
+  "backend/high_wilderness_sidecar/aviation_logistics.py": "bf58565fb7d905f7df8e681214596b4857013ea599d1b06fe4a249ee0dd779bb",
+  "backend/high_wilderness_sidecar/aviation_flight.py": "191e9baa647ca8aab27a72cf0a83608417b673203000f37f41ad314524c8484d",
+  "backend/high_wilderness_sidecar/aviation_combat.py": "7e28c5daf10f209ae8d923af1704f6fcb0897ba67222424fbe90232bff8914d8",
+  "backend/high_wilderness_sidecar/tactical_observation.py": "e8fc8f1d0a16ce960187fd8f5bf6a7928d9611e7f743c11d4de3a79f896cf14a",
+  "backend/high_wilderness_sidecar/tactical_ew.py": "150798e61bb890dc64d7b7d3daab8fe979995dede7f588165179823c8483d570",
+  "tools/profile_tactical_7c2.py": "7158706f573cdef640c5bb72626a968f466154feefd53d5c5c941f08fb8104b3",
+  "tools/tactical_7c2_reference_aviation_flight.py": "f57ae854e0c6d09e57af818278c3ebf83253b330aa746d4970f7ad727cd1cbf8",
+  "tools/tactical_7c2_reference_aviation_combat.py": "0f68988655dbf3ead44fa1552d4f323d016e3c33aa0435c61a6b9984aec4b69b",
+  "tools/tactical_7c2_reference_aviation_logistics.py": "b996e5cbcf41be1b9995588dae8ce32abb79eb6856ae1c39003166e05b65b3ea",
+  "tools/test_tactical_7c2.py": "24f41d50f5bb670127953dcbb3fe05dd46115ec14739ce611d21683f64bbffea",
+  "tools/tactical_7c_oracle.py": "4675d46d3d99a788aad2fa9775360cb351c3d6f1f647f7df7fa38b2c069a98ad",
+  "tools/profile_tactical_7c.py": "bbfecddbe875130832b2c82edc0357636d2093bcc9c95656c271d3f0efd2e247"
+}

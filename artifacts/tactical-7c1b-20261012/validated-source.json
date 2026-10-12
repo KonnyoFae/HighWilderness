@@ -1,0 +1,9 @@
+{
+  "backend/high_wilderness_sidecar/tactical_observation.py": "e8fc8f1d0a16ce960187fd8f5bf6a7928d9611e7f743c11d4de3a79f896cf14a",
+  "backend/high_wilderness_sidecar/tactical_ew.py": "150798e61bb890dc64d7b7d3daab8fe979995dede7f588165179823c8483d570",
+  "tools/profile_tactical_7c1b.py": "4d0d2a9c19302468f8d4ba1572985578ccb910cb59bb872211f849f747186868",
+  "tools/tactical_7c1b_reference.py": "81a39b57ef881d6a59055a12e61f0671eba1ddb425bf4493eb9f143f4644da5a",
+  "tools/test_tactical_7c1b.py": "70572ac9bc701aaf36d41745edec0cacd5c226c3a146eaa4ef39609f28038d16",
+  "tools/tactical_7c_oracle.py": "4675d46d3d99a788aad2fa9775360cb351c3d6f1f647f7df7fa38b2c069a98ad",
+  "tools/profile_tactical_7c.py": "bbfecddbe875130832b2c82edc0357636d2093bcc9c95656c271d3f0efd2e247"
+}

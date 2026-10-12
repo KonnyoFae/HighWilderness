@@ -1,0 +1,80 @@
+{
+  "case": "mixed-9v9",
+  "steps": 900,
+  "sections": [
+    "world",
+    "guns",
+    "fire_control",
+    "projectiles",
+    "observation",
+    "inventory",
+    "missiles",
+    "aviation",
+    "ew",
+    "defense",
+    "damage",
+    "fire",
+    "personnel",
+    "magazines",
+    "navigation",
+    "height_orders",
+    "departures",
+    "ending"
+  ],
+  "fixture_sha256": "4f7770f4510d15746f7714ae487bca5ff7cc13778ef25dd73207aec0f19f2ce9",
+  "expanded_tape_sha256": "a0b8eda53fffacb6dbfafaea185242fb87b0da2cf152631fec266d48539d5234",
+  "final_load": {
+    "ships": 18,
+    "guns": 26,
+    "projectiles": 91,
+    "missiles": 42,
+    "airborne": 5,
+    "aircraft_sensors": 8,
+    "jammers": 1,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 83,
+    "shared_tracks": 558,
+    "shots": 63,
+    "missile_shots": 69,
+    "hits": 11,
+    "interceptions": 5
+  },
+  "counters": {
+    "reference": {
+      "Work": 45687,
+      "aviation_logistics.deepcopy": 45691,
+      "aviation_flight.deepcopy": 1812,
+      "aviation_combat.deepcopy": 1800,
+      "receiving": 22257
+    },
+    "candidate": {
+      "Work": 52,
+      "aviation_logistics.deepcopy": 56,
+      "aviation_flight.deepcopy": 912,
+      "countdown": 3600,
+      "aviation_combat.deepcopy": 911,
+      "can_receive": 22257
+    }
+  },
+  "late_601_660": {
+    "reference": {
+      "aviation_combat.deepcopy": 120,
+      "Work": 4600,
+      "aviation_logistics.deepcopy": 4600,
+      "aviation_flight.deepcopy": 124,
+      "receiving": 2304
+    },
+    "candidate": {
+      "countdown": 240,
+      "Work": 10,
+      "aviation_logistics.deepcopy": 10,
+      "aviation_flight.deepcopy": 64,
+      "can_receive": 2304,
+      "aviation_combat.deepcopy": 62
+    }
+  },
+  "scope": "Exact authority comparison and diagnostic counts; no performance timings. Epochs normalized; derived caches and wall clocks excluded."
+}
