@@ -1,0 +1,72 @@
+{
+  "case": "guns-9v9",
+  "pair": 2,
+  "variant": "reference",
+  "steps": 900,
+  "step": {
+    "mean_ms": 17.591756777255796,
+    "p50_ms": 18.037800007732585,
+    "p95_ms": 21.86569999321364,
+    "p99_ms": 24.955800006864592,
+    "max_ms": 28.122699994128197
+  },
+  "publish": {
+    "mean_ms": 7.940109333463219,
+    "p50_ms": 7.70000001648441,
+    "p95_ms": 10.46459999633953,
+    "p99_ms": 12.678800005232915,
+    "max_ms": 46.4127000013832
+  },
+  "read": {
+    "mean_ms": 5.989625778359671,
+    "p50_ms": 5.61829999787733,
+    "p95_ms": 7.502299995394424,
+    "p99_ms": 8.232799998950213,
+    "max_ms": 49.117199989268556
+  },
+  "service_cpu_s": 18.53125,
+  "service_wall_s": 18.966771499690367,
+  "final_load": {
+    "ships": 18,
+    "guns": 54,
+    "projectiles": 140,
+    "missiles": 0,
+    "airborne": 0,
+    "aircraft_sensors": 0,
+    "jammers": 0,
+    "jobs": 0,
+    "queued": 0,
+    "aircraft": 0,
+    "pilots": 0,
+    "local_tracks": 153,
+    "shared_tracks": 162,
+    "shots": 320,
+    "missile_shots": 0,
+    "hits": 56,
+    "interceptions": 0
+  },
+  "fixture_sha256": "9a2b174acddbbaadec41db5d3f5e81f912f3aac53b18902c2a8c914c7d1229ff",
+  "authority_tape_sha256": "71e180aa7d8a0e536a2b3123c0155e940aa768d4bff2d09f6e4e1692f2ec32cb",
+  "expanded_final": {
+    "world": "2b36e6a38b423792286de5c92558e6bbb5185024c63fd8fdcfb182a0e99e9024",
+    "guns": "fd7e6911106aa139164a14e7ca1cd089ff3a0c5a648b4b9fa0cfb2be313e9a6f",
+    "fire_control": "0c3d9d72620b479d13bcb23d280f4f090952edeb8989389cd4a6f003d8465fea",
+    "projectiles": "47a2e4a454067287a4f1792be186f1159525c314e9730675adfce4966ddc077b",
+    "observation": "000b338296940669e77dd07cf992b228b05313efc799aa8a7958d7c18ef3209b",
+    "inventory": "2f991cf8085a07ddc39c67e81214b03d6796688baa7c166cc1668c6a8fbf875e",
+    "missiles": "a57ad391ddc13e7fab6510761da4761a5ca96f5244041f65dabdb5d6719b00c7",
+    "aviation": "bc6d3e3d54f3ab5a503053e74b75b47276bb87931b5983fb515139c96d290508",
+    "ew": "732ae426cac3019bc2f755ffcd8d414276d5c451e06c04a626a51f9dc0cf0d44",
+    "defense": "cef1bf39bb356b4141a0122f9a42422a9bd5f65e6ecee12effbf5563adbfb414",
+    "damage": "552e1375b3644965d57e6494d352794a9e63862aca716cb9462b74b10edc4f6e",
+    "fire": "0bc954e51a14763cff515847177a8e5bb27397597b5c6f3c279e732eef0dce12",
+    "personnel": "ce46f256ca94803a06b048d9be95b7664cceb949dc9f1a6e7e5020c8264b638c",
+    "magazines": "bc2940ea3296830186bede556abd36ff943bf82e2c2be064171f00a3af7118af",
+    "navigation": "2d70bff9fac7228217a2c6520454c8eea003c751813bfb1566972d8bbc074a1b",
+    "height_orders": "a9034f5ca40a6a50cd4c82c59bbe12912aa51c0748a237752344634d9981167b",
+    "departures": "4687c8a6e22cf4ba78efed9f3fb985e345577270eec4e1618dfcd13e4c95500e",
+    "ending": "38e0b9de817f645c4bec37c0d4a3e58baecccb040f5718dc069a72c7385a0bed"
+  },
+  "physics_caches_cleared": true,
+  "scope": "Uninstrumented offline service calls; no profiler/diagnostic counters. Not wall-clock paced real-time acceptance."
+}

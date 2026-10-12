@@ -70,7 +70,7 @@ def run(source,out):
                 boundaries.append(dict(step=step,load=counts(b)));print(json.dumps(boundaries[-1]),flush=True)
             assert b.ending is None,'Sample ended before the frozen comparison boundary'
         report=dict(case=frozen['case'],fixture_sha256=canonical_sha256(frozen),authority_tape_sha256=canonical_sha256(tape),
-            matched_steps=len(tape),scope='cProfile attribution only; inclusive times overlap and profiling changes elapsed time. No production optimization applied.',
+            matched_steps=len(tape),scope='cProfile attribution only; inclusive times overlap and profiling changes elapsed time. The attribution tool does not modify the production implementation; source.json identifies the measured revision.',
             boundaries=boundaries,windows=[dict(first_step=a,last_step=z,profile=summarize(p)) for (a,z),p in zip(windows,step_profiles)],
             publication=summarize(publication),read=summarize(reads))
         write(out/'hotspots.json',report)

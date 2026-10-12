@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-12",
+  "unique_tests": 134,
+  "command": "python -X utf8 -m unittest tools.test_tactical_7c3 tools.test_missile_defense tools.test_tactical_defense_prediction tools.test_missile_guidance tools.test_missile_maneuver tools.test_tactical_damage tools.test_tactical_interception tools.test_aviation_combat tools.test_aviation_ew tools.test_tactical_7c",
+  "elapsed_seconds": 67.581,
+  "exit_code": 0,
+  "result": "OK",
+  "notes": "Final implementation after reverting the collision trial. Includes 10 new tests, a 90-case seeker matrix and 360 randomized exact geometry comparisons. Correctness checks may run concurrently; performance measurements run separately after all checks and profilers finish. The earlier trial is archived separately and is not counted as additional unique tests."
+}

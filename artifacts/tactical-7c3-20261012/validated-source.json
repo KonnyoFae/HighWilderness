@@ -1,0 +1,11 @@
+{
+  "backend/high_wilderness_sidecar/tactical_damage.py": "ba15b7a4d8095fd9007b7ed0fb4ab9f5f7b6ab07dd6a0ee24c8616bbdfcd8a03",
+  "backend/high_wilderness_sidecar/tactical_missile_defense.py": "8a5f43840ff2e2da3d107327a96c4db7a4c2f7d391e0182bd25fd74b17cba01e",
+  "tools/profile_tactical_7c_hotspots.py": "e155793bc894b66c1812bfd98953b539533e69b9e5d4dd6466bfe64bb7a3b7ed",
+  "tools/profile_tactical_7c.py": "bbfecddbe875130832b2c82edc0357636d2093bcc9c95656c271d3f0efd2e247",
+  "tools/profile_tactical_7c3.py": "5493eb7b63640dd7195475e00942e321f87f519be8a3f6e7f5100729e7576df5",
+  "tools/tactical_7c_oracle.py": "4675d46d3d99a788aad2fa9775360cb351c3d6f1f647f7df7fa38b2c069a98ad",
+  "tools/tactical_7c3_reference_damage.py": "6c55dca4242893efbd72b54c3ab1f2b41f7ec246e2f2bc15139d2da6068608af",
+  "tools/tactical_7c3_reference_missile.py": "79b0885851fef55a37db003a0d28b2ce677b243e013fdf02f92c5a4f2547a2ac",
+  "tools/test_tactical_7c3.py": "c69590ddd28ab734530a38a98e4d2187cfaf1cd5936603ebce7e407572b1c852"
+}

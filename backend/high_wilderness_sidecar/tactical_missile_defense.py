@@ -55,16 +55,65 @@ def select(b,n,mid,profile,layer,origin,world,available,inventories,projectiles,
     return dict(projectile_id=pid,position=position,velocity=velocity,layer=launch_layer),None
 
 
+class _ReservationInputs:
+    """One prepare phase's interceptor index, updated in original round order.
+
+    Only the target buckets changed by a prepared round lose their cached
+    observation-gated commitments. Pending launches remain in their original
+    positions after active rounds; nothing survives this candidate phase.
+    """
+    def __init__(self,b,world,available,projectiles,frame):
+        self.b=b;self.world=world;self.available=available;self.frame=frame
+        self.buckets={};self.targets={};self.covered={}
+        for i,p in enumerate((*projectiles,*(d.projectile for d in b.missiles.pending))):self.replace(i,p)
+
+    def replace(self,index,p):
+        old=self.targets.pop(index,None)
+        if old is not None:
+            del self.buckets[old][index]
+            if not self.buckets[old]:del self.buckets[old]
+            self.covered.pop(old,None)
+        target=p.interception_target_id
+        if (target is not None and p.missile and p.missile.profile.interceptor and p.interception_damage>0
+            and p.interception_expected_step is not None and self.world.fixed_step<=min(p.expires,p.interception_expected_step)):
+            self.targets[index]=target;self.buckets.setdefault(target,{})[index]=p
+            self.covered.pop(target,None)
+
+    def occupied(self,observer,target,own_id):
+        rows=self.buckets.get(target,{})
+        if not any(p.id!=own_id for p in rows.values()):return False
+        by_observer=self.covered.setdefault(target,{})
+        if observer not in by_observer:
+            by_observer[observer]=commitments(self.b,observer,target,tuple(rows[i] for i in sorted(rows)),
+                self.world,self.available,include_pending=False,frame=self.frame)
+        return any(p.id!=own_id for p in by_observer[observer])
+
+
 def prepare_all(b,world,available,projectiles,environment,frame=None):
     from .missile_flight import prepare
+    from .aviation_weapons import can_target
     result=list(projectiles)
+    if not any(p.missile for p in result):return result
+    sources={s.ship_id:n for n,s in enumerate(world.ships)}
+    reservations=_ReservationInputs(b,world,available,result,frame)
+    targets=tuple(t for t in environment.contacts if t.kind=='projectile')
+    contacts={}
     for i,p in enumerate(result):
         if not p.missile:continue
-        n=next(n for n,s in enumerate(world.ships) if s.ship_id==p.ship_id)
-        unavailable=tuple(t.id for t in environment.contacts if t.kind=='projectile' and
-            any(q.id!=p.id and q.missile and q.missile.profile.interceptor for q in commitments(b,n,t.id,result,world,available,frame=frame))) if p.missile.profile.interceptor else ()
-        updated=prepare(p,world,b._sides,replace(environment,unavailable_targets=unavailable))
+        n=sources[p.ship_id];profile=p.missile.profile;side=b._sides[n]
+        unavailable=tuple(t.id for t in targets if reservations.occupied(n,t.id,p.id)) if profile.interceptor else ()
+        # These gates cannot depend on missile pose or seeker memory. Keep
+        # original order and decoys; range, cone, layers, fields and threat
+        # validation still run on each remaining contact for each missile.
+        key=side,profile.interceptor,tuple(profile.target_kinds),profile.seeker=='anti_radiation'
+        if key not in contacts:
+            contacts[key]=tuple(t for t in environment.contacts if t.side!=side
+                and (t.decoy or can_target(profile,t.kind))
+                and (not profile.interceptor or t.decoy or t.durability is not None and t.durability>0)
+                and (profile.seeker!='anti_radiation' or t.emitting))
+        updated=prepare(p,world,b._sides,replace(environment,contacts=contacts[key],unavailable_targets=unavailable))
         result[i]=reservation(updated,world.fixed_step)
+        reservations.replace(i,result[i])
     return result
 
 

@@ -1,0 +1,86 @@
+{
+  "case": "mixed-9v9",
+  "steps": 900,
+  "sections": [
+    "world",
+    "guns",
+    "fire_control",
+    "projectiles",
+    "observation",
+    "inventory",
+    "missiles",
+    "aviation",
+    "ew",
+    "defense",
+    "damage",
+    "fire",
+    "personnel",
+    "magazines",
+    "navigation",
+    "height_orders",
+    "departures",
+    "ending"
+  ],
+  "fixture_sha256": "4f7770f4510d15746f7714ae487bca5ff7cc13778ef25dd73207aec0f19f2ce9",
+  "expanded_tape_sha256": "a0b8eda53fffacb6dbfafaea185242fb87b0da2cf152631fec266d48539d5234",
+  "final_load": {
+    "ships": 18,
+    "guns": 26,
+    "projectiles": 91,
+    "missiles": 42,
+    "airborne": 5,
+    "aircraft_sensors": 8,
+    "jammers": 1,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 83,
+    "shared_tracks": 558,
+    "shots": 63,
+    "missile_shots": 69,
+    "hits": 11,
+    "interceptions": 5
+  },
+  "counters": {
+    "reference": {
+      "prepare_all": 900,
+      "commitments": 441865,
+      "guidance.contact": 1640178,
+      "guidance.blocked_channels": 232190,
+      "_segment_aabb_entry_fraction": 1350634,
+      "contacts_on_path": 103970,
+      "segment": 1559226
+    },
+    "candidate": {
+      "prepare_all": 900,
+      "commitments": 26306,
+      "guidance.contact": 380795,
+      "guidance.blocked_channels": 232190,
+      "_segment_aabb_entry_fraction": 1350634,
+      "contacts_on_path": 103970,
+      "segment": 1559226
+    }
+  },
+  "late_601_660": {
+    "reference": {
+      "_segment_aabb_entry_fraction": 153597,
+      "prepare_all": 60,
+      "guidance.contact": 198424,
+      "guidance.blocked_channels": 26021,
+      "commitments": 57851,
+      "contacts_on_path": 12198,
+      "segment": 182925
+    },
+    "candidate": {
+      "_segment_aabb_entry_fraction": 153597,
+      "prepare_all": 60,
+      "guidance.contact": 46429,
+      "guidance.blocked_channels": 26021,
+      "commitments": 3497,
+      "contacts_on_path": 12198,
+      "segment": 182925
+    }
+  },
+  "scope": "Exact authority comparison and diagnostic counts; no performance timings. Epochs normalized; derived caches and wall clocks excluded."
+}
