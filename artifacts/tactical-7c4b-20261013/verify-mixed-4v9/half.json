@@ -1,0 +1,81 @@
+{
+  "case": "mixed-4v9",
+  "variant": "half",
+  "steps": 900,
+  "simulated_s": 15.0,
+  "wall_s": 30.002,
+  "runner_wall_s": 63.922393499989994,
+  "status": {
+    "epoch": "2981377b92354728b536b2f4fed0e498",
+    "fixed_step": 900,
+    "running": true,
+    "generation": 0,
+    "pause_reason": null,
+    "debt_quanta": 0,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 0,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 140,
+    "speed": {
+      "mode": "fixed",
+      "effective": 0.5,
+      "slowed": false,
+      "revision": 0,
+      "active_wall_s": 30.0,
+      "advanced_simulation_s": 15.0,
+      "actual_ratio": 0.5,
+      "step_mean_ms": 0.0,
+      "nonstep_utilization": 0.0,
+      "longest_step_ms": 0.0
+    }
+  },
+  "peak_debt_steps": 1.08,
+  "rate_changes": [
+    {
+      "wall_s": 0.004,
+      "step": 0,
+      "rate": 0.5
+    }
+  ],
+  "rate_wall_s": {
+    "0.5": 30.0
+  },
+  "step": {
+    "mean_ms": 35.17027166662349,
+    "p50_ms": 36.50940000079572,
+    "p95_ms": 55.11669997940771,
+    "p99_ms": 59.97729999944568,
+    "max_ms": 93.87909999350086
+  },
+  "read_and_encode": {
+    "mean_ms": 13.175364705785515,
+    "p50_ms": 12.831699976231903,
+    "p95_ms": 17.056799988495186,
+    "p99_ms": 20.50840001902543,
+    "max_ms": 52.394600003026426
+  },
+  "load": {
+    "ships": 13,
+    "guns": 16,
+    "projectiles": 71,
+    "missiles": 28,
+    "airborne": 5,
+    "aircraft_sensors": 8,
+    "jammers": 1,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 72,
+    "shared_tracks": 285,
+    "shots": 47,
+    "missile_shots": 54,
+    "hits": 12,
+    "interceptions": 4
+  },
+  "error": null,
+  "fixture_sha256": "bd76a24c0219bf4f104612231d2a85228527f9aeddb65f2607e339d196aae262",
+  "expanded_tape_sha256": "4707fc0a1d1601e7793ee1351273f10bf4ca69f0a2628564d979fef131ab16b5",
+  "scope": "Synthetic-clock equivalence against 7b and 7c.4a; timings are not performance results."
+}

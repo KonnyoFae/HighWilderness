@@ -1,0 +1,5 @@
+{
+  "metrics": {},
+  "sample_limit": 2048,
+  "scope": "Instrumented real sidecar. Starts at resume; nested timings must not be added together. Queue residence excludes blocked put; put includes it. stdio excludes browser delivery. Recent percentiles retain at most 2048 samples; count/mean/max cover all recorded samples."
+}

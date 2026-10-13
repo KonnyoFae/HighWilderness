@@ -35,6 +35,9 @@ def create(directory, *, layered=False):
             service.store._write_ship(db, record)
     packet = scene.packet(service); value = packet['scene']; previous = value['revision']
     value['revision'] += 1; value['distance_m'] = 16000 if layered else 50000
+    # This save/restart fixture requires the explicit separation above; it must
+    # not inherit the later automatic-contact default from scene.fresh().
+    value['distance_mode'] = 'manual'
     for side in value['sides']:
         for ship in side['ships']: ship['y_m'] = 0
     scene.save(service, value, previous)

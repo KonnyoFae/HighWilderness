@@ -51,7 +51,8 @@ class ContinuityTests(unittest.TestCase):
 
     def launch(self, identity):
         packet = scene.packet(self.prep)
-        return self.live.deploy_encounter(scene.encounter(self.prep, packet['scene']['revision'], identity))
+        return self.live.deploy_encounter(scene.encounter(self.prep, packet['scene']['revision'], identity,
+            packet['contact_start'].get('input_sha256')))
 
     def order(self, kind, mid=LAUNCHER, **kw):
         b = self.live.gunnery
@@ -90,9 +91,17 @@ class ContinuityTests(unittest.TestCase):
         self.assertEqual(sum(-c['delta'] for c in own['changes'] if c['reason']=='missile_fired'), 2)
         self.assertFalse(b.projectiles); self.assertFalse(b.missiles.pending)
         response_bytes = len(json.dumps(result, ensure_ascii=False, allow_nan=False).encode('utf-8'))
-        self.assertGreater(response_bytes, MAX_RESPONSE_BYTES)
         self.assertLess(response_bytes, MAX_SETTLEMENT_RESPONSE_BYTES)
         self.assertEqual(self.call('settlement', settlement_id=key)['result'], result)
+        # Current resource snapshots are smaller than the original fixture.
+        # Exercise the larger settled-view allowance explicitly rather than
+        # relying on an incidental serialized size of the ship definitions.
+        geometry={**self.live.geometry,'boundary_probe':'x'*MAX_RESPONSE_BYTES}
+        with patch.object(self.live,'geometry',geometry):
+            large=self.live.read()
+            self.assertGreater(len(json.dumps(large,ensure_ascii=False).encode('utf-8')),MAX_RESPONSE_BYTES)
+            with patch('backend.high_wilderness_sidecar.realtime_view.MAX_SETTLEMENT_RESPONSE_BYTES',MAX_RESPONSE_BYTES):
+                with self.assertRaises(ps.ContractError):self.live.read()
         with self.prep.store.connection() as db:
             db.execute("CREATE TRIGGER fail_fleet_save BEFORE INSERT ON ships WHEN NEW.id='instance.ew.ally' BEGIN SELECT RAISE(ABORT,'5i storage failure'); END")
         with self.assertRaisesRegex(ps.ContractError, '5i storage failure'): self.call('save', settlement_id=key)
@@ -156,6 +165,7 @@ class ContinuityTests(unittest.TestCase):
         for version in (1, 2):
             old = ps.clone(result); old['interface'] = f'gaotian.battle-settlement/p3-v{version}'
             old.pop('player_side_id')
+            for field in ('departures','withdrawal_policy','escape_outcomes','aviation_salvage'):old.pop(field,None)
             if version==1: old.pop('wrecks')
             for row in old['ships']: row.pop('side_id'); row.pop('ship_name')
             self.assertEqual(st.validate_result(old), old)

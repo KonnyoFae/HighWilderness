@@ -1,0 +1,81 @@
+{
+  "case": "mixed-4v9-reversed",
+  "variant": "half",
+  "steps": 900,
+  "simulated_s": 15.0,
+  "wall_s": 30.002,
+  "runner_wall_s": 59.101547199999914,
+  "status": {
+    "epoch": "f3dcd90e131c497281f5a24261d9453d",
+    "fixed_step": 900,
+    "running": true,
+    "generation": 0,
+    "pause_reason": null,
+    "debt_quanta": 0,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 2,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 123,
+    "speed": {
+      "mode": "fixed",
+      "effective": 0.5,
+      "slowed": false,
+      "revision": 0,
+      "active_wall_s": 30.0,
+      "advanced_simulation_s": 15.0,
+      "actual_ratio": 0.5,
+      "step_mean_ms": 0.0,
+      "nonstep_utilization": 0.0,
+      "longest_step_ms": 0.0
+    }
+  },
+  "peak_debt_steps": 1.08,
+  "rate_changes": [
+    {
+      "wall_s": 0.004,
+      "step": 0,
+      "rate": 0.5
+    }
+  ],
+  "rate_wall_s": {
+    "0.5": 30.0
+  },
+  "step": {
+    "mean_ms": 29.93645388901415,
+    "p50_ms": 28.40990002732724,
+    "p95_ms": 50.85060000419617,
+    "p99_ms": 63.815000001341105,
+    "max_ms": 105.64019999583252
+  },
+  "read_and_encode": {
+    "mean_ms": 13.887339100204603,
+    "p50_ms": 12.812400003895164,
+    "p95_ms": 21.620699990307912,
+    "p99_ms": 30.443399999057874,
+    "max_ms": 34.97449998394586
+  },
+  "load": {
+    "ships": 13,
+    "guns": 16,
+    "projectiles": 70,
+    "missiles": 29,
+    "airborne": 5,
+    "aircraft_sensors": 8,
+    "jammers": 1,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 40,
+    "shared_tracks": 245,
+    "shots": 59,
+    "missile_shots": 54,
+    "hits": 13,
+    "interceptions": 4
+  },
+  "error": null,
+  "fixture_sha256": "35c4372b74ac69bda8b92d4a0f2fa2dd3527aab4a2d18e6d651b88dd94e3ce59",
+  "expanded_tape_sha256": "79ab3eb517b2ae171102dd0f579453a9fdef48720cc5bc9339aff905a653521c",
+  "scope": "Synthetic-clock equivalence against 7b and 7c.4a; timings are not performance results."
+}

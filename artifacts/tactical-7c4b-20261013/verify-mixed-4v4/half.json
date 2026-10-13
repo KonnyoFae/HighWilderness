@@ -1,0 +1,81 @@
+{
+  "case": "mixed-4v4",
+  "variant": "half",
+  "steps": 900,
+  "simulated_s": 15.0,
+  "wall_s": 30.002,
+  "runner_wall_s": 40.77253019998898,
+  "status": {
+    "epoch": "6f87be075cfd48b6a3e76d5897bdc8f7",
+    "fixed_step": 900,
+    "running": true,
+    "generation": 0,
+    "pause_reason": null,
+    "debt_quanta": 0,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 0,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 52,
+    "speed": {
+      "mode": "fixed",
+      "effective": 0.5,
+      "slowed": false,
+      "revision": 0,
+      "active_wall_s": 30.0,
+      "advanced_simulation_s": 15.0,
+      "actual_ratio": 0.5,
+      "step_mean_ms": 0.0,
+      "nonstep_utilization": 0.0,
+      "longest_step_ms": 0.0
+    }
+  },
+  "peak_debt_steps": 1.08,
+  "rate_changes": [
+    {
+      "wall_s": 0.004,
+      "step": 0,
+      "rate": 0.5
+    }
+  ],
+  "rate_wall_s": {
+    "0.5": 30.0
+  },
+  "step": {
+    "mean_ms": 21.006945444516735,
+    "p50_ms": 20.079700014321133,
+    "p95_ms": 32.31939999386668,
+    "p99_ms": 36.369500012369826,
+    "max_ms": 64.8102999839466
+  },
+  "read_and_encode": {
+    "mean_ms": 9.596105535763595,
+    "p50_ms": 8.659000013722107,
+    "p95_ms": 14.271599997300655,
+    "p99_ms": 28.786999988369644,
+    "max_ms": 48.64740002085455
+  },
+  "load": {
+    "ships": 8,
+    "guns": 6,
+    "projectiles": 59,
+    "missiles": 20,
+    "airborne": 6,
+    "aircraft_sensors": 10,
+    "jammers": 2,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 20,
+    "shared_tracks": 144,
+    "shots": 47,
+    "missile_shots": 36,
+    "hits": 8,
+    "interceptions": 3
+  },
+  "error": null,
+  "fixture_sha256": "037a402facffbec2c4aa9586d0e90dbaf11eb2b5aa32916704935f7218a9fdbe",
+  "expanded_tape_sha256": "b3d1403297dd9d2ca2036297ee9c6c501678041469c21758e79f27d0cd4af7a6",
+  "scope": "Synthetic-clock equivalence against 7b and 7c.4a; timings are not performance results."
+}

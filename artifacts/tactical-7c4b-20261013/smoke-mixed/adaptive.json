@@ -1,0 +1,81 @@
+{
+  "case": "mixed-9v9",
+  "variant": "adaptive",
+  "steps": 24,
+  "simulated_s": 0.4,
+  "wall_s": 0.408,
+  "runner_wall_s": 1.1465127000119537,
+  "status": {
+    "epoch": "20363b1210ec4f9ca8ab7d71b3f67893",
+    "fixed_step": 24,
+    "running": true,
+    "generation": 0,
+    "pause_reason": null,
+    "debt_quanta": 360000000,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 3,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 7,
+    "speed": {
+      "mode": "adaptive",
+      "effective": 1.0,
+      "slowed": false,
+      "revision": 0,
+      "active_wall_s": 0.406,
+      "advanced_simulation_s": 0.4,
+      "actual_ratio": 0.9852216748768473,
+      "step_mean_ms": 5.0,
+      "nonstep_utilization": 0.02015533980582524,
+      "longest_step_ms": 5.0
+    }
+  },
+  "peak_debt_steps": 1.08,
+  "rate_changes": [
+    {
+      "wall_s": 0.004,
+      "step": 0,
+      "rate": 1.0
+    }
+  ],
+  "rate_wall_s": {
+    "1.0": 0.406
+  },
+  "step": {
+    "mean_ms": 17.58815000236306,
+    "p50_ms": 16.535100003238767,
+    "p95_ms": 22.162299981573597,
+    "p99_ms": 22.749299998395145,
+    "max_ms": 23.2362000097055
+  },
+  "read_and_encode": {
+    "mean_ms": 11.431199993239716,
+    "p50_ms": 11.696400004439056,
+    "p95_ms": 11.904199986020103,
+    "p99_ms": 11.904199986020103,
+    "max_ms": 13.008099980652332
+  },
+  "load": {
+    "ships": 18,
+    "guns": 26,
+    "projectiles": 3,
+    "missiles": 3,
+    "airborne": 4,
+    "aircraft_sensors": 8,
+    "jammers": 2,
+    "jobs": 6,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 37,
+    "shared_tracks": 216,
+    "shots": 0,
+    "missile_shots": 5,
+    "hits": 0,
+    "interceptions": 0
+  },
+  "error": null,
+  "fixture_sha256": "4f7770f4510d15746f7714ae487bca5ff7cc13778ef25dd73207aec0f19f2ce9",
+  "expanded_tape_sha256": "20a90bd1f03a883b25e08158afa927461ee98bee05371cb81d4c3d618f6d52e8",
+  "scope": "Synthetic-clock equivalence against 7b and 7c.4a; timings are not performance results."
+}

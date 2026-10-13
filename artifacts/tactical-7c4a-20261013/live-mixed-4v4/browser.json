@@ -1,0 +1,119 @@
+{
+  "source": "G:\\高天荒野\\artifacts\\tactical-7b-20261009\\mixed-4v4",
+  "variant": "candidate",
+  "scope": "Instrumented headless Edge / Vite development build / Node stdio bridge. Nested timings must not be added. Browser bridge includes Playwright serialization/delivery overhead. No native Tauri/GPU completion or battle-command latency claim.",
+  "browser": "155.0.4283.45",
+  "wallMs": 4509.8341999999975,
+  "finalStatus": {
+    "acknowledged_event_sequence": 37,
+    "debt_quanta": 15508072000,
+    "epoch": "8ae9a9a4dd7f4b0caa9469b358d1c9f3",
+    "fixed_step": 248,
+    "generation": 1,
+    "highest_input_sequence": 0,
+    "pause_reason": "overload",
+    "pending_inputs": 0,
+    "reliable_events": 0,
+    "retained_receipts": 0,
+    "running": false
+  },
+  "nodeResponseParse": {
+    "count": 41,
+    "meanMs": 0.6641268292685975,
+    "p95Ms": 0.94629999999961,
+    "maxMs": 1.1410999999970954
+  },
+  "selectionClickThroughTwoFramesMs": 27.69999998807907,
+  "metrics": {
+    "browserBridge.tactical.realtime.read": {
+      "count": 38,
+      "meanMs": 99.39999999890202,
+      "p95Ms": 130.7999999821186,
+      "maxMs": 143.69999998807907
+    },
+    "merge": {
+      "count": 39,
+      "meanMs": 0.11538461691293961,
+      "p95Ms": 0.20000001788139343,
+      "maxMs": 0.30000001192092896
+    },
+    "sampling": {
+      "count": 829,
+      "meanMs": 0.0972255730801526,
+      "p95Ms": 0.20000001788139343,
+      "maxMs": 0.7000000178813934
+    },
+    "renderSubmission": {
+      "count": 829,
+      "meanMs": 0.5227985526238477,
+      "p95Ms": 0.7999999821186066,
+      "maxMs": 1.5999999940395355
+    },
+    "browserBridge.tactical.realtime.resume": {
+      "count": 1,
+      "meanMs": 49.900000005960464,
+      "p95Ms": 49.900000005960464,
+      "maxMs": 49.900000005960464
+    },
+    "frameCPU": {
+      "count": 791,
+      "meanMs": 1.6198482934277216,
+      "p95Ms": 2.4000000059604645,
+      "maxMs": 5.199999988079071
+    },
+    "frameInterval": {
+      "count": 790,
+      "meanMs": 5.795063291139241,
+      "p95Ms": 16.600000000000364,
+      "maxMs": 33.20000000000073
+    }
+  },
+  "requests": {
+    "tactical.realtime.read": {
+      "count": 40,
+      "meanMs": 39.196530000000074,
+      "p95Ms": 62.25619999999981,
+      "maxMs": 64.6862000000001
+    },
+    "tactical.realtime.resume": {
+      "count": 1,
+      "meanMs": 10.472499999999854,
+      "p95Ms": 10.472499999999854,
+      "maxMs": 10.472499999999854
+    }
+  },
+  "peakResponseBytes": 170516,
+  "heap": [
+    {
+      "label": "paused-entry",
+      "usedSize": 14984564,
+      "totalSize": 16154624,
+      "embedderHeapUsedSize": 1244632,
+      "backingStorageSize": 12745835,
+      "documents": 1,
+      "nodes": 87,
+      "jsEventListeners": 170
+    },
+    {
+      "label": "paused-end",
+      "usedSize": 26593564,
+      "totalSize": 29470720,
+      "embedderHeapUsedSize": 3218768,
+      "backingStorageSize": 13186903,
+      "documents": 6,
+      "nodes": 1450,
+      "jsEventListeners": 362
+    },
+    {
+      "label": "unmounted",
+      "usedSize": 1165140,
+      "totalSize": 2883584,
+      "embedderHeapUsedSize": 878872,
+      "backingStorageSize": 252,
+      "documents": 6,
+      "nodes": 48,
+      "jsEventListeners": 0
+    }
+  ],
+  "errors": []
+}

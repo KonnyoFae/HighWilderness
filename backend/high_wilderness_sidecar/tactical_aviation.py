@@ -7,6 +7,7 @@ from . import aviation_ew
 class AviationRuntime:
     def __init__(self,battle):
         self.battle=battle;self.sequence=0;self.last=None;self.flights={};self.recent=()
+        self._view_profiles={}
         from . import aviation_combat,aviation_weapons
         if battle.damage:
             compiled={}
@@ -59,15 +60,17 @@ class AviationRuntime:
         self.sequence,self.last=v['sequence'],v
         return True
 
-    def view(self):
+    def view(self, *, inventory_summaries=None):
+        from .view_cache import definition
         b=self.battle;ships=[];own=b._sides[b._direct_index];flights=[];known={}
         for n,inv in enumerate(b.inventory.inventories):
             if 'aviation' not in inv._definition or b._sides[n]!=b._sides[b._direct_index]:continue
             p=inv._definition['aviation']
             if not p['facilities'] and not inv._value['aviation']['manifest']['aircraft']:continue
-            ships.append(dict(ship_id=b.session.world.ships[n].ship_id,profile=ps.clone(p),state=ps.clone(inv._value['aviation']),
+            ships.append(dict(ship_id=b.session.world.ships[n].ship_id,
+                profile=definition(self._view_profiles,n,inv.pack.definition_json,lambda:p),state=ps.clone(inv._value['aviation']),
                 module_names={m.id:m.prototype.name for m in inv.pack.seed.resources.modules},
-                cargo=ps.clone(inv._value['cargo']),capacity=inv.summary()))
+                cargo=ps.clone(inv._value['cargo']),capacity=inv.summary() if inventory_summaries is None else inventory_summaries[n]))
         for key,f in self.flights.items():
             if b._sides[f['owner']]!=own:continue
             a=flight.plane(b.inventory.inventories[f['owner']],key)

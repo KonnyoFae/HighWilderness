@@ -10,7 +10,7 @@ import type { TacticalRequest, TacticalView } from "./model";
 import { SCENARIO_ID } from "./model";
 import { makeHelmControl, NOTCHES } from "./control";
 import type { HelmDraft, Notch } from "./control";
-import { acceptRealtime, pauseLabel, receiptLabel } from "./realtime";
+import { acceptRealtime, controlTargetStep, runningLabel, receiptLabel } from "./realtime";
 import type { RealtimeEnvelope } from "./realtime";
 import { SettlementPanel } from "./SettlementPanel";
 import type { SettlementEnvelope, SettlementLibrary } from "./settlement";
@@ -211,9 +211,11 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   async function read() {
     const current = latest.current;
     if (!current.state) return;
+    const started=performance.now();
     accept(await call<RealtimeEnvelope>("tactical.realtime.read", { scene_id: current.state.status.epoch,
       known_static_sha256: current.view?.snapshot.static_sha256 ?? null, ack_inputs: ack.current.inputs, ack_events: ack.current.event,
       display:{interface:PROJECTILE_STREAM,after_sequence:projectileStream.current.cursor()} }));
+    return performance.now()-started;
   }
   useEffect(() => {
     if (!active) return;
@@ -252,14 +254,14 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       const scene_id = latest.current.state.status.epoch;
       if (kind === "control") {
         if (unknown.current !== null || helm && helmPendingRef.current!==null) return;
-        await read(); // fresh target; never retarget an input after sending it
+        const readWallMs=await read(); // fresh target; never retarget an input after sending it
         const current = latest.current.state!;
         if (!current.status.running || !current.available) throw new Error("请先开始试航，并确认旗舰仍可操纵。");
         const sequence = current.status.highest_input_sequence + 1;
         unknown.current = sequence; setUncertain(sequence);
         const input = { interface: "gaotian.tactical-scheduled-control/e3a-v1alpha1", epoch: scene_id,
           generation: current.status.generation, sequence, ship_id: current.direct_ship_id,
-          target_step: current.status.fixed_step + 2, control: helm ? helmControl(helm) : makeHelmControl(draft, turn) };
+          target_step: controlTargetStep(current.status,readWallMs??0), control: helm ? helmControl(helm) : makeHelmControl(draft, turn) };
         if(helm){helmPendingRef.current=sequence;setHelmPending(sequence);}
         const result = await call<{ status: string }>("tactical.realtime.control", { scene_id, input });
         unknown.current = null; setUncertain(null);
@@ -476,7 +478,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
   };
   if (battleLayout) return <section className="panel tactical-panel battle-workspace canvas-workspace" aria-label="战术战场">
     <header className="battle-toolbar">
-      <div><h2>{view ? "舰队交战" : "正在部署舰队"}</h2>{state&&<small>{state.status.running?'运行中':pauseLabel[state.status.pause_reason??'']??'已暂停'} · {(state.status.fixed_step/60).toFixed(1)} 秒</small>}</div>
+      <div><h2>{view ? "舰队交战" : "正在部署舰队"}</h2>{state&&<small>{runningLabel(state.status)} · {(state.status.fixed_step/60).toFixed(1)} 秒</small>}</div>
       <div className="editor-row">
         {!state && <button disabled={busy || !active} onClick={() => void action("create")}>重试进入战场</button>}
         <button disabled={busy || !state || state.status.running || !!state.settlement} onClick={() => void action("resume")}>开始交战</button>
@@ -693,7 +695,7 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
     {receipt && <p role="status">{receipt}</p>}
     {uncertain !== null && <p role="alert">操纵 {uncertain} 的结果尚未确认，正在查询；不会自动重发。</p>}
     {gunUncertain !== null && <p role="alert">火炮命令 {gunUncertain} 尚待确认，正在查询；不会自动重发射击。</p>}
-    {state && <p className="editor-summary">{state.status.running ? "运行中" : pauseLabel[state.status.pause_reason ?? ""] ?? "已暂停"} · 第 {state.status.fixed_step} 步 · {(state.status.fixed_step / 60).toFixed(2)} 秒</p>}
+    {state && <p className="editor-summary">{runningLabel(state.status)} · 第 {state.status.fixed_step} 步 · {(state.status.fixed_step / 60).toFixed(2)} 秒</p>}
     {state && !state.available && !view?.snapshot.gunnery?.ending && !view?.snapshot.navigation?.disengagement?.departed_ship_ids.includes(state.direct_ship_id) && <p role="alert">旗舰已失去操纵权。{state.loss_reason === "direct_ship_falling" ? "舰艇正在坠落。" : "后续操纵已取消。"}</p>}
     <fieldset className="realtime-helm" disabled={busy || !active || !state?.status.running || !state.available || uncertain !== null}>
       <div className="editor-row">

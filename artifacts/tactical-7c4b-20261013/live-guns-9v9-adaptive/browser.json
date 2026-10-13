@@ -1,0 +1,259 @@
+{
+  "source": "G:\\高天荒野\\artifacts\\tactical-7b-20261009\\guns-9v9",
+  "variant": "adaptive",
+  "scope": "Headless Edge / Vite / Node bridge. Adaptive run includes up to six UI helm orders, so its state is not compared with the fixed run. Command timings start at browser bridge submission; canvas timing means render submission after the resolved authority step, not native/GPU completion. All latency is wall milliseconds.",
+  "browser": "155.0.4283.45",
+  "wallMs": 30110.3943,
+  "finalStatus": {
+    "acknowledged_event_sequence": 225,
+    "debt_quanta": 548059534,
+    "epoch": "58a52d2811cd4dc3831772c7cd036e74",
+    "fixed_step": 596,
+    "generation": 0,
+    "highest_input_sequence": 6,
+    "pause_reason": null,
+    "pending_inputs": 0,
+    "reliable_events": 1,
+    "retained_receipts": 0,
+    "running": true,
+    "speed": {
+      "active_wall_s": 30.0078591,
+      "actual_ratio": 0.33102439265096834,
+      "advanced_simulation_s": 9.933333333333334,
+      "effective": 0.226,
+      "longest_step_ms": 52.4378,
+      "mode": "adaptive",
+      "nonstep_utilization": 0.22259245429878416,
+      "revision": 51,
+      "slowed": true,
+      "step_mean_ms": 25.80193909383784
+    }
+  },
+  "commands": [
+    {
+      "sequence": 1,
+      "targetStep": 73,
+      "submitted": 21388.600000023842,
+      "replyMs": 22,
+      "replyStatus": "accepted",
+      "receiptMs": 299.69999998807907,
+      "status": "executed",
+      "resolvedStep": 74,
+      "domMs": 324.09999999403954,
+      "canvasMs": 602.5999999940395,
+      "shownStep": 74.10198399929031
+    },
+    {
+      "sequence": 2,
+      "targetStep": 148,
+      "submitted": 24324,
+      "replyMs": 22,
+      "replyStatus": "accepted",
+      "receiptMs": 316.40000000596046,
+      "status": "executed",
+      "resolvedStep": 149,
+      "domMs": 343.7000000178814,
+      "canvasMs": 703.8000000119209,
+      "shownStep": 149.0759679993333
+    },
+    {
+      "sequence": 3,
+      "targetStep": 207,
+      "submitted": 27118.40000000596,
+      "replyMs": 27.80000001192093,
+      "replyStatus": "accepted",
+      "receiptMs": 352.2000000178814,
+      "status": "executed",
+      "resolvedStep": 208,
+      "domMs": 376.80000001192093,
+      "canvasMs": 779.0999999940395,
+      "shownStep": 208.06118799942803
+    },
+    {
+      "sequence": 4,
+      "targetStep": 260,
+      "submitted": 30021.5,
+      "replyMs": 26.700000017881393,
+      "replyStatus": "accepted",
+      "receiptMs": 353.30000001192093,
+      "status": "executed",
+      "resolvedStep": 261,
+      "domMs": 389.2000000178814,
+      "canvasMs": 843,
+      "shownStep": 261.933831999412
+    },
+    {
+      "sequence": 5,
+      "targetStep": 316,
+      "submitted": 32915.5,
+      "replyMs": 21.900000005960464,
+      "replyStatus": "accepted",
+      "receiptMs": 329.90000000596046,
+      "status": "executed",
+      "resolvedStep": 317,
+      "domMs": 356.40000000596046,
+      "canvasMs": 865.4000000059605,
+      "shownStep": 317.03928999942184
+    },
+    {
+      "sequence": 6,
+      "targetStep": 366,
+      "submitted": 35712.70000001788,
+      "replyMs": 22.5,
+      "replyStatus": "accepted",
+      "receiptMs": 389.2999999821186,
+      "status": "executed",
+      "resolvedStep": 367,
+      "domMs": 415.90000000596046,
+      "canvasMs": 728.0999999940395,
+      "shownStep": 367.16252199933274
+    }
+  ],
+  "commandSummary": {
+    "submitted": 6,
+    "rejected": 0,
+    "executed": 6,
+    "reply": {
+      "count": 6,
+      "meanMs": 23.816666672627132,
+      "p95Ms": 26.700000017881393,
+      "maxMs": 27.80000001192093
+    },
+    "receipt": {
+      "count": 6,
+      "meanMs": 340.1333333353202,
+      "p95Ms": 353.30000001192093,
+      "maxMs": 389.2999999821186
+    },
+    "dom": {
+      "count": 6,
+      "meanMs": 367.683333342274,
+      "p95Ms": 389.2000000178814,
+      "maxMs": 415.90000000596046
+    },
+    "canvas": {
+      "count": 6,
+      "meanMs": 753.6666666666666,
+      "p95Ms": 843,
+      "maxMs": 865.4000000059605
+    }
+  },
+  "runningText": "01 战前准备\n02 交战与结算\n\n准备舰队 · 指定旗舰 · 保存战果\n\n清空战术测试数据\n舰队交战\n自动降速 · 0.23× · 9.9 秒\n开始交战\n暂停交战\n结束本场交战（测试）\n\n操纵 6：已执行\n\n舰队\n01\n●\n7b player.0 · gun · 旗舰\n02\n●\n7b player.1 · gun\n03\n●\n7b player.2 · gun\n04\n●\n7b player.3 · gun\n05\n●\n7b player.4 · gun\n06\n●\n7b player.5 · gun\n07\n●\n7b player.6 · gun\n08\n●\n7b player.7 · gun\n09\n●\n7b player.8 · gun\n☷\n视图与观察层\n1000 m\n小格 50 m\n参考线 500 m\n主参考线 5 km\nX -5 km\nX 0 m\nX 5 km\nY 0 m\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n观察切换不改变舰艇高度与火炮作用层。\n战场操作说明\n旗舰 · 7b player.0 · gun\n0.0 m/s · -0.0 °/s\n推进与转向\n前进\n倒车\n制动\n↶ 左转\n半速\n全速\n全速\n¾\n½\n¼\n微速\n停车\n右转 ↷\n半速\n全速\n\n自动回正中 · 正在消除角速度\n\n再次点击当前转向档位自动回正；只消除角速度，不返回原航向。停车保留惯性，制动同时回正。\n\n实际高度：上层\n\n前往上层\n前往云层\n前往雨层\n取消换层\n⌖\n舰务\n7b player.0 · gun\n舰况\n损管\n货舱\n舰队命令\n\n旗舰使用独立操纵区\n\n旗舰距离 6.00 公里 · 脱离阈值 50 公里\n\n整队撤离机动\n\n升力冗余 +36.9% · 仍有余量\n\n干重 2,234 吨 · 可用升力 30,000 kN\n按干重计算，挂载与货物不计入。\n换层指令\n\n实际高度：上层\n\n主动换层相邻层 5 公里 · 入战基准 1 分 14.3 秒\n当前每段 1 分 14.3 秒\n\n前往上层\n前往云层\n前往雨层\n取消换层\n\n换层与移动、攻击同时执行。更改目标会重新开始本段；取消保留当前实际层。\n\n直控旗舰\n\n航速\n0.0 m/s\n船壳\n97.4%\n高度层\n上层\n转向速度\n-0.0 °/s\n\n结构耐久 28851 / 29620\n\n舰上人员\n\n可执勤 22 · 负伤 0 · 累计阵亡 0\n\n伤员暂不参与岗位分配；本阶段无战中治疗。\n\n人员类别与岗位\n模块状态\n▤\n火控\n操作舰 · 7b player.0 · gun\n\n已知目标 · 双击定位\n\n7b enemy.0 · gun\n跟踪中\n上层 · 1 m/s\n0.1 秒前观测\n7b enemy.1 · gun\n跟踪中\n上层 · 1 m/s\n0.1 秒前观测\n7b enemy.2 · gun\n跟踪中\n上层 · 1 m/s\n0.1 秒前观测\n7b enemy.3 · gun\n跟踪中\n上层 · 1 m/s\n0.1 秒前观测\n7b enemy.4 · gun\n跟踪中\n上层 · 1 m/s\n0.1 秒前观测\n7b enemy.5 · gun\n跟踪中\n上层 · 1 m/s\n0.1 秒前观测\n7b enemy.6 · gun\n跟踪中\n上层 · 1 m/s\n0.1 秒前观测\n7b enemy.7 · gun\n跟踪中\n上层 · 1 m/s\n0.1 秒前观测\n7b enemy.8 · gun\n跟踪中\n上层 · 1 m/s\n0.1 秒前观测\n火炮\n航空\n导弹\n在画布瞄准／指定目标\n旗舰武器组\n50 毫米链炮\n3 门\n单炮细调\n\n请选择武器组。\n\n感知设备\n电子对抗\n⊕\n战场记录",
+  "nodeResponseParse": {
+    "count": 164,
+    "meanMs": 1.0736359756092497,
+    "p95Ms": 1.808499999999185,
+    "maxMs": 3.2269000000014785
+  },
+  "selectionClickThroughTwoFramesMs": 187,
+  "metrics": {
+    "browserBridge.tactical.realtime.read": {
+      "count": 153,
+      "meanMs": 176.3392156859239,
+      "p95Ms": 236,
+      "maxMs": 321.30000001192093
+    },
+    "merge": {
+      "count": 154,
+      "meanMs": 0.805844158321232,
+      "p95Ms": 1.7000000178813934,
+      "maxMs": 4.0999999940395355
+    },
+    "sampling": {
+      "count": 4551,
+      "meanMs": 0.3030323005919665,
+      "p95Ms": 0.5999999940395355,
+      "maxMs": 2.300000011920929
+    },
+    "renderSubmission": {
+      "count": 4551,
+      "meanMs": 1.0943528893386314,
+      "p95Ms": 1.699999988079071,
+      "maxMs": 4.5
+    },
+    "browserBridge.tactical.realtime.resume": {
+      "count": 1,
+      "meanMs": 85.30000001192093,
+      "p95Ms": 85.30000001192093,
+      "maxMs": 85.30000001192093
+    },
+    "frameCPU": {
+      "count": 4397,
+      "meanMs": 3.8001137136030336,
+      "p95Ms": 6.0999999940395355,
+      "maxMs": 26.900000005960464
+    },
+    "frameInterval": {
+      "count": 4396,
+      "meanMs": 7.012192902638763,
+      "p95Ms": 16.700000000004366,
+      "maxMs": 87.5
+    },
+    "browserBridge.tactical.realtime.control": {
+      "count": 6,
+      "meanMs": 23.816666672627132,
+      "p95Ms": 26.700000017881393,
+      "maxMs": 27.80000001192093
+    }
+  },
+  "requests": {
+    "tactical.realtime.read": {
+      "count": 156,
+      "meanMs": 39.21246025641038,
+      "p95Ms": 66.53080000000045,
+      "maxMs": 111.01870000000054
+    },
+    "tactical.realtime.resume": {
+      "count": 1,
+      "meanMs": 14.403100000003178,
+      "p95Ms": 14.403100000003178,
+      "maxMs": 14.403100000003178
+    },
+    "tactical.realtime.control": {
+      "count": 6,
+      "meanMs": 5.875516666666347,
+      "p95Ms": 10.239600000000792,
+      "maxMs": 14.997499999997672
+    },
+    "tactical.realtime.pause": {
+      "count": 1,
+      "meanMs": 87.62999999999738,
+      "p95Ms": 87.62999999999738,
+      "maxMs": 87.62999999999738
+    }
+  },
+  "peakResponseBytes": 815741,
+  "heap": [
+    {
+      "label": "paused-entry",
+      "usedSize": 15065684,
+      "totalSize": 16678912,
+      "embedderHeapUsedSize": 1281776,
+      "backingStorageSize": 12754680,
+      "documents": 1,
+      "nodes": 87,
+      "jsEventListeners": 170
+    },
+    {
+      "label": "paused-end",
+      "usedSize": 37369104,
+      "totalSize": 42971136,
+      "embedderHeapUsedSize": 4367160,
+      "backingStorageSize": 13405581,
+      "documents": 6,
+      "nodes": 1742,
+      "jsEventListeners": 384
+    },
+    {
+      "label": "unmounted",
+      "usedSize": 1168552,
+      "totalSize": 3145728,
+      "embedderHeapUsedSize": 870536,
+      "backingStorageSize": 261,
+      "documents": 6,
+      "nodes": 48,
+      "jsEventListeners": 0
+    }
+  ],
+  "errors": []
+}

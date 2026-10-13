@@ -1,0 +1,162 @@
+{
+  "source": "G:\\高天荒野\\artifacts\\tactical-7b-20261009\\mixed-9v9",
+  "variant": "fixed",
+  "scope": "Headless Edge / Vite / Node bridge. Adaptive run includes up to six UI helm orders, so its state is not compared with the fixed run. Command timings start at browser bridge submission; canvas timing means render submission after the resolved authority step, not native/GPU completion. All latency is wall milliseconds.",
+  "browser": "155.0.4283.45",
+  "wallMs": 1239.5959000000003,
+  "finalStatus": {
+    "acknowledged_event_sequence": 14,
+    "debt_quanta": 18622454000,
+    "epoch": "8f363c76aabf4dbbab095e39fc961673",
+    "fixed_step": 37,
+    "generation": 1,
+    "highest_input_sequence": 0,
+    "pause_reason": "overload",
+    "pending_inputs": 0,
+    "reliable_events": 0,
+    "retained_receipts": 0,
+    "running": false,
+    "speed": {
+      "active_wall_s": 0.9270409,
+      "actual_ratio": 0.6651989860066224,
+      "advanced_simulation_s": 0.6166666666666667,
+      "effective": 1,
+      "longest_step_ms": 25.5439,
+      "mode": "fixed",
+      "nonstep_utilization": 0,
+      "revision": 0,
+      "slowed": false,
+      "step_mean_ms": 18.731761530930843
+    }
+  },
+  "commands": [],
+  "commandSummary": {
+    "submitted": 0,
+    "rejected": 0,
+    "executed": 0,
+    "reply": {
+      "count": 0,
+      "meanMs": null,
+      "p95Ms": null,
+      "maxMs": null
+    },
+    "receipt": {
+      "count": 0,
+      "meanMs": null,
+      "p95Ms": null,
+      "maxMs": null
+    },
+    "dom": {
+      "count": 0,
+      "meanMs": null,
+      "p95Ms": null,
+      "maxMs": null
+    },
+    "canvas": {
+      "count": 0,
+      "meanMs": null,
+      "p95Ms": null,
+      "maxMs": null
+    }
+  },
+  "runningText": "01 战前准备\n02 交战与结算\n\n准备舰队 · 指定旗舰 · 保存战果\n\n清空战术测试数据\n舰队交战\n运行中 · 0.6 秒\n开始交战\n暂停交战\n结束本场交战（测试）\n7b player.0 · defense · 1 个撞舰威胁 ›\n7b player.3 · strike · 1 个撞舰威胁 ›\n舰队\n01\n●\n7b player.0 · defense · 旗舰\n02\n●\n7b player.1 · missile\n03\n●\n7b player.2 · e1\n04\n●\n7b player.3 · strike\n05\n●\n7b player.4 · gun\n06\n●\n7b player.5 · gun\n07\n●\n7b player.6 · missile\n08\n●\n7b player.7 · defense\n09\n●\n7b player.8 · gun\n☷\n视图与观察层\n1000 m\n箔条 × 4\n热能烟雾 × 4\n小格 50 m\n参考线 500 m\n主参考线 5 km\nX -5 km\nX 0 m\nX 5 km\nY 0 m\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n●\n◌\n◌\n◌\n◌\n◌\n观察切换不改变舰艇高度与火炮作用层。\n战场操作说明\n旗舰 · 7b player.0 · defense\n0.0 m/s · 0.0 °/s\n推进与转向\n前进\n倒车\n制动\n↶ 左转\n半速\n全速\n全速\n¾\n½\n¼\n微速\n停车\n右转 ↷\n半速\n全速\n\n未施加转向指令\n\n再次点击当前转向档位自动回正；只消除角速度，不返回原航向。停车保留惯性，制动同时回正。\n\n实际高度：上层\n\n前往上层\n前往云层\n前往雨层\n取消换层\n⌖\n舰务\n7b player.0 · defense\n舰况\n损管\n货舱\n舰队命令\n\n旗舰使用独立操纵区\n\n旗舰距离 6.00 公里 · 脱离阈值 50 公里\n\n整队撤离机动\n\n升力冗余 +36.6% · 仍有余量\n\n干重 2,239.1 吨 · 可用升力 30,000 kN\n按干重计算，挂载与货物不计入。\n换层指令\n\n实际高度：上层\n\n主动换层相邻层 5 公里 · 入战基准 1 分 14.6 秒\n当前每段 1 分 14.6 秒\n\n前往上层\n前往云层\n前往雨层\n取消换层\n\n换层与移动、攻击同时执行。更改目标会重新开始本段；取消保留当前实际层。\n\n直控旗舰\n\n航速\n0.0 m/s\n船壳\n100.0%\n高度层\n上层\n转向速度\n0.0 °/s\n\n结构耐久 29620 / 29620\n\n舰上人员\n\n可执勤 21 · 负伤 0 · 累计阵亡 0\n\n伤员暂不参与岗位分配；本阶段无战中治疗。\n\n人员类别与岗位\n模块状态\n▤\n火控\n操作舰 · 7b player.0 · defense\n\n已知目标 · 双击定位\n\n导弹 #7\n跟踪中\n上层 · 930 m/s\n0.1 秒前观测\n敌机 #instance.7b.enemy.2.aviation.aircraft.1\n跟踪中\n上层 · 135 m/s\n0.1 秒前观测\n7b enemy.2 · e1\n跟踪中\n上层 · 0 m/s\n0.1 秒前观测\n7b enemy.5 · gun\n跟踪中\n上层 · 0 m/s\n0.1 秒前观测\n7b enemy.4 · gun\n跟踪中\n上层 · 0 m/s\n0.1 秒前观测\n7b enemy.7 · defense\n跟踪中\n上层 · 0 m/s\n0.1 秒前观测\n7b enemy.0 · defense\n已失联\n上层 · 0 m/s\n0.6 秒前观测\n敌机 #instance.7b.enemy.3.aviation.aircraft.1\n已失联\n上层 · 120 m/s\n0.6 秒前观测\n7b enemy.1 · missile\n已失联\n上层 · 0 m/s\n0.6 秒前观测\n7b enemy.3 · strike\n已失联\n上层 · 0 m/s\n0.6 秒前观测\n7b enemy.6 · missile\n已失联\n上层 · 0 m/s\n0.6 秒前观测\n7b enemy.8 · gun\n已失联\n上层 · 0 m/s\n0.6 秒前观测\n火炮\n航空\n导弹\n在画布瞄准／指定目标\n旗舰武器组\n红外自持火控30毫米近防炮\n1 门\n单炮细调\n\n请选择武器组。\n\n感知设备\n电子对抗\n⊕\n战场记录",
+  "nodeResponseParse": {
+    "count": 13,
+    "meanMs": 0.881330769230072,
+    "p95Ms": 1.09599999999773,
+    "maxMs": 1.1473000000005413
+  },
+  "selectionClickThroughTwoFramesMs": 23.30000001192093,
+  "metrics": {
+    "sampling": {
+      "count": 172,
+      "meanMs": 0.11627906890109528,
+      "p95Ms": 0.20000001788139343,
+      "maxMs": 0.699999988079071
+    },
+    "renderSubmission": {
+      "count": 172,
+      "meanMs": 0.7633720922262169,
+      "p95Ms": 1.199999988079071,
+      "maxMs": 1.5999999940395355
+    },
+    "browserBridge.tactical.realtime.read": {
+      "count": 10,
+      "meanMs": 156.4199999988079,
+      "p95Ms": 196.59999999403954,
+      "maxMs": 295.59999999403954
+    },
+    "merge": {
+      "count": 11,
+      "meanMs": 0.027272728356448086,
+      "p95Ms": 0.09999999403953552,
+      "maxMs": 0.10000002384185791
+    },
+    "browserBridge.tactical.realtime.resume": {
+      "count": 1,
+      "meanMs": 112,
+      "p95Ms": 112,
+      "maxMs": 112
+    },
+    "frameCPU": {
+      "count": 161,
+      "meanMs": 2.5739130416642064,
+      "p95Ms": 4.0999999940395355,
+      "maxMs": 5.799999982118607
+    },
+    "frameInterval": {
+      "count": 160,
+      "meanMs": 6.665625,
+      "p95Ms": 12.599999999998545,
+      "maxMs": 45.900000000001455
+    }
+  },
+  "requests": {
+    "tactical.realtime.read": {
+      "count": 12,
+      "meanMs": 35.257241666666836,
+      "p95Ms": 60.274600000000646,
+      "maxMs": 85.25249999999869
+    },
+    "tactical.realtime.resume": {
+      "count": 1,
+      "meanMs": 33.625599999999395,
+      "p95Ms": 33.625599999999395,
+      "maxMs": 33.625599999999395
+    }
+  },
+  "peakResponseBytes": 339596,
+  "heap": [
+    {
+      "label": "paused-entry",
+      "usedSize": 15073984,
+      "totalSize": 16678912,
+      "embedderHeapUsedSize": 1284032,
+      "backingStorageSize": 12754691,
+      "documents": 1,
+      "nodes": 87,
+      "jsEventListeners": 170
+    },
+    {
+      "label": "paused-end",
+      "usedSize": 31094944,
+      "totalSize": 34967552,
+      "embedderHeapUsedSize": 3512272,
+      "backingStorageSize": 13570753,
+      "documents": 6,
+      "nodes": 1717,
+      "jsEventListeners": 400
+    },
+    {
+      "label": "unmounted",
+      "usedSize": 1165056,
+      "totalSize": 3670016,
+      "embedderHeapUsedSize": 875312,
+      "backingStorageSize": 257,
+      "documents": 6,
+      "nodes": 48,
+      "jsEventListeners": 0
+    }
+  ],
+  "errors": []
+}

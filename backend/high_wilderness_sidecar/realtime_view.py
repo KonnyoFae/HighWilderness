@@ -15,6 +15,7 @@ from 高天荒野舰艇数据契约 import canonical_sha256
 from .simplified_flight import build_sample_session
 from .tactical_scheduler import TacticalScheduler, ScheduledControl, require, count
 from .tactical_scheduler import QUANTA
+from .tactical_speed import SpeedPolicy
 from .tactical import render_static, RENDER_INTERFACE
 from .tactical_scenario import build_two_ship_scenario, SCENARIO_ID
 from .tactical_gunnery import GunneryBattle, prepare_trial_session
@@ -35,10 +36,11 @@ MAX_SETTLEMENT_RESPONSE_BYTES = 4*1024*1024
 
 
 class RealtimeViewService:
-    def __init__(self, instance_id, root=None, *, clock=monotonic_ns, settlement_dir=None):
+    def __init__(self, instance_id, root=None, *, clock=monotonic_ns, settlement_dir=None, speed_policy=SpeedPolicy(mode='adaptive')):
         self.instance_id = instance_id
         self.root = Path(root) if root else Path(__file__).resolve().parents[2]
         self.clock = clock
+        self.speed_policy = speed_policy
         self.scheduler = None
         self.gunnery = None
         self.latest = self.geometry = self.digest = None
@@ -150,6 +152,7 @@ class RealtimeViewService:
     def tick(self):
         if self.scheduler is None:
             return
+        work=self.begin_work()
         try:
             if self.running and self.clock()-self.last_read > LEASE_NS:
                 self.pause('disconnected')
@@ -163,6 +166,19 @@ class RealtimeViewService:
             # repair a failed display; keep the last valid view and expose status.
             self.error = '试航已暂停，请重新读取状态；已完成的模拟步不会重放。'
             self.pause()
+        finally:
+            try:self.finish_work(work)
+            except Exception:
+                self.error='试航时钟异常，已暂停。'
+                self.pause()
+
+    def begin_work(self):
+        q=self.scheduler
+        return None if q is None else (q,self.clock(),q._speed.step_work_ns)
+
+    def finish_work(self, token):
+        if token is not None and token[0] is self.scheduler:
+            self.scheduler.observe_work(token[1],token[2])
 
     def _prepare_result(self):
         if self.gunnery.ending is None or self._result is not None:
@@ -203,7 +219,7 @@ class RealtimeViewService:
                 self.projectile_stream.record(battle.session.world.fixed_step, history.completed)
                 history.release_finished()
             return result
-        scheduler = TacticalScheduler(battle.session, clock=self.clock, stepper=stepper, stop_when=lambda: battle.ending is not None)
+        scheduler = TacticalScheduler(battle.session, clock=self.clock, speed_policy=self.speed_policy,stepper=stepper, stop_when=lambda: battle.ending is not None)
         digest = canonical_sha256(geometry)
         previous = dict(self.__dict__)
         try:

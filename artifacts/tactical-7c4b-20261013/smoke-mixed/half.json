@@ -1,0 +1,81 @@
+{
+  "case": "mixed-9v9",
+  "variant": "half",
+  "steps": 24,
+  "simulated_s": 0.4,
+  "wall_s": 0.802,
+  "runner_wall_s": 1.2097525999997742,
+  "status": {
+    "epoch": "d324e83c40e64b2ea2dcfa859ec0338a",
+    "fixed_step": 24,
+    "running": true,
+    "generation": 0,
+    "pause_reason": null,
+    "debt_quanta": 0,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 1,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 9,
+    "speed": {
+      "mode": "fixed",
+      "effective": 0.5,
+      "slowed": false,
+      "revision": 0,
+      "active_wall_s": 0.8,
+      "advanced_simulation_s": 0.4,
+      "actual_ratio": 0.5,
+      "step_mean_ms": 0.0,
+      "nonstep_utilization": 0.0,
+      "longest_step_ms": 0.0
+    }
+  },
+  "peak_debt_steps": 0.98,
+  "rate_changes": [
+    {
+      "wall_s": 0.004,
+      "step": 0,
+      "rate": 0.5
+    }
+  ],
+  "rate_wall_s": {
+    "0.5": 0.8
+  },
+  "step": {
+    "mean_ms": 17.268741668279592,
+    "p50_ms": 16.66510000359267,
+    "p95_ms": 20.612399996025488,
+    "p99_ms": 21.60790000925772,
+    "max_ms": 22.34280001721345
+  },
+  "read_and_encode": {
+    "mean_ms": 11.620125002082204,
+    "p50_ms": 11.808599985670298,
+    "p95_ms": 12.139400001615286,
+    "p99_ms": 12.139400001615286,
+    "max_ms": 12.3922000057064
+  },
+  "load": {
+    "ships": 18,
+    "guns": 26,
+    "projectiles": 3,
+    "missiles": 3,
+    "airborne": 4,
+    "aircraft_sensors": 8,
+    "jammers": 2,
+    "jobs": 6,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 37,
+    "shared_tracks": 216,
+    "shots": 0,
+    "missile_shots": 5,
+    "hits": 0,
+    "interceptions": 0
+  },
+  "error": null,
+  "fixture_sha256": "4f7770f4510d15746f7714ae487bca5ff7cc13778ef25dd73207aec0f19f2ce9",
+  "expanded_tape_sha256": "20a90bd1f03a883b25e08158afa927461ee98bee05371cb81d4c3d618f6d52e8",
+  "scope": "Synthetic-clock equivalence against 7b and 7c.4a; timings are not performance results."
+}

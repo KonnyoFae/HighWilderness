@@ -1,0 +1,61 @@
+{
+  "policy": {
+    "mode": "fixed",
+    "fixed_rate": 1.0,
+    "minimum_rate": 0.05,
+    "utilization": 0.7,
+    "window_ns": 200000000,
+    "step_alpha": 0.15,
+    "overhead_alpha": 0.3,
+    "recovery_delay_ns": 1500000000,
+    "recovery_per_second": 0.06,
+    "pressure_steps": 4.0
+  },
+  "status": {
+    "epoch": "37314b21e2aa40419e830885b5c6c666",
+    "fixed_step": 105,
+    "running": false,
+    "generation": 1,
+    "pause_reason": "overload",
+    "debt_quanta": 15337878000,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 0,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 27,
+    "speed": {
+      "mode": "fixed",
+      "effective": 1.0,
+      "slowed": false,
+      "revision": 0,
+      "active_wall_s": 2.0056313,
+      "advanced_simulation_s": 1.75,
+      "actual_ratio": 0.8725432236722672,
+      "step_mean_ms": 16.419439334599524,
+      "nonstep_utilization": 0.0,
+      "longest_step_ms": 26.9517
+    }
+  },
+  "speed": {
+    "mode": "fixed",
+    "effective": 1.0,
+    "slowed": false,
+    "revision": 0,
+    "active_wall_s": 2.0056313,
+    "advanced_simulation_s": 1.75,
+    "actual_ratio": 0.8725432236722672,
+    "step_mean_ms": 16.419439334599524,
+    "nonstep_utilization": 0.0,
+    "longest_step_ms": 26.9517
+  },
+  "changes": [
+    {
+      "wall_s": 0.0,
+      "step": 0,
+      "rate": 1.0
+    }
+  ],
+  "rate_wall_s": {
+    "1.0": 2.0056313
+  }
+}

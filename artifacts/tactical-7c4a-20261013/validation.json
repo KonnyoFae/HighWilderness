@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-13",
+  "unit_regression": {
+    "command": "python -X utf8 -m unittest tools.test_tactical_7c4 tools.test_realtime_view tools.test_projectile_stream tools.test_tactical_presentation tools.test_shell_presentation tools.test_missile_display tools.test_tactical_observation tools.test_tactical_aviation_foundation 高天荒野Web桥接协议测试 高天荒野WebSidecar生命周期测试",
+    "tests": 73,
+    "elapsed_s": 33.572,
+    "status": "PASS",
+    "note": "Includes 13 new 7c.4a tests. The two root scripts use main functions, not unittest discovery; their actual standalone runs are recorded below. Earlier development runs are not added to this count."
+  },
+  "continuity": {
+    "command": "python -X utf8 -m unittest tools.test_tactical_continuity",
+    "tests": 4,
+    "elapsed_s": 70.063,
+    "status": "PASS",
+    "repairs": "Old test setup omitted the 7a preview hash and inherited automatic distance despite specifying a manual separation; legacy-result conversion retained later departure/aviation fields; the incidental >1 MiB fixture assumption was replaced with an explicit settled-view size boundary. No production battle or settlement rule was changed."
+  },
+  "protocol": {
+    "command": "python -X utf8 高天荒野Web桥接协议测试.py",
+    "status": "PASS",
+    "positive_examples": 18,
+    "negative_examples": 45
+  },
+  "lifecycle": {
+    "command": "python -X utf8 高天荒野WebSidecar生命周期测试.py",
+    "status": "PASS",
+    "checks": 8
+  }
+}

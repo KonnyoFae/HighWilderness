@@ -387,8 +387,10 @@ class ObservationRuntime:
             result.append(ResourceOperation(world.epoch,ship_id,sequences[ship_id],'mode',mid,mode,world.fixed_step,'opening'))
         return tuple(result)
 
-    def view(self):
-        b=self.battle;world=b.session.world;_,available=b._availability(world);ships=[];inputs=_Inputs(self,world,available)
+    def view(self, *, available=None):
+        b=self.battle;world=b.session.world
+        if available is None:_,available=b._availability(world)
+        ships=[];inputs=_Inputs(self,world,available)
         for n,s in enumerate(world.ships):
             if b._sides[n]!=b._sides[b._direct_index]:continue
             rows=[]

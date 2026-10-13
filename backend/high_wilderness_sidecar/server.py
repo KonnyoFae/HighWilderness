@@ -65,6 +65,17 @@ def write_failure_log(error: ContractError) -> None:
     print(json.dumps(record, ensure_ascii=False, sort_keys=True), file=sys.stderr, flush=True)
 
 
+def realtime_response(request: dict, result: dict, *, wire=False):
+    if not wire:
+        return response_for(request, result=result)
+    # Encode on the authority owner before it can advance again. Only immutable
+    # bytes enter the writer queue; no live view references cross threads.
+    # encode_message still checks the complete JSON tree, envelope and frame cap.
+    response = response_for(request, result={})
+    response['result'] = result
+    return encode_message(response)
+
+
 class SidecarServer:
     def __init__(self, instance_id: str, recovery_dir=None, settlement_dir=None):
         if not ID_PATTERN.fullmatch(instance_id):
@@ -119,7 +130,7 @@ class SidecarServer:
     def handle(self, request: Any) -> tuple[tuple[dict[str, Any], ...], bool]:
         return self.execute(self.accept(request))
 
-    def execute(self, message: dict) -> tuple[tuple[dict[str, Any], ...], bool]:
+    def execute(self, message: dict, *, wire=False) -> tuple[tuple[dict[str, Any] | bytes, ...], bool]:
         method = message["method"]
 
         if not self.handshake_complete:
@@ -173,13 +184,16 @@ class SidecarServer:
                 return (response_for(message,error=_error_payload(error)),),False
 
         if method in REALTIME_CAPABILITIES:
+            work=self.realtime.begin_work()
             try:
                 if method in ('tactical.realtime.create', 'tactical.realtime.deploy', 'tactical.realtime.deploy_prepared', 'tactical.realtime.deploy_encounter'):
                     if self.tactical.scenario is not None:
                         raise ContractError('tactical.realtime.scene_active', '$', '请先释放原试航场景')
-                return (response_for(message, result=self.realtime.dispatch(message, mode=self.tactical.mode)),), False
+                return (realtime_response(message, self.realtime.dispatch(message, mode=self.tactical.mode), wire=wire),), False
             except ContractError as error:
                 return (response_for(message, error=_error_payload(error)),), False
+            finally:
+                self.realtime.finish_work(work)
 
         if method in TACTICAL_CAPABILITIES:
             try:
@@ -221,7 +235,7 @@ class SidecarServer:
                         return
                     if not writer_errors:
                         for output in outputs:
-                            output_stream.write(encode_message(output))
+                            output_stream.write(output if isinstance(output, bytes) else encode_message(output))
                         output_stream.flush()
                 except (OSError, ContractError) as error:
                     writer_errors.append(error)
@@ -245,7 +259,7 @@ class SidecarServer:
                         self.realtime.pause('disconnected')
                         return
                     try:
-                        outputs, _ = self.execute(message)
+                        outputs, _ = self.execute(message, wire=True)
                     except Exception as error:
                         # Preserve queue liveness without leaking internal exception data.
                         failure = _bridge_error("domain_worker_failed", "$", "操作失败，请重新读取当前会话或场景")

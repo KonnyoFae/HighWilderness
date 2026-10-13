@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-13",
+  "backend": {
+    "command": "python -X utf8 -m unittest tools.test_tactical_7c4b tools.test_tactical_scheduler tools.test_realtime_view tools.test_tactical_7c4 tools.test_projectile_stream tools.test_tactical_continuity",
+    "tests": 59,
+    "seconds": 99.864,
+    "result": "PASS"
+  },
+  "frontend": {"typecheck": "PASS", "files": 48, "tests": 206, "seconds": 1.70, "result": "PASS"},
+  "protocol": {"positive": 18, "negative": 45, "result": "PASS"},
+  "sidecar_lifecycle": {"checks": 8, "result": "PASS"},
+  "development_notes": [
+    "Initial output-pressure assertion was one pump early; retained event boundary rechecked after advancing clock.",
+    "Sandbox Node temp-file rename failed; tests rerun in approved environment.",
+    "Initial page driver attempted helm while dock collapsed; driver now opens it with the actual UI toggle.",
+    "Second smoke exposed stale two-step helm targets; fresh-read wall cost now selects 2-6 steps within the existing input window. No automatic input resubmission.",
+    "Third smoke executed all six commands; all smoke runs are excluded from final performance results."
+  ]
+}

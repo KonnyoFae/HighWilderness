@@ -1,0 +1,81 @@
+{
+  "case": "guns-9v9",
+  "variant": "half",
+  "steps": 900,
+  "simulated_s": 15.0,
+  "wall_s": 30.002,
+  "runner_wall_s": 57.754944100015564,
+  "status": {
+    "epoch": "272566a1b3f34a1ab5339fdb1e393a42",
+    "fixed_step": 900,
+    "running": true,
+    "generation": 0,
+    "pause_reason": null,
+    "debt_quanta": 0,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 0,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 95,
+    "speed": {
+      "mode": "fixed",
+      "effective": 0.5,
+      "slowed": false,
+      "revision": 0,
+      "active_wall_s": 30.0,
+      "advanced_simulation_s": 15.0,
+      "actual_ratio": 0.5,
+      "step_mean_ms": 0.0,
+      "nonstep_utilization": 0.0,
+      "longest_step_ms": 0.0
+    }
+  },
+  "peak_debt_steps": 1.08,
+  "rate_changes": [
+    {
+      "wall_s": 0.004,
+      "step": 0,
+      "rate": 0.5
+    }
+  ],
+  "rate_wall_s": {
+    "0.5": 30.0
+  },
+  "step": {
+    "mean_ms": 20.28156411112933,
+    "p50_ms": 20.785000000614673,
+    "p95_ms": 25.441799982218072,
+    "p99_ms": 28.293400013353676,
+    "max_ms": 37.68939999281429
+  },
+  "read_and_encode": {
+    "mean_ms": 16.1029577847799,
+    "p50_ms": 15.813600010005757,
+    "p95_ms": 19.815799983916804,
+    "p99_ms": 26.94010001141578,
+    "max_ms": 62.34160001622513
+  },
+  "load": {
+    "ships": 18,
+    "guns": 54,
+    "projectiles": 140,
+    "missiles": 0,
+    "airborne": 0,
+    "aircraft_sensors": 0,
+    "jammers": 0,
+    "jobs": 0,
+    "queued": 0,
+    "aircraft": 0,
+    "pilots": 0,
+    "local_tracks": 153,
+    "shared_tracks": 162,
+    "shots": 320,
+    "missile_shots": 0,
+    "hits": 56,
+    "interceptions": 0
+  },
+  "error": null,
+  "fixture_sha256": "9a2b174acddbbaadec41db5d3f5e81f912f3aac53b18902c2a8c914c7d1229ff",
+  "expanded_tape_sha256": "691cbd11ef88429773829ca22c24a311db0eedf9b8f52b3bfdab9612fefb010b",
+  "scope": "Synthetic-clock equivalence against 7b and 7c.4a; timings are not performance results."
+}

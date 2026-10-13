@@ -30,13 +30,26 @@ export class PresentationTimeline {
   private receivedAt = 0;
   private displayedStep = 0;
   private effectFloor = -Infinity;
+  private speed = 1;
+  private sampleAt = 0;
+  private variableClock = false;
 
-  clear() { this.frames = []; }
+  clear() { this.frames = [];this.variableClock=false;this.speed=1;this.sampleAt=0; }
+
+  private advance(now:number) {
+    const latest=this.frames.at(-1)?.snapshot;
+    if(!latest)return this.displayedStep;
+    const target=latest.fixed_step+(now-this.receivedAt-PRESENTATION_DELAY_MS)*this.speed/(1000*latest.fixed_step_s);
+    const desired=this.variableClock?Math.min(target,this.displayedStep+Math.max(0,now-this.sampleAt)*this.speed/(1000*latest.fixed_step_s)):target;
+    this.sampleAt=Math.max(this.sampleAt,now);
+    return this.displayedStep=Math.min(latest.fixed_step,Math.max(this.displayedStep,desired));
+  }
 
   push(view: TacticalView, now: number) {
     const next = view.snapshot, last = this.frames.at(-1)?.snapshot;
     if (last && next.backend_instance_id === last.backend_instance_id && next.scene_id === last.scene_id &&
         next.fixed_step < last.fixed_step) return;
+    const speed=next.simulation_speed??1;
     const discontinuity = !last || next.backend_instance_id !== last.backend_instance_id || next.scene_id !== last.scene_id ||
       next.static_sha256 !== last.static_sha256 || next.display_reset ||
       (next.fixed_step-last.fixed_step)*next.fixed_step_s > MAX_GAP_S;
@@ -55,13 +68,18 @@ export class PresentationTimeline {
         next.static_sha256 !== last.static_sha256 || next.paused !== last.paused || next.paused ||
         (next.fixed_step-last.fixed_step)*next.fixed_step_s > MAX_GAP_S) {
       this.frames = [view]; this.receivedAt = now; this.displayedStep = next.fixed_step;
+      this.speed=speed;this.sampleAt=now;this.variableClock=speed!==1;
       return;
     }
+    if(this.variableClock||speed!==this.speed){this.advance(now);this.variableClock=true;this.speed=speed;}
     // Polling the same publication must not restart its clock or replay events.
     if (next.fixed_step === last.fixed_step) { this.frames[this.frames.length-1] = view; return; }
     this.frames.push(view); this.receivedAt = now;
     while (this.frames.length > 2 && (this.frames.length > 32 ||
         next.time_s-this.frames[1].snapshot.time_s > 1)) this.frames.shift();
+    if(this.displayedStep<this.frames[0].snapshot.fixed_step){
+      this.displayedStep=this.frames[0].snapshot.fixed_step;this.effectFloor=this.displayedStep;
+    }
   }
 
   sample(now: number): TacticalView | null {
@@ -70,8 +88,7 @@ export class PresentationTimeline {
     const latest = newest.snapshot;
     if (latest.paused || latest.gunnery?.ending) return {...newest,snapshot:{...latest,display_effect_after_step:this.effectFloor,gunnery:latest.gunnery&&{...latest.gunnery,
       projectiles:latest.gunnery.projectiles.map(p=>p.missile_samples?.length?(displayMissile(p,latest.fixed_step)??p):p.shell_samples?.length?displayShell(p,latest.fixed_step):p)}}};
-    const desired = latest.fixed_step + (now-this.receivedAt-PRESENTATION_DELAY_MS)/(1000*latest.fixed_step_s);
-    const step = this.displayedStep = Math.min(latest.fixed_step, Math.max(this.displayedStep, desired));
+    const step = this.advance(now);
     const rightIndex = this.frames.findIndex(v => v.snapshot.fixed_step >= step);
     const right = this.frames[rightIndex < 0 ? this.frames.length-1 : rightIndex].snapshot;
     const left = this.frames[Math.max(0, rightIndex-1)].snapshot;

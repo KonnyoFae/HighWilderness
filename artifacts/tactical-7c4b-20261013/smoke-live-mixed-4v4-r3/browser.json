@@ -1,0 +1,236 @@
+{
+  "source": "G:\\高天荒野\\artifacts\\tactical-7b-20261009\\mixed-4v4",
+  "variant": "adaptive",
+  "scope": "Headless Edge / Vite / Node bridge. Adaptive run includes up to six UI helm orders, so its state is not compared with the fixed run. Command timings start at browser bridge submission; canvas timing means render submission after the resolved authority step, not native/GPU completion. All latency is wall milliseconds.",
+  "browser": "155.0.4283.45",
+  "wallMs": 18012.0423,
+  "finalStatus": {
+    "acknowledged_event_sequence": 178,
+    "debt_quanta": 730353252,
+    "epoch": "71e06c3bf91b4715bfb59100a73a4f87",
+    "fixed_step": 486,
+    "generation": 0,
+    "highest_input_sequence": 6,
+    "pause_reason": null,
+    "pending_inputs": 0,
+    "reliable_events": 0,
+    "retained_receipts": 0,
+    "running": true,
+    "speed": {
+      "active_wall_s": 17.9650568,
+      "actual_ratio": 0.45087527916972686,
+      "advanced_simulation_s": 8.1,
+      "effective": 0.318,
+      "longest_step_ms": 36.3972,
+      "mode": "adaptive",
+      "nonstep_utilization": 0.1415296663093072,
+      "revision": 37,
+      "slowed": true,
+      "step_mean_ms": 29.644691957874286
+    }
+  },
+  "commands": [
+    {
+      "sequence": 1,
+      "targetStep": 91,
+      "submitted": 9575,
+      "replyMs": 21.5,
+      "replyStatus": "accepted",
+      "receiptMs": 308.2000000178814,
+      "status": "executed",
+      "resolvedStep": 92,
+      "domMs": 334.5,
+      "canvasMs": 420.90000000596046,
+      "shownStep": 92.07718999976575
+    },
+    {
+      "sequence": 2,
+      "targetStep": 150,
+      "submitted": 12082,
+      "replyMs": 18.599999994039536,
+      "replyStatus": "accepted",
+      "receiptMs": 214.7000000178814,
+      "status": "executed",
+      "resolvedStep": 151,
+      "domMs": 230.90000000596046,
+      "canvasMs": 628.8000000119209,
+      "shownStep": 151.4047819999552
+    },
+    {
+      "sequence": 3,
+      "targetStep": 220,
+      "submitted": 14749.800000011921,
+      "replyMs": 19.799999982118607,
+      "replyStatus": "accepted",
+      "receiptMs": 171.69999998807907,
+      "status": "executed",
+      "resolvedStep": 221,
+      "domMs": 184.7999999821186,
+      "canvasMs": 481.19999998807907,
+      "shownStep": 221.02474399991462
+    },
+    {
+      "sequence": 4,
+      "targetStep": 307,
+      "submitted": 17526,
+      "replyMs": 13.700000017881393,
+      "replyStatus": "accepted",
+      "receiptMs": 219.2000000178814,
+      "status": "executed",
+      "resolvedStep": 308,
+      "domMs": 236.09999999403954,
+      "canvasMs": 546.8000000119209,
+      "shownStep": 308.0008039998936
+    },
+    {
+      "sequence": 5,
+      "targetStep": 370,
+      "submitted": 20037.80000001192,
+      "replyMs": 17.19999998807907,
+      "replyStatus": "accepted",
+      "receiptMs": 191.2999999821186,
+      "status": "executed",
+      "resolvedStep": 371,
+      "domMs": 208.5,
+      "canvasMs": 599.0999999940395,
+      "shownStep": 371.37198199991246
+    },
+    {
+      "sequence": 6,
+      "targetStep": 426,
+      "submitted": 22773.40000000596,
+      "replyMs": 15.400000005960464,
+      "replyStatus": "accepted",
+      "receiptMs": 221.09999999403954,
+      "status": "executed",
+      "resolvedStep": 427,
+      "domMs": 237.19999998807907,
+      "canvasMs": 597.9000000059605,
+      "shownStep": 427.05227599993304
+    }
+  ],
+  "runningText": "01 战前准备\n02 交战与结算\n\n准备舰队 · 指定旗舰 · 保存战果\n\n清空战术测试数据\n舰队交战\n自动降速 · 0.32× · 8.1 秒\n开始交战\n暂停交战\n结束本场交战（测试）\n\n操纵 6：已执行\n\n7b player.0 · defense · 2 个撞舰威胁 ›\n7b player.1 · missile · 3 个撞舰威胁 ›\n舰队\n01\n●\n7b player.0 · defense · 旗舰\n02\n●\n7b player.1 · missile\n03\n●\n7b player.2 · e1\n04\n●\n7b player.3 · strike\n☷\n视图与观察层\n1000 m\n箔条 × 2\n热能烟雾 × 2\n小格 50 m\n参考线 500 m\n主参考线 5 km\nX -5 km\nX 0 m\nX 5 km\nY 0 m\n●\n●\n●\n●\n●\n观察切换不改变舰艇高度与火炮作用层。\n战场操作说明\n旗舰 · 7b player.0 · defense\n0.0 m/s · -0.1 °/s\n推进与转向\n前进\n倒车\n制动\n↶ 左转\n半速\n全速\n全速\n¾\n½\n¼\n微速\n停车\n右转 ↷\n半速\n全速\n\n自动回正中 · 正在消除角速度\n\n再次点击当前转向档位自动回正；只消除角速度，不返回原航向。停车保留惯性，制动同时回正。\n\n实际高度：上层\n\n前往上层\n前往云层\n前往雨层\n取消换层\n⌖\n舰务\n7b player.0 · defense\n舰况\n损管\n货舱\n舰队命令\n\n旗舰使用独立操纵区\n\n旗舰距离 6.00 公里 · 脱离阈值 50 公里\n\n整队撤离机动\n\n升力冗余 +36.6% · 仍有余量\n\n干重 2,239.1 吨 · 可用升力 30,000 kN\n按干重计算，挂载与货物不计入。\n换层指令\n\n实际高度：上层\n\n主动换层相邻层 5 公里 · 入战基准 1 分 14.6 秒\n当前每段 1 分 14.6 秒\n\n前往上层\n前往云层\n前往雨层\n取消换层\n\n换层与移动、攻击同时执行。更改目标会重新开始本段；取消保留当前实际层。\n\n直控旗舰\n\n航速\n0.0 m/s\n船壳\n100.0%\n高度层\n上层\n转向速度\n-0.1 °/s\n\n结构耐久 29620 / 29620\n\n舰上人员\n\n可执勤 21 · 负伤 0 · 累计阵亡 0\n\n伤员暂不参与岗位分配；本阶段无战中治疗。\n\n人员类别与岗位\n模块状态\n▤\n火控\n操作舰 · 7b player.0 · defense\n\n已知目标 · 双击定位\n\n导弹 #1\n跟踪中\n上层 · 1130 m/s\n0.0 秒前观测\n导弹 #8\n跟踪中\n上层 · 980 m/s\n0.0 秒前观测\n导弹 #18\n跟踪中\n上层 · 706 m/s\n0.0 秒前观测\n导弹 #13\n跟踪中\n上层 · 830 m/s\n0.0 秒前观测\n敌机 #instance.7b.enemy.2.aviation.aircraft.1\n跟踪中\n上层 · 180 m/s\n0.0 秒前观测\n敌机 #instance.7b.enemy.3.aviation.aircraft.1\n跟踪中\n上层 · 260 m/s\n0.0 秒前观测\n导弹 #31\n跟踪中\n上层 · 1486 m/s\n0.0 秒前观测\n7b enemy.2 · e1\n跟踪中\n上层 · 0 m/s\n0.0 秒前观测\n导弹 #17\n已失联\n上层 · 2000 m/s\n0.9 秒前观测\n导弹 #22\n已失联\n上层 · 2000 m/s\n1.0 秒前观测\n导弹 #3\n已失联\n上层 · 950 m/s\n2.6 秒前观测\n火炮\n航空\n导弹\n在画布瞄准／指定目标\n旗舰武器组\n红外自持火控30毫米近防炮\n1 门\n单炮细调\n\n请选择武器组。\n\n感知设备\n电子对抗\n⊕\n战场记录",
+  "nodeResponseParse": {
+    "count": 171,
+    "meanMs": 0.6604479532163051,
+    "p95Ms": 0.8457999999991443,
+    "maxMs": 2.7440999999998894
+  },
+  "selectionClickThroughTwoFramesMs": 21.899999976158142,
+  "metrics": {
+    "browserBridge.tactical.realtime.read": {
+      "count": 160,
+      "meanMs": 91.76875000037253,
+      "p95Ms": 126.69999998807907,
+      "maxMs": 242.90000000596046
+    },
+    "merge": {
+      "count": 162,
+      "meanMs": 0.13271604938271606,
+      "p95Ms": 0.30000001192092896,
+      "maxMs": 0.5
+    },
+    "sampling": {
+      "count": 3437,
+      "meanMs": 0.11204538827966319,
+      "p95Ms": 0.20000001788139343,
+      "maxMs": 1.699999988079071
+    },
+    "renderSubmission": {
+      "count": 3437,
+      "meanMs": 0.48452138513161896,
+      "p95Ms": 0.800000011920929,
+      "maxMs": 2.5
+    },
+    "browserBridge.tactical.realtime.resume": {
+      "count": 1,
+      "meanMs": 44.5,
+      "p95Ms": 44.5,
+      "maxMs": 44.5
+    },
+    "frameCPU": {
+      "count": 3276,
+      "meanMs": 1.4658730158602797,
+      "p95Ms": 2.300000011920929,
+      "maxMs": 6.800000011920929
+    },
+    "frameInterval": {
+      "count": 3275,
+      "meanMs": 5.634748091603049,
+      "p95Ms": 16.600000000000364,
+      "maxMs": 50
+    },
+    "browserBridge.tactical.realtime.control": {
+      "count": 6,
+      "meanMs": 17.69999999801318,
+      "p95Ms": 19.799999982118607,
+      "maxMs": 21.5
+    },
+    "browserBridge.tactical.realtime.pause": {
+      "count": 1,
+      "meanMs": 131.09999999403954,
+      "p95Ms": 131.09999999403954,
+      "maxMs": 131.09999999403954
+    }
+  },
+  "requests": {
+    "tactical.realtime.read": {
+      "count": 163,
+      "meanMs": 28.309175460122898,
+      "p95Ms": 56.62589999999909,
+      "maxMs": 81.30279999999948
+    },
+    "tactical.realtime.resume": {
+      "count": 1,
+      "meanMs": 7.9549000000006345,
+      "p95Ms": 7.9549000000006345,
+      "maxMs": 7.9549000000006345
+    },
+    "tactical.realtime.control": {
+      "count": 6,
+      "meanMs": 8.82641666666647,
+      "p95Ms": 14.248899999998685,
+      "maxMs": 16.297500000000582
+    },
+    "tactical.realtime.pause": {
+      "count": 1,
+      "meanMs": 35.563500000000204,
+      "p95Ms": 35.563500000000204,
+      "maxMs": 35.563500000000204
+    }
+  },
+  "peakResponseBytes": 274941,
+  "heap": [
+    {
+      "label": "paused-entry",
+      "usedSize": 15009440,
+      "totalSize": 15892480,
+      "embedderHeapUsedSize": 1244712,
+      "backingStorageSize": 12755007,
+      "documents": 1,
+      "nodes": 87,
+      "jsEventListeners": 170
+    },
+    {
+      "label": "paused-end",
+      "usedSize": 29438508,
+      "totalSize": 32923648,
+      "embedderHeapUsedSize": 3687160,
+      "backingStorageSize": 13201266,
+      "documents": 6,
+      "nodes": 1500,
+      "jsEventListeners": 357
+    },
+    {
+      "label": "unmounted",
+      "usedSize": 1167844,
+      "totalSize": 3407872,
+      "embedderHeapUsedSize": 876728,
+      "backingStorageSize": 261,
+      "documents": 6,
+      "nodes": 48,
+      "jsEventListeners": 0
+    }
+  ],
+  "errors": []
+}

@@ -46,6 +46,7 @@ export interface TacticalSnapshot {
   // Client-only display boundaries; never command or simulation inputs.
   display_reset?:boolean;
   display_effect_after_step?:number;
+  simulation_speed?:number;
   observation_source?:string;
   projectile_stream?: import('./projectileStream').ProjectileStreamPacket;
   interface: "gaotian.tactical-render-snapshot/v1alpha1";

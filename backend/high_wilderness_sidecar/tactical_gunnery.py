@@ -898,6 +898,7 @@ class GunneryBattle(SensorState):
         self._guard()
         weapons = []
         inventory_summaries = tuple(inv.summary() for inv in self.inventory.inventories)
+        available = self._availability(self.session.world)[1]
         for gun_index, (gun, state) in enumerate(zip(self.guns, self.states)):
             recipe_id = state.reload_recipe_id
             ship = self.session.world.ships[gun.ship_index]
@@ -940,7 +941,9 @@ class GunneryBattle(SensorState):
         return dict(interface='gaotian.gunnery-view/p2a-v1alpha1', command_sequence=self.sequence,
             stores=stores_view(self, inventory_summaries),
             deck_hit_policy=asdict(self.damage.deck_policy) if self.damage else None,
-            observation=self.observation.view(), missiles=self.missiles.view(), aviation=self.aviation.view(), electronic_warfare=self.ew.view(), groups=ps.clone(list(self.groups)), weapons=weapons, projectiles=[dict(id=p.id, ship_id=p.ship_id, position_m=p.position,
+            observation=self.observation.view(available=available),
+            missiles=self.missiles.view(available=available,inventory_summaries=inventory_summaries),
+            aviation=self.aviation.view(inventory_summaries=inventory_summaries), electronic_warfare=self.ew.view(), groups=ps.clone(list(self.groups)), weapons=weapons, projectiles=[dict(id=p.id, ship_id=p.ship_id, position_m=p.position,
                 previous_m=p.previous, velocity_mps=p.velocity, projectile_type=p.projectile_key[0], height_layer=p.height_layer,
                 kind='missile' if p.missile else 'shell',
                 missile=None if not p.missile else dict(model_id=p.missile.profile.model_id,warhead_id=p.missile.warhead,

@@ -1,0 +1,73 @@
+{
+  "case": "mixed-4v4",
+  "wall_s": 4.3827789000060875,
+  "simulated_s": 4.133333333333334,
+  "status": {
+    "epoch": "8ae9a9a4dd7f4b0caa9469b358d1c9f3",
+    "fixed_step": 248,
+    "running": false,
+    "generation": 1,
+    "pause_reason": "overload",
+    "debt_quanta": 15508072000,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 0,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 37
+  },
+  "peak_debt_steps": 15.508072,
+  "costs": {
+    "step": {
+      "mean_ms": 14.799657660924208,
+      "p50_ms": 14.918900007614866,
+      "p95_ms": 18.64139997633174,
+      "p99_ms": 21.294199978001416,
+      "max_ms": 24.571499990997836
+    },
+    "publish": {
+      "mean_ms": 4.0198316671497505,
+      "p50_ms": 3.879099996993318,
+      "p95_ms": 5.856700008735061,
+      "p99_ms": 6.671100010862574,
+      "max_ms": 7.118899986380711
+    },
+    "read": {
+      "mean_ms": 4.108053848493653,
+      "p50_ms": 3.7215000193100423,
+      "p95_ms": 6.118699995568022,
+      "p99_ms": 6.746700004441664,
+      "max_ms": 7.18719998258166
+    }
+  },
+  "load": {
+    "ships": 8,
+    "guns": 6,
+    "projectiles": 11,
+    "missiles": 9,
+    "airborne": 4,
+    "aircraft_sensors": 8,
+    "jammers": 2,
+    "jobs": 6,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 22,
+    "shared_tracks": 76,
+    "shots": 2,
+    "missile_shots": 11,
+    "hits": 0,
+    "interceptions": 1
+  },
+  "error": null,
+  "memory_before": {
+    "working_set": 71323648,
+    "private_bytes": 57626624,
+    "peak_working_set": 71323648
+  },
+  "memory_end": {
+    "working_set": 72085504,
+    "private_bytes": 57999360,
+    "peak_working_set": 73052160
+  },
+  "scope": "Real scheduler/sidecar. Headless browser bridge, not native Tauri."
+}

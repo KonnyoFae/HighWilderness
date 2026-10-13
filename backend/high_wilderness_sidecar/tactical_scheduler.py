@@ -13,6 +13,7 @@ from time import monotonic_ns
 from 高天荒野舰艇数据契约 import ContractError
 from 高天荒野舰艇定向推进控制桥 import DirectionalPropulsionControlInput, directional_control
 from .simplified_flight import SimplifiedFlightSession
+from .tactical_speed import SpeedPolicy, SpeedController, SpeedStatus, RATE_SCALE
 
 INTERFACE = 'gaotian.tactical-scheduled-control/e3a-v1alpha1'
 QUANTA = 1_000_000_000
@@ -118,10 +119,11 @@ class SchedulerStatus:
     reliable_events: int
     highest_input_sequence: int
     acknowledged_event_sequence: int
+    speed: SpeedStatus
 
 
 class TacticalScheduler:
-    def __init__(self, session, *, clock=monotonic_ns, limits=SchedulerLimits(), domain_inputs=None, project=None, stepper=None, stop_when=None):
+    def __init__(self, session, *, clock=monotonic_ns, limits=SchedulerLimits(), speed_policy=SpeedPolicy(), domain_inputs=None, project=None, stepper=None, stop_when=None):
         require(type(session) is SimplifiedFlightSession and type(limits) is SchedulerLimits, 'Invalid scheduler resource')
         require(session._owner == get_ident() and not session._executing, 'Session must belong to idle current owner')
         require(all(s.command is not None for s in session.world.ships), 'Scheduler requires command lifecycle domain')
@@ -131,6 +133,7 @@ class TacticalScheduler:
         self._owner, self._busy = get_ident(), False
         self._clock, self._limits = clock, limits
         self._clock_failed = False
+        self._speed=SpeedController(speed_policy);self._rate_remainder=0
         self._domains, self._project = domain_inputs, project
         require(stepper is None or callable(stepper), 'Invalid integrated stepper')
         self._stop_when = stop_when
@@ -160,7 +163,7 @@ class TacticalScheduler:
         self._guard()
         return SchedulerStatus(self._committed.epoch, self._committed.fixed_step, self._running,
             self._generation, self._reason, self._debt, len(self._pending), len(self._records), len(self._events),
-            self._highest, self._event_ack)
+            self._highest, self._event_ack,self._speed.status())
 
     def _sample(self):
         now = self._clock()
@@ -169,9 +172,24 @@ class TacticalScheduler:
             self._pause('clock_error')
             require(False, 'Monotonic clock moved backward or returned invalid time')
         if self._running:
-            self._debt += (now-self._last_ns)*60
+            elapsed=now-self._last_ns
+            added,self._rate_remainder=divmod(elapsed*60*self._speed.rate+self._rate_remainder,RATE_SCALE)
+            self._debt+=added;self._speed.elapse(elapsed)
         self._last_ns = now
         return now
+
+    def observe_work(self, start_ns, step_work_ns):
+        """Owner-thread service cost, including publication/read/response encoding.
+
+        Call once around a host tick or request; subtract nested fixed-step work.
+        No read or rate adjustment itself advances a simulation step.
+        """
+        self._guard()
+        now=self._sample()
+        if self._running:
+            self._speed.window_work+=max(0,now-start_ns-(self._speed.step_work_ns-step_work_ns))
+            self._speed.tune(self._debt/QUANTA)
+            if self._debt>self.limits.overload_steps*QUANTA:self._pause('overload')
 
     def _allowed(self):
         return any(s.ship_id == self._session._direct and s.authority_allowed and s.motion.hull_integrity_fraction > 0
@@ -210,6 +228,7 @@ class TacticalScheduler:
         self._sample()
         require(self._debt <= self.limits.overload_steps*QUANTA, 'Recover paused debt before resume')
         require(len(self._events) < self.limits.reliable_events, 'Acknowledge reliable events before resume')
+        if not self._running:self._speed.resume()
         self._running, self._reason = True, None
         return self.status
 
@@ -311,6 +330,7 @@ class TacticalScheduler:
         if allowed and not self._allowed():
             self._invalidate('authority_lost')
         if self._stop_when is not None and self._stop_when():
+            self._sample()
             self._pause('battle_finished')
         return True
 
@@ -345,9 +365,13 @@ class TacticalScheduler:
                     break
                 if self._debt < QUANTA or now-start >= self.limits.pump_budget_ns:
                     break
+                was_running=self._running
                 if not self._step():
                     break
                 completed += 1
+                finished=self._sample()
+                self._speed.record_step(finished-now,active=was_running)
+                if self._running:self._speed.tune(self._debt/QUANTA)
                 if self._stop_when is not None and self._stop_when():
                     break
                 # Include compute time, even after the final permitted step.
