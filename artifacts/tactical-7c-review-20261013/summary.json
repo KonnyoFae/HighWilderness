@@ -1,0 +1,5797 @@
+{
+  "reused_7c4b_head": "4cb15c04d40f9ed68f06c8fbca949b9c5c0c6986",
+  "profile_head": "ecafbff40826ac92c3eb4683bee80c19776a01e9",
+  "source_files": 680,
+  "profiles": [
+    {
+      "case": "mixed-9v9",
+      "matched_steps": 900,
+      "boundaries": [
+        {
+          "step": 60,
+          "load": {
+            "ships": 18,
+            "guns": 26,
+            "projectiles": 6,
+            "missiles": 6,
+            "airborne": 4,
+            "aircraft_sensors": 8,
+            "jammers": 2,
+            "jobs": 6,
+            "queued": 0,
+            "aircraft": 10,
+            "pilots": 18,
+            "local_tracks": 39,
+            "shared_tracks": 234,
+            "shots": 0,
+            "missile_shots": 8,
+            "hits": 0,
+            "interceptions": 0
+          }
+        },
+        {
+          "step": 660,
+          "load": {
+            "ships": 18,
+            "guns": 26,
+            "projectiles": 71,
+            "missiles": 46,
+            "airborne": 6,
+            "aircraft_sensors": 12,
+            "jammers": 2,
+            "jobs": 4,
+            "queued": 0,
+            "aircraft": 10,
+            "pilots": 18,
+            "local_tracks": 50,
+            "shared_tracks": 513,
+            "shots": 18,
+            "missile_shots": 58,
+            "hits": 3,
+            "interceptions": 2
+          }
+        }
+      ],
+      "late_inclusive": [
+        {
+          "file": "backend/high_wilderness_sidecar/realtime_view.py",
+          "line": 210,
+          "function": "stepper",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0053533,
+          "inclusive_s": 9.331258100000001,
+          "callers": []
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+          "line": 461,
+          "function": "step",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0104506,
+          "inclusive_s": 9.3012426,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 210,
+              "function": "stepper",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0104506,
+              "inclusive_s": 9.3012426
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_inventory.py",
+          "line": 580,
+          "function": "step",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0068402,
+          "inclusive_s": 9.2637994,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 461,
+              "function": "step",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0068402,
+              "inclusive_s": 9.2637994
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+          "line": 495,
+          "function": "step",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.044478000000000004,
+          "inclusive_s": 9.2479484,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_inventory.py",
+              "line": 580,
+              "function": "step",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.044478000000000004,
+              "inclusive_s": 9.2479484
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_inventory.py",
+          "line": 593,
+          "function": "stage",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0058219000000000005,
+          "inclusive_s": 7.7674848,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 495,
+              "function": "step",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0058219000000000005,
+              "inclusive_s": 7.7674848
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+          "line": 516,
+          "function": "simulate",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0265722,
+          "inclusive_s": 7.737512300000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_inventory.py",
+              "line": 593,
+              "function": "stage",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0265722,
+              "inclusive_s": 7.737512300000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_missile_defense.py",
+          "line": 92,
+          "function": "prepare_all",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.014248700000000001,
+          "inclusive_s": 2.0135113000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.014248700000000001,
+              "inclusive_s": 2.0135113000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/missile_flight.py",
+          "line": 208,
+          "function": "prepare",
+          "primitive_calls": 2784,
+          "total_calls": 2784,
+          "self_s": 0.020101300000000002,
+          "inclusive_s": 1.7698414,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_missile_defense.py",
+              "line": 92,
+              "function": "prepare_all",
+              "primitive_calls": 2778,
+              "total_calls": 2778,
+              "self_s": 0.0200503,
+              "inclusive_s": 1.7680167000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_missiles.py",
+              "line": 164,
+              "function": "plan",
+              "primitive_calls": 4,
+              "total_calls": 4,
+              "self_s": 2.64e-05,
+              "inclusive_s": 0.0011444
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_combat.py",
+              "line": 66,
+              "function": "plan",
+              "primitive_calls": 2,
+              "total_calls": 2,
+              "self_s": 2.46e-05,
+              "inclusive_s": 0.0006803
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/missile_guidance.py",
+          "line": 133,
+          "function": "update",
+          "primitive_calls": 2784,
+          "total_calls": 2784,
+          "self_s": 0.0790657,
+          "inclusive_s": 1.5916169,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/missile_flight.py",
+              "line": 208,
+              "function": "prepare",
+              "primitive_calls": 2784,
+              "total_calls": 2784,
+              "self_s": 0.0790657,
+              "inclusive_s": 1.5916169
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 225,
+          "function": "plan",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.1040152,
+          "inclusive_s": 1.4648437,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.1040152,
+              "inclusive_s": 1.4648437
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/missile_guidance.py",
+          "line": 86,
+          "function": "contact",
+          "primitive_calls": 46429,
+          "total_calls": 46429,
+          "self_s": 0.16378990000000002,
+          "inclusive_s": 1.3772148000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/missile_guidance.py",
+              "line": 133,
+              "function": "update",
+              "primitive_calls": 46429,
+              "total_calls": 46429,
+              "self_s": 0.16378990000000002,
+              "inclusive_s": 1.3772148000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+          "line": 128,
+          "function": "predict_collisions",
+          "primitive_calls": 9586,
+          "total_calls": 9586,
+          "self_s": 0.0055037,
+          "inclusive_s": 1.2948673000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+              "line": 150,
+              "function": "threat_check",
+              "primitive_calls": 2186,
+              "total_calls": 2186,
+              "self_s": 0.0016040000000000002,
+              "inclusive_s": 0.8975288
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+              "line": 85,
+              "function": "observe",
+              "primitive_calls": 7400,
+              "total_calls": 7400,
+              "self_s": 0.0038997000000000003,
+              "inclusive_s": 0.39733850000000004
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_defense_prediction.py",
+          "line": 57,
+          "function": "collisions",
+          "primitive_calls": 9586,
+          "total_calls": 9586,
+          "self_s": 0.0395835,
+          "inclusive_s": 1.2893636000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+              "line": 128,
+              "function": "predict_collisions",
+              "primitive_calls": 9586,
+              "total_calls": 9586,
+              "self_s": 0.0395835,
+              "inclusive_s": 1.2893636000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_defense_prediction.py",
+          "line": 106,
+          "function": "calculate",
+          "primitive_calls": 3152,
+          "total_calls": 3152,
+          "self_s": 0.14222,
+          "inclusive_s": 1.193985,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_defense_prediction.py",
+              "line": 57,
+              "function": "collisions",
+              "primitive_calls": 3152,
+              "total_calls": 3152,
+              "self_s": 0.14222,
+              "inclusive_s": 1.193985
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+          "line": 477,
+          "function": "impacts",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.001467,
+          "inclusive_s": 1.0853814000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 495,
+              "function": "step",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.001467,
+              "inclusive_s": 1.0853814000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+          "line": 248,
+          "function": "advance",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.2740403,
+          "inclusive_s": 1.0624269000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 477,
+              "function": "impacts",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.2740403,
+              "inclusive_s": 1.0624269000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 144,
+          "function": "advance",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0202627,
+          "inclusive_s": 1.0462373,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0202627,
+              "inclusive_s": 1.0462373
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 163,
+          "function": "visible",
+          "primitive_calls": 61650,
+          "total_calls": 61650,
+          "self_s": 0.1849938,
+          "inclusive_s": 1.0268139,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 61650,
+              "total_calls": 61650,
+              "self_s": 0.1849938,
+              "inclusive_s": 1.0268139
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+          "line": 150,
+          "function": "threat_check",
+          "primitive_calls": 7091,
+          "total_calls": 7091,
+          "self_s": 0.0074361,
+          "inclusive_s": 0.9074570000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/missile_guidance.py",
+              "line": 86,
+              "function": "contact",
+              "primitive_calls": 7091,
+              "total_calls": 7091,
+              "self_s": 0.0074361,
+              "inclusive_s": 0.9074570000000001
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+          "line": 1763,
+          "function": "replace",
+          "primitive_calls": 107158,
+          "total_calls": 107158,
+          "self_s": 0.0744313,
+          "inclusive_s": 0.7593687,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 40595,
+              "total_calls": 40595,
+              "self_s": 0.020709500000000002,
+              "inclusive_s": 0.11844650000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/missile_guidance.py",
+              "line": 133,
+              "function": "update",
+              "primitive_calls": 6202,
+              "total_calls": 6202,
+              "self_s": 0.0065398,
+              "inclusive_s": 0.10032680000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/projectile_observation.py",
+              "line": 65,
+              "function": "extrapolate",
+              "primitive_calls": 16383,
+              "total_calls": 16383,
+              "self_s": 0.0132653,
+              "inclusive_s": 0.09726420000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/missile_flight.py",
+              "line": 208,
+              "function": "prepare",
+              "primitive_calls": 5568,
+              "total_calls": 5568,
+              "self_s": 0.0045069,
+              "inclusive_s": 0.0847756
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 495,
+              "function": "step",
+              "primitive_calls": 9960,
+              "total_calls": 9960,
+              "self_s": 0.006782000000000001,
+              "inclusive_s": 0.0655661
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 4231,
+              "total_calls": 4231,
+              "self_s": 0.0023681,
+              "inclusive_s": 0.0474091
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 324,
+              "function": "<genexpr>",
+              "primitive_calls": 4233,
+              "total_calls": 4233,
+              "self_s": 0.0023008,
+              "inclusive_s": 0.0466188
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/missile_maneuver.py",
+              "line": 25,
+              "function": "control",
+              "primitive_calls": 2784,
+              "total_calls": 2784,
+              "self_s": 0.0038475000000000002,
+              "inclusive_s": 0.0406634
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+          "line": 196,
+          "function": "contacts_on_path",
+          "primitive_calls": 12198,
+          "total_calls": 12198,
+          "self_s": 0.20862540000000002,
+          "inclusive_s": 0.7348595,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_defense_prediction.py",
+              "line": 106,
+              "function": "calculate",
+              "primitive_calls": 12156,
+              "total_calls": 12156,
+              "self_s": 0.2077082,
+              "inclusive_s": 0.7323929
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 40,
+              "total_calls": 40,
+              "self_s": 0.0008806,
+              "inclusive_s": 0.0023409000000000004
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 216,
+              "function": "choose_deck",
+              "primitive_calls": 2,
+              "total_calls": 2,
+              "self_s": 3.66e-05,
+              "inclusive_s": 0.00012570000000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+          "line": 85,
+          "function": "observe",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0349927,
+          "inclusive_s": 0.7345412,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0349927,
+              "inclusive_s": 0.7345412
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/missile_guidance.py",
+          "line": 65,
+          "function": "blocked_channels",
+          "primitive_calls": 95046,
+          "total_calls": 95046,
+          "self_s": 0.2612044,
+          "inclusive_s": 0.7034899,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+              "line": 81,
+              "function": "occluded",
+              "primitive_calls": 59550,
+              "total_calls": 59550,
+              "self_s": 0.15243230000000002,
+              "inclusive_s": 0.40822240000000004
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/missile_guidance.py",
+              "line": 86,
+              "function": "contact",
+              "primitive_calls": 26021,
+              "total_calls": 26021,
+              "self_s": 0.07782660000000001,
+              "inclusive_s": 0.2084727
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+              "line": 73,
+              "function": "sample",
+              "primitive_calls": 9475,
+              "total_calls": 9475,
+              "self_s": 0.0309455,
+              "inclusive_s": 0.0867948
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+          "line": 110,
+          "function": "deepcopy",
+          "primitive_calls": 1220,
+          "total_calls": 991561,
+          "self_s": 0.2366493,
+          "inclusive_s": 0.6600055,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+              "line": 198,
+              "function": "_deepcopy_dict",
+              "primitive_calls": 45368,
+              "total_calls": 831414,
+              "self_s": 0.1544431,
+              "inclusive_s": 0.6484413
+            },
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+              "line": 181,
+              "function": "_deepcopy_tuple",
+              "primitive_calls": 20278,
+              "total_calls": 73618,
+              "self_s": 0.0257451,
+              "inclusive_s": 0.3069053
+            },
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+              "line": 228,
+              "function": "_reconstruct",
+              "primitive_calls": 5959,
+              "total_calls": 15903,
+              "self_s": 0.0147694,
+              "inclusive_s": 0.2450881
+            },
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+              "line": 172,
+              "function": "_deepcopy_list",
+              "primitive_calls": 45894,
+              "total_calls": 53503,
+              "self_s": 0.0382033,
+              "inclusive_s": 0.1932259
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_combat.py",
+              "line": 66,
+              "function": "plan",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0001866,
+              "inclusive_s": 0.18300270000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+              "line": 144,
+              "function": "advance",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0001061,
+              "inclusive_s": 0.1790141
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_inventory.py",
+              "line": 249,
+              "function": "command",
+              "primitive_calls": 604,
+              "total_calls": 604,
+              "self_s": 0.0006842,
+              "inclusive_s": 0.1624727
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/missile_logistics.py",
+              "line": 13,
+              "function": "__init__",
+              "primitive_calls": 484,
+              "total_calls": 484,
+              "self_s": 0.0005964000000000001,
+              "inclusive_s": 0.1258623
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+          "line": 198,
+          "function": "_deepcopy_dict",
+          "primitive_calls": 1220,
+          "total_calls": 76850,
+          "self_s": 0.1663897,
+          "inclusive_s": 0.6573982,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+              "line": 110,
+              "function": "deepcopy",
+              "primitive_calls": 1220,
+              "total_calls": 76850,
+              "self_s": 0.1663897,
+              "inclusive_s": 0.6573982
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+          "line": 1782,
+          "function": "_replace",
+          "primitive_calls": 107158,
+          "total_calls": 107158,
+          "self_s": 0.3501148,
+          "inclusive_s": 0.6459436000000001,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+              "line": 1763,
+              "function": "replace",
+              "primitive_calls": 107158,
+              "total_calls": 107158,
+              "self_s": 0.3501148,
+              "inclusive_s": 0.6459436000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 309,
+          "function": "sources",
+          "primitive_calls": 36732,
+          "total_calls": 36732,
+          "self_s": 0.046830500000000004,
+          "inclusive_s": 0.578078,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+              "line": 132,
+              "function": "environment",
+              "primitive_calls": 21816,
+              "total_calls": 21816,
+              "self_s": 0.027920300000000002,
+              "inclusive_s": 0.37832590000000005
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 321,
+              "function": "defense_sources",
+              "primitive_calls": 14008,
+              "total_calls": 14008,
+              "self_s": 0.0174172,
+              "inclusive_s": 0.1862386
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_missiles.py",
+              "line": 164,
+              "function": "plan",
+              "primitive_calls": 668,
+              "total_calls": 668,
+              "self_s": 0.0011179,
+              "inclusive_s": 0.0099767
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_missiles.py",
+              "line": 195,
+              "function": "<lambda>",
+              "primitive_calls": 240,
+              "total_calls": 240,
+              "self_s": 0.0003751,
+              "inclusive_s": 0.0035368
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 100,
+          "function": "candidates",
+          "primitive_calls": 2560,
+          "total_calls": 2560,
+          "self_s": 0.0042450000000000005,
+          "inclusive_s": 0.544466,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+              "line": 144,
+              "function": "advance",
+              "primitive_calls": 2560,
+              "total_calls": 2560,
+              "self_s": 0.0042450000000000005,
+              "inclusive_s": 0.544466
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/aviation_recovery.py",
+          "line": 5,
+          "function": "can_receive",
+          "primitive_calls": 2304,
+          "total_calls": 2304,
+          "self_s": 0.026598700000000003,
+          "inclusive_s": 0.5299510000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+              "line": 100,
+              "function": "candidates",
+              "primitive_calls": 2304,
+              "total_calls": 2304,
+              "self_s": 0.026598700000000003,
+              "inclusive_s": 0.5299510000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+          "line": 132,
+          "function": "environment",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.058673100000000006,
+          "inclusive_s": 0.4882484,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.058673100000000006,
+              "inclusive_s": 0.4882484
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 299,
+          "function": "controllers",
+          "primitive_calls": 75361,
+          "total_calls": 75361,
+          "self_s": 0.1089813,
+          "inclusive_s": 0.458988,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 309,
+              "function": "sources",
+              "primitive_calls": 32556,
+              "total_calls": 32556,
+              "self_s": 0.068875,
+              "inclusive_s": 0.2473527
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 313,
+              "function": "<genexpr>",
+              "primitive_calls": 35385,
+              "total_calls": 35385,
+              "self_s": 0.0322065,
+              "inclusive_s": 0.1676127
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_defense.py",
+              "line": 25,
+              "function": "<genexpr>",
+              "primitive_calls": 6340,
+              "total_calls": 6340,
+              "self_s": 0.0073974,
+              "inclusive_s": 0.0345103
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.0005024000000000001,
+              "inclusive_s": 0.009512300000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+          "line": 81,
+          "function": "occluded",
+          "primitive_calls": 59550,
+          "total_calls": 59550,
+          "self_s": 0.0353189,
+          "inclusive_s": 0.4454135,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 163,
+              "function": "visible",
+              "primitive_calls": 59550,
+              "total_calls": 59550,
+              "self_s": 0.0353189,
+              "inclusive_s": 0.4454135
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/missile_guidance.py",
+          "line": 56,
+          "function": "segment_circle",
+          "primitive_calls": 619505,
+          "total_calls": 619505,
+          "self_s": 0.31763830000000004,
+          "inclusive_s": 0.41264740000000005,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/missile_guidance.py",
+              "line": 65,
+              "function": "blocked_channels",
+              "primitive_calls": 619505,
+              "total_calls": 619505,
+              "self_s": 0.31763830000000004,
+              "inclusive_s": 0.41264740000000005
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/aviation_combat.py",
+          "line": 66,
+          "function": "plan",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.007281,
+          "inclusive_s": 0.40477890000000005,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.007281,
+              "inclusive_s": 0.40477890000000005
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 196,
+          "function": "targets",
+          "primitive_calls": 180,
+          "total_calls": 180,
+          "self_s": 0.1945059,
+          "inclusive_s": 0.3955061,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_ew.py",
+              "line": 50,
+              "function": "refresh",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0659229,
+              "inclusive_s": 0.13380160000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+              "line": 144,
+              "function": "advance",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0645554,
+              "inclusive_s": 0.1317728
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0640276,
+              "inclusive_s": 0.1299317
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/aviation_catalog.py",
+          "line": 81,
+          "function": "model",
+          "primitive_calls": 9169,
+          "total_calls": 9169,
+          "self_s": 0.012712900000000001,
+          "inclusive_s": 0.35391740000000005,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_logistics.py",
+              "line": 39,
+              "function": "unload_costs",
+              "primitive_calls": 2304,
+              "total_calls": 2304,
+              "self_s": 0.0031195000000000003,
+              "inclusive_s": 0.0893855
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_catalog.py",
+              "line": 87,
+              "function": "cargo_volume_cm3",
+              "primitive_calls": 2304,
+              "total_calls": 2304,
+              "self_s": 0.0029429,
+              "inclusive_s": 0.07712770000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_ew.py",
+              "line": 20,
+              "function": "model_for",
+              "primitive_calls": 1068,
+              "total_calls": 1068,
+              "self_s": 0.001374,
+              "inclusive_s": 0.041663000000000006
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+              "line": 59,
+              "function": "targets",
+              "primitive_calls": 1068,
+              "total_calls": 1068,
+              "self_s": 0.0013817,
+              "inclusive_s": 0.041360600000000004
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_manifest.py",
+              "line": 24,
+              "function": "validate",
+              "primitive_calls": 614,
+              "total_calls": 614,
+              "self_s": 0.0010131,
+              "inclusive_s": 0.0250043
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_combat.py",
+              "line": 66,
+              "function": "plan",
+              "primitive_calls": 356,
+              "total_calls": 356,
+              "self_s": 0.0007536,
+              "inclusive_s": 0.020888800000000003
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_combat.py",
+              "line": 31,
+              "function": "environment",
+              "primitive_calls": 356,
+              "total_calls": 356,
+              "self_s": 0.0005709,
+              "inclusive_s": 0.0175183
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+              "line": 144,
+              "function": "advance",
+              "primitive_calls": 356,
+              "total_calls": 356,
+              "self_s": 0.00047410000000000003,
+              "inclusive_s": 0.014742700000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/persistent_ship.py",
+          "line": 91,
+          "function": "clone",
+          "primitive_calls": 9415,
+          "total_calls": 9415,
+          "self_s": 0.0057609,
+          "inclusive_s": 0.3482864,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_catalog.py",
+              "line": 81,
+              "function": "model",
+              "primitive_calls": 9169,
+              "total_calls": 9169,
+              "self_s": 0.005525700000000001,
+              "inclusive_s": 0.33257820000000005
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_manifest.py",
+              "line": 24,
+              "function": "validate",
+              "primitive_calls": 246,
+              "total_calls": 246,
+              "self_s": 0.00023520000000000002,
+              "inclusive_s": 0.015708200000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 189,
+          "function": "effect",
+          "primitive_calls": 78961,
+          "total_calls": 78961,
+          "self_s": 0.15474580000000002,
+          "inclusive_s": 0.3396283,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 299,
+              "function": "controllers",
+              "primitive_calls": 74281,
+              "total_calls": 74281,
+              "self_s": 0.1428537,
+              "inclusive_s": 0.31233930000000004
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 3600,
+              "total_calls": 3600,
+              "self_s": 0.0095133,
+              "inclusive_s": 0.0218127
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 108,
+              "function": "<genexpr>",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.0023788000000000004,
+              "inclusive_s": 0.0054763
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/aviation_resources.py",
+          "line": 66,
+          "function": "quarters_available",
+          "primitive_calls": 2546,
+          "total_calls": 2546,
+          "self_s": 0.0463177,
+          "inclusive_s": 0.33606070000000005,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_recovery.py",
+              "line": 5,
+              "function": "can_receive",
+              "primitive_calls": 2304,
+              "total_calls": 2304,
+              "self_s": 0.039464700000000005,
+              "inclusive_s": 0.2937136
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_logistics.py",
+              "line": 265,
+              "function": "countdown",
+              "primitive_calls": 238,
+              "total_calls": 238,
+              "self_s": 0.0067618,
+              "inclusive_s": 0.0416498
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_logistics.py",
+              "line": 249,
+              "function": "house_displaced",
+              "primitive_calls": 4,
+              "total_calls": 4,
+              "self_s": 9.120000000000001e-05,
+              "inclusive_s": 0.0006973000000000001
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+          "line": 181,
+          "function": "_deepcopy_tuple",
+          "primitive_calls": 10139,
+          "total_calls": 40895,
+          "self_s": 0.0406636,
+          "inclusive_s": 0.31887370000000004,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+              "line": 110,
+              "function": "deepcopy",
+              "primitive_calls": 10139,
+              "total_calls": 40895,
+              "self_s": 0.0406636,
+              "inclusive_s": 0.31887370000000004
+            }
+          ]
+        },
+        {
+          "file": "高天荒野舰艇战术弹丸世界.py",
+          "line": 1006,
+          "function": "_segment_aabb_entry_fraction",
+          "primitive_calls": 153597,
+          "total_calls": 153597,
+          "self_s": 0.1955683,
+          "inclusive_s": 0.29943590000000003,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 196,
+              "function": "contacts_on_path",
+              "primitive_calls": 115457,
+              "total_calls": 115457,
+              "self_s": 0.1603079,
+              "inclusive_s": 0.2468671
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 38140,
+              "total_calls": 38140,
+              "self_s": 0.035260400000000004,
+              "inclusive_s": 0.052568800000000006
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 313,
+          "function": "<genexpr>",
+          "primitive_calls": 95020,
+          "total_calls": 95020,
+          "self_s": 0.08705660000000001,
+          "inclusive_s": 0.279162,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 309,
+              "function": "sources",
+              "primitive_calls": 95020,
+              "total_calls": 95020,
+              "self_s": 0.08705660000000001,
+              "inclusive_s": 0.279162
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+          "line": 131,
+          "function": "choose",
+          "primitive_calls": 240,
+          "total_calls": 240,
+          "self_s": 0.0162373,
+          "inclusive_s": 0.2720881,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 240,
+              "total_calls": 240,
+              "self_s": 0.0162373,
+              "inclusive_s": 0.2720881
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+          "line": 228,
+          "function": "_reconstruct",
+          "primitive_calls": 7039,
+          "total_calls": 16983,
+          "self_s": 0.0295445,
+          "inclusive_s": 0.2679615,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+              "line": 110,
+              "function": "deepcopy",
+              "primitive_calls": 5959,
+              "total_calls": 15903,
+              "self_s": 0.028577300000000003,
+              "inclusive_s": 0.2649514
+            },
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+              "line": 62,
+              "function": "copy",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.0009672000000000001,
+              "inclusive_s": 0.0030101000000000004
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/aviation_ew.py",
+          "line": 50,
+          "function": "refresh",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0016647,
+          "inclusive_s": 0.25930020000000004,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0016647,
+              "inclusive_s": 0.25930020000000004
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/projectile_observation.py",
+          "line": 65,
+          "function": "extrapolate",
+          "primitive_calls": 16383,
+          "total_calls": 16383,
+          "self_s": 0.036507700000000004,
+          "inclusive_s": 0.24783870000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+              "line": 85,
+              "function": "observe",
+              "primitive_calls": 8360,
+              "total_calls": 8360,
+              "self_s": 0.0186768,
+              "inclusive_s": 0.1277666
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_defense.py",
+              "line": 65,
+              "function": "commitments",
+              "primitive_calls": 3900,
+              "total_calls": 3900,
+              "self_s": 0.0093091,
+              "inclusive_s": 0.0616311
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_missile_defense.py",
+              "line": 25,
+              "function": "select",
+              "primitive_calls": 1986,
+              "total_calls": 1986,
+              "self_s": 0.0041539,
+              "inclusive_s": 0.0282698
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+              "line": 131,
+              "function": "choose",
+              "primitive_calls": 1986,
+              "total_calls": 1986,
+              "self_s": 0.0040546,
+              "inclusive_s": 0.027820800000000003
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_missiles.py",
+              "line": 164,
+              "function": "plan",
+              "primitive_calls": 151,
+              "total_calls": 151,
+              "self_s": 0.0003133,
+              "inclusive_s": 0.0023504000000000003
+            }
+          ]
+        },
+        {
+          "file": "高天荒野舰艇人员舱容量.py",
+          "line": 18,
+          "function": "allocate",
+          "primitive_calls": 2546,
+          "total_calls": 2546,
+          "self_s": 0.09337000000000001,
+          "inclusive_s": 0.22578550000000003,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_resources.py",
+              "line": 66,
+              "function": "quarters_available",
+              "primitive_calls": 2546,
+              "total_calls": 2546,
+              "self_s": 0.09337000000000001,
+              "inclusive_s": 0.22578550000000003
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+          "line": 35,
+          "function": "predict",
+          "primitive_calls": 48502,
+          "total_calls": 48502,
+          "self_s": 0.1292507,
+          "inclusive_s": 0.22448590000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_defense_prediction.py",
+              "line": 111,
+              "function": "at",
+              "primitive_calls": 30616,
+              "total_calls": 30616,
+              "self_s": 0.07979270000000001,
+              "inclusive_s": 0.1386539
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/projectile_observation.py",
+              "line": 65,
+              "function": "extrapolate",
+              "primitive_calls": 16383,
+              "total_calls": 16383,
+              "self_s": 0.045787400000000006,
+              "inclusive_s": 0.0793769
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+              "line": 50,
+              "function": "residual",
+              "primitive_calls": 1503,
+              "total_calls": 1503,
+              "self_s": 0.0036706000000000004,
+              "inclusive_s": 0.0064551
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+          "line": 82,
+          "function": "segment",
+          "primitive_calls": 182925,
+          "total_calls": 182925,
+          "self_s": 0.15450470000000002,
+          "inclusive_s": 0.2208939,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 196,
+              "function": "contacts_on_path",
+              "primitive_calls": 182925,
+              "total_calls": 182925,
+              "self_s": 0.15450470000000002,
+              "inclusive_s": 0.2208939
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 74,
+          "function": "can_observe",
+          "primitive_calls": 73226,
+          "total_calls": 73226,
+          "self_s": 0.11798700000000001,
+          "inclusive_s": 0.21978250000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 163,
+              "function": "visible",
+              "primitive_calls": 61650,
+              "total_calls": 61650,
+              "self_s": 0.1018687,
+              "inclusive_s": 0.18921680000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+              "line": 73,
+              "function": "sample",
+              "primitive_calls": 11576,
+              "total_calls": 11576,
+              "self_s": 0.016118300000000002,
+              "inclusive_s": 0.0305657
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+          "line": 172,
+          "function": "_deepcopy_list",
+          "primitive_calls": 20510,
+          "total_calls": 23812,
+          "self_s": 0.022997700000000003,
+          "inclusive_s": 0.2184209,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+              "line": 110,
+              "function": "deepcopy",
+              "primitive_calls": 20510,
+              "total_calls": 23812,
+              "self_s": 0.022997700000000003,
+              "inclusive_s": 0.2184209
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_defense.py",
+          "line": 65,
+          "function": "commitments",
+          "primitive_calls": 5170,
+          "total_calls": 5170,
+          "self_s": 0.022922,
+          "inclusive_s": 0.21818780000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+              "line": 131,
+              "function": "choose",
+              "primitive_calls": 1673,
+              "total_calls": 1673,
+              "self_s": 0.0083078,
+              "inclusive_s": 0.0883211
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_missile_defense.py",
+              "line": 82,
+              "function": "occupied",
+              "primitive_calls": 2465,
+              "total_calls": 2465,
+              "self_s": 0.010061800000000001,
+              "inclusive_s": 0.0768944
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_missile_defense.py",
+              "line": 25,
+              "function": "select",
+              "primitive_calls": 1032,
+              "total_calls": 1032,
+              "self_s": 0.004552400000000001,
+              "inclusive_s": 0.0529723
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+          "line": 98,
+          "function": "plan",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0078088,
+          "inclusive_s": 0.2154674,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0078088,
+              "inclusive_s": 0.2154674
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/persistent_ship.py",
+          "line": 82,
+          "function": "decode",
+          "primitive_calls": 9415,
+          "total_calls": 9415,
+          "self_s": 0.013592300000000002,
+          "inclusive_s": 0.2127388,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/persistent_ship.py",
+              "line": 91,
+              "function": "clone",
+              "primitive_calls": 9415,
+              "total_calls": 9415,
+              "self_s": 0.013592300000000002,
+              "inclusive_s": 0.2127388
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 321,
+          "function": "defense_sources",
+          "primitive_calls": 14684,
+          "total_calls": 14684,
+          "self_s": 0.01738,
+          "inclusive_s": 0.2120524,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+              "line": 85,
+              "function": "observe",
+              "primitive_calls": 12536,
+              "total_calls": 12536,
+              "self_s": 0.013940300000000001,
+              "inclusive_s": 0.16395410000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_missile_defense.py",
+              "line": 25,
+              "function": "select",
+              "primitive_calls": 1056,
+              "total_calls": 1056,
+              "self_s": 0.0017074000000000002,
+              "inclusive_s": 0.026689
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_point_defense.py",
+              "line": 131,
+              "function": "choose",
+              "primitive_calls": 941,
+              "total_calls": 941,
+              "self_s": 0.0015001,
+              "inclusive_s": 0.0169674
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_missiles.py",
+              "line": 195,
+              "function": "<lambda>",
+              "primitive_calls": 151,
+              "total_calls": 151,
+              "self_s": 0.0002322,
+              "inclusive_s": 0.0044419
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_missiles.py",
+          "line": 164,
+          "function": "plan",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0194057,
+          "inclusive_s": 0.1990924,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0194057,
+              "inclusive_s": 0.1990924
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/__init__.py",
+          "line": 304,
+          "function": "loads",
+          "primitive_calls": 9415,
+          "total_calls": 9415,
+          "self_s": 0.015826700000000003,
+          "inclusive_s": 0.1895125,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/persistent_ship.py",
+              "line": 82,
+              "function": "decode",
+              "primitive_calls": 9415,
+              "total_calls": 9415,
+              "self_s": 0.015826700000000003,
+              "inclusive_s": 0.1895125
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/aviation_combat.py",
+          "line": 45,
+          "function": "known",
+          "primitive_calls": 356,
+          "total_calls": 356,
+          "self_s": 0.1275917,
+          "inclusive_s": 0.1825759,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_combat.py",
+              "line": 66,
+              "function": "plan",
+              "primitive_calls": 356,
+              "total_calls": 356,
+              "self_s": 0.1275917,
+              "inclusive_s": 0.1825759
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_inventory.py",
+          "line": 249,
+          "function": "command",
+          "primitive_calls": 604,
+          "total_calls": 604,
+          "self_s": 0.005935,
+          "inclusive_s": 0.18182240000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+              "line": 98,
+              "function": "plan",
+              "primitive_calls": 600,
+              "total_calls": 600,
+              "self_s": 0.0058011,
+              "inclusive_s": 0.18029340000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 619,
+              "function": "transact",
+              "primitive_calls": 4,
+              "total_calls": 4,
+              "self_s": 0.0001339,
+              "inclusive_s": 0.0015290000000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 73,
+          "function": "sample",
+          "primitive_calls": 712,
+          "total_calls": 712,
+          "self_s": 0.029031400000000002,
+          "inclusive_s": 0.17964870000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_flight.py",
+              "line": 144,
+              "function": "advance",
+              "primitive_calls": 356,
+              "total_calls": 356,
+              "self_s": 0.016830400000000002,
+              "inclusive_s": 0.1040591
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/aviation_ew.py",
+              "line": 50,
+              "function": "refresh",
+              "primitive_calls": 356,
+              "total_calls": 356,
+              "self_s": 0.012201,
+              "inclusive_s": 0.0755896
+            }
+          ]
+        }
+      ],
+      "publication": [
+        {
+          "file": "backend/high_wilderness_sidecar/realtime_view.py",
+          "line": 239,
+          "function": "publish",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0210614,
+          "inclusive_s": 0.4178295,
+          "callers": []
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+          "line": 896,
+          "function": "view",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0182439,
+          "inclusive_s": 0.26833280000000004,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 239,
+              "function": "publish",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0182439,
+              "inclusive_s": 0.26833280000000004
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_presentation.py",
+          "line": 62,
+          "function": "publish_shells",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 8.180000000000001e-05,
+          "inclusive_s": 0.11473560000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 239,
+              "function": "publish",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 8.180000000000001e-05,
+              "inclusive_s": 0.11473560000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/missile_display.py",
+          "line": 148,
+          "function": "publish",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0005883,
+          "inclusive_s": 0.0948795,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_presentation.py",
+              "line": 62,
+              "function": "publish_shells",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0005883,
+              "inclusive_s": 0.0948795
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/missile_display.py",
+          "line": 80,
+          "function": "_seal",
+          "primitive_calls": 751,
+          "total_calls": 751,
+          "self_s": 0.0029534,
+          "inclusive_s": 0.0924911,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/missile_display.py",
+              "line": 148,
+              "function": "publish",
+              "primitive_calls": 751,
+              "total_calls": 751,
+              "self_s": 0.0029534,
+              "inclusive_s": 0.0924911
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 390,
+          "function": "view",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0173225,
+          "inclusive_s": 0.0915456,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 896,
+              "function": "view",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0173225,
+              "inclusive_s": 0.0915456
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+          "line": 59,
+          "function": "curve_error",
+          "primitive_calls": 2287,
+          "total_calls": 2287,
+          "self_s": 0.0481849,
+          "inclusive_s": 0.0904051,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/missile_display.py",
+              "line": 36,
+              "function": "visit",
+              "primitive_calls": 1926,
+              "total_calls": 1926,
+              "self_s": 0.0394286,
+              "inclusive_s": 0.07384690000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+              "line": 85,
+              "function": "visit",
+              "primitive_calls": 361,
+              "total_calls": 361,
+              "self_s": 0.0087563,
+              "inclusive_s": 0.016558200000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/missile_display.py",
+          "line": 29,
+          "function": "simplify",
+          "primitive_calls": 751,
+          "total_calls": 751,
+          "self_s": 0.0033442000000000003,
+          "inclusive_s": 0.0890809,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/missile_display.py",
+              "line": 80,
+              "function": "_seal",
+              "primitive_calls": 751,
+              "total_calls": 751,
+              "self_s": 0.0033442000000000003,
+              "inclusive_s": 0.0890809
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/missile_display.py",
+          "line": 36,
+          "function": "visit",
+          "primitive_calls": 797,
+          "total_calls": 963,
+          "self_s": 0.0023727,
+          "inclusive_s": 0.0854399,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/missile_display.py",
+              "line": 29,
+              "function": "simplify",
+              "primitive_calls": 797,
+              "total_calls": 797,
+              "self_s": 0.0019752000000000003,
+              "inclusive_s": 0.0854399
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/missile_display.py",
+              "line": 36,
+              "function": "visit",
+              "primitive_calls": 68,
+              "total_calls": 166,
+              "self_s": 0.0003975,
+              "inclusive_s": 0.0070818
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 309,
+          "function": "sources",
+          "primitive_calls": 9144,
+          "total_calls": 9144,
+          "self_s": 0.0076162,
+          "inclusive_s": 0.07225960000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 390,
+              "function": "view",
+              "primitive_calls": 9144,
+              "total_calls": 9144,
+              "self_s": 0.0076162,
+              "inclusive_s": 0.07225960000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/persistent_ship.py",
+          "line": 82,
+          "function": "decode",
+          "primitive_calls": 1540,
+          "total_calls": 1540,
+          "self_s": 0.0019444000000000002,
+          "inclusive_s": 0.0573854,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/view_cache.py",
+              "line": 5,
+              "function": "definition",
+              "primitive_calls": 300,
+              "total_calls": 300,
+              "self_s": 0.0004899,
+              "inclusive_s": 0.034097300000000004
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/persistent_ship.py",
+              "line": 91,
+              "function": "clone",
+              "primitive_calls": 1240,
+              "total_calls": 1240,
+              "self_s": 0.0014545,
+              "inclusive_s": 0.023288100000000003
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/__init__.py",
+          "line": 304,
+          "function": "loads",
+          "primitive_calls": 1540,
+          "total_calls": 1540,
+          "self_s": 0.0021892,
+          "inclusive_s": 0.053483,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/persistent_ship.py",
+              "line": 82,
+              "function": "decode",
+              "primitive_calls": 1540,
+              "total_calls": 1540,
+              "self_s": 0.0021892,
+              "inclusive_s": 0.053483
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/decoder.py",
+          "line": 340,
+          "function": "decode",
+          "primitive_calls": 1540,
+          "total_calls": 1540,
+          "self_s": 0.0018015000000000001,
+          "inclusive_s": 0.048779800000000005,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/__init__.py",
+              "line": 304,
+              "function": "loads",
+              "primitive_calls": 1540,
+              "total_calls": 1540,
+              "self_s": 0.0018015000000000001,
+              "inclusive_s": 0.048779800000000005
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_missiles.py",
+          "line": 278,
+          "function": "view",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.005021,
+          "inclusive_s": 0.047467100000000005,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 896,
+              "function": "view",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.005021,
+              "inclusive_s": 0.047467100000000005
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/decoder.py",
+          "line": 351,
+          "function": "raw_decode",
+          "primitive_calls": 1540,
+          "total_calls": 1540,
+          "self_s": 0.022633900000000002,
+          "inclusive_s": 0.045406,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/decoder.py",
+              "line": 340,
+              "function": "decode",
+              "primitive_calls": 1540,
+              "total_calls": 1540,
+              "self_s": 0.022633900000000002,
+              "inclusive_s": 0.045406
+            }
+          ]
+        }
+      ],
+      "read": [
+        {
+          "file": "backend/high_wilderness_sidecar/realtime_view.py",
+          "line": 282,
+          "function": "read",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0015730000000000002,
+          "inclusive_s": 0.2074338,
+          "callers": []
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/__init__.py",
+          "line": 304,
+          "function": "loads",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 7.19e-05,
+          "inclusive_s": 0.1049128,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 282,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 7.19e-05,
+              "inclusive_s": 0.1049128
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/decoder.py",
+          "line": 340,
+          "function": "decode",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.00011140000000000001,
+          "inclusive_s": 0.1048242,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/__init__.py",
+              "line": 304,
+              "function": "loads",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.00011140000000000001,
+              "inclusive_s": 0.1048242
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/decoder.py",
+          "line": 351,
+          "function": "raw_decode",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.1045856,
+          "inclusive_s": 0.1045856,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/decoder.py",
+              "line": 340,
+              "function": "decode",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.1045856,
+              "inclusive_s": 0.1045856
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/__init__.py",
+          "line": 185,
+          "function": "dumps",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0001284,
+          "inclusive_s": 0.0927849,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 282,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 5.67e-05,
+              "inclusive_s": 0.08967030000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/projectile_stream.py",
+              "line": 105,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 7.170000000000001e-05,
+              "inclusive_s": 0.0031146000000000004
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/encoder.py",
+          "line": 185,
+          "function": "encode",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0001541,
+          "inclusive_s": 0.09264380000000001,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/__init__.py",
+              "line": 185,
+              "function": "dumps",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0001541,
+              "inclusive_s": 0.09264380000000001
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/encoder.py",
+          "line": 207,
+          "function": "iterencode",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.09242550000000001,
+          "inclusive_s": 0.09242550000000001,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/encoder.py",
+              "line": 185,
+              "function": "encode",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.09242550000000001,
+              "inclusive_s": 0.09242550000000001
+            }
+          ]
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'encode' of 'str' objects>",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0057532,
+          "inclusive_s": 0.0057532,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 282,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0057238,
+              "inclusive_s": 0.0057238
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/projectile_stream.py",
+              "line": 105,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 2.9400000000000003e-05,
+              "inclusive_s": 2.9400000000000003e-05
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/projectile_stream.py",
+          "line": 105,
+          "function": "read",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.00031120000000000003,
+          "inclusive_s": 0.0035900000000000003,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 282,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.00031120000000000003,
+              "inclusive_s": 0.0035900000000000003
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+          "line": 1484,
+          "function": "asdict",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 4.2600000000000005e-05,
+          "inclusive_s": 0.000858,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 282,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 4.2600000000000005e-05,
+              "inclusive_s": 0.000858
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "guns-9v9",
+      "matched_steps": 900,
+      "boundaries": [
+        {
+          "step": 60,
+          "load": {
+            "ships": 18,
+            "guns": 54,
+            "projectiles": 19,
+            "missiles": 0,
+            "airborne": 0,
+            "aircraft_sensors": 0,
+            "jammers": 0,
+            "jobs": 0,
+            "queued": 0,
+            "aircraft": 0,
+            "pilots": 0,
+            "local_tracks": 162,
+            "shared_tracks": 162,
+            "shots": 19,
+            "missile_shots": 0,
+            "hits": 0,
+            "interceptions": 0
+          }
+        },
+        {
+          "step": 660,
+          "load": {
+            "ships": 18,
+            "guns": 54,
+            "projectiles": 127,
+            "missiles": 0,
+            "airborne": 0,
+            "aircraft_sensors": 0,
+            "jammers": 0,
+            "jobs": 0,
+            "queued": 0,
+            "aircraft": 0,
+            "pilots": 0,
+            "local_tracks": 153,
+            "shared_tracks": 162,
+            "shots": 203,
+            "missile_shots": 0,
+            "hits": 18,
+            "interceptions": 0
+          }
+        }
+      ],
+      "late_inclusive": [
+        {
+          "file": "backend/high_wilderness_sidecar/realtime_view.py",
+          "line": 210,
+          "function": "stepper",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0015237,
+          "inclusive_s": 3.5954494,
+          "callers": []
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+          "line": 461,
+          "function": "step",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.008916400000000001,
+          "inclusive_s": 3.5725647,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 210,
+              "function": "stepper",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.008916400000000001,
+              "inclusive_s": 3.5725647
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_inventory.py",
+          "line": 580,
+          "function": "step",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0027895000000000003,
+          "inclusive_s": 3.537119,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 461,
+              "function": "step",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0027895000000000003,
+              "inclusive_s": 3.537119
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+          "line": 495,
+          "function": "step",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0462843,
+          "inclusive_s": 3.5248912000000003,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_inventory.py",
+              "line": 580,
+              "function": "step",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0462843,
+              "inclusive_s": 3.5248912000000003
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_inventory.py",
+          "line": 593,
+          "function": "stage",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.003013,
+          "inclusive_s": 1.6568307000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 495,
+              "function": "step",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.003013,
+              "inclusive_s": 1.6568307000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+          "line": 516,
+          "function": "simulate",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.031118100000000003,
+          "inclusive_s": 1.6016147,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_inventory.py",
+              "line": 593,
+              "function": "stage",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.031118100000000003,
+              "inclusive_s": 1.6016147
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+          "line": 477,
+          "function": "impacts",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0014804,
+          "inclusive_s": 1.4495751000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 495,
+              "function": "step",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0014804,
+              "inclusive_s": 1.4495751000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+          "line": 248,
+          "function": "advance",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.5021791,
+          "inclusive_s": 1.4405171,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 477,
+              "function": "impacts",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.5021791,
+              "inclusive_s": 1.4405171
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 225,
+          "function": "plan",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.131214,
+          "inclusive_s": 0.6476554,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.131214,
+              "inclusive_s": 0.6476554
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+          "line": 1763,
+          "function": "replace",
+          "primitive_calls": 123723,
+          "total_calls": 123723,
+          "self_s": 0.07009330000000001,
+          "inclusive_s": 0.6178663000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 84894,
+              "total_calls": 84894,
+              "self_s": 0.042608400000000005,
+              "inclusive_s": 0.2487743
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+              "line": 102,
+              "function": "advance_projectile",
+              "primitive_calls": 8019,
+              "total_calls": 8019,
+              "self_s": 0.006877200000000001,
+              "inclusive_s": 0.1077163
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 8031,
+              "total_calls": 8031,
+              "self_s": 0.0044384,
+              "inclusive_s": 0.09160560000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 495,
+              "function": "step",
+              "primitive_calls": 9960,
+              "total_calls": 9960,
+              "self_s": 0.007120100000000001,
+              "inclusive_s": 0.06906960000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+              "line": 175,
+              "function": "acquire",
+              "primitive_calls": 3946,
+              "total_calls": 3946,
+              "self_s": 0.0027246,
+              "inclusive_s": 0.0383541
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 3240,
+              "total_calls": 3240,
+              "self_s": 0.0026432,
+              "inclusive_s": 0.0328461
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+              "line": 226,
+              "function": "prepare",
+              "primitive_calls": 3770,
+              "total_calls": 3770,
+              "self_s": 0.0022521,
+              "inclusive_s": 0.0156735
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire.py",
+              "line": 286,
+              "function": "work",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.0006707000000000001,
+              "inclusive_s": 0.0072865000000000004
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+          "line": 132,
+          "function": "environment",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0313663,
+          "inclusive_s": 0.6171829000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0313663,
+              "inclusive_s": 0.6171829000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 309,
+          "function": "sources",
+          "primitive_calls": 10042,
+          "total_calls": 10042,
+          "self_s": 0.024407400000000003,
+          "inclusive_s": 0.5883149000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+              "line": 132,
+              "function": "environment",
+              "primitive_calls": 9720,
+              "total_calls": 9720,
+              "self_s": 0.023369300000000003,
+              "inclusive_s": 0.5656834000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 434,
+              "function": "_sources",
+              "primitive_calls": 322,
+              "total_calls": 322,
+              "self_s": 0.0010381000000000001,
+              "inclusive_s": 0.022631500000000002
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+          "line": 1782,
+          "function": "_replace",
+          "primitive_calls": 123723,
+          "total_calls": 123723,
+          "self_s": 0.2735434,
+          "inclusive_s": 0.5055628,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+              "line": 1763,
+              "function": "replace",
+              "primitive_calls": 123723,
+              "total_calls": 123723,
+              "self_s": 0.2735434,
+              "inclusive_s": 0.5055628
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 313,
+          "function": "<genexpr>",
+          "primitive_calls": 99328,
+          "total_calls": 99328,
+          "self_s": 0.14913400000000002,
+          "inclusive_s": 0.500252,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 309,
+              "function": "sources",
+              "primitive_calls": 99328,
+              "total_calls": 99328,
+              "self_s": 0.14913400000000002,
+              "inclusive_s": 0.500252
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 299,
+          "function": "controllers",
+          "primitive_calls": 90496,
+          "total_calls": 90496,
+          "self_s": 0.0853642,
+          "inclusive_s": 0.3781012,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 313,
+              "function": "<genexpr>",
+              "primitive_calls": 79374,
+              "total_calls": 79374,
+              "self_s": 0.06329860000000001,
+              "inclusive_s": 0.3063428
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 309,
+              "function": "sources",
+              "primitive_calls": 10042,
+              "total_calls": 10042,
+              "self_s": 0.0215164,
+              "inclusive_s": 0.0621451
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.0005492,
+              "inclusive_s": 0.0096133
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 189,
+          "function": "effect",
+          "primitive_calls": 92656,
+          "total_calls": 92656,
+          "self_s": 0.11454070000000001,
+          "inclusive_s": 0.2848218,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 299,
+              "function": "controllers",
+              "primitive_calls": 89416,
+              "total_calls": 89416,
+              "self_s": 0.10696710000000001,
+              "inclusive_s": 0.2668819
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 2160,
+              "total_calls": 2160,
+              "self_s": 0.0053429,
+              "inclusive_s": 0.012592500000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 108,
+              "function": "<genexpr>",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.0022307,
+              "inclusive_s": 0.0053474
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+          "line": 281,
+          "function": "<genexpr>",
+          "primitive_calls": 289656,
+          "total_calls": 289656,
+          "self_s": 0.0601162,
+          "inclusive_s": 0.2115363,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 289656,
+              "total_calls": 289656,
+              "self_s": 0.0601162,
+              "inclusive_s": 0.2115363
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 163,
+          "function": "visible",
+          "primitive_calls": 9720,
+          "total_calls": 9720,
+          "self_s": 0.036828,
+          "inclusive_s": 0.17304630000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 9720,
+              "total_calls": 9720,
+              "self_s": 0.036828,
+              "inclusive_s": 0.17304630000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+          "line": 102,
+          "function": "advance_projectile",
+          "primitive_calls": 8019,
+          "total_calls": 8019,
+          "self_s": 0.010984500000000001,
+          "inclusive_s": 0.1530734,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 8019,
+              "total_calls": 8019,
+              "self_s": 0.010984500000000001,
+              "inclusive_s": 0.1530734
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+          "line": 278,
+          "function": "same_layer",
+          "primitive_calls": 144971,
+          "total_calls": 144971,
+          "self_s": 0.0639899,
+          "inclusive_s": 0.1515929,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 281,
+              "function": "<genexpr>",
+              "primitive_calls": 144828,
+              "total_calls": 144828,
+              "self_s": 0.0639184,
+              "inclusive_s": 0.1514201
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 126,
+              "total_calls": 126,
+              "self_s": 6.29e-05,
+              "inclusive_s": 0.0001522
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 202,
+              "function": "remember",
+              "primitive_calls": 17,
+              "total_calls": 17,
+              "self_s": 8.6e-06,
+              "inclusive_s": 2.0600000000000003e-05
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+          "line": 175,
+          "function": "acquire",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0181252,
+          "inclusive_s": 0.13892490000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0181252,
+              "inclusive_s": 0.13892490000000002
+            }
+          ]
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.getattr>",
+          "primitive_calls": 1241157,
+          "total_calls": 1241157,
+          "self_s": 0.1176422,
+          "inclusive_s": 0.1176422,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+              "line": 1782,
+              "function": "_replace",
+              "primitive_calls": 1025480,
+              "total_calls": 1025480,
+              "self_s": 0.0956032,
+              "inclusive_s": 0.0956032
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+              "line": 99,
+              "function": "layer_breaks",
+              "primitive_calls": 144828,
+              "total_calls": 144828,
+              "self_s": 0.0148698,
+              "inclusive_s": 0.0148698
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_presentation.py",
+              "line": 83,
+              "function": "record",
+              "primitive_calls": 32104,
+              "total_calls": 32104,
+              "self_s": 0.0022557000000000002,
+              "inclusive_s": 0.0022557000000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+              "line": 132,
+              "function": "environment",
+              "primitive_calls": 19440,
+              "total_calls": 19440,
+              "self_s": 0.0022171,
+              "inclusive_s": 0.0022171
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+              "line": 85,
+              "function": "flight_segment",
+              "primitive_calls": 8046,
+              "total_calls": 8046,
+              "self_s": 0.0011535,
+              "inclusive_s": 0.0011535
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+              "line": 102,
+              "function": "advance_projectile",
+              "primitive_calls": 8019,
+              "total_calls": 8019,
+              "self_s": 0.0010568,
+              "inclusive_s": 0.0010568
+            },
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+              "line": 62,
+              "function": "copy",
+              "primitive_calls": 2160,
+              "total_calls": 2160,
+              "self_s": 0.0002963,
+              "inclusive_s": 0.0002963
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.0001898,
+              "inclusive_s": 0.0001898
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+          "line": 189,
+          "function": "boundary",
+          "primitive_calls": 2160,
+          "total_calls": 2160,
+          "self_s": 0.024722300000000003,
+          "inclusive_s": 0.1173243,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 495,
+              "function": "step",
+              "primitive_calls": 2160,
+              "total_calls": 2160,
+              "self_s": 0.024722300000000003,
+              "inclusive_s": 0.1173243
+            }
+          ]
+        },
+        {
+          "file": "高天荒野舰艇战术弹丸世界.py",
+          "line": 1006,
+          "function": "_segment_aabb_entry_fraction",
+          "primitive_calls": 73560,
+          "total_calls": 73560,
+          "self_s": 0.07048130000000001,
+          "inclusive_s": 0.10556520000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 72508,
+              "total_calls": 72508,
+              "self_s": 0.06946870000000001,
+              "inclusive_s": 0.1040134
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 196,
+              "function": "contacts_on_path",
+              "primitive_calls": 1052,
+              "total_calls": 1052,
+              "self_s": 0.0010126,
+              "inclusive_s": 0.0015518
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+          "line": 99,
+          "function": "layer_breaks",
+          "primitive_calls": 144828,
+          "total_calls": 144828,
+          "self_s": 0.0755283,
+          "inclusive_s": 0.10256810000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 144828,
+              "total_calls": 144828,
+              "self_s": 0.0755283,
+              "inclusive_s": 0.10256810000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+          "line": 633,
+          "function": "load",
+          "primitive_calls": 4320,
+          "total_calls": 4320,
+          "self_s": 0.0060764,
+          "inclusive_s": 0.102121,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 271,
+              "function": "reasons",
+              "primitive_calls": 2160,
+              "total_calls": 2160,
+              "self_s": 0.0028361000000000003,
+              "inclusive_s": 0.046223600000000004
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 495,
+              "function": "step",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.0016439,
+              "inclusive_s": 0.030474200000000003
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 189,
+              "function": "boundary",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.0015964000000000002,
+              "inclusive_s": 0.0254232
+            }
+          ]
+        },
+        {
+          "file": "高天荒野舰艇战术机动求解器.py",
+          "line": 733,
+          "function": "_load_metrics",
+          "primitive_calls": 4320,
+          "total_calls": 4320,
+          "self_s": 0.013497400000000001,
+          "inclusive_s": 0.08429990000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 633,
+              "function": "load",
+              "primitive_calls": 4320,
+              "total_calls": 4320,
+              "self_s": 0.013497400000000001,
+              "inclusive_s": 0.08429990000000001
+            }
+          ]
+        },
+        {
+          "file": "高天荒野舰艇数据契约.py",
+          "line": 802,
+          "function": "output_fraction",
+          "primitive_calls": 92690,
+          "total_calls": 92690,
+          "self_s": 0.0673485,
+          "inclusive_s": 0.08305760000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 189,
+              "function": "effect",
+              "primitive_calls": 92656,
+              "total_calls": 92656,
+              "self_s": 0.06730620000000001,
+              "inclusive_s": 0.08300690000000001
+            },
+            {
+              "file": "高天荒野舰艇数据契约.py",
+              "line": 1689,
+              "function": "damage_output_fraction",
+              "primitive_calls": 10,
+              "total_calls": 10,
+              "self_s": 2.5900000000000003e-05,
+              "inclusive_s": 2.8700000000000003e-05
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_command_runtime.py",
+              "line": 115,
+              "function": "<genexpr>",
+              "primitive_calls": 24,
+              "total_calls": 24,
+              "self_s": 1.6400000000000002e-05,
+              "inclusive_s": 2.2000000000000003e-05
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+          "line": 79,
+          "function": "at",
+          "primitive_calls": 16341,
+          "total_calls": 16341,
+          "self_s": 0.042276400000000006,
+          "inclusive_s": 0.06942330000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 8058,
+              "total_calls": 8058,
+              "self_s": 0.0213452,
+              "inclusive_s": 0.0349406
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+              "line": 102,
+              "function": "advance_projectile",
+              "primitive_calls": 8019,
+              "total_calls": 8019,
+              "self_s": 0.0202122,
+              "inclusive_s": 0.0333158
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 41,
+              "function": "local_path",
+              "primitive_calls": 252,
+              "total_calls": 252,
+              "self_s": 0.0006845,
+              "inclusive_s": 0.0011076
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 216,
+              "function": "choose_deck",
+              "primitive_calls": 12,
+              "total_calls": 12,
+              "self_s": 3.4500000000000005e-05,
+              "inclusive_s": 5.9300000000000005e-05
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 176,
+          "function": "radar_factor",
+          "primitive_calls": 9720,
+          "total_calls": 9720,
+          "self_s": 0.018437000000000002,
+          "inclusive_s": 0.0636022,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 163,
+              "function": "visible",
+              "primitive_calls": 9720,
+              "total_calls": 9720,
+              "self_s": 0.018437000000000002,
+              "inclusive_s": 0.0636022
+            }
+          ]
+        },
+        {
+          "file": "高天荒野舰艇战术机动求解器.py",
+          "line": 518,
+          "function": "calculate_tactical_drag",
+          "primitive_calls": 2330,
+          "total_calls": 2330,
+          "self_s": 0.0081186,
+          "inclusive_s": 0.0616236,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 495,
+              "function": "step",
+              "primitive_calls": 2160,
+              "total_calls": 2160,
+              "self_s": 0.0075003000000000005,
+              "inclusive_s": 0.0569763
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_navigation.py",
+              "line": 30,
+              "function": "steer",
+              "primitive_calls": 170,
+              "total_calls": 170,
+              "self_s": 0.0006183,
+              "inclusive_s": 0.0046473
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_sensor_state.py",
+          "line": 41,
+          "function": "crew_efficiency",
+          "primitive_calls": 96345,
+          "total_calls": 96345,
+          "self_s": 0.031404800000000004,
+          "inclusive_s": 0.0602776,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 189,
+              "function": "effect",
+              "primitive_calls": 92656,
+              "total_calls": 92656,
+              "self_s": 0.02986,
+              "inclusive_s": 0.043354500000000004
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 498,
+              "function": "permissions",
+              "primitive_calls": 3240,
+              "total_calls": 3240,
+              "self_s": 0.0013073000000000002,
+              "inclusive_s": 0.0163722
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 449,
+              "total_calls": 449,
+              "self_s": 0.00023750000000000003,
+              "inclusive_s": 0.0005509
+            }
+          ]
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.sorted>",
+          "primitive_calls": 234708,
+          "total_calls": 234708,
+          "self_s": 0.052446400000000004,
+          "inclusive_s": 0.057669700000000004,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 145152,
+              "total_calls": 145152,
+              "self_s": 0.025509800000000003,
+              "inclusive_s": 0.025950200000000003
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 77904,
+              "total_calls": 77904,
+              "self_s": 0.020559900000000002,
+              "inclusive_s": 0.0216737
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 79,
+              "function": "allocate",
+              "primitive_calls": 2160,
+              "total_calls": 2160,
+              "self_s": 0.0029632,
+              "inclusive_s": 0.0052507000000000005
+            },
+            {
+              "file": "高天荒野舰艇运行时参数编译器.py",
+              "line": 121,
+              "function": "powered_instance_ids",
+              "primitive_calls": 346,
+              "total_calls": 346,
+              "self_s": 0.0004044,
+              "inclusive_s": 0.0011087
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 189,
+              "function": "boundary",
+              "primitive_calls": 4320,
+              "total_calls": 4320,
+              "self_s": 0.0009080000000000001,
+              "inclusive_s": 0.0009080000000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_magazine.py",
+              "line": 97,
+              "function": "resolve",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.00045470000000000005,
+              "inclusive_s": 0.0008391000000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 495,
+              "function": "step",
+              "primitive_calls": 2160,
+              "total_calls": 2160,
+              "self_s": 0.0005889000000000001,
+              "inclusive_s": 0.0005889000000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+              "line": 65,
+              "function": "possible_arc",
+              "primitive_calls": 301,
+              "total_calls": 301,
+              "self_s": 0.00030710000000000004,
+              "inclusive_s": 0.00036040000000000003
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+          "line": 288,
+          "function": "<genexpr>",
+          "primitive_calls": 217242,
+          "total_calls": 217242,
+          "self_s": 0.0390859,
+          "inclusive_s": 0.052432000000000006,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 217242,
+              "total_calls": 217242,
+              "self_s": 0.0390859,
+              "inclusive_s": 0.052432000000000006
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+          "line": 271,
+          "function": "reasons",
+          "primitive_calls": 2160,
+          "total_calls": 2160,
+          "self_s": 0.0017432,
+          "inclusive_s": 0.0488255,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 189,
+              "function": "boundary",
+              "primitive_calls": 2160,
+              "total_calls": 2160,
+              "self_s": 0.0017432,
+              "inclusive_s": 0.0488255
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+          "line": 289,
+          "function": "<genexpr>",
+          "primitive_calls": 217242,
+          "total_calls": 217242,
+          "self_s": 0.036668400000000004,
+          "inclusive_s": 0.047688900000000006,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 217242,
+              "total_calls": 217242,
+              "self_s": 0.036668400000000004,
+              "inclusive_s": 0.047688900000000006
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_targeting.py",
+          "line": 80,
+          "function": "search_contacts",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0085038,
+          "inclusive_s": 0.046959600000000004,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+              "line": 175,
+              "function": "acquire",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0085038,
+              "inclusive_s": 0.046959600000000004
+            }
+          ]
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.next>",
+          "primitive_calls": 111912,
+          "total_calls": 111912,
+          "self_s": 0.0247068,
+          "inclusive_s": 0.046150300000000005,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 189,
+              "function": "effect",
+              "primitive_calls": 92656,
+              "total_calls": 92656,
+              "self_s": 0.0185893,
+              "inclusive_s": 0.031104200000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.0005639,
+              "inclusive_s": 0.0025799
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+              "line": 175,
+              "function": "acquire",
+              "primitive_calls": 3060,
+              "total_calls": 3060,
+              "self_s": 0.0008326000000000001,
+              "inclusive_s": 0.0024850000000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 498,
+              "function": "permissions",
+              "primitive_calls": 3240,
+              "total_calls": 3240,
+              "self_s": 0.0006843,
+              "inclusive_s": 0.0022134000000000003
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 3689,
+              "total_calls": 3689,
+              "self_s": 0.0010601,
+              "inclusive_s": 0.0019917000000000003
+            },
+            {
+              "file": "高天荒野舰艇战术机动求解器.py",
+              "line": 124,
+              "function": "layer",
+              "primitive_calls": 2330,
+              "total_calls": 2330,
+              "self_s": 0.0008068000000000001,
+              "inclusive_s": 0.0014632
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 495,
+              "function": "step",
+              "primitive_calls": 2160,
+              "total_calls": 2160,
+              "self_s": 0.0008615000000000001,
+              "inclusive_s": 0.0010943
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire.py",
+              "line": 279,
+              "function": "permissions",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.0003553,
+              "inclusive_s": 0.0009848
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+          "line": 68,
+          "function": "ship_layer_at",
+          "primitive_calls": 144971,
+          "total_calls": 144971,
+          "self_s": 0.0325847,
+          "inclusive_s": 0.0447028,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 278,
+              "function": "same_layer",
+              "primitive_calls": 144971,
+              "total_calls": 144971,
+              "self_s": 0.0325847,
+              "inclusive_s": 0.0447028
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+          "line": 85,
+          "function": "flight_segment",
+          "primitive_calls": 8046,
+          "total_calls": 8046,
+          "self_s": 0.0105897,
+          "inclusive_s": 0.0432776,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 8046,
+              "total_calls": 8046,
+              "self_s": 0.0105897,
+              "inclusive_s": 0.0432776
+            }
+          ]
+        },
+        {
+          "file": "高天荒野舰艇战术机动求解器.py",
+          "line": 707,
+          "function": "structure_ratio",
+          "primitive_calls": 4320,
+          "total_calls": 4320,
+          "self_s": 0.032347400000000005,
+          "inclusive_s": 0.0431382,
+          "callers": [
+            {
+              "file": "高天荒野舰艇战术机动求解器.py",
+              "line": 733,
+              "function": "_load_metrics",
+              "primitive_calls": 4320,
+              "total_calls": 4320,
+              "self_s": 0.032347400000000005,
+              "inclusive_s": 0.0431382
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+          "line": 95,
+          "function": "layer_at",
+          "primitive_calls": 144983,
+          "total_calls": 144983,
+          "self_s": 0.028524200000000003,
+          "inclusive_s": 0.042905500000000006,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 278,
+              "function": "same_layer",
+              "primitive_calls": 144971,
+              "total_calls": 144971,
+              "self_s": 0.0285205,
+              "inclusive_s": 0.0429002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 12,
+              "total_calls": 12,
+              "self_s": 3.7e-06,
+              "inclusive_s": 5.3e-06
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+          "line": 1472,
+          "function": "_is_dataclass_instance",
+          "primitive_calls": 123723,
+          "total_calls": 123723,
+          "self_s": 0.0300143,
+          "inclusive_s": 0.0422102,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+              "line": 1763,
+              "function": "replace",
+              "primitive_calls": 123723,
+              "total_calls": 123723,
+              "self_s": 0.0300143,
+              "inclusive_s": 0.0422102
+            }
+          ]
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.min>",
+          "primitive_calls": 429659,
+          "total_calls": 429659,
+          "self_s": 0.0404129,
+          "inclusive_s": 0.0418856,
+          "callers": [
+            {
+              "file": "高天荒野舰艇战术弹丸世界.py",
+              "line": 1006,
+              "function": "_segment_aabb_entry_fraction",
+              "primitive_calls": 158029,
+              "total_calls": 158029,
+              "self_s": 0.013945,
+              "inclusive_s": 0.013945
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 288,
+              "function": "<genexpr>",
+              "primitive_calls": 144828,
+              "total_calls": 144828,
+              "self_s": 0.013346100000000001,
+              "inclusive_s": 0.013346100000000001
+            },
+            {
+              "file": "高天荒野舰艇数据契约.py",
+              "line": 802,
+              "function": "output_fraction",
+              "primitive_calls": 92690,
+              "total_calls": 92690,
+              "self_s": 0.008346300000000001,
+              "inclusive_s": 0.008346300000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_navigation.py",
+              "line": 30,
+              "function": "steer",
+              "primitive_calls": 1020,
+              "total_calls": 1020,
+              "self_s": 0.000943,
+              "inclusive_s": 0.0024157000000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 61,
+              "function": "observation_range",
+              "primitive_calls": 9720,
+              "total_calls": 9720,
+              "self_s": 0.0012732000000000002,
+              "inclusive_s": 0.0012732000000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/simplified_flight.py",
+              "line": 346,
+              "function": "<genexpr>",
+              "primitive_calls": 12960,
+              "total_calls": 12960,
+              "self_s": 0.0012222000000000001,
+              "inclusive_s": 0.0012222000000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 4124,
+              "total_calls": 4124,
+              "self_s": 0.000548,
+              "inclusive_s": 0.000548
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+              "line": 100,
+              "function": "candidate",
+              "primitive_calls": 2362,
+              "total_calls": 2362,
+              "self_s": 0.0003036,
+              "inclusive_s": 0.0003036
+            }
+          ]
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.max>",
+          "primitive_calls": 485910,
+          "total_calls": 485910,
+          "self_s": 0.0401334,
+          "inclusive_s": 0.0402003,
+          "callers": [
+            {
+              "file": "高天荒野舰艇战术弹丸世界.py",
+              "line": 1006,
+              "function": "_segment_aabb_entry_fraction",
+              "primitive_calls": 158029,
+              "total_calls": 158029,
+              "self_s": 0.0137123,
+              "inclusive_s": 0.0137123
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 289,
+              "function": "<genexpr>",
+              "primitive_calls": 144828,
+              "total_calls": 144828,
+              "self_s": 0.0110205,
+              "inclusive_s": 0.0110205
+            },
+            {
+              "file": "高天荒野舰艇数据契约.py",
+              "line": 802,
+              "function": "output_fraction",
+              "primitive_calls": 92690,
+              "total_calls": 92690,
+              "self_s": 0.0073628,
+              "inclusive_s": 0.0073628
+            },
+            {
+              "file": "高天荒野舰艇战术机动求解器.py",
+              "line": 707,
+              "function": "structure_ratio",
+              "primitive_calls": 64800,
+              "total_calls": 64800,
+              "self_s": 0.0051393,
+              "inclusive_s": 0.0051393
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+              "line": 43,
+              "function": "coefficient",
+              "primitive_calls": 16092,
+              "total_calls": 16092,
+              "self_s": 0.0014945000000000002,
+              "inclusive_s": 0.0014945000000000002
+            },
+            {
+              "file": "高天荒野舰艇气动缓存.py",
+              "line": 360,
+              "function": "calculate_drag",
+              "primitive_calls": 2330,
+              "total_calls": 2330,
+              "self_s": 0.000337,
+              "inclusive_s": 0.000337
+            },
+            {
+              "file": "高天荒野舰艇战术机动求解器.py",
+              "line": 856,
+              "function": "_integrate_delivered_actuation",
+              "primitive_calls": 3240,
+              "total_calls": 3240,
+              "self_s": 0.000317,
+              "inclusive_s": 0.000317
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+              "line": 175,
+              "function": "acquire",
+              "primitive_calls": 414,
+              "total_calls": 414,
+              "self_s": 0.00020930000000000002,
+              "inclusive_s": 0.0002617
+            }
+          ]
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'get' of 'dict' objects>",
+          "primitive_calls": 290001,
+          "total_calls": 290001,
+          "self_s": 0.037579,
+          "inclusive_s": 0.037579,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 225,
+              "function": "plan",
+              "primitive_calls": 107910,
+              "total_calls": 107910,
+              "self_s": 0.0145801,
+              "inclusive_s": 0.0145801
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 313,
+              "function": "<genexpr>",
+              "primitive_calls": 89286,
+              "total_calls": 89286,
+              "self_s": 0.009577800000000001,
+              "inclusive_s": 0.009577800000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_targeting.py",
+              "line": 80,
+              "function": "search_contacts",
+              "primitive_calls": 18098,
+              "total_calls": 18098,
+              "self_s": 0.0031732,
+              "inclusive_s": 0.0031732
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 309,
+              "function": "sources",
+              "primitive_calls": 10042,
+              "total_calls": 10042,
+              "self_s": 0.0015104,
+              "inclusive_s": 0.0015104
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_targeting.py",
+              "line": 23,
+              "function": "visible",
+              "primitive_calls": 9502,
+              "total_calls": 9502,
+              "self_s": 0.0012911,
+              "inclusive_s": 0.0012911
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+              "line": 100,
+              "function": "candidate",
+              "primitive_calls": 4736,
+              "total_calls": 4736,
+              "self_s": 0.0007172000000000001,
+              "inclusive_s": 0.0007172000000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_sensor_state.py",
+              "line": 13,
+              "function": "check",
+              "primitive_calls": 6804,
+              "total_calls": 6804,
+              "self_s": 0.0006772000000000001,
+              "inclusive_s": 0.0006772000000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+              "line": 175,
+              "function": "acquire",
+              "primitive_calls": 3060,
+              "total_calls": 3060,
+              "self_s": 0.0006597,
+              "inclusive_s": 0.0006597
+            }
+          ]
+        },
+        {
+          "file": "高天荒野舰艇气动缓存.py",
+          "line": 360,
+          "function": "calculate_drag",
+          "primitive_calls": 2330,
+          "total_calls": 2330,
+          "self_s": 0.014224100000000002,
+          "inclusive_s": 0.0373408,
+          "callers": [
+            {
+              "file": "高天荒野舰艇战术机动求解器.py",
+              "line": 518,
+              "function": "calculate_tactical_drag",
+              "primitive_calls": 2330,
+              "total_calls": 2330,
+              "self_s": 0.014224100000000002,
+              "inclusive_s": 0.0373408
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+          "line": 498,
+          "function": "permissions",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0053149,
+          "inclusive_s": 0.036411,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_inventory.py",
+              "line": 593,
+              "function": "stage",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0053149,
+              "inclusive_s": 0.036411
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+          "line": 226,
+          "function": "prepare",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0073974,
+          "inclusive_s": 0.035219900000000005,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0073974,
+              "inclusive_s": 0.035219900000000005
+            }
+          ]
+        },
+        {
+          "file": "高天荒野舰艇RCS缓存.py",
+          "line": 394,
+          "function": "interpolate_hull_rcs",
+          "primitive_calls": 9720,
+          "total_calls": 9720,
+          "self_s": 0.0240192,
+          "inclusive_s": 0.0350182,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 176,
+              "function": "radar_factor",
+              "primitive_calls": 9720,
+              "total_calls": 9720,
+              "self_s": 0.0240192,
+              "inclusive_s": 0.0350182
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 74,
+          "function": "can_observe",
+          "primitive_calls": 9720,
+          "total_calls": 9720,
+          "self_s": 0.0182714,
+          "inclusive_s": 0.034795900000000005,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 163,
+              "function": "visible",
+              "primitive_calls": 9720,
+              "total_calls": 9720,
+              "self_s": 0.0182714,
+              "inclusive_s": 0.034795900000000005
+            }
+          ]
+        },
+        {
+          "file": "高天荒野舰艇战术机动求解器.py",
+          "line": 64,
+          "function": "to_list",
+          "primitive_calls": 353306,
+          "total_calls": 353306,
+          "self_s": 0.0314897,
+          "inclusive_s": 0.0314897,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 289680,
+              "total_calls": 289680,
+              "self_s": 0.0246548,
+              "inclusive_s": 0.0246548
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_targeting.py",
+              "line": 23,
+              "function": "visible",
+              "primitive_calls": 19004,
+              "total_calls": 19004,
+              "self_s": 0.0017051000000000002,
+              "inclusive_s": 0.0017051000000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ew.py",
+              "line": 132,
+              "function": "environment",
+              "primitive_calls": 11880,
+              "total_calls": 11880,
+              "self_s": 0.0014351000000000001,
+              "inclusive_s": 0.0014351000000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 299,
+              "function": "controllers",
+              "primitive_calls": 10042,
+              "total_calls": 10042,
+              "self_s": 0.0012212,
+              "inclusive_s": 0.0012212
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_fire_control.py",
+              "line": 45,
+              "function": "geometry",
+              "primitive_calls": 7004,
+              "total_calls": 7004,
+              "self_s": 0.0007814,
+              "inclusive_s": 0.0007814
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 6480,
+              "total_calls": 6480,
+              "self_s": 0.0007085,
+              "inclusive_s": 0.0007085
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 196,
+              "function": "targets",
+              "primitive_calls": 4320,
+              "total_calls": 4320,
+              "self_s": 0.00034950000000000004,
+              "inclusive_s": 0.00034950000000000004
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_defense_prediction.py",
+              "line": 27,
+              "function": "ship_pose",
+              "primitive_calls": 2160,
+              "total_calls": 2160,
+              "self_s": 0.00032940000000000004,
+              "inclusive_s": 0.00032940000000000004
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_resources_runtime.py",
+          "line": 90,
+          "function": "crew_efficiency",
+          "primitive_calls": 96405,
+          "total_calls": 96405,
+          "self_s": 0.0266737,
+          "inclusive_s": 0.0288886,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_sensor_state.py",
+              "line": 41,
+              "function": "crew_efficiency",
+              "primitive_calls": 96345,
+              "total_calls": 96345,
+              "self_s": 0.0266579,
+              "inclusive_s": 0.0288728
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_resources_runtime.py",
+              "line": 189,
+              "function": "<genexpr>",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 1.58e-05,
+              "inclusive_s": 1.58e-05
+            }
+          ]
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.hasattr>",
+          "primitive_calls": 274610,
+          "total_calls": 274610,
+          "self_s": 0.027384400000000003,
+          "inclusive_s": 0.027384400000000003,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+              "line": 95,
+              "function": "layer_at",
+              "primitive_calls": 144983,
+              "total_calls": 144983,
+              "self_s": 0.014381300000000001,
+              "inclusive_s": 0.014381300000000001
+            },
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+              "line": 1472,
+              "function": "_is_dataclass_instance",
+              "primitive_calls": 123723,
+              "total_calls": 123723,
+              "self_s": 0.0121959,
+              "inclusive_s": 0.0121959
+            },
+            {
+              "file": "<frozen importlib._bootstrap>",
+              "line": 1409,
+              "function": "_handle_fromlist",
+              "primitive_calls": 4800,
+              "total_calls": 4800,
+              "self_s": 0.0006771,
+              "inclusive_s": 0.0006771
+            },
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/copy.py",
+              "line": 228,
+              "function": "_reconstruct",
+              "primitive_calls": 1080,
+              "total_calls": 1080,
+              "self_s": 0.00012350000000000002,
+              "inclusive_s": 0.00012350000000000002
+            },
+            {
+              "file": "高天荒野舰艇数据契约.py",
+              "line": 3985,
+              "function": "canonical_json",
+              "primitive_calls": 12,
+              "total_calls": 12,
+              "self_s": 3.6000000000000003e-06,
+              "inclusive_s": 3.6000000000000003e-06
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 12,
+              "total_calls": 12,
+              "self_s": 3e-06,
+              "inclusive_s": 3e-06
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 193,
+          "function": "<genexpr>",
+          "primitive_calls": 185312,
+          "total_calls": 185312,
+          "self_s": 0.025330400000000003,
+          "inclusive_s": 0.025330400000000003,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 189,
+              "function": "effect",
+              "primitive_calls": 92656,
+              "total_calls": 92656,
+              "self_s": 0.0128155,
+              "inclusive_s": 0.0128155
+            },
+            {
+              "file": "~",
+              "line": 0,
+              "function": "<built-in method builtins.next>",
+              "primitive_calls": 92656,
+              "total_calls": 92656,
+              "self_s": 0.0125149,
+              "inclusive_s": 0.0125149
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+          "line": 62,
+          "function": "ship_layer_boundary",
+          "primitive_calls": 289799,
+          "total_calls": 289799,
+          "self_s": 0.025226500000000002,
+          "inclusive_s": 0.025226500000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 248,
+              "function": "advance",
+              "primitive_calls": 144828,
+              "total_calls": 144828,
+              "self_s": 0.013108400000000001,
+              "inclusive_s": 0.013108400000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_damage.py",
+              "line": 68,
+              "function": "ship_layer_at",
+              "primitive_calls": 144971,
+              "total_calls": 144971,
+              "self_s": 0.012118100000000001,
+              "inclusive_s": 0.012118100000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_targeting.py",
+          "line": 23,
+          "function": "visible",
+          "primitive_calls": 9502,
+          "total_calls": 9502,
+          "self_s": 0.0157681,
+          "inclusive_s": 0.0249751,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_targeting.py",
+              "line": 80,
+              "function": "search_contacts",
+              "primitive_calls": 9180,
+              "total_calls": 9180,
+              "self_s": 0.014874300000000002,
+              "inclusive_s": 0.023614600000000003
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 322,
+              "total_calls": 322,
+              "self_s": 0.0008938,
+              "inclusive_s": 0.0013605000000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+          "line": 54,
+          "function": "step_coefficient",
+          "primitive_calls": 8046,
+          "total_calls": 8046,
+          "self_s": 0.004715100000000001,
+          "inclusive_s": 0.024756200000000003,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_ballistics.py",
+              "line": 85,
+              "function": "flight_segment",
+              "primitive_calls": 8046,
+              "total_calls": 8046,
+              "self_s": 0.004715100000000001,
+              "inclusive_s": 0.024756200000000003
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_navigation.py",
+          "line": 166,
+          "function": "plan",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0043105,
+          "inclusive_s": 0.024661100000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 461,
+              "function": "step",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0043105,
+              "inclusive_s": 0.024661100000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+          "line": 434,
+          "function": "_sources",
+          "primitive_calls": 322,
+          "total_calls": 322,
+          "self_s": 0.00027570000000000003,
+          "inclusive_s": 0.022907200000000003,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 516,
+              "function": "simulate",
+              "primitive_calls": 322,
+              "total_calls": 322,
+              "self_s": 0.00027570000000000003,
+              "inclusive_s": 0.022907200000000003
+            }
+          ]
+        }
+      ],
+      "publication": [
+        {
+          "file": "backend/high_wilderness_sidecar/realtime_view.py",
+          "line": 239,
+          "function": "publish",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0179233,
+          "inclusive_s": 0.3952238,
+          "callers": []
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+          "line": 896,
+          "function": "view",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0332145,
+          "inclusive_s": 0.239102,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 239,
+              "function": "publish",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0332145,
+              "inclusive_s": 0.239102
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 390,
+          "function": "view",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0089536,
+          "inclusive_s": 0.1285038,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 896,
+              "function": "view",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0089536,
+              "inclusive_s": 0.1285038
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 309,
+          "function": "sources",
+          "primitive_calls": 4860,
+          "total_calls": 4860,
+          "self_s": 0.007001500000000001,
+          "inclusive_s": 0.1181746,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 390,
+              "function": "view",
+              "primitive_calls": 4860,
+              "total_calls": 4860,
+              "self_s": 0.007001500000000001,
+              "inclusive_s": 0.1181746
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_presentation.py",
+          "line": 62,
+          "function": "publish_shells",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 7.290000000000001e-05,
+          "inclusive_s": 0.1153034,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 239,
+              "function": "publish",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 7.290000000000001e-05,
+              "inclusive_s": 0.1153034
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+          "line": 168,
+          "function": "publish",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0013888000000000001,
+          "inclusive_s": 0.1151873,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_presentation.py",
+              "line": 62,
+              "function": "publish_shells",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0013888000000000001,
+              "inclusive_s": 0.1151873
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+          "line": 123,
+          "function": "_seal",
+          "primitive_calls": 2169,
+          "total_calls": 2169,
+          "self_s": 0.0065008,
+          "inclusive_s": 0.1096776,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+              "line": 168,
+              "function": "publish",
+              "primitive_calls": 2169,
+              "total_calls": 2169,
+              "self_s": 0.0065008,
+              "inclusive_s": 0.1096776
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+          "line": 78,
+          "function": "simplify",
+          "primitive_calls": 2169,
+          "total_calls": 2169,
+          "self_s": 0.0032126000000000004,
+          "inclusive_s": 0.1021682,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+              "line": 123,
+              "function": "_seal",
+              "primitive_calls": 2169,
+              "total_calls": 2169,
+              "self_s": 0.0032126000000000004,
+              "inclusive_s": 0.1021682
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 313,
+          "function": "<genexpr>",
+          "primitive_calls": 28890,
+          "total_calls": 28890,
+          "self_s": 0.0561376,
+          "inclusive_s": 0.1003454,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 309,
+              "function": "sources",
+              "primitive_calls": 28890,
+              "total_calls": 28890,
+              "self_s": 0.0561376,
+              "inclusive_s": 0.1003454
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+          "line": 85,
+          "function": "visit",
+          "primitive_calls": 2163,
+          "total_calls": 2163,
+          "self_s": 0.0020403,
+          "inclusive_s": 0.09862270000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+              "line": 78,
+              "function": "simplify",
+              "primitive_calls": 2163,
+              "total_calls": 2163,
+              "self_s": 0.0020403,
+              "inclusive_s": 0.09862270000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+          "line": 59,
+          "function": "curve_error",
+          "primitive_calls": 2163,
+          "total_calls": 2163,
+          "self_s": 0.050847100000000006,
+          "inclusive_s": 0.0963066,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+              "line": 85,
+              "function": "visit",
+              "primitive_calls": 2163,
+              "total_calls": 2163,
+              "self_s": 0.050847100000000006,
+              "inclusive_s": 0.0963066
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_personnel.py",
+          "line": 121,
+          "function": "view",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0285303,
+          "inclusive_s": 0.0404459,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_gunnery.py",
+              "line": 896,
+              "function": "view",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0285303,
+              "inclusive_s": 0.0404459
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 299,
+          "function": "controllers",
+          "primitive_calls": 43308,
+          "total_calls": 43308,
+          "self_s": 0.010766300000000001,
+          "inclusive_s": 0.036953900000000005,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 313,
+              "function": "<genexpr>",
+              "primitive_calls": 38448,
+              "total_calls": 38448,
+              "self_s": 0.009450700000000001,
+              "inclusive_s": 0.026722100000000002
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 309,
+              "function": "sources",
+              "primitive_calls": 4860,
+              "total_calls": 4860,
+              "self_s": 0.0013156,
+              "inclusive_s": 0.010231800000000001
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 105,
+          "function": "controllers",
+          "primitive_calls": 43308,
+          "total_calls": 43308,
+          "self_s": 0.018756500000000002,
+          "inclusive_s": 0.026187600000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/tactical_observation.py",
+              "line": 299,
+              "function": "controllers",
+              "primitive_calls": 43308,
+              "total_calls": 43308,
+              "self_s": 0.018756500000000002,
+              "inclusive_s": 0.026187600000000002
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+          "line": 28,
+          "function": "value_and_derivative",
+          "primitive_calls": 17232,
+          "total_calls": 17232,
+          "self_s": 0.0179551,
+          "inclusive_s": 0.023631100000000002,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/shell_presentation.py",
+              "line": 59,
+              "function": "curve_error",
+              "primitive_calls": 17232,
+              "total_calls": 17232,
+              "self_s": 0.0179551,
+              "inclusive_s": 0.023631100000000002
+            }
+          ]
+        }
+      ],
+      "read": [
+        {
+          "file": "backend/high_wilderness_sidecar/realtime_view.py",
+          "line": 282,
+          "function": "read",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0016148,
+          "inclusive_s": 0.1549769,
+          "callers": []
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/__init__.py",
+          "line": 304,
+          "function": "loads",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 7.04e-05,
+          "inclusive_s": 0.07780060000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 282,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 7.04e-05,
+              "inclusive_s": 0.07780060000000001
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/decoder.py",
+          "line": 340,
+          "function": "decode",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0001034,
+          "inclusive_s": 0.0777155,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/__init__.py",
+              "line": 304,
+              "function": "loads",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0001034,
+              "inclusive_s": 0.0777155
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/decoder.py",
+          "line": 351,
+          "function": "raw_decode",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0774918,
+          "inclusive_s": 0.0774918,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/decoder.py",
+              "line": 340,
+              "function": "decode",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0774918,
+              "inclusive_s": 0.0774918
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/__init__.py",
+          "line": 185,
+          "function": "dumps",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0001371,
+          "inclusive_s": 0.0685106,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 282,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 5.8e-05,
+              "inclusive_s": 0.06415320000000001
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/projectile_stream.py",
+              "line": 105,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 7.91e-05,
+              "inclusive_s": 0.0043574
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/encoder.py",
+          "line": 185,
+          "function": "encode",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0001494,
+          "inclusive_s": 0.06836,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/__init__.py",
+              "line": 185,
+              "function": "dumps",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0001494,
+              "inclusive_s": 0.06836
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/encoder.py",
+          "line": 207,
+          "function": "iterencode",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0681651,
+          "inclusive_s": 0.0681651,
+          "callers": [
+            {
+              "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/json/encoder.py",
+              "line": 185,
+              "function": "encode",
+              "primitive_calls": 60,
+              "total_calls": 60,
+              "self_s": 0.0681651,
+              "inclusive_s": 0.0681651
+            }
+          ]
+        },
+        {
+          "file": "backend/high_wilderness_sidecar/projectile_stream.py",
+          "line": 105,
+          "function": "read",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 0.0004752,
+          "inclusive_s": 0.005055700000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 282,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0004752,
+              "inclusive_s": 0.005055700000000001
+            }
+          ]
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'encode' of 'str' objects>",
+          "primitive_calls": 60,
+          "total_calls": 60,
+          "self_s": 0.0046003,
+          "inclusive_s": 0.0046003,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 282,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 0.0045431000000000004,
+              "inclusive_s": 0.0045431000000000004
+            },
+            {
+              "file": "backend/high_wilderness_sidecar/projectile_stream.py",
+              "line": 105,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 5.72e-05,
+              "inclusive_s": 5.72e-05
+            }
+          ]
+        },
+        {
+          "file": "C:/Users/Yichen/AppData/Local/Python/pythoncore-3.14-64/Lib/dataclasses.py",
+          "line": 1484,
+          "function": "asdict",
+          "primitive_calls": 30,
+          "total_calls": 30,
+          "self_s": 4.71e-05,
+          "inclusive_s": 0.0007876000000000001,
+          "callers": [
+            {
+              "file": "backend/high_wilderness_sidecar/realtime_view.py",
+              "line": 282,
+              "function": "read",
+              "primitive_calls": 30,
+              "total_calls": 30,
+              "self_s": 4.71e-05,
+              "inclusive_s": 0.0007876000000000001
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "paced": [
+    {
+      "case": "guns-4v4",
+      "variant": "fixed",
+      "steps": 900,
+      "simulated_s": 15.0,
+      "wall_s": 15.020021,
+      "status": {
+        "epoch": "70cc7f64f6aa4a6eb2e8281192ceed44",
+        "fixed_step": 900,
+        "running": true,
+        "generation": 0,
+        "pause_reason": null,
+        "debt_quanta": 1200042000,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 95,
+        "speed": {
+          "mode": "fixed",
+          "effective": 1.0,
+          "slowed": false,
+          "revision": 0,
+          "active_wall_s": 15.0200007,
+          "advanced_simulation_s": 15.0,
+          "actual_ratio": 0.9986683955347618,
+          "step_mean_ms": 8.75779037458423,
+          "nonstep_utilization": 0.0,
+          "longest_step_ms": 13.0506
+        }
+      },
+      "peak_debt_steps": 2.024336,
+      "step": {
+        "mean_ms": 7.860836888301289,
+        "p50_ms": 7.877800002461299,
+        "p95_ms": 10.638799984008074,
+        "p99_ms": 11.330199980875477,
+        "max_ms": 13.027200009673834
+      },
+      "read_and_encode": {
+        "mean_ms": 8.545556391240973,
+        "p50_ms": 8.752900001127273,
+        "p95_ms": 10.754000017186627,
+        "p99_ms": 11.062499979743734,
+        "max_ms": 23.10260001104325
+      }
+    },
+    {
+      "case": "guns-4v4",
+      "variant": "adaptive",
+      "steps": 900,
+      "simulated_s": 15.0,
+      "wall_s": 15.711445,
+      "status": {
+        "epoch": "2caa8f3409f14a3ba88ab6c0fb4a2cc9",
+        "fixed_step": 900,
+        "running": true,
+        "generation": 0,
+        "pause_reason": null,
+        "debt_quanta": 625708680,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 95,
+        "speed": {
+          "mode": "adaptive",
+          "effective": 1.0,
+          "slowed": false,
+          "revision": 17,
+          "active_wall_s": 15.7093401,
+          "advanced_simulation_s": 15.0,
+          "actual_ratio": 0.9548459645354549,
+          "step_mean_ms": 8.432640024053393,
+          "nonstep_utilization": 0.16981584294793634,
+          "longest_step_ms": 13.4091
+        }
+      },
+      "peak_debt_steps": 2.553018,
+      "step": {
+        "mean_ms": 7.668871333201727,
+        "p50_ms": 7.858700002543628,
+        "p95_ms": 10.183800011873245,
+        "p99_ms": 10.855399974389002,
+        "max_ms": 13.374700007261708
+      },
+      "read_and_encode": {
+        "mean_ms": 8.90466376723202,
+        "p50_ms": 8.924199995817617,
+        "p95_ms": 11.07340000453405,
+        "p99_ms": 11.49730000179261,
+        "max_ms": 26.08219999819994
+      }
+    },
+    {
+      "case": "mixed-4v4",
+      "variant": "fixed",
+      "steps": 476,
+      "simulated_s": 7.933333333333334,
+      "wall_s": 8.1870743,
+      "status": {
+        "epoch": "1dbea234bc4c436a9c70e89be4b6d4e5",
+        "fixed_step": 476,
+        "running": false,
+        "generation": 1,
+        "pause_reason": "overload",
+        "debt_quanta": 15097288000,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 44,
+        "speed": {
+          "mode": "fixed",
+          "effective": 1.0,
+          "slowed": false,
+          "revision": 0,
+          "active_wall_s": 8.1849548,
+          "advanced_simulation_s": 7.933333333333334,
+          "actual_ratio": 0.9692580505555551,
+          "step_mean_ms": 19.147265471221377,
+          "nonstep_utilization": 0.0,
+          "longest_step_ms": 23.3627
+        }
+      },
+      "peak_debt_steps": 15.097288,
+      "step": {
+        "mean_ms": 13.129550209508606,
+        "p50_ms": 13.089200016111135,
+        "p95_ms": 18.60309997573495,
+        "p99_ms": 22.42290001595393,
+        "max_ms": 23.333500022999942
+      },
+      "read_and_encode": {
+        "mean_ms": 7.441054929611863,
+        "p50_ms": 6.748500018147752,
+        "p95_ms": 9.096599998883903,
+        "p99_ms": 11.28979999339208,
+        "max_ms": 37.93530000257306
+      }
+    },
+    {
+      "case": "mixed-4v4",
+      "variant": "adaptive",
+      "steps": 900,
+      "simulated_s": 15.0,
+      "wall_s": 31.1254641,
+      "status": {
+        "epoch": "ae957cb639b949e9bfa49ceca5353b60",
+        "fixed_step": 900,
+        "running": true,
+        "generation": 0,
+        "pause_reason": null,
+        "debt_quanta": 477881988,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 52,
+        "speed": {
+          "mode": "adaptive",
+          "effective": 0.372,
+          "slowed": true,
+          "revision": 46,
+          "active_wall_s": 31.1233985,
+          "advanced_simulation_s": 15.0,
+          "actual_ratio": 0.4819525091387433,
+          "step_mean_ms": 23.554201816239352,
+          "nonstep_utilization": 0.15279377943463368,
+          "longest_step_ms": 33.5596
+        }
+      },
+      "peak_debt_steps": 1.57251,
+      "step": {
+        "mean_ms": 19.37824933349879,
+        "p50_ms": 20.210899994708598,
+        "p95_ms": 29.22319999197498,
+        "p99_ms": 31.179599987808615,
+        "max_ms": 33.52570001152344
+      },
+      "read_and_encode": {
+        "mean_ms": 9.9984926918226,
+        "p50_ms": 10.14900000882335,
+        "p95_ms": 12.22029997734353,
+        "p99_ms": 13.48110000253655,
+        "max_ms": 34.49920000275597
+      }
+    },
+    {
+      "case": "guns-9v9",
+      "variant": "fixed",
+      "steps": 145,
+      "simulated_s": 2.4166666666666665,
+      "wall_s": 2.6688529,
+      "status": {
+        "epoch": "2248c47057694982bb9165b2e0496603",
+        "fixed_step": 145,
+        "running": false,
+        "generation": 1,
+        "pause_reason": "overload",
+        "debt_quanta": 15006740000,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 32,
+        "speed": {
+          "mode": "fixed",
+          "effective": 1.0,
+          "slowed": false,
+          "revision": 0,
+          "active_wall_s": 2.666779,
+          "advanced_simulation_s": 2.4166666666666665,
+          "actual_ratio": 0.906211825826837,
+          "step_mean_ms": 16.03440743213116,
+          "nonstep_utilization": 0.0,
+          "longest_step_ms": 19.0108
+        }
+      },
+      "peak_debt_steps": 15.00674,
+      "step": {
+        "mean_ms": 14.336971722639584,
+        "p50_ms": 14.817699993727729,
+        "p95_ms": 16.49909999105148,
+        "p99_ms": 17.035199998645112,
+        "max_ms": 18.919599999208003
+      },
+      "read_and_encode": {
+        "mean_ms": 13.231508694487907,
+        "p50_ms": 13.626100000692531,
+        "p95_ms": 14.628100005211309,
+        "p99_ms": 14.68710001790896,
+        "max_ms": 14.932799997041002
+      }
+    },
+    {
+      "case": "guns-9v9",
+      "variant": "adaptive",
+      "steps": 900,
+      "simulated_s": 15.0,
+      "wall_s": 38.5994161,
+      "status": {
+        "epoch": "4bcc9e5f9b8e4599b49de90b6529f73f",
+        "fixed_step": 900,
+        "running": true,
+        "generation": 0,
+        "pause_reason": null,
+        "debt_quanta": 638574486,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 95,
+        "speed": {
+          "mode": "adaptive",
+          "effective": 0.416,
+          "slowed": true,
+          "revision": 68,
+          "active_wall_s": 38.5973147,
+          "advanced_simulation_s": 15.0,
+          "actual_ratio": 0.38862807209746125,
+          "step_mean_ms": 17.708949783096855,
+          "nonstep_utilization": 0.2197807942903039,
+          "longest_step_ms": 33.0819
+        }
+      },
+      "peak_debt_steps": 2.359981648,
+      "step": {
+        "mean_ms": 19.532111222312476,
+        "p50_ms": 19.759100017836317,
+        "p95_ms": 26.492100005270913,
+        "p99_ms": 30.227299983380362,
+        "max_ms": 33.04260000004433
+      },
+      "read_and_encode": {
+        "mean_ms": 15.991037215417386,
+        "p50_ms": 16.104499984066933,
+        "p95_ms": 19.30990000255406,
+        "p99_ms": 22.206900001037866,
+        "max_ms": 52.43429998517968
+      }
+    },
+    {
+      "case": "mixed-9v9",
+      "variant": "fixed",
+      "steps": 59,
+      "simulated_s": 0.9833333333333333,
+      "wall_s": 1.2441412,
+      "status": {
+        "epoch": "6c185c61ff4c4224a3f4ccf7b6c3de5e",
+        "fixed_step": 59,
+        "running": false,
+        "generation": 1,
+        "pause_reason": "overload",
+        "debt_quanta": 15507970000,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 21,
+        "speed": {
+          "mode": "fixed",
+          "effective": 1.0,
+          "slowed": false,
+          "revision": 0,
+          "active_wall_s": 1.2417995,
+          "advanced_simulation_s": 0.9833333333333333,
+          "actual_ratio": 0.7918615954776381,
+          "step_mean_ms": 18.902851479142516,
+          "nonstep_utilization": 0.0,
+          "longest_step_ms": 30.9811
+        }
+      },
+      "peak_debt_steps": 15.50797,
+      "step": {
+        "mean_ms": 17.198896607269642,
+        "p50_ms": 16.225899977143854,
+        "p95_ms": 23.80809999885969,
+        "p99_ms": 25.270699989050627,
+        "max_ms": 27.153100003488362
+      },
+      "read_and_encode": {
+        "mean_ms": 12.605890904193405,
+        "p50_ms": 12.842900003306568,
+        "p95_ms": 14.652899990323931,
+        "p99_ms": 14.652899990323931,
+        "max_ms": 14.843699987977743
+      }
+    },
+    {
+      "case": "mixed-9v9",
+      "variant": "adaptive",
+      "steps": 900,
+      "simulated_s": 15.0,
+      "wall_s": 88.9536915,
+      "status": {
+        "epoch": "6ee2c3cf2c42463a9613ce6f16ffcb4a",
+        "fixed_step": 900,
+        "running": true,
+        "generation": 0,
+        "pause_reason": null,
+        "debt_quanta": 653674218,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 55,
+        "speed": {
+          "mode": "adaptive",
+          "effective": 0.129,
+          "slowed": true,
+          "revision": 112,
+          "active_wall_s": 88.9514595,
+          "advanced_simulation_s": 15.0,
+          "actual_ratio": 0.1686312971626958,
+          "step_mean_ms": 58.656729949726866,
+          "nonstep_utilization": 0.25389856972053637,
+          "longest_step_ms": 104.5457
+        }
+      },
+      "peak_debt_steps": 4.02798,
+      "step": {
+        "mean_ms": 46.44295566737936,
+        "p50_ms": 48.09880000539124,
+        "p95_ms": 68.18920001387596,
+        "p99_ms": 76.65090000955388,
+        "max_ms": 104.50509999645874
+      },
+      "read_and_encode": {
+        "mean_ms": 19.293941317431482,
+        "p50_ms": 19.307499984279275,
+        "p95_ms": 24.28360001067631,
+        "p99_ms": 27.08959998562932,
+        "max_ms": 56.44750001374632
+      }
+    },
+    {
+      "case": "mixed-4v9",
+      "variant": "fixed",
+      "steps": 134,
+      "simulated_s": 2.2333333333333334,
+      "wall_s": 2.4867995,
+      "status": {
+        "epoch": "ac70ce53067149ef81daad3adc546c7e",
+        "fixed_step": 134,
+        "running": false,
+        "generation": 1,
+        "pause_reason": "overload",
+        "debt_quanta": 15067942000,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 32,
+        "speed": {
+          "mode": "fixed",
+          "effective": 1.0,
+          "slowed": false,
+          "revision": 0,
+          "active_wall_s": 2.4844657,
+          "advanced_simulation_s": 2.2333333333333334,
+          "actual_ratio": 0.8989189640788091,
+          "step_mean_ms": 18.111705985500794,
+          "nonstep_utilization": 0.0,
+          "longest_step_ms": 23.3303
+        }
+      },
+      "peak_debt_steps": 15.067942,
+      "step": {
+        "mean_ms": 15.598194774869246,
+        "p50_ms": 15.748199977679178,
+        "p95_ms": 18.582900025648996,
+        "p99_ms": 20.16330001060851,
+        "max_ms": 20.64000000245869
+      },
+      "read_and_encode": {
+        "mean_ms": 10.959690479683644,
+        "p50_ms": 11.133699998026714,
+        "p95_ms": 11.96830000844784,
+        "p99_ms": 11.96830000844784,
+        "max_ms": 12.44560000486672
+      }
+    },
+    {
+      "case": "mixed-4v9",
+      "variant": "adaptive",
+      "steps": 900,
+      "simulated_s": 15.0,
+      "wall_s": 55.4527189,
+      "status": {
+        "epoch": "2b97d8eee648465389ff4b5f8efb6d77",
+        "fixed_step": 900,
+        "running": true,
+        "generation": 0,
+        "pause_reason": null,
+        "debt_quanta": 768093486,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 140,
+        "speed": {
+          "mode": "adaptive",
+          "effective": 0.19,
+          "slowed": true,
+          "revision": 72,
+          "active_wall_s": 55.4506639,
+          "advanced_simulation_s": 15.0,
+          "actual_ratio": 0.27051073774429596,
+          "step_mean_ms": 48.748211518784345,
+          "nonstep_utilization": 0.1750361934243583,
+          "longest_step_ms": 76.8267
+        }
+      },
+      "peak_debt_steps": 1.608800846,
+      "step": {
+        "mean_ms": 33.34122766679179,
+        "p50_ms": 34.2839999939315,
+        "p95_ms": 52.71959997480735,
+        "p99_ms": 57.701999990968034,
+        "max_ms": 76.7731000087224
+      },
+      "read_and_encode": {
+        "mean_ms": 13.163264928704516,
+        "p50_ms": 12.893099978100508,
+        "p95_ms": 16.487999993842095,
+        "p99_ms": 18.480600003385916,
+        "max_ms": 34.55359998042695
+      }
+    },
+    {
+      "case": "mixed-4v9-reversed",
+      "variant": "fixed",
+      "steps": 172,
+      "simulated_s": 2.8666666666666667,
+      "wall_s": 3.1248193,
+      "status": {
+        "epoch": "07cf419ef38d4cb3bcf8247c69b679ad",
+        "fixed_step": 172,
+        "running": false,
+        "generation": 1,
+        "pause_reason": "overload",
+        "debt_quanta": 15363200000,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 33,
+        "speed": {
+          "mode": "fixed",
+          "effective": 1.0,
+          "slowed": false,
+          "revision": 0,
+          "active_wall_s": 3.12272,
+          "advanced_simulation_s": 2.8666666666666667,
+          "actual_ratio": 0.9180031084012229,
+          "step_mean_ms": 17.383491290459634,
+          "nonstep_utilization": 0.0,
+          "longest_step_ms": 20.0592
+        }
+      },
+      "peak_debt_steps": 15.3632,
+      "step": {
+        "mean_ms": 14.248179070966936,
+        "p50_ms": 13.899500016123056,
+        "p95_ms": 17.8343000006862,
+        "p99_ms": 18.297200003871694,
+        "max_ms": 18.680799985304475
+      },
+      "read_and_encode": {
+        "mean_ms": 10.7648222237239,
+        "p50_ms": 11.205999995581806,
+        "p95_ms": 12.593299994478002,
+        "p99_ms": 12.69289999618195,
+        "max_ms": 12.720099999569356
+      }
+    },
+    {
+      "case": "mixed-4v9-reversed",
+      "variant": "adaptive",
+      "steps": 900,
+      "simulated_s": 15.0,
+      "wall_s": 49.6522586,
+      "status": {
+        "epoch": "afe4a203dfba4c6b853af6cc1c01df76",
+        "fixed_step": 900,
+        "running": true,
+        "generation": 0,
+        "pause_reason": null,
+        "debt_quanta": 674323926,
+        "pending_inputs": 0,
+        "retained_receipts": 0,
+        "reliable_events": 0,
+        "highest_input_sequence": 0,
+        "acknowledged_event_sequence": 125,
+        "speed": {
+          "mode": "adaptive",
+          "effective": 0.175,
+          "slowed": true,
+          "revision": 64,
+          "active_wall_s": 49.6501214,
+          "advanced_simulation_s": 15.0,
+          "actual_ratio": 0.3021140649215009,
+          "step_mean_ms": 42.085559289896175,
+          "nonstep_utilization": 0.2092026898132376,
+          "longest_step_ms": 74.0181
+        }
+      },
+      "peak_debt_steps": 1.607528,
+      "step": {
+        "mean_ms": 28.26996822272324,
+        "p50_ms": 30.13430000282824,
+        "p95_ms": 44.00350002106279,
+        "p99_ms": 50.14729997492395,
+        "max_ms": 73.9746000035666
+      },
+      "read_and_encode": {
+        "mean_ms": 14.578706283089998,
+        "p50_ms": 14.857000001939014,
+        "p95_ms": 18.531600013375282,
+        "p99_ms": 20.367299992358312,
+        "max_ms": 33.228499989490956
+      }
+    }
+  ],
+  "live": [
+    {
+      "case": "guns-4v4",
+      "command_summary": {
+        "submitted": 6,
+        "rejected": 0,
+        "executed": 6,
+        "reply": {
+          "count": 6,
+          "meanMs": 17.150000005960464,
+          "p95Ms": 18.80000001192093,
+          "maxMs": 19.400000005960464
+        },
+        "receipt": {
+          "count": 6,
+          "meanMs": 205.8166666676601,
+          "p95Ms": 219.09999999403954,
+          "maxMs": 283.90000000596046
+        },
+        "dom": {
+          "count": 6,
+          "meanMs": 223.2166666686535,
+          "p95Ms": 236.69999998807907,
+          "maxMs": 302.90000000596046
+        },
+        "canvas": {
+          "count": 6,
+          "meanMs": 348.53333333631355,
+          "p95Ms": 400.40000000596046,
+          "maxMs": 416.5
+        }
+      },
+      "receipt_to_canvas_ms": [
+        76.89999997615814,
+        158.30000001192093,
+        160.5,
+        116.5,
+        203.80000001192093,
+        140.30000001192093
+      ],
+      "receipt_to_canvas": {
+        "count": 6,
+        "mean_ms": 142.7166666686535,
+        "p95_ms": 160.5,
+        "max_ms": 203.80000001192093
+      },
+      "metrics": {
+        "browserBridge.tactical.realtime.read": {
+          "count": 256,
+          "meanMs": 96.80859374976717,
+          "p95Ms": 137.90000000596046,
+          "maxMs": 326.10000002384186
+        },
+        "merge": {
+          "count": 257,
+          "meanMs": 0.4194552533125599,
+          "p95Ms": 0.9000000059604645,
+          "maxMs": 1.5999999940395355
+        },
+        "sampling": {
+          "count": 5915,
+          "meanMs": 0.19793744728107726,
+          "p95Ms": 0.4000000059604645,
+          "maxMs": 1.399999976158142
+        },
+        "renderSubmission": {
+          "count": 5915,
+          "meanMs": 0.5836855454456977,
+          "p95Ms": 0.9000000059604645,
+          "maxMs": 10
+        },
+        "browserBridge.tactical.realtime.resume": {
+          "count": 1,
+          "meanMs": 38.400000005960464,
+          "p95Ms": 38.400000005960464,
+          "maxMs": 38.400000005960464
+        },
+        "frameCPU": {
+          "count": 5659,
+          "meanMs": 1.884096130367976,
+          "p95Ms": 2.800000011920929,
+          "maxMs": 13.799999982118607
+        },
+        "frameInterval": {
+          "count": 5658,
+          "meanMs": 5.419441498762831,
+          "p95Ms": 12.5,
+          "maxMs": 54.19999999999709
+        },
+        "browserBridge.tactical.realtime.control": {
+          "count": 6,
+          "meanMs": 17.150000005960464,
+          "p95Ms": 18.80000001192093,
+          "maxMs": 19.400000005960464
+        }
+      },
+      "node_response_parse": {
+        "count": 266,
+        "meanMs": 0.6147605263158493,
+        "p95Ms": 0.8775000000023283,
+        "maxMs": 1.886899999997695
+      },
+      "selection_ms": 19.19999998807907,
+      "peak_response_bytes": 786495
+    },
+    {
+      "case": "mixed-4v4",
+      "command_summary": {
+        "submitted": 6,
+        "rejected": 0,
+        "executed": 6,
+        "reply": {
+          "count": 6,
+          "meanMs": 18.30000000198682,
+          "p95Ms": 21.599999994039536,
+          "maxMs": 22.5
+        },
+        "receipt": {
+          "count": 6,
+          "meanMs": 228.54999999701977,
+          "p95Ms": 246.59999999403954,
+          "maxMs": 255.5
+        },
+        "dom": {
+          "count": 6,
+          "meanMs": 245.09999999403954,
+          "p95Ms": 266.19999998807907,
+          "maxMs": 269
+        },
+        "canvas": {
+          "count": 6,
+          "meanMs": 501.74999999503297,
+          "p95Ms": 566.3000000119209,
+          "maxMs": 673.8000000119209
+        }
+      },
+      "receipt_to_canvas_ms": [
+        146.40000000596046,
+        206.89999997615814,
+        238.5,
+        281.5,
+        347.59999999403954,
+        418.30000001192093
+      ],
+      "receipt_to_canvas": {
+        "count": 6,
+        "mean_ms": 273.1999999980132,
+        "p95_ms": 347.59999999403954,
+        "max_ms": 418.30000001192093
+      },
+      "metrics": {
+        "browserBridge.tactical.realtime.read": {
+          "count": 258,
+          "meanMs": 90.99147286791673,
+          "p95Ms": 117.90000000596046,
+          "maxMs": 235.30000001192093
+        },
+        "merge": {
+          "count": 260,
+          "meanMs": 0.201538462134508,
+          "p95Ms": 0.4000000059604645,
+          "maxMs": 0.6000000238418579
+        },
+        "sampling": {
+          "count": 5850,
+          "meanMs": 0.127213675119938,
+          "p95Ms": 0.29999998211860657,
+          "maxMs": 4
+        },
+        "renderSubmission": {
+          "count": 5850,
+          "meanMs": 0.4646837603281706,
+          "p95Ms": 0.699999988079071,
+          "maxMs": 3.800000011920929
+        },
+        "browserBridge.tactical.realtime.resume": {
+          "count": 1,
+          "meanMs": 49.5,
+          "p95Ms": 49.5,
+          "maxMs": 49.5
+        },
+        "frameCPU": {
+          "count": 5591,
+          "meanMs": 1.3805580396245831,
+          "p95Ms": 2,
+          "maxMs": 5.4000000059604645
+        },
+        "frameInterval": {
+          "count": 5590,
+          "meanMs": 5.4749373881932195,
+          "p95Ms": 12.599999999998545,
+          "maxMs": 37.39999999999782
+        },
+        "browserBridge.tactical.realtime.control": {
+          "count": 6,
+          "meanMs": 18.30000000198682,
+          "p95Ms": 21.599999994039536,
+          "maxMs": 22.5
+        },
+        "browserBridge.tactical.realtime.pause": {
+          "count": 1,
+          "meanMs": 178.39999997615814,
+          "p95Ms": 178.39999997615814,
+          "maxMs": 178.39999997615814
+        }
+      },
+      "node_response_parse": {
+        "count": 268,
+        "meanMs": 0.6874503731343468,
+        "p95Ms": 0.8591999999989639,
+        "maxMs": 1.5302000000010594
+      },
+      "selection_ms": 28.5,
+      "peak_response_bytes": 387215
+    },
+    {
+      "case": "guns-9v9",
+      "command_summary": {
+        "submitted": 6,
+        "rejected": 0,
+        "executed": 6,
+        "reply": {
+          "count": 6,
+          "meanMs": 23.816666672627132,
+          "p95Ms": 26.700000017881393,
+          "maxMs": 27.80000001192093
+        },
+        "receipt": {
+          "count": 6,
+          "meanMs": 340.1333333353202,
+          "p95Ms": 353.30000001192093,
+          "maxMs": 389.2999999821186
+        },
+        "dom": {
+          "count": 6,
+          "meanMs": 367.683333342274,
+          "p95Ms": 389.2000000178814,
+          "maxMs": 415.90000000596046
+        },
+        "canvas": {
+          "count": 6,
+          "meanMs": 753.6666666666666,
+          "p95Ms": 843,
+          "maxMs": 865.4000000059605
+        }
+      },
+      "receipt_to_canvas_ms": [
+        302.90000000596046,
+        387.40000000596046,
+        426.89999997615814,
+        489.69999998807907,
+        535.5,
+        338.80000001192093
+      ],
+      "receipt_to_canvas": {
+        "count": 6,
+        "mean_ms": 413.5333333313465,
+        "p95_ms": 489.69999998807907,
+        "max_ms": 535.5
+      },
+      "metrics": {
+        "browserBridge.tactical.realtime.read": {
+          "count": 153,
+          "meanMs": 176.3392156859239,
+          "p95Ms": 236,
+          "maxMs": 321.30000001192093
+        },
+        "merge": {
+          "count": 154,
+          "meanMs": 0.805844158321232,
+          "p95Ms": 1.7000000178813934,
+          "maxMs": 4.0999999940395355
+        },
+        "sampling": {
+          "count": 4551,
+          "meanMs": 0.3030323005919665,
+          "p95Ms": 0.5999999940395355,
+          "maxMs": 2.300000011920929
+        },
+        "renderSubmission": {
+          "count": 4551,
+          "meanMs": 1.0943528893386314,
+          "p95Ms": 1.699999988079071,
+          "maxMs": 4.5
+        },
+        "browserBridge.tactical.realtime.resume": {
+          "count": 1,
+          "meanMs": 85.30000001192093,
+          "p95Ms": 85.30000001192093,
+          "maxMs": 85.30000001192093
+        },
+        "frameCPU": {
+          "count": 4397,
+          "meanMs": 3.8001137136030336,
+          "p95Ms": 6.0999999940395355,
+          "maxMs": 26.900000005960464
+        },
+        "frameInterval": {
+          "count": 4396,
+          "meanMs": 7.012192902638763,
+          "p95Ms": 16.700000000004366,
+          "maxMs": 87.5
+        },
+        "browserBridge.tactical.realtime.control": {
+          "count": 6,
+          "meanMs": 23.816666672627132,
+          "p95Ms": 26.700000017881393,
+          "maxMs": 27.80000001192093
+        }
+      },
+      "node_response_parse": {
+        "count": 164,
+        "meanMs": 1.0736359756092497,
+        "p95Ms": 1.808499999999185,
+        "maxMs": 3.2269000000014785
+      },
+      "selection_ms": 187,
+      "peak_response_bytes": 815741
+    },
+    {
+      "case": "mixed-9v9",
+      "command_summary": {
+        "submitted": 6,
+        "rejected": 0,
+        "executed": 6,
+        "reply": {
+          "count": 6,
+          "meanMs": 25.266666665673256,
+          "p95Ms": 28.799999982118607,
+          "maxMs": 32
+        },
+        "receipt": {
+          "count": 6,
+          "meanMs": 369.74999999503297,
+          "p95Ms": 362.7999999821186,
+          "maxMs": 463.2999999821186
+        },
+        "dom": {
+          "count": 6,
+          "meanMs": 396.96666665871936,
+          "p95Ms": 391.7999999821186,
+          "maxMs": 486.59999999403954
+        },
+        "canvas": {
+          "count": 6,
+          "meanMs": 1041.9333333273728,
+          "p95Ms": 1105.2999999821186,
+          "maxMs": 1320.4000000059605
+        }
+      },
+      "receipt_to_canvas_ms": [
+        439.5,
+        556.1999999880791,
+        746.6999999880791,
+        631.3000000119209,
+        671.5,
+        987.9000000059605
+      ],
+      "receipt_to_canvas": {
+        "count": 6,
+        "mean_ms": 672.1833333323399,
+        "p95_ms": 746.6999999880791,
+        "max_ms": 987.9000000059605
+      },
+      "metrics": {
+        "browserBridge.tactical.realtime.read": {
+          "count": 163,
+          "meanMs": 165.49631902008701,
+          "p95Ms": 210.90000000596046,
+          "maxMs": 315.39999997615814
+        },
+        "merge": {
+          "count": 165,
+          "meanMs": 0.1690909085851727,
+          "p95Ms": 0.30000001192092896,
+          "maxMs": 0.4000000059604645
+        },
+        "sampling": {
+          "count": 4718,
+          "meanMs": 0.1395930480393579,
+          "p95Ms": 0.29999998211860657,
+          "maxMs": 0.800000011920929
+        },
+        "renderSubmission": {
+          "count": 4718,
+          "meanMs": 0.8142433233713892,
+          "p95Ms": 1.0999999940395355,
+          "maxMs": 3.800000011920929
+        },
+        "browserBridge.tactical.realtime.resume": {
+          "count": 1,
+          "meanMs": 115.19999998807907,
+          "p95Ms": 115.19999998807907,
+          "maxMs": 115.19999998807907
+        },
+        "frameCPU": {
+          "count": 4554,
+          "meanMs": 2.496201141994671,
+          "p95Ms": 3.300000011920929,
+          "maxMs": 11.400000005960464
+        },
+        "frameInterval": {
+          "count": 4553,
+          "meanMs": 6.748429606852624,
+          "p95Ms": 16.60000000000582,
+          "maxMs": 58.30000000000291
+        },
+        "browserBridge.tactical.realtime.control": {
+          "count": 6,
+          "meanMs": 25.283333331346512,
+          "p95Ms": 28.899999976158142,
+          "maxMs": 32
+        },
+        "browserBridge.tactical.realtime.pause": {
+          "count": 1,
+          "meanMs": 272.2999999821186,
+          "p95Ms": 272.2999999821186,
+          "maxMs": 272.2999999821186
+        }
+      },
+      "node_response_parse": {
+        "count": 173,
+        "meanMs": 1.0754526011558987,
+        "p95Ms": 1.2916000000041095,
+        "maxMs": 2.201999999997497
+      },
+      "selection_ms": 29.900000005960464,
+      "peak_response_bytes": 515177
+    }
+  ],
+  "scope": "New cProfile attribution on the pushed runtime; paced/page measurements reused from 7c.4b with identical source hashes. Inclusive times overlap and include profiler overhead. No new throughput benchmark or native/full-battle acceptance."
+}

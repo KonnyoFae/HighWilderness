@@ -1,0 +1,2045 @@
+{
+  "cases": [
+    {
+      "case": "guns-4v4",
+      "source_files": 681,
+      "commands": [
+        {
+          "sequence": 1,
+          "ms": {
+            "click_to_submit": 26.799999982118607,
+            "submit_to_accept": 17.200000017881393,
+            "submit_to_receipt": 80.30000001192093,
+            "submit_to_canvas": 226.80000001192093,
+            "click_to_canvas": 253.59999999403954,
+            "receipt_to_canvas": 146.5,
+            "timeline_to_canvas": 65.59999999403954,
+            "reference_submit_to_canvas": 226.80000001192093,
+            "delivered_to_timeline": 9.900000005960464,
+            "accepted_to_executed": 32.70489999651909,
+            "executed_to_publication": 38.381999999284744,
+            "publication_to_read": 63.97789999842644,
+            "read_server_execute": 7.311699986457825,
+            "read_node_outside_execute": 12.422300013542554,
+            "read_browser_outside_node": 7.265999999999622
+          }
+        },
+        {
+          "sequence": 2,
+          "ms": {
+            "click_to_submit": 27,
+            "submit_to_accept": 20.5,
+            "submit_to_receipt": 94.2999999821186,
+            "submit_to_canvas": 223.40000000596046,
+            "click_to_canvas": 250.40000000596046,
+            "receipt_to_canvas": 129.10000002384186,
+            "timeline_to_canvas": 69.60000002384186,
+            "reference_submit_to_canvas": 223.40000000596046,
+            "delivered_to_timeline": 10.199999988079071,
+            "accepted_to_executed": 34.470599979162216,
+            "executed_to_publication": 38.821700006723404,
+            "publication_to_read": 45.159199982881546,
+            "read_server_execute": 7.615900009870529,
+            "read_node_outside_execute": 12.103799990129119,
+            "read_browser_outside_node": 8.180300005960817
+          }
+        },
+        {
+          "sequence": 3,
+          "ms": {
+            "click_to_submit": 34.89999997615814,
+            "submit_to_accept": 17.80000001192093,
+            "submit_to_receipt": 103,
+            "submit_to_canvas": 230.10000002384186,
+            "click_to_canvas": 265,
+            "receipt_to_canvas": 127.10000002384186,
+            "timeline_to_canvas": 52.900000005960464,
+            "reference_submit_to_canvas": 230.10000002384186,
+            "delivered_to_timeline": 8.599999994039536,
+            "accepted_to_executed": 28.55840003490448,
+            "executed_to_publication": 58.014399975538254,
+            "publication_to_read": 49.65420001745224,
+            "read_server_execute": 7.625400006771088,
+            "read_node_outside_execute": 7.834999993228848,
+            "read_browser_outside_node": 7.339600011920993
+          }
+        },
+        {
+          "sequence": 4,
+          "ms": {
+            "click_to_submit": 68.2000000178814,
+            "submit_to_accept": 13.900000005960464,
+            "submit_to_receipt": 137.7999999821186,
+            "submit_to_canvas": 262.40000000596046,
+            "click_to_canvas": 330.60000002384186,
+            "receipt_to_canvas": 124.60000002384186,
+            "timeline_to_canvas": 46.70000001788139,
+            "reference_submit_to_canvas": 281.40000000596046,
+            "delivered_to_timeline": 11.5,
+            "accepted_to_executed": 54.0358000099659,
+            "executed_to_publication": 79.43869999051094,
+            "publication_to_read": 46.754799991846085,
+            "read_server_execute": 10.234799981117249,
+            "read_node_outside_execute": 10.358400018882094,
+            "read_browser_outside_node": 8.606799988079729
+          }
+        },
+        {
+          "sequence": 5,
+          "ms": {
+            "click_to_submit": 46.20000001788139,
+            "submit_to_accept": 12.900000005960464,
+            "submit_to_receipt": 104.19999998807907,
+            "submit_to_canvas": 238.69999998807907,
+            "click_to_canvas": 284.90000000596046,
+            "receipt_to_canvas": 134.5,
+            "timeline_to_canvas": 57.79999998211861,
+            "reference_submit_to_canvas": 300.69999998807907,
+            "delivered_to_timeline": 11.900000005960464,
+            "accepted_to_executed": 43.03929999470711,
+            "executed_to_publication": 69.94930002093315,
+            "publication_to_read": 25.374199986457825,
+            "read_server_execute": 9.12610000371933,
+            "read_node_outside_execute": 18.29589999627933,
+            "read_browser_outside_node": 9.677999994040874
+          }
+        },
+        {
+          "sequence": 6,
+          "ms": {
+            "click_to_submit": 48.69999998807907,
+            "submit_to_accept": 20.599999994039536,
+            "submit_to_receipt": 109.80000001192093,
+            "submit_to_canvas": 193.90000000596046,
+            "click_to_canvas": 242.59999999403954,
+            "receipt_to_canvas": 84.09999999403954,
+            "timeline_to_canvas": 72.40000000596046,
+            "reference_submit_to_canvas": 277.2000000178814,
+            "delivered_to_timeline": 11.699999988079071,
+            "accepted_to_executed": 32.816199988126755,
+            "executed_to_publication": 43.85440003871918,
+            "publication_to_read": 3.8041999638080597,
+            "read_server_execute": 8.192400008440018,
+            "read_node_outside_execute": 25.557199991559173,
+            "read_browser_outside_node": 8.350399994040345
+          }
+        },
+        {
+          "sequence": 7,
+          "ms": {
+            "click_to_submit": 53.80000001192093,
+            "submit_to_accept": 12.400000005960464,
+            "submit_to_receipt": 118.09999999403954,
+            "submit_to_canvas": 210.09999999403954,
+            "click_to_canvas": 263.90000000596046,
+            "receipt_to_canvas": 92,
+            "timeline_to_canvas": 79.2999999821186,
+            "reference_submit_to_canvas": 265.59999999403954,
+            "delivered_to_timeline": 12.700000017881393,
+            "accepted_to_executed": 32.82660001516342,
+            "executed_to_publication": 35.55399999022484,
+            "publication_to_read": 28.0387000143528,
+            "read_server_execute": 9.396699994802475,
+            "read_node_outside_execute": 14.824800005197176,
+            "read_browser_outside_node": 7.97849998807942
+          }
+        },
+        {
+          "sequence": 8,
+          "ms": {
+            "click_to_submit": 42.599999994039536,
+            "submit_to_accept": 10.5,
+            "submit_to_receipt": 75.59999999403954,
+            "submit_to_canvas": 243.69999998807907,
+            "click_to_canvas": 286.2999999821186,
+            "receipt_to_canvas": 168.09999999403954,
+            "timeline_to_canvas": 37.5,
+            "reference_submit_to_canvas": 270.59999999403954,
+            "delivered_to_timeline": 10.199999988079071,
+            "accepted_to_executed": 49.812799990177155,
+            "executed_to_publication": 76.88919997215271,
+            "publication_to_read": 49.98230001330376,
+            "read_server_execute": 9.09510001540184,
+            "read_node_outside_execute": 6.401599984597851,
+            "read_browser_outside_node": 8.903300005960773
+          }
+        },
+        {
+          "sequence": 9,
+          "ms": {
+            "click_to_submit": 34.400000005960464,
+            "submit_to_accept": 13.799999982118607,
+            "submit_to_receipt": 79.2999999821186,
+            "submit_to_canvas": 196.2999999821186,
+            "click_to_canvas": 230.69999998807907,
+            "receipt_to_canvas": 117,
+            "timeline_to_canvas": 105.19999998807907,
+            "reference_submit_to_canvas": 242,
+            "delivered_to_timeline": 11.800000011920929,
+            "accepted_to_executed": 30.630800008773804,
+            "executed_to_publication": 7.668899983167648,
+            "publication_to_read": 20.099500000476837,
+            "read_server_execute": 10.27350002527237,
+            "read_node_outside_execute": 7.270499974725681,
+            "read_browser_outside_node": 9.155999988081021
+          }
+        },
+        {
+          "sequence": 10,
+          "ms": {
+            "click_to_submit": 48,
+            "submit_to_accept": 14.599999994039536,
+            "submit_to_receipt": 153,
+            "submit_to_canvas": 234.19999998807907,
+            "click_to_canvas": 282.19999998807907,
+            "receipt_to_canvas": 81.19999998807907,
+            "timeline_to_canvas": 69.80000001192093,
+            "reference_submit_to_canvas": 292,
+            "delivered_to_timeline": 11.399999976158142,
+            "accepted_to_executed": 67.31169998645782,
+            "executed_to_publication": 47.95429998636246,
+            "publication_to_read": 5.07600000500679,
+            "read_server_execute": 10.716699987649918,
+            "read_node_outside_execute": 21.551900012349506,
+            "read_browser_outside_node": 12.13140000596104
+          }
+        },
+        {
+          "sequence": 11,
+          "ms": {
+            "click_to_submit": 82,
+            "submit_to_accept": 17.900000005960464,
+            "submit_to_receipt": 142.09999999403954,
+            "submit_to_canvas": 290.30000001192093,
+            "click_to_canvas": 372.30000001192093,
+            "receipt_to_canvas": 148.2000000178814,
+            "timeline_to_canvas": 64.2000000178814,
+            "reference_submit_to_canvas": 364.90000000596046,
+            "delivered_to_timeline": 12.900000005960464,
+            "accepted_to_executed": 76.71939998865128,
+            "executed_to_publication": 65.04039999842644,
+            "publication_to_read": 40.56010001897812,
+            "read_server_execute": 11.433200001716614,
+            "read_node_outside_execute": 8.453399998285022,
+            "read_browser_outside_node": 10.013399976156506
+          }
+        },
+        {
+          "sequence": 12,
+          "ms": {
+            "click_to_submit": 54.19999998807907,
+            "submit_to_accept": 16.599999994039536,
+            "submit_to_receipt": 141.7000000178814,
+            "submit_to_canvas": 273.90000000596046,
+            "click_to_canvas": 328.09999999403954,
+            "receipt_to_canvas": 132.19999998807907,
+            "timeline_to_canvas": 58,
+            "reference_submit_to_canvas": 422.7000000178814,
+            "delivered_to_timeline": 12.699999988079071,
+            "accepted_to_executed": 94.16020002961159,
+            "executed_to_publication": 60.994699984788895,
+            "publication_to_read": 27.045800030231476,
+            "read_server_execute": 11.606100022792816,
+            "read_node_outside_execute": 7.692699977207667,
+            "read_browser_outside_node": 10.201199999999517
+          }
+        },
+        {
+          "sequence": 13,
+          "ms": {
+            "click_to_submit": 72.7000000178814,
+            "submit_to_accept": 22.900000005960464,
+            "submit_to_receipt": 151.7999999821186,
+            "submit_to_canvas": 248.19999998807907,
+            "click_to_canvas": 320.90000000596046,
+            "receipt_to_canvas": 96.40000000596046,
+            "timeline_to_canvas": 82.7999999821186,
+            "reference_submit_to_canvas": 385,
+            "delivered_to_timeline": 13.600000023841858,
+            "accepted_to_executed": 76.44480001926422,
+            "executed_to_publication": 38.12489998340607,
+            "publication_to_read": 18.077499985694885,
+            "read_server_execute": 11.924000024795532,
+            "read_node_outside_execute": 18.390899975202046,
+            "read_browser_outside_node": 11.485099982121028
+          }
+        },
+        {
+          "sequence": 14,
+          "ms": {
+            "click_to_submit": 43.5,
+            "submit_to_accept": 20,
+            "submit_to_receipt": 133.40000000596046,
+            "submit_to_canvas": 248,
+            "click_to_canvas": 291.5,
+            "receipt_to_canvas": 114.59999999403954,
+            "timeline_to_canvas": 102.09999999403954,
+            "reference_submit_to_canvas": 421.90000000596046,
+            "delivered_to_timeline": 12.5,
+            "accepted_to_executed": 62.629200011491776,
+            "executed_to_publication": 8.090599983930588,
+            "publication_to_read": 22.781000018119812,
+            "read_server_execute": 12.92670002579689,
+            "read_node_outside_execute": 13.579199974199582,
+            "read_browser_outside_node": 11.894100005963992
+          }
+        },
+        {
+          "sequence": 15,
+          "ms": {
+            "click_to_submit": 35.099999994039536,
+            "submit_to_accept": 22,
+            "submit_to_receipt": 141.7000000178814,
+            "submit_to_canvas": 270.80000001192093,
+            "click_to_canvas": 305.90000000596046,
+            "receipt_to_canvas": 129.09999999403954,
+            "timeline_to_canvas": 59,
+            "reference_submit_to_canvas": 400.60000002384186,
+            "delivered_to_timeline": 12.300000011920929,
+            "accepted_to_executed": 64.86620000004768,
+            "executed_to_publication": 77.11880001425743,
+            "publication_to_read": 34.768900007009506,
+            "read_server_execute": 11.902500003576279,
+            "read_node_outside_execute": 7.679899996423046,
+            "read_browser_outside_node": 9.01759999404021
+          }
+        },
+        {
+          "sequence": 16,
+          "ms": {
+            "click_to_submit": 56.900000005960464,
+            "submit_to_accept": 21.69999998807907,
+            "submit_to_receipt": 109.19999998807907,
+            "submit_to_canvas": 224.80000001192093,
+            "click_to_canvas": 281.7000000178814,
+            "receipt_to_canvas": 115.60000002384186,
+            "timeline_to_canvas": 103.40000000596046,
+            "reference_submit_to_canvas": 412.30000001192093,
+            "delivered_to_timeline": 12.200000017881393,
+            "accepted_to_executed": 54.49700000882149,
+            "executed_to_publication": 9.275299996137619,
+            "publication_to_read": 5.079399973154068,
+            "read_server_execute": 10.249700009822845,
+            "read_node_outside_execute": 18.76439999017748,
+            "read_browser_outside_node": 8.985899999999674
+          }
+        },
+        {
+          "sequence": 17,
+          "ms": {
+            "click_to_submit": 43.20000001788139,
+            "submit_to_accept": 13.699999988079071,
+            "submit_to_receipt": 157.59999999403954,
+            "submit_to_canvas": 243.7999999821186,
+            "click_to_canvas": 287,
+            "receipt_to_canvas": 86.19999998807907,
+            "timeline_to_canvas": 73.2999999821186,
+            "reference_submit_to_canvas": 435.2999999821186,
+            "delivered_to_timeline": 12.900000005960464,
+            "accepted_to_executed": 86.30409997701645,
+            "executed_to_publication": 37.61270001530647,
+            "publication_to_read": 5.300700008869171,
+            "read_server_execute": 12.25849997997284,
+            "read_node_outside_execute": 30.497500020028383,
+            "read_browser_outside_node": 10.544000011919707
+          }
+        },
+        {
+          "sequence": 18,
+          "ms": {
+            "click_to_submit": 79,
+            "submit_to_accept": 20.30000001192093,
+            "submit_to_receipt": 166.80000001192093,
+            "submit_to_canvas": 261.60000002384186,
+            "click_to_canvas": 340.60000002384186,
+            "receipt_to_canvas": 94.80000001192093,
+            "timeline_to_canvas": 82.10000002384186,
+            "reference_submit_to_canvas": 469.7000000178814,
+            "delivered_to_timeline": 12.699999988079071,
+            "accepted_to_executed": 72.08730003237724,
+            "executed_to_publication": 45.12560001015663,
+            "publication_to_read": 7.309999972581863,
+            "read_server_execute": 13.943899989128113,
+            "read_node_outside_execute": 22.74710001087078,
+            "read_browser_outside_node": 14.309000000001106
+          }
+        },
+        {
+          "sequence": 19,
+          "ms": {
+            "click_to_submit": 55.900000005960464,
+            "submit_to_accept": 18,
+            "submit_to_receipt": 168,
+            "submit_to_canvas": 291,
+            "click_to_canvas": 346.90000000596046,
+            "receipt_to_canvas": 123,
+            "timeline_to_canvas": 62.5,
+            "reference_submit_to_canvas": 446.30000001192093,
+            "delivered_to_timeline": 12.299999982118607,
+            "accepted_to_executed": 94.73899999260902,
+            "executed_to_publication": 74.78550001978874,
+            "publication_to_read": 27.01079997420311,
+            "read_server_execute": 13.11030000448227,
+            "read_node_outside_execute": 6.521899995517742,
+            "read_browser_outside_node": 8.867799999999988
+          }
+        },
+        {
+          "sequence": 20,
+          "ms": {
+            "click_to_submit": 49.70000001788139,
+            "submit_to_accept": 18.299999982118607,
+            "submit_to_receipt": 138.39999997615814,
+            "submit_to_canvas": 291.09999999403954,
+            "click_to_canvas": 340.80000001192093,
+            "receipt_to_canvas": 152.7000000178814,
+            "timeline_to_canvas": 48.80000001192093,
+            "reference_submit_to_canvas": 414.2999999821186,
+            "delivered_to_timeline": 12.5,
+            "accepted_to_executed": 87.1608000099659,
+            "executed_to_publication": 58.429899990558624,
+            "publication_to_read": 42.65660002827644,
+            "read_server_execute": 12.939799964427948,
+            "read_node_outside_execute": 16.205500035575824,
+            "read_browser_outside_node": 19.954699994035764
+          }
+        }
+      ],
+      "latency": {
+        "click_to_submit": {
+          "count": 20,
+          "mean_ms": 50.14000000208616,
+          "p95_ms": 79,
+          "max_ms": 82
+        },
+        "submit_to_accept": {
+          "count": 20,
+          "mean_ms": 17.279999999701978,
+          "p95_ms": 22,
+          "max_ms": 22.900000005960464
+        },
+        "submit_to_receipt": {
+          "count": 20,
+          "mean_ms": 125.30499999672175,
+          "p95_ms": 166.80000001192093,
+          "max_ms": 168
+        },
+        "submit_to_canvas": {
+          "count": 20,
+          "mean_ms": 245.1550000011921,
+          "p95_ms": 291,
+          "max_ms": 291.09999999403954
+        },
+        "click_to_canvas": {
+          "count": 20,
+          "mean_ms": 295.29500000327823,
+          "p95_ms": 346.90000000596046,
+          "max_ms": 372.30000001192093
+        },
+        "receipt_to_canvas": {
+          "count": 20,
+          "mean_ms": 119.85000000447035,
+          "p95_ms": 152.7000000178814,
+          "max_ms": 168.09999999403954
+        },
+        "timeline_to_canvas": {
+          "count": 20,
+          "mean_ms": 69.65000000149011,
+          "p95_ms": 103.40000000596046,
+          "max_ms": 105.19999998807907
+        },
+        "reference_submit_to_canvas": {
+          "count": 20,
+          "mean_ms": 339.1400000050664,
+          "p95_ms": 446.30000001192093,
+          "max_ms": 469.7000000178814
+        },
+        "delivered_to_timeline": {
+          "count": 20,
+          "mean_ms": 11.825,
+          "p95_ms": 12.900000005960464,
+          "max_ms": 13.600000023841858
+        },
+        "accepted_to_executed": {
+          "count": 20,
+          "mean_ms": 58.79075500369072,
+          "p95_ms": 94.16020002961159,
+          "max_ms": 94.73899999260902
+        },
+        "executed_to_publication": {
+          "count": 20,
+          "mean_ms": 48.55626499801874,
+          "p95_ms": 77.11880001425743,
+          "max_ms": 79.43869999051094
+        },
+        "publication_to_read": {
+          "count": 20,
+          "mean_ms": 28.425589999556543,
+          "p95_ms": 49.98230001330376,
+          "max_ms": 63.97789999842644
+        },
+        "read_server_execute": {
+          "count": 20,
+          "mean_ms": 10.59415000230074,
+          "p95_ms": 13.11030000448227,
+          "max_ms": 13.943899989128113
+        },
+        "read_node_outside_execute": {
+          "count": 20,
+          "mean_ms": 14.357694997698946,
+          "p95_ms": 25.557199991559173,
+          "max_ms": 30.497500020028383
+        },
+        "read_browser_outside_node": {
+          "count": 20,
+          "mean_ms": 10.143154997318106,
+          "p95_ms": 14.309000000001106,
+          "max_ms": 19.954699994035764
+        }
+      },
+      "selection": {
+        "count": 20,
+        "meanMs": 16.519999995827675,
+        "p95Ms": 19.80000001192093,
+        "maxMs": 20.299999982118607
+      },
+      "simulated_s": 28.883333333333333,
+      "wall_s": 41.59322609999799,
+      "naturally_finished": true,
+      "peak_debt_steps": 2.998972,
+      "final_speed": 0.587,
+      "peak_response_bytes": 714665
+    },
+    {
+      "case": "mixed-4v4",
+      "source_files": 681,
+      "commands": [
+        {
+          "sequence": 1,
+          "ms": {
+            "click_to_submit": 55.20000001788139,
+            "submit_to_accept": 13.599999994039536,
+            "submit_to_receipt": 131.39999997615814,
+            "submit_to_canvas": 261.89999997615814,
+            "click_to_canvas": 317.09999999403954,
+            "receipt_to_canvas": 130.5,
+            "timeline_to_canvas": 49.099999994039536,
+            "reference_submit_to_canvas": 267.09999999403954,
+            "delivered_to_timeline": 11.199999988079071,
+            "accepted_to_executed": 58.2049999833107,
+            "executed_to_publication": 62.076200008392334,
+            "publication_to_read": 48.19490000605583,
+            "read_server_execute": 7.65489998459816,
+            "read_node_outside_execute": 20.756300015400484,
+            "read_browser_outside_node": 7.488800005961821
+          }
+        },
+        {
+          "sequence": 2,
+          "ms": {
+            "click_to_submit": 28,
+            "submit_to_accept": 38.39999997615814,
+            "submit_to_receipt": 155.19999998807907,
+            "submit_to_canvas": 222.09999999403954,
+            "click_to_canvas": 250.09999999403954,
+            "receipt_to_canvas": 66.90000000596046,
+            "timeline_to_canvas": 53.599999994039536,
+            "reference_submit_to_canvas": 329.2999999821186,
+            "delivered_to_timeline": 13.300000011920929,
+            "accepted_to_executed": 57.34860000014305,
+            "executed_to_publication": 51.3498999774456,
+            "publication_to_read": 7.927200019359589,
+            "read_server_execute": 8.13740000128746,
+            "read_node_outside_execute": 15.576599998712481,
+            "read_browser_outside_node": 8.885999994039594
+          }
+        },
+        {
+          "sequence": 3,
+          "ms": {
+            "click_to_submit": 27.5,
+            "submit_to_accept": 16.5,
+            "submit_to_receipt": 153.30000001192093,
+            "submit_to_canvas": 236.10000002384186,
+            "click_to_canvas": 263.60000002384186,
+            "receipt_to_canvas": 82.80000001192093,
+            "timeline_to_canvas": 72.60000002384186,
+            "reference_submit_to_canvas": 368.10000002384186,
+            "delivered_to_timeline": 10.199999988079071,
+            "accepted_to_executed": 65.72300001978874,
+            "executed_to_publication": 21.991899967193604,
+            "publication_to_read": 26.872800022363663,
+            "read_server_execute": 8.45890000462532,
+            "read_node_outside_execute": 11.92319999537358,
+            "read_browser_outside_node": 8.917900011922029
+          }
+        },
+        {
+          "sequence": 4,
+          "ms": {
+            "click_to_submit": 52,
+            "submit_to_accept": 24.200000017881393,
+            "submit_to_receipt": 194.2000000178814,
+            "submit_to_canvas": 306.40000000596046,
+            "click_to_canvas": 358.40000000596046,
+            "receipt_to_canvas": 112.19999998807907,
+            "timeline_to_canvas": 99.30000001192093,
+            "reference_submit_to_canvas": 466.7000000178814,
+            "delivered_to_timeline": 12.899999976158142,
+            "accepted_to_executed": 118.24749997258186,
+            "executed_to_publication": 3.2229000329971313,
+            "publication_to_read": 45.755899995565414,
+            "read_server_execute": 7.8420000076293945,
+            "read_node_outside_execute": 13.02189999237089,
+            "read_browser_outside_node": 9.736100023841573
+          }
+        },
+        {
+          "sequence": 5,
+          "ms": {
+            "click_to_submit": 44.099999994039536,
+            "submit_to_accept": 13.099999994039536,
+            "submit_to_receipt": 162.40000000596046,
+            "submit_to_canvas": 255.40000000596046,
+            "click_to_canvas": 299.5,
+            "receipt_to_canvas": 93,
+            "timeline_to_canvas": 80.7000000178814,
+            "reference_submit_to_canvas": 400.40000000596046,
+            "delivered_to_timeline": 12.299999982118607,
+            "accepted_to_executed": 63.70890000462532,
+            "executed_to_publication": 51.87849998474121,
+            "publication_to_read": 30.99830001592636,
+            "read_server_execute": 7.4966000020504,
+            "read_node_outside_execute": 8.139999997947598,
+            "read_browser_outside_node": 10.46340002384386
+          }
+        },
+        {
+          "sequence": 6,
+          "ms": {
+            "click_to_submit": 72.5,
+            "submit_to_accept": 30.799999982118607,
+            "submit_to_receipt": 221.89999997615814,
+            "submit_to_canvas": 301.69999998807907,
+            "click_to_canvas": 374.19999998807907,
+            "receipt_to_canvas": 79.80000001192093,
+            "timeline_to_canvas": 69.09999999403954,
+            "reference_submit_to_canvas": 563.5,
+            "delivered_to_timeline": 10.700000017881393,
+            "accepted_to_executed": 132.6444000005722,
+            "executed_to_publication": 53.905699998140335,
+            "publication_to_read": 2.872999995946884,
+            "read_server_execute": 6.676500022411346,
+            "read_node_outside_execute": 23.852399977589812,
+            "read_browser_outside_node": 7.671099988077913
+          }
+        },
+        {
+          "sequence": 7,
+          "ms": {
+            "click_to_submit": 63.80000001192093,
+            "submit_to_accept": 21.30000001192093,
+            "submit_to_receipt": 224.19999998807907,
+            "submit_to_canvas": 324.80000001192093,
+            "click_to_canvas": 388.60000002384186,
+            "receipt_to_canvas": 100.60000002384186,
+            "timeline_to_canvas": 89,
+            "reference_submit_to_canvas": 566.5999999940395,
+            "delivered_to_timeline": 11.600000023841858,
+            "accepted_to_executed": 140.31429997086525,
+            "executed_to_publication": 3.7641000151634216,
+            "publication_to_read": 47.59459999203682,
+            "read_server_execute": 9.468699991703033,
+            "read_node_outside_execute": 24.601200008295564,
+            "read_browser_outside_node": 8.430100000001403
+          }
+        },
+        {
+          "sequence": 8,
+          "ms": {
+            "click_to_submit": 49.20000001788139,
+            "submit_to_accept": 40.599999994039536,
+            "submit_to_receipt": 127.59999999403954,
+            "submit_to_canvas": 250.39999997615814,
+            "click_to_canvas": 299.59999999403954,
+            "receipt_to_canvas": 122.7999999821186,
+            "timeline_to_canvas": 62.099999994039536,
+            "reference_submit_to_canvas": 500.2999999821186,
+            "delivered_to_timeline": 11.199999988079071,
+            "accepted_to_executed": 79.63429999351501,
+            "executed_to_publication": 47.551300048828125,
+            "publication_to_read": 6.608299970626831,
+            "read_server_execute": 7.608699977397919,
+            "read_node_outside_execute": 1.3326000226006727,
+            "read_browser_outside_node": 7.658699994040944
+          }
+        },
+        {
+          "sequence": 9,
+          "ms": {
+            "click_to_submit": 44.30000001192093,
+            "submit_to_accept": 18.599999994039536,
+            "submit_to_receipt": 176.90000000596046,
+            "submit_to_canvas": 276.7999999821186,
+            "click_to_canvas": 321.09999999403954,
+            "receipt_to_canvas": 99.89999997615814,
+            "timeline_to_canvas": 87.5,
+            "reference_submit_to_canvas": 551.9000000059605,
+            "delivered_to_timeline": 12.5,
+            "accepted_to_executed": 108.55090001225471,
+            "executed_to_publication": 3.6415999829769135,
+            "publication_to_read": 34.20200002193451,
+            "read_server_execute": 9.323500007390976,
+            "read_node_outside_execute": 20.178099992608622,
+            "read_browser_outside_node": 10.698399988079473
+          }
+        },
+        {
+          "sequence": 10,
+          "ms": {
+            "click_to_submit": 64.80000001192093,
+            "submit_to_accept": 20.799999982118607,
+            "submit_to_receipt": 193.2999999821186,
+            "submit_to_canvas": 324.59999999403954,
+            "click_to_canvas": 389.40000000596046,
+            "receipt_to_canvas": 131.30000001192093,
+            "timeline_to_canvas": 117.90000000596046,
+            "reference_submit_to_canvas": 616.1999999880791,
+            "delivered_to_timeline": 13.400000005960464,
+            "accepted_to_executed": 139.49580001831055,
+            "executed_to_publication": 4.349500000476837,
+            "publication_to_read": 21.785399973392487,
+            "read_server_execute": 9.45370003581047,
+            "read_node_outside_execute": 13.064899964188953,
+            "read_browser_outside_node": 8.681399988079647
+          }
+        },
+        {
+          "sequence": 11,
+          "ms": {
+            "click_to_submit": 50.29999998211861,
+            "submit_to_accept": 30.200000017881393,
+            "submit_to_receipt": 159.90000000596046,
+            "submit_to_canvas": 315.90000000596046,
+            "click_to_canvas": 366.19999998807907,
+            "receipt_to_canvas": 156,
+            "timeline_to_canvas": 59.099999994039536,
+            "reference_submit_to_canvas": 589.5999999940395,
+            "delivered_to_timeline": 10.800000011920929,
+            "accepted_to_executed": 111.76470002532005,
+            "executed_to_publication": 50.92119997739792,
+            "publication_to_read": 19.60530000925064,
+            "read_server_execute": 8.693100035190582,
+            "read_node_outside_execute": 23.284599964812514,
+            "read_browser_outside_node": 8.422300005957368
+          }
+        },
+        {
+          "sequence": 12,
+          "ms": {
+            "click_to_submit": 40.89999997615814,
+            "submit_to_accept": 12.400000005960464,
+            "submit_to_receipt": 163,
+            "submit_to_canvas": 283.5,
+            "click_to_canvas": 324.39999997615814,
+            "receipt_to_canvas": 120.5,
+            "timeline_to_canvas": 108,
+            "reference_submit_to_canvas": 574.1000000238419,
+            "delivered_to_timeline": 12.5,
+            "accepted_to_executed": 140.45389997959137,
+            "executed_to_publication": 3.8594000041484833,
+            "publication_to_read": 4.38289999961853,
+            "read_server_execute": 8.361000001430511,
+            "read_node_outside_execute": 1.6231999985684524,
+            "read_browser_outside_node": 7.915799976159178
+          }
+        },
+        {
+          "sequence": 13,
+          "ms": {
+            "click_to_submit": 63.900000005960464,
+            "submit_to_accept": 13.599999994039536,
+            "submit_to_receipt": 164.90000000596046,
+            "submit_to_canvas": 279.80000001192093,
+            "click_to_canvas": 343.7000000178814,
+            "receipt_to_canvas": 114.90000000596046,
+            "timeline_to_canvas": 102.30000001192093,
+            "reference_submit_to_canvas": 578.8000000119209,
+            "delivered_to_timeline": 12.599999994039536,
+            "accepted_to_executed": 103.77509999275208,
+            "executed_to_publication": 24.270000010728836,
+            "publication_to_read": 5.283799976110458,
+            "read_server_execute": 8.588200002908707,
+            "read_node_outside_execute": 18.430899997096276,
+            "read_browser_outside_node": 8.580899994034553
+          }
+        },
+        {
+          "sequence": 14,
+          "ms": {
+            "click_to_submit": 76,
+            "submit_to_accept": 12.5,
+            "submit_to_receipt": 172.09999999403954,
+            "submit_to_canvas": 334.89999997615814,
+            "click_to_canvas": 410.89999997615814,
+            "receipt_to_canvas": 162.7999999821186,
+            "timeline_to_canvas": 95.7999999821186,
+            "reference_submit_to_canvas": 609,
+            "delivered_to_timeline": 10.300000011920929,
+            "accepted_to_executed": 103.24730002880096,
+            "executed_to_publication": 32.88249999284744,
+            "publication_to_read": 55.7611999809742,
+            "read_server_execute": 10.08050000667572,
+            "read_node_outside_execute": 21.54369999332266,
+            "read_browser_outside_node": 9.975799994041154
+          }
+        },
+        {
+          "sequence": 15,
+          "ms": {
+            "click_to_submit": 63.29999998211861,
+            "submit_to_accept": 17.80000001192093,
+            "submit_to_receipt": 175,
+            "submit_to_canvas": 287.7000000178814,
+            "click_to_canvas": 351,
+            "receipt_to_canvas": 112.7000000178814,
+            "timeline_to_canvas": 101.90000000596046,
+            "reference_submit_to_canvas": 580.8000000119209,
+            "delivered_to_timeline": 10.800000011920929,
+            "accepted_to_executed": 111.2815999686718,
+            "executed_to_publication": 6.503500014543533,
+            "publication_to_read": 43.331900000572205,
+            "read_server_execute": 9.490800023078918,
+            "read_node_outside_execute": 26.42229997691902,
+            "read_browser_outside_node": 7.886899982120667
+          }
+        },
+        {
+          "sequence": 16,
+          "ms": {
+            "click_to_submit": 47.60000002384186,
+            "submit_to_accept": 20.899999976158142,
+            "submit_to_receipt": 205.5,
+            "submit_to_canvas": 349,
+            "click_to_canvas": 396.60000002384186,
+            "receipt_to_canvas": 143.5,
+            "timeline_to_canvas": 70.30000001192093,
+            "reference_submit_to_canvas": 631.2999999821186,
+            "delivered_to_timeline": 12.199999988079071,
+            "accepted_to_executed": 144.82860001921654,
+            "executed_to_publication": 66.16110000014305,
+            "publication_to_read": 24.763799995183945,
+            "read_server_execute": 9.1773000061512,
+            "read_node_outside_execute": 16.836099993844982,
+            "read_browser_outside_node": 9.186600017885212
+          }
+        },
+        {
+          "sequence": 17,
+          "ms": {
+            "click_to_submit": 71.5,
+            "submit_to_accept": 12.100000023841858,
+            "submit_to_receipt": 155.80000001192093,
+            "submit_to_canvas": 273.30000001192093,
+            "click_to_canvas": 344.80000001192093,
+            "receipt_to_canvas": 117.5,
+            "timeline_to_canvas": 103.19999998807907,
+            "reference_submit_to_canvas": 673.5,
+            "delivered_to_timeline": 14.300000011920929,
+            "accepted_to_executed": 122.9481999874115,
+            "executed_to_publication": 6.360599994659424,
+            "publication_to_read": 4.2435000240802765,
+            "read_server_execute": 9.528499990701675,
+            "read_node_outside_execute": 11.327300009295868,
+            "read_browser_outside_node": 9.844199988081527
+          }
+        },
+        {
+          "sequence": 18,
+          "ms": {
+            "click_to_submit": 101.80000001192093,
+            "submit_to_accept": 10.599999994039536,
+            "submit_to_receipt": 203.09999999403954,
+            "submit_to_canvas": 388.09999999403954,
+            "click_to_canvas": 489.90000000596046,
+            "receipt_to_canvas": 185,
+            "timeline_to_canvas": 103.2000000178814,
+            "reference_submit_to_canvas": 727.1999999880791,
+            "delivered_to_timeline": 12.299999982118607,
+            "accepted_to_executed": 175.22150000929832,
+            "executed_to_publication": 22.499199986457825,
+            "publication_to_read": 59.22290003299713,
+            "read_server_execute": 10.347600013017654,
+            "read_node_outside_execute": 21.494599986981484,
+            "read_browser_outside_node": 8.757799994040397
+          }
+        },
+        {
+          "sequence": 19,
+          "ms": {
+            "click_to_submit": 71.40000000596046,
+            "submit_to_accept": 14.099999994039536,
+            "submit_to_receipt": 244.7000000178814,
+            "submit_to_canvas": 365.80000001192093,
+            "click_to_canvas": 437.2000000178814,
+            "receipt_to_canvas": 121.09999999403954,
+            "timeline_to_canvas": 108.80000001192093,
+            "reference_submit_to_canvas": 732.5999999940395,
+            "delivered_to_timeline": 12.299999982118607,
+            "accepted_to_executed": 189.90279999375343,
+            "executed_to_publication": 4.26419997215271,
+            "publication_to_read": 16.857300013303757,
+            "read_server_execute": 10.049599975347519,
+            "read_node_outside_execute": 16.60270002465404,
+            "read_browser_outside_node": 12.447700023840298
+          }
+        },
+        {
+          "sequence": 20,
+          "ms": {
+            "click_to_submit": 47.70000001788139,
+            "submit_to_accept": 42.69999998807907,
+            "submit_to_receipt": 189.59999999403954,
+            "submit_to_canvas": 357.89999997615814,
+            "click_to_canvas": 405.59999999403954,
+            "receipt_to_canvas": 168.2999999821186,
+            "timeline_to_canvas": 91.59999999403954,
+            "reference_submit_to_canvas": 732.7999999821186,
+            "delivered_to_timeline": 12.900000005960464,
+            "accepted_to_executed": 133.4239999949932,
+            "executed_to_publication": 24.4995000064373,
+            "publication_to_read": 41.91049998998642,
+            "read_server_execute": 11.974399983882904,
+            "read_node_outside_execute": 1.8880000161152566,
+            "read_browser_outside_node": 10.63760000000184
+          }
+        }
+      ],
+      "latency": {
+        "click_to_submit": {
+          "count": 20,
+          "mean_ms": 56.79000000357628,
+          "p95_ms": 76,
+          "max_ms": 101.80000001192093
+        },
+        "submit_to_accept": {
+          "count": 20,
+          "mean_ms": 21.239999997615815,
+          "p95_ms": 40.599999994039536,
+          "max_ms": 42.69999998807907
+        },
+        "submit_to_receipt": {
+          "count": 20,
+          "mean_ms": 178.6999999985099,
+          "p95_ms": 224.19999998807907,
+          "max_ms": 244.7000000178814
+        },
+        "submit_to_canvas": {
+          "count": 20,
+          "mean_ms": 299.8049999982119,
+          "p95_ms": 365.80000001192093,
+          "max_ms": 388.09999999403954
+        },
+        "click_to_canvas": {
+          "count": 20,
+          "mean_ms": 356.59500000178815,
+          "p95_ms": 437.2000000178814,
+          "max_ms": 489.90000000596046
+        },
+        "receipt_to_canvas": {
+          "count": 20,
+          "mean_ms": 121.10499999970197,
+          "p95_ms": 168.2999999821186,
+          "max_ms": 185
+        },
+        "timeline_to_canvas": {
+          "count": 20,
+          "mean_ms": 86.25500000268221,
+          "p95_ms": 108.80000001192093,
+          "max_ms": 117.90000000596046
+        },
+        "reference_submit_to_canvas": {
+          "count": 20,
+          "mean_ms": 552.989999999106,
+          "p95_ms": 732.5999999940395,
+          "max_ms": 732.7999999821186
+        },
+        "delivered_to_timeline": {
+          "count": 20,
+          "mean_ms": 12.01499999910593,
+          "p95_ms": 13.400000005960464,
+          "max_ms": 14.300000011920929
+        },
+        "accepted_to_executed": {
+          "count": 20,
+          "mean_ms": 115.03601999878883,
+          "p95_ms": 175.22150000929832,
+          "max_ms": 189.90279999375343
+        },
+        "executed_to_publication": {
+          "count": 20,
+          "mean_ms": 27.297639998793603,
+          "p95_ms": 62.076200008392334,
+          "max_ms": 66.16110000014305
+        },
+        "publication_to_read": {
+          "count": 20,
+          "mean_ms": 27.408775001764297,
+          "p95_ms": 55.7611999809742,
+          "max_ms": 59.22290003299713
+        },
+        "read_server_execute": {
+          "count": 20,
+          "mean_ms": 8.920595003664493,
+          "p95_ms": 10.347600013017654,
+          "max_ms": 11.974399983882904
+        },
+        "read_node_outside_execute": {
+          "count": 20,
+          "mean_ms": 15.595029996334961,
+          "p95_ms": 24.601200008295564,
+          "max_ms": 26.42229997691902
+        },
+        "read_browser_outside_node": {
+          "count": 20,
+          "mean_ms": 9.114374999702523,
+          "p95_ms": 10.698399988079473,
+          "max_ms": 12.447700023840298
+        }
+      },
+      "selection": {
+        "count": 20,
+        "meanMs": 17.19000000357628,
+        "p95Ms": 28.80000001192093,
+        "maxMs": 30.200000017881393
+      },
+      "simulated_s": 16.266666666666666,
+      "wall_s": 45.31109760000254,
+      "naturally_finished": false,
+      "peak_debt_steps": 2.339194,
+      "final_speed": 0.262,
+      "peak_response_bytes": 416631
+    },
+    {
+      "case": "guns-9v9",
+      "source_files": 681,
+      "commands": [
+        {
+          "sequence": 1,
+          "ms": {
+            "click_to_submit": 75.59999999403954,
+            "submit_to_accept": 23.19999998807907,
+            "submit_to_receipt": 144.19999998807907,
+            "submit_to_canvas": 238.09999999403954,
+            "click_to_canvas": 313.69999998807907,
+            "receipt_to_canvas": 93.90000000596046,
+            "timeline_to_canvas": 78.19999998807907,
+            "reference_submit_to_canvas": 397.40000000596046,
+            "delivered_to_timeline": 15.700000017881393,
+            "accepted_to_executed": 80.59579998254776,
+            "executed_to_publication": 36.6245000064373,
+            "publication_to_read": 4.418599992990494,
+            "read_server_execute": 10.17399999499321,
+            "read_node_outside_execute": 15.59620000500945,
+            "read_browser_outside_node": 14.129799976155482
+          }
+        },
+        {
+          "sequence": 2,
+          "ms": {
+            "click_to_submit": 71.69999998807907,
+            "submit_to_accept": 19,
+            "submit_to_receipt": 149.69999998807907,
+            "submit_to_canvas": 268.40000000596046,
+            "click_to_canvas": 340.09999999403954,
+            "receipt_to_canvas": 118.7000000178814,
+            "timeline_to_canvas": 103.90000000596046,
+            "reference_submit_to_canvas": 410.09999999403954,
+            "delivered_to_timeline": 14.800000011920929,
+            "accepted_to_executed": 99.38439998030663,
+            "executed_to_publication": 5.510700017213821,
+            "publication_to_read": 6.4710999727249146,
+            "read_server_execute": 12.540499985218048,
+            "read_node_outside_execute": 18.976000014783494,
+            "read_browser_outside_node": 12.3834999761566
+          }
+        },
+        {
+          "sequence": 3,
+          "ms": {
+            "click_to_submit": 88.5,
+            "submit_to_accept": 15,
+            "submit_to_receipt": 136.2000000178814,
+            "submit_to_canvas": 303.09999999403954,
+            "click_to_canvas": 391.59999999403954,
+            "receipt_to_canvas": 166.89999997615814,
+            "timeline_to_canvas": 71.09999999403954,
+            "reference_submit_to_canvas": 455.59999999403954,
+            "delivered_to_timeline": 15.0,
+            "accepted_to_executed": 107.36879998445511,
+            "executed_to_publication": 43.263300001621246,
+            "publication_to_read": 27.941199988126755,
+            "read_server_execute": 13.208999991416931,
+            "read_node_outside_execute": 14.77720000858244,
+            "read_browser_outside_node": 16.51380000000063
+          }
+        },
+        {
+          "sequence": 4,
+          "ms": {
+            "click_to_submit": 86.19999998807907,
+            "submit_to_accept": 15.599999994039536,
+            "submit_to_receipt": 201.19999998807907,
+            "submit_to_canvas": 324.90000000596046,
+            "click_to_canvas": 411.09999999403954,
+            "receipt_to_canvas": 123.7000000178814,
+            "timeline_to_canvas": 108.5,
+            "reference_submit_to_canvas": 504.69999998807907,
+            "delivered_to_timeline": 15.200000017881393,
+            "accepted_to_executed": 132.45959997177124,
+            "executed_to_publication": 6.074900031089783,
+            "publication_to_read": 37.522799998521805,
+            "read_server_execute": 15.233799993991852,
+            "read_node_outside_execute": 7.0090000060081366,
+            "read_browser_outside_node": 15.357199994039547
+          }
+        },
+        {
+          "sequence": 5,
+          "ms": {
+            "click_to_submit": 70.59999999403954,
+            "submit_to_accept": 23.69999998807907,
+            "submit_to_receipt": 204.7999999821186,
+            "submit_to_canvas": 319,
+            "click_to_canvas": 389.59999999403954,
+            "receipt_to_canvas": 114.2000000178814,
+            "timeline_to_canvas": 99,
+            "reference_submit_to_canvas": 500,
+            "delivered_to_timeline": 15.200000017881393,
+            "accepted_to_executed": 139.96330001950264,
+            "executed_to_publication": 6.397399991750717,
+            "publication_to_read": 31.915199995040894,
+            "read_server_execute": 15.703900009393692,
+            "read_node_outside_execute": 8.656199990604364,
+            "read_browser_outside_node": 14.139900000001944
+          }
+        },
+        {
+          "sequence": 6,
+          "ms": {
+            "click_to_submit": 77.40000000596046,
+            "submit_to_accept": 24.400000005960464,
+            "submit_to_receipt": 206.09999999403954,
+            "submit_to_canvas": 347.5,
+            "click_to_canvas": 424.90000000596046,
+            "receipt_to_canvas": 141.40000000596046,
+            "timeline_to_canvas": 71,
+            "reference_submit_to_canvas": 544.2000000178814,
+            "delivered_to_timeline": 14.900000005960464,
+            "accepted_to_executed": 125.50510001182556,
+            "executed_to_publication": 62.32600000500679,
+            "publication_to_read": 48.078500002622604,
+            "read_server_execute": 15.563999980688095,
+            "read_node_outside_execute": 2.281100019310543,
+            "read_browser_outside_node": 14.854899988080433
+          }
+        },
+        {
+          "sequence": 7,
+          "ms": {
+            "click_to_submit": 87.40000000596046,
+            "submit_to_accept": 14.199999988079071,
+            "submit_to_receipt": 231.19999998807907,
+            "submit_to_canvas": 344.2999999821186,
+            "click_to_canvas": 431.69999998807907,
+            "receipt_to_canvas": 113.09999999403954,
+            "timeline_to_canvas": 97.09999999403954,
+            "reference_submit_to_canvas": 567.0999999940395,
+            "delivered_to_timeline": 16.099999994039536,
+            "accepted_to_executed": 148.57339999079704,
+            "executed_to_publication": 25.749200016260147,
+            "publication_to_read": 27.879900008440018,
+            "read_server_execute": 15.641999989748001,
+            "read_node_outside_execute": 29.371700010255154,
+            "read_browser_outside_node": 18.186299988075916
+          }
+        },
+        {
+          "sequence": 8,
+          "ms": {
+            "click_to_submit": 70.69999998807907,
+            "submit_to_accept": 31.099999994039536,
+            "submit_to_receipt": 144.09999999403954,
+            "submit_to_canvas": 348.30000001192093,
+            "click_to_canvas": 419,
+            "receipt_to_canvas": 204.2000000178814,
+            "timeline_to_canvas": 55.20000001788139,
+            "reference_submit_to_canvas": 573.6999999880791,
+            "delivered_to_timeline": 14.699999988079071,
+            "accepted_to_executed": 94.91770002245903,
+            "executed_to_publication": 119.08989998698235,
+            "publication_to_read": 5.985199987888336,
+            "read_server_execute": 13.16169998049736,
+            "read_node_outside_execute": 76.84840001950215,
+            "read_browser_outside_node": 15.989900000000489
+          }
+        },
+        {
+          "sequence": 9,
+          "ms": {
+            "click_to_submit": 72.90000000596046,
+            "submit_to_accept": 18.900000005960464,
+            "submit_to_receipt": 182.19999998807907,
+            "submit_to_canvas": 318.7999999821186,
+            "click_to_canvas": 391.69999998807907,
+            "receipt_to_canvas": 136.59999999403954,
+            "timeline_to_canvas": 118.2999999821186,
+            "reference_submit_to_canvas": 614.2999999821186,
+            "delivered_to_timeline": 18.30000001192093,
+            "accepted_to_executed": 125.55549997091293,
+            "executed_to_publication": 8.593100011348724,
+            "publication_to_read": 7.7076999843120575,
+            "read_server_execute": 16.267800003290176,
+            "read_node_outside_execute": 18.824899996710883,
+            "read_browser_outside_node": 17.90729999999894
+          }
+        },
+        {
+          "sequence": 10,
+          "ms": {
+            "click_to_submit": 76.19999998807907,
+            "submit_to_accept": 26.80000001192093,
+            "submit_to_receipt": 212.30000001192093,
+            "submit_to_canvas": 388.80000001192093,
+            "click_to_canvas": 465,
+            "receipt_to_canvas": 176.5,
+            "timeline_to_canvas": 117.80000001192093,
+            "reference_submit_to_canvas": 679.4000000059605,
+            "delivered_to_timeline": 9.400000005960464,
+            "accepted_to_executed": 163.02340000867844,
+            "executed_to_publication": 24.1114000082016,
+            "publication_to_read": 41.46119999885559,
+            "read_server_execute": 16.553200006484985,
+            "read_node_outside_execute": 5.9661999935196945,
+            "read_browser_outside_node": 14.98059999999532
+          }
+        },
+        {
+          "sequence": 11,
+          "ms": {
+            "click_to_submit": 125.19999998807907,
+            "submit_to_accept": 21.80000001192093,
+            "submit_to_receipt": 187.90000000596046,
+            "submit_to_canvas": 310.40000000596046,
+            "click_to_canvas": 435.59999999403954,
+            "receipt_to_canvas": 122.5,
+            "timeline_to_canvas": 106.7000000178814,
+            "reference_submit_to_canvas": 630.5999999940395,
+            "delivered_to_timeline": 15.799999982118607,
+            "accepted_to_executed": 144.50260001420975,
+            "executed_to_publication": 9.503100007772446,
+            "publication_to_read": 8.345200002193451,
+            "read_server_execute": 16.34670001268387,
+            "read_node_outside_execute": 17.498599987316993,
+            "read_browser_outside_node": 14.954700011920067
+          }
+        },
+        {
+          "sequence": 12,
+          "ms": {
+            "click_to_submit": 53.30000001192093,
+            "submit_to_accept": 42.79999998211861,
+            "submit_to_receipt": 197.69999998807907,
+            "submit_to_canvas": 349.19999998807907,
+            "click_to_canvas": 402.5,
+            "receipt_to_canvas": 151.5,
+            "timeline_to_canvas": 75.30000001192093,
+            "reference_submit_to_canvas": 680.7999999821186,
+            "delivered_to_timeline": 16.599999994039536,
+            "accepted_to_executed": 138.27559998631477,
+            "executed_to_publication": 76.88180002570152,
+            "publication_to_read": 9.91959998011589,
+            "read_server_execute": 16.282499998807907,
+            "read_node_outside_execute": 1.8826000011904398,
+            "read_browser_outside_node": 14.534899988080724
+          }
+        },
+        {
+          "sequence": 13,
+          "ms": {
+            "click_to_submit": 84.90000000596046,
+            "submit_to_accept": 18.599999994039536,
+            "submit_to_receipt": 207.7999999821186,
+            "submit_to_canvas": 340.09999999403954,
+            "click_to_canvas": 425,
+            "receipt_to_canvas": 132.30000001192093,
+            "timeline_to_canvas": 116.19999998807907,
+            "reference_submit_to_canvas": 763.1999999880791,
+            "delivered_to_timeline": 16.100000023841858,
+            "accepted_to_executed": 156.8555999994278,
+            "executed_to_publication": 9.228899985551834,
+            "publication_to_read": 6.907499998807907,
+            "read_server_execute": 15.387299984693527,
+            "read_node_outside_execute": 4.301100015305565,
+            "read_browser_outside_node": 15.311600000000908
+          }
+        },
+        {
+          "sequence": 14,
+          "ms": {
+            "click_to_submit": 79.30000001192093,
+            "submit_to_accept": 21.899999976158142,
+            "submit_to_receipt": 195.59999999403954,
+            "submit_to_canvas": 330.5,
+            "click_to_canvas": 409.80000001192093,
+            "receipt_to_canvas": 134.90000000596046,
+            "timeline_to_canvas": 118.60000002384186,
+            "reference_submit_to_canvas": 681.3999999761581,
+            "delivered_to_timeline": 16.299999982118607,
+            "accepted_to_executed": 143.6342000067234,
+            "executed_to_publication": 11.256599992513657,
+            "publication_to_read": 8.351999998092651,
+            "read_server_execute": 18.684500008821487,
+            "read_node_outside_execute": 19.94469999118155,
+            "read_browser_outside_node": 19.270800005957426
+          }
+        },
+        {
+          "sequence": 15,
+          "ms": {
+            "click_to_submit": 81.5,
+            "submit_to_accept": 26.200000017881393,
+            "submit_to_receipt": 217.7000000178814,
+            "submit_to_canvas": 399.40000000596046,
+            "click_to_canvas": 480.90000000596046,
+            "receipt_to_canvas": 181.69999998807907,
+            "timeline_to_canvas": 102.40000000596046,
+            "reference_submit_to_canvas": 707.5,
+            "delivered_to_timeline": 16.599999994039536,
+            "accepted_to_executed": 151.5271000266075,
+            "executed_to_publication": 47.906999975442886,
+            "publication_to_read": 39.29030001163483,
+            "read_server_execute": 17.847200006246567,
+            "read_node_outside_execute": 3.1276999937545042,
+            "read_browser_outside_node": 14.825100011919858
+          }
+        },
+        {
+          "sequence": 16,
+          "ms": {
+            "click_to_submit": 70.90000000596046,
+            "submit_to_accept": 27.099999994039536,
+            "submit_to_receipt": 187.80000001192093,
+            "submit_to_canvas": 323.90000000596046,
+            "click_to_canvas": 394.80000001192093,
+            "receipt_to_canvas": 136.09999999403954,
+            "timeline_to_canvas": 119.7000000178814,
+            "reference_submit_to_canvas": 597.9000000059605,
+            "delivered_to_timeline": 16.399999976158142,
+            "accepted_to_executed": 133.22329998016357,
+            "executed_to_publication": 9.173299998044968,
+            "publication_to_read": 8.237300008535385,
+            "read_server_execute": 17.25,
+            "read_node_outside_execute": 33.93999999999505,
+            "read_browser_outside_node": 16.310000000004948
+          }
+        },
+        {
+          "sequence": 17,
+          "ms": {
+            "click_to_submit": 75.39999997615814,
+            "submit_to_accept": 18.30000001192093,
+            "submit_to_receipt": 244.90000000596046,
+            "submit_to_canvas": 430.7000000178814,
+            "click_to_canvas": 506.09999999403954,
+            "receipt_to_canvas": 185.80000001192093,
+            "timeline_to_canvas": 105.30000001192093,
+            "reference_submit_to_canvas": 747.4000000059605,
+            "delivered_to_timeline": 16.400000005960464,
+            "accepted_to_executed": 198.2078999876976,
+            "executed_to_publication": 27.338100016117096,
+            "publication_to_read": 54.808899998664856,
+            "read_server_execute": 18.02860000729561,
+            "read_node_outside_execute": 15.644799992704066,
+            "read_browser_outside_node": 17.126599982118933
+          }
+        },
+        {
+          "sequence": 18,
+          "ms": {
+            "click_to_submit": 83.30000001192093,
+            "submit_to_accept": 27.30000001192093,
+            "submit_to_receipt": 298,
+            "submit_to_canvas": 434.69999998807907,
+            "click_to_canvas": 518,
+            "receipt_to_canvas": 136.69999998807907,
+            "timeline_to_canvas": 55,
+            "reference_submit_to_canvas": 675.6999999880791,
+            "delivered_to_timeline": 14.5,
+            "accepted_to_executed": 200.09529998898506,
+            "executed_to_publication": 77.12119999527931,
+            "publication_to_read": 28.258200019598007,
+            "read_server_execute": 17.118499994277954,
+            "read_node_outside_execute": 15.018300005722267,
+            "read_browser_outside_node": 14.06319998807885
+          }
+        },
+        {
+          "sequence": 19,
+          "ms": {
+            "click_to_submit": 101.7000000178814,
+            "submit_to_accept": 25.299999982118607,
+            "submit_to_receipt": 215.2999999821186,
+            "submit_to_canvas": 362.09999999403954,
+            "click_to_canvas": 463.80000001192093,
+            "receipt_to_canvas": 146.80000001192093,
+            "timeline_to_canvas": 130.5,
+            "reference_submit_to_canvas": 623.1999999880791,
+            "delivered_to_timeline": 16.30000001192093,
+            "accepted_to_executed": 127.39659997820854,
+            "executed_to_publication": 9.107800006866455,
+            "publication_to_read": 28.329600006341934,
+            "read_server_execute": 16.146800011396408,
+            "read_node_outside_execute": 6.702899988602439,
+            "read_browser_outside_node": 14.750299994040688
+          }
+        },
+        {
+          "sequence": 20,
+          "ms": {
+            "click_to_submit": 63,
+            "submit_to_accept": 26,
+            "submit_to_receipt": 137,
+            "submit_to_canvas": 294.40000000596046,
+            "click_to_canvas": 357.40000000596046,
+            "receipt_to_canvas": 157.40000000596046,
+            "timeline_to_canvas": 77.90000000596046,
+            "reference_submit_to_canvas": 531.7999999821186,
+            "delivered_to_timeline": 16.900000005960464,
+            "accepted_to_executed": 103.00960001349449,
+            "executed_to_publication": 64.36359998583794,
+            "publication_to_read": 7.211500018835068,
+            "read_server_execute": 14.880199998617172,
+            "read_node_outside_execute": 1.8557000013825018,
+            "read_browser_outside_node": 14.864099994039861
+          }
+        }
+      ],
+      "latency": {
+        "click_to_submit": {
+          "count": 20,
+          "mean_ms": 79.78499999940395,
+          "p95_ms": 101.7000000178814,
+          "max_ms": 125.19999998807907
+        },
+        "submit_to_accept": {
+          "count": 20,
+          "mean_ms": 23.35999999791384,
+          "p95_ms": 31.099999994039536,
+          "max_ms": 42.79999998211861
+        },
+        "submit_to_receipt": {
+          "count": 20,
+          "mean_ms": 195.08499999642373,
+          "p95_ms": 244.90000000596046,
+          "max_ms": 298
+        },
+        "submit_to_canvas": {
+          "count": 20,
+          "mean_ms": 338.82999999970195,
+          "p95_ms": 430.7000000178814,
+          "max_ms": 434.69999998807907
+        },
+        "click_to_canvas": {
+          "count": 20,
+          "mean_ms": 418.6149999991059,
+          "p95_ms": 506.09999999403954,
+          "max_ms": 518
+        },
+        "receipt_to_canvas": {
+          "count": 20,
+          "mean_ms": 143.74500000327825,
+          "p95_ms": 185.80000001192093,
+          "max_ms": 204.2000000178814
+        },
+        "timeline_to_canvas": {
+          "count": 20,
+          "mean_ms": 96.3850000038743,
+          "p95_ms": 119.7000000178814,
+          "max_ms": 130.5
+        },
+        "reference_submit_to_canvas": {
+          "count": 20,
+          "mean_ms": 594.2999999940396,
+          "p95_ms": 747.4000000059605,
+          "max_ms": 763.1999999880791
+        },
+        "delivered_to_timeline": {
+          "count": 20,
+          "mean_ms": 15.560000002384186,
+          "p95_ms": 16.900000005960464,
+          "max_ms": 18.30000001192093
+        },
+        "accepted_to_executed": {
+          "count": 20,
+          "mean_ms": 135.70373999625446,
+          "p95_ms": 198.2078999876976,
+          "max_ms": 200.09529998898506
+        },
+        "executed_to_publication": {
+          "count": 20,
+          "mean_ms": 33.98109000325203,
+          "p95_ms": 77.12119999527931,
+          "max_ms": 119.08989998698235
+        },
+        "publication_to_read": {
+          "count": 20,
+          "mean_ms": 21.95207499861717,
+          "p95_ms": 48.078500002622604,
+          "max_ms": 54.808899998664856
+        },
+        "read_server_execute": {
+          "count": 20,
+          "mean_ms": 15.601109997928143,
+          "p95_ms": 18.02860000729561,
+          "max_ms": 18.684500008821487
+        },
+        "read_node_outside_execute": {
+          "count": 20,
+          "mean_ms": 15.911165002072085,
+          "p95_ms": 33.93999999999505,
+          "max_ms": 76.84840001950215
+        },
+        "read_browser_outside_node": {
+          "count": 20,
+          "mean_ms": 15.522724994933379,
+          "p95_ms": 18.186299988075916,
+          "max_ms": 19.270800005957426
+        }
+      },
+      "selection": {
+        "count": 20,
+        "meanMs": 24.519999998807908,
+        "p95Ms": 29.900000005960464,
+        "maxMs": 32
+      },
+      "simulated_s": 14.033333333333333,
+      "wall_s": 45.44160250001005,
+      "naturally_finished": false,
+      "peak_debt_steps": 2.84134629,
+      "final_speed": 0.297,
+      "peak_response_bytes": 761943
+    },
+    {
+      "case": "mixed-9v9",
+      "source_files": 681,
+      "commands": [
+        {
+          "sequence": 1,
+          "ms": {
+            "click_to_submit": 89.39999997615814,
+            "submit_to_accept": 12.800000011920929,
+            "submit_to_receipt": 194.60000002384186,
+            "submit_to_canvas": 340.5,
+            "click_to_canvas": 429.89999997615814,
+            "receipt_to_canvas": 145.89999997615814,
+            "timeline_to_canvas": 71.7999999821186,
+            "reference_submit_to_canvas": 482.80000001192093,
+            "delivered_to_timeline": 15.700000017881393,
+            "accepted_to_executed": 124.07940000295639,
+            "executed_to_publication": 67.62360000610352,
+            "publication_to_read": 34.57279998064041,
+            "read_server_execute": 15.17629998922348,
+            "read_node_outside_execute": 5.842600010775641,
+            "read_browser_outside_node": 15.581099994040414
+          }
+        },
+        {
+          "sequence": 2,
+          "ms": {
+            "click_to_submit": 87.19999998807907,
+            "submit_to_accept": 15.800000011920929,
+            "submit_to_receipt": 198.5,
+            "submit_to_canvas": 360,
+            "click_to_canvas": 447.19999998807907,
+            "receipt_to_canvas": 161.5,
+            "timeline_to_canvas": 65.90000000596046,
+            "reference_submit_to_canvas": 544.0999999940395,
+            "delivered_to_timeline": 16.19999998807907,
+            "accepted_to_executed": 148.2712999880314,
+            "executed_to_publication": 47.11270001530647,
+            "publication_to_read": 29.98820000886917,
+            "read_server_execute": 15.38409999012947,
+            "read_node_outside_execute": 26.03290000987181,
+            "read_browser_outside_node": 16.983000005959184
+          }
+        },
+        {
+          "sequence": 3,
+          "ms": {
+            "click_to_submit": 79.90000000596046,
+            "submit_to_accept": 21.700000017881393,
+            "submit_to_receipt": 234.7000000178814,
+            "submit_to_canvas": 367.30000001192093,
+            "click_to_canvas": 447.2000000178814,
+            "receipt_to_canvas": 132.59999999403954,
+            "timeline_to_canvas": 116.80000001192093,
+            "reference_submit_to_canvas": 562.7000000178814,
+            "delivered_to_timeline": 15.799999982118607,
+            "accepted_to_executed": 131.42020002007484,
+            "executed_to_publication": 17.322999984025955,
+            "publication_to_read": 45.72510001063347,
+            "read_server_execute": 15.796399980783463,
+            "read_node_outside_execute": 21.15180001921908,
+            "read_browser_outside_node": 18.351800011918385
+          }
+        },
+        {
+          "sequence": 4,
+          "ms": {
+            "click_to_submit": 80.2999999821186,
+            "submit_to_accept": 33,
+            "submit_to_receipt": 199,
+            "submit_to_canvas": 353.2000000178814,
+            "click_to_canvas": 433.5,
+            "receipt_to_canvas": 154.2000000178814,
+            "timeline_to_canvas": 78.90000000596046,
+            "reference_submit_to_canvas": 621.7000000178814,
+            "delivered_to_timeline": 15.699999988079071,
+            "accepted_to_executed": 136.97990000247955,
+            "executed_to_publication": 72.3154000043869,
+            "publication_to_read": 7.594200015068054,
+            "read_server_execute": 13.850400000810623,
+            "read_node_outside_execute": 2.04439999918759,
+            "read_browser_outside_node": 16.00520000596225
+          }
+        },
+        {
+          "sequence": 5,
+          "ms": {
+            "click_to_submit": 64.60000002384186,
+            "submit_to_accept": 22.19999998807907,
+            "submit_to_receipt": 170.39999997615814,
+            "submit_to_canvas": 322.09999999403954,
+            "click_to_canvas": 386.7000000178814,
+            "receipt_to_canvas": 151.7000000178814,
+            "timeline_to_canvas": 62.400000005960464,
+            "reference_submit_to_canvas": 606.5999999940395,
+            "delivered_to_timeline": 14.900000005960464,
+            "accepted_to_executed": 119.61800000071526,
+            "executed_to_publication": 82.83769997954369,
+            "publication_to_read": 6.542199999094009,
+            "read_server_execute": 14.161500006914139,
+            "read_node_outside_execute": 21.023299993088585,
+            "read_browser_outside_node": 16.815199999997276
+          }
+        },
+        {
+          "sequence": 6,
+          "ms": {
+            "click_to_submit": 66,
+            "submit_to_accept": 31.799999982118607,
+            "submit_to_receipt": 237.7999999821186,
+            "submit_to_canvas": 359.2999999821186,
+            "click_to_canvas": 425.2999999821186,
+            "receipt_to_canvas": 121.5,
+            "timeline_to_canvas": 104.69999998807907,
+            "reference_submit_to_canvas": 724.6999999880791,
+            "delivered_to_timeline": 16.80000001192093,
+            "accepted_to_executed": 167.6269000172615,
+            "executed_to_publication": 13.701700001955032,
+            "publication_to_read": 7.274500012397766,
+            "read_server_execute": 15.260800004005432,
+            "read_node_outside_execute": 5.54119999599061,
+            "read_browser_outside_node": 15.297999994043494
+          }
+        },
+        {
+          "sequence": 7,
+          "ms": {
+            "click_to_submit": 93,
+            "submit_to_accept": 19.69999998807907,
+            "submit_to_receipt": 194.69999998807907,
+            "submit_to_canvas": 385,
+            "click_to_canvas": 478,
+            "receipt_to_canvas": 190.30000001192093,
+            "timeline_to_canvas": 114.80000001192093,
+            "reference_submit_to_canvas": 693,
+            "delivered_to_timeline": 15.199999988079071,
+            "accepted_to_executed": 130.94200003147125,
+            "executed_to_publication": 28.69499996304512,
+            "publication_to_read": 50.99350002408028,
+            "read_server_execute": 16.619800001382828,
+            "read_node_outside_execute": 2.449499998612737,
+            "read_browser_outside_node": 16.530700023846293
+          }
+        },
+        {
+          "sequence": 8,
+          "ms": {
+            "click_to_submit": 103.09999999403954,
+            "submit_to_accept": 12.200000017881393,
+            "submit_to_receipt": 209.90000000596046,
+            "submit_to_canvas": 331.7000000178814,
+            "click_to_canvas": 434.80000001192093,
+            "receipt_to_canvas": 121.80000001192093,
+            "timeline_to_canvas": 104.90000000596046,
+            "reference_submit_to_canvas": 766.4000000059605,
+            "delivered_to_timeline": 16.900000005960464,
+            "accepted_to_executed": 167.72279998660088,
+            "executed_to_publication": 6.891000002622604,
+            "publication_to_read": 6.6509000062942505,
+            "read_server_execute": 14.816199988126755,
+            "read_node_outside_execute": 11.937600011871837,
+            "read_browser_outside_node": 18.24620000000141
+          }
+        },
+        {
+          "sequence": 9,
+          "ms": {
+            "click_to_submit": 107.5,
+            "submit_to_accept": 11.899999976158142,
+            "submit_to_receipt": 230.89999997615814,
+            "submit_to_canvas": 448,
+            "click_to_canvas": 555.5,
+            "receipt_to_canvas": 217.10000002384186,
+            "timeline_to_canvas": 98.80000001192093,
+            "reference_submit_to_canvas": 701.0999999940395,
+            "delivered_to_timeline": 15.800000011920929,
+            "accepted_to_executed": 191.2238000035286,
+            "executed_to_publication": 22.35580000281334,
+            "publication_to_read": 83.92620000243187,
+            "read_server_execute": 15.672499984502792,
+            "read_node_outside_execute": 13.223900015495019,
+            "read_browser_outside_node": 14.30359998808126
+          }
+        },
+        {
+          "sequence": 10,
+          "ms": {
+            "click_to_submit": 107.7999999821186,
+            "submit_to_accept": 35,
+            "submit_to_receipt": 229.90000000596046,
+            "submit_to_canvas": 355.7000000178814,
+            "click_to_canvas": 463.5,
+            "receipt_to_canvas": 125.80000001192093,
+            "timeline_to_canvas": 111.2000000178814,
+            "reference_submit_to_canvas": 763.1000000238419,
+            "delivered_to_timeline": 14.599999994039536,
+            "accepted_to_executed": 162.94300001859665,
+            "executed_to_publication": 6.361699968576431,
+            "publication_to_read": 8.994500011205673,
+            "read_server_execute": 15.628199994564056,
+            "read_node_outside_execute": 2.399000005432754,
+            "read_browser_outside_node": 17.97280000000319
+          }
+        },
+        {
+          "sequence": 11,
+          "ms": {
+            "click_to_submit": 80.89999997615814,
+            "submit_to_accept": 22,
+            "submit_to_receipt": 223.40000000596046,
+            "submit_to_canvas": 350.60000002384186,
+            "click_to_canvas": 431.5,
+            "receipt_to_canvas": 127.2000000178814,
+            "timeline_to_canvas": 110.80000001192093,
+            "reference_submit_to_canvas": 745,
+            "delivered_to_timeline": 16.400000005960464,
+            "accepted_to_executed": 167.48859998583794,
+            "executed_to_publication": 6.569999992847443,
+            "publication_to_read": 6.19870001077652,
+            "read_server_execute": 14.135399997234344,
+            "read_node_outside_execute": 47.02470000276662,
+            "read_browser_outside_node": 17.63989998211764
+          }
+        },
+        {
+          "sequence": 12,
+          "ms": {
+            "click_to_submit": 99.59999999403954,
+            "submit_to_accept": 21,
+            "submit_to_receipt": 279.5,
+            "submit_to_canvas": 399.30000001192093,
+            "click_to_canvas": 498.90000000596046,
+            "receipt_to_canvas": 119.80000001192093,
+            "timeline_to_canvas": 103.5,
+            "reference_submit_to_canvas": 908.9000000059605,
+            "delivered_to_timeline": 16.30000001192093,
+            "accepted_to_executed": 214.6948999762535,
+            "executed_to_publication": 6.231800019741058,
+            "publication_to_read": 8.210999995470047,
+            "read_server_execute": 16.418399959802628,
+            "read_node_outside_execute": 36.43960004019755,
+            "read_browser_outside_node": 22.641999999999825
+          }
+        },
+        {
+          "sequence": 13,
+          "ms": {
+            "click_to_submit": 94.69999998807907,
+            "submit_to_accept": 15.200000017881393,
+            "submit_to_receipt": 306.80000001192093,
+            "submit_to_canvas": 430.30000001192093,
+            "click_to_canvas": 525,
+            "receipt_to_canvas": 123.5,
+            "timeline_to_canvas": 106.40000000596046,
+            "reference_submit_to_canvas": 884.5,
+            "delivered_to_timeline": 17.099999994039536,
+            "accepted_to_executed": 268.00850000977516,
+            "executed_to_publication": 6.565200001001358,
+            "publication_to_read": 5.597699999809265,
+            "read_server_execute": 13.546900004148483,
+            "read_node_outside_execute": 42.65189999585709,
+            "read_browser_outside_node": 16.001200017875817
+          }
+        },
+        {
+          "sequence": 14,
+          "ms": {
+            "click_to_submit": 102.89999997615814,
+            "submit_to_accept": 35.30000001192093,
+            "submit_to_receipt": 244.10000002384186,
+            "submit_to_canvas": 363.30000001192093,
+            "click_to_canvas": 466.19999998807907,
+            "receipt_to_canvas": 119.19999998807907,
+            "timeline_to_canvas": 103.09999999403954,
+            "reference_submit_to_canvas": 827.3000000119209,
+            "delivered_to_timeline": 16.099999994039536,
+            "accepted_to_executed": 176.58170002698898,
+            "executed_to_publication": 7.61379998922348,
+            "publication_to_read": 7.189300000667572,
+            "read_server_execute": 16.263099998235703,
+            "read_node_outside_execute": 17.566300001759373,
+            "read_browser_outside_node": 17.170600000004924
+          }
+        },
+        {
+          "sequence": 15,
+          "ms": {
+            "click_to_submit": 105.90000000596046,
+            "submit_to_accept": 23.599999994039536,
+            "submit_to_receipt": 353.40000000596046,
+            "submit_to_canvas": 477.09999999403954,
+            "click_to_canvas": 583,
+            "receipt_to_canvas": 123.69999998807907,
+            "timeline_to_canvas": 108,
+            "reference_submit_to_canvas": 1044.699999988079,
+            "delivered_to_timeline": 15.699999988079071,
+            "accepted_to_executed": 310.4099999964237,
+            "executed_to_publication": 7.479099988937378,
+            "publication_to_read": 7.975400030612946,
+            "read_server_execute": 16.32539999485016,
+            "read_node_outside_execute": 57.29160000514821,
+            "read_browser_outside_node": 16.38300000000163
+          }
+        },
+        {
+          "sequence": 16,
+          "ms": {
+            "click_to_submit": 105.90000000596046,
+            "submit_to_accept": 13.5,
+            "submit_to_receipt": 264.2999999821186,
+            "submit_to_canvas": 401.39999997615814,
+            "click_to_canvas": 507.2999999821186,
+            "receipt_to_canvas": 137.09999999403954,
+            "timeline_to_canvas": 119.39999997615814,
+            "reference_submit_to_canvas": 894.5,
+            "delivered_to_timeline": 17.700000017881393,
+            "accepted_to_executed": 220.29060000181198,
+            "executed_to_publication": 6.865600019693375,
+            "publication_to_read": 9.297399997711182,
+            "read_server_execute": 18.537000000476837,
+            "read_node_outside_execute": 44.739899999520276,
+            "read_browser_outside_node": 15.423099988081958
+          }
+        },
+        {
+          "sequence": 17,
+          "ms": {
+            "click_to_submit": 91.2999999821186,
+            "submit_to_accept": 16.5,
+            "submit_to_receipt": 387.30000001192093,
+            "submit_to_canvas": 510.09999999403954,
+            "click_to_canvas": 601.3999999761581,
+            "receipt_to_canvas": 122.7999999821186,
+            "timeline_to_canvas": 104.19999998807907,
+            "reference_submit_to_canvas": 1291.2000000178814,
+            "delivered_to_timeline": 18.599999994039536,
+            "accepted_to_executed": 342.83350002765656,
+            "executed_to_publication": 6.907599955797195,
+            "publication_to_read": 6.963600009679794,
+            "read_server_execute": 16.508199989795685,
+            "read_node_outside_execute": 60.364600010201684,
+            "read_browser_outside_node": 18.12720000000263
+          }
+        },
+        {
+          "sequence": 18,
+          "ms": {
+            "click_to_submit": 111.90000000596046,
+            "submit_to_accept": 17.69999998807907,
+            "submit_to_receipt": 422.80000001192093,
+            "submit_to_canvas": 554.0999999940395,
+            "click_to_canvas": 666,
+            "receipt_to_canvas": 131.2999999821186,
+            "timeline_to_canvas": 112.09999999403954,
+            "reference_submit_to_canvas": 1135.0999999940395,
+            "delivered_to_timeline": 19.19999998807907,
+            "accepted_to_executed": 373.60929998755455,
+            "executed_to_publication": 6.804500013589859,
+            "publication_to_read": 7.094099998474121,
+            "read_server_execute": 15.514100015163422,
+            "read_node_outside_execute": 53.57069998484076,
+            "read_browser_outside_node": 17.815200005956285
+          }
+        },
+        {
+          "sequence": 19,
+          "ms": {
+            "click_to_submit": 102,
+            "submit_to_accept": 27.799999982118607,
+            "submit_to_receipt": 296.2999999821186,
+            "submit_to_canvas": 423.90000000596046,
+            "click_to_canvas": 525.9000000059605,
+            "receipt_to_canvas": 127.60000002384186,
+            "timeline_to_canvas": 110.40000000596046,
+            "reference_submit_to_canvas": 968.9000000059605,
+            "delivered_to_timeline": 17.200000017881393,
+            "accepted_to_executed": 223.8134999871254,
+            "executed_to_publication": 6.689800024032593,
+            "publication_to_read": 6.701700001955032,
+            "read_server_execute": 15.14190000295639,
+            "read_node_outside_execute": 31.40709999704268,
+            "read_browser_outside_node": 22.250999982119538
+          }
+        },
+        {
+          "sequence": 20,
+          "ms": {
+            "click_to_submit": 111.09999999403954,
+            "submit_to_accept": 14,
+            "submit_to_receipt": 369.90000000596046,
+            "submit_to_canvas": 494.19999998807907,
+            "click_to_canvas": 605.2999999821186,
+            "receipt_to_canvas": 124.2999999821186,
+            "timeline_to_canvas": 108.09999999403954,
+            "reference_submit_to_canvas": 1100.199999988079,
+            "delivered_to_timeline": 16.19999998807907,
+            "accepted_to_executed": 326.5649999976158,
+            "executed_to_publication": 7.228399991989136,
+            "publication_to_read": 7.526899993419647,
+            "read_server_execute": 16.857299983501434,
+            "read_node_outside_execute": 8.463700016502116,
+            "read_browser_outside_node": 16.17899999999645
+          }
+        }
+      ],
+      "latency": {
+        "click_to_submit": {
+          "count": 20,
+          "mean_ms": 94.24999999403954,
+          "p95_ms": 111.09999999403954,
+          "max_ms": 111.90000000596046
+        },
+        "submit_to_accept": {
+          "count": 20,
+          "mean_ms": 21.134999999403952,
+          "p95_ms": 35,
+          "max_ms": 35.30000001192093
+        },
+        "submit_to_receipt": {
+          "count": 20,
+          "mean_ms": 262.41000000089406,
+          "p95_ms": 387.30000001192093,
+          "max_ms": 422.80000001192093
+        },
+        "submit_to_canvas": {
+          "count": 20,
+          "mean_ms": 401.35500000268223,
+          "p95_ms": 510.09999999403954,
+          "max_ms": 554.0999999940395
+        },
+        "click_to_canvas": {
+          "count": 20,
+          "mean_ms": 495.60499999672174,
+          "p95_ms": 605.2999999821186,
+          "max_ms": 666
+        },
+        "receipt_to_canvas": {
+          "count": 20,
+          "mean_ms": 138.94500000178815,
+          "p95_ms": 190.30000001192093,
+          "max_ms": 217.10000002384186
+        },
+        "timeline_to_canvas": {
+          "count": 20,
+          "mean_ms": 100.81000000089406,
+          "p95_ms": 116.80000001192093,
+          "max_ms": 119.39999997615814
+        },
+        "reference_submit_to_canvas": {
+          "count": 20,
+          "mean_ms": 813.3250000029802,
+          "p95_ms": 1135.0999999940395,
+          "max_ms": 1291.2000000178814
+        },
+        "delivered_to_timeline": {
+          "count": 20,
+          "mean_ms": 16.404999999701978,
+          "p95_ms": 18.599999994039536,
+          "max_ms": 19.19999998807907
+        },
+        "accepted_to_executed": {
+          "count": 20,
+          "mean_ms": 205.256145003438,
+          "p95_ms": 342.83350002765656,
+          "max_ms": 373.60929998755455
+        },
+        "executed_to_publication": {
+          "count": 20,
+          "mean_ms": 21.708669996261598,
+          "p95_ms": 72.3154000043869,
+          "max_ms": 82.83769997954369
+        },
+        "publication_to_read": {
+          "count": 20,
+          "mean_ms": 17.750895005464553,
+          "p95_ms": 50.99350002408028,
+          "max_ms": 83.92620000243187
+        },
+        "read_server_execute": {
+          "count": 20,
+          "mean_ms": 15.580694994330406,
+          "p95_ms": 16.857299983501434,
+          "max_ms": 18.537000000476837
+        },
+        "read_node_outside_execute": {
+          "count": 20,
+          "mean_ms": 25.5583150056691,
+          "p95_ms": 57.29160000514821,
+          "max_ms": 60.364600010201684
+        },
+        "read_browser_outside_node": {
+          "count": 20,
+          "mean_ms": 17.285990000000492,
+          "p95_ms": 22.250999982119538,
+          "max_ms": 22.641999999999825
+        }
+      },
+      "selection": {
+        "count": 20,
+        "meanMs": 23.600000001490116,
+        "p95Ms": 31.19999998807907,
+        "maxMs": 38.80000001192093
+      },
+      "simulated_s": 8.133333333333333,
+      "wall_s": 45.49172919997363,
+      "naturally_finished": false,
+      "peak_debt_steps": 4.018347744,
+      "final_speed": 0.111,
+      "peak_response_bytes": 594996
+    }
+  ],
+  "scope": "Four instrumented headless runs, at most 45 wall seconds or natural battle end, 20 commands each. Reference clock consumes identical delivered committed states at identical sample times. Shadow cost is present in both clock observations. Separate browser/Node/Python monotonic durations; do not directly subtract timestamps from different processes or add nested statistics. No backend simulation or input-rule change, no new six-case equivalence or 1x/native/full-battle acceptance."
+}

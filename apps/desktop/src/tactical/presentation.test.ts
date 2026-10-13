@@ -21,18 +21,19 @@ const trail: FinishedProjectile = { id: 1, ship_id: id, born_step: 1, origin_m: 
   position_m: [10, 0], end_step: 2, end_m: [60, 0], expires_step: 20, impact: { ship_id: 'target', outcome: 'module' } };
 
 describe('shared tactical presentation time', () => {
-  it('changes speed continuously on same-step updates and retains the new pace across publications',()=>{
+  it('changes speed continuously on same-step updates while recovering the inherited display phase',()=>{
     const clock=new PresentationTimeline();clock.push(frame(0),0);clock.push(frame(12),200);
     const before=clock.sample(220)!.snapshot.fixed_step;
     clock.push(frame(12,{simulation_speed:.25}),220);
     expect(clock.sample(220)!.snapshot.fixed_step).toBeCloseTo(before);
-    expect(clock.sample(260)!.snapshot.fixed_step).toBeCloseTo(before+.6);
+    expect(clock.sample(260)!.snapshot.fixed_step).toBeGreaterThan(before+.6);
     clock.push(frame(13,{simulation_speed:.25}),270);
-    expect(clock.sample(300)!.snapshot.fixed_step).toBeCloseTo(before+1.2);
+    expect(clock.sample(300)!.snapshot.fixed_step).toBeLessThanOrEqual(13);
     const slow=clock.sample(310)!.snapshot.fixed_step;
     clock.push(frame(13,{simulation_speed:1}),310);
     expect(clock.sample(310)!.snapshot.fixed_step).toBeCloseTo(slow);
-    expect(clock.sample(320)!.snapshot.fixed_step).toBeLessThanOrEqual(slow+.6);
+    expect(clock.sample(320)!.snapshot.fixed_step).toBeGreaterThanOrEqual(slow);
+    expect(clock.sample(370)!.snapshot.fixed_step).toBe(13);
     expect(clock.sample(10000)!.snapshot.fixed_step).toBe(13);
     clock.clear();clock.push(frame(0),11000);clock.push(frame(4),11067);
     expect(clock.sample(11140)!.snapshot.fixed_step).toBeCloseTo(2.38);

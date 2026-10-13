@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-13",
+  "reference_commit": "ecafbff40826ac92c3eb4683bee80c19776a01e9",
+  "regression_before_fix": {
+    "suite": "presentationSpeed.test.ts",
+    "tests": 5,
+    "failed": 5,
+    "example": "After a 1x to 0.05x same-step update at 220 ms, the published step is 12; at 300 ms the old clock shows 7.44 instead of reaching step 12."
+  },
+  "focused_after_fix": {"files": 2, "passed": 16},
+  "frontend_check": {"typecheck": "passed", "files": 49, "passed": 211},
+  "scope": "Frontend source/test changes only. Existing backend/protocol/state-equivalence results are reused after source comparison, not rerun. Browser evidence is audited separately."
+}

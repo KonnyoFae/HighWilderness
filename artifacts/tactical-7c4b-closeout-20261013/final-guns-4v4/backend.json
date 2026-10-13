@@ -1,0 +1,85 @@
+{
+  "case": "guns-4v4",
+  "wall_s": 45.74252920001163,
+  "simulated_s": 26.516666666666666,
+  "status": {
+    "epoch": "0a97354f160e4c3dace71685d3d16d9a",
+    "fixed_step": 1591,
+    "running": false,
+    "generation": 1,
+    "pause_reason": "manual",
+    "debt_quanta": 823124498,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 3,
+    "highest_input_sequence": 19,
+    "acknowledged_event_sequence": 716,
+    "speed": {
+      "mode": "adaptive",
+      "effective": 0.578,
+      "slowed": true,
+      "revision": 102,
+      "active_wall_s": 45.6991236,
+      "advanced_simulation_s": 26.516666666666666,
+      "actual_ratio": 0.5802445337631522,
+      "step_mean_ms": 13.084008088939019,
+      "nonstep_utilization": 0.1717716760939044,
+      "longest_step_ms": 36.0699
+    }
+  },
+  "peak_debt_steps": 4.332162,
+  "costs": {
+    "step": {
+      "mean_ms": 12.3452800753186,
+      "p50_ms": 11.361999990185723,
+      "p95_ms": 21.801299997605383,
+      "p99_ms": 27.75459998520091,
+      "max_ms": 35.63890000805259
+    },
+    "publish": {
+      "mean_ms": 8.473647068895485,
+      "p50_ms": 7.793500000843778,
+      "p95_ms": 14.206399995600805,
+      "p99_ms": 18.377000000327826,
+      "max_ms": 56.53020000318065
+    },
+    "read": {
+      "mean_ms": 8.16475197260795,
+      "p50_ms": 7.805300003383309,
+      "p95_ms": 13.363699981709942,
+      "p99_ms": 16.421500011347234,
+      "max_ms": 43.77369998837821
+    }
+  },
+  "load": {
+    "ships": 8,
+    "guns": 24,
+    "projectiles": 234,
+    "missiles": 0,
+    "airborne": 0,
+    "aircraft_sensors": 0,
+    "jammers": 0,
+    "jobs": 0,
+    "queued": 0,
+    "aircraft": 0,
+    "pilots": 0,
+    "local_tracks": 12,
+    "shared_tracks": 24,
+    "shots": 704,
+    "missile_shots": 0,
+    "hits": 265,
+    "interceptions": 0
+  },
+  "error": null,
+  "memory_before": {
+    "working_set": 72077312,
+    "private_bytes": 58187776,
+    "peak_working_set": 72077312
+  },
+  "memory_end": {
+    "working_set": 78475264,
+    "private_bytes": 63119360,
+    "peak_working_set": 80097280
+  },
+  "scope": "Real scheduler/sidecar. Headless browser bridge, not native Tauri."
+}

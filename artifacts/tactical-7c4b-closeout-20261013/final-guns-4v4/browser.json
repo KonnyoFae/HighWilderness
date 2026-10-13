@@ -1,0 +1,8171 @@
+{
+  "source": "G:\\高天荒野\\artifacts\\tactical-7b-20261009\\guns-4v4",
+  "variant": "adaptive-closeout",
+  "scope": "Headless Edge / Vite / Node bridge with passive Python trace and a shadow of the ecafbff display clock on identical delivered views and sample times. Shadow sampling adds CPU overhead; this is a latency diagnostic, not a throughput benchmark. Full click time starts at the browser click event. Canvas means render submission, not native/GPU completion. All latencies are wall milliseconds.",
+  "browser": "155.0.4283.45",
+  "wallMs": 45011.4617,
+  "finalStatus": {
+    "acknowledged_event_sequence": 714,
+    "debt_quanta": 950314736,
+    "epoch": "0a97354f160e4c3dace71685d3d16d9a",
+    "fixed_step": 1564,
+    "generation": 0,
+    "highest_input_sequence": 19,
+    "pause_reason": null,
+    "pending_inputs": 0,
+    "reliable_events": 1,
+    "retained_receipts": 0,
+    "running": true,
+    "speed": {
+      "active_wall_s": 44.8798269,
+      "actual_ratio": 0.5808103209655353,
+      "advanced_simulation_s": 26.066666666666666,
+      "effective": 0.528,
+      "longest_step_ms": 36.0699,
+      "mode": "adaptive",
+      "nonstep_utilization": 0.1900257356922837,
+      "revision": 98,
+      "slowed": true,
+      "step_mean_ms": 11.888397232724312
+    }
+  },
+  "commands": [
+    {
+      "sequence": 1,
+      "targetStep": 103,
+      "submitted": 12068.90000000596,
+      "clicked": 11938.09999999404,
+      "replyMs": 22.299999982118607,
+      "replyStatus": "accepted",
+      "receiptMs": 206.19999998807907,
+      "status": "executed",
+      "resolvedStep": 104,
+      "domMs": 229.89999997615814,
+      "timelineMs": 231.2999999821186,
+      "canvasMs": 303.7999999821186,
+      "shownStep": 104.23600000071521,
+      "referenceCanvasMs": 303.7999999821186,
+      "clickToSubmitMs": 130.80000001192093,
+      "clickToCanvasMs": 434.59999999403954,
+      "receiptToCanvasMs": 97.59999999403954,
+      "timelineToCanvasMs": 72.5,
+      "referenceReceiptToCanvasMs": 97.59999999403954,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 11915.40000000596,
+          "serial": 33,
+          "end": 11985.799999982119,
+          "viewStep": 92,
+          "authorityStep": 92,
+          "speed": 1
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 11986.09999999404,
+          "serial": 34,
+          "end": 12068.40000000596,
+          "viewStep": 97,
+          "authorityStep": 97,
+          "speed": 1
+        }
+      ]
+    },
+    {
+      "sequence": 2,
+      "targetStep": 208,
+      "submitted": 13863.799999982119,
+      "clicked": 13682.699999988079,
+      "error": "Error: {\"code\":\"tactical_scheduler.boundary\",\"details\":{},\"message\":\"Input outside future boundary window\",\"path\":\"$\",\"retryable\":false,\"source\":\"domain\"}",
+      "clickToSubmitMs": 181.09999999403954,
+      "clickToCanvasMs": null,
+      "receiptToCanvasMs": null,
+      "timelineToCanvasMs": null,
+      "referenceReceiptToCanvasMs": null,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 13664.90000000596,
+          "serial": 48,
+          "end": 13756.299999982119,
+          "viewStep": 197,
+          "authorityStep": 197,
+          "speed": 1
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 13756.59999999404,
+          "serial": 49,
+          "end": 13863.299999982119,
+          "viewStep": 201,
+          "authorityStep": 202,
+          "speed": 1
+        }
+      ]
+    },
+    {
+      "sequence": 2,
+      "targetStep": 294,
+      "submitted": 15514.5,
+      "clicked": 15366.799999982119,
+      "replyMs": 15.900000005960464,
+      "replyStatus": "accepted",
+      "receiptMs": 243,
+      "status": "executed",
+      "resolvedStep": 295,
+      "domMs": 262,
+      "timelineMs": 263.19999998807907,
+      "canvasMs": 324.69999998807907,
+      "shownStep": 295.1230000008345,
+      "referenceCanvasMs": 424.19999998807907,
+      "clickToSubmitMs": 147.7000000178814,
+      "clickToCanvasMs": 472.40000000596046,
+      "receiptToCanvasMs": 81.69999998807907,
+      "timelineToCanvasMs": 61.5,
+      "referenceReceiptToCanvasMs": 181.19999998807907,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 15349.59999999404,
+          "serial": 63,
+          "end": 15443.90000000596,
+          "viewStep": 287,
+          "authorityStep": 287,
+          "speed": 0.7
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 15444.40000000596,
+          "serial": 64,
+          "end": 15514.40000000596,
+          "viewStep": 287,
+          "authorityStep": 290,
+          "speed": 0.7
+        }
+      ]
+    },
+    {
+      "sequence": 3,
+      "targetStep": 370,
+      "submitted": 17290.59999999404,
+      "clicked": 17078.29999998212,
+      "replyMs": 30.30000001192093,
+      "replyStatus": "accepted",
+      "receiptMs": 154.90000000596046,
+      "status": "executed",
+      "resolvedStep": 371,
+      "domMs": 177.5,
+      "timelineMs": 349.5,
+      "canvasMs": 377.19999998807907,
+      "shownStep": 371.0160000004768,
+      "referenceCanvasMs": 405.69999998807907,
+      "clickToSubmitMs": 212.30000001192093,
+      "clickToCanvasMs": 589.5,
+      "receiptToCanvasMs": 222.2999999821186,
+      "timelineToCanvasMs": 27.69999998807907,
+      "referenceReceiptToCanvasMs": 250.7999999821186,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 17069.59999999404,
+          "serial": 78,
+          "end": 17171.19999998808,
+          "viewStep": 357,
+          "authorityStep": 360,
+          "speed": 0.751
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 17171.79999998212,
+          "serial": 79,
+          "end": 17290,
+          "viewStep": 361,
+          "authorityStep": 364,
+          "speed": 0.751
+        }
+      ]
+    },
+    {
+      "sequence": 4,
+      "targetStep": 439,
+      "submitted": 19053.69999998808,
+      "clicked": 18858.09999999404,
+      "replyMs": 15.900000005960464,
+      "replyStatus": "accepted",
+      "receiptMs": 286.59999999403954,
+      "status": "executed",
+      "resolvedStep": 440,
+      "domMs": 310.5,
+      "timelineMs": 311.80000001192093,
+      "canvasMs": 388.5,
+      "shownStep": 440.13523200000003,
+      "referenceCanvasMs": 533.5999999940395,
+      "clickToSubmitMs": 195.59999999403954,
+      "clickToCanvasMs": 584.0999999940395,
+      "receiptToCanvasMs": 101.90000000596046,
+      "timelineToCanvasMs": 76.69999998807907,
+      "referenceReceiptToCanvasMs": 247,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 18825.29999998212,
+          "serial": 91,
+          "end": 18954.09999999404,
+          "viewStep": 429,
+          "authorityStep": 430,
+          "speed": 0.563
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 18954.79999998212,
+          "serial": 92,
+          "end": 19053.19999998808,
+          "viewStep": 432,
+          "authorityStep": 434,
+          "speed": 0.563
+        }
+      ]
+    },
+    {
+      "sequence": 5,
+      "targetStep": 502,
+      "submitted": 20913.29999998212,
+      "clicked": 20698.5,
+      "replyMs": 23,
+      "replyStatus": "accepted",
+      "receiptMs": 162.60000002384186,
+      "status": "executed",
+      "resolvedStep": 503,
+      "domMs": 195.7000000178814,
+      "timelineMs": 357.60000002384186,
+      "canvasMs": 396.2000000178814,
+      "shownStep": 503.11199999964236,
+      "referenceCanvasMs": 498.5,
+      "clickToSubmitMs": 214.7999999821186,
+      "clickToCanvasMs": 611,
+      "receiptToCanvasMs": 233.59999999403954,
+      "timelineToCanvasMs": 38.599999994039536,
+      "referenceReceiptToCanvasMs": 335.89999997615814,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 20638.19999998808,
+          "serial": 104,
+          "end": 20775.19999998808,
+          "viewStep": 491,
+          "authorityStep": 491,
+          "speed": 0.599
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 20776.09999999404,
+          "serial": 105,
+          "end": 20912.29999998212,
+          "viewStep": 494,
+          "authorityStep": 496,
+          "speed": 0.599
+        }
+      ]
+    },
+    {
+      "sequence": 6,
+      "targetStep": 573,
+      "submitted": 22899.19999998808,
+      "clicked": 22681.90000000596,
+      "replyMs": 27.099999994039536,
+      "replyStatus": "accepted",
+      "receiptMs": 262.80000001192093,
+      "status": "executed",
+      "resolvedStep": 574,
+      "domMs": 288.7000000178814,
+      "timelineMs": 289.90000000596046,
+      "canvasMs": 403.59999999403954,
+      "shownStep": 574.9935680001918,
+      "referenceCanvasMs": 562.8000000119209,
+      "clickToSubmitMs": 217.2999999821186,
+      "clickToCanvasMs": 620.8999999761581,
+      "receiptToCanvasMs": 140.7999999821186,
+      "timelineToCanvasMs": 113.69999998807907,
+      "referenceReceiptToCanvasMs": 300,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 22667.29999998212,
+          "serial": 118,
+          "end": 22796.79999998212,
+          "viewStep": 564,
+          "authorityStep": 564,
+          "speed": 0.536
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 22797.69999998808,
+          "serial": 119,
+          "end": 22898.40000000596,
+          "viewStep": 567,
+          "authorityStep": 568,
+          "speed": 0.536
+        }
+      ]
+    },
+    {
+      "sequence": 7,
+      "targetStep": 635,
+      "submitted": 24762.5,
+      "clicked": 24524.79999998212,
+      "replyMs": 21.099999994039536,
+      "replyStatus": "accepted",
+      "receiptMs": 263.69999998807907,
+      "status": "executed",
+      "resolvedStep": 636,
+      "domMs": 288,
+      "timelineMs": 289.19999998807907,
+      "canvasMs": 353.19999998807907,
+      "shownStep": 636.0250000008346,
+      "referenceCanvasMs": 510.90000000596046,
+      "clickToSubmitMs": 237.7000000178814,
+      "clickToCanvasMs": 590.9000000059605,
+      "receiptToCanvasMs": 89.5,
+      "timelineToCanvasMs": 64,
+      "referenceReceiptToCanvasMs": 247.2000000178814,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 24506.40000000596,
+          "serial": 132,
+          "end": 24615.09999999404,
+          "viewStep": 623,
+          "authorityStep": 624,
+          "speed": 0.587
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 24616,
+          "serial": 133,
+          "end": 24761.59999999404,
+          "viewStep": 629,
+          "authorityStep": 629,
+          "speed": 0.599
+        }
+      ]
+    },
+    {
+      "sequence": 8,
+      "targetStep": 703,
+      "submitted": 26514.19999998808,
+      "clicked": 26293.19999998808,
+      "replyMs": 21.80000001192093,
+      "replyStatus": "accepted",
+      "receiptMs": 287.09999999403954,
+      "status": "executed",
+      "resolvedStep": 704,
+      "domMs": 311.90000000596046,
+      "timelineMs": 313.40000000596046,
+      "canvasMs": 372.09999999403954,
+      "shownStep": 704.1367480002535,
+      "referenceCanvasMs": 471.5,
+      "clickToSubmitMs": 221,
+      "clickToCanvasMs": 593.0999999940395,
+      "receiptToCanvasMs": 85,
+      "timelineToCanvasMs": 58.69999998807907,
+      "referenceReceiptToCanvasMs": 184.40000000596046,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 26268.29999998212,
+          "serial": 145,
+          "end": 26402.09999999404,
+          "viewStep": 690,
+          "authorityStep": 692,
+          "speed": 0.685
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 26402.69999998808,
+          "serial": 146,
+          "end": 26513.40000000596,
+          "viewStep": 696,
+          "authorityStep": 697,
+          "speed": 0.685
+        }
+      ]
+    },
+    {
+      "sequence": 9,
+      "targetStep": 787,
+      "submitted": 28400,
+      "clicked": 28266.90000000596,
+      "replyMs": 21.5,
+      "replyStatus": "accepted",
+      "receiptMs": 292.5,
+      "status": "executed",
+      "resolvedStep": 788,
+      "domMs": 306.69999998807907,
+      "timelineMs": 307.2999999821186,
+      "canvasMs": 336.19999998807907,
+      "shownStep": 788.0800000014302,
+      "referenceCanvasMs": 423.09999999403954,
+      "clickToSubmitMs": 133.09999999403954,
+      "clickToCanvasMs": 469.2999999821186,
+      "receiptToCanvasMs": 43.69999998807907,
+      "timelineToCanvasMs": 28.900000005960464,
+      "referenceReceiptToCanvasMs": 130.59999999403954,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 28284.19999998808,
+          "serial": 160,
+          "end": 28399.5,
+          "viewStep": 778,
+          "authorityStep": 781,
+          "speed": 0.796
+        }
+      ]
+    },
+    {
+      "sequence": 10,
+      "targetStep": 869,
+      "submitted": 30183.69999998808,
+      "clicked": 29999.5,
+      "replyMs": 15.599999994039536,
+      "replyStatus": "accepted",
+      "receiptMs": 207,
+      "status": "executed",
+      "resolvedStep": 870,
+      "domMs": 226.30000001192093,
+      "timelineMs": 347.2000000178814,
+      "canvasMs": 368.59999999403954,
+      "shownStep": 870.1219999996422,
+      "referenceCanvasMs": 527.5999999940395,
+      "clickToSubmitMs": 184.19999998807907,
+      "clickToCanvasMs": 552.7999999821186,
+      "receiptToCanvasMs": 161.59999999403954,
+      "timelineToCanvasMs": 21.399999976158142,
+      "referenceReceiptToCanvasMs": 320.59999999403954,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 29968.29999998212,
+          "serial": 172,
+          "end": 30097.59999999404,
+          "viewStep": 859,
+          "authorityStep": 859,
+          "speed": 0.64
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 30098.09999999404,
+          "serial": 173,
+          "end": 30183.29999998212,
+          "viewStep": 863,
+          "authorityStep": 864,
+          "speed": 0.64
+        }
+      ]
+    },
+    {
+      "sequence": 11,
+      "targetStep": 942,
+      "submitted": 32112.29999998212,
+      "clicked": 31938.5,
+      "replyMs": 22.5,
+      "replyStatus": "accepted",
+      "receiptMs": 176.80000001192093,
+      "status": "executed",
+      "resolvedStep": 943,
+      "domMs": 198.2000000178814,
+      "timelineMs": 198.90000000596046,
+      "canvasMs": 304.40000000596046,
+      "shownStep": 943,
+      "referenceCanvasMs": 479.80000001192093,
+      "clickToSubmitMs": 173.7999999821186,
+      "clickToCanvasMs": 478.19999998807907,
+      "receiptToCanvasMs": 127.59999999403954,
+      "timelineToCanvasMs": 105.5,
+      "referenceReceiptToCanvasMs": 303,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 31960.19999998808,
+          "serial": 186,
+          "end": 32111.40000000596,
+          "viewStep": 934,
+          "authorityStep": 936,
+          "speed": 0.667
+        }
+      ]
+    },
+    {
+      "sequence": 12,
+      "targetStep": 1004,
+      "submitted": 33894.09999999404,
+      "clicked": 33631.69999998808,
+      "replyMs": 33.099999994039536,
+      "replyStatus": "accepted",
+      "receiptMs": 380.09999999403954,
+      "status": "executed",
+      "resolvedStep": 1005,
+      "domMs": 404.09999999403954,
+      "timelineMs": 405.30000001192093,
+      "canvasMs": 448,
+      "shownStep": 1005.0399999997019,
+      "referenceCanvasMs": 630,
+      "clickToSubmitMs": 262.40000000596046,
+      "clickToCanvasMs": 710.4000000059605,
+      "receiptToCanvasMs": 67.90000000596046,
+      "timelineToCanvasMs": 42.69999998807907,
+      "referenceReceiptToCanvasMs": 249.90000000596046,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 33587.69999998808,
+          "serial": 196,
+          "end": 33755.5,
+          "viewStep": 991,
+          "authorityStep": 993,
+          "speed": 0.532
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 33756.69999998808,
+          "serial": 197,
+          "end": 33893.40000000596,
+          "viewStep": 997,
+          "authorityStep": 998,
+          "speed": 0.532
+        }
+      ]
+    },
+    {
+      "sequence": 13,
+      "targetStep": 1062,
+      "submitted": 36058.19999998808,
+      "clicked": 35711.19999998808,
+      "replyMs": 25.30000001192093,
+      "replyStatus": "accepted",
+      "receiptMs": 462,
+      "status": "executed",
+      "resolvedStep": 1063,
+      "domMs": 495.7000000178814,
+      "timelineMs": 497.09999999403954,
+      "canvasMs": 554.0999999940395,
+      "shownStep": 1063.0400000007155,
+      "referenceCanvasMs": 684.2000000178814,
+      "clickToSubmitMs": 347,
+      "clickToCanvasMs": 901.0999999940395,
+      "receiptToCanvasMs": 92.09999999403954,
+      "timelineToCanvasMs": 57,
+      "referenceReceiptToCanvasMs": 222.2000000178814,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 35690.5,
+          "serial": 208,
+          "end": 35874.19999998808,
+          "viewStep": 1051,
+          "authorityStep": 1051,
+          "speed": 0.402
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 35875.79999998212,
+          "serial": 209,
+          "end": 36055.90000000596,
+          "viewStep": 1054,
+          "authorityStep": 1056,
+          "speed": 0.402
+        }
+      ]
+    },
+    {
+      "sequence": 14,
+      "targetStep": 1109,
+      "submitted": 37837.90000000596,
+      "clicked": 37528.90000000596,
+      "replyMs": 41.19999998807907,
+      "replyStatus": "accepted",
+      "receiptMs": 425,
+      "status": "executed",
+      "resolvedStep": 1110,
+      "domMs": 454.2999999821186,
+      "timelineMs": 455.59999999403954,
+      "canvasMs": 513.5,
+      "shownStep": 1110.328,
+      "referenceCanvasMs": 678.1999999880791,
+      "clickToSubmitMs": 309,
+      "clickToCanvasMs": 822.5,
+      "receiptToCanvasMs": 88.5,
+      "timelineToCanvasMs": 57.900000005960464,
+      "referenceReceiptToCanvasMs": 253.19999998807907,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 37507.79999998212,
+          "serial": 218,
+          "end": 37691.79999998212,
+          "viewStep": 1096,
+          "authorityStep": 1098,
+          "speed": 0.453
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 37693.29999998212,
+          "serial": 219,
+          "end": 37836,
+          "viewStep": 1101,
+          "authorityStep": 1103,
+          "speed": 0.466
+        }
+      ]
+    },
+    {
+      "sequence": 15,
+      "targetStep": 1158,
+      "submitted": 39690.79999998212,
+      "clicked": 39472.90000000596,
+      "replyMs": 23.700000017881393,
+      "replyStatus": "accepted",
+      "receiptMs": 507.7000000178814,
+      "status": "executed",
+      "resolvedStep": 1159,
+      "domMs": 537,
+      "timelineMs": 538.2000000178814,
+      "canvasMs": 576.6000000238419,
+      "shownStep": 1159.088,
+      "referenceCanvasMs": 681.5,
+      "clickToSubmitMs": 217.89999997615814,
+      "clickToCanvasMs": 794.5,
+      "receiptToCanvasMs": 68.90000000596046,
+      "timelineToCanvasMs": 38.400000005960464,
+      "referenceReceiptToCanvasMs": 173.7999999821186,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 39345.90000000596,
+          "serial": 229,
+          "end": 39526.29999998212,
+          "viewStep": 1147,
+          "authorityStep": 1147,
+          "speed": 0.41
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 39527.90000000596,
+          "serial": 230,
+          "end": 39689.59999999404,
+          "viewStep": 1151,
+          "authorityStep": 1152,
+          "speed": 0.41
+        }
+      ]
+    },
+    {
+      "sequence": 16,
+      "targetStep": 1208,
+      "submitted": 41633.5,
+      "clicked": 41293.40000000596,
+      "replyMs": 22.69999998807907,
+      "replyStatus": "accepted",
+      "receiptMs": 371.59999999403954,
+      "status": "executed",
+      "resolvedStep": 1209,
+      "domMs": 404.40000000596046,
+      "timelineMs": 405.69999998807907,
+      "canvasMs": 463.2999999821186,
+      "shownStep": 1209.198000000715,
+      "referenceCanvasMs": 611.4000000059605,
+      "clickToSubmitMs": 340.09999999403954,
+      "clickToCanvasMs": 803.3999999761581,
+      "receiptToCanvasMs": 91.69999998807907,
+      "timelineToCanvasMs": 57.599999994039536,
+      "referenceReceiptToCanvasMs": 239.80000001192093,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 41277.90000000596,
+          "serial": 239,
+          "end": 41436.69999998808,
+          "viewStep": 1195,
+          "authorityStep": 1197,
+          "speed": 0.451
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 41437.59999999404,
+          "serial": 240,
+          "end": 41632,
+          "viewStep": 1200,
+          "authorityStep": 1202,
+          "speed": 0.463
+        }
+      ]
+    },
+    {
+      "sequence": 17,
+      "targetStep": 1258,
+      "submitted": 43352.09999999404,
+      "clicked": 43005.09999999404,
+      "replyMs": 23,
+      "replyStatus": "accepted",
+      "receiptMs": 396,
+      "status": "executed",
+      "resolvedStep": 1259,
+      "domMs": 426,
+      "timelineMs": 427.5,
+      "canvasMs": 481.59999999403954,
+      "shownStep": 1259.0000000002385,
+      "referenceCanvasMs": 809.4000000059605,
+      "clickToSubmitMs": 347,
+      "clickToCanvasMs": 828.5999999940395,
+      "receiptToCanvasMs": 85.59999999403954,
+      "timelineToCanvasMs": 54.099999994039536,
+      "referenceReceiptToCanvasMs": 413.40000000596046,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 42964.09999999404,
+          "serial": 250,
+          "end": 43144.29999998212,
+          "viewStep": 1246,
+          "authorityStep": 1246,
+          "speed": 0.508
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 43145.29999998212,
+          "serial": 251,
+          "end": 43350.79999998212,
+          "viewStep": 1252,
+          "authorityStep": 1252,
+          "speed": 0.38
+        }
+      ]
+    },
+    {
+      "sequence": 18,
+      "targetStep": 1295,
+      "submitted": 45221.59999999404,
+      "clicked": 44913.69999998808,
+      "replyMs": 22.900000005960464,
+      "replyStatus": "accepted",
+      "receiptMs": 288.5,
+      "status": "executed",
+      "resolvedStep": 1296,
+      "domMs": 311.5,
+      "timelineMs": 312.59999999403954,
+      "canvasMs": 418.40000000596046,
+      "shownStep": 1296,
+      "referenceCanvasMs": 776.8000000119209,
+      "clickToSubmitMs": 307.90000000596046,
+      "clickToCanvasMs": 726.3000000119209,
+      "receiptToCanvasMs": 129.90000000596046,
+      "timelineToCanvasMs": 105.80000001192093,
+      "referenceReceiptToCanvasMs": 488.30000001192093,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 44897.5,
+          "serial": 262,
+          "end": 45063.19999998808,
+          "viewStep": 1287,
+          "authorityStep": 1287,
+          "speed": 0.325
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 45064.90000000596,
+          "serial": 263,
+          "end": 45220.19999998808,
+          "viewStep": 1289,
+          "authorityStep": 1290,
+          "speed": 0.337
+        }
+      ]
+    },
+    {
+      "sequence": 19,
+      "targetStep": 1333,
+      "submitted": 46850.40000000596,
+      "clicked": 46558.19999998808,
+      "replyMs": 37.79999998211861,
+      "replyStatus": "accepted",
+      "receiptMs": 445.2999999821186,
+      "status": "executed",
+      "resolvedStep": 1334,
+      "domMs": 477.39999997615814,
+      "timelineMs": 478.59999999403954,
+      "canvasMs": 549.1999999880791,
+      "shownStep": 1334.11,
+      "referenceCanvasMs": 690.7999999821186,
+      "clickToSubmitMs": 292.2000000178814,
+      "clickToCanvasMs": 841.4000000059605,
+      "receiptToCanvasMs": 103.90000000596046,
+      "timelineToCanvasMs": 70.59999999403954,
+      "referenceReceiptToCanvasMs": 245.5,
+      "preflightReads": [
+        {
+          "method": "tactical.realtime.read",
+          "start": 46529.19999998808,
+          "serial": 273,
+          "end": 46675.79999998212,
+          "viewStep": 1322,
+          "authorityStep": 1323,
+          "speed": 0.415
+        },
+        {
+          "method": "tactical.realtime.read",
+          "start": 46678,
+          "serial": 274,
+          "end": 46847.90000000596,
+          "viewStep": 1327,
+          "authorityStep": 1327,
+          "speed": 0.427
+        }
+      ]
+    }
+  ],
+  "calls": [
+    {
+      "method": "tactical.preparation.scene_read",
+      "start": 319.69999998807907,
+      "serial": 1,
+      "end": 3295.199999988079
+    },
+    {
+      "method": "tactical.preparation.library",
+      "start": 3295.2999999821186,
+      "serial": 2,
+      "end": 3343.2999999821186
+    },
+    {
+      "method": "tactical.preparation.scene_encounter",
+      "start": 3758,
+      "serial": 3,
+      "end": 6124.5
+    },
+    {
+      "method": "tactical.set_mode",
+      "start": 6124.699999988079,
+      "serial": 4,
+      "end": 6136
+    },
+    {
+      "method": "tactical.realtime.settlements",
+      "start": 6147.4000000059605,
+      "serial": 5,
+      "end": 6155
+    },
+    {
+      "method": "tactical.realtime.deploy_encounter",
+      "start": 6148,
+      "serial": 6,
+      "end": 9548.09999999404,
+      "viewStep": 0,
+      "authorityStep": 0,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 9698.299999982119,
+      "serial": 7,
+      "end": 9754.299999982119,
+      "viewStep": 0,
+      "authorityStep": 0,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 9877.5,
+      "serial": 8,
+      "end": 9919.5,
+      "viewStep": 0,
+      "authorityStep": 0,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 9967.59999999404,
+      "serial": 9,
+      "end": 10010.699999988079,
+      "viewStep": 0,
+      "authorityStep": 0,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10034,
+      "serial": 10,
+      "end": 10072.299999982119,
+      "viewStep": 0,
+      "authorityStep": 0,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10118.40000000596,
+      "serial": 11,
+      "end": 10163.5,
+      "viewStep": 0,
+      "authorityStep": 0,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10176.59999999404,
+      "serial": 12,
+      "end": 10217.199999988079,
+      "viewStep": 0,
+      "authorityStep": 0,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10235.09999999404,
+      "serial": 13,
+      "end": 10278.699999988079,
+      "viewStep": 0,
+      "authorityStep": 0,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10302.699999988079,
+      "serial": 14,
+      "end": 10342.40000000596,
+      "viewStep": 0,
+      "authorityStep": 0,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.resume",
+      "start": 10367.699999988079,
+      "serial": 15,
+      "end": 10407,
+      "viewStep": 0,
+      "authorityStep": 0,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10436.699999988079,
+      "serial": 16,
+      "end": 10503.799999982119,
+      "viewStep": 0,
+      "authorityStep": 3,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10521,
+      "serial": 17,
+      "end": 10580.09999999404,
+      "viewStep": 9,
+      "authorityStep": 9,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10594.699999988079,
+      "serial": 18,
+      "end": 10648.59999999404,
+      "viewStep": 9,
+      "authorityStep": 13,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10662,
+      "serial": 19,
+      "end": 10717.40000000596,
+      "viewStep": 13,
+      "authorityStep": 17,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10772.59999999404,
+      "serial": 20,
+      "end": 10835.199999988079,
+      "viewStep": 22,
+      "authorityStep": 23,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10847.90000000596,
+      "serial": 21,
+      "end": 10902.90000000596,
+      "viewStep": 27,
+      "authorityStep": 28,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10915.59999999404,
+      "serial": 22,
+      "end": 10973.199999988079,
+      "viewStep": 31,
+      "authorityStep": 32,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 10986.59999999404,
+      "serial": 23,
+      "end": 11048.09999999404,
+      "viewStep": 35,
+      "authorityStep": 37,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 11061.40000000596,
+      "serial": 24,
+      "end": 11115.299999982119,
+      "viewStep": 40,
+      "authorityStep": 41,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 11128.90000000596,
+      "serial": 25,
+      "end": 11189.09999999404,
+      "viewStep": 45,
+      "authorityStep": 45,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 11192.5,
+      "serial": 26,
+      "end": 11255.199999988079,
+      "viewStep": 45,
+      "authorityStep": 49,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 11310,
+      "serial": 27,
+      "end": 11380.299999982119,
+      "viewStep": 55,
+      "authorityStep": 55,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 11393.5,
+      "serial": 28,
+      "end": 11463.40000000596,
+      "viewStep": 59,
+      "authorityStep": 61,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 11510.09999999404,
+      "serial": 29,
+      "end": 11575.199999988079,
+      "viewStep": 68,
+      "authorityStep": 68,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 11587.90000000596,
+      "serial": 30,
+      "end": 11657.299999982119,
+      "viewStep": 73,
+      "authorityStep": 73,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 11710.90000000596,
+      "serial": 31,
+      "end": 11794.799999982119,
+      "viewStep": 78,
+      "authorityStep": 80,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 11811.299999982119,
+      "serial": 32,
+      "end": 11894.299999982119,
+      "viewStep": 82,
+      "authorityStep": 86,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 11915.40000000596,
+      "serial": 33,
+      "end": 11985.799999982119,
+      "viewStep": 92,
+      "authorityStep": 92,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 11986.09999999404,
+      "serial": 34,
+      "end": 12068.40000000596,
+      "viewStep": 97,
+      "authorityStep": 97,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 12068.90000000596,
+      "serial": 35,
+      "end": 12091.199999988079
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 12091.199999988079,
+      "serial": 36,
+      "end": 12166.90000000596,
+      "viewStep": 101,
+      "authorityStep": 102,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 12190.199999988079,
+      "serial": 37,
+      "end": 12275.09999999404,
+      "viewStep": 106,
+      "authorityStep": 109,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 12314.199999988079,
+      "serial": 38,
+      "end": 12412,
+      "viewStep": 115,
+      "authorityStep": 116,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 12450,
+      "serial": 39,
+      "end": 12560.799999982119,
+      "viewStep": 125,
+      "authorityStep": 125,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 12587.299999982119,
+      "serial": 40,
+      "end": 12681.90000000596,
+      "viewStep": 130,
+      "authorityStep": 133,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 12714.299999982119,
+      "serial": 41,
+      "end": 12809.199999988079,
+      "viewStep": 139,
+      "authorityStep": 140,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 12849.40000000596,
+      "serial": 42,
+      "end": 12956.5,
+      "viewStep": 149,
+      "authorityStep": 149,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 12984.5,
+      "serial": 43,
+      "end": 13082.299999982119,
+      "viewStep": 154,
+      "authorityStep": 156,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 13118.5,
+      "serial": 44,
+      "end": 13222.699999988079,
+      "viewStep": 164,
+      "authorityStep": 165,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 13252.699999988079,
+      "serial": 45,
+      "end": 13345.699999988079,
+      "viewStep": 169,
+      "authorityStep": 173,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 13385.40000000596,
+      "serial": 46,
+      "end": 13500.40000000596,
+      "viewStep": 178,
+      "authorityStep": 180,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 13524.09999999404,
+      "serial": 47,
+      "end": 13633.5,
+      "viewStep": 187,
+      "authorityStep": 188,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 13664.90000000596,
+      "serial": 48,
+      "end": 13756.299999982119,
+      "viewStep": 197,
+      "authorityStep": 197,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 13756.59999999404,
+      "serial": 49,
+      "end": 13863.299999982119,
+      "viewStep": 201,
+      "authorityStep": 202,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 13863.799999982119,
+      "serial": 50
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 13880.59999999404,
+      "serial": 51,
+      "end": 13965.199999988079,
+      "viewStep": 206,
+      "authorityStep": 210,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 13999.799999982119,
+      "serial": 52,
+      "end": 14109.199999988079,
+      "viewStep": 216,
+      "authorityStep": 218,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 14128,
+      "serial": 53,
+      "end": 14237.299999982119,
+      "viewStep": 222,
+      "authorityStep": 226,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 14263.199999988079,
+      "serial": 54,
+      "end": 14345.799999982119,
+      "viewStep": 232,
+      "authorityStep": 233,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 14389.09999999404,
+      "serial": 55,
+      "end": 14469.799999982119,
+      "viewStep": 237,
+      "authorityStep": 240,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 14473.299999982119,
+      "serial": 56,
+      "end": 14593.59999999404,
+      "viewStep": 246,
+      "authorityStep": 247,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 14611.699999988079,
+      "serial": 57,
+      "end": 14701.59999999404,
+      "viewStep": 251,
+      "authorityStep": 253,
+      "speed": 1
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 14728.40000000596,
+      "serial": 58,
+      "end": 14812,
+      "viewStep": 255,
+      "authorityStep": 261,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 14860.09999999404,
+      "serial": 59,
+      "end": 14964,
+      "viewStep": 265,
+      "authorityStep": 266,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 14993.699999988079,
+      "serial": 60,
+      "end": 15083.699999988079,
+      "viewStep": 269,
+      "authorityStep": 271,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 15126.699999988079,
+      "serial": 61,
+      "end": 15226.299999982119,
+      "viewStep": 276,
+      "authorityStep": 277,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 15259.799999982119,
+      "serial": 62,
+      "end": 15334.699999988079,
+      "viewStep": 279,
+      "authorityStep": 282,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 15349.59999999404,
+      "serial": 63,
+      "end": 15443.90000000596,
+      "viewStep": 287,
+      "authorityStep": 287,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 15444.40000000596,
+      "serial": 64,
+      "end": 15514.40000000596,
+      "viewStep": 287,
+      "authorityStep": 290,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 15514.5,
+      "serial": 65,
+      "end": 15530.40000000596
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 15530.40000000596,
+      "serial": 66,
+      "end": 15612.199999988079,
+      "viewStep": 291,
+      "authorityStep": 294,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 15664.90000000596,
+      "serial": 67,
+      "end": 15757.5,
+      "viewStep": 298,
+      "authorityStep": 299,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 15798,
+      "serial": 68,
+      "end": 15908.699999988079,
+      "viewStep": 305,
+      "authorityStep": 305,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 15933.199999988079,
+      "serial": 69,
+      "end": 16037,
+      "viewStep": 309,
+      "authorityStep": 311,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 16068.199999988079,
+      "serial": 70,
+      "end": 16172,
+      "viewStep": 316,
+      "authorityStep": 317,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 16205,
+      "serial": 71,
+      "end": 16303,
+      "viewStep": 320,
+      "authorityStep": 323,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 16331.799999982119,
+      "serial": 72,
+      "end": 16437,
+      "viewStep": 327,
+      "authorityStep": 328,
+      "speed": 0.7
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 16467.90000000596,
+      "serial": 73,
+      "end": 16546.59999999404,
+      "viewStep": 331,
+      "authorityStep": 333,
+      "speed": 0.712
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 16560.29999998212,
+      "serial": 74,
+      "end": 16653.19999998808,
+      "viewStep": 334,
+      "authorityStep": 337,
+      "speed": 0.712
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 16671.90000000596,
+      "serial": 75,
+      "end": 16766.5,
+      "viewStep": 342,
+      "authorityStep": 342,
+      "speed": 0.725
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 16805,
+      "serial": 76,
+      "end": 16893.40000000596,
+      "viewStep": 345,
+      "authorityStep": 348,
+      "speed": 0.738
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 16938.59999999404,
+      "serial": 77,
+      "end": 17035.79999998212,
+      "viewStep": 353,
+      "authorityStep": 354,
+      "speed": 0.738
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 17069.59999999404,
+      "serial": 78,
+      "end": 17171.19999998808,
+      "viewStep": 357,
+      "authorityStep": 360,
+      "speed": 0.751
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 17171.79999998212,
+      "serial": 79,
+      "end": 17290,
+      "viewStep": 361,
+      "authorityStep": 364,
+      "speed": 0.751
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 17290.59999999404,
+      "serial": 80,
+      "end": 17320.90000000596
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 17320.90000000596,
+      "serial": 81,
+      "end": 17445.5,
+      "viewStep": 369,
+      "authorityStep": 371,
+      "speed": 0.751
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 17476.79999998212,
+      "serial": 82,
+      "end": 17615,
+      "viewStep": 377,
+      "authorityStep": 378,
+      "speed": 0.751
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 17637.09999999404,
+      "serial": 83,
+      "end": 17760.69999998808,
+      "viewStep": 384,
+      "authorityStep": 386,
+      "speed": 0.674
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 17781.69999998808,
+      "serial": 84,
+      "end": 17934.59999999404,
+      "viewStep": 391,
+      "authorityStep": 392,
+      "speed": 0.674
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 17954.79999998212,
+      "serial": 85,
+      "end": 18059.79999998212,
+      "viewStep": 395,
+      "authorityStep": 398,
+      "speed": 0.674
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 18087.29999998212,
+      "serial": 86,
+      "end": 18219.29999998212,
+      "viewStep": 402,
+      "authorityStep": 403,
+      "speed": 0.674
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 18243.19999998808,
+      "serial": 87,
+      "end": 18366.5,
+      "viewStep": 408,
+      "authorityStep": 410,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 18373.69999998808,
+      "serial": 88,
+      "end": 18479.40000000596,
+      "viewStep": 412,
+      "authorityStep": 414,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 18501.90000000596,
+      "serial": 89,
+      "end": 18638.59999999404,
+      "viewStep": 417,
+      "authorityStep": 418,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 18681.09999999404,
+      "serial": 90,
+      "end": 18799.29999998212,
+      "viewStep": 423,
+      "authorityStep": 425,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 18825.29999998212,
+      "serial": 91,
+      "end": 18954.09999999404,
+      "viewStep": 429,
+      "authorityStep": 430,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 18954.79999998212,
+      "serial": 92,
+      "end": 19053.19999998808,
+      "viewStep": 432,
+      "authorityStep": 434,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 19053.69999998808,
+      "serial": 93,
+      "end": 19069.59999999404
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 19069.59999999404,
+      "serial": 94,
+      "end": 19198,
+      "viewStep": 438,
+      "authorityStep": 438,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 19226.09999999404,
+      "serial": 95,
+      "end": 19340.29999998212,
+      "viewStep": 441,
+      "authorityStep": 443,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 19360.59999999404,
+      "serial": 96,
+      "end": 19496.59999999404,
+      "viewStep": 447,
+      "authorityStep": 447,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 19520.40000000596,
+      "serial": 97,
+      "end": 19665,
+      "viewStep": 450,
+      "authorityStep": 453,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 19693.79999998212,
+      "serial": 98,
+      "end": 19855.09999999404,
+      "viewStep": 457,
+      "authorityStep": 459,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 19873.29999998212,
+      "serial": 99,
+      "end": 20025.29999998212,
+      "viewStep": 463,
+      "authorityStep": 465,
+      "speed": 0.563
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 20046.90000000596,
+      "serial": 100,
+      "end": 20154.69999998808,
+      "viewStep": 469,
+      "authorityStep": 471,
+      "speed": 0.575
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 20176.19999998808,
+      "serial": 101,
+      "end": 20304.90000000596,
+      "viewStep": 475,
+      "authorityStep": 475,
+      "speed": 0.587
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 20325.40000000596,
+      "serial": 102,
+      "end": 20439.09999999404,
+      "viewStep": 478,
+      "authorityStep": 480,
+      "speed": 0.587
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 20461.40000000596,
+      "serial": 103,
+      "end": 20604.29999998212,
+      "viewStep": 485,
+      "authorityStep": 486,
+      "speed": 0.599
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 20638.19999998808,
+      "serial": 104,
+      "end": 20775.19999998808,
+      "viewStep": 491,
+      "authorityStep": 491,
+      "speed": 0.599
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 20776.09999999404,
+      "serial": 105,
+      "end": 20912.29999998212,
+      "viewStep": 494,
+      "authorityStep": 496,
+      "speed": 0.599
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 20913.29999998212,
+      "serial": 106,
+      "end": 20936.29999998212
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 20936.40000000596,
+      "serial": 107,
+      "end": 21075.90000000596,
+      "viewStep": 501,
+      "authorityStep": 503,
+      "speed": 0.599
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 21105.40000000596,
+      "serial": 108,
+      "end": 21246,
+      "viewStep": 507,
+      "authorityStep": 509,
+      "speed": 0.612
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 21267.19999998808,
+      "serial": 109,
+      "end": 21390.09999999404,
+      "viewStep": 511,
+      "authorityStep": 514,
+      "speed": 0.612
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 21425.59999999404,
+      "serial": 110,
+      "end": 21556.59999999404,
+      "viewStep": 519,
+      "authorityStep": 520,
+      "speed": 0.625
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 21576.69999998808,
+      "serial": 111,
+      "end": 21709.59999999404,
+      "viewStep": 525,
+      "authorityStep": 526,
+      "speed": 0.625
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 21731.09999999404,
+      "serial": 112,
+      "end": 21858.5,
+      "viewStep": 531,
+      "authorityStep": 532,
+      "speed": 0.638
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 21896.19999998808,
+      "serial": 113,
+      "end": 22049.59999999404,
+      "viewStep": 537,
+      "authorityStep": 538,
+      "speed": 0.651
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 22070.59999999404,
+      "serial": 114,
+      "end": 22198.19999998808,
+      "viewStep": 543,
+      "authorityStep": 545,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 22230.59999999404,
+      "serial": 115,
+      "end": 22356.59999999404,
+      "viewStep": 550,
+      "authorityStep": 550,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 22378.40000000596,
+      "serial": 116,
+      "end": 22504.79999998212,
+      "viewStep": 553,
+      "authorityStep": 555,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 22528.79999998212,
+      "serial": 117,
+      "end": 22645.79999998212,
+      "viewStep": 559,
+      "authorityStep": 560,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 22667.29999998212,
+      "serial": 118,
+      "end": 22796.79999998212,
+      "viewStep": 564,
+      "authorityStep": 564,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 22797.69999998808,
+      "serial": 119,
+      "end": 22898.40000000596,
+      "viewStep": 567,
+      "authorityStep": 568,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 22899.19999998808,
+      "serial": 120,
+      "end": 22926.19999998808
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 22926.29999998212,
+      "serial": 121,
+      "end": 23038.09999999404,
+      "viewStep": 572,
+      "authorityStep": 573,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 23056.29999998212,
+      "serial": 122,
+      "end": 23162,
+      "viewStep": 575,
+      "authorityStep": 576,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 23184.29999998212,
+      "serial": 123,
+      "end": 23278.69999998808,
+      "viewStep": 580,
+      "authorityStep": 581,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 23307,
+      "serial": 124,
+      "end": 23415.69999998808,
+      "viewStep": 583,
+      "authorityStep": 584,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 23444.40000000596,
+      "serial": 125,
+      "end": 23561.5,
+      "viewStep": 588,
+      "authorityStep": 589,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 23582.59999999404,
+      "serial": 126,
+      "end": 23694.29999998212,
+      "viewStep": 591,
+      "authorityStep": 593,
+      "speed": 0.536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 23720.40000000596,
+      "serial": 127,
+      "end": 23851.09999999404,
+      "viewStep": 597,
+      "authorityStep": 598,
+      "speed": 0.549
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 23873,
+      "serial": 128,
+      "end": 24013,
+      "viewStep": 603,
+      "authorityStep": 603,
+      "speed": 0.549
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 24043,
+      "serial": 129,
+      "end": 24158.69999998808,
+      "viewStep": 609,
+      "authorityStep": 609,
+      "speed": 0.562
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 24188.29999998212,
+      "serial": 130,
+      "end": 24287.90000000596,
+      "viewStep": 612,
+      "authorityStep": 613,
+      "speed": 0.574
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 24316.19999998808,
+      "serial": 131,
+      "end": 24471.90000000596,
+      "viewStep": 617,
+      "authorityStep": 618,
+      "speed": 0.574
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 24506.40000000596,
+      "serial": 132,
+      "end": 24615.09999999404,
+      "viewStep": 623,
+      "authorityStep": 624,
+      "speed": 0.587
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 24616,
+      "serial": 133,
+      "end": 24761.59999999404,
+      "viewStep": 629,
+      "authorityStep": 629,
+      "speed": 0.599
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 24762.5,
+      "serial": 134,
+      "end": 24783.59999999404
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 24783.59999999404,
+      "serial": 135,
+      "end": 24889.79999998212,
+      "viewStep": 632,
+      "authorityStep": 634,
+      "speed": 0.611
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 24920.19999998808,
+      "serial": 136,
+      "end": 25026.19999998808,
+      "viewStep": 639,
+      "authorityStep": 640,
+      "speed": 0.611
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 25055,
+      "serial": 137,
+      "end": 25182.09999999404,
+      "viewStep": 642,
+      "authorityStep": 644,
+      "speed": 0.623
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 25203.19999998808,
+      "serial": 138,
+      "end": 25355.29999998212,
+      "viewStep": 649,
+      "authorityStep": 650,
+      "speed": 0.635
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 25364.90000000596,
+      "serial": 139,
+      "end": 25482.5,
+      "viewStep": 655,
+      "authorityStep": 656,
+      "speed": 0.635
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 25515.09999999404,
+      "serial": 140,
+      "end": 25636.90000000596,
+      "viewStep": 661,
+      "authorityStep": 662,
+      "speed": 0.635
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 25661.90000000596,
+      "serial": 141,
+      "end": 25811.09999999404,
+      "viewStep": 667,
+      "authorityStep": 669,
+      "speed": 0.647
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 25846,
+      "serial": 142,
+      "end": 25967.19999998808,
+      "viewStep": 673,
+      "authorityStep": 675,
+      "speed": 0.66
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 25994.09999999404,
+      "serial": 143,
+      "end": 26115,
+      "viewStep": 679,
+      "authorityStep": 681,
+      "speed": 0.66
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 26136.09999999404,
+      "serial": 144,
+      "end": 26234.19999998808,
+      "viewStep": 686,
+      "authorityStep": 687,
+      "speed": 0.673
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 26268.29999998212,
+      "serial": 145,
+      "end": 26402.09999999404,
+      "viewStep": 690,
+      "authorityStep": 692,
+      "speed": 0.685
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 26402.69999998808,
+      "serial": 146,
+      "end": 26513.40000000596,
+      "viewStep": 696,
+      "authorityStep": 697,
+      "speed": 0.685
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 26514.19999998808,
+      "serial": 147,
+      "end": 26536
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 26536,
+      "serial": 148,
+      "end": 26664.90000000596,
+      "viewStep": 702,
+      "authorityStep": 703,
+      "speed": 0.697
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 26686,
+      "serial": 149,
+      "end": 26801.29999998212,
+      "viewStep": 706,
+      "authorityStep": 709,
+      "speed": 0.709
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 26822.5,
+      "serial": 150,
+      "end": 26938.79999998212,
+      "viewStep": 714,
+      "authorityStep": 715,
+      "speed": 0.709
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 26960.79999998212,
+      "serial": 151,
+      "end": 27088.19999998808,
+      "viewStep": 721,
+      "authorityStep": 721,
+      "speed": 0.722
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 27120.90000000596,
+      "serial": 152,
+      "end": 27243.90000000596,
+      "viewStep": 727,
+      "authorityStep": 728,
+      "speed": 0.735
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 27268.40000000596,
+      "serial": 153,
+      "end": 27372,
+      "viewStep": 731,
+      "authorityStep": 734,
+      "speed": 0.747
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 27402.09999999404,
+      "serial": 154,
+      "end": 27521.40000000596,
+      "viewStep": 739,
+      "authorityStep": 740,
+      "speed": 0.747
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 27542.90000000596,
+      "serial": 155,
+      "end": 27670.40000000596,
+      "viewStep": 746,
+      "authorityStep": 747,
+      "speed": 0.759
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 27693.79999998212,
+      "serial": 156,
+      "end": 27805.09999999404,
+      "viewStep": 750,
+      "authorityStep": 754,
+      "speed": 0.771
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 27828.19999998808,
+      "serial": 157,
+      "end": 27948.69999998808,
+      "viewStep": 758,
+      "authorityStep": 760,
+      "speed": 0.771
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 27990.40000000596,
+      "serial": 158,
+      "end": 28112.69999998808,
+      "viewStep": 766,
+      "authorityStep": 768,
+      "speed": 0.771
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 28140.69999998808,
+      "serial": 159,
+      "end": 28255.29999998212,
+      "viewStep": 774,
+      "authorityStep": 775,
+      "speed": 0.783
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 28284.19999998808,
+      "serial": 160,
+      "end": 28399.5,
+      "viewStep": 778,
+      "authorityStep": 781,
+      "speed": 0.796
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 28400,
+      "serial": 161,
+      "end": 28421.5
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 28421.59999999404,
+      "serial": 162,
+      "end": 28545.40000000596,
+      "viewStep": 786,
+      "authorityStep": 787,
+      "speed": 0.796
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 28565,
+      "serial": 163,
+      "end": 28692.5,
+      "viewStep": 794,
+      "authorityStep": 794,
+      "speed": 0.808
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 28727.90000000596,
+      "serial": 164,
+      "end": 28860.09999999404,
+      "viewStep": 802,
+      "authorityStep": 803,
+      "speed": 0.808
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 28881.29999998212,
+      "serial": 165,
+      "end": 29022.79999998212,
+      "viewStep": 810,
+      "authorityStep": 811,
+      "speed": 0.82
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 29029.90000000596,
+      "serial": 166,
+      "end": 29168.69999998808,
+      "viewStep": 814,
+      "authorityStep": 818,
+      "speed": 0.82
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 29200.69999998808,
+      "serial": 167,
+      "end": 29337.5,
+      "viewStep": 824,
+      "authorityStep": 826,
+      "speed": 0.82
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 29360.19999998808,
+      "serial": 168,
+      "end": 29494.59999999404,
+      "viewStep": 833,
+      "authorityStep": 834,
+      "speed": 0.742
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 29533.29999998212,
+      "serial": 169,
+      "end": 29663.59999999404,
+      "viewStep": 840,
+      "authorityStep": 841,
+      "speed": 0.742
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 29684.59999999404,
+      "serial": 170,
+      "end": 29797,
+      "viewStep": 844,
+      "authorityStep": 847,
+      "speed": 0.742
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 29819.09999999404,
+      "serial": 171,
+      "end": 29943.90000000596,
+      "viewStep": 853,
+      "authorityStep": 854,
+      "speed": 0.64
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 29968.29999998212,
+      "serial": 172,
+      "end": 30097.59999999404,
+      "viewStep": 859,
+      "authorityStep": 859,
+      "speed": 0.64
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 30098.09999999404,
+      "serial": 173,
+      "end": 30183.29999998212,
+      "viewStep": 863,
+      "authorityStep": 864,
+      "speed": 0.64
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 30183.69999998808,
+      "serial": 174,
+      "end": 30199.29999998212
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 30199.29999998212,
+      "serial": 175,
+      "end": 30284.40000000596,
+      "viewStep": 866,
+      "authorityStep": 867,
+      "speed": 0.64
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 30300.29999998212,
+      "serial": 176,
+      "end": 30390.69999998808,
+      "viewStep": 869,
+      "authorityStep": 872,
+      "speed": 0.64
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 30413.59999999404,
+      "serial": 177,
+      "end": 30515.09999999404,
+      "viewStep": 875,
+      "authorityStep": 876,
+      "speed": 0.64
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 30535.59999999404,
+      "serial": 178,
+      "end": 30626.19999998808,
+      "viewStep": 878,
+      "authorityStep": 880,
+      "speed": 0.64
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 30674.09999999404,
+      "serial": 179,
+      "end": 30847.19999998808,
+      "viewStep": 885,
+      "authorityStep": 887,
+      "speed": 0.64
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 30880.40000000596,
+      "serial": 180,
+      "end": 31048.29999998212,
+      "viewStep": 892,
+      "authorityStep": 894,
+      "speed": 0.64
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 31080,
+      "serial": 181,
+      "end": 31244.79999998212,
+      "viewStep": 901,
+      "authorityStep": 902,
+      "speed": 0.64
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 31276.09999999404,
+      "serial": 182,
+      "end": 31428.79999998212,
+      "viewStep": 907,
+      "authorityStep": 909,
+      "speed": 0.64
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 31445.90000000596,
+      "serial": 183,
+      "end": 31591.5,
+      "viewStep": 914,
+      "authorityStep": 915,
+      "speed": 0.654
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 31622.5,
+      "serial": 184,
+      "end": 31765.40000000596,
+      "viewStep": 921,
+      "authorityStep": 923,
+      "speed": 0.654
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 31785.5,
+      "serial": 185,
+      "end": 31925.79999998212,
+      "viewStep": 927,
+      "authorityStep": 929,
+      "speed": 0.654
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 31960.19999998808,
+      "serial": 186,
+      "end": 32111.40000000596,
+      "viewStep": 934,
+      "authorityStep": 936,
+      "speed": 0.667
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 32112.29999998212,
+      "serial": 187,
+      "end": 32134.79999998212
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 32134.79999998212,
+      "serial": 188,
+      "end": 32289.09999999404,
+      "viewStep": 943,
+      "authorityStep": 943,
+      "speed": 0.679
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 32307.79999998212,
+      "serial": 189,
+      "end": 32476.79999998212,
+      "viewStep": 950,
+      "authorityStep": 950,
+      "speed": 0.614
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 32499.40000000596,
+      "serial": 190,
+      "end": 32653.59999999404,
+      "viewStep": 956,
+      "authorityStep": 957,
+      "speed": 0.614
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 32684.59999999404,
+      "serial": 191,
+      "end": 32852.69999998808,
+      "viewStep": 963,
+      "authorityStep": 964,
+      "speed": 0.532
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 32884.29999998212,
+      "serial": 192,
+      "end": 33033.40000000596,
+      "viewStep": 969,
+      "authorityStep": 970,
+      "speed": 0.532
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 33054,
+      "serial": 193,
+      "end": 33200.59999999404,
+      "viewStep": 975,
+      "authorityStep": 975,
+      "speed": 0.532
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 33230.29999998212,
+      "serial": 194,
+      "end": 33383.69999998808,
+      "viewStep": 980,
+      "authorityStep": 981,
+      "speed": 0.532
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 33392,
+      "serial": 195,
+      "end": 33557.40000000596,
+      "viewStep": 985,
+      "authorityStep": 987,
+      "speed": 0.532
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 33587.69999998808,
+      "serial": 196,
+      "end": 33755.5,
+      "viewStep": 991,
+      "authorityStep": 993,
+      "speed": 0.532
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 33756.69999998808,
+      "serial": 197,
+      "end": 33893.40000000596,
+      "viewStep": 997,
+      "authorityStep": 998,
+      "speed": 0.532
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 33894.09999999404,
+      "serial": 198,
+      "end": 33927.19999998808
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 33927.19999998808,
+      "serial": 199,
+      "end": 34086.09999999404,
+      "viewStep": 1003,
+      "authorityStep": 1003,
+      "speed": 0.532
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 34107.69999998808,
+      "serial": 200,
+      "end": 34274.19999998808,
+      "viewStep": 1008,
+      "authorityStep": 1009,
+      "speed": 0.532
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 34303.09999999404,
+      "serial": 201,
+      "end": 34492.79999998212,
+      "viewStep": 1013,
+      "authorityStep": 1015,
+      "speed": 0.532
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 34520.69999998808,
+      "serial": 202,
+      "end": 34676.5,
+      "viewStep": 1020,
+      "authorityStep": 1022,
+      "speed": 0.532
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 34712,
+      "serial": 203,
+      "end": 34908.29999998212,
+      "viewStep": 1028,
+      "authorityStep": 1028,
+      "speed": 0.402
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 34945.90000000596,
+      "serial": 204,
+      "end": 35103.79999998212,
+      "viewStep": 1032,
+      "authorityStep": 1033,
+      "speed": 0.402
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 35126.29999998212,
+      "serial": 205,
+      "end": 35258.40000000596,
+      "viewStep": 1037,
+      "authorityStep": 1038,
+      "speed": 0.402
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 35298.79999998212,
+      "serial": 206,
+      "end": 35475.19999998808,
+      "viewStep": 1041,
+      "authorityStep": 1042,
+      "speed": 0.402
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 35514.79999998212,
+      "serial": 207,
+      "end": 35675.5,
+      "viewStep": 1047,
+      "authorityStep": 1047,
+      "speed": 0.402
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 35690.5,
+      "serial": 208,
+      "end": 35874.19999998808,
+      "viewStep": 1051,
+      "authorityStep": 1051,
+      "speed": 0.402
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 35875.79999998212,
+      "serial": 209,
+      "end": 36055.90000000596,
+      "viewStep": 1054,
+      "authorityStep": 1056,
+      "speed": 0.402
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 36058.19999998808,
+      "serial": 210,
+      "end": 36083.5
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 36083.59999999404,
+      "serial": 211,
+      "end": 36298.29999998212,
+      "viewStep": 1061,
+      "authorityStep": 1061,
+      "speed": 0.402
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 36324.19999998808,
+      "serial": 212,
+      "end": 36520.19999998808,
+      "viewStep": 1065,
+      "authorityStep": 1067,
+      "speed": 0.416
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 36549.59999999404,
+      "serial": 213,
+      "end": 36693.79999998212,
+      "viewStep": 1070,
+      "authorityStep": 1072,
+      "speed": 0.427
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 36709.5,
+      "serial": 214,
+      "end": 36888.79999998212,
+      "viewStep": 1075,
+      "authorityStep": 1076,
+      "speed": 0.44
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 36913.09999999404,
+      "serial": 215,
+      "end": 37096.59999999404,
+      "viewStep": 1082,
+      "authorityStep": 1082,
+      "speed": 0.44
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 37127.29999998212,
+      "serial": 216,
+      "end": 37272.40000000596,
+      "viewStep": 1086,
+      "authorityStep": 1087,
+      "speed": 0.44
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 37300.29999998212,
+      "serial": 217,
+      "end": 37480.29999998212,
+      "viewStep": 1091,
+      "authorityStep": 1092,
+      "speed": 0.453
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 37507.79999998212,
+      "serial": 218,
+      "end": 37691.79999998212,
+      "viewStep": 1096,
+      "authorityStep": 1098,
+      "speed": 0.453
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 37693.29999998212,
+      "serial": 219,
+      "end": 37836,
+      "viewStep": 1101,
+      "authorityStep": 1103,
+      "speed": 0.466
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 37837.90000000596,
+      "serial": 220,
+      "end": 37879.09999999404
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 37879.09999999404,
+      "serial": 221,
+      "end": 38053,
+      "viewStep": 1106,
+      "authorityStep": 1108,
+      "speed": 0.478
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 38077.19999998808,
+      "serial": 222,
+      "end": 38262.90000000596,
+      "viewStep": 1114,
+      "authorityStep": 1114,
+      "speed": 0.49
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 38287.79999998212,
+      "serial": 223,
+      "end": 38479.79999998212,
+      "viewStep": 1120,
+      "authorityStep": 1120,
+      "speed": 0.49
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 38512.29999998212,
+      "serial": 224,
+      "end": 38668,
+      "viewStep": 1125,
+      "authorityStep": 1127,
+      "speed": 0.49
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 38696.69999998808,
+      "serial": 225,
+      "end": 38839.69999998808,
+      "viewStep": 1130,
+      "authorityStep": 1132,
+      "speed": 0.41
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 38860,
+      "serial": 226,
+      "end": 38991.19999998808,
+      "viewStep": 1135,
+      "authorityStep": 1135,
+      "speed": 0.41
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 39012.09999999404,
+      "serial": 227,
+      "end": 39144.09999999404,
+      "viewStep": 1139,
+      "authorityStep": 1139,
+      "speed": 0.41
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 39180.29999998212,
+      "serial": 228,
+      "end": 39319.59999999404,
+      "viewStep": 1143,
+      "authorityStep": 1143,
+      "speed": 0.41
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 39345.90000000596,
+      "serial": 229,
+      "end": 39526.29999998212,
+      "viewStep": 1147,
+      "authorityStep": 1147,
+      "speed": 0.41
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 39527.90000000596,
+      "serial": 230,
+      "end": 39689.59999999404,
+      "viewStep": 1151,
+      "authorityStep": 1152,
+      "speed": 0.41
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 39690.79999998212,
+      "serial": 231,
+      "end": 39714.5
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 39714.5,
+      "serial": 232,
+      "end": 39935.90000000596,
+      "viewStep": 1157,
+      "authorityStep": 1157,
+      "speed": 0.41
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 39961.59999999404,
+      "serial": 233,
+      "end": 40198.5,
+      "viewStep": 1163,
+      "authorityStep": 1163,
+      "speed": 0.41
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 40222.90000000596,
+      "serial": 234,
+      "end": 40419.19999998808,
+      "viewStep": 1167,
+      "authorityStep": 1169,
+      "speed": 0.41
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 40443.40000000596,
+      "serial": 235,
+      "end": 40629.09999999404,
+      "viewStep": 1174,
+      "authorityStep": 1175,
+      "speed": 0.423
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 40639.09999999404,
+      "serial": 236,
+      "end": 40820.09999999404,
+      "viewStep": 1179,
+      "authorityStep": 1180,
+      "speed": 0.436
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 40847.90000000596,
+      "serial": 237,
+      "end": 41025.79999998212,
+      "viewStep": 1183,
+      "authorityStep": 1185,
+      "speed": 0.449
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 41060.69999998808,
+      "serial": 238,
+      "end": 41253.59999999404,
+      "viewStep": 1191,
+      "authorityStep": 1191,
+      "speed": 0.451
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 41277.90000000596,
+      "serial": 239,
+      "end": 41436.69999998808,
+      "viewStep": 1195,
+      "authorityStep": 1197,
+      "speed": 0.451
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 41437.59999999404,
+      "serial": 240,
+      "end": 41632,
+      "viewStep": 1200,
+      "authorityStep": 1202,
+      "speed": 0.463
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 41633.5,
+      "serial": 241,
+      "end": 41656.19999998808
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 41656.29999998212,
+      "serial": 242,
+      "end": 41816.5,
+      "viewStep": 1206,
+      "authorityStep": 1208,
+      "speed": 0.463
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 41845.09999999404,
+      "serial": 243,
+      "end": 42005.09999999404,
+      "viewStep": 1212,
+      "authorityStep": 1213,
+      "speed": 0.476
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 42033.69999998808,
+      "serial": 244,
+      "end": 42184.09999999404,
+      "viewStep": 1217,
+      "authorityStep": 1218,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 42213.59999999404,
+      "serial": 245,
+      "end": 42349.90000000596,
+      "viewStep": 1223,
+      "authorityStep": 1223,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 42366,
+      "serial": 246,
+      "end": 42483.09999999404,
+      "viewStep": 1228,
+      "authorityStep": 1228,
+      "speed": 0.496
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 42502.19999998808,
+      "serial": 247,
+      "end": 42614.5,
+      "viewStep": 1230,
+      "authorityStep": 1232,
+      "speed": 0.496
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 42633,
+      "serial": 248,
+      "end": 42770.5,
+      "viewStep": 1236,
+      "authorityStep": 1236,
+      "speed": 0.508
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 42804.59999999404,
+      "serial": 249,
+      "end": 42938.69999998808,
+      "viewStep": 1239,
+      "authorityStep": 1241,
+      "speed": 0.508
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 42964.09999999404,
+      "serial": 250,
+      "end": 43144.29999998212,
+      "viewStep": 1246,
+      "authorityStep": 1246,
+      "speed": 0.508
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 43145.29999998212,
+      "serial": 251,
+      "end": 43350.79999998212,
+      "viewStep": 1252,
+      "authorityStep": 1252,
+      "speed": 0.38
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 43352.09999999404,
+      "serial": 252,
+      "end": 43375.09999999404
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 43375.09999999404,
+      "serial": 253,
+      "end": 43539.19999998808,
+      "viewStep": 1257,
+      "authorityStep": 1257,
+      "speed": 0.325
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 43570.40000000596,
+      "serial": 254,
+      "end": 43748.09999999404,
+      "viewStep": 1261,
+      "authorityStep": 1261,
+      "speed": 0.325
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 43773.90000000596,
+      "serial": 255,
+      "end": 43951.69999998808,
+      "viewStep": 1264,
+      "authorityStep": 1265,
+      "speed": 0.325
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 43975,
+      "serial": 256,
+      "end": 44124,
+      "viewStep": 1268,
+      "authorityStep": 1269,
+      "speed": 0.325
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 44153.5,
+      "serial": 257,
+      "end": 44291.29999998212,
+      "viewStep": 1272,
+      "authorityStep": 1272,
+      "speed": 0.325
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 44314.29999998212,
+      "serial": 258,
+      "end": 44441.79999998212,
+      "viewStep": 1275,
+      "authorityStep": 1276,
+      "speed": 0.325
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 44475.5,
+      "serial": 259,
+      "end": 44606,
+      "viewStep": 1279,
+      "authorityStep": 1279,
+      "speed": 0.325
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 44623.79999998212,
+      "serial": 260,
+      "end": 44731.79999998212,
+      "viewStep": 1281,
+      "authorityStep": 1281,
+      "speed": 0.325
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 44751,
+      "serial": 261,
+      "end": 44872.19999998808,
+      "viewStep": 1283,
+      "authorityStep": 1284,
+      "speed": 0.325
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 44897.5,
+      "serial": 262,
+      "end": 45063.19999998808,
+      "viewStep": 1287,
+      "authorityStep": 1287,
+      "speed": 0.325
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 45064.90000000596,
+      "serial": 263,
+      "end": 45220.19999998808,
+      "viewStep": 1289,
+      "authorityStep": 1290,
+      "speed": 0.337
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 45221.59999999404,
+      "serial": 264,
+      "end": 45244.5
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 45244.59999999404,
+      "serial": 265,
+      "end": 45372.19999998808,
+      "viewStep": 1293,
+      "authorityStep": 1294,
+      "speed": 0.337
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 45379.59999999404,
+      "serial": 266,
+      "end": 45510.09999999404,
+      "viewStep": 1296,
+      "authorityStep": 1296,
+      "speed": 0.35
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 45544.79999998212,
+      "serial": 267,
+      "end": 45682.90000000596,
+      "viewStep": 1300,
+      "authorityStep": 1300,
+      "speed": 0.363
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 45702.59999999404,
+      "serial": 268,
+      "end": 45811.59999999404,
+      "viewStep": 1302,
+      "authorityStep": 1303,
+      "speed": 0.363
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 45830.59999999404,
+      "serial": 269,
+      "end": 45956.19999998808,
+      "viewStep": 1306,
+      "authorityStep": 1306,
+      "speed": 0.376
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 45975.69999998808,
+      "serial": 270,
+      "end": 46127.69999998808,
+      "viewStep": 1310,
+      "authorityStep": 1310,
+      "speed": 0.39
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 46155.19999998808,
+      "serial": 271,
+      "end": 46313.19999998808,
+      "viewStep": 1314,
+      "authorityStep": 1314,
+      "speed": 0.403
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 46356.19999998808,
+      "serial": 272,
+      "end": 46507.79999998212,
+      "viewStep": 1318,
+      "authorityStep": 1319,
+      "speed": 0.415
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 46529.19999998808,
+      "serial": 273,
+      "end": 46675.79999998212,
+      "viewStep": 1322,
+      "authorityStep": 1323,
+      "speed": 0.415
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 46678,
+      "serial": 274,
+      "end": 46847.90000000596,
+      "viewStep": 1327,
+      "authorityStep": 1327,
+      "speed": 0.427
+    },
+    {
+      "method": "tactical.realtime.control",
+      "start": 46850.40000000596,
+      "serial": 275,
+      "end": 46888.19999998808
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 46888.19999998808,
+      "serial": 276,
+      "end": 47071.09999999404,
+      "viewStep": 1331,
+      "authorityStep": 1332,
+      "speed": 0.439
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 47109.19999998808,
+      "serial": 277,
+      "end": 47295.59999999404,
+      "viewStep": 1336,
+      "authorityStep": 1338,
+      "speed": 0.44
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 47323.59999999404,
+      "serial": 278,
+      "end": 47506.90000000596,
+      "viewStep": 1343,
+      "authorityStep": 1343,
+      "speed": 0.363
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 47532.29999998212,
+      "serial": 279,
+      "end": 47716.09999999404,
+      "viewStep": 1347,
+      "authorityStep": 1348,
+      "speed": 0.363
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 47741.29999998212,
+      "serial": 280,
+      "end": 47900.40000000596,
+      "viewStep": 1351,
+      "authorityStep": 1352,
+      "speed": 0.363
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 47925.40000000596,
+      "serial": 281,
+      "end": 48081.90000000596,
+      "viewStep": 1355,
+      "authorityStep": 1356,
+      "speed": 0.363
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 48106.69999998808,
+      "serial": 282,
+      "end": 48269.69999998808,
+      "viewStep": 1359,
+      "authorityStep": 1360,
+      "speed": 0.363
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 48307.5,
+      "serial": 283,
+      "end": 48460.19999998808,
+      "viewStep": 1363,
+      "authorityStep": 1364,
+      "speed": 0.363
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 48492.29999998212,
+      "serial": 284,
+      "end": 48661.29999998212,
+      "viewStep": 1369,
+      "authorityStep": 1369,
+      "speed": 0.363
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 48696.5,
+      "serial": 285,
+      "end": 48821,
+      "viewStep": 1373,
+      "authorityStep": 1373,
+      "speed": 0.363
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 48841.29999998212,
+      "serial": 286,
+      "end": 48957.09999999404,
+      "viewStep": 1375,
+      "authorityStep": 1376,
+      "speed": 0.376
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 48975.69999998808,
+      "serial": 287,
+      "end": 49114,
+      "viewStep": 1379,
+      "authorityStep": 1379,
+      "speed": 0.388
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 49134.5,
+      "serial": 288,
+      "end": 49269.59999999404,
+      "viewStep": 1383,
+      "authorityStep": 1383,
+      "speed": 0.4
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 49300.19999998808,
+      "serial": 289,
+      "end": 49443,
+      "viewStep": 1387,
+      "authorityStep": 1387,
+      "speed": 0.4
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 49463,
+      "serial": 290,
+      "end": 49587.5,
+      "viewStep": 1389,
+      "authorityStep": 1391,
+      "speed": 0.412
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 49605.79999998212,
+      "serial": 291,
+      "end": 49754.09999999404,
+      "viewStep": 1394,
+      "authorityStep": 1395,
+      "speed": 0.424
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 49777.69999998808,
+      "serial": 292,
+      "end": 49908.19999998808,
+      "viewStep": 1398,
+      "authorityStep": 1399,
+      "speed": 0.437
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 49927.40000000596,
+      "serial": 293,
+      "end": 50052.29999998212,
+      "viewStep": 1402,
+      "authorityStep": 1403,
+      "speed": 0.437
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 50071.29999998212,
+      "serial": 294,
+      "end": 50199.09999999404,
+      "viewStep": 1404,
+      "authorityStep": 1407,
+      "speed": 0.449
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 50234.5,
+      "serial": 295,
+      "end": 50362.29999998212,
+      "viewStep": 1411,
+      "authorityStep": 1411,
+      "speed": 0.449
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 50381.29999998212,
+      "serial": 296,
+      "end": 50514.79999998212,
+      "viewStep": 1415,
+      "authorityStep": 1415,
+      "speed": 0.463
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 50535.19999998808,
+      "serial": 297,
+      "end": 50677.90000000596,
+      "viewStep": 1420,
+      "authorityStep": 1420,
+      "speed": 0.463
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 50705.69999998808,
+      "serial": 298,
+      "end": 50860.5,
+      "viewStep": 1424,
+      "authorityStep": 1425,
+      "speed": 0.465
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 50880.59999999404,
+      "serial": 299,
+      "end": 50984,
+      "viewStep": 1427,
+      "authorityStep": 1429,
+      "speed": 0.478
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 51003.69999998808,
+      "serial": 300,
+      "end": 51138.90000000596,
+      "viewStep": 1433,
+      "authorityStep": 1433,
+      "speed": 0.49
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 51171.90000000596,
+      "serial": 301,
+      "end": 51300.5,
+      "viewStep": 1437,
+      "authorityStep": 1438,
+      "speed": 0.49
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 51318.5,
+      "serial": 302,
+      "end": 51438.40000000596,
+      "viewStep": 1440,
+      "authorityStep": 1442,
+      "speed": 0.503
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 51454.5,
+      "serial": 303,
+      "end": 51577.29999998212,
+      "viewStep": 1445,
+      "authorityStep": 1446,
+      "speed": 0.515
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 51594.59999999404,
+      "serial": 304,
+      "end": 51702.09999999404,
+      "viewStep": 1448,
+      "authorityStep": 1450,
+      "speed": 0.515
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 51726,
+      "serial": 305,
+      "end": 51871.5,
+      "viewStep": 1454,
+      "authorityStep": 1455,
+      "speed": 0.528
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 51892.5,
+      "serial": 306,
+      "end": 52055,
+      "viewStep": 1460,
+      "authorityStep": 1460,
+      "speed": 0.54
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 52081.19999998808,
+      "serial": 307,
+      "end": 52244.40000000596,
+      "viewStep": 1466,
+      "authorityStep": 1466,
+      "speed": 0.553
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 52268.29999998212,
+      "serial": 308,
+      "end": 52412.19999998808,
+      "viewStep": 1472,
+      "authorityStep": 1472,
+      "speed": 0.565
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 52448.40000000596,
+      "serial": 309,
+      "end": 52605,
+      "viewStep": 1477,
+      "authorityStep": 1478,
+      "speed": 0.565
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 52629.79999998212,
+      "serial": 310,
+      "end": 52794.5,
+      "viewStep": 1484,
+      "authorityStep": 1484,
+      "speed": 0.565
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 52821.69999998808,
+      "serial": 311,
+      "end": 52962.5,
+      "viewStep": 1491,
+      "authorityStep": 1491,
+      "speed": 0.577
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 52990.5,
+      "serial": 312,
+      "end": 53189.29999998212,
+      "viewStep": 1497,
+      "authorityStep": 1497,
+      "speed": 0.577
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 53211.79999998212,
+      "serial": 313,
+      "end": 53363.40000000596,
+      "viewStep": 1503,
+      "authorityStep": 1504,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 53397.59999999404,
+      "serial": 314,
+      "end": 53587.79999998212,
+      "viewStep": 1509,
+      "authorityStep": 1510,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 53610.40000000596,
+      "serial": 315,
+      "end": 53774.29999998212,
+      "viewStep": 1516,
+      "authorityStep": 1516,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 53801.09999999404,
+      "serial": 316,
+      "end": 53917.5,
+      "viewStep": 1519,
+      "authorityStep": 1521,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 53938.5,
+      "serial": 317,
+      "end": 54061.69999998808,
+      "viewStep": 1525,
+      "authorityStep": 1525,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 54078.59999999404,
+      "serial": 318,
+      "end": 54179.90000000596,
+      "viewStep": 1528,
+      "authorityStep": 1529,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 54200,
+      "serial": 319,
+      "end": 54309.09999999404,
+      "viewStep": 1533,
+      "authorityStep": 1533,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 54331.29999998212,
+      "serial": 320,
+      "end": 54438.79999998212,
+      "viewStep": 1535,
+      "authorityStep": 1537,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 54461.59999999404,
+      "serial": 321,
+      "end": 54591.19999998808,
+      "viewStep": 1540,
+      "authorityStep": 1541,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 54607.5,
+      "serial": 322,
+      "end": 54741.29999998212,
+      "viewStep": 1545,
+      "authorityStep": 1545,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 54763.59999999404,
+      "serial": 323,
+      "end": 54896,
+      "viewStep": 1547,
+      "authorityStep": 1549,
+      "speed": 0.488
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 54923.79999998212,
+      "serial": 324,
+      "end": 55054,
+      "viewStep": 1553,
+      "authorityStep": 1554,
+      "speed": 0.501
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 55075.59999999404,
+      "serial": 325,
+      "end": 55209.19999998808,
+      "viewStep": 1559,
+      "authorityStep": 1559,
+      "speed": 0.515
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 55230.90000000596,
+      "serial": 326,
+      "end": 55404.5,
+      "viewStep": 1564,
+      "authorityStep": 1564,
+      "speed": 0.528
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 55426.5,
+      "serial": 327,
+      "end": 55851,
+      "viewStep": 1570,
+      "authorityStep": 1570,
+      "speed": 0.528
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 55872.90000000596,
+      "serial": 328,
+      "end": 56057.69999998808,
+      "viewStep": 1582,
+      "authorityStep": 1584,
+      "speed": 0.565
+    },
+    {
+      "method": "tactical.realtime.pause",
+      "start": 56059.09999999404,
+      "serial": 329,
+      "end": 56343.40000000596,
+      "viewStep": 1591,
+      "authorityStep": 1591,
+      "speed": 0.578
+    },
+    {
+      "method": "tactical.realtime.read",
+      "start": 56383.90000000596,
+      "serial": 330
+    }
+  ],
+  "deliveries": [
+    {
+      "at": 10354.59999999404,
+      "step": 0,
+      "rate": 1,
+      "paused": true
+    },
+    {
+      "at": 10421.09999999404,
+      "step": 0,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 10524.09999999404,
+      "step": 0,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 10598.299999982119,
+      "step": 9,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 10664.699999988079,
+      "step": 9,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 10733.40000000596,
+      "step": 13,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 10850.5,
+      "step": 22,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 10918.09999999404,
+      "step": 27,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 10989.59999999404,
+      "step": 31,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 11064.09999999404,
+      "step": 35,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 11131.299999982119,
+      "step": 40,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 11205.199999988079,
+      "step": 45,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 11270,
+      "step": 45,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 11396.299999982119,
+      "step": 55,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 11478.299999982119,
+      "step": 59,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 11590.40000000596,
+      "step": 68,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 11676.699999988079,
+      "step": 73,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 11814.40000000596,
+      "step": 78,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 11913.5,
+      "step": 82,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 12004.09999999404,
+      "step": 92,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 12091.699999988079,
+      "step": 97,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 12187.90000000596,
+      "step": 101,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 12300.199999988079,
+      "step": 106,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 12436.40000000596,
+      "step": 115,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 12581.799999982119,
+      "step": 125,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 12699.59999999404,
+      "step": 130,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 12829.90000000596,
+      "step": 139,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 12979.299999982119,
+      "step": 149,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 13098.90000000596,
+      "step": 154,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 13246.699999988079,
+      "step": 164,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 13366.199999988079,
+      "step": 169,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 13521.40000000596,
+      "step": 178,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 13662.299999982119,
+      "step": 187,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 13778.09999999404,
+      "step": 197,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 13836.90000000596,
+      "step": 197,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 13837,
+      "step": 197,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 13880.90000000596,
+      "step": 201,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 13985,
+      "step": 206,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 13985.09999999404,
+      "step": 206,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 14126,
+      "step": 216,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 14260.40000000596,
+      "step": 222,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 14363,
+      "step": 232,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 14486.09999999404,
+      "step": 237,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 14615.699999988079,
+      "step": 246,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 14723.59999999404,
+      "step": 251,
+      "rate": 1,
+      "paused": false
+    },
+    {
+      "at": 14834.5,
+      "step": 255,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 14982.799999982119,
+      "step": 265,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 15101.09999999404,
+      "step": 269,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 15243.5,
+      "step": 276,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 15353.40000000596,
+      "step": 279,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 15468.5,
+      "step": 287,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 15530.699999988079,
+      "step": 287,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 15627.799999982119,
+      "step": 291,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 15777.699999988079,
+      "step": 298,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 15928.299999982119,
+      "step": 305,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 16057.199999988079,
+      "step": 309,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 16191.59999999404,
+      "step": 316,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 16323.09999999404,
+      "step": 320,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 16455,
+      "step": 327,
+      "rate": 0.7,
+      "paused": false
+    },
+    {
+      "at": 16563.5,
+      "step": 331,
+      "rate": 0.712,
+      "paused": false
+    },
+    {
+      "at": 16669.5,
+      "step": 334,
+      "rate": 0.712,
+      "paused": false
+    },
+    {
+      "at": 16785,
+      "step": 342,
+      "rate": 0.725,
+      "paused": false
+    },
+    {
+      "at": 16911.90000000596,
+      "step": 345,
+      "rate": 0.738,
+      "paused": false
+    },
+    {
+      "at": 17057.90000000596,
+      "step": 353,
+      "rate": 0.738,
+      "paused": false
+    },
+    {
+      "at": 17196.79999998212,
+      "step": 357,
+      "rate": 0.751,
+      "paused": false
+    },
+    {
+      "at": 17307.59999999404,
+      "step": 361,
+      "rate": 0.751,
+      "paused": false
+    },
+    {
+      "at": 17307.79999998212,
+      "step": 361,
+      "rate": 0.751,
+      "paused": false
+    },
+    {
+      "at": 17363.59999999404,
+      "step": 361,
+      "rate": 0.751,
+      "paused": false
+    },
+    {
+      "at": 17363.79999998212,
+      "step": 361,
+      "rate": 0.751,
+      "paused": false
+    },
+    {
+      "at": 17469.59999999404,
+      "step": 369,
+      "rate": 0.751,
+      "paused": false
+    },
+    {
+      "at": 17640.09999999404,
+      "step": 377,
+      "rate": 0.751,
+      "paused": false
+    },
+    {
+      "at": 17785.79999998212,
+      "step": 384,
+      "rate": 0.674,
+      "paused": false
+    },
+    {
+      "at": 17958.09999999404,
+      "step": 391,
+      "rate": 0.674,
+      "paused": false
+    },
+    {
+      "at": 18084,
+      "step": 395,
+      "rate": 0.674,
+      "paused": false
+    },
+    {
+      "at": 18247.59999999404,
+      "step": 402,
+      "rate": 0.674,
+      "paused": false
+    },
+    {
+      "at": 18389.09999999404,
+      "step": 408,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 18506.40000000596,
+      "step": 412,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 18664.29999998212,
+      "step": 417,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 18829.19999998808,
+      "step": 423,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 18979.40000000596,
+      "step": 429,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 19074,
+      "step": 432,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 19222.69999998808,
+      "step": 438,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 19365.5,
+      "step": 441,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 19526.29999998212,
+      "step": 447,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 19690.5,
+      "step": 450,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 19892.69999998808,
+      "step": 457,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 20051.09999999404,
+      "step": 463,
+      "rate": 0.563,
+      "paused": false
+    },
+    {
+      "at": 20180.19999998808,
+      "step": 469,
+      "rate": 0.575,
+      "paused": false
+    },
+    {
+      "at": 20329.29999998212,
+      "step": 475,
+      "rate": 0.587,
+      "paused": false
+    },
+    {
+      "at": 20466.40000000596,
+      "step": 478,
+      "rate": 0.587,
+      "paused": false
+    },
+    {
+      "at": 20634.09999999404,
+      "step": 485,
+      "rate": 0.599,
+      "paused": false
+    },
+    {
+      "at": 20806.79999998212,
+      "step": 491,
+      "rate": 0.599,
+      "paused": false
+    },
+    {
+      "at": 20941.69999998808,
+      "step": 494,
+      "rate": 0.599,
+      "paused": false
+    },
+    {
+      "at": 20978.19999998808,
+      "step": 494,
+      "rate": 0.599,
+      "paused": false
+    },
+    {
+      "at": 20978.29999998212,
+      "step": 494,
+      "rate": 0.599,
+      "paused": false
+    },
+    {
+      "at": 21110.40000000596,
+      "step": 501,
+      "rate": 0.599,
+      "paused": false
+    },
+    {
+      "at": 21138.69999998808,
+      "step": 501,
+      "rate": 0.599,
+      "paused": false
+    },
+    {
+      "at": 21138.90000000596,
+      "step": 501,
+      "rate": 0.599,
+      "paused": false
+    },
+    {
+      "at": 21270.90000000596,
+      "step": 507,
+      "rate": 0.612,
+      "paused": false
+    },
+    {
+      "at": 21412.59999999404,
+      "step": 511,
+      "rate": 0.612,
+      "paused": false
+    },
+    {
+      "at": 21580.29999998212,
+      "step": 519,
+      "rate": 0.625,
+      "paused": false
+    },
+    {
+      "at": 21734.59999999404,
+      "step": 525,
+      "rate": 0.625,
+      "paused": false
+    },
+    {
+      "at": 21884.19999998808,
+      "step": 531,
+      "rate": 0.638,
+      "paused": false
+    },
+    {
+      "at": 22074.59999999404,
+      "step": 537,
+      "rate": 0.651,
+      "paused": false
+    },
+    {
+      "at": 22221.79999998212,
+      "step": 543,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 22382.09999999404,
+      "step": 550,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 22535.59999999404,
+      "step": 553,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 22672.5,
+      "step": 559,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 22824.5,
+      "step": 564,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 22926.79999998212,
+      "step": 567,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 23061.19999998808,
+      "step": 572,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 23189.09999999404,
+      "step": 575,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 23303.69999998808,
+      "step": 580,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 23441.40000000596,
+      "step": 583,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 23590.79999998212,
+      "step": 588,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 23720.69999998808,
+      "step": 591,
+      "rate": 0.536,
+      "paused": false
+    },
+    {
+      "at": 23877.09999999404,
+      "step": 597,
+      "rate": 0.549,
+      "paused": false
+    },
+    {
+      "at": 24035.90000000596,
+      "step": 603,
+      "rate": 0.549,
+      "paused": false
+    },
+    {
+      "at": 24184.90000000596,
+      "step": 609,
+      "rate": 0.562,
+      "paused": false
+    },
+    {
+      "at": 24313,
+      "step": 612,
+      "rate": 0.574,
+      "paused": false
+    },
+    {
+      "at": 24499.5,
+      "step": 617,
+      "rate": 0.574,
+      "paused": false
+    },
+    {
+      "at": 24642.5,
+      "step": 623,
+      "rate": 0.587,
+      "paused": false
+    },
+    {
+      "at": 24788.19999998808,
+      "step": 629,
+      "rate": 0.599,
+      "paused": false
+    },
+    {
+      "at": 24810.09999999404,
+      "step": 629,
+      "rate": 0.599,
+      "paused": false
+    },
+    {
+      "at": 24810.19999998808,
+      "step": 629,
+      "rate": 0.599,
+      "paused": false
+    },
+    {
+      "at": 24917.19999998808,
+      "step": 632,
+      "rate": 0.611,
+      "paused": false
+    },
+    {
+      "at": 24945.5,
+      "step": 632,
+      "rate": 0.611,
+      "paused": false
+    },
+    {
+      "at": 24945.59999999404,
+      "step": 632,
+      "rate": 0.611,
+      "paused": false
+    },
+    {
+      "at": 25051.69999998808,
+      "step": 639,
+      "rate": 0.611,
+      "paused": false
+    },
+    {
+      "at": 25207.29999998212,
+      "step": 642,
+      "rate": 0.623,
+      "paused": false
+    },
+    {
+      "at": 25387,
+      "step": 649,
+      "rate": 0.635,
+      "paused": false
+    },
+    {
+      "at": 25506.40000000596,
+      "step": 655,
+      "rate": 0.635,
+      "paused": false
+    },
+    {
+      "at": 25662.29999998212,
+      "step": 661,
+      "rate": 0.635,
+      "paused": false
+    },
+    {
+      "at": 25837.19999998808,
+      "step": 667,
+      "rate": 0.647,
+      "paused": false
+    },
+    {
+      "at": 25991,
+      "step": 673,
+      "rate": 0.66,
+      "paused": false
+    },
+    {
+      "at": 26139.59999999404,
+      "step": 679,
+      "rate": 0.66,
+      "paused": false
+    },
+    {
+      "at": 26265.09999999404,
+      "step": 686,
+      "rate": 0.673,
+      "paused": false
+    },
+    {
+      "at": 26427.29999998212,
+      "step": 690,
+      "rate": 0.685,
+      "paused": false
+    },
+    {
+      "at": 26541.09999999404,
+      "step": 696,
+      "rate": 0.685,
+      "paused": false
+    },
+    {
+      "at": 26690.5,
+      "step": 702,
+      "rate": 0.697,
+      "paused": false
+    },
+    {
+      "at": 26827.59999999404,
+      "step": 706,
+      "rate": 0.709,
+      "paused": false
+    },
+    {
+      "at": 26964.90000000596,
+      "step": 714,
+      "rate": 0.709,
+      "paused": false
+    },
+    {
+      "at": 27113.5,
+      "step": 721,
+      "rate": 0.722,
+      "paused": false
+    },
+    {
+      "at": 27268.69999998808,
+      "step": 727,
+      "rate": 0.735,
+      "paused": false
+    },
+    {
+      "at": 27399.29999998212,
+      "step": 731,
+      "rate": 0.747,
+      "paused": false
+    },
+    {
+      "at": 27546.90000000596,
+      "step": 739,
+      "rate": 0.747,
+      "paused": false
+    },
+    {
+      "at": 27694.19999998808,
+      "step": 746,
+      "rate": 0.759,
+      "paused": false
+    },
+    {
+      "at": 27832.5,
+      "step": 750,
+      "rate": 0.771,
+      "paused": false
+    },
+    {
+      "at": 27977.79999998212,
+      "step": 758,
+      "rate": 0.771,
+      "paused": false
+    },
+    {
+      "at": 28143.59999999404,
+      "step": 766,
+      "rate": 0.771,
+      "paused": false
+    },
+    {
+      "at": 28281,
+      "step": 774,
+      "rate": 0.783,
+      "paused": false
+    },
+    {
+      "at": 28370.09999999404,
+      "step": 774,
+      "rate": 0.783,
+      "paused": false
+    },
+    {
+      "at": 28370.29999998212,
+      "step": 774,
+      "rate": 0.783,
+      "paused": false
+    },
+    {
+      "at": 28421.90000000596,
+      "step": 778,
+      "rate": 0.796,
+      "paused": false
+    },
+    {
+      "at": 28474.59999999404,
+      "step": 778,
+      "rate": 0.796,
+      "paused": false
+    },
+    {
+      "at": 28474.69999998808,
+      "step": 778,
+      "rate": 0.796,
+      "paused": false
+    },
+    {
+      "at": 28569.90000000596,
+      "step": 786,
+      "rate": 0.796,
+      "paused": false
+    },
+    {
+      "at": 28707.29999998212,
+      "step": 794,
+      "rate": 0.808,
+      "paused": false
+    },
+    {
+      "at": 28884.79999998212,
+      "step": 802,
+      "rate": 0.808,
+      "paused": false
+    },
+    {
+      "at": 29042.5,
+      "step": 810,
+      "rate": 0.82,
+      "paused": false
+    },
+    {
+      "at": 29194.79999998212,
+      "step": 814,
+      "rate": 0.82,
+      "paused": false
+    },
+    {
+      "at": 29364.19999998808,
+      "step": 824,
+      "rate": 0.82,
+      "paused": false
+    },
+    {
+      "at": 29520.40000000596,
+      "step": 833,
+      "rate": 0.742,
+      "paused": false
+    },
+    {
+      "at": 29688.59999999404,
+      "step": 840,
+      "rate": 0.742,
+      "paused": false
+    },
+    {
+      "at": 29824,
+      "step": 844,
+      "rate": 0.742,
+      "paused": false
+    },
+    {
+      "at": 29974.79999998212,
+      "step": 853,
+      "rate": 0.64,
+      "paused": false
+    },
+    {
+      "at": 30116.29999998212,
+      "step": 859,
+      "rate": 0.64,
+      "paused": false
+    },
+    {
+      "at": 30203.19999998808,
+      "step": 863,
+      "rate": 0.64,
+      "paused": false
+    },
+    {
+      "at": 30303.90000000596,
+      "step": 866,
+      "rate": 0.64,
+      "paused": false
+    },
+    {
+      "at": 30411.09999999404,
+      "step": 869,
+      "rate": 0.64,
+      "paused": false
+    },
+    {
+      "at": 30530.90000000596,
+      "step": 875,
+      "rate": 0.64,
+      "paused": false
+    },
+    {
+      "at": 30641.69999998808,
+      "step": 878,
+      "rate": 0.64,
+      "paused": false
+    },
+    {
+      "at": 30874.90000000596,
+      "step": 885,
+      "rate": 0.64,
+      "paused": false
+    },
+    {
+      "at": 31075.69999998808,
+      "step": 892,
+      "rate": 0.64,
+      "paused": false
+    },
+    {
+      "at": 31269.29999998212,
+      "step": 901,
+      "rate": 0.64,
+      "paused": false
+    },
+    {
+      "at": 31448.09999999404,
+      "step": 907,
+      "rate": 0.64,
+      "paused": false
+    },
+    {
+      "at": 31618.09999999404,
+      "step": 914,
+      "rate": 0.654,
+      "paused": false
+    },
+    {
+      "at": 31789.29999998212,
+      "step": 921,
+      "rate": 0.654,
+      "paused": false
+    },
+    {
+      "at": 31955.69999998808,
+      "step": 927,
+      "rate": 0.654,
+      "paused": false
+    },
+    {
+      "at": 32001,
+      "step": 927,
+      "rate": 0.654,
+      "paused": false
+    },
+    {
+      "at": 32001.09999999404,
+      "step": 927,
+      "rate": 0.654,
+      "paused": false
+    },
+    {
+      "at": 32140.5,
+      "step": 934,
+      "rate": 0.667,
+      "paused": false
+    },
+    {
+      "at": 32185.59999999404,
+      "step": 934,
+      "rate": 0.667,
+      "paused": false
+    },
+    {
+      "at": 32185.79999998212,
+      "step": 934,
+      "rate": 0.667,
+      "paused": false
+    },
+    {
+      "at": 32311.19999998808,
+      "step": 943,
+      "rate": 0.679,
+      "paused": false
+    },
+    {
+      "at": 32504.69999998808,
+      "step": 950,
+      "rate": 0.614,
+      "paused": false
+    },
+    {
+      "at": 32678.40000000596,
+      "step": 956,
+      "rate": 0.614,
+      "paused": false
+    },
+    {
+      "at": 32877.5,
+      "step": 963,
+      "rate": 0.532,
+      "paused": false
+    },
+    {
+      "at": 33057.40000000596,
+      "step": 969,
+      "rate": 0.532,
+      "paused": false
+    },
+    {
+      "at": 33226.59999999404,
+      "step": 975,
+      "rate": 0.532,
+      "paused": false
+    },
+    {
+      "at": 33409.29999998212,
+      "step": 980,
+      "rate": 0.532,
+      "paused": false
+    },
+    {
+      "at": 33595.59999999404,
+      "step": 985,
+      "rate": 0.532,
+      "paused": false
+    },
+    {
+      "at": 33784.09999999404,
+      "step": 991,
+      "rate": 0.532,
+      "paused": false
+    },
+    {
+      "at": 33910.79999998212,
+      "step": 997,
+      "rate": 0.532,
+      "paused": false
+    },
+    {
+      "at": 34113.79999998212,
+      "step": 1003,
+      "rate": 0.532,
+      "paused": false
+    },
+    {
+      "at": 34299.40000000596,
+      "step": 1008,
+      "rate": 0.532,
+      "paused": false
+    },
+    {
+      "at": 34524.90000000596,
+      "step": 1013,
+      "rate": 0.532,
+      "paused": false
+    },
+    {
+      "at": 34707.29999998212,
+      "step": 1020,
+      "rate": 0.532,
+      "paused": false
+    },
+    {
+      "at": 34951.90000000596,
+      "step": 1028,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 35131.59999999404,
+      "step": 1032,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 35279.59999999404,
+      "step": 1037,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 35523.19999998808,
+      "step": 1041,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 35706.09999999404,
+      "step": 1047,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 35908.90000000596,
+      "step": 1051,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 36089.69999998808,
+      "step": 1054,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 36121.79999998212,
+      "step": 1054,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 36122,
+      "step": 1054,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 36330,
+      "step": 1061,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 36360.79999998212,
+      "step": 1061,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 36360.90000000596,
+      "step": 1061,
+      "rate": 0.402,
+      "paused": false
+    },
+    {
+      "at": 36555.29999998212,
+      "step": 1065,
+      "rate": 0.416,
+      "paused": false
+    },
+    {
+      "at": 36712.09999999404,
+      "step": 1070,
+      "rate": 0.427,
+      "paused": false
+    },
+    {
+      "at": 36915.69999998808,
+      "step": 1075,
+      "rate": 0.44,
+      "paused": false
+    },
+    {
+      "at": 37131.79999998212,
+      "step": 1082,
+      "rate": 0.44,
+      "paused": false
+    },
+    {
+      "at": 37306.29999998212,
+      "step": 1086,
+      "rate": 0.44,
+      "paused": false
+    },
+    {
+      "at": 37502.40000000596,
+      "step": 1091,
+      "rate": 0.453,
+      "paused": false
+    },
+    {
+      "at": 37724.59999999404,
+      "step": 1096,
+      "rate": 0.453,
+      "paused": false
+    },
+    {
+      "at": 37873.29999998212,
+      "step": 1101,
+      "rate": 0.466,
+      "paused": false
+    },
+    {
+      "at": 38082.69999998808,
+      "step": 1106,
+      "rate": 0.478,
+      "paused": false
+    },
+    {
+      "at": 38293.5,
+      "step": 1114,
+      "rate": 0.49,
+      "paused": false
+    },
+    {
+      "at": 38517,
+      "step": 1120,
+      "rate": 0.49,
+      "paused": false
+    },
+    {
+      "at": 38700.90000000596,
+      "step": 1125,
+      "rate": 0.49,
+      "paused": false
+    },
+    {
+      "at": 38863.90000000596,
+      "step": 1130,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 39015.79999998212,
+      "step": 1135,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 39167.79999998212,
+      "step": 1139,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 39352.40000000596,
+      "step": 1143,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 39557.29999998212,
+      "step": 1147,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 39720.69999998808,
+      "step": 1151,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 39742.59999999404,
+      "step": 1151,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 39742.79999998212,
+      "step": 1151,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 39786.09999999404,
+      "step": 1151,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 39786.29999998212,
+      "step": 1151,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 39966.19999998808,
+      "step": 1157,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 40229,
+      "step": 1163,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 40447.79999998212,
+      "step": 1167,
+      "rate": 0.41,
+      "paused": false
+    },
+    {
+      "at": 40660.59999999404,
+      "step": 1174,
+      "rate": 0.423,
+      "paused": false
+    },
+    {
+      "at": 40852.19999998808,
+      "step": 1179,
+      "rate": 0.436,
+      "paused": false
+    },
+    {
+      "at": 41053,
+      "step": 1183,
+      "rate": 0.449,
+      "paused": false
+    },
+    {
+      "at": 41282.69999998808,
+      "step": 1191,
+      "rate": 0.451,
+      "paused": false
+    },
+    {
+      "at": 41463.59999999404,
+      "step": 1195,
+      "rate": 0.451,
+      "paused": false
+    },
+    {
+      "at": 41661.40000000596,
+      "step": 1200,
+      "rate": 0.463,
+      "paused": false
+    },
+    {
+      "at": 41850.69999998808,
+      "step": 1206,
+      "rate": 0.463,
+      "paused": false
+    },
+    {
+      "at": 42039.19999998808,
+      "step": 1212,
+      "rate": 0.476,
+      "paused": false
+    },
+    {
+      "at": 42214,
+      "step": 1217,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 42370.09999999404,
+      "step": 1223,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 42506.5,
+      "step": 1228,
+      "rate": 0.496,
+      "paused": false
+    },
+    {
+      "at": 42637,
+      "step": 1230,
+      "rate": 0.496,
+      "paused": false
+    },
+    {
+      "at": 42797.09999999404,
+      "step": 1236,
+      "rate": 0.508,
+      "paused": false
+    },
+    {
+      "at": 42969.19999998808,
+      "step": 1239,
+      "rate": 0.508,
+      "paused": false
+    },
+    {
+      "at": 43174.29999998212,
+      "step": 1246,
+      "rate": 0.508,
+      "paused": false
+    },
+    {
+      "at": 43219.29999998212,
+      "step": 1246,
+      "rate": 0.508,
+      "paused": false
+    },
+    {
+      "at": 43219.5,
+      "step": 1246,
+      "rate": 0.508,
+      "paused": false
+    },
+    {
+      "at": 43381.90000000596,
+      "step": 1252,
+      "rate": 0.38,
+      "paused": false
+    },
+    {
+      "at": 43427.90000000596,
+      "step": 1252,
+      "rate": 0.38,
+      "paused": false
+    },
+    {
+      "at": 43428,
+      "step": 1252,
+      "rate": 0.38,
+      "paused": false
+    },
+    {
+      "at": 43570.90000000596,
+      "step": 1257,
+      "rate": 0.325,
+      "paused": false
+    },
+    {
+      "at": 43779.59999999404,
+      "step": 1261,
+      "rate": 0.325,
+      "paused": false
+    },
+    {
+      "at": 43979.59999999404,
+      "step": 1264,
+      "rate": 0.325,
+      "paused": false
+    },
+    {
+      "at": 44149.5,
+      "step": 1268,
+      "rate": 0.325,
+      "paused": false
+    },
+    {
+      "at": 44319.09999999404,
+      "step": 1272,
+      "rate": 0.325,
+      "paused": false
+    },
+    {
+      "at": 44463.09999999404,
+      "step": 1275,
+      "rate": 0.325,
+      "paused": false
+    },
+    {
+      "at": 44627.09999999404,
+      "step": 1279,
+      "rate": 0.325,
+      "paused": false
+    },
+    {
+      "at": 44755.29999998212,
+      "step": 1281,
+      "rate": 0.325,
+      "paused": false
+    },
+    {
+      "at": 44902.40000000596,
+      "step": 1283,
+      "rate": 0.325,
+      "paused": false
+    },
+    {
+      "at": 45094.79999998212,
+      "step": 1287,
+      "rate": 0.325,
+      "paused": false
+    },
+    {
+      "at": 45250.79999998212,
+      "step": 1289,
+      "rate": 0.337,
+      "paused": false
+    },
+    {
+      "at": 45395.40000000596,
+      "step": 1293,
+      "rate": 0.337,
+      "paused": false
+    },
+    {
+      "at": 45534.19999998808,
+      "step": 1296,
+      "rate": 0.35,
+      "paused": false
+    },
+    {
+      "at": 45706.09999999404,
+      "step": 1300,
+      "rate": 0.363,
+      "paused": false
+    },
+    {
+      "at": 45834.59999999404,
+      "step": 1302,
+      "rate": 0.363,
+      "paused": false
+    },
+    {
+      "at": 45980.19999998808,
+      "step": 1306,
+      "rate": 0.376,
+      "paused": false
+    },
+    {
+      "at": 46150.69999998808,
+      "step": 1310,
+      "rate": 0.39,
+      "paused": false
+    },
+    {
+      "at": 46341.69999998808,
+      "step": 1314,
+      "rate": 0.403,
+      "paused": false
+    },
+    {
+      "at": 46534.90000000596,
+      "step": 1318,
+      "rate": 0.415,
+      "paused": false
+    },
+    {
+      "at": 46702.59999999404,
+      "step": 1322,
+      "rate": 0.415,
+      "paused": false
+    },
+    {
+      "at": 46737.19999998808,
+      "step": 1322,
+      "rate": 0.415,
+      "paused": false
+    },
+    {
+      "at": 46737.40000000596,
+      "step": 1322,
+      "rate": 0.415,
+      "paused": false
+    },
+    {
+      "at": 46888.5,
+      "step": 1327,
+      "rate": 0.427,
+      "paused": false
+    },
+    {
+      "at": 46943.19999998808,
+      "step": 1327,
+      "rate": 0.427,
+      "paused": false
+    },
+    {
+      "at": 46943.5,
+      "step": 1327,
+      "rate": 0.427,
+      "paused": false
+    },
+    {
+      "at": 47109.79999998212,
+      "step": 1331,
+      "rate": 0.439,
+      "paused": false
+    },
+    {
+      "at": 47329,
+      "step": 1336,
+      "rate": 0.44,
+      "paused": false
+    },
+    {
+      "at": 47537,
+      "step": 1343,
+      "rate": 0.363,
+      "paused": false
+    },
+    {
+      "at": 47745.5,
+      "step": 1347,
+      "rate": 0.363,
+      "paused": false
+    },
+    {
+      "at": 47930.09999999404,
+      "step": 1351,
+      "rate": 0.363,
+      "paused": false
+    },
+    {
+      "at": 48111.40000000596,
+      "step": 1355,
+      "rate": 0.363,
+      "paused": false
+    },
+    {
+      "at": 48302.29999998212,
+      "step": 1359,
+      "rate": 0.363,
+      "paused": false
+    },
+    {
+      "at": 48485,
+      "step": 1363,
+      "rate": 0.363,
+      "paused": false
+    },
+    {
+      "at": 48684.40000000596,
+      "step": 1369,
+      "rate": 0.363,
+      "paused": false
+    },
+    {
+      "at": 48845.09999999404,
+      "step": 1373,
+      "rate": 0.363,
+      "paused": false
+    },
+    {
+      "at": 48979.09999999404,
+      "step": 1375,
+      "rate": 0.376,
+      "paused": false
+    },
+    {
+      "at": 49138.40000000596,
+      "step": 1379,
+      "rate": 0.388,
+      "paused": false
+    },
+    {
+      "at": 49291.79999998212,
+      "step": 1383,
+      "rate": 0.4,
+      "paused": false
+    },
+    {
+      "at": 49466.09999999404,
+      "step": 1387,
+      "rate": 0.4,
+      "paused": false
+    },
+    {
+      "at": 49609.90000000596,
+      "step": 1389,
+      "rate": 0.412,
+      "paused": false
+    },
+    {
+      "at": 49778,
+      "step": 1394,
+      "rate": 0.424,
+      "paused": false
+    },
+    {
+      "at": 49931.29999998212,
+      "step": 1398,
+      "rate": 0.437,
+      "paused": false
+    },
+    {
+      "at": 50076.40000000596,
+      "step": 1402,
+      "rate": 0.437,
+      "paused": false
+    },
+    {
+      "at": 50221.09999999404,
+      "step": 1404,
+      "rate": 0.449,
+      "paused": false
+    },
+    {
+      "at": 50385.59999999404,
+      "step": 1411,
+      "rate": 0.449,
+      "paused": false
+    },
+    {
+      "at": 50539.09999999404,
+      "step": 1415,
+      "rate": 0.463,
+      "paused": false
+    },
+    {
+      "at": 50699.29999998212,
+      "step": 1420,
+      "rate": 0.463,
+      "paused": false
+    },
+    {
+      "at": 50884.19999998808,
+      "step": 1424,
+      "rate": 0.465,
+      "paused": false
+    },
+    {
+      "at": 51008.19999998808,
+      "step": 1427,
+      "rate": 0.478,
+      "paused": false
+    },
+    {
+      "at": 51161.79999998212,
+      "step": 1433,
+      "rate": 0.49,
+      "paused": false
+    },
+    {
+      "at": 51322.09999999404,
+      "step": 1437,
+      "rate": 0.49,
+      "paused": false
+    },
+    {
+      "at": 51457.90000000596,
+      "step": 1440,
+      "rate": 0.503,
+      "paused": false
+    },
+    {
+      "at": 51598.09999999404,
+      "step": 1445,
+      "rate": 0.515,
+      "paused": false
+    },
+    {
+      "at": 51730.09999999404,
+      "step": 1448,
+      "rate": 0.515,
+      "paused": false
+    },
+    {
+      "at": 51897.09999999404,
+      "step": 1454,
+      "rate": 0.528,
+      "paused": false
+    },
+    {
+      "at": 52085.79999998212,
+      "step": 1460,
+      "rate": 0.54,
+      "paused": false
+    },
+    {
+      "at": 52272.90000000596,
+      "step": 1466,
+      "rate": 0.553,
+      "paused": false
+    },
+    {
+      "at": 52438,
+      "step": 1472,
+      "rate": 0.565,
+      "paused": false
+    },
+    {
+      "at": 52634.40000000596,
+      "step": 1477,
+      "rate": 0.565,
+      "paused": false
+    },
+    {
+      "at": 52826,
+      "step": 1484,
+      "rate": 0.565,
+      "paused": false
+    },
+    {
+      "at": 52988.59999999404,
+      "step": 1491,
+      "rate": 0.577,
+      "paused": false
+    },
+    {
+      "at": 53215.79999998212,
+      "step": 1497,
+      "rate": 0.577,
+      "paused": false
+    },
+    {
+      "at": 53392.79999998212,
+      "step": 1503,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 53613.90000000596,
+      "step": 1509,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 53801.40000000596,
+      "step": 1516,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 53942.5,
+      "step": 1519,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 54082.09999999404,
+      "step": 1525,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 54200.19999998808,
+      "step": 1528,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 54328.69999998808,
+      "step": 1533,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 54459,
+      "step": 1535,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 54611.09999999404,
+      "step": 1540,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 54767.90000000596,
+      "step": 1545,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 54918.69999998808,
+      "step": 1547,
+      "rate": 0.488,
+      "paused": false
+    },
+    {
+      "at": 55079.79999998212,
+      "step": 1553,
+      "rate": 0.501,
+      "paused": false
+    },
+    {
+      "at": 55236.5,
+      "step": 1559,
+      "rate": 0.515,
+      "paused": false
+    },
+    {
+      "at": 55431.40000000596,
+      "step": 1564,
+      "rate": 0.528,
+      "paused": false
+    },
+    {
+      "at": 55875.90000000596,
+      "step": 1570,
+      "rate": 0.528,
+      "paused": false
+    },
+    {
+      "at": 56089.69999998808,
+      "step": 1582,
+      "rate": 0.565,
+      "paused": false
+    }
+  ],
+  "commandSummary": {
+    "submitted": 20,
+    "rejected": 1,
+    "executed": 19,
+    "reply": {
+      "count": 19,
+      "meanMs": 24.563157894109423,
+      "p95Ms": 37.79999998211861,
+      "maxMs": 41.19999998807907
+    },
+    "receipt": {
+      "count": 19,
+      "meanMs": 306.2842105266295,
+      "p95Ms": 462,
+      "maxMs": 507.7000000178814
+    },
+    "dom": {
+      "count": 19,
+      "meanMs": 331.8842105269432,
+      "p95Ms": 495.7000000178814,
+      "maxMs": 537
+    },
+    "canvas": {
+      "count": 19,
+      "meanMs": 417.5368421014987,
+      "p95Ms": 554.0999999940395,
+      "maxMs": 576.6000000238419
+    },
+    "clickToSubmitMs": {
+      "count": 20,
+      "meanMs": 233.64499999880792,
+      "p95Ms": 347,
+      "maxMs": 347
+    },
+    "clickToCanvasMs": {
+      "count": 19,
+      "meanMs": 653.947368416347,
+      "p95Ms": 841.4000000059605,
+      "maxMs": 901.0999999940395
+    },
+    "receiptToCanvasMs": {
+      "count": 19,
+      "meanMs": 111.25263157486916,
+      "p95Ms": 222.2999999821186,
+      "maxMs": 233.59999999403954
+    },
+    "timelineToCanvasMs": {
+      "count": 19,
+      "meanMs": 60.699999995921786,
+      "p95Ms": 105.80000001192093,
+      "maxMs": 113.69999998807907
+    },
+    "referenceCanvasMs": {
+      "count": 19,
+      "meanMs": 563.357894735901,
+      "p95Ms": 776.8000000119209,
+      "maxMs": 809.4000000059605
+    },
+    "referenceReceiptToCanvasMs": {
+      "count": 19,
+      "meanMs": 257.0736842092715,
+      "p95Ms": 413.40000000596046,
+      "maxMs": 488.30000001192093
+    }
+  },
+  "runningText": "01 战前准备\n02 交战与结算\n\n准备舰队 · 指定旗舰 · 保存战果\n\n清空战术测试数据\n舰队交战\n自动降速 · 0.52× · 26.0 秒\n开始交战\n暂停交战\n结束本场交战（测试）\n\n操纵 19：已执行\n\n舰队\n01\n●\n7b player.0 · gun · 旗舰\n02\n●\n7b player.1 · gun\n03\n●\n7b player.2 · gun\n04\n●\n7b player.3 · gun\n☷\n视图与观察层\n1000 m\n小格 50 m\n参考线 500 m\n主参考线 5 km\nX -5 km\nX 0 m\nX 5 km\nY 0 m\n●\n●\n●\n●\n观察切换不改变舰艇高度与火炮作用层。\n战场操作说明\n旗舰 · 7b player.0 · gun\n0.0 m/s · -0.2 °/s\n推进与转向\n前进\n倒车\n制动\n↶ 左转\n半速\n全速\n全速\n¾\n½\n¼\n微速\n停车\n右转 ↷\n半速\n全速\n\n右转 · 50% 推力\n\n再次点击当前转向档位自动回正；只消除角速度，不返回原航向。停车保留惯性，制动同时回正。\n\n实际高度：上层\n\n前往上层\n前往云层\n前往雨层\n取消换层\n⌖\n舰务\n7b player.0 · gun\n舰况\n损管\n货舱\n舰队命令\n\n旗舰使用独立操纵区\n\n旗舰距离 5.97 公里 · 脱离阈值 50 公里\n\n整队撤离机动\n\n升力冗余 +36.9% · 仍有余量\n\n干重 2,234 吨 · 可用升力 30,000 kN\n按干重计算，挂载与货物不计入。\n换层指令\n\n实际高度：上层\n\n主动换层相邻层 5 公里 · 入战基准 1 分 14.3 秒\n当前每段 1 分 14.3 秒\n\n前往上层\n前往云层\n前往雨层\n取消换层\n\n换层与移动、攻击同时执行。更改目标会重新开始本段；取消保留当前实际层。\n\n直控旗舰\n\n航速\n0.0 m/s\n船壳\n51.5%\n高度层\n上层\n转向速度\n-0.2 °/s\n\n结构耐久 15261 / 29620\n\n舰上人员\n\n可执勤 22 · 负伤 0 · 累计阵亡 0\n\n伤员暂不参与岗位分配；本阶段无战中治疗。\n\n人员类别与岗位\n模块状态\n▤\n火控\n操作舰 · 7b player.0 · gun\n\n已知目标 · 双击定位\n\n暂无有效观测，请检查感知设备。\n\n火炮\n航空\n导弹\n在画布瞄准／指定目标\n旗舰武器组\n50 毫米链炮\n3 门\n单炮细调\n\n请选择武器组。\n\n感知设备\n电子对抗\n⊕\n战场记录",
+  "nodeResponseParse": {
+    "count": 320,
+    "meanMs": 0.7655987499999639,
+    "p95Ms": 1.35740000000078,
+    "maxMs": 2.0128999999942607
+  },
+  "selectionClickThroughTwoFramesMs": 22.5,
+  "runningSelection": {
+    "count": 20,
+    "meanMs": 35.71999999880791,
+    "p95Ms": 56.19999998807907,
+    "maxMs": 66.30000001192093
+  },
+  "selectionSamples": [
+    56.19999998807907,
+    29.69999998807907,
+    26.5,
+    29.30000001192093,
+    36.400000005960464,
+    29.5,
+    17.299999982118607,
+    36,
+    66.30000001192093,
+    41.39999997615814,
+    18.30000001192093,
+    41.099999994039536,
+    33.900000005960464,
+    41.099999994039536,
+    23.700000017881393,
+    43.400000005960464,
+    33.900000005960464,
+    39.29999998211861,
+    28.099999994039536,
+    43
+  ],
+  "metrics": {
+    "browserBridge.tactical.realtime.read": {
+      "count": 294,
+      "meanMs": 131.05204081596162,
+      "p95Ms": 185.7999999821186,
+      "maxMs": 424.5
+    },
+    "merge": {
+      "count": 296,
+      "meanMs": 0.7959459467312774,
+      "p95Ms": 2,
+      "maxMs": 2.5999999940395355
+    },
+    "sampling": {
+      "count": 7823,
+      "meanMs": 0.4149686821042219,
+      "p95Ms": 0.800000011920929,
+      "maxMs": 6.4000000059604645
+    },
+    "renderSubmission": {
+      "count": 7823,
+      "meanMs": 0.8027866546773673,
+      "p95Ms": 1.4000000059604645,
+      "maxMs": 3.899999976158142
+    },
+    "browserBridge.tactical.realtime.resume": {
+      "count": 1,
+      "meanMs": 39.30000001192093,
+      "p95Ms": 39.30000001192093,
+      "maxMs": 39.30000001192093
+    },
+    "frameCPU": {
+      "count": 7510,
+      "meanMs": 2.6929427430013844,
+      "p95Ms": 4.5,
+      "maxMs": 14.300000011920929
+    },
+    "frameInterval": {
+      "count": 7509,
+      "meanMs": 6.1089359435344,
+      "p95Ms": 16.700000000000728,
+      "maxMs": 75
+    },
+    "browserBridge.tactical.realtime.control": {
+      "count": 20,
+      "meanMs": 24.165000000596045,
+      "p95Ms": 37.79999998211861,
+      "maxMs": 41.19999998807907
+    },
+    "browserBridge.tactical.realtime.pause": {
+      "count": 1,
+      "meanMs": 284.30000001192093,
+      "p95Ms": 284.30000001192093,
+      "maxMs": 284.30000001192093
+    }
+  },
+  "requests": {
+    "tactical.realtime.read": {
+      "count": 298,
+      "meanMs": 33.43758456375857,
+      "p95Ms": 56.4030999999959,
+      "maxMs": 74.70990000000165
+    },
+    "tactical.realtime.resume": {
+      "count": 1,
+      "meanMs": 7.890799999999217,
+      "p95Ms": 7.890799999999217,
+      "maxMs": 7.890799999999217
+    },
+    "tactical.realtime.control": {
+      "count": 19,
+      "meanMs": 7.721536842105132,
+      "p95Ms": 30.336599999995087,
+      "maxMs": 31.250099999997474
+    },
+    "tactical.realtime.pause": {
+      "count": 1,
+      "meanMs": 63.83679999999731,
+      "p95Ms": 63.83679999999731,
+      "maxMs": 63.83679999999731
+    }
+  },
+  "requestTrace": [
+    {
+      "request_id": "req.16",
+      "method": "tactical.realtime.read",
+      "ms": 6.108999999998559,
+      "bytes": 96132,
+      "browserSerial": 14
+    },
+    {
+      "request_id": "req.17",
+      "method": "tactical.realtime.resume",
+      "ms": 7.890799999999217,
+      "bytes": 96129,
+      "browserSerial": 15
+    },
+    {
+      "request_id": "req.18",
+      "method": "tactical.realtime.read",
+      "ms": 13.712999999999738,
+      "bytes": 105005,
+      "browserSerial": 16
+    },
+    {
+      "request_id": "req.19",
+      "method": "tactical.realtime.read",
+      "ms": 13.3153999999995,
+      "bytes": 111437,
+      "browserSerial": 17
+    },
+    {
+      "request_id": "req.20",
+      "method": "tactical.realtime.read",
+      "ms": 10.926400000000285,
+      "bytes": 104030,
+      "browserSerial": 18
+    },
+    {
+      "request_id": "req.21",
+      "method": "tactical.realtime.read",
+      "ms": 14.793799999999464,
+      "bytes": 105977,
+      "browserSerial": 19
+    },
+    {
+      "request_id": "req.22",
+      "method": "tactical.realtime.read",
+      "ms": 20.149600000000646,
+      "bytes": 117810,
+      "browserSerial": 20
+    },
+    {
+      "request_id": "req.23",
+      "method": "tactical.realtime.read",
+      "ms": 12.676600000002509,
+      "bytes": 114340,
+      "browserSerial": 21
+    },
+    {
+      "request_id": "req.24",
+      "method": "tactical.realtime.read",
+      "ms": 11.909700000000157,
+      "bytes": 109103,
+      "browserSerial": 22
+    },
+    {
+      "request_id": "req.25",
+      "method": "tactical.realtime.read",
+      "ms": 14.65559999999823,
+      "bytes": 114044,
+      "browserSerial": 23
+    },
+    {
+      "request_id": "req.26",
+      "method": "tactical.realtime.read",
+      "ms": 12.97780000000057,
+      "bytes": 110316,
+      "browserSerial": 24
+    },
+    {
+      "request_id": "req.27",
+      "method": "tactical.realtime.read",
+      "ms": 15.029300000001967,
+      "bytes": 115835,
+      "browserSerial": 25
+    },
+    {
+      "request_id": "req.28",
+      "method": "tactical.realtime.read",
+      "ms": 16.26300000000265,
+      "bytes": 108833,
+      "browserSerial": 26
+    },
+    {
+      "request_id": "req.29",
+      "method": "tactical.realtime.read",
+      "ms": 18.092400000001362,
+      "bytes": 122244,
+      "browserSerial": 27
+    },
+    {
+      "request_id": "req.30",
+      "method": "tactical.realtime.read",
+      "ms": 17.33429999999862,
+      "bytes": 119378,
+      "browserSerial": 28
+    },
+    {
+      "request_id": "req.31",
+      "method": "tactical.realtime.read",
+      "ms": 17.157400000000052,
+      "bytes": 130862,
+      "browserSerial": 29
+    },
+    {
+      "request_id": "req.32",
+      "method": "tactical.realtime.read",
+      "ms": 23.008700000002136,
+      "bytes": 117604,
+      "browserSerial": 30
+    },
+    {
+      "request_id": "req.33",
+      "method": "tactical.realtime.read",
+      "ms": 20.15560000000187,
+      "bytes": 118693,
+      "browserSerial": 31
+    },
+    {
+      "request_id": "req.34",
+      "method": "tactical.realtime.read",
+      "ms": 21.862499999999272,
+      "bytes": 113578,
+      "browserSerial": 32
+    },
+    {
+      "request_id": "req.35",
+      "method": "tactical.realtime.read",
+      "ms": 25.301899999998568,
+      "bytes": 120362,
+      "browserSerial": 33
+    },
+    {
+      "request_id": "req.36",
+      "method": "tactical.realtime.read",
+      "ms": 28.187299999997776,
+      "bytes": 116419,
+      "browserSerial": 34
+    },
+    {
+      "request_id": "req.37",
+      "method": "tactical.realtime.control",
+      "ms": 6.479500000001281,
+      "bytes": 113,
+      "browserSerial": 35
+    },
+    {
+      "request_id": "req.38",
+      "method": "tactical.realtime.read",
+      "ms": 18.450400000001537,
+      "bytes": 117709,
+      "browserSerial": 36
+    },
+    {
+      "request_id": "req.39",
+      "method": "tactical.realtime.read",
+      "ms": 23.096600000000763,
+      "bytes": 133662,
+      "browserSerial": 37
+    },
+    {
+      "request_id": "req.40",
+      "method": "tactical.realtime.read",
+      "ms": 19.777099999999336,
+      "bytes": 156315,
+      "browserSerial": 38
+    },
+    {
+      "request_id": "req.41",
+      "method": "tactical.realtime.read",
+      "ms": 31.659299999999348,
+      "bytes": 170247,
+      "browserSerial": 39
+    },
+    {
+      "request_id": "req.42",
+      "method": "tactical.realtime.read",
+      "ms": 27.088400000000547,
+      "bytes": 159053,
+      "browserSerial": 40
+    },
+    {
+      "request_id": "req.43",
+      "method": "tactical.realtime.read",
+      "ms": 21.371500000001106,
+      "bytes": 140451,
+      "browserSerial": 41
+    },
+    {
+      "request_id": "req.44",
+      "method": "tactical.realtime.read",
+      "ms": 46.052599999999074,
+      "bytes": 147243,
+      "browserSerial": 42
+    },
+    {
+      "request_id": "req.45",
+      "method": "tactical.realtime.read",
+      "ms": 30.529799999996612,
+      "bytes": 142397,
+      "browserSerial": 43
+    },
+    {
+      "request_id": "req.46",
+      "method": "tactical.realtime.read",
+      "ms": 37.42480000000069,
+      "bytes": 151100,
+      "browserSerial": 44
+    },
+    {
+      "request_id": "req.47",
+      "method": "tactical.realtime.read",
+      "ms": 26.939699999998993,
+      "bytes": 139107,
+      "browserSerial": 45
+    },
+    {
+      "request_id": "req.48",
+      "method": "tactical.realtime.read",
+      "ms": 33.302199999998265,
+      "bytes": 156830,
+      "browserSerial": 46
+    },
+    {
+      "request_id": "req.49",
+      "method": "tactical.realtime.read",
+      "ms": 32.603800000000774,
+      "bytes": 151590,
+      "browserSerial": 47
+    },
+    {
+      "request_id": "req.50",
+      "method": "tactical.realtime.read",
+      "ms": 17.7371000000021,
+      "bytes": 141638,
+      "browserSerial": 48
+    },
+    {
+      "request_id": "req.51",
+      "method": "tactical.realtime.read",
+      "ms": 35.215799999998126,
+      "bytes": 134961,
+      "browserSerial": 49
+    },
+    {
+      "request_id": "req.53",
+      "method": "tactical.realtime.read",
+      "ms": 20.752199999998993,
+      "bytes": 134550,
+      "browserSerial": 51
+    },
+    {
+      "request_id": "req.54",
+      "method": "tactical.realtime.read",
+      "ms": 40.33950000000186,
+      "bytes": 144880,
+      "browserSerial": 52
+    },
+    {
+      "request_id": "req.55",
+      "method": "tactical.realtime.read",
+      "ms": 50.78989999999976,
+      "bytes": 137806,
+      "browserSerial": 53
+    },
+    {
+      "request_id": "req.56",
+      "method": "tactical.realtime.read",
+      "ms": 19.339100000001054,
+      "bytes": 150859,
+      "browserSerial": 54
+    },
+    {
+      "request_id": "req.57",
+      "method": "tactical.realtime.read",
+      "ms": 21.019799999998213,
+      "bytes": 140993,
+      "browserSerial": 55
+    },
+    {
+      "request_id": "req.58",
+      "method": "tactical.realtime.read",
+      "ms": 51.25920000000042,
+      "bytes": 151747,
+      "browserSerial": 56
+    },
+    {
+      "request_id": "req.59",
+      "method": "tactical.realtime.read",
+      "ms": 21.05749999999898,
+      "bytes": 143510,
+      "browserSerial": 57
+    },
+    {
+      "request_id": "req.60",
+      "method": "tactical.realtime.read",
+      "ms": 23.829899999996996,
+      "bytes": 149543,
+      "browserSerial": 58
+    },
+    {
+      "request_id": "req.61",
+      "method": "tactical.realtime.read",
+      "ms": 33.883700000002136,
+      "bytes": 161833,
+      "browserSerial": 59
+    },
+    {
+      "request_id": "req.62",
+      "method": "tactical.realtime.read",
+      "ms": 25.19869999999719,
+      "bytes": 158284,
+      "browserSerial": 60
+    },
+    {
+      "request_id": "req.63",
+      "method": "tactical.realtime.read",
+      "ms": 31.33980000000156,
+      "bytes": 164130,
+      "browserSerial": 61
+    },
+    {
+      "request_id": "req.64",
+      "method": "tactical.realtime.read",
+      "ms": 19.776200000000244,
+      "bytes": 147593,
+      "browserSerial": 62
+    },
+    {
+      "request_id": "req.65",
+      "method": "tactical.realtime.read",
+      "ms": 32.35729999999967,
+      "bytes": 160562,
+      "browserSerial": 63
+    },
+    {
+      "request_id": "req.66",
+      "method": "tactical.realtime.read",
+      "ms": 17.14940000000206,
+      "bytes": 137692,
+      "browserSerial": 64
+    },
+    {
+      "request_id": "req.67",
+      "method": "tactical.realtime.control",
+      "ms": 7.308899999999994,
+      "bytes": 113,
+      "browserSerial": 65
+    },
+    {
+      "request_id": "req.68",
+      "method": "tactical.realtime.read",
+      "ms": 24.218700000001263,
+      "bytes": 150706,
+      "browserSerial": 66
+    },
+    {
+      "request_id": "req.69",
+      "method": "tactical.realtime.read",
+      "ms": 23.332500000000437,
+      "bytes": 174354,
+      "browserSerial": 67
+    },
+    {
+      "request_id": "req.70",
+      "method": "tactical.realtime.read",
+      "ms": 35.84490000000005,
+      "bytes": 182433,
+      "browserSerial": 68
+    },
+    {
+      "request_id": "req.71",
+      "method": "tactical.realtime.read",
+      "ms": 43.160799999997835,
+      "bytes": 166507,
+      "browserSerial": 69
+    },
+    {
+      "request_id": "req.72",
+      "method": "tactical.realtime.read",
+      "ms": 32.25489999999991,
+      "bytes": 178990,
+      "browserSerial": 70
+    },
+    {
+      "request_id": "req.73",
+      "method": "tactical.realtime.read",
+      "ms": 32.687400000002526,
+      "bytes": 172537,
+      "browserSerial": 71
+    },
+    {
+      "request_id": "req.74",
+      "method": "tactical.realtime.read",
+      "ms": 29.919000000001688,
+      "bytes": 186606,
+      "browserSerial": 72
+    },
+    {
+      "request_id": "req.75",
+      "method": "tactical.realtime.read",
+      "ms": 19.08759999999893,
+      "bytes": 168558,
+      "browserSerial": 73
+    },
+    {
+      "request_id": "req.76",
+      "method": "tactical.realtime.read",
+      "ms": 19.993500000000495,
+      "bytes": 163710,
+      "browserSerial": 74
+    },
+    {
+      "request_id": "req.77",
+      "method": "tactical.realtime.read",
+      "ms": 21.6862000000001,
+      "bytes": 183822,
+      "browserSerial": 75
+    },
+    {
+      "request_id": "req.78",
+      "method": "tactical.realtime.read",
+      "ms": 19.718799999998737,
+      "bytes": 182423,
+      "browserSerial": 76
+    },
+    {
+      "request_id": "req.79",
+      "method": "tactical.realtime.read",
+      "ms": 26.725800000000163,
+      "bytes": 191501,
+      "browserSerial": 77
+    },
+    {
+      "request_id": "req.80",
+      "method": "tactical.realtime.read",
+      "ms": 21.620600000002014,
+      "bytes": 172580,
+      "browserSerial": 78
+    },
+    {
+      "request_id": "req.81",
+      "method": "tactical.realtime.read",
+      "ms": 40.76440000000002,
+      "bytes": 161698,
+      "browserSerial": 79
+    },
+    {
+      "request_id": "req.82",
+      "method": "tactical.realtime.control",
+      "ms": 12.201399999998102,
+      "bytes": 113,
+      "browserSerial": 80
+    },
+    {
+      "request_id": "req.83",
+      "method": "tactical.realtime.read",
+      "ms": 40.075700000001234,
+      "bytes": 188795,
+      "browserSerial": 81
+    },
+    {
+      "request_id": "req.84",
+      "method": "tactical.realtime.read",
+      "ms": 40.89300000000003,
+      "bytes": 188621,
+      "browserSerial": 82
+    },
+    {
+      "request_id": "req.85",
+      "method": "tactical.realtime.read",
+      "ms": 40.650399999998626,
+      "bytes": 194774,
+      "browserSerial": 83
+    },
+    {
+      "request_id": "req.86",
+      "method": "tactical.realtime.read",
+      "ms": 43.594600000000355,
+      "bytes": 197880,
+      "browserSerial": 84
+    },
+    {
+      "request_id": "req.87",
+      "method": "tactical.realtime.read",
+      "ms": 21.045399999999063,
+      "bytes": 182657,
+      "browserSerial": 85
+    },
+    {
+      "request_id": "req.88",
+      "method": "tactical.realtime.read",
+      "ms": 30.068299999999,
+      "bytes": 201474,
+      "browserSerial": 86
+    },
+    {
+      "request_id": "req.89",
+      "method": "tactical.realtime.read",
+      "ms": 27.436699999998382,
+      "bytes": 195110,
+      "browserSerial": 87
+    },
+    {
+      "request_id": "req.90",
+      "method": "tactical.realtime.read",
+      "ms": 26.25040000000081,
+      "bytes": 175502,
+      "browserSerial": 88
+    },
+    {
+      "request_id": "req.91",
+      "method": "tactical.realtime.read",
+      "ms": 38.301400000000285,
+      "bytes": 203904,
+      "browserSerial": 89
+    },
+    {
+      "request_id": "req.92",
+      "method": "tactical.realtime.read",
+      "ms": 23.09009999999762,
+      "bytes": 197991,
+      "browserSerial": 90
+    },
+    {
+      "request_id": "req.93",
+      "method": "tactical.realtime.read",
+      "ms": 40.59370000000126,
+      "bytes": 200151,
+      "browserSerial": 91
+    },
+    {
+      "request_id": "req.94",
+      "method": "tactical.realtime.read",
+      "ms": 11.061900000000605,
+      "bytes": 171955,
+      "browserSerial": 92
+    },
+    {
+      "request_id": "req.95",
+      "method": "tactical.realtime.control",
+      "ms": 3.984500000002299,
+      "bytes": 113,
+      "browserSerial": 93
+    },
+    {
+      "request_id": "req.96",
+      "method": "tactical.realtime.read",
+      "ms": 46.88719999999739,
+      "bytes": 189298,
+      "browserSerial": 94
+    },
+    {
+      "request_id": "req.97",
+      "method": "tactical.realtime.read",
+      "ms": 26.42150000000038,
+      "bytes": 189945,
+      "browserSerial": 95
+    },
+    {
+      "request_id": "req.98",
+      "method": "tactical.realtime.read",
+      "ms": 35.251899999999296,
+      "bytes": 195531,
+      "browserSerial": 96
+    },
+    {
+      "request_id": "req.99",
+      "method": "tactical.realtime.read",
+      "ms": 36.35429999999906,
+      "bytes": 185391,
+      "browserSerial": 97
+    },
+    {
+      "request_id": "req.100",
+      "method": "tactical.realtime.read",
+      "ms": 34.384399999999005,
+      "bytes": 209567,
+      "browserSerial": 98
+    },
+    {
+      "request_id": "req.101",
+      "method": "tactical.realtime.read",
+      "ms": 47.68960000000152,
+      "bytes": 205951,
+      "browserSerial": 99
+    },
+    {
+      "request_id": "req.102",
+      "method": "tactical.realtime.read",
+      "ms": 15.291800000002695,
+      "bytes": 216347,
+      "browserSerial": 100
+    },
+    {
+      "request_id": "req.103",
+      "method": "tactical.realtime.read",
+      "ms": 23.411900000002788,
+      "bytes": 205774,
+      "browserSerial": 101
+    },
+    {
+      "request_id": "req.104",
+      "method": "tactical.realtime.read",
+      "ms": 23.758599999997386,
+      "bytes": 188624,
+      "browserSerial": 102
+    },
+    {
+      "request_id": "req.105",
+      "method": "tactical.realtime.read",
+      "ms": 43.400799999999435,
+      "bytes": 206576,
+      "browserSerial": 103
+    },
+    {
+      "request_id": "req.106",
+      "method": "tactical.realtime.read",
+      "ms": 34.75040000000081,
+      "bytes": 203135,
+      "browserSerial": 104
+    },
+    {
+      "request_id": "req.107",
+      "method": "tactical.realtime.read",
+      "ms": 37.074000000000524,
+      "bytes": 186072,
+      "browserSerial": 105
+    },
+    {
+      "request_id": "req.108",
+      "method": "tactical.realtime.control",
+      "ms": 7.3125,
+      "bytes": 113,
+      "browserSerial": 106
+    },
+    {
+      "request_id": "req.109",
+      "method": "tactical.realtime.read",
+      "ms": 46.87079999999696,
+      "bytes": 202673,
+      "browserSerial": 107
+    },
+    {
+      "request_id": "req.110",
+      "method": "tactical.realtime.read",
+      "ms": 38.77600000000166,
+      "bytes": 202753,
+      "browserSerial": 108
+    },
+    {
+      "request_id": "req.111",
+      "method": "tactical.realtime.read",
+      "ms": 38.10069999999905,
+      "bytes": 184934,
+      "browserSerial": 109
+    },
+    {
+      "request_id": "req.112",
+      "method": "tactical.realtime.read",
+      "ms": 34.6919999999991,
+      "bytes": 207725,
+      "browserSerial": 110
+    },
+    {
+      "request_id": "req.113",
+      "method": "tactical.realtime.read",
+      "ms": 27.472700000002078,
+      "bytes": 200443,
+      "browserSerial": 111
+    },
+    {
+      "request_id": "req.114",
+      "method": "tactical.realtime.read",
+      "ms": 27.070599999999104,
+      "bytes": 211265,
+      "browserSerial": 112
+    },
+    {
+      "request_id": "req.115",
+      "method": "tactical.realtime.read",
+      "ms": 63.922200000000885,
+      "bytes": 197898,
+      "browserSerial": 113
+    },
+    {
+      "request_id": "req.116",
+      "method": "tactical.realtime.read",
+      "ms": 29.341700000000856,
+      "bytes": 195945,
+      "browserSerial": 114
+    },
+    {
+      "request_id": "req.117",
+      "method": "tactical.realtime.read",
+      "ms": 37.15049999999974,
+      "bytes": 201798,
+      "browserSerial": 115
+    },
+    {
+      "request_id": "req.118",
+      "method": "tactical.realtime.read",
+      "ms": 43.2544999999991,
+      "bytes": 173634,
+      "browserSerial": 116
+    },
+    {
+      "request_id": "req.119",
+      "method": "tactical.realtime.read",
+      "ms": 19.1929999999993,
+      "bytes": 195754,
+      "browserSerial": 117
+    },
+    {
+      "request_id": "req.120",
+      "method": "tactical.realtime.read",
+      "ms": 35.91309999999794,
+      "bytes": 187814,
+      "browserSerial": 118
+    },
+    {
+      "request_id": "req.121",
+      "method": "tactical.realtime.read",
+      "ms": 26.98199999999997,
+      "bytes": 167308,
+      "browserSerial": 119
+    },
+    {
+      "request_id": "req.122",
+      "method": "tactical.realtime.control",
+      "ms": 9.697899999999208,
+      "bytes": 113,
+      "browserSerial": 120
+    },
+    {
+      "request_id": "req.123",
+      "method": "tactical.realtime.read",
+      "ms": 20.021600000000035,
+      "bytes": 188196,
+      "browserSerial": 121
+    },
+    {
+      "request_id": "req.124",
+      "method": "tactical.realtime.read",
+      "ms": 23.6137000000017,
+      "bytes": 178456,
+      "browserSerial": 122
+    },
+    {
+      "request_id": "req.125",
+      "method": "tactical.realtime.read",
+      "ms": 17.460699999999633,
+      "bytes": 186409,
+      "browserSerial": 123
+    },
+    {
+      "request_id": "req.126",
+      "method": "tactical.realtime.read",
+      "ms": 20.38880000000063,
+      "bytes": 178413,
+      "browserSerial": 124
+    },
+    {
+      "request_id": "req.127",
+      "method": "tactical.realtime.read",
+      "ms": 22.994399999999587,
+      "bytes": 190657,
+      "browserSerial": 125
+    },
+    {
+      "request_id": "req.128",
+      "method": "tactical.realtime.read",
+      "ms": 24.879699999997683,
+      "bytes": 176573,
+      "browserSerial": 126
+    },
+    {
+      "request_id": "req.129",
+      "method": "tactical.realtime.read",
+      "ms": 32.24699999999939,
+      "bytes": 203731,
+      "browserSerial": 127
+    },
+    {
+      "request_id": "req.130",
+      "method": "tactical.realtime.read",
+      "ms": 40.02929999999833,
+      "bytes": 195115,
+      "browserSerial": 128
+    },
+    {
+      "request_id": "req.131",
+      "method": "tactical.realtime.read",
+      "ms": 27.350800000000163,
+      "bytes": 200393,
+      "browserSerial": 129
+    },
+    {
+      "request_id": "req.132",
+      "method": "tactical.realtime.read",
+      "ms": 20.94759999999951,
+      "bytes": 170074,
+      "browserSerial": 130
+    },
+    {
+      "request_id": "req.133",
+      "method": "tactical.realtime.read",
+      "ms": 53.027500000000146,
+      "bytes": 194703,
+      "browserSerial": 131
+    },
+    {
+      "request_id": "req.134",
+      "method": "tactical.realtime.read",
+      "ms": 17.566900000001624,
+      "bytes": 194740,
+      "browserSerial": 132
+    },
+    {
+      "request_id": "req.135",
+      "method": "tactical.realtime.read",
+      "ms": 39.51249999999709,
+      "bytes": 203407,
+      "browserSerial": 133
+    },
+    {
+      "request_id": "req.136",
+      "method": "tactical.realtime.control",
+      "ms": 0.6166000000011991,
+      "bytes": 113,
+      "browserSerial": 134
+    },
+    {
+      "request_id": "req.137",
+      "method": "tactical.realtime.read",
+      "ms": 17.32589999999982,
+      "bytes": 183961,
+      "browserSerial": 135
+    },
+    {
+      "request_id": "req.138",
+      "method": "tactical.realtime.read",
+      "ms": 15.590600000003178,
+      "bytes": 207144,
+      "browserSerial": 136
+    },
+    {
+      "request_id": "req.139",
+      "method": "tactical.realtime.read",
+      "ms": 38.6108000000022,
+      "bytes": 188821,
+      "browserSerial": 137
+    },
+    {
+      "request_id": "req.140",
+      "method": "tactical.realtime.read",
+      "ms": 28.551100000000588,
+      "bytes": 201852,
+      "browserSerial": 138
+    },
+    {
+      "request_id": "req.141",
+      "method": "tactical.realtime.read",
+      "ms": 31.59310000000187,
+      "bytes": 202828,
+      "browserSerial": 139
+    },
+    {
+      "request_id": "req.142",
+      "method": "tactical.realtime.read",
+      "ms": 31.20560000000114,
+      "bytes": 199511,
+      "browserSerial": 140
+    },
+    {
+      "request_id": "req.143",
+      "method": "tactical.realtime.read",
+      "ms": 55.707000000002154,
+      "bytes": 212476,
+      "browserSerial": 141
+    },
+    {
+      "request_id": "req.144",
+      "method": "tactical.realtime.read",
+      "ms": 35.34509999999864,
+      "bytes": 188509,
+      "browserSerial": 142
+    },
+    {
+      "request_id": "req.145",
+      "method": "tactical.realtime.read",
+      "ms": 24.22700000000259,
+      "bytes": 195366,
+      "browserSerial": 143
+    },
+    {
+      "request_id": "req.146",
+      "method": "tactical.realtime.read",
+      "ms": 14.463900000002468,
+      "bytes": 189713,
+      "browserSerial": 144
+    },
+    {
+      "request_id": "req.147",
+      "method": "tactical.realtime.read",
+      "ms": 28.92229999999836,
+      "bytes": 177622,
+      "browserSerial": 145
+    },
+    {
+      "request_id": "req.148",
+      "method": "tactical.realtime.read",
+      "ms": 21.518299999999726,
+      "bytes": 183870,
+      "browserSerial": 146
+    },
+    {
+      "request_id": "req.149",
+      "method": "tactical.realtime.control",
+      "ms": 0.7497000000003027,
+      "bytes": 113,
+      "browserSerial": 147
+    },
+    {
+      "request_id": "req.150",
+      "method": "tactical.realtime.read",
+      "ms": 32.662099999997736,
+      "bytes": 190071,
+      "browserSerial": 148
+    },
+    {
+      "request_id": "req.151",
+      "method": "tactical.realtime.read",
+      "ms": 33.54790000000139,
+      "bytes": 184700,
+      "browserSerial": 149
+    },
+    {
+      "request_id": "req.152",
+      "method": "tactical.realtime.read",
+      "ms": 24.65639999999985,
+      "bytes": 200540,
+      "browserSerial": 150
+    },
+    {
+      "request_id": "req.153",
+      "method": "tactical.realtime.read",
+      "ms": 44.978399999999965,
+      "bytes": 194238,
+      "browserSerial": 151
+    },
+    {
+      "request_id": "req.154",
+      "method": "tactical.realtime.read",
+      "ms": 26.70900000000256,
+      "bytes": 203198,
+      "browserSerial": 152
+    },
+    {
+      "request_id": "req.155",
+      "method": "tactical.realtime.read",
+      "ms": 18.56319999999687,
+      "bytes": 190141,
+      "browserSerial": 153
+    },
+    {
+      "request_id": "req.156",
+      "method": "tactical.realtime.read",
+      "ms": 28.339899999999034,
+      "bytes": 201522,
+      "browserSerial": 154
+    },
+    {
+      "request_id": "req.157",
+      "method": "tactical.realtime.read",
+      "ms": 27.656199999997625,
+      "bytes": 194112,
+      "browserSerial": 155
+    },
+    {
+      "request_id": "req.158",
+      "method": "tactical.realtime.read",
+      "ms": 16.098599999997532,
+      "bytes": 190541,
+      "browserSerial": 156
+    },
+    {
+      "request_id": "req.159",
+      "method": "tactical.realtime.read",
+      "ms": 31.703999999997905,
+      "bytes": 190695,
+      "browserSerial": 157
+    },
+    {
+      "request_id": "req.160",
+      "method": "tactical.realtime.read",
+      "ms": 30.2928000000029,
+      "bytes": 203095,
+      "browserSerial": 158
+    },
+    {
+      "request_id": "req.161",
+      "method": "tactical.realtime.read",
+      "ms": 26.54420000000391,
+      "bytes": 191256,
+      "browserSerial": 159
+    },
+    {
+      "request_id": "req.162",
+      "method": "tactical.realtime.read",
+      "ms": 25.613400000002002,
+      "bytes": 180252,
+      "browserSerial": 160
+    },
+    {
+      "request_id": "req.163",
+      "method": "tactical.realtime.control",
+      "ms": 3.7595000000001164,
+      "bytes": 113,
+      "browserSerial": 161
+    },
+    {
+      "request_id": "req.164",
+      "method": "tactical.realtime.read",
+      "ms": 34.04399999999441,
+      "bytes": 190020,
+      "browserSerial": 162
+    },
+    {
+      "request_id": "req.165",
+      "method": "tactical.realtime.read",
+      "ms": 37.16860000000452,
+      "bytes": 205413,
+      "browserSerial": 163
+    },
+    {
+      "request_id": "req.166",
+      "method": "tactical.realtime.read",
+      "ms": 40.84399999999732,
+      "bytes": 210945,
+      "browserSerial": 164
+    },
+    {
+      "request_id": "req.167",
+      "method": "tactical.realtime.read",
+      "ms": 49.67459999999846,
+      "bytes": 204032,
+      "browserSerial": 165
+    },
+    {
+      "request_id": "req.168",
+      "method": "tactical.realtime.read",
+      "ms": 42.85150000000431,
+      "bytes": 194205,
+      "browserSerial": 166
+    },
+    {
+      "request_id": "req.169",
+      "method": "tactical.realtime.read",
+      "ms": 30.563900000001013,
+      "bytes": 210789,
+      "browserSerial": 167
+    },
+    {
+      "request_id": "req.170",
+      "method": "tactical.realtime.read",
+      "ms": 33.89470000000438,
+      "bytes": 206502,
+      "browserSerial": 168
+    },
+    {
+      "request_id": "req.171",
+      "method": "tactical.realtime.read",
+      "ms": 33.10179999999673,
+      "bytes": 211316,
+      "browserSerial": 169
+    },
+    {
+      "request_id": "req.172",
+      "method": "tactical.realtime.read",
+      "ms": 29.010000000002037,
+      "bytes": 178043,
+      "browserSerial": 170
+    },
+    {
+      "request_id": "req.173",
+      "method": "tactical.realtime.read",
+      "ms": 28.952500000006694,
+      "bytes": 200367,
+      "browserSerial": 171
+    },
+    {
+      "request_id": "req.174",
+      "method": "tactical.realtime.read",
+      "ms": 54.41150000000198,
+      "bytes": 196963,
+      "browserSerial": 172
+    },
+    {
+      "request_id": "req.175",
+      "method": "tactical.realtime.read",
+      "ms": 19.092400000001362,
+      "bytes": 188174,
+      "browserSerial": 173
+    },
+    {
+      "request_id": "req.176",
+      "method": "tactical.realtime.control",
+      "ms": 0.9874999999956344,
+      "bytes": 114,
+      "browserSerial": 174
+    },
+    {
+      "request_id": "req.177",
+      "method": "tactical.realtime.read",
+      "ms": 20.097499999996217,
+      "bytes": 182485,
+      "browserSerial": 175
+    },
+    {
+      "request_id": "req.178",
+      "method": "tactical.realtime.read",
+      "ms": 24.3298000000068,
+      "bytes": 197090,
+      "browserSerial": 176
+    },
+    {
+      "request_id": "req.179",
+      "method": "tactical.realtime.read",
+      "ms": 26.951399999998102,
+      "bytes": 205343,
+      "browserSerial": 177
+    },
+    {
+      "request_id": "req.180",
+      "method": "tactical.realtime.read",
+      "ms": 22.572299999999814,
+      "bytes": 196053,
+      "browserSerial": 178
+    },
+    {
+      "request_id": "req.181",
+      "method": "tactical.realtime.read",
+      "ms": 56.670500000000175,
+      "bytes": 242910,
+      "browserSerial": 179
+    },
+    {
+      "request_id": "req.182",
+      "method": "tactical.realtime.read",
+      "ms": 36.09479999999894,
+      "bytes": 231751,
+      "browserSerial": 180
+    },
+    {
+      "request_id": "req.183",
+      "method": "tactical.realtime.read",
+      "ms": 36.957900000001246,
+      "bytes": 256594,
+      "browserSerial": 181
+    },
+    {
+      "request_id": "req.184",
+      "method": "tactical.realtime.read",
+      "ms": 39.45260000000417,
+      "bytes": 235231,
+      "browserSerial": 182
+    },
+    {
+      "request_id": "req.185",
+      "method": "tactical.realtime.read",
+      "ms": 38.89890000000014,
+      "bytes": 233969,
+      "browserSerial": 183
+    },
+    {
+      "request_id": "req.186",
+      "method": "tactical.realtime.read",
+      "ms": 42.45679999999993,
+      "bytes": 238333,
+      "browserSerial": 184
+    },
+    {
+      "request_id": "req.187",
+      "method": "tactical.realtime.read",
+      "ms": 19.879000000000815,
+      "bytes": 232400,
+      "browserSerial": 185
+    },
+    {
+      "request_id": "req.188",
+      "method": "tactical.realtime.read",
+      "ms": 35.730100000000675,
+      "bytes": 227329,
+      "browserSerial": 186
+    },
+    {
+      "request_id": "req.189",
+      "method": "tactical.realtime.control",
+      "ms": 0.7127000000036787,
+      "bytes": 114,
+      "browserSerial": 187
+    },
+    {
+      "request_id": "req.190",
+      "method": "tactical.realtime.read",
+      "ms": 42.66350000000239,
+      "bytes": 239819,
+      "browserSerial": 188
+    },
+    {
+      "request_id": "req.191",
+      "method": "tactical.realtime.read",
+      "ms": 55.55310000000463,
+      "bytes": 228656,
+      "browserSerial": 189
+    },
+    {
+      "request_id": "req.192",
+      "method": "tactical.realtime.read",
+      "ms": 44.019399999997404,
+      "bytes": 239866,
+      "browserSerial": 190
+    },
+    {
+      "request_id": "req.193",
+      "method": "tactical.realtime.read",
+      "ms": 45.869400000003225,
+      "bytes": 236350,
+      "browserSerial": 191
+    },
+    {
+      "request_id": "req.194",
+      "method": "tactical.realtime.read",
+      "ms": 31.73479999999836,
+      "bytes": 245695,
+      "browserSerial": 192
+    },
+    {
+      "request_id": "req.195",
+      "method": "tactical.realtime.read",
+      "ms": 34.42369999999937,
+      "bytes": 244610,
+      "browserSerial": 193
+    },
+    {
+      "request_id": "req.196",
+      "method": "tactical.realtime.read",
+      "ms": 35.470500000003085,
+      "bytes": 244613,
+      "browserSerial": 194
+    },
+    {
+      "request_id": "req.197",
+      "method": "tactical.realtime.read",
+      "ms": 48.7896999999939,
+      "bytes": 244144,
+      "browserSerial": 195
+    },
+    {
+      "request_id": "req.198",
+      "method": "tactical.realtime.read",
+      "ms": 44.006099999998696,
+      "bytes": 249955,
+      "browserSerial": 196
+    },
+    {
+      "request_id": "req.199",
+      "method": "tactical.realtime.read",
+      "ms": 30.18869999999879,
+      "bytes": 243960,
+      "browserSerial": 197
+    },
+    {
+      "request_id": "req.200",
+      "method": "tactical.realtime.control",
+      "ms": 30.336599999995087,
+      "bytes": 116,
+      "browserSerial": 198
+    },
+    {
+      "request_id": "req.201",
+      "method": "tactical.realtime.read",
+      "ms": 43.58879999999772,
+      "bytes": 250385,
+      "browserSerial": 199
+    },
+    {
+      "request_id": "req.202",
+      "method": "tactical.realtime.read",
+      "ms": 47.52260000000388,
+      "bytes": 254956,
+      "browserSerial": 200
+    },
+    {
+      "request_id": "req.203",
+      "method": "tactical.realtime.read",
+      "ms": 35.095500000003085,
+      "bytes": 266049,
+      "browserSerial": 201
+    },
+    {
+      "request_id": "req.204",
+      "method": "tactical.realtime.read",
+      "ms": 33.822699999996985,
+      "bytes": 265490,
+      "browserSerial": 202
+    },
+    {
+      "request_id": "req.205",
+      "method": "tactical.realtime.read",
+      "ms": 58.323800000005576,
+      "bytes": 285570,
+      "browserSerial": 203
+    },
+    {
+      "request_id": "req.206",
+      "method": "tactical.realtime.read",
+      "ms": 39.88390000000072,
+      "bytes": 260215,
+      "browserSerial": 204
+    },
+    {
+      "request_id": "req.207",
+      "method": "tactical.realtime.read",
+      "ms": 22.54609999999957,
+      "bytes": 277672,
+      "browserSerial": 205
+    },
+    {
+      "request_id": "req.208",
+      "method": "tactical.realtime.read",
+      "ms": 39.9349000000002,
+      "bytes": 256380,
+      "browserSerial": 206
+    },
+    {
+      "request_id": "req.209",
+      "method": "tactical.realtime.read",
+      "ms": 25.308600000003935,
+      "bytes": 283818,
+      "browserSerial": 207
+    },
+    {
+      "request_id": "req.210",
+      "method": "tactical.realtime.read",
+      "ms": 42.46959999999672,
+      "bytes": 256383,
+      "browserSerial": 208
+    },
+    {
+      "request_id": "req.211",
+      "method": "tactical.realtime.read",
+      "ms": 39.4748000000036,
+      "bytes": 267308,
+      "browserSerial": 209
+    },
+    {
+      "request_id": "req.212",
+      "method": "tactical.realtime.control",
+      "ms": 1.0659000000014203,
+      "bytes": 116,
+      "browserSerial": 210
+    },
+    {
+      "request_id": "req.213",
+      "method": "tactical.realtime.read",
+      "ms": 69.99989999999525,
+      "bytes": 279263,
+      "browserSerial": 211
+    },
+    {
+      "request_id": "req.214",
+      "method": "tactical.realtime.read",
+      "ms": 63.57760000000417,
+      "bytes": 271592,
+      "browserSerial": 212
+    },
+    {
+      "request_id": "req.215",
+      "method": "tactical.realtime.read",
+      "ms": 34.915500000002794,
+      "bytes": 262230,
+      "browserSerial": 213
+    },
+    {
+      "request_id": "req.216",
+      "method": "tactical.realtime.read",
+      "ms": 40.04629999999452,
+      "bytes": 255528,
+      "browserSerial": 214
+    },
+    {
+      "request_id": "req.217",
+      "method": "tactical.realtime.read",
+      "ms": 57.97650000000431,
+      "bytes": 290347,
+      "browserSerial": 215
+    },
+    {
+      "request_id": "req.218",
+      "method": "tactical.realtime.read",
+      "ms": 21.972900000000664,
+      "bytes": 260222,
+      "browserSerial": 216
+    },
+    {
+      "request_id": "req.219",
+      "method": "tactical.realtime.read",
+      "ms": 38.97119999999995,
+      "bytes": 272458,
+      "browserSerial": 217
+    },
+    {
+      "request_id": "req.220",
+      "method": "tactical.realtime.read",
+      "ms": 46.85139999999956,
+      "bytes": 267095,
+      "browserSerial": 218
+    },
+    {
+      "request_id": "req.221",
+      "method": "tactical.realtime.read",
+      "ms": 24.23120000000199,
+      "bytes": 255280,
+      "browserSerial": 219
+    },
+    {
+      "request_id": "req.222",
+      "method": "tactical.realtime.control",
+      "ms": 31.250099999997474,
+      "bytes": 116,
+      "browserSerial": 220
+    },
+    {
+      "request_id": "req.223",
+      "method": "tactical.realtime.read",
+      "ms": 38.11620000000403,
+      "bytes": 261892,
+      "browserSerial": 221
+    },
+    {
+      "request_id": "req.224",
+      "method": "tactical.realtime.read",
+      "ms": 60.74850000000151,
+      "bytes": 286560,
+      "browserSerial": 222
+    },
+    {
+      "request_id": "req.225",
+      "method": "tactical.realtime.read",
+      "ms": 44.696100000001024,
+      "bytes": 267782,
+      "browserSerial": 223
+    },
+    {
+      "request_id": "req.226",
+      "method": "tactical.realtime.read",
+      "ms": 34.04049999999552,
+      "bytes": 272645,
+      "browserSerial": 224
+    },
+    {
+      "request_id": "req.227",
+      "method": "tactical.realtime.read",
+      "ms": 38.840400000000955,
+      "bytes": 267063,
+      "browserSerial": 225
+    },
+    {
+      "request_id": "req.228",
+      "method": "tactical.realtime.read",
+      "ms": 26.300100000000384,
+      "bytes": 264917,
+      "browserSerial": 226
+    },
+    {
+      "request_id": "req.229",
+      "method": "tactical.realtime.read",
+      "ms": 31.87630000000354,
+      "bytes": 267378,
+      "browserSerial": 227
+    },
+    {
+      "request_id": "req.230",
+      "method": "tactical.realtime.read",
+      "ms": 26.399100000002363,
+      "bytes": 267012,
+      "browserSerial": 228
+    },
+    {
+      "request_id": "req.231",
+      "method": "tactical.realtime.read",
+      "ms": 34.83320000000094,
+      "bytes": 267975,
+      "browserSerial": 229
+    },
+    {
+      "request_id": "req.232",
+      "method": "tactical.realtime.read",
+      "ms": 43.329499999999825,
+      "bytes": 272368,
+      "browserSerial": 230
+    },
+    {
+      "request_id": "req.233",
+      "method": "tactical.realtime.control",
+      "ms": 0.6958000000013271,
+      "bytes": 116,
+      "browserSerial": 231
+    },
+    {
+      "request_id": "req.234",
+      "method": "tactical.realtime.read",
+      "ms": 66.19759999999951,
+      "bytes": 286704,
+      "browserSerial": 232
+    },
+    {
+      "request_id": "req.235",
+      "method": "tactical.realtime.read",
+      "ms": 74.70990000000165,
+      "bytes": 297221,
+      "browserSerial": 233
+    },
+    {
+      "request_id": "req.236",
+      "method": "tactical.realtime.read",
+      "ms": 46.30769999999757,
+      "bytes": 272348,
+      "browserSerial": 234
+    },
+    {
+      "request_id": "req.237",
+      "method": "tactical.realtime.read",
+      "ms": 39.779600000001665,
+      "bytes": 292234,
+      "browserSerial": 235
+    },
+    {
+      "request_id": "req.238",
+      "method": "tactical.realtime.read",
+      "ms": 43.45300000000134,
+      "bytes": 266836,
+      "browserSerial": 236
+    },
+    {
+      "request_id": "req.239",
+      "method": "tactical.realtime.read",
+      "ms": 51.19120000000112,
+      "bytes": 272664,
+      "browserSerial": 237
+    },
+    {
+      "request_id": "req.240",
+      "method": "tactical.realtime.read",
+      "ms": 54.66730000000098,
+      "bytes": 290318,
+      "browserSerial": 238
+    },
+    {
+      "request_id": "req.241",
+      "method": "tactical.realtime.read",
+      "ms": 39.248200000001816,
+      "bytes": 273657,
+      "browserSerial": 239
+    },
+    {
+      "request_id": "req.242",
+      "method": "tactical.realtime.read",
+      "ms": 65.62779999999475,
+      "bytes": 261302,
+      "browserSerial": 240
+    },
+    {
+      "request_id": "req.243",
+      "method": "tactical.realtime.control",
+      "ms": 4.365600000004633,
+      "bytes": 116,
+      "browserSerial": 241
+    },
+    {
+      "request_id": "req.244",
+      "method": "tactical.realtime.read",
+      "ms": 48.079100000002654,
+      "bytes": 264358,
+      "browserSerial": 242
+    },
+    {
+      "request_id": "req.245",
+      "method": "tactical.realtime.read",
+      "ms": 39.19390000000567,
+      "bytes": 261727,
+      "browserSerial": 243
+    },
+    {
+      "request_id": "req.246",
+      "method": "tactical.realtime.read",
+      "ms": 29.353100000000268,
+      "bytes": 270057,
+      "browserSerial": 244
+    },
+    {
+      "request_id": "req.247",
+      "method": "tactical.realtime.read",
+      "ms": 39.42689999999857,
+      "bytes": 267355,
+      "browserSerial": 245
+    },
+    {
+      "request_id": "req.248",
+      "method": "tactical.realtime.read",
+      "ms": 23.59900000000198,
+      "bytes": 266917,
+      "browserSerial": 246
+    },
+    {
+      "request_id": "req.249",
+      "method": "tactical.realtime.read",
+      "ms": 27.26180000000022,
+      "bytes": 242910,
+      "browserSerial": 247
+    },
+    {
+      "request_id": "req.250",
+      "method": "tactical.realtime.read",
+      "ms": 33.43710000000283,
+      "bytes": 268388,
+      "browserSerial": 248
+    },
+    {
+      "request_id": "req.251",
+      "method": "tactical.realtime.read",
+      "ms": 31.8038000000015,
+      "bytes": 238318,
+      "browserSerial": 249
+    },
+    {
+      "request_id": "req.252",
+      "method": "tactical.realtime.read",
+      "ms": 53.6333999999988,
+      "bytes": 265285,
+      "browserSerial": 250
+    },
+    {
+      "request_id": "req.253",
+      "method": "tactical.realtime.read",
+      "ms": 70.69180000000051,
+      "bytes": 274807,
+      "browserSerial": 251
+    },
+    {
+      "request_id": "req.254",
+      "method": "tactical.realtime.control",
+      "ms": 5.749499999998079,
+      "bytes": 116,
+      "browserSerial": 252
+    },
+    {
+      "request_id": "req.255",
+      "method": "tactical.realtime.read",
+      "ms": 40.927700000000186,
+      "bytes": 275024,
+      "browserSerial": 253
+    },
+    {
+      "request_id": "req.256",
+      "method": "tactical.realtime.read",
+      "ms": 45.86099999999715,
+      "bytes": 261628,
+      "browserSerial": 254
+    },
+    {
+      "request_id": "req.257",
+      "method": "tactical.realtime.read",
+      "ms": 45.31850000000122,
+      "bytes": 262008,
+      "browserSerial": 255
+    },
+    {
+      "request_id": "req.258",
+      "method": "tactical.realtime.read",
+      "ms": 26.40020000000368,
+      "bytes": 264618,
+      "browserSerial": 256
+    },
+    {
+      "request_id": "req.259",
+      "method": "tactical.realtime.read",
+      "ms": 34.2899999999936,
+      "bytes": 256568,
+      "browserSerial": 257
+    },
+    {
+      "request_id": "req.260",
+      "method": "tactical.realtime.read",
+      "ms": 26.645300000003772,
+      "bytes": 273084,
+      "browserSerial": 258
+    },
+    {
+      "request_id": "req.261",
+      "method": "tactical.realtime.read",
+      "ms": 25.955900000000838,
+      "bytes": 263911,
+      "browserSerial": 259
+    },
+    {
+      "request_id": "req.262",
+      "method": "tactical.realtime.read",
+      "ms": 18.945400000004156,
+      "bytes": 234114,
+      "browserSerial": 260
+    },
+    {
+      "request_id": "req.263",
+      "method": "tactical.realtime.read",
+      "ms": 16.01070000000618,
+      "bytes": 237836,
+      "browserSerial": 261
+    },
+    {
+      "request_id": "req.264",
+      "method": "tactical.realtime.read",
+      "ms": 38.41449999999895,
+      "bytes": 264889,
+      "browserSerial": 262
+    },
+    {
+      "request_id": "req.265",
+      "method": "tactical.realtime.read",
+      "ms": 39.13160000000062,
+      "bytes": 245130,
+      "browserSerial": 263
+    },
+    {
+      "request_id": "req.266",
+      "method": "tactical.realtime.control",
+      "ms": 0.6586999999999534,
+      "bytes": 116,
+      "browserSerial": 264
+    },
+    {
+      "request_id": "req.267",
+      "method": "tactical.realtime.read",
+      "ms": 26.341099999997823,
+      "bytes": 269633,
+      "browserSerial": 265
+    },
+    {
+      "request_id": "req.268",
+      "method": "tactical.realtime.read",
+      "ms": 30.464500000001863,
+      "bytes": 262042,
+      "browserSerial": 266
+    },
+    {
+      "request_id": "req.269",
+      "method": "tactical.realtime.read",
+      "ms": 37.573899999995774,
+      "bytes": 262112,
+      "browserSerial": 267
+    },
+    {
+      "request_id": "req.270",
+      "method": "tactical.realtime.read",
+      "ms": 20.322800000001735,
+      "bytes": 239267,
+      "browserSerial": 268
+    },
+    {
+      "request_id": "req.271",
+      "method": "tactical.realtime.read",
+      "ms": 25.531499999997322,
+      "bytes": 264476,
+      "browserSerial": 269
+    },
+    {
+      "request_id": "req.272",
+      "method": "tactical.realtime.read",
+      "ms": 47.68540000000212,
+      "bytes": 266058,
+      "browserSerial": 270
+    },
+    {
+      "request_id": "req.273",
+      "method": "tactical.realtime.read",
+      "ms": 52.17190000000119,
+      "bytes": 268467,
+      "browserSerial": 271
+    },
+    {
+      "request_id": "req.274",
+      "method": "tactical.realtime.read",
+      "ms": 44.67199999999866,
+      "bytes": 273974,
+      "browserSerial": 272
+    },
+    {
+      "request_id": "req.275",
+      "method": "tactical.realtime.read",
+      "ms": 38.67870000000403,
+      "bytes": 265682,
+      "browserSerial": 273
+    },
+    {
+      "request_id": "req.276",
+      "method": "tactical.realtime.read",
+      "ms": 46.98019999999815,
+      "bytes": 267944,
+      "browserSerial": 274
+    },
+    {
+      "request_id": "req.277",
+      "method": "tactical.realtime.control",
+      "ms": 18.77629999999772,
+      "bytes": 116,
+      "browserSerial": 275
+    },
+    {
+      "request_id": "req.278",
+      "method": "tactical.realtime.read",
+      "ms": 49.84179999999469,
+      "bytes": 276618,
+      "browserSerial": 276
+    },
+    {
+      "request_id": "req.279",
+      "method": "tactical.realtime.read",
+      "ms": 40.54290000000037,
+      "bytes": 280879,
+      "browserSerial": 277
+    },
+    {
+      "request_id": "req.280",
+      "method": "tactical.realtime.read",
+      "ms": 27.545200000000477,
+      "bytes": 299086,
+      "browserSerial": 278
+    },
+    {
+      "request_id": "req.281",
+      "method": "tactical.realtime.read",
+      "ms": 56.4030999999959,
+      "bytes": 272338,
+      "browserSerial": 279
+    },
+    {
+      "request_id": "req.282",
+      "method": "tactical.realtime.read",
+      "ms": 37.00789999999688,
+      "bytes": 274946,
+      "browserSerial": 280
+    },
+    {
+      "request_id": "req.283",
+      "method": "tactical.realtime.read",
+      "ms": 28.693000000006577,
+      "bytes": 273964,
+      "browserSerial": 281
+    },
+    {
+      "request_id": "req.284",
+      "method": "tactical.realtime.read",
+      "ms": 37.58259999999427,
+      "bytes": 272231,
+      "browserSerial": 282
+    },
+    {
+      "request_id": "req.285",
+      "method": "tactical.realtime.read",
+      "ms": 48.976800000004005,
+      "bytes": 272349,
+      "browserSerial": 283
+    },
+    {
+      "request_id": "req.286",
+      "method": "tactical.realtime.read",
+      "ms": 58.05939999999828,
+      "bytes": 287406,
+      "browserSerial": 284
+    },
+    {
+      "request_id": "req.287",
+      "method": "tactical.realtime.read",
+      "ms": 28.40450000000419,
+      "bytes": 263123,
+      "browserSerial": 285
+    },
+    {
+      "request_id": "req.288",
+      "method": "tactical.realtime.read",
+      "ms": 23.83600000000297,
+      "bytes": 239822,
+      "browserSerial": 286
+    },
+    {
+      "request_id": "req.289",
+      "method": "tactical.realtime.read",
+      "ms": 29.225100000003295,
+      "bytes": 264343,
+      "browserSerial": 287
+    },
+    {
+      "request_id": "req.290",
+      "method": "tactical.realtime.read",
+      "ms": 32.130799999999,
+      "bytes": 262845,
+      "browserSerial": 288
+    },
+    {
+      "request_id": "req.291",
+      "method": "tactical.realtime.read",
+      "ms": 37.591599999999744,
+      "bytes": 258717,
+      "browserSerial": 289
+    },
+    {
+      "request_id": "req.292",
+      "method": "tactical.realtime.read",
+      "ms": 32.69499999999971,
+      "bytes": 236030,
+      "browserSerial": 290
+    },
+    {
+      "request_id": "req.293",
+      "method": "tactical.realtime.read",
+      "ms": 40.32130000000325,
+      "bytes": 257918,
+      "browserSerial": 291
+    },
+    {
+      "request_id": "req.294",
+      "method": "tactical.realtime.read",
+      "ms": 30.445199999994657,
+      "bytes": 262490,
+      "browserSerial": 292
+    },
+    {
+      "request_id": "req.295",
+      "method": "tactical.realtime.read",
+      "ms": 28.696900000002643,
+      "bytes": 256778,
+      "browserSerial": 293
+    },
+    {
+      "request_id": "req.296",
+      "method": "tactical.realtime.read",
+      "ms": 37.11779999999999,
+      "bytes": 242433,
+      "browserSerial": 294
+    },
+    {
+      "request_id": "req.297",
+      "method": "tactical.realtime.read",
+      "ms": 29.956200000000536,
+      "bytes": 260873,
+      "browserSerial": 295
+    },
+    {
+      "request_id": "req.298",
+      "method": "tactical.realtime.read",
+      "ms": 28.18029999999999,
+      "bytes": 264410,
+      "browserSerial": 296
+    },
+    {
+      "request_id": "req.299",
+      "method": "tactical.realtime.read",
+      "ms": 47.84540000000561,
+      "bytes": 260912,
+      "browserSerial": 297
+    },
+    {
+      "request_id": "req.300",
+      "method": "tactical.realtime.read",
+      "ms": 56.826499999995576,
+      "bytes": 260088,
+      "browserSerial": 298
+    },
+    {
+      "request_id": "req.301",
+      "method": "tactical.realtime.read",
+      "ms": 21.285100000000966,
+      "bytes": 225722,
+      "browserSerial": 299
+    },
+    {
+      "request_id": "req.302",
+      "method": "tactical.realtime.read",
+      "ms": 37.56549999999697,
+      "bytes": 256723,
+      "browserSerial": 300
+    },
+    {
+      "request_id": "req.303",
+      "method": "tactical.realtime.read",
+      "ms": 38.032899999998335,
+      "bytes": 250512,
+      "browserSerial": 301
+    },
+    {
+      "request_id": "req.304",
+      "method": "tactical.realtime.read",
+      "ms": 30.642899999998917,
+      "bytes": 231784,
+      "browserSerial": 302
+    },
+    {
+      "request_id": "req.305",
+      "method": "tactical.realtime.read",
+      "ms": 33.89820000000327,
+      "bytes": 247464,
+      "browserSerial": 303
+    },
+    {
+      "request_id": "req.306",
+      "method": "tactical.realtime.read",
+      "ms": 20.74779999999737,
+      "bytes": 224507,
+      "browserSerial": 304
+    },
+    {
+      "request_id": "req.307",
+      "method": "tactical.realtime.read",
+      "ms": 44.98559999999998,
+      "bytes": 248043,
+      "browserSerial": 305
+    },
+    {
+      "request_id": "req.308",
+      "method": "tactical.realtime.read",
+      "ms": 40.197199999995064,
+      "bytes": 248919,
+      "browserSerial": 306
+    },
+    {
+      "request_id": "req.309",
+      "method": "tactical.realtime.read",
+      "ms": 50.792999999997846,
+      "bytes": 246782,
+      "browserSerial": 307
+    },
+    {
+      "request_id": "req.310",
+      "method": "tactical.realtime.read",
+      "ms": 36.95539999999892,
+      "bytes": 246687,
+      "browserSerial": 308
+    },
+    {
+      "request_id": "req.311",
+      "method": "tactical.realtime.read",
+      "ms": 45.337500000001455,
+      "bytes": 241191,
+      "browserSerial": 309
+    },
+    {
+      "request_id": "req.312",
+      "method": "tactical.realtime.read",
+      "ms": 37.239300000001094,
+      "bytes": 243126,
+      "browserSerial": 310
+    },
+    {
+      "request_id": "req.313",
+      "method": "tactical.realtime.read",
+      "ms": 40.08439999999973,
+      "bytes": 234776,
+      "browserSerial": 311
+    },
+    {
+      "request_id": "req.314",
+      "method": "tactical.realtime.read",
+      "ms": 55.37289999999484,
+      "bytes": 247063,
+      "browserSerial": 312
+    },
+    {
+      "request_id": "req.315",
+      "method": "tactical.realtime.read",
+      "ms": 29.932699999997567,
+      "bytes": 244577,
+      "browserSerial": 313
+    },
+    {
+      "request_id": "req.316",
+      "method": "tactical.realtime.read",
+      "ms": 73.37339999999676,
+      "bytes": 235629,
+      "browserSerial": 314
+    },
+    {
+      "request_id": "req.317",
+      "method": "tactical.realtime.read",
+      "ms": 44.84180000000197,
+      "bytes": 243555,
+      "browserSerial": 315
+    },
+    {
+      "request_id": "req.318",
+      "method": "tactical.realtime.read",
+      "ms": 23.661599999999453,
+      "bytes": 211663,
+      "browserSerial": 316
+    },
+    {
+      "request_id": "req.319",
+      "method": "tactical.realtime.read",
+      "ms": 40.764799999997194,
+      "bytes": 230931,
+      "browserSerial": 317
+    },
+    {
+      "request_id": "req.320",
+      "method": "tactical.realtime.read",
+      "ms": 25.025900000000547,
+      "bytes": 210179,
+      "browserSerial": 318
+    },
+    {
+      "request_id": "req.321",
+      "method": "tactical.realtime.read",
+      "ms": 27.01550000000134,
+      "bytes": 227319,
+      "browserSerial": 319
+    },
+    {
+      "request_id": "req.322",
+      "method": "tactical.realtime.read",
+      "ms": 33.74789999999484,
+      "bytes": 206813,
+      "browserSerial": 320
+    },
+    {
+      "request_id": "req.323",
+      "method": "tactical.realtime.read",
+      "ms": 42.91410000000178,
+      "bytes": 230694,
+      "browserSerial": 321
+    },
+    {
+      "request_id": "req.324",
+      "method": "tactical.realtime.read",
+      "ms": 34.81999999999971,
+      "bytes": 233995,
+      "browserSerial": 322
+    },
+    {
+      "request_id": "req.325",
+      "method": "tactical.realtime.read",
+      "ms": 18.47860000000219,
+      "bytes": 206821,
+      "browserSerial": 323
+    },
+    {
+      "request_id": "req.326",
+      "method": "tactical.realtime.read",
+      "ms": 24.952100000002247,
+      "bytes": 232850,
+      "browserSerial": 324
+    },
+    {
+      "request_id": "req.327",
+      "method": "tactical.realtime.read",
+      "ms": 29.099099999999453,
+      "bytes": 241059,
+      "browserSerial": 325
+    },
+    {
+      "request_id": "req.328",
+      "method": "tactical.realtime.read",
+      "ms": 59.33749999999418,
+      "bytes": 234365,
+      "browserSerial": 326
+    },
+    {
+      "request_id": "req.329",
+      "method": "tactical.realtime.read",
+      "ms": 24.11290000000008,
+      "bytes": 237165,
+      "browserSerial": 327
+    },
+    {
+      "request_id": "req.330",
+      "method": "tactical.realtime.read",
+      "ms": 41.1678000000029,
+      "bytes": 290828,
+      "browserSerial": 328
+    },
+    {
+      "request_id": "req.331",
+      "method": "tactical.realtime.pause",
+      "ms": 63.83679999999731,
+      "bytes": 536762,
+      "browserSerial": 329
+    },
+    {
+      "request_id": "req.332",
+      "method": "tactical.realtime.read",
+      "ms": 21.139600000002247,
+      "bytes": 188959,
+      "browserSerial": 330
+    },
+    {
+      "request_id": "req.333",
+      "method": "tactical.realtime.read",
+      "ms": 14.647499999999127,
+      "bytes": 188959,
+      "browserSerial": 331
+    },
+    {
+      "request_id": "req.334",
+      "method": "tactical.realtime.read",
+      "ms": 21.26350000000093,
+      "bytes": 188959,
+      "browserSerial": 332
+    },
+    {
+      "request_id": "req.335",
+      "method": "tactical.realtime.read",
+      "ms": 14.021399999997811,
+      "bytes": 188959,
+      "browserSerial": 333
+    }
+  ],
+  "peakResponseBytes": 536762,
+  "heap": [
+    {
+      "label": "paused-entry",
+      "usedSize": 15015792,
+      "totalSize": 16416768,
+      "embedderHeapUsedSize": 1243536,
+      "backingStorageSize": 12756330,
+      "documents": 1,
+      "nodes": 87,
+      "jsEventListeners": 171
+    },
+    {
+      "label": "paused-end",
+      "usedSize": 34972180,
+      "totalSize": 40030208,
+      "embedderHeapUsedSize": 4099816,
+      "backingStorageSize": 13178902,
+      "documents": 6,
+      "nodes": 1370,
+      "jsEventListeners": 326
+    },
+    {
+      "label": "unmounted",
+      "usedSize": 1169932,
+      "totalSize": 3145728,
+      "embedderHeapUsedSize": 869776,
+      "backingStorageSize": 261,
+      "documents": 6,
+      "nodes": 48,
+      "jsEventListeners": 0
+    }
+  ],
+  "errors": []
+}

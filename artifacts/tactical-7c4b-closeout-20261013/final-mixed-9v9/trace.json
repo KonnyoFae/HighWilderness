@@ -1,0 +1,7223 @@
+{
+  "events": [
+    {
+      "kind": "publication",
+      "at_ms": 234617206.59149998,
+      "start_ms": 234617198.1649,
+      "step": 0,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234617212.6424,
+      "request_id": "req.14",
+      "start_ms": 234617206.5995,
+      "view_step": 0,
+      "authority_step": 0,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234617221.4737,
+      "request_id": "req.14",
+      "method": "tactical.realtime.resume",
+      "start_ms": 234617198.1056
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234617292.174,
+      "start_ms": 234617287.1695,
+      "step": 2,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234617380.7723,
+      "start_ms": 234617373.5264,
+      "step": 6,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234617388.1858,
+      "request_id": "req.15",
+      "start_ms": 234617380.8502,
+      "view_step": 6,
+      "authority_step": 6,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234617396.98319998,
+      "request_id": "req.15",
+      "method": "tactical.realtime.read",
+      "start_ms": 234617380.8264
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234617454.70679998,
+      "start_ms": 234617447.209,
+      "step": 8,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234617533.39999998,
+      "start_ms": 234617526.15739998,
+      "step": 11,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234617589.199,
+      "request_id": "req.16",
+      "start_ms": 234617580.26389998,
+      "view_step": 11,
+      "authority_step": 13,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234617598.3639,
+      "request_id": "req.16",
+      "method": "tactical.realtime.read",
+      "start_ms": 234617580.1859
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234617628.9838,
+      "start_ms": 234617621.27380002,
+      "step": 14,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234617724.64249998,
+      "start_ms": 234617718.00329998,
+      "step": 16,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234617775.6049,
+      "request_id": "req.17",
+      "start_ms": 234617767.4429,
+      "view_step": 16,
+      "authority_step": 17,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234617786.6042,
+      "request_id": "req.17",
+      "method": "tactical.realtime.read",
+      "start_ms": 234617767.3768
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234617820.2105,
+      "start_ms": 234617811.439,
+      "step": 18,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234617906.6645,
+      "start_ms": 234617899.7546,
+      "step": 20,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234617948.9332,
+      "request_id": "req.18",
+      "start_ms": 234617941.14839998,
+      "view_step": 20,
+      "authority_step": 21,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234617960.0059,
+      "request_id": "req.18",
+      "method": "tactical.realtime.read",
+      "start_ms": 234617941.1119
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234617992.90039998,
+      "start_ms": 234617985.2035,
+      "step": 22,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234618085.40559998,
+      "start_ms": 234618077.97,
+      "step": 24,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234618127.8595,
+      "request_id": "req.19",
+      "start_ms": 234618118.69370002,
+      "view_step": 24,
+      "authority_step": 25,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234618136.7257,
+      "request_id": "req.19",
+      "method": "tactical.realtime.read",
+      "start_ms": 234618118.597
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234618230.4462,
+      "start_ms": 234618161.2298,
+      "step": 26,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234618308.39180002,
+      "start_ms": 234618300.8966,
+      "step": 29,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234618316.2106,
+      "request_id": "req.20",
+      "start_ms": 234618308.5364,
+      "view_step": 29,
+      "authority_step": 29,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234618326.18870002,
+      "request_id": "req.20",
+      "method": "tactical.realtime.read",
+      "start_ms": 234618308.4637
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234618397.7994,
+      "start_ms": 234618390.3062,
+      "step": 31,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234618473.18400002,
+      "start_ms": 234618463.8911,
+      "step": 32,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234618505.1293,
+      "request_id": "req.21",
+      "start_ms": 234618497.67139998,
+      "view_step": 32,
+      "authority_step": 33,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234618515.0481,
+      "request_id": "req.21",
+      "method": "tactical.realtime.read",
+      "start_ms": 234618497.6197
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234618556.78959998,
+      "start_ms": 234618548.9804,
+      "step": 34,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234618648.7335,
+      "start_ms": 234618641.9981,
+      "step": 36,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234618664.5328,
+      "request_id": "req.22",
+      "start_ms": 234618655.60259998,
+      "view_step": 36,
+      "authority_step": 36,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234618674.43760002,
+      "request_id": "req.22",
+      "method": "tactical.realtime.read",
+      "start_ms": 234618655.5068
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234618751.6466,
+      "start_ms": 234618745.0982,
+      "step": 38,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234618826.02539998,
+      "start_ms": 234618818.455,
+      "step": 39,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234618858.33290002,
+      "request_id": "req.23",
+      "start_ms": 234618850.0979,
+      "view_step": 39,
+      "authority_step": 40,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234618867.7554,
+      "request_id": "req.23",
+      "method": "tactical.realtime.read",
+      "start_ms": 234618850.0596
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234618910.7696,
+      "start_ms": 234618904.2732,
+      "step": 41,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234619012.1379,
+      "start_ms": 234619004.7484,
+      "step": 43,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234619019.3444,
+      "request_id": "req.24",
+      "start_ms": 234619012.2275,
+      "view_step": 43,
+      "authority_step": 43,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234619029.5801,
+      "request_id": "req.24",
+      "method": "tactical.realtime.read",
+      "start_ms": 234619012.1889
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234619124.837,
+      "start_ms": 234619116.64299998,
+      "step": 45,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234619158.264,
+      "sequence": 1,
+      "target_step": 48,
+      "at_step": 46
+    },
+    {
+      "kind": "request",
+      "at_ms": 234619158.3486,
+      "request_id": "req.25",
+      "method": "tactical.realtime.control",
+      "start_ms": 234619158.146
+    },
+    {
+      "kind": "read",
+      "at_ms": 234619186.187,
+      "request_id": "req.26",
+      "start_ms": 234619177.9211,
+      "view_step": 45,
+      "authority_step": 46,
+      "receipts": [
+        {
+          "sequence": 1,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234619194.4081,
+      "request_id": "req.26",
+      "method": "tactical.realtime.read",
+      "start_ms": 234619177.856
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234619230.26459998,
+      "start_ms": 234619223.48479998,
+      "step": 47,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234619307.8624,
+      "sequence": 1,
+      "status": "executed",
+      "step": 49
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234619315.15129998,
+      "start_ms": 234619307.901,
+      "step": 49,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234619365.87840003,
+      "request_id": "req.27",
+      "start_ms": 234619357.6146,
+      "view_step": 49,
+      "authority_step": 50,
+      "receipts": [
+        {
+          "sequence": 1,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234619377.18310001,
+      "request_id": "req.27",
+      "method": "tactical.realtime.read",
+      "start_ms": 234619357.5744
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234619418.0242,
+      "start_ms": 234619410.575,
+      "step": 51,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234619518.8597,
+      "start_ms": 234619511.3017,
+      "step": 53,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234619529.6565,
+      "request_id": "req.28",
+      "start_ms": 234619522.68600002,
+      "view_step": 53,
+      "authority_step": 53,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234619539.66430002,
+      "request_id": "req.28",
+      "method": "tactical.realtime.read",
+      "start_ms": 234619522.5991
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234619626.14929998,
+      "start_ms": 234619618.7394,
+      "step": 55,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234619729.43199998,
+      "start_ms": 234619721.764,
+      "step": 57,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234619737.6532,
+      "request_id": "req.29",
+      "start_ms": 234619729.57140002,
+      "view_step": 57,
+      "authority_step": 57,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234619748.05580002,
+      "request_id": "req.29",
+      "method": "tactical.realtime.read",
+      "start_ms": 234619729.51500002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234619842.7455,
+      "start_ms": 234619832.90350002,
+      "step": 59,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234619919.89749998,
+      "request_id": "req.30",
+      "start_ms": 234619912.1008,
+      "view_step": 59,
+      "authority_step": 60,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234619929.0809,
+      "request_id": "req.30",
+      "method": "tactical.realtime.read",
+      "start_ms": 234619911.9976
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234619970.6065,
+      "start_ms": 234619961.67709997,
+      "step": 61,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234620062.51700002,
+      "start_ms": 234620054.2642,
+      "step": 63,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234620083.112,
+      "request_id": "req.31",
+      "start_ms": 234620074.20810002,
+      "view_step": 63,
+      "authority_step": 63,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234620092.09600002,
+      "request_id": "req.31",
+      "method": "tactical.realtime.read",
+      "start_ms": 234620074.1399
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234620139.1178,
+      "start_ms": 234620130.2754,
+      "step": 64,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234620231.9465,
+      "start_ms": 234620224.7211,
+      "step": 66,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234620288.5699,
+      "request_id": "req.32",
+      "start_ms": 234620279.4054,
+      "view_step": 66,
+      "authority_step": 67,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234620298.5888,
+      "request_id": "req.32",
+      "method": "tactical.realtime.read",
+      "start_ms": 234620279.3199
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234620305.484,
+      "start_ms": 234620298.661,
+      "step": 67,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234620391.48180002,
+      "start_ms": 234620384.30060002,
+      "step": 69,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234620457.5663,
+      "request_id": "req.33",
+      "start_ms": 234620447.6476,
+      "view_step": 69,
+      "authority_step": 70,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234620468.451,
+      "request_id": "req.33",
+      "method": "tactical.realtime.read",
+      "start_ms": 234620447.55069998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234620476.689,
+      "start_ms": 234620468.5314,
+      "step": 70,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234620562.1188,
+      "start_ms": 234620554.7998,
+      "step": 72,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234620632.0092,
+      "request_id": "req.34",
+      "start_ms": 234620623.15850002,
+      "view_step": 72,
+      "authority_step": 73,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234620642.0295,
+      "request_id": "req.34",
+      "method": "tactical.realtime.read",
+      "start_ms": 234620623.0519
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234620686.8274,
+      "start_ms": 234620678.9688,
+      "step": 74,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234620783.3337,
+      "start_ms": 234620778.2732,
+      "step": 76,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234620803.86740002,
+      "request_id": "req.35",
+      "start_ms": 234620795.3602,
+      "view_step": 76,
+      "authority_step": 76,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234620815.3577,
+      "request_id": "req.35",
+      "method": "tactical.realtime.read",
+      "start_ms": 234620795.2734
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234620902.9696,
+      "start_ms": 234620893.6821,
+      "step": 78,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234620948.4322,
+      "sequence": 2,
+      "target_step": 80,
+      "at_step": 79
+    },
+    {
+      "kind": "request",
+      "at_ms": 234620948.5276,
+      "request_id": "req.36",
+      "method": "tactical.realtime.control",
+      "start_ms": 234620948.3133
+    },
+    {
+      "kind": "read",
+      "at_ms": 234620978.9021,
+      "request_id": "req.37",
+      "start_ms": 234620969.2649,
+      "view_step": 78,
+      "authority_step": 79,
+      "receipts": [
+        {
+          "sequence": 2,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234620987.85860002,
+      "request_id": "req.37",
+      "method": "tactical.realtime.read",
+      "start_ms": 234620969.17299998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234621022.1911,
+      "start_ms": 234621014.17700002,
+      "step": 80,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234621088.8223,
+      "sequence": 2,
+      "status": "executed",
+      "step": 81
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234621097.63140002,
+      "start_ms": 234621088.8741,
+      "step": 81,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234621188.2284,
+      "start_ms": 234621179.5843,
+      "step": 83,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234621195.5505,
+      "request_id": "req.38",
+      "start_ms": 234621188.3981,
+      "view_step": 83,
+      "authority_step": 83,
+      "receipts": [
+        {
+          "sequence": 2,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234621204.26070002,
+      "request_id": "req.38",
+      "method": "tactical.realtime.read",
+      "start_ms": 234621188.3059
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234621292.7164,
+      "start_ms": 234621283.07299998,
+      "step": 85,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234621361.1316,
+      "request_id": "req.39",
+      "start_ms": 234621352.82639998,
+      "view_step": 85,
+      "authority_step": 86,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234621372.618,
+      "request_id": "req.39",
+      "method": "tactical.realtime.read",
+      "start_ms": 234621352.75759998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234621381.1834,
+      "start_ms": 234621372.72000003,
+      "step": 86,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234621481.9824,
+      "start_ms": 234621476.2483,
+      "step": 88,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234621541.0428,
+      "request_id": "req.40",
+      "start_ms": 234621532.0527,
+      "view_step": 88,
+      "authority_step": 89,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234621551.5062,
+      "request_id": "req.40",
+      "method": "tactical.realtime.read",
+      "start_ms": 234621531.9792
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234621559.3806,
+      "start_ms": 234621551.5728,
+      "step": 89,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234621664.0104,
+      "start_ms": 234621657.3322,
+      "step": 91,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234621720.7432,
+      "request_id": "req.41",
+      "start_ms": 234621713.2884,
+      "view_step": 91,
+      "authority_step": 92,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234621731.6848,
+      "request_id": "req.41",
+      "method": "tactical.realtime.read",
+      "start_ms": 234621713.223
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234621740.2143,
+      "start_ms": 234621731.752,
+      "step": 92,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234621845.2337,
+      "start_ms": 234621838.7512,
+      "step": 94,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234621905.89540002,
+      "request_id": "req.42",
+      "start_ms": 234621895.81300002,
+      "view_step": 94,
+      "authority_step": 95,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234621916.4869,
+      "request_id": "req.42",
+      "method": "tactical.realtime.read",
+      "start_ms": 234621895.75890002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234621924.7074,
+      "start_ms": 234621916.5499,
+      "step": 95,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234622031.94660002,
+      "start_ms": 234622024.66210002,
+      "step": 97,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234622086.6651,
+      "request_id": "req.43",
+      "start_ms": 234622076.648,
+      "view_step": 97,
+      "authority_step": 98,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234622097.786,
+      "request_id": "req.43",
+      "method": "tactical.realtime.read",
+      "start_ms": 234622076.5637
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234622144.4029,
+      "start_ms": 234622137.45459998,
+      "step": 99,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234622230.3043,
+      "start_ms": 234622223.8219,
+      "step": 100,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234622269.2041,
+      "request_id": "req.44",
+      "start_ms": 234622260.4023,
+      "view_step": 100,
+      "authority_step": 101,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234622280.1953,
+      "request_id": "req.44",
+      "method": "tactical.realtime.read",
+      "start_ms": 234622260.2807
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234622330.69120002,
+      "start_ms": 234622322.7927,
+      "step": 102,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234622407.6564,
+      "start_ms": 234622400.5356,
+      "step": 103,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234622459.28109998,
+      "request_id": "req.45",
+      "start_ms": 234622448.809,
+      "view_step": 103,
+      "authority_step": 104,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234622470.1095,
+      "request_id": "req.45",
+      "method": "tactical.realtime.read",
+      "start_ms": 234622448.75829998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234622512.888,
+      "start_ms": 234622503.7455,
+      "step": 105,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234622591.0323,
+      "start_ms": 234622583.0035,
+      "step": 106,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234622641.4343,
+      "request_id": "req.46",
+      "start_ms": 234622632.1713,
+      "view_step": 106,
+      "authority_step": 107,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234622653.7959,
+      "request_id": "req.46",
+      "method": "tactical.realtime.read",
+      "start_ms": 234622632.1115
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234622695.5618,
+      "start_ms": 234622686.6626,
+      "step": 108,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234622772.0088,
+      "start_ms": 234622764.73250002,
+      "step": 109,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234622818.6435,
+      "sequence": 3,
+      "target_step": 111,
+      "at_step": 110
+    },
+    {
+      "kind": "request",
+      "at_ms": 234622818.7432,
+      "request_id": "req.47",
+      "method": "tactical.realtime.control",
+      "start_ms": 234622818.57
+    },
+    {
+      "kind": "read",
+      "at_ms": 234622834.5499,
+      "request_id": "req.48",
+      "start_ms": 234622824.97779998,
+      "view_step": 109,
+      "authority_step": 110,
+      "receipts": [
+        {
+          "sequence": 3,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234622844.8529,
+      "request_id": "req.48",
+      "method": "tactical.realtime.read",
+      "start_ms": 234622824.84809998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234622852.76839998,
+      "start_ms": 234622844.9197,
+      "step": 110,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234622950.5432,
+      "sequence": 3,
+      "status": "executed",
+      "step": 112
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234622957.358,
+      "start_ms": 234622950.58519998,
+      "step": 112,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234623027.2532,
+      "request_id": "req.49",
+      "start_ms": 234623014.9268,
+      "view_step": 112,
+      "authority_step": 113,
+      "receipts": [
+        {
+          "sequence": 3,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234623040.6609,
+      "request_id": "req.49",
+      "method": "tactical.realtime.read",
+      "start_ms": 234623014.8619
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234623049.9415,
+      "start_ms": 234623040.7384,
+      "step": 113,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234623159.2257,
+      "start_ms": 234623150.1511,
+      "step": 115,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234623227.2867,
+      "request_id": "req.50",
+      "start_ms": 234623218.1641,
+      "view_step": 115,
+      "authority_step": 116,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234623238.13000003,
+      "request_id": "req.50",
+      "method": "tactical.realtime.read",
+      "start_ms": 234623218.0446
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234623245.3974,
+      "start_ms": 234623238.21199998,
+      "step": 116,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234623357.1754,
+      "start_ms": 234623348.7566,
+      "step": 118,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234623424.4214,
+      "request_id": "req.51",
+      "start_ms": 234623414.40840003,
+      "view_step": 118,
+      "authority_step": 119,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234623435.32320002,
+      "request_id": "req.51",
+      "method": "tactical.realtime.read",
+      "start_ms": 234623414.2975
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234623443.2505,
+      "start_ms": 234623435.4025,
+      "step": 119,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234623518.63090003,
+      "start_ms": 234623510.6816,
+      "step": 120,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234623620.3092,
+      "start_ms": 234623612.70639998,
+      "step": 122,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234623627.322,
+      "request_id": "req.52",
+      "start_ms": 234623620.4712,
+      "view_step": 122,
+      "authority_step": 122,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234623638.2204,
+      "request_id": "req.52",
+      "method": "tactical.realtime.read",
+      "start_ms": 234623620.3624
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234623698.1895,
+      "start_ms": 234623690.79950002,
+      "step": 123,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234623775.815,
+      "start_ms": 234623766.6219,
+      "step": 124,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234623821.5662,
+      "request_id": "req.53",
+      "start_ms": 234623811.7869,
+      "view_step": 124,
+      "authority_step": 125,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234623832.3722,
+      "request_id": "req.53",
+      "method": "tactical.realtime.read",
+      "start_ms": 234623811.71899998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234623900.24769998,
+      "start_ms": 234623891.8826,
+      "step": 126,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234623980.4112,
+      "start_ms": 234623970.6354,
+      "step": 127,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234624021.9297,
+      "request_id": "req.54",
+      "start_ms": 234624011.8867,
+      "view_step": 127,
+      "authority_step": 128,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234624032.0952,
+      "request_id": "req.54",
+      "method": "tactical.realtime.read",
+      "start_ms": 234624011.787
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234624096.6213,
+      "start_ms": 234624085.9262,
+      "step": 129,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234624180.48040003,
+      "start_ms": 234624171.2519,
+      "step": 130,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234624219.13020003,
+      "request_id": "req.55",
+      "start_ms": 234624210.4436,
+      "view_step": 130,
+      "authority_step": 131,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234624231.2924,
+      "request_id": "req.55",
+      "method": "tactical.realtime.read",
+      "start_ms": 234624210.3643
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234624278.6597,
+      "start_ms": 234624269.82799998,
+      "step": 132,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234624351.1855,
+      "start_ms": 234624345.4981,
+      "step": 133,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234624363.9781,
+      "request_id": "req.56",
+      "start_ms": 234624356.6182,
+      "view_step": 133,
+      "authority_step": 133,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234624373.914,
+      "request_id": "req.56",
+      "method": "tactical.realtime.read",
+      "start_ms": 234624356.5674
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234624430.94210002,
+      "start_ms": 234624420.725,
+      "step": 134,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234624543.5599,
+      "start_ms": 234624536.5554,
+      "step": 136,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234624543.70020002,
+      "sequence": 4,
+      "target_step": 137,
+      "at_step": 136
+    },
+    {
+      "kind": "request",
+      "at_ms": 234624543.7951,
+      "request_id": "req.57",
+      "method": "tactical.realtime.control",
+      "start_ms": 234624543.6205
+    },
+    {
+      "kind": "read",
+      "at_ms": 234624580.0787,
+      "request_id": "req.58",
+      "start_ms": 234624572.9278,
+      "view_step": 136,
+      "authority_step": 136,
+      "receipts": [
+        {
+          "sequence": 4,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234624588.182,
+      "request_id": "req.58",
+      "method": "tactical.realtime.read",
+      "start_ms": 234624572.84939998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234624628.85770002,
+      "start_ms": 234624621.1132,
+      "step": 137,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234624687.75620002,
+      "sequence": 4,
+      "status": "executed",
+      "step": 138
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234624705.84800002,
+      "start_ms": 234624698.7683,
+      "step": 138,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234624818.7629,
+      "start_ms": 234624808.6212,
+      "step": 140,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234624885.8166,
+      "request_id": "req.59",
+      "start_ms": 234624818.89429998,
+      "view_step": 140,
+      "authority_step": 140,
+      "receipts": [
+        {
+          "sequence": 4,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234624899.1292,
+      "request_id": "req.59",
+      "method": "tactical.realtime.read",
+      "start_ms": 234624818.8377
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234624941.4569,
+      "start_ms": 234624932.9826,
+      "step": 141,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625019.5242,
+      "start_ms": 234625011.86979997,
+      "step": 143,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625110.15600002,
+      "start_ms": 234625100.4356,
+      "step": 144,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234625121.47750002,
+      "request_id": "req.60",
+      "start_ms": 234625110.3535,
+      "view_step": 144,
+      "authority_step": 144,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234625130.56620002,
+      "request_id": "req.60",
+      "method": "tactical.realtime.read",
+      "start_ms": 234625110.2387
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625182.86470002,
+      "start_ms": 234625175.9975,
+      "step": 145,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625260.04729998,
+      "start_ms": 234625254.0572,
+      "step": 146,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234625283.7277,
+      "request_id": "req.61",
+      "start_ms": 234625274.0685,
+      "view_step": 146,
+      "authority_step": 146,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234625294.4231,
+      "request_id": "req.61",
+      "method": "tactical.realtime.read",
+      "start_ms": 234625274.0022
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625346.5035,
+      "start_ms": 234625338.53489998,
+      "step": 147,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625429.1654,
+      "start_ms": 234625422.3708,
+      "step": 148,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234625456.3632,
+      "request_id": "req.62",
+      "start_ms": 234625447.67659998,
+      "view_step": 148,
+      "authority_step": 148,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234625467.68550003,
+      "request_id": "req.62",
+      "method": "tactical.realtime.read",
+      "start_ms": 234625447.61589998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625513.4662,
+      "start_ms": 234625506.0026,
+      "step": 149,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625587.44189999,
+      "start_ms": 234625580.0524,
+      "step": 150,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234625633.6453,
+      "request_id": "req.63",
+      "start_ms": 234625622.97950003,
+      "view_step": 150,
+      "authority_step": 150,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234625643.1625,
+      "request_id": "req.63",
+      "method": "tactical.realtime.read",
+      "start_ms": 234625622.9466
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625680.75669998,
+      "start_ms": 234625673.30600002,
+      "step": 151,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625768.582,
+      "start_ms": 234625760.54749998,
+      "step": 152,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234625831.3592,
+      "request_id": "req.64",
+      "start_ms": 234625822.6209,
+      "view_step": 152,
+      "authority_step": 153,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234625841.628,
+      "request_id": "req.64",
+      "method": "tactical.realtime.read",
+      "start_ms": 234625822.57349998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625849.38599998,
+      "start_ms": 234625841.7206,
+      "step": 153,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234625926.7441,
+      "start_ms": 234625916.4034,
+      "step": 154,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234626011.9623,
+      "start_ms": 234626005.64310002,
+      "step": 155,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234626019.9787,
+      "request_id": "req.65",
+      "start_ms": 234626012.2163,
+      "view_step": 155,
+      "authority_step": 155,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234626030.1835,
+      "request_id": "req.65",
+      "method": "tactical.realtime.read",
+      "start_ms": 234626012.16419998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234626091.24800003,
+      "start_ms": 234626082.99699998,
+      "step": 156,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234626176.8391,
+      "start_ms": 234626168.9784,
+      "step": 157,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234626233.4973,
+      "request_id": "req.66",
+      "start_ms": 234626224.72329998,
+      "view_step": 157,
+      "authority_step": 158,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234626242.49830002,
+      "request_id": "req.66",
+      "method": "tactical.realtime.read",
+      "start_ms": 234626224.6715
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234626253.0454,
+      "start_ms": 234626245.0792,
+      "step": 158,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234626338.0122,
+      "start_ms": 234626329.55659997,
+      "step": 159,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234626394.65579998,
+      "sequence": 5,
+      "target_step": 162,
+      "at_step": 160
+    },
+    {
+      "kind": "request",
+      "at_ms": 234626394.75939998,
+      "request_id": "req.67",
+      "method": "tactical.realtime.control",
+      "start_ms": 234626394.5825
+    },
+    {
+      "kind": "read",
+      "at_ms": 234626409.6632,
+      "request_id": "req.68",
+      "start_ms": 234626400.838,
+      "view_step": 159,
+      "authority_step": 160,
+      "receipts": [
+        {
+          "sequence": 5,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234626420.53010002,
+      "request_id": "req.68",
+      "method": "tactical.realtime.read",
+      "start_ms": 234626400.76479998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234626428.3451,
+      "start_ms": 234626420.5923,
+      "step": 160,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234626504.7446,
+      "start_ms": 234626495.9028,
+      "step": 161,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234626592.8624,
+      "request_id": "req.69",
+      "start_ms": 234626583.92909998,
+      "view_step": 161,
+      "authority_step": 162,
+      "receipts": [
+        {
+          "sequence": 5,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234626605.6937,
+      "request_id": "req.69",
+      "method": "tactical.realtime.read",
+      "start_ms": 234626583.8702
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234626645.2769,
+      "sequence": 5,
+      "status": "executed",
+      "step": 163
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234626652.4169,
+      "start_ms": 234626645.3138,
+      "step": 163,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234626727.6787,
+      "start_ms": 234626719.8662,
+      "step": 164,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234626775.0933,
+      "request_id": "req.70",
+      "start_ms": 234626765.16,
+      "view_step": 164,
+      "authority_step": 165,
+      "receipts": [
+        {
+          "sequence": 5,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234626787.6805,
+      "request_id": "req.70",
+      "method": "tactical.realtime.read",
+      "start_ms": 234626765.11360002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234626844.5194,
+      "start_ms": 234626835.84,
+      "step": 166,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234626928.691,
+      "start_ms": 234626921.3136,
+      "step": 167,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234626959.1886,
+      "request_id": "req.71",
+      "start_ms": 234626949.8879,
+      "view_step": 167,
+      "authority_step": 167,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234626969.6157,
+      "request_id": "req.71",
+      "method": "tactical.realtime.read",
+      "start_ms": 234626949.7429
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627014.7024,
+      "start_ms": 234627007.0964,
+      "step": 168,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627089.1148,
+      "start_ms": 234627081.75849998,
+      "step": 169,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234627141.23360002,
+      "request_id": "req.72",
+      "start_ms": 234627132.9321,
+      "view_step": 169,
+      "authority_step": 170,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234627152.1884,
+      "request_id": "req.72",
+      "method": "tactical.realtime.read",
+      "start_ms": 234627132.8941
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627166.85450003,
+      "start_ms": 234627158.3221,
+      "step": 170,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627278.9871,
+      "start_ms": 234627272.132,
+      "step": 172,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234627306.08969998,
+      "request_id": "req.73",
+      "start_ms": 234627297.4575,
+      "view_step": 172,
+      "authority_step": 172,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234627317.7906,
+      "request_id": "req.73",
+      "method": "tactical.realtime.read",
+      "start_ms": 234627297.3603
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627364.055,
+      "start_ms": 234627356.28370002,
+      "step": 173,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627446.234,
+      "start_ms": 234627438.7485,
+      "step": 174,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234627490.3989,
+      "request_id": "req.74",
+      "start_ms": 234627481.6695,
+      "view_step": 174,
+      "authority_step": 175,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234627501.7398,
+      "request_id": "req.74",
+      "method": "tactical.realtime.read",
+      "start_ms": 234627481.61859998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627560.19439998,
+      "start_ms": 234627551.84530002,
+      "step": 176,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627646.92339998,
+      "start_ms": 234627639.187,
+      "step": 177,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234627707.2104,
+      "request_id": "req.75",
+      "start_ms": 234627699.42859998,
+      "view_step": 177,
+      "authority_step": 178,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234627716.6031,
+      "request_id": "req.75",
+      "method": "tactical.realtime.read",
+      "start_ms": 234627699.3793
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627723.23549998,
+      "start_ms": 234627716.67279997,
+      "step": 178,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627797.4826,
+      "start_ms": 234627790.7261,
+      "step": 179,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627915.8094,
+      "start_ms": 234627908.4405,
+      "step": 181,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234627924.1436,
+      "request_id": "req.76",
+      "start_ms": 234627915.9207,
+      "view_step": 181,
+      "authority_step": 181,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234627933.6277,
+      "request_id": "req.76",
+      "method": "tactical.realtime.read",
+      "start_ms": 234627915.8705
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234627989.68629998,
+      "start_ms": 234627982.1054,
+      "step": 182,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234628072.9958,
+      "request_id": "req.77",
+      "start_ms": 234628065.3056,
+      "view_step": 182,
+      "authority_step": 183,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234628084.37309998,
+      "request_id": "req.77",
+      "method": "tactical.realtime.read",
+      "start_ms": 234628065.248
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234628133.84170002,
+      "start_ms": 234628125.8107,
+      "step": 184,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234628211.16750002,
+      "start_ms": 234628201.9556,
+      "step": 185,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234628254.34129998,
+      "sequence": 6,
+      "target_step": 187,
+      "at_step": 186
+    },
+    {
+      "kind": "request",
+      "at_ms": 234628254.4362,
+      "request_id": "req.78",
+      "method": "tactical.realtime.control",
+      "start_ms": 234628254.273
+    },
+    {
+      "kind": "read",
+      "at_ms": 234628274.4938,
+      "request_id": "req.79",
+      "start_ms": 234628267.0923,
+      "view_step": 185,
+      "authority_step": 186,
+      "receipts": [
+        {
+          "sequence": 6,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234628283.1422,
+      "request_id": "req.79",
+      "method": "tactical.realtime.read",
+      "start_ms": 234628267.03359997
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234628291.6483,
+      "start_ms": 234628283.2051,
+      "step": 186,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234628368.6894,
+      "start_ms": 234628361.5959,
+      "step": 187,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234628426.5828,
+      "sequence": 6,
+      "status": "executed",
+      "step": 188
+    },
+    {
+      "kind": "read",
+      "at_ms": 234628440.0673,
+      "request_id": "req.80",
+      "start_ms": 234628430.2826,
+      "view_step": 187,
+      "authority_step": 188,
+      "receipts": [
+        {
+          "sequence": 6,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234628451.549,
+      "request_id": "req.80",
+      "method": "tactical.realtime.read",
+      "start_ms": 234628430.24089998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234628459.54020002,
+      "start_ms": 234628451.63259998,
+      "step": 188,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234628538.2531,
+      "start_ms": 234628529.04749998,
+      "step": 189,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234628611.5783,
+      "start_ms": 234628604.3107,
+      "step": 190,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234628659.57270002,
+      "request_id": "req.81",
+      "start_ms": 234628651.07,
+      "view_step": 190,
+      "authority_step": 191,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234628668.8272,
+      "request_id": "req.81",
+      "method": "tactical.realtime.read",
+      "start_ms": 234628651.0187
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234628689.6979,
+      "start_ms": 234628681.9738,
+      "step": 191,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234628773.022,
+      "start_ms": 234628764.8534,
+      "step": 192,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234628824.6823,
+      "request_id": "req.82",
+      "start_ms": 234628814.9072,
+      "view_step": 192,
+      "authority_step": 193,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234628833.7416,
+      "request_id": "req.82",
+      "method": "tactical.realtime.read",
+      "start_ms": 234628814.8368
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234628848.07070002,
+      "start_ms": 234628840.5923,
+      "step": 193,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234628931.0091,
+      "start_ms": 234628918.203,
+      "step": 194,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234629006.0957,
+      "request_id": "req.83",
+      "start_ms": 234628998.0054,
+      "view_step": 194,
+      "authority_step": 195,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234629016.85889998,
+      "request_id": "req.83",
+      "method": "tactical.realtime.read",
+      "start_ms": 234628997.9442
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234629064.98970002,
+      "start_ms": 234629057.30089998,
+      "step": 196,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234629142.53959998,
+      "start_ms": 234629134.4995,
+      "step": 197,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234629209.6421,
+      "request_id": "req.84",
+      "start_ms": 234629199.8155,
+      "view_step": 197,
+      "authority_step": 198,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234629221.2645,
+      "request_id": "req.84",
+      "method": "tactical.realtime.read",
+      "start_ms": 234629199.7931
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234629231.9063,
+      "start_ms": 234629221.3475,
+      "step": 198,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234629346.98920003,
+      "start_ms": 234629339.6447,
+      "step": 199,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234629395.87780002,
+      "request_id": "req.85",
+      "start_ms": 234629386.30290002,
+      "view_step": 199,
+      "authority_step": 200,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234629406.2856,
+      "request_id": "req.85",
+      "method": "tactical.realtime.read",
+      "start_ms": 234629386.2542
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234629459.1644,
+      "start_ms": 234629450.52290002,
+      "step": 201,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234629543.3376,
+      "start_ms": 234629537.3178,
+      "step": 202,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234629564.57479998,
+      "request_id": "req.86",
+      "start_ms": 234629556.198,
+      "view_step": 202,
+      "authority_step": 202,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234629574.9016,
+      "request_id": "req.86",
+      "method": "tactical.realtime.read",
+      "start_ms": 234629556.1433
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234629637.38619998,
+      "start_ms": 234629631.3905,
+      "step": 203,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234629736.3203,
+      "start_ms": 234629728.3511,
+      "step": 204,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234629743.2746,
+      "request_id": "req.87",
+      "start_ms": 234629736.5121,
+      "view_step": 204,
+      "authority_step": 204,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234629753.27089998,
+      "request_id": "req.87",
+      "method": "tactical.realtime.read",
+      "start_ms": 234629736.4763
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234629835.64040002,
+      "start_ms": 234629828.2925,
+      "step": 205,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234629878.74690002,
+      "request_id": "req.88",
+      "start_ms": 234629869.18780002,
+      "view_step": 205,
+      "authority_step": 205,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234629889.92389998,
+      "request_id": "req.88",
+      "method": "tactical.realtime.read",
+      "start_ms": 234629869.136
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234629942.6444,
+      "start_ms": 234629933.75590003,
+      "step": 206,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234630022.0503,
+      "start_ms": 234630015.82140002,
+      "step": 207,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234630022.3217,
+      "sequence": 7,
+      "target_step": 208,
+      "at_step": 207
+    },
+    {
+      "kind": "request",
+      "at_ms": 234630022.4051,
+      "request_id": "req.89",
+      "method": "tactical.realtime.control",
+      "start_ms": 234630022.25129998
+    },
+    {
+      "kind": "read",
+      "at_ms": 234630048.6242,
+      "request_id": "req.90",
+      "start_ms": 234630039.2882,
+      "view_step": 207,
+      "authority_step": 207,
+      "receipts": [
+        {
+          "sequence": 7,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234630058.2394,
+      "request_id": "req.90",
+      "method": "tactical.realtime.read",
+      "start_ms": 234630039.2269
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234630122.9066,
+      "start_ms": 234630114.0826,
+      "step": 208,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234630209.19799998,
+      "sequence": 7,
+      "status": "executed",
+      "step": 209
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234630216.84089997,
+      "start_ms": 234630209.2434,
+      "step": 209,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234630226.2621,
+      "request_id": "req.91",
+      "start_ms": 234630217.0656,
+      "view_step": 209,
+      "authority_step": 209,
+      "receipts": [
+        {
+          "sequence": 7,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234630237.38390002,
+      "request_id": "req.91",
+      "method": "tactical.realtime.read",
+      "start_ms": 234630217.0409
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234630311.84370002,
+      "start_ms": 234630303.533,
+      "step": 210,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234630399.17610002,
+      "start_ms": 234630392.86679998,
+      "step": 211,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234630406.60799998,
+      "request_id": "req.92",
+      "start_ms": 234630399.4656,
+      "view_step": 211,
+      "authority_step": 211,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234630417.1974,
+      "request_id": "req.92",
+      "method": "tactical.realtime.read",
+      "start_ms": 234630399.4047
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234630500.61630002,
+      "start_ms": 234630492.8066,
+      "step": 212,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234630598.0071,
+      "start_ms": 234630591.15739998,
+      "step": 213,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234630606.6584,
+      "request_id": "req.93",
+      "start_ms": 234630598.27330002,
+      "view_step": 213,
+      "authority_step": 213,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234630616.535,
+      "request_id": "req.93",
+      "method": "tactical.realtime.read",
+      "start_ms": 234630598.2013
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234630700.2688,
+      "start_ms": 234630689.7203,
+      "step": 214,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234630788.0898,
+      "start_ms": 234630780.1835,
+      "step": 215,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234630795.91079998,
+      "request_id": "req.94",
+      "start_ms": 234630788.1713,
+      "view_step": 215,
+      "authority_step": 215,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234630806.1155,
+      "request_id": "req.94",
+      "method": "tactical.realtime.read",
+      "start_ms": 234630788.1482
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234630872.5805,
+      "start_ms": 234630866.9154,
+      "step": 216,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234630971.1916,
+      "start_ms": 234630963.9393,
+      "step": 217,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234630980.2196,
+      "request_id": "req.95",
+      "start_ms": 234630971.31530002,
+      "view_step": 217,
+      "authority_step": 217,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234630991.31449997,
+      "request_id": "req.95",
+      "method": "tactical.realtime.read",
+      "start_ms": 234630971.2581
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234631065.3001,
+      "start_ms": 234631054.9907,
+      "step": 218,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234631145.7517,
+      "start_ms": 234631138.85729998,
+      "step": 219,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234631154.8166,
+      "request_id": "req.96",
+      "start_ms": 234631146.0112,
+      "view_step": 219,
+      "authority_step": 219,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234631165.8095,
+      "request_id": "req.96",
+      "method": "tactical.realtime.read",
+      "start_ms": 234631145.9515
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234631225.60979998,
+      "start_ms": 234631218.4417,
+      "step": 220,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234631304.9377,
+      "start_ms": 234631298.99859998,
+      "step": 221,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234631313.78550002,
+      "request_id": "req.97",
+      "start_ms": 234631306.5384,
+      "view_step": 221,
+      "authority_step": 221,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234631325.4071,
+      "request_id": "req.97",
+      "method": "tactical.realtime.read",
+      "start_ms": 234631306.5123
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234631398.9106,
+      "start_ms": 234631391.3147,
+      "step": 222,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234631483.15350002,
+      "request_id": "req.98",
+      "start_ms": 234631473.226,
+      "view_step": 222,
+      "authority_step": 223,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234631494.34579998,
+      "request_id": "req.98",
+      "method": "tactical.realtime.read",
+      "start_ms": 234631473.1734
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234631501.3841,
+      "start_ms": 234631494.4254,
+      "step": 223,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234631578.25190002,
+      "start_ms": 234631569.19450003,
+      "step": 224,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234631661.1733,
+      "request_id": "req.99",
+      "start_ms": 234631654.4714,
+      "view_step": 224,
+      "authority_step": 225,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234631668.38720003,
+      "request_id": "req.99",
+      "method": "tactical.realtime.read",
+      "start_ms": 234631654.4162
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234631719.2967,
+      "start_ms": 234631710.0528,
+      "step": 226,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234631797.1001,
+      "start_ms": 234631789.5616,
+      "step": 227,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234631839.8096,
+      "sequence": 8,
+      "target_step": 228,
+      "at_step": 228
+    },
+    {
+      "kind": "request",
+      "at_ms": 234631839.9077,
+      "request_id": "req.100",
+      "method": "tactical.realtime.control",
+      "start_ms": 234631839.7408
+    },
+    {
+      "kind": "read",
+      "at_ms": 234631866.3704,
+      "request_id": "req.101",
+      "start_ms": 234631855.4237,
+      "view_step": 227,
+      "authority_step": 228,
+      "receipts": [
+        {
+          "sequence": 8,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234631876.734,
+      "request_id": "req.101",
+      "method": "tactical.realtime.read",
+      "start_ms": 234631855.37199998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234631888.16540003,
+      "start_ms": 234631876.82110003,
+      "step": 228,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234631938.6635,
+      "sequence": 8,
+      "status": "executed",
+      "step": 229
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234631998.4365,
+      "start_ms": 234631992.29630002,
+      "step": 230,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234632082.2518,
+      "start_ms": 234632074.907,
+      "step": 231,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234632092.3357,
+      "request_id": "req.102",
+      "start_ms": 234632082.3576,
+      "view_step": 231,
+      "authority_step": 231,
+      "receipts": [
+        {
+          "sequence": 8,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234632106.2674,
+      "request_id": "req.102",
+      "method": "tactical.realtime.read",
+      "start_ms": 234632082.3093
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234632157.1839,
+      "start_ms": 234632148.4605,
+      "step": 232,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234632233.8299,
+      "start_ms": 234632226.8204,
+      "step": 233,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234632272.0938,
+      "request_id": "req.103",
+      "start_ms": 234632262.6209,
+      "view_step": 233,
+      "authority_step": 233,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234632283.4266,
+      "request_id": "req.103",
+      "method": "tactical.realtime.read",
+      "start_ms": 234632262.5246
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234632328.1241,
+      "start_ms": 234632319.97750002,
+      "step": 234,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234632405.4979,
+      "start_ms": 234632398.1706,
+      "step": 235,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234632459.0987,
+      "request_id": "req.104",
+      "start_ms": 234632449.5327,
+      "view_step": 235,
+      "authority_step": 236,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234632468.2964,
+      "request_id": "req.104",
+      "method": "tactical.realtime.read",
+      "start_ms": 234632449.5102
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234632480.8476,
+      "start_ms": 234632473.7834,
+      "step": 236,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234632561.0971,
+      "start_ms": 234632551.9993,
+      "step": 237,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234632614.7116,
+      "request_id": "req.105",
+      "start_ms": 234632606.3168,
+      "view_step": 237,
+      "authority_step": 238,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234632624.3162,
+      "request_id": "req.105",
+      "method": "tactical.realtime.read",
+      "start_ms": 234632606.26090002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234632692.0421,
+      "start_ms": 234632680.6807,
+      "step": 239,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234632775.67929998,
+      "start_ms": 234632769.1604,
+      "step": 240,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234632785.1452,
+      "request_id": "req.106",
+      "start_ms": 234632775.9176,
+      "view_step": 240,
+      "authority_step": 240,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234632796.8298,
+      "request_id": "req.106",
+      "method": "tactical.realtime.read",
+      "start_ms": 234632775.884
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234632863.2639,
+      "start_ms": 234632854.89330003,
+      "step": 241,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234632937.5291,
+      "start_ms": 234632930.1067,
+      "step": 242,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234632986.9806,
+      "request_id": "req.107",
+      "start_ms": 234632978.5867,
+      "view_step": 242,
+      "authority_step": 243,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234632997.83859998,
+      "request_id": "req.107",
+      "method": "tactical.realtime.read",
+      "start_ms": 234632978.5533
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633012.9799,
+      "start_ms": 234633005.7778,
+      "step": 243,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633095.1254,
+      "start_ms": 234633085.06149998,
+      "step": 244,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234633157.9682,
+      "request_id": "req.108",
+      "start_ms": 234633150.06370002,
+      "view_step": 244,
+      "authority_step": 245,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234633167.72460002,
+      "request_id": "req.108",
+      "method": "tactical.realtime.read",
+      "start_ms": 234633150.0095
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633174.6313,
+      "start_ms": 234633167.7782,
+      "step": 245,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633257.3549,
+      "start_ms": 234633248.6262,
+      "step": 246,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234633329.90449998,
+      "request_id": "req.109",
+      "start_ms": 234633321.1957,
+      "view_step": 246,
+      "authority_step": 247,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234633338.22390002,
+      "request_id": "req.109",
+      "method": "tactical.realtime.read",
+      "start_ms": 234633321.1681
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633346.8201,
+      "start_ms": 234633338.2836,
+      "step": 247,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633424.6324,
+      "start_ms": 234633414.7702,
+      "step": 248,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234633486.0408,
+      "request_id": "req.110",
+      "start_ms": 234633474.3154,
+      "view_step": 248,
+      "authority_step": 249,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234633497.44619998,
+      "request_id": "req.110",
+      "method": "tactical.realtime.read",
+      "start_ms": 234633474.2705
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633506.3902,
+      "start_ms": 234633497.52629998,
+      "step": 249,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633595.9965,
+      "start_ms": 234633586.9301,
+      "step": 250,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234633660.5607,
+      "sequence": 9,
+      "target_step": 253,
+      "at_step": 251
+    },
+    {
+      "kind": "request",
+      "at_ms": 234633660.66689998,
+      "request_id": "req.111",
+      "method": "tactical.realtime.control",
+      "start_ms": 234633660.4567
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633676.36290002,
+      "start_ms": 234633668.87669998,
+      "step": 251,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234633733.81899998,
+      "request_id": "req.112",
+      "start_ms": 234633725.1521,
+      "view_step": 251,
+      "authority_step": 252,
+      "receipts": [
+        {
+          "sequence": 9,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234633745.07149997,
+      "request_id": "req.112",
+      "method": "tactical.realtime.read",
+      "start_ms": 234633725.08929998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633750.4721,
+      "start_ms": 234633745.1346,
+      "step": 252,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633830.2848,
+      "start_ms": 234633820.8811,
+      "step": 253,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234633930.1012,
+      "sequence": 9,
+      "status": "executed",
+      "step": 254
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234633941.3013,
+      "start_ms": 234633930.1363,
+      "step": 254,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234634009.80110002,
+      "request_id": "req.113",
+      "start_ms": 234633941.4218,
+      "view_step": 254,
+      "authority_step": 254,
+      "receipts": [
+        {
+          "sequence": 9,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234634021.2843,
+      "request_id": "req.113",
+      "method": "tactical.realtime.read",
+      "start_ms": 234633941.3594
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234634078.4377,
+      "start_ms": 234634069.6462,
+      "step": 255,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234634199.2886,
+      "start_ms": 234634191.59179997,
+      "step": 257,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234634208.30999997,
+      "request_id": "req.114",
+      "start_ms": 234634199.3971,
+      "view_step": 257,
+      "authority_step": 257,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234634219.1424,
+      "request_id": "req.114",
+      "method": "tactical.realtime.read",
+      "start_ms": 234634199.3463
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234634301.83159998,
+      "start_ms": 234634294.02629998,
+      "step": 258,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234634398.207,
+      "start_ms": 234634390.9802,
+      "step": 259,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234634410.0763,
+      "request_id": "req.115",
+      "start_ms": 234634398.3315,
+      "view_step": 259,
+      "authority_step": 259,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234634422.5936,
+      "request_id": "req.115",
+      "method": "tactical.realtime.read",
+      "start_ms": 234634398.27
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234634516.4208,
+      "start_ms": 234634507.8486,
+      "step": 260,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234634620.2588,
+      "start_ms": 234634610.7112,
+      "step": 261,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234634630.9975,
+      "request_id": "req.116",
+      "start_ms": 234634620.4034,
+      "view_step": 261,
+      "authority_step": 261,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234634648.2165,
+      "request_id": "req.116",
+      "method": "tactical.realtime.read",
+      "start_ms": 234634620.3265
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234634723.7793,
+      "start_ms": 234634714.9651,
+      "step": 262,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234634829.59840003,
+      "start_ms": 234634821.3447,
+      "step": 263,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234634838.8923,
+      "request_id": "req.117",
+      "start_ms": 234634829.73070002,
+      "view_step": 263,
+      "authority_step": 263,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234634849.9598,
+      "request_id": "req.117",
+      "method": "tactical.realtime.read",
+      "start_ms": 234634829.67000002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234634928.0655,
+      "start_ms": 234634918.3413,
+      "step": 264,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234635030.3515,
+      "start_ms": 234635024.26070002,
+      "step": 265,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234635037.7989,
+      "request_id": "req.118",
+      "start_ms": 234635030.4459,
+      "view_step": 265,
+      "authority_step": 265,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234635050.7374,
+      "request_id": "req.118",
+      "method": "tactical.realtime.read",
+      "start_ms": 234635030.40330002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234635138.7651,
+      "start_ms": 234635131.3624,
+      "step": 266,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234635236.4016,
+      "start_ms": 234635228.9873,
+      "step": 267,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234635245.678,
+      "request_id": "req.119",
+      "start_ms": 234635236.52740002,
+      "view_step": 267,
+      "authority_step": 267,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234635258.8356,
+      "request_id": "req.119",
+      "method": "tactical.realtime.read",
+      "start_ms": 234635236.4639
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234635346.38549998,
+      "start_ms": 234635337.0577,
+      "step": 268,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234635439.3486,
+      "start_ms": 234635429.82680002,
+      "step": 269,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234635448.8939,
+      "request_id": "req.120",
+      "start_ms": 234635439.45549998,
+      "view_step": 269,
+      "authority_step": 269,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234635459.70139998,
+      "request_id": "req.120",
+      "method": "tactical.realtime.read",
+      "start_ms": 234635439.4114
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234635543.5843,
+      "start_ms": 234635537.5878,
+      "step": 270,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234635590.0691,
+      "sequence": 10,
+      "target_step": 272,
+      "at_step": 270
+    },
+    {
+      "kind": "request",
+      "at_ms": 234635590.1695,
+      "request_id": "req.121",
+      "method": "tactical.realtime.control",
+      "start_ms": 234635589.9812
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234635643.95999998,
+      "start_ms": 234635635.863,
+      "step": 271,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234635654.5805,
+      "request_id": "req.122",
+      "start_ms": 234635644.0883,
+      "view_step": 271,
+      "authority_step": 271,
+      "receipts": [
+        {
+          "sequence": 10,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234635666.8849,
+      "request_id": "req.122",
+      "method": "tactical.realtime.read",
+      "start_ms": 234635644.0328
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234635752.81219998,
+      "start_ms": 234635743.7933,
+      "step": 272,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234635854.95430002,
+      "sequence": 10,
+      "status": "executed",
+      "step": 273
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234635863.0195,
+      "start_ms": 234635854.99809998,
+      "step": 273,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234635873.6271,
+      "request_id": "req.123",
+      "start_ms": 234635863.1507,
+      "view_step": 273,
+      "authority_step": 273,
+      "receipts": [
+        {
+          "sequence": 10,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234635882.5524,
+      "request_id": "req.123",
+      "method": "tactical.realtime.read",
+      "start_ms": 234635863.0792
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234635964.1344,
+      "start_ms": 234635956.424,
+      "step": 274,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234636047.89360002,
+      "start_ms": 234636039.993,
+      "step": 275,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234636055.6932,
+      "request_id": "req.124",
+      "start_ms": 234636048.1973,
+      "view_step": 275,
+      "authority_step": 275,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234636066.5029,
+      "request_id": "req.124",
+      "method": "tactical.realtime.read",
+      "start_ms": 234636048.138
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234636153.4384,
+      "start_ms": 234636144.74449998,
+      "step": 276,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234636244.4612,
+      "start_ms": 234636236.7791,
+      "step": 277,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234636253.85119998,
+      "request_id": "req.125",
+      "start_ms": 234636244.56980002,
+      "view_step": 277,
+      "authority_step": 277,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234636265.5835,
+      "request_id": "req.125",
+      "method": "tactical.realtime.read",
+      "start_ms": 234636244.5207
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234636342.56039998,
+      "start_ms": 234636333.9062,
+      "step": 278,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234636443.61180001,
+      "start_ms": 234636433.5604,
+      "step": 279,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234636452.185,
+      "request_id": "req.126",
+      "start_ms": 234636443.67850003,
+      "view_step": 279,
+      "authority_step": 279,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234636464.7092,
+      "request_id": "req.126",
+      "method": "tactical.realtime.read",
+      "start_ms": 234636443.6606
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234636530.60480002,
+      "start_ms": 234636522.95360002,
+      "step": 280,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234636628.6776,
+      "start_ms": 234636620.8319,
+      "step": 281,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234636637.9951,
+      "request_id": "req.127",
+      "start_ms": 234636628.796,
+      "view_step": 281,
+      "authority_step": 281,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234636649.4684,
+      "request_id": "req.127",
+      "method": "tactical.realtime.read",
+      "start_ms": 234636628.7382
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234636720.89200002,
+      "start_ms": 234636714.12399998,
+      "step": 282,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234636810.3702,
+      "start_ms": 234636803.7256,
+      "step": 283,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234636821.0476,
+      "request_id": "req.128",
+      "start_ms": 234636810.7404,
+      "view_step": 283,
+      "authority_step": 283,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234636832.9779,
+      "request_id": "req.128",
+      "method": "tactical.realtime.read",
+      "start_ms": 234636810.6718
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234636912.10909998,
+      "start_ms": 234636902.5385,
+      "step": 284,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234637012.46150002,
+      "start_ms": 234637006.0149,
+      "step": 285,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234637022.40350002,
+      "request_id": "req.129",
+      "start_ms": 234637012.676,
+      "view_step": 285,
+      "authority_step": 285,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234637034.6755,
+      "request_id": "req.129",
+      "method": "tactical.realtime.read",
+      "start_ms": 234637012.6511
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234637116.4594,
+      "start_ms": 234637105.81599998,
+      "step": 286,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234637206.6136,
+      "start_ms": 234637199.21580002,
+      "step": 287,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234637216.8117,
+      "request_id": "req.130",
+      "start_ms": 234637206.731,
+      "view_step": 287,
+      "authority_step": 287,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234637229.85529998,
+      "request_id": "req.130",
+      "method": "tactical.realtime.read",
+      "start_ms": 234637206.6781
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234637318.47550002,
+      "start_ms": 234637309.3681,
+      "step": 288,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234637377.311,
+      "sequence": 11,
+      "target_step": 290,
+      "at_step": 289
+    },
+    {
+      "kind": "request",
+      "at_ms": 234637377.39099997,
+      "request_id": "req.131",
+      "method": "tactical.realtime.control",
+      "start_ms": 234637377.2466
+    },
+    {
+      "kind": "read",
+      "at_ms": 234637405.12050003,
+      "request_id": "req.132",
+      "start_ms": 234637396.7658,
+      "view_step": 288,
+      "authority_step": 289,
+      "receipts": [
+        {
+          "sequence": 11,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234637417.7279,
+      "request_id": "req.132",
+      "method": "tactical.realtime.read",
+      "start_ms": 234637396.6902
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234637425.3383,
+      "start_ms": 234637417.8075,
+      "step": 289,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234637502.08119997,
+      "start_ms": 234637493.241,
+      "step": 290,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234637598.1666,
+      "sequence": 11,
+      "status": "executed",
+      "step": 291
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234637606.70900002,
+      "start_ms": 234637598.2092,
+      "step": 291,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234637616.5249,
+      "request_id": "req.133",
+      "start_ms": 234637606.8175,
+      "view_step": 291,
+      "authority_step": 291,
+      "receipts": [
+        {
+          "sequence": 11,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234637627.0609,
+      "request_id": "req.133",
+      "method": "tactical.realtime.read",
+      "start_ms": 234637606.7679
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234637708.5221,
+      "start_ms": 234637699.35459998,
+      "step": 292,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234637812.3752,
+      "start_ms": 234637801.943,
+      "step": 293,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234637821.2314,
+      "request_id": "req.134",
+      "start_ms": 234637812.4824,
+      "view_step": 293,
+      "authority_step": 293,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234637831.187,
+      "request_id": "req.134",
+      "method": "tactical.realtime.read",
+      "start_ms": 234637812.4311
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234637914.6861,
+      "start_ms": 234637906.7493,
+      "step": 294,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234638029.5634,
+      "start_ms": 234638023.25689998,
+      "step": 295,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234638037.47730002,
+      "request_id": "req.135",
+      "start_ms": 234638029.70799997,
+      "view_step": 295,
+      "authority_step": 295,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234638048.8824,
+      "request_id": "req.135",
+      "method": "tactical.realtime.read",
+      "start_ms": 234638029.6237
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234638135.9822,
+      "start_ms": 234638126.53,
+      "step": 296,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234638248.9066,
+      "start_ms": 234638240.2633,
+      "step": 297,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234638257.121,
+      "request_id": "req.136",
+      "start_ms": 234638249.01619998,
+      "view_step": 297,
+      "authority_step": 297,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234638266.8141,
+      "request_id": "req.136",
+      "method": "tactical.realtime.read",
+      "start_ms": 234638248.9616
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234638350.3923,
+      "start_ms": 234638344.34690002,
+      "step": 298,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234638457.9923,
+      "start_ms": 234638450.5422,
+      "step": 299,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234638467.5708,
+      "request_id": "req.137",
+      "start_ms": 234638458.104,
+      "view_step": 299,
+      "authority_step": 299,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234638477.3315,
+      "request_id": "req.137",
+      "method": "tactical.realtime.read",
+      "start_ms": 234638458.0752
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234638565.291,
+      "start_ms": 234638557.3218,
+      "step": 300,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234638671.33879998,
+      "start_ms": 234638662.2731,
+      "step": 301,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234638678.96719998,
+      "request_id": "req.138",
+      "start_ms": 234638671.4455,
+      "view_step": 301,
+      "authority_step": 301,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234638690.4499,
+      "request_id": "req.138",
+      "method": "tactical.realtime.read",
+      "start_ms": 234638671.3965
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234638775.55769998,
+      "start_ms": 234638768.19480002,
+      "step": 302,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234638898.3512,
+      "start_ms": 234638887.8966,
+      "step": 303,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234638907.8265,
+      "request_id": "req.139",
+      "start_ms": 234638898.4484,
+      "view_step": 303,
+      "authority_step": 303,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234638921.67430001,
+      "request_id": "req.139",
+      "method": "tactical.realtime.read",
+      "start_ms": 234638898.4089
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234638995.6386,
+      "start_ms": 234638986.6722,
+      "step": 304,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234639106.6462,
+      "start_ms": 234639097.8625,
+      "step": 305,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234639116.7667,
+      "request_id": "req.140",
+      "start_ms": 234639106.73950002,
+      "view_step": 305,
+      "authority_step": 305,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234639127.61339998,
+      "request_id": "req.140",
+      "method": "tactical.realtime.read",
+      "start_ms": 234639106.714
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234639202.4266,
+      "start_ms": 234639193.8458,
+      "step": 306,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234639306.5492,
+      "start_ms": 234639297.9986,
+      "step": 307,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234639306.69009998,
+      "sequence": 12,
+      "target_step": 309,
+      "at_step": 307
+    },
+    {
+      "kind": "request",
+      "at_ms": 234639306.7844,
+      "request_id": "req.141",
+      "method": "tactical.realtime.control",
+      "start_ms": 234639306.61249998
+    },
+    {
+      "kind": "read",
+      "at_ms": 234639334.61409998,
+      "request_id": "req.142",
+      "start_ms": 234639322.28759998,
+      "view_step": 307,
+      "authority_step": 307,
+      "receipts": [
+        {
+          "sequence": 12,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234639347.1676,
+      "request_id": "req.142",
+      "method": "tactical.realtime.read",
+      "start_ms": 234639322.2104
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234639470.5964,
+      "start_ms": 234639462.2879,
+      "step": 308,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234639526.89139998,
+      "request_id": "req.143",
+      "start_ms": 234639516.9166,
+      "view_step": 308,
+      "authority_step": 309,
+      "receipts": [
+        {
+          "sequence": 12,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234639538.25509998,
+      "request_id": "req.143",
+      "method": "tactical.realtime.read",
+      "start_ms": 234639516.86810002
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234639606.2237,
+      "sequence": 12,
+      "status": "executed",
+      "step": 310
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234639616.9523,
+      "start_ms": 234639606.2869,
+      "step": 310,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234639714.73099998,
+      "start_ms": 234639708.6136,
+      "step": 311,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234639725.1561,
+      "request_id": "req.144",
+      "start_ms": 234639714.9156,
+      "view_step": 311,
+      "authority_step": 311,
+      "receipts": [
+        {
+          "sequence": 12,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234639736.1169,
+      "request_id": "req.144",
+      "method": "tactical.realtime.read",
+      "start_ms": 234639714.8971
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234639824.21469998,
+      "start_ms": 234639815.68510002,
+      "step": 312,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234639956.44849998,
+      "start_ms": 234639941.7047,
+      "step": 313,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234639970.4634,
+      "request_id": "req.145",
+      "start_ms": 234639956.61260003,
+      "view_step": 313,
+      "authority_step": 313,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234639987.9498,
+      "request_id": "req.145",
+      "method": "tactical.realtime.read",
+      "start_ms": 234639956.53759998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234640076.85390002,
+      "start_ms": 234640066.7966,
+      "step": 314,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234640169.387,
+      "start_ms": 234640159.7927,
+      "step": 315,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234640181.13660002,
+      "request_id": "req.146",
+      "start_ms": 234640169.5509,
+      "view_step": 315,
+      "authority_step": 315,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234640193.0953,
+      "request_id": "req.146",
+      "method": "tactical.realtime.read",
+      "start_ms": 234640169.4821
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234640299.0536,
+      "start_ms": 234640290.4611,
+      "step": 316,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234640398.4208,
+      "start_ms": 234640392.1089,
+      "step": 317,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234640406.0558,
+      "request_id": "req.147",
+      "start_ms": 234640398.5055,
+      "view_step": 317,
+      "authority_step": 317,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234640416.7767,
+      "request_id": "req.147",
+      "method": "tactical.realtime.read",
+      "start_ms": 234640398.4654
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234640515.11909997,
+      "start_ms": 234640506.4262,
+      "step": 318,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234640579.519,
+      "request_id": "req.148",
+      "start_ms": 234640570.2622,
+      "view_step": 318,
+      "authority_step": 318,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234640592.5173,
+      "request_id": "req.148",
+      "method": "tactical.realtime.read",
+      "start_ms": 234640570.2399
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234640655.45729998,
+      "start_ms": 234640646.1514,
+      "step": 319,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234640744.7547,
+      "start_ms": 234640738.6449,
+      "step": 320,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234640769.7966,
+      "request_id": "req.149",
+      "start_ms": 234640760.2595,
+      "view_step": 320,
+      "authority_step": 320,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234640782.8663,
+      "request_id": "req.149",
+      "method": "tactical.realtime.read",
+      "start_ms": 234640760.1986
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234640852.7551,
+      "start_ms": 234640844.6693,
+      "step": 321,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234640969.24040002,
+      "start_ms": 234640961.422,
+      "step": 322,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234640979.98169997,
+      "request_id": "req.150",
+      "start_ms": 234640969.32520002,
+      "view_step": 322,
+      "authority_step": 322,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234640991.7947,
+      "request_id": "req.150",
+      "method": "tactical.realtime.read",
+      "start_ms": 234640969.30150002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234641087.56,
+      "start_ms": 234641079.2184,
+      "step": 323,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234641124.71949998,
+      "sequence": 13,
+      "target_step": 325,
+      "at_step": 323
+    },
+    {
+      "kind": "request",
+      "at_ms": 234641124.8085,
+      "request_id": "req.151",
+      "method": "tactical.realtime.control",
+      "start_ms": 234641124.6321
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234641193.6525,
+      "start_ms": 234641185.5202,
+      "step": 324,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234641203.3243,
+      "request_id": "req.152",
+      "start_ms": 234641193.76630002,
+      "view_step": 324,
+      "authority_step": 324,
+      "receipts": [
+        {
+          "sequence": 13,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234641213.34730002,
+      "request_id": "req.152",
+      "method": "tactical.realtime.read",
+      "start_ms": 234641193.7178
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234641306.71159998,
+      "start_ms": 234641298.0629,
+      "step": 325,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234641397.1884,
+      "sequence": 13,
+      "status": "executed",
+      "step": 326
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234641405.8598,
+      "start_ms": 234641397.2254,
+      "step": 326,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234641414.6686,
+      "request_id": "req.153",
+      "start_ms": 234641406.0275,
+      "view_step": 326,
+      "authority_step": 326,
+      "receipts": [
+        {
+          "sequence": 13,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234641426.6222,
+      "request_id": "req.153",
+      "method": "tactical.realtime.read",
+      "start_ms": 234641405.9526
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234641515.0976,
+      "start_ms": 234641505.6595,
+      "step": 327,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234641623.9601,
+      "start_ms": 234641616.49670002,
+      "step": 328,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234641634.5095,
+      "request_id": "req.154",
+      "start_ms": 234641624.0767,
+      "view_step": 328,
+      "authority_step": 328,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234641646.4212,
+      "request_id": "req.154",
+      "method": "tactical.realtime.read",
+      "start_ms": 234641624.0147
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234641724.9116,
+      "start_ms": 234641716.6644,
+      "step": 329,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234641828.297,
+      "start_ms": 234641820.23020002,
+      "step": 330,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234641840.3252,
+      "request_id": "req.155",
+      "start_ms": 234641828.6423,
+      "view_step": 330,
+      "authority_step": 330,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234641852.5393,
+      "request_id": "req.155",
+      "method": "tactical.realtime.read",
+      "start_ms": 234641828.5643
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234641940.3653,
+      "start_ms": 234641932.8286,
+      "step": 331,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234642069.287,
+      "start_ms": 234642060.3376,
+      "step": 332,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234642079.79610002,
+      "request_id": "req.156",
+      "start_ms": 234642069.4014,
+      "view_step": 332,
+      "authority_step": 332,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234642094.7158,
+      "request_id": "req.156",
+      "method": "tactical.realtime.read",
+      "start_ms": 234642069.3502
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234642168.82660002,
+      "start_ms": 234642159.9181,
+      "step": 333,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234642258.2804,
+      "start_ms": 234642251.54200003,
+      "step": 334,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234642279.4842,
+      "request_id": "req.157",
+      "start_ms": 234642268.31419998,
+      "view_step": 334,
+      "authority_step": 334,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234642291.89220002,
+      "request_id": "req.157",
+      "method": "tactical.realtime.read",
+      "start_ms": 234642268.265
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234642398.6844,
+      "start_ms": 234642390.68,
+      "step": 335,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234642517.2831,
+      "start_ms": 234642507.059,
+      "step": 336,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234642529.66579998,
+      "request_id": "req.158",
+      "start_ms": 234642517.4362,
+      "view_step": 336,
+      "authority_step": 336,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234642542.02940002,
+      "request_id": "req.158",
+      "method": "tactical.realtime.read",
+      "start_ms": 234642517.3573
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234642617.28559998,
+      "start_ms": 234642607.2041,
+      "step": 337,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234642733.7322,
+      "start_ms": 234642724.9335,
+      "step": 338,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234642743.3382,
+      "request_id": "req.159",
+      "start_ms": 234642733.85250002,
+      "view_step": 338,
+      "authority_step": 338,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234642755.8406,
+      "request_id": "req.159",
+      "method": "tactical.realtime.read",
+      "start_ms": 234642733.79599997
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234642843.0507,
+      "start_ms": 234642834.1117,
+      "step": 339,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234642959.0579,
+      "start_ms": 234642950.567,
+      "step": 340,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234642959.1974,
+      "sequence": 14,
+      "target_step": 341,
+      "at_step": 340
+    },
+    {
+      "kind": "request",
+      "at_ms": 234642959.2961,
+      "request_id": "req.160",
+      "method": "tactical.realtime.control",
+      "start_ms": 234642959.1206
+    },
+    {
+      "kind": "read",
+      "at_ms": 234642980.6909,
+      "request_id": "req.161",
+      "start_ms": 234642970.6204,
+      "view_step": 340,
+      "authority_step": 340,
+      "receipts": [
+        {
+          "sequence": 14,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234642993.6006,
+      "request_id": "req.161",
+      "method": "tactical.realtime.read",
+      "start_ms": 234642970.5389
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234643081.82290003,
+      "start_ms": 234643069.8429,
+      "step": 341,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234643185.5248,
+      "sequence": 14,
+      "status": "executed",
+      "step": 342
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234643194.6372,
+      "start_ms": 234643185.5695,
+      "step": 342,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234643206.2755,
+      "request_id": "req.162",
+      "start_ms": 234643194.7501,
+      "view_step": 342,
+      "authority_step": 342,
+      "receipts": [
+        {
+          "sequence": 14,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234643218.47349998,
+      "request_id": "req.162",
+      "method": "tactical.realtime.read",
+      "start_ms": 234643194.6857
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234643287.2892,
+      "start_ms": 234643280.714,
+      "step": 343,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234643425.4976,
+      "start_ms": 234643416.5874,
+      "step": 344,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234643434.2863,
+      "request_id": "req.163",
+      "start_ms": 234643425.6014,
+      "view_step": 344,
+      "authority_step": 344,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234643446.6622,
+      "request_id": "req.163",
+      "method": "tactical.realtime.read",
+      "start_ms": 234643425.5453
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234643538.67859998,
+      "start_ms": 234643529.67339998,
+      "step": 345,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234643672.3115,
+      "start_ms": 234643663.51819998,
+      "step": 346,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234643680.8123,
+      "request_id": "req.164",
+      "start_ms": 234643672.3962,
+      "view_step": 346,
+      "authority_step": 346,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234643692.1703,
+      "request_id": "req.164",
+      "method": "tactical.realtime.read",
+      "start_ms": 234643672.3617
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234643784.45360002,
+      "start_ms": 234643775.87330002,
+      "step": 347,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234643912.7615,
+      "start_ms": 234643905.2296,
+      "step": 348,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234643922.7437,
+      "request_id": "req.165",
+      "start_ms": 234643912.87969998,
+      "view_step": 348,
+      "authority_step": 348,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234643936.2194,
+      "request_id": "req.165",
+      "method": "tactical.realtime.read",
+      "start_ms": 234643912.8212
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234644028.3225,
+      "start_ms": 234644019.10129997,
+      "step": 349,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234644184.3662,
+      "start_ms": 234644173.7453,
+      "step": 350,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234644195.4188,
+      "request_id": "req.166",
+      "start_ms": 234644184.526,
+      "view_step": 350,
+      "authority_step": 350,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234644208.43739998,
+      "request_id": "req.166",
+      "method": "tactical.realtime.read",
+      "start_ms": 234644184.4339
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234644283.24560001,
+      "start_ms": 234644271.8106,
+      "step": 351,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234644402.1653,
+      "start_ms": 234644393.2503,
+      "step": 352,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234644412.4907,
+      "request_id": "req.167",
+      "start_ms": 234644402.28489998,
+      "view_step": 352,
+      "authority_step": 352,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234644422.2039,
+      "request_id": "req.167",
+      "method": "tactical.realtime.read",
+      "start_ms": 234644402.2299
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234644521.9632,
+      "start_ms": 234644514.5045,
+      "step": 353,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234644570.35279998,
+      "request_id": "req.168",
+      "start_ms": 234644561.4571,
+      "view_step": 353,
+      "authority_step": 353,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234644582.5463,
+      "request_id": "req.168",
+      "method": "tactical.realtime.read",
+      "start_ms": 234644561.3932
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234644679.96,
+      "start_ms": 234644669.4954,
+      "step": 354,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234644770.2208,
+      "start_ms": 234644762.2314,
+      "step": 355,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234644770.3613,
+      "sequence": 15,
+      "target_step": 356,
+      "at_step": 355
+    },
+    {
+      "kind": "request",
+      "at_ms": 234644770.4545,
+      "request_id": "req.169",
+      "method": "tactical.realtime.control",
+      "start_ms": 234644770.2864
+    },
+    {
+      "kind": "read",
+      "at_ms": 234644785.3554,
+      "request_id": "req.170",
+      "start_ms": 234644773.3789,
+      "view_step": 355,
+      "authority_step": 355,
+      "receipts": [
+        {
+          "sequence": 15,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234644797.42069998,
+      "request_id": "req.170",
+      "method": "tactical.realtime.read",
+      "start_ms": 234644773.3194
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234644893.6324,
+      "start_ms": 234644885.9433,
+      "step": 356,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234645018.31149998,
+      "sequence": 15,
+      "status": "executed",
+      "step": 357
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234645026.4642,
+      "start_ms": 234645018.3512,
+      "step": 357,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234645038.8256,
+      "request_id": "req.171",
+      "start_ms": 234645026.6067,
+      "view_step": 357,
+      "authority_step": 357,
+      "receipts": [
+        {
+          "sequence": 15,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234645052.3768,
+      "request_id": "req.171",
+      "method": "tactical.realtime.read",
+      "start_ms": 234645026.5262
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234645157.7524,
+      "start_ms": 234645148.6148,
+      "step": 358,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234645262.9951,
+      "start_ms": 234645255.20340002,
+      "step": 359,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234645274.291,
+      "request_id": "req.172",
+      "start_ms": 234645263.1951,
+      "view_step": 359,
+      "authority_step": 359,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234645288.7631,
+      "request_id": "req.172",
+      "method": "tactical.realtime.read",
+      "start_ms": 234645263.07459998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234645449.9234,
+      "start_ms": 234645390.3223,
+      "step": 360,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234645512.1252,
+      "request_id": "req.173",
+      "start_ms": 234645502.9539,
+      "view_step": 360,
+      "authority_step": 361,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234645522.4766,
+      "request_id": "req.173",
+      "method": "tactical.realtime.read",
+      "start_ms": 234645502.8967
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234645529.4177,
+      "start_ms": 234645522.5349,
+      "step": 361,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234645650.0197,
+      "start_ms": 234645643.2127,
+      "step": 362,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234645697.2285,
+      "request_id": "req.174",
+      "start_ms": 234645687.5764,
+      "view_step": 362,
+      "authority_step": 362,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234645710.7139,
+      "request_id": "req.174",
+      "method": "tactical.realtime.read",
+      "start_ms": 234645687.5248
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234645807.9231,
+      "start_ms": 234645790.9184,
+      "step": 363,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234645920.35500002,
+      "start_ms": 234645911.27859998,
+      "step": 364,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234645932.49539998,
+      "request_id": "req.175",
+      "start_ms": 234645920.5102,
+      "view_step": 364,
+      "authority_step": 364,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234645947.7058,
+      "request_id": "req.175",
+      "method": "tactical.realtime.read",
+      "start_ms": 234645920.4542
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234646062.07009998,
+      "start_ms": 234646054.1663,
+      "step": 365,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234646194.3892,
+      "start_ms": 234646182.3462,
+      "step": 366,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234646205.0376,
+      "request_id": "req.176",
+      "start_ms": 234646194.55859998,
+      "view_step": 366,
+      "authority_step": 366,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234646216.48999998,
+      "request_id": "req.176",
+      "method": "tactical.realtime.read",
+      "start_ms": 234646194.48589998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234646321.9713,
+      "start_ms": 234646311.61810002,
+      "step": 367,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234646368.4347,
+      "request_id": "req.177",
+      "start_ms": 234646359.9186,
+      "view_step": 367,
+      "authority_step": 367,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234646380.81870002,
+      "request_id": "req.177",
+      "method": "tactical.realtime.read",
+      "start_ms": 234646359.8219
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234646470.24240002,
+      "start_ms": 234646460.0502,
+      "step": 368,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234646514.24650002,
+      "sequence": 16,
+      "target_step": 370,
+      "at_step": 368
+    },
+    {
+      "kind": "request",
+      "at_ms": 234646514.33119997,
+      "request_id": "req.178",
+      "method": "tactical.realtime.control",
+      "start_ms": 234646514.1695
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234646602.8009,
+      "start_ms": 234646593.43179998,
+      "step": 369,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234646615.6527,
+      "request_id": "req.179",
+      "start_ms": 234646602.8991,
+      "view_step": 369,
+      "authority_step": 369,
+      "receipts": [
+        {
+          "sequence": 16,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234646627.7439,
+      "request_id": "req.179",
+      "method": "tactical.realtime.read",
+      "start_ms": 234646602.8717
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234646753.9407,
+      "start_ms": 234646743.0902,
+      "step": 370,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234646866.6495,
+      "sequence": 16,
+      "status": "executed",
+      "step": 371
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234646874.56530002,
+      "start_ms": 234646866.71,
+      "step": 371,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234646884.23319998,
+      "request_id": "req.180",
+      "start_ms": 234646874.67290002,
+      "view_step": 371,
+      "authority_step": 371,
+      "receipts": [
+        {
+          "sequence": 16,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234646897.8633,
+      "request_id": "req.180",
+      "method": "tactical.realtime.read",
+      "start_ms": 234646874.6135
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234647027.768,
+      "start_ms": 234647020.2854,
+      "step": 372,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234647077.1739,
+      "request_id": "req.181",
+      "start_ms": 234647066.6708,
+      "view_step": 372,
+      "authority_step": 372,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234647089.6324,
+      "request_id": "req.181",
+      "method": "tactical.realtime.read",
+      "start_ms": 234647066.57990003
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234647163.5737,
+      "start_ms": 234647152.1825,
+      "step": 373,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234647273.8425,
+      "start_ms": 234647266.1459,
+      "step": 374,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234647283.0804,
+      "request_id": "req.182",
+      "start_ms": 234647274.1099,
+      "view_step": 374,
+      "authority_step": 374,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234647294.5594,
+      "request_id": "req.182",
+      "method": "tactical.realtime.read",
+      "start_ms": 234647274.05519998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234647431.7767,
+      "start_ms": 234647423.6613,
+      "step": 375,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234647477.7526,
+      "request_id": "req.183",
+      "start_ms": 234647467.5496,
+      "view_step": 375,
+      "authority_step": 375,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234647490.4031,
+      "request_id": "req.183",
+      "method": "tactical.realtime.read",
+      "start_ms": 234647467.4838
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234647579.1416,
+      "start_ms": 234647565.4041,
+      "step": 376,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234647690.1105,
+      "start_ms": 234647678.8327,
+      "step": 377,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234647701.2392,
+      "request_id": "req.184",
+      "start_ms": 234647690.219,
+      "view_step": 377,
+      "authority_step": 377,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234647714.7743,
+      "request_id": "req.184",
+      "method": "tactical.realtime.read",
+      "start_ms": 234647690.1875
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234647801.5804,
+      "start_ms": 234647790.89490002,
+      "step": 378,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234647943.069,
+      "start_ms": 234647934.53989998,
+      "step": 379,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234647953.58949998,
+      "request_id": "req.185",
+      "start_ms": 234647943.1825,
+      "view_step": 379,
+      "authority_step": 379,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234647966.3892,
+      "request_id": "req.185",
+      "method": "tactical.realtime.read",
+      "start_ms": 234647943.1339
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234648088.6165,
+      "start_ms": 234648079.5807,
+      "step": 380,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234648125.0404,
+      "request_id": "req.186",
+      "start_ms": 234648117.4835,
+      "view_step": 380,
+      "authority_step": 380,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234648138.86720002,
+      "request_id": "req.186",
+      "method": "tactical.realtime.read",
+      "start_ms": 234648117.431
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234648232.9996,
+      "start_ms": 234648222.4458,
+      "step": 381,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234648276.3962,
+      "sequence": 17,
+      "target_step": 383,
+      "at_step": 381
+    },
+    {
+      "kind": "request",
+      "at_ms": 234648276.4951,
+      "request_id": "req.187",
+      "method": "tactical.realtime.control",
+      "start_ms": 234648276.312
+    },
+    {
+      "kind": "read",
+      "at_ms": 234648309.6754,
+      "request_id": "req.188",
+      "start_ms": 234648299.6031,
+      "view_step": 381,
+      "authority_step": 381,
+      "receipts": [
+        {
+          "sequence": 17,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234648321.872,
+      "request_id": "req.188",
+      "method": "tactical.realtime.read",
+      "start_ms": 234648299.5749
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234648400.6961,
+      "start_ms": 234648392.25010002,
+      "step": 382,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234648518.1942,
+      "start_ms": 234648505.8932,
+      "step": 383,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234648528.5072,
+      "request_id": "req.189",
+      "start_ms": 234648518.29189998,
+      "view_step": 383,
+      "authority_step": 383,
+      "receipts": [
+        {
+          "sequence": 17,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234648541.0391,
+      "request_id": "req.189",
+      "method": "tactical.realtime.read",
+      "start_ms": 234648518.252
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234648652.1973,
+      "sequence": 17,
+      "status": "executed",
+      "step": 384
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234648661.7837,
+      "start_ms": 234648652.2448,
+      "step": 384,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234648710.5659,
+      "request_id": "req.190",
+      "start_ms": 234648700.5578,
+      "view_step": 384,
+      "authority_step": 384,
+      "receipts": [
+        {
+          "sequence": 17,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234648721.9863,
+      "request_id": "req.190",
+      "method": "tactical.realtime.read",
+      "start_ms": 234648700.4633
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234648788.7671,
+      "start_ms": 234648778.16799998,
+      "step": 385,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234648944.2163,
+      "start_ms": 234648932.87719998,
+      "step": 386,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234648953.3019,
+      "request_id": "req.191",
+      "start_ms": 234648944.3318,
+      "view_step": 386,
+      "authority_step": 386,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234648965.86920002,
+      "request_id": "req.191",
+      "method": "tactical.realtime.read",
+      "start_ms": 234648944.2879
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234649084.4733,
+      "start_ms": 234649077.22840002,
+      "step": 387,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234649152.6388,
+      "request_id": "req.192",
+      "start_ms": 234649143.4656,
+      "view_step": 387,
+      "authority_step": 387,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234649163.7097,
+      "request_id": "req.192",
+      "method": "tactical.realtime.read",
+      "start_ms": 234649143.3809
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234649250.4961,
+      "start_ms": 234649240.37370002,
+      "step": 388,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234649373.4039,
+      "start_ms": 234649362.79320002,
+      "step": 389,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234649386.1805,
+      "request_id": "req.193",
+      "start_ms": 234649373.50019997,
+      "view_step": 389,
+      "authority_step": 389,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234649396.6162,
+      "request_id": "req.193",
+      "method": "tactical.realtime.read",
+      "start_ms": 234649373.4761
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234649513.8529,
+      "start_ms": 234649506.3801,
+      "step": 390,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234649570.65539998,
+      "request_id": "req.194",
+      "start_ms": 234649559.98310003,
+      "view_step": 390,
+      "authority_step": 390,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234649585.63700002,
+      "request_id": "req.194",
+      "method": "tactical.realtime.read",
+      "start_ms": 234649559.9181
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234649676.64200002,
+      "start_ms": 234649663.3048,
+      "step": 391,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234649766.08810002,
+      "start_ms": 234649757.7523,
+      "step": 392,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234649776.8693,
+      "request_id": "req.195",
+      "start_ms": 234649766.16160002,
+      "view_step": 392,
+      "authority_step": 392,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234649787.8737,
+      "request_id": "req.195",
+      "method": "tactical.realtime.read",
+      "start_ms": 234649766.141
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234649905.5718,
+      "start_ms": 234649895.5174,
+      "step": 393,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234649934.71,
+      "sequence": 18,
+      "target_step": 395,
+      "at_step": 393
+    },
+    {
+      "kind": "request",
+      "at_ms": 234649935.01369998,
+      "request_id": "req.196",
+      "method": "tactical.realtime.control",
+      "start_ms": 234649934.5625
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234650023.8315,
+      "start_ms": 234650014.2066,
+      "step": 394,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234650031.0602,
+      "request_id": "req.197",
+      "start_ms": 234650023.9465,
+      "view_step": 394,
+      "authority_step": 394,
+      "receipts": [
+        {
+          "sequence": 18,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234650043.1814,
+      "request_id": "req.197",
+      "method": "tactical.realtime.read",
+      "start_ms": 234650023.8975
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234650161.8833,
+      "start_ms": 234650151.875,
+      "step": 395,
+      "paused": false
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234650282.36290002,
+      "sequence": 18,
+      "status": "executed",
+      "step": 396
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234650291.86999997,
+      "start_ms": 234650282.4531,
+      "step": 396,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234650356.6164,
+      "request_id": "req.198",
+      "start_ms": 234650291.9466,
+      "view_step": 396,
+      "authority_step": 396,
+      "receipts": [
+        {
+          "sequence": 18,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234650370.6464,
+      "request_id": "req.198",
+      "method": "tactical.realtime.read",
+      "start_ms": 234650291.924
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234650435.83900002,
+      "start_ms": 234650428.9484,
+      "step": 397,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234650527.44390002,
+      "start_ms": 234650519.05380002,
+      "step": 398,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234650553.6108,
+      "request_id": "req.199",
+      "start_ms": 234650542.4368,
+      "view_step": 398,
+      "authority_step": 398,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234650568.188,
+      "request_id": "req.199",
+      "method": "tactical.realtime.read",
+      "start_ms": 234650542.3026
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234650659.6033,
+      "start_ms": 234650649.6329,
+      "step": 399,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234650735.2649,
+      "request_id": "req.200",
+      "start_ms": 234650726.31309998,
+      "view_step": 399,
+      "authority_step": 399,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234650745.9063,
+      "request_id": "req.200",
+      "method": "tactical.realtime.read",
+      "start_ms": 234650726.2518
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234650835.7062,
+      "start_ms": 234650825.178,
+      "step": 400,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234650960.5546,
+      "start_ms": 234650951.1214,
+      "step": 401,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234650969.4594,
+      "request_id": "req.201",
+      "start_ms": 234650960.66770002,
+      "view_step": 401,
+      "authority_step": 401,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234650978.8024,
+      "request_id": "req.201",
+      "method": "tactical.realtime.read",
+      "start_ms": 234650960.61949998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234651107.30870003,
+      "start_ms": 234651098.115,
+      "step": 402,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234651148.3068,
+      "request_id": "req.202",
+      "start_ms": 234651139.1257,
+      "view_step": 402,
+      "authority_step": 402,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234651159.7737,
+      "request_id": "req.202",
+      "method": "tactical.realtime.read",
+      "start_ms": 234651139.0542
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234651238.123,
+      "start_ms": 234651229.3024,
+      "step": 403,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234651311.9277,
+      "request_id": "req.203",
+      "start_ms": 234651302.2572,
+      "view_step": 403,
+      "authority_step": 403,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234651321.71359998,
+      "request_id": "req.203",
+      "method": "tactical.realtime.read",
+      "start_ms": 234651302.2186
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234651405.4328,
+      "start_ms": 234651393.4601,
+      "step": 404,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234651548.3888,
+      "start_ms": 234651538.45270002,
+      "step": 405,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234651561.4634,
+      "request_id": "req.204",
+      "start_ms": 234651548.5049,
+      "view_step": 405,
+      "authority_step": 405,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234651572.1162,
+      "request_id": "req.204",
+      "method": "tactical.realtime.read",
+      "start_ms": 234651548.473
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234651689.1716,
+      "start_ms": 234651680.5031,
+      "step": 406,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234651727.9954,
+      "request_id": "req.205",
+      "start_ms": 234651719.4644,
+      "view_step": 406,
+      "authority_step": 406,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234651737.0395,
+      "request_id": "req.205",
+      "method": "tactical.realtime.read",
+      "start_ms": 234651719.4086
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234651839.71,
+      "start_ms": 234651829.8856,
+      "step": 407,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234651877.6325,
+      "sequence": 19,
+      "target_step": 409,
+      "at_step": 407
+    },
+    {
+      "kind": "request",
+      "at_ms": 234651877.7386,
+      "request_id": "req.206",
+      "method": "tactical.realtime.control",
+      "start_ms": 234651877.5384
+    },
+    {
+      "kind": "read",
+      "at_ms": 234651909.4002,
+      "request_id": "req.207",
+      "start_ms": 234651900.51529998,
+      "view_step": 407,
+      "authority_step": 407,
+      "receipts": [
+        {
+          "sequence": 19,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234651918.8626,
+      "request_id": "req.207",
+      "method": "tactical.realtime.read",
+      "start_ms": 234651900.4661
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234652005.5752,
+      "start_ms": 234651995.2399,
+      "step": 408,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234652135.5456,
+      "start_ms": 234652128.1721,
+      "step": 409,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234652145.0239,
+      "request_id": "req.208",
+      "start_ms": 234652135.6467,
+      "view_step": 409,
+      "authority_step": 409,
+      "receipts": [
+        {
+          "sequence": 19,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234652157.6981,
+      "request_id": "req.208",
+      "method": "tactical.realtime.read",
+      "start_ms": 234652135.59719998
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234652269.86940002,
+      "sequence": 19,
+      "status": "executed",
+      "step": 410
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234652276.998,
+      "start_ms": 234652269.913,
+      "step": 410,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234652331.83040002,
+      "request_id": "req.209",
+      "start_ms": 234652321.1739,
+      "view_step": 410,
+      "authority_step": 410,
+      "receipts": [
+        {
+          "sequence": 19,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234652344.3759,
+      "request_id": "req.209",
+      "method": "tactical.realtime.read",
+      "start_ms": 234652321.0974
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234652423.37060001,
+      "start_ms": 234652414.57610002,
+      "step": 411,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234652537.72190002,
+      "start_ms": 234652528.2918,
+      "step": 412,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234652546.676,
+      "request_id": "req.210",
+      "start_ms": 234652537.8495,
+      "view_step": 412,
+      "authority_step": 412,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234652557.7578,
+      "request_id": "req.210",
+      "method": "tactical.realtime.read",
+      "start_ms": 234652537.7899
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234652653.8942,
+      "start_ms": 234652646.9949,
+      "step": 413,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234652791.1379,
+      "start_ms": 234652782.3554,
+      "step": 414,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234652801.949,
+      "request_id": "req.211",
+      "start_ms": 234652791.22980002,
+      "view_step": 414,
+      "authority_step": 414,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234652814.9894,
+      "request_id": "req.211",
+      "method": "tactical.realtime.read",
+      "start_ms": 234652791.19099998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234652904.49670002,
+      "start_ms": 234652894.41169998,
+      "step": 415,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234653043.7525,
+      "start_ms": 234653035.665,
+      "step": 416,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234653052.8655,
+      "request_id": "req.212",
+      "start_ms": 234653043.914,
+      "view_step": 416,
+      "authority_step": 416,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234653062.91770002,
+      "request_id": "req.212",
+      "method": "tactical.realtime.read",
+      "start_ms": 234653043.817
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234653199.4464,
+      "start_ms": 234653186.6822,
+      "step": 417,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234653295.58850002,
+      "start_ms": 234653287.7143,
+      "step": 418,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234653308.8383,
+      "request_id": "req.213",
+      "start_ms": 234653295.6679,
+      "view_step": 418,
+      "authority_step": 418,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234653319.8512,
+      "request_id": "req.213",
+      "method": "tactical.realtime.read",
+      "start_ms": 234653295.64600003
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234653422.13779998,
+      "start_ms": 234653412.2125,
+      "step": 419,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234653477.3246,
+      "request_id": "req.214",
+      "start_ms": 234653469.3711,
+      "view_step": 419,
+      "authority_step": 419,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234653492.8745,
+      "request_id": "req.214",
+      "method": "tactical.realtime.read",
+      "start_ms": 234653469.31379998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234653584.2501,
+      "start_ms": 234653571.87489998,
+      "step": 420,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234653690.3962,
+      "start_ms": 234653679.3081,
+      "step": 421,
+      "paused": false
+    },
+    {
+      "kind": "accepted",
+      "at_ms": 234653690.5133,
+      "sequence": 20,
+      "target_step": 422,
+      "at_step": 421
+    },
+    {
+      "kind": "request",
+      "at_ms": 234653690.5938,
+      "request_id": "req.215",
+      "method": "tactical.realtime.control",
+      "start_ms": 234653690.4456
+    },
+    {
+      "kind": "read",
+      "at_ms": 234653707.6938,
+      "request_id": "req.216",
+      "start_ms": 234653696.6967,
+      "view_step": 421,
+      "authority_step": 421,
+      "receipts": [
+        {
+          "sequence": 20,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234653719.46940002,
+      "request_id": "req.216",
+      "method": "tactical.realtime.read",
+      "start_ms": 234653696.2608
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234653839.0558,
+      "start_ms": 234653830.232,
+      "step": 422,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234653894.3837,
+      "request_id": "req.217",
+      "start_ms": 234653884.0802,
+      "view_step": 422,
+      "authority_step": 422,
+      "receipts": [
+        {
+          "sequence": 20,
+          "status": "accepted"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234653904.9318,
+      "request_id": "req.217",
+      "method": "tactical.realtime.read",
+      "start_ms": 234653884.0207
+    },
+    {
+      "kind": "resolved",
+      "at_ms": 234653982.51540002,
+      "sequence": 20,
+      "status": "executed",
+      "step": 423
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234653990.98900002,
+      "start_ms": 234653982.5726,
+      "step": 423,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234654118.3308,
+      "start_ms": 234654108.9618,
+      "step": 424,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234654129.7665,
+      "request_id": "req.218",
+      "start_ms": 234654118.44280002,
+      "view_step": 424,
+      "authority_step": 424,
+      "receipts": [
+        {
+          "sequence": 20,
+          "status": "executed"
+        }
+      ]
+    },
+    {
+      "kind": "request",
+      "at_ms": 234654141.35029998,
+      "request_id": "req.218",
+      "method": "tactical.realtime.read",
+      "start_ms": 234654118.4152
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234654299.7763,
+      "start_ms": 234654291.07090002,
+      "step": 425,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234654421.7544,
+      "start_ms": 234654412.2322,
+      "step": 426,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234654432.7716,
+      "request_id": "req.219",
+      "start_ms": 234654421.9106,
+      "view_step": 426,
+      "authority_step": 426,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234654446.4554,
+      "request_id": "req.219",
+      "method": "tactical.realtime.read",
+      "start_ms": 234654421.8305
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234654552.34309998,
+      "start_ms": 234654543.94030002,
+      "step": 427,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234654702.2796,
+      "start_ms": 234654692.3454,
+      "step": 428,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234654713.866,
+      "request_id": "req.220",
+      "start_ms": 234654702.37399998,
+      "view_step": 428,
+      "authority_step": 428,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234654723.5281,
+      "request_id": "req.220",
+      "method": "tactical.realtime.read",
+      "start_ms": 234654702.33130002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234654852.6633,
+      "start_ms": 234654843.7556,
+      "step": 429,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234654905.2762,
+      "request_id": "req.221",
+      "start_ms": 234654891.578,
+      "view_step": 429,
+      "authority_step": 429,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234654919.35059997,
+      "request_id": "req.221",
+      "method": "tactical.realtime.read",
+      "start_ms": 234654891.5076
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234655009.08339998,
+      "start_ms": 234654999.6784,
+      "step": 430,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234655171.0156,
+      "start_ms": 234655159.8701,
+      "step": 431,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234655181.7898,
+      "request_id": "req.222",
+      "start_ms": 234655171.155,
+      "view_step": 431,
+      "authority_step": 431,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234655192.7138,
+      "request_id": "req.222",
+      "method": "tactical.realtime.read",
+      "start_ms": 234655171.0922
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234655344.3591,
+      "start_ms": 234655283.1514,
+      "step": 432,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234655420.17679998,
+      "start_ms": 234655411.611,
+      "step": 433,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234655429.2549,
+      "request_id": "req.223",
+      "start_ms": 234655420.3121,
+      "view_step": 433,
+      "authority_step": 433,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234655441.094,
+      "request_id": "req.223",
+      "method": "tactical.realtime.read",
+      "start_ms": 234655420.2391
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234655565.0152,
+      "start_ms": 234655556.1363,
+      "step": 434,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234655617.87849998,
+      "request_id": "req.224",
+      "start_ms": 234655606.1877,
+      "view_step": 434,
+      "authority_step": 434,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234655628.5872,
+      "request_id": "req.224",
+      "method": "tactical.realtime.read",
+      "start_ms": 234655606.1223
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234655722.19689998,
+      "start_ms": 234655712.8079,
+      "step": 435,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234655800.96600002,
+      "request_id": "req.225",
+      "start_ms": 234655790.9205,
+      "view_step": 435,
+      "authority_step": 435,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234655810.6524,
+      "request_id": "req.225",
+      "method": "tactical.realtime.read",
+      "start_ms": 234655790.8655
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234655917.78280002,
+      "start_ms": 234655906.8819,
+      "step": 436,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234656049.74749997,
+      "start_ms": 234656041.9093,
+      "step": 437,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234656058.90559998,
+      "request_id": "req.226",
+      "start_ms": 234656050.0695,
+      "view_step": 437,
+      "authority_step": 437,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234656072.037,
+      "request_id": "req.226",
+      "method": "tactical.realtime.read",
+      "start_ms": 234656049.81649998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234656125.4831,
+      "start_ms": 234656116.804,
+      "step": 437,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234656202.8099,
+      "start_ms": 234656193.61330003,
+      "step": 438,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234656244.20740002,
+      "request_id": "req.227",
+      "start_ms": 234656233.8815,
+      "view_step": 438,
+      "authority_step": 438,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234656253.6538,
+      "request_id": "req.227",
+      "method": "tactical.realtime.read",
+      "start_ms": 234656233.822
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234656284.84239998,
+      "start_ms": 234656275.8837,
+      "step": 438,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234656362.2906,
+      "start_ms": 234656354.1196,
+      "step": 439,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234656432.39880002,
+      "request_id": "req.228",
+      "start_ms": 234656422.11089998,
+      "view_step": 439,
+      "authority_step": 439,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234656444.9782,
+      "request_id": "req.228",
+      "method": "tactical.realtime.read",
+      "start_ms": 234656422.05359998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234656537.1473,
+      "start_ms": 234656528.75989997,
+      "step": 440,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234656618.1284,
+      "request_id": "req.229",
+      "start_ms": 234656607.0283,
+      "view_step": 440,
+      "authority_step": 440,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234656628.5614,
+      "request_id": "req.229",
+      "method": "tactical.realtime.read",
+      "start_ms": 234656606.9809
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234656719.9059,
+      "start_ms": 234656709.80179998,
+      "step": 441,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234656850.1762,
+      "start_ms": 234656842.9027,
+      "step": 442,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234656859.5811,
+      "request_id": "req.230",
+      "start_ms": 234656850.268,
+      "view_step": 442,
+      "authority_step": 442,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234656870.1845,
+      "request_id": "req.230",
+      "method": "tactical.realtime.read",
+      "start_ms": 234656850.2454
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234656926.8926,
+      "start_ms": 234656916.4991,
+      "step": 442,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234657015.094,
+      "start_ms": 234657006.2399,
+      "step": 443,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234657048.556,
+      "request_id": "req.231",
+      "start_ms": 234657037.9544,
+      "view_step": 443,
+      "authority_step": 443,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234657061.4874,
+      "request_id": "req.231",
+      "method": "tactical.realtime.read",
+      "start_ms": 234657037.8808
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234657092.1261,
+      "start_ms": 234657083.1063,
+      "step": 443,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234657173.7292,
+      "start_ms": 234657166.3943,
+      "step": 444,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234657237.69979998,
+      "request_id": "req.232",
+      "start_ms": 234657227.23049998,
+      "view_step": 444,
+      "authority_step": 444,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234657250.7121,
+      "request_id": "req.232",
+      "method": "tactical.realtime.read",
+      "start_ms": 234657227.18350002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234657328.9625,
+      "start_ms": 234657319.9643,
+      "step": 445,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234657487.5887,
+      "start_ms": 234657479.8904,
+      "step": 446,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234657495.9247,
+      "request_id": "req.233",
+      "start_ms": 234657487.6921,
+      "view_step": 446,
+      "authority_step": 446,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234657507.8353,
+      "request_id": "req.233",
+      "method": "tactical.realtime.read",
+      "start_ms": 234657487.6503
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234657632.92880002,
+      "start_ms": 234657624.5148,
+      "step": 447,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234657675.47439998,
+      "request_id": "req.234",
+      "start_ms": 234657665.3186,
+      "view_step": 447,
+      "authority_step": 447,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234657689.10320002,
+      "request_id": "req.234",
+      "method": "tactical.realtime.read",
+      "start_ms": 234657665.28779998
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234657795.8094,
+      "start_ms": 234657784.006,
+      "step": 448,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234657916.14369997,
+      "start_ms": 234657907.18,
+      "step": 449,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234657925.306,
+      "request_id": "req.235",
+      "start_ms": 234657916.52699998,
+      "view_step": 449,
+      "authority_step": 449,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234657938.19300002,
+      "request_id": "req.235",
+      "method": "tactical.realtime.read",
+      "start_ms": 234657916.4612
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234658059.2422,
+      "start_ms": 234658051.92339998,
+      "step": 450,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234658115.95450002,
+      "request_id": "req.236",
+      "start_ms": 234658105.05179998,
+      "view_step": 450,
+      "authority_step": 450,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234658129.0548,
+      "request_id": "req.236",
+      "method": "tactical.realtime.read",
+      "start_ms": 234658104.99319997
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234658208.69500002,
+      "start_ms": 234658193.641,
+      "step": 451,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234658346.6787,
+      "start_ms": 234658339.44979998,
+      "step": 452,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234658355.1905,
+      "request_id": "req.237",
+      "start_ms": 234658346.8397,
+      "view_step": 452,
+      "authority_step": 452,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234658369.5514,
+      "request_id": "req.237",
+      "method": "tactical.realtime.read",
+      "start_ms": 234658346.7804
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234658485.29340002,
+      "start_ms": 234658476.5824,
+      "step": 453,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234658543.1181,
+      "request_id": "req.238",
+      "start_ms": 234658532.36380002,
+      "view_step": 453,
+      "authority_step": 453,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234658555.1972,
+      "request_id": "req.238",
+      "method": "tactical.realtime.read",
+      "start_ms": 234658532.336
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234658644.5097,
+      "start_ms": 234658634.1708,
+      "step": 454,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234658771.8365,
+      "start_ms": 234658764.37690002,
+      "step": 455,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234658780.9734,
+      "request_id": "req.239",
+      "start_ms": 234658771.9543,
+      "view_step": 455,
+      "authority_step": 455,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234658793.1372,
+      "request_id": "req.239",
+      "method": "tactical.realtime.read",
+      "start_ms": 234658771.9037
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234658903.1025,
+      "start_ms": 234658893.2473,
+      "step": 456,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234658953.0536,
+      "request_id": "req.240",
+      "start_ms": 234658943.2245,
+      "view_step": 456,
+      "authority_step": 456,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234658964.11150002,
+      "request_id": "req.240",
+      "method": "tactical.realtime.read",
+      "start_ms": 234658943.1958
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234659048.4915,
+      "start_ms": 234659040.791,
+      "step": 457,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234659191.426,
+      "start_ms": 234659181.4019,
+      "step": 458,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234659201.6505,
+      "request_id": "req.241",
+      "start_ms": 234659191.5607,
+      "view_step": 458,
+      "authority_step": 458,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234659213.2129,
+      "request_id": "req.241",
+      "method": "tactical.realtime.read",
+      "start_ms": 234659191.49600002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234659327.7487,
+      "start_ms": 234659318.9153,
+      "step": 459,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234659386.4467,
+      "request_id": "req.242",
+      "start_ms": 234659376.7769,
+      "view_step": 459,
+      "authority_step": 459,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234659400.07279998,
+      "request_id": "req.242",
+      "method": "tactical.realtime.read",
+      "start_ms": 234659376.7457
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234659493.6655,
+      "start_ms": 234659484.4739,
+      "step": 460,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234659599.86789998,
+      "start_ms": 234659589.2057,
+      "step": 461,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234659610.1045,
+      "request_id": "req.243",
+      "start_ms": 234659600.004,
+      "view_step": 461,
+      "authority_step": 461,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234659624.3086,
+      "request_id": "req.243",
+      "method": "tactical.realtime.read",
+      "start_ms": 234659599.94730002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234659744.5409,
+      "start_ms": 234659735.7815,
+      "step": 462,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234659798.0907,
+      "request_id": "req.244",
+      "start_ms": 234659788.1873,
+      "view_step": 462,
+      "authority_step": 462,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234659809.3899,
+      "request_id": "req.244",
+      "method": "tactical.realtime.read",
+      "start_ms": 234659788.1568
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234659885.1934,
+      "start_ms": 234659875.7027,
+      "step": 463,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234660074.5205,
+      "start_ms": 234660012.3885,
+      "step": 464,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234660086.1416,
+      "request_id": "req.245",
+      "start_ms": 234660074.63320002,
+      "view_step": 464,
+      "authority_step": 464,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234660098.3666,
+      "request_id": "req.245",
+      "method": "tactical.realtime.read",
+      "start_ms": 234660074.6064
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234660190.3356,
+      "start_ms": 234660180.7195,
+      "step": 465,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234660266.8458,
+      "start_ms": 234660258.5209,
+      "step": 465,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234660360.2315,
+      "start_ms": 234660349.4946,
+      "step": 466,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234660369.6563,
+      "request_id": "req.246",
+      "start_ms": 234660360.3386,
+      "view_step": 466,
+      "authority_step": 466,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234660381.8748,
+      "request_id": "req.246",
+      "method": "tactical.realtime.read",
+      "start_ms": 234660360.31359997
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234660511.509,
+      "start_ms": 234660503.3884,
+      "step": 467,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234660561.6475,
+      "request_id": "req.247",
+      "start_ms": 234660553.01189998,
+      "view_step": 467,
+      "authority_step": 467,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234660574.7722,
+      "request_id": "req.247",
+      "method": "tactical.realtime.read",
+      "start_ms": 234660552.9822
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234660667.8089,
+      "start_ms": 234660658.1475,
+      "step": 468,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234660739.9343,
+      "request_id": "req.248",
+      "start_ms": 234660730.04950002,
+      "view_step": 468,
+      "authority_step": 468,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234660751.58049998,
+      "request_id": "req.248",
+      "method": "tactical.realtime.read",
+      "start_ms": 234660730.01880002
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234660839.2745,
+      "start_ms": 234660826.53869998,
+      "step": 469,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234660985.6519,
+      "start_ms": 234660977.1482,
+      "step": 470,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234660994.64270002,
+      "request_id": "req.249",
+      "start_ms": 234660985.7459,
+      "view_step": 470,
+      "authority_step": 470,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234661006.823,
+      "request_id": "req.249",
+      "method": "tactical.realtime.read",
+      "start_ms": 234660985.7205
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234661149.5155,
+      "start_ms": 234661141.0334,
+      "step": 471,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234661195.7439,
+      "request_id": "req.250",
+      "start_ms": 234661184.1337,
+      "view_step": 471,
+      "authority_step": 471,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234661213.98110002,
+      "request_id": "req.250",
+      "method": "tactical.realtime.read",
+      "start_ms": 234661184.0836
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234661310.646,
+      "start_ms": 234661294.4513,
+      "step": 472,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234661462.956,
+      "start_ms": 234661453.9192,
+      "step": 473,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234661470.8948,
+      "request_id": "req.251",
+      "start_ms": 234661463.0406,
+      "view_step": 473,
+      "authority_step": 473,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234661481.707,
+      "request_id": "req.251",
+      "method": "tactical.realtime.read",
+      "start_ms": 234661463.006
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234661619.162,
+      "start_ms": 234661609.4639,
+      "step": 474,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234661667.80220002,
+      "request_id": "req.252",
+      "start_ms": 234661656.75590003,
+      "view_step": 474,
+      "authority_step": 474,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234661677.8181,
+      "request_id": "req.252",
+      "method": "tactical.realtime.read",
+      "start_ms": 234661656.7276
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234661764.0352,
+      "start_ms": 234661750.7106,
+      "step": 475,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234661919.0529,
+      "start_ms": 234661909.37469998,
+      "step": 476,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234661927.9944,
+      "request_id": "req.253",
+      "start_ms": 234661919.1511,
+      "view_step": 476,
+      "authority_step": 476,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234661939.00829998,
+      "request_id": "req.253",
+      "method": "tactical.realtime.read",
+      "start_ms": 234661919.1245
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234662069.0285,
+      "start_ms": 234662062.25039998,
+      "step": 477,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234662113.86360002,
+      "request_id": "req.254",
+      "start_ms": 234662103.3215,
+      "view_step": 477,
+      "authority_step": 477,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234662123.14040002,
+      "request_id": "req.254",
+      "method": "tactical.realtime.read",
+      "start_ms": 234662103.2899
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234662220.2272,
+      "start_ms": 234662209.1126,
+      "step": 478,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234662358.47129998,
+      "start_ms": 234662349.15510002,
+      "step": 479,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234662368.306,
+      "request_id": "req.255",
+      "start_ms": 234662358.5634,
+      "view_step": 479,
+      "authority_step": 479,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234662380.1086,
+      "request_id": "req.255",
+      "method": "tactical.realtime.read",
+      "start_ms": 234662358.52440003
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234662508.60500002,
+      "start_ms": 234662497.55900002,
+      "step": 480,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234662646.70740002,
+      "start_ms": 234662637.91709998,
+      "step": 481,
+      "paused": false
+    },
+    {
+      "kind": "read",
+      "at_ms": 234662657.67409998,
+      "request_id": "req.256",
+      "start_ms": 234662646.7935,
+      "view_step": 481,
+      "authority_step": 481,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234662671.78010002,
+      "request_id": "req.256",
+      "method": "tactical.realtime.read",
+      "start_ms": 234662646.7701
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234662803.3511,
+      "start_ms": 234662793.7741,
+      "step": 482,
+      "paused": false
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234662831.2878,
+      "start_ms": 234662822.46960002,
+      "step": 482,
+      "paused": true
+    },
+    {
+      "kind": "read",
+      "at_ms": 234662848.6943,
+      "request_id": "req.257",
+      "start_ms": 234662831.2948,
+      "view_step": 482,
+      "authority_step": 482,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234662871.0181,
+      "request_id": "req.257",
+      "method": "tactical.realtime.pause",
+      "start_ms": 234662822.2786
+    },
+    {
+      "kind": "read",
+      "at_ms": 234663185.6377,
+      "request_id": "req.258",
+      "start_ms": 234663176.38320002,
+      "view_step": 482,
+      "authority_step": 482,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234663197.7112,
+      "request_id": "req.258",
+      "method": "tactical.realtime.read",
+      "start_ms": 234663176.3505
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234663205.6014,
+      "start_ms": 234663197.924,
+      "step": 482,
+      "paused": true
+    },
+    {
+      "kind": "read",
+      "at_ms": 234663531.2588,
+      "request_id": "req.259",
+      "start_ms": 234663521.3774,
+      "view_step": 482,
+      "authority_step": 482,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234663544.9473,
+      "request_id": "req.259",
+      "method": "tactical.realtime.read",
+      "start_ms": 234663521.3453
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234663553.0594,
+      "start_ms": 234663545.1573,
+      "step": 482,
+      "paused": true
+    },
+    {
+      "kind": "read",
+      "at_ms": 234663712.8722,
+      "request_id": "req.260",
+      "start_ms": 234663704.2829,
+      "view_step": 482,
+      "authority_step": 482,
+      "receipts": []
+    },
+    {
+      "kind": "request",
+      "at_ms": 234663722.6457,
+      "request_id": "req.260",
+      "method": "tactical.realtime.read",
+      "start_ms": 234663704.2448
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234663733.15710002,
+      "start_ms": 234663722.8594,
+      "step": 482,
+      "paused": true
+    },
+    {
+      "kind": "publication",
+      "at_ms": 234664351.69829997,
+      "start_ms": 234664343.70200002,
+      "step": 482,
+      "paused": true
+    }
+  ],
+  "dropped": 0,
+  "scope": "Diagnostic monotonic wall milliseconds in the Python process. Request start/end brackets correlate request IDs with Node; browser timestamps have a separate origin. Instrumentation adds overhead."
+}

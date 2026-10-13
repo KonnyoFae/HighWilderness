@@ -40,7 +40,15 @@ export class PresentationTimeline {
     const latest=this.frames.at(-1)?.snapshot;
     if(!latest)return this.displayedStep;
     const target=latest.fixed_step+(now-this.receivedAt-PRESENTATION_DELAY_MS)*this.speed/(1000*latest.fixed_step_s);
-    const desired=this.variableClock?Math.min(target,this.displayedStep+Math.max(0,now-this.sampleAt)*this.speed/(1000*latest.fixed_step_s)):target;
+    const elapsed=Math.max(0,now-this.sampleAt);
+    // Rate changes must not preserve old phase debt at the new (possibly 0.05x)
+    // pace. Recover continuously towards the delivered endpoint by the end of
+    // its existing wall-time buffer. Duplicate publications keep that deadline.
+    // This only traverses committed history; sparse delivery can still freeze.
+    const remaining=this.receivedAt+PRESENTATION_DELAY_MS-this.sampleAt;
+    const catchup=this.displayedStep+(latest.fixed_step-this.displayedStep)*(remaining>0?Math.min(1,elapsed/remaining):1);
+    const nominal=this.displayedStep+elapsed*this.speed/(1000*latest.fixed_step_s);
+    const desired=this.variableClock?Math.min(target,Math.max(nominal,catchup)):target;
     this.sampleAt=Math.max(this.sampleAt,now);
     return this.displayedStep=Math.min(latest.fixed_step,Math.max(this.displayedStep,desired));
   }
