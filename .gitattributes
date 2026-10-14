@@ -33,6 +33,11 @@ artifacts/tactical-7c4a-20261013/** -text !eol whitespace=cr-at-eol
 artifacts/tactical-7c4b-20261013/** -text !eol whitespace=cr-at-eol
 artifacts/tactical-7c-review-20261013/** -text !eol whitespace=cr-at-eol
 artifacts/tactical-7c4b-closeout-20261013/** -text !eol whitespace=cr-at-eol
+artifacts/tactical-p1a-chaff-20261014/** -text !eol whitespace=cr-at-eol
+artifacts/tactical-p1a-chaff-20261014/**/*.txt whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+artifacts/tactical-p1b-20261014/** -text !eol whitespace=cr-at-eol
+artifacts/tactical-p1b-20261014/**/*.txt whitespace=cr-at-eol,-blank-at-eof
+tools/tactical_p1b_reference.py -text !eol whitespace=cr-at-eol,-blank-at-eof
 
 # Frozen comparison source retains the exact bytes recorded in evidence hashes.
 tools/tactical_7c1b_reference.py -text !eol whitespace=cr-at-eol,-blank-at-eof

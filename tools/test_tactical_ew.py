@@ -43,8 +43,7 @@ class ElectronicWarfareTests(unittest.TestCase):
 
     def test_repeated_input_and_failed_tick_do_not_spend_twice(self):
         b=self.battle()
-        with self.assertRaises(ps.ContractError):self.deploy(b)
-        self.incoming(b);cmd=self.deploy(b);before=b.inventory.inventories[0].snapshot()
+        cmd=self.deploy(b);before=b.inventory.inventories[0].snapshot()
         def failure(*args):raise RuntimeError('rollback')
         with self.assertRaises(RuntimeError):b.step(project=failure)
         self.assertEqual(b.inventory.inventories[0].snapshot(),before);self.assertFalse(b.ew.effects)

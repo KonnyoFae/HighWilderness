@@ -4,6 +4,7 @@ Plans are published after the enclosing atomic battle step succeeds. Shared
 tracks preserve the originating sample; they never remeasure at the receiver.
 """
 from dataclasses import dataclass, replace, field
+from contextlib import contextmanager
 from math import hypot, atan2, degrees, cos, sin
 from pathlib import Path
 import json
@@ -92,15 +93,15 @@ def allocate(candidates, previous, capacity, priorities):
 
 
 class _Inputs:
-    """Scratch inputs for one plan/view call; never retained by the runtime.
+    """Capabilities for one immutable candidate stage or one plan/view call.
 
-    Even two plans at the same fixed step get fresh inputs. Target range and
-    visibility are still checked individually against that call's world.
+    No observations, target eligibility or EW results are cached here. Even
+    within a stage, target range and source validity are checked individually.
     """
     def __init__(self,runtime,world,available):
         self.runtime=runtime;self.world=world;self.available=available
         self.positions=tuple(tuple(s.motion.position_world_m.to_list()) for s in world.ships)
-        self.controls={}
+        self.controls={};self.unlimited={}
 
     def controllers(self,n,position):
         if n not in self.controls:
@@ -108,6 +109,8 @@ class _Inputs:
             self.controls[n]=tuple((mid,b._capabilities[n][mid]['maximum_lock_range_m'],
                 int(b._capabilities[n][mid]['simultaneous_channels']*self.runtime.effect(self.world,n,mid,'fire_control.solution')))
                 for mid in b._controllers[n] if not self.available[n][mid])
+            self.unlimited[n]=(tuple(mid for mid,_,_ in self.controls[n]),sum(count for _,_,count in self.controls[n]))
+        if position is None:return self.unlimited[n]
         distance=None if position is None else hypot(*(a-c for a,c in zip(position,self.positions[n])))
         controls=[];channels=0
         for mid,maximum,count in self.controls[n]:
@@ -159,6 +162,21 @@ class ObservationRuntime:
             self.sensors.append(sensors);self.links.append(tuple(links))
         self.frame=Frame({}, {}, (), -1)
         self.sequence=0;self.last=None;self.locks={};self.pending_modes={}
+        self._stage_inputs=None
+
+    @contextmanager
+    def capability_stage(self,world,available):
+        """Scope shared controller work to a synchronous immutable candidate.
+
+        Open after damage/crew/availability resolution; close before repairs,
+        departures, publication or external callbacks. A new frame (including
+        same-step chaff) is always read by sources; it is not part of this cache.
+        Restore even on failure, so a retry cannot inherit candidate scratch.
+        """
+        previous=self._stage_inputs
+        self._stage_inputs=_Inputs(self,world,available)
+        try:yield
+        finally:self._stage_inputs=previous
 
     def visible(self,n,mid,ship,target,effective,occluded,*,origin=None):
         from .tactical_gunnery import rotate, add
@@ -297,6 +315,9 @@ class ObservationRuntime:
         return replace(frame,locks=locks)
 
     def controllers(self,n,world,available,position=None,*,inputs=None):
+        if inputs is None:
+            stage=getattr(self,'_stage_inputs',None)
+            if stage is not None and stage.world is world and stage.available is available:inputs=stage
         if inputs is not None:return inputs.controllers(n,position)
         b=self.battle;controls=[];channels=0
         for mid in b._controllers[n]:

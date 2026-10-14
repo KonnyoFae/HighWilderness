@@ -1,0 +1,20 @@
+{
+  "backend": {
+    "command": "python -X utf8 -m unittest tools.test_tactical_p1b tools.test_tactical_7c1b tools.test_tactical_chaff tools.test_tactical_ew tools.test_tactical_observation tools.test_tactical_gunnery tools.test_aviation_ew tools.test_missile_defense tools.test_tactical_defense_prediction tools.test_tactical_fire_control_scheduling tools.test_tactical_fire_control_optimization tools.test_tactical_targeting tools.test_tactical_7c4 tools.test_tactical_7c4b",
+    "tests": 150,
+    "new_p1b_tests": 5,
+    "exit_code": 0,
+    "output": "backend-tests.txt",
+    "scope": "Correctness only; ran alongside frozen-state verification, never alongside formal performance measurements."
+  },
+  "production_changes": [
+    "backend/high_wilderness_sidecar/tactical_observation.py",
+    "backend/high_wilderness_sidecar/tactical_gunnery.py"
+  ],
+  "reference": {
+    "head": "aa301d3c409fd3a96690ad292ca43b8032805cd7",
+    "frozen": "tools/tactical_p1b_reference.py",
+    "ast_verified": ["_Inputs", "ObservationRuntime.controllers"],
+    "scope": "Both variants use the current P1a manual-chaff rule. Reference disables the new scope and restores the frozen capability methods only."
+  }
+}

@@ -1,0 +1,3852 @@
+{
+  "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('complementary', { name: '所选舰艇' }).getByRole('button', { name: '设备', exact: true })\u001b[22m\n",
+  "errors": [],
+  "checks": [],
+  "commands": [],
+  "snapshots": {},
+  "live": {
+    "available": true,
+    "direct_ship_id": "ship.chaff.player",
+    "engines": [
+      {
+        "actual": 0,
+        "id": "main_engine_port",
+        "phase": "ready",
+        "target": 0
+      },
+      {
+        "actual": 0,
+        "id": "main_engine_starboard",
+        "phase": "ready",
+        "target": 0
+      },
+      {
+        "actual": 0,
+        "id": "thruster_port_aft",
+        "phase": "ready",
+        "target": 0
+      },
+      {
+        "actual": 0,
+        "id": "thruster_port_fore",
+        "phase": "off",
+        "target": 0
+      },
+      {
+        "actual": 0,
+        "id": "thruster_starboard_aft",
+        "phase": "ready",
+        "target": 0
+      },
+      {
+        "actual": 0,
+        "id": "thruster_starboard_fore",
+        "phase": "off",
+        "target": 0
+      }
+    ],
+    "error": null,
+    "events": [
+      {
+        "epoch": "49fdb6ee956c4a2a92494c409b384603",
+        "result": {
+          "diagnostics": [
+            [
+              "ship.chaff.enemy",
+              {
+                "active_force_body_n": {
+                  "x": 0,
+                  "y": 200000
+                },
+                "active_torque_n_m": 0,
+                "command_scale": 1,
+                "crew_g": 1.0000416550563953,
+                "drag_breakdown": {
+                  "beta_deg": 0,
+                  "drag_force_n": 368.27718932638703,
+                  "equivalent_drag_area_m2": 105.9141243998864,
+                  "form_area_m2": 84.4054054054054,
+                  "mach": 0.00775615627119088,
+                  "reynolds_number": 22708301.971764408,
+                  "skin_area_m2": 21.508718994480997,
+                  "skin_friction_coefficient": 0.002500315352603465,
+                  "speed_mps": 2.637093132204899,
+                  "wave_area_m2": 0
+                },
+                "drag_force_world_n": {
+                  "x": -4.510094811075442e-14,
+                  "y": 368.2771893263871
+                },
+                "fuel_units_consumed": 0,
+                "hull_integrity_damage": 0,
+                "structure_ratio": 0.0009315149177087085,
+                "target_yaw_rate_radps": 0
+              }
+            ],
+            [
+              "ship.chaff.player",
+              {
+                "active_force_body_n": {
+                  "x": 0,
+                  "y": 0
+                },
+                "active_torque_n_m": 0,
+                "command_scale": 1,
+                "crew_g": 1,
+                "drag_breakdown": {
+                  "beta_deg": 0,
+                  "drag_force_n": 0,
+                  "equivalent_drag_area_m2": 148.06318377061382,
+                  "form_area_m2": 84.4054054054054,
+                  "mach": 0,
+                  "reynolds_number": 100000,
+                  "skin_area_m2": 63.65777836520843,
+                  "skin_friction_coefficient": 0.007399999999999999,
+                  "speed_mps": 0,
+                  "wave_area_m2": 0
+                },
+                "drag_force_world_n": {
+                  "x": 0,
+                  "y": 0
+                },
+                "fuel_units_consumed": 0,
+                "hull_integrity_damage": 0,
+                "structure_ratio": 0,
+                "target_yaw_rate_radps": 0
+              }
+            ]
+          ],
+          "events": [
+            [
+              "ship.chaff.player",
+              "impact",
+              "damage",
+              [],
+              0.00865650969529086
+            ]
+          ],
+          "fixed_step": 1798
+        },
+        "sequence": 122
+      }
+    ],
+    "interface": "gaotian.realtime-view/e3b-v1alpha1",
+    "loss_reason": null,
+    "receipts": [],
+    "requested_control": {
+      "automatic_brake": false,
+      "automatic_brake_policy": "gaotian.propulsion-control/translation-only-quarter-brake/v2",
+      "channel_commands": [
+        {
+          "command_channel": "translation.forward",
+          "commanded_notch": "stop",
+          "target_output_percent": null
+        },
+        {
+          "command_channel": "translation.reverse",
+          "commanded_notch": "stop",
+          "target_output_percent": null
+        },
+        {
+          "command_channel": "translation.left",
+          "commanded_notch": "stop",
+          "target_output_percent": null
+        },
+        {
+          "command_channel": "translation.right",
+          "commanded_notch": "stop",
+          "target_output_percent": null
+        },
+        {
+          "command_channel": "yaw.counterclockwise",
+          "commanded_notch": null,
+          "target_output_percent": 0
+        },
+        {
+          "command_channel": "yaw.clockwise",
+          "commanded_notch": null,
+          "target_output_percent": 0
+        }
+      ],
+      "interface": "gaotian.tactical-propulsion-control/v2alpha1",
+      "main_engine_quantization_policy": "gaotian.propulsion-control/nearest-telegraph-ties-up/v1",
+      "maneuver_quantization_policy": "gaotian.propulsion-control/nearest-stage-ties-up/v1",
+      "overg_requested": false,
+      "source_migration_id": null
+    },
+    "settlement": null,
+    "status": {
+      "acknowledged_event_sequence": 121,
+      "debt_quanta": 622722000,
+      "epoch": "49fdb6ee956c4a2a92494c409b384603",
+      "fixed_step": 1800,
+      "generation": 0,
+      "highest_input_sequence": 0,
+      "pause_reason": null,
+      "pending_inputs": 0,
+      "reliable_events": 1,
+      "retained_receipts": 0,
+      "running": true,
+      "speed": {
+        "active_wall_s": 30.0103787,
+        "actual_ratio": 0.9996541629779567,
+        "advanced_simulation_s": 30,
+        "effective": 1,
+        "longest_step_ms": 4.5299,
+        "mode": "adaptive",
+        "nonstep_utilization": 0.06969431882042444,
+        "revision": 0,
+        "slowed": false,
+        "step_mean_ms": 2.1826192758618346
+      }
+    },
+    "view": {
+      "authority_interface": "gaotian.simplified-flight-experiment/v1alpha1",
+      "backend_instance_id": "backend.e3bbrowser",
+      "events": [],
+      "fixed_step": 1799,
+      "fixed_step_s": 0.016666666666666666,
+      "gunnery": {
+        "aviation": {
+          "command_available": false,
+          "command_sequence": 0,
+          "contacts": [],
+          "flights": [],
+          "jamming_areas": [],
+          "recent": [],
+          "ships": []
+        },
+        "command_sequence": 0,
+        "damage": {
+          "expired": 52,
+          "hits": 103,
+          "magazine_detonations": 0,
+          "magazine_explosions": [],
+          "recent": [
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.4128696315456182
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.9880012517899994,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                -0.5682691624116276,
+                -2421.7048686247426
+              ],
+              "projectile_id": 103,
+              "projectile_speed_mps": 698.5316433419069,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 698.5316433419069,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1197
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.21179326088167727
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.4022311846956525,
+              "module_damage": 17.313019390581722,
+              "module_ids": [
+                "fire_control"
+              ],
+              "outcome": "penetrated",
+              "position_m": [
+                -6.156835481298123,
+                -2438.4717387536116
+              ],
+              "projectile_id": 105,
+              "projectile_speed_mps": 697.6643328771297,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 697.6643328771297,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1211
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.004967955173924565
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.07457776138816012,
+              "module_damage": 17.313019390581722,
+              "module_ids": [
+                "thruster_port_fore"
+              ],
+              "outcome": "penetrated",
+              "position_m": [
+                -8.978197327171765,
+                -2446.9349446185765
+              ],
+              "projectile_id": 109,
+              "projectile_speed_mps": 697.267129238712,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 697.267129238712,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1236
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.24891026597470045
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.4342151822556934,
+              "module_damage": 17.313019390581722,
+              "module_ids": [
+                "fire_control"
+              ],
+              "outcome": "penetrated",
+              "position_m": [
+                -2.734389144941128,
+                -2428.2044312633207
+              ],
+              "projectile_id": 111,
+              "projectile_speed_mps": 698.2927508335858,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 698.2927508335858,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1246
+            },
+            {
+              "armor_after": null,
+              "armor_before": null,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.17697624815627933
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.754549809695178,
+              "module_damage": 10.820637119113576,
+              "module_ids": [
+                "thruster_port_aft"
+              ],
+              "outcome": "module",
+              "position_m": [
+                -10.696360031490542,
+                -2525.0009449802615
+              ],
+              "projectile_id": 113,
+              "projectile_speed_mps": 693.1752272046431,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 693.1752272046431,
+              "residual_energy_ratio": 0,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1266
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.3465139549225569
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.6009297240046181,
+              "module_damage": 17.313019390581722,
+              "module_ids": [
+                "fire_control"
+              ],
+              "outcome": "penetrated",
+              "position_m": [
+                -3.6059106850235114,
+                -2430.8189650253207
+              ],
+              "projectile_id": 115,
+              "projectile_speed_mps": 698.2083342676978,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 698.2083342676978,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1270
+            },
+            {
+              "armor_after": null,
+              "armor_before": null,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.029368555173277855
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.2607397171127842,
+              "module_damage": 10.820637119113576,
+              "module_ids": [
+                "thruster_starboard_aft"
+              ],
+              "outcome": "module",
+              "position_m": [
+                11.129475177324103,
+                -2520.000983841694
+              ],
+              "projectile_id": 117,
+              "projectile_speed_mps": 693.4963741062503,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 693.4963741062503,
+              "residual_energy_ratio": 0,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1290
+            },
+            {
+              "armor_after": null,
+              "armor_before": null,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.5365169097203761
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.6652131490857667,
+              "module_damage": 10.820637119113576,
+              "module_ids": [
+                "thruster_port_aft"
+              ],
+              "outcome": "module",
+              "position_m": [
+                -11.133453171833384,
+                -2525.001136462434
+              ],
+              "projectile_id": 119,
+              "projectile_speed_mps": 693.258020391888,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 693.258020391888,
+              "residual_energy_ratio": 0,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1302
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.522605626611039
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.3447070802547443,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                -9.280052865223947,
+                -2447.841314888879
+              ],
+              "projectile_id": 121,
+              "projectile_speed_mps": 697.9558369881255,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 697.9558369881255,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1535
+            },
+            {
+              "armor_after": null,
+              "armor_before": null,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.36593476636335254
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.52694992030246,
+              "module_damage": 10.820637119113576,
+              "module_ids": [
+                "thruster_starboard_aft"
+              ],
+              "outcome": "module",
+              "position_m": [
+                10.232286585001232,
+                -2520.001274830014
+              ],
+              "projectile_id": 123,
+              "projectile_speed_mps": 694.1526196797062,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 694.1526196797062,
+              "residual_energy_ratio": 0,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1553
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.6335968745406717
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.9523234656027406,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                -0.28233762785374505,
+                -2420.847247629846
+              ],
+              "projectile_id": 125,
+              "projectile_speed_mps": 699.4603816979107,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 699.4603816979107,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1556
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 1,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.6398605520371348
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.001533739669083514,
+              "module_damage": 17.313019390581722,
+              "module_ids": [
+                "infrared.backup"
+              ],
+              "outcome": "penetrated",
+              "position_m": [
+                -5.036470791572193,
+                -2480.0000078721077
+              ],
+              "projectile_id": 127,
+              "projectile_speed_mps": 696.3410781579885,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 696.3410781579885,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1574
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 1,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.9212200720794499
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.963960248642398,
+              "module_damage": 17.313019390581722,
+              "module_ids": [
+                "crew_quarters_upper"
+              ],
+              "outcome": "penetrated",
+              "position_m": [
+                -3.525082323357508,
+                -2480.000178773529
+              ],
+              "projectile_id": 129,
+              "projectile_speed_mps": 696.3737009355344,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 696.3737009355344,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1585
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.7721400787122548
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.9892255192292723,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                -0.8582090039472456,
+                -2422.574682101555
+              ],
+              "projectile_id": 131,
+              "projectile_speed_mps": 699.4659536316791,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 699.4659536316791,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1592
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.9746085756924003
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.67039627505557,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                -1.2832266200262294,
+                2392.931722983979
+              ],
+              "projectile_id": 134,
+              "projectile_speed_mps": 698.7060629577576,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 701.0591601071561,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.enemy",
+              "source_ship_id": "ship.chaff.player",
+              "step": 1607
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 1,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.6953233452513814
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.8884222160546792,
+              "module_damage": 17.313019390581722,
+              "module_ids": [
+                "crew_quarters_upper"
+              ],
+              "outcome": "penetrated",
+              "position_m": [
+                -3.8052128871258293,
+                -2480.0005101524275
+              ],
+              "projectile_id": 133,
+              "projectile_speed_mps": 696.4391937655935,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 696.4391937655935,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1609
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 1,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.7470309112686664
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.849501548762722,
+              "module_damage": 17.313019390581722,
+              "module_ids": [
+                "countermeasure.decoy.small",
+                "sensor_upper_starboard"
+              ],
+              "outcome": "penetrated",
+              "position_m": [
+                4.3818117988657255,
+                -2480.000657991487
+              ],
+              "projectile_id": 135,
+              "projectile_speed_mps": 696.4726564221845,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 696.4726564221845,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1621
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.20324128400534391
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.7158284001837065,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                0.23907880717574917,
+                -2420.718294914112
+              ],
+              "projectile_id": 137,
+              "projectile_speed_mps": 699.6646157826715,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 699.6646157826715,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1628
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.105440195184201
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.3544890715166864,
+              "module_damage": 17.313019390581722,
+              "module_ids": [
+                "fire_control"
+              ],
+              "outcome": "penetrated",
+              "position_m": [
+                -2.8696934611639895,
+                -2428.610260331548
+              ],
+              "projectile_id": 139,
+              "projectile_speed_mps": 699.2767668717064,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 699.2767668717064,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1641
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.2776954509317875
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.2345458220443679,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                -2.5553420920750165,
+                -2427.6669523124838
+              ],
+              "projectile_id": 141,
+              "projectile_speed_mps": 699.3608688604852,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 699.3608688604852,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1653
+            },
+            {
+              "armor_after": null,
+              "armor_before": null,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.5663943148683757
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.1443077338422719,
+              "module_damage": 10.820637119113576,
+              "module_ids": [
+                "thruster_starboard_aft"
+              ],
+              "outcome": "module",
+              "position_m": [
+                11.709592716934662,
+                -2520.0006318099445
+              ],
+              "projectile_id": 143,
+              "projectile_speed_mps": 694.4813785494706,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 694.4813785494706,
+              "residual_energy_ratio": 0,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1673
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.7245052047073841
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.901491385977773,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                -1.568073718292308,
+                -2424.704680059441
+              ],
+              "projectile_id": 145,
+              "projectile_speed_mps": 699.5871048273716,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 699.5871048273716,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1676
+            },
+            {
+              "armor_after": null,
+              "armor_before": null,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.11580099770799279
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.49831198905865826,
+              "module_damage": 10.820637119113576,
+              "module_ids": [
+                "thruster_port_aft"
+              ],
+              "outcome": "module",
+              "position_m": [
+                -12.19786503850525,
+                -2525.0012789177426
+              ],
+              "projectile_id": 147,
+              "projectile_speed_mps": 694.2827540798993,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 694.2827540798993,
+              "residual_energy_ratio": 0,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1697
+            },
+            {
+              "armor_after": null,
+              "armor_before": null,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.5793356124777347
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.0234872059882794,
+              "module_damage": 10.820637119113576,
+              "module_ids": [
+                "thruster_starboard_aft"
+              ],
+              "outcome": "module",
+              "position_m": [
+                11.996673489308192,
+                -2520.0001173683836
+              ],
+              "projectile_id": 149,
+              "projectile_speed_mps": 694.583758839303,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 694.583758839303,
+              "residual_energy_ratio": 0,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1709
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.47038808232173324
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.9166180747369436,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                5.981735615042589,
+                -2437.9456025450672
+              ],
+              "projectile_id": 151,
+              "projectile_speed_mps": 698.9843296091437,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 698.9843296091437,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1713
+            },
+            {
+              "armor_after": null,
+              "armor_before": null,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.3581410637125373
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.37508819522786935,
+              "module_damage": 10.820637119113576,
+              "module_ids": [
+                "thruster_port_aft"
+              ],
+              "outcome": "module",
+              "position_m": [
+                -10.416408087638617,
+                -2525.001199287764
+              ],
+              "projectile_id": 153,
+              "projectile_speed_mps": 694.3865512020042,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 694.3865512020042,
+              "residual_energy_ratio": 0,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1733
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.2569335352163762
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.9970113584268445,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                2.727473476804269,
+                -2428.18243591274
+              ],
+              "projectile_id": 155,
+              "projectile_speed_mps": 699.575201651262,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 699.575201651262,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1736
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.6603948546107858
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.3326642184560819,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                8.07592112736289,
+                -2444.2289099249106
+              ],
+              "projectile_id": 157,
+              "projectile_speed_mps": 698.7543382585606,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 698.7543382585606,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1750
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 1,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.6997922260779887
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.36650909140711196,
+              "module_damage": 17.313019390581722,
+              "module_ids": [
+                "countermeasure.decoy.small",
+                "sensor_upper_starboard"
+              ],
+              "outcome": "penetrated",
+              "position_m": [
+                4.341543283442251,
+                -2480.0011956393314
+              ],
+              "projectile_id": 159,
+              "projectile_speed_mps": 696.8842477756679,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 696.8842477756679,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1765
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.4357246907893568
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.5721446334031051,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                1.5615553366474018,
+                -2424.685939265878
+              ],
+              "projectile_id": 161,
+              "projectile_speed_mps": 699.8682242648846,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 699.8682242648846,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1772
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 0.5
+                  },
+                  {
+                    "deck_level": 1,
+                    "probability": 0.5
+                  }
+                ],
+                "sample": 0.0610325587913394
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.8437953535749364,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                -6.663679287882164,
+                -2439.991715944401
+              ],
+              "projectile_id": 163,
+              "projectile_speed_mps": 699.0865360124731,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 699.0865360124731,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1785
+            },
+            {
+              "armor_after": 0,
+              "armor_before": 0,
+              "deck_level": 0,
+              "deck_selection": {
+                "policy": "gaotian.deck-hit-policy/3b-v1",
+                "preferred_levels": [],
+                "probabilities": [
+                  {
+                    "deck_level": 0,
+                    "probability": 1
+                  }
+                ],
+                "sample": 0.6643935868050903
+              },
+              "height_layer": "upper",
+              "impact_fraction": 0.4366965803081604,
+              "module_damage": 0,
+              "module_ids": [],
+              "outcome": "penetrated",
+              "position_m": [
+                9.135404670436351,
+                -2447.407483700148
+              ],
+              "projectile_id": 165,
+              "projectile_speed_mps": 698.7276701546723,
+              "projectile_type": "projectile.3a.50mm.ordinary",
+              "projectile_version": 1,
+              "relative_speed_mps": 698.7276701546723,
+              "residual_energy_ratio": 1,
+              "ship_id": "ship.chaff.player",
+              "source_ship_id": "ship.chaff.enemy",
+              "step": 1798
+            }
+          ]
+        },
+        "damage_control": {
+          "command_sequence": 0,
+          "devices": [
+            {
+              "capacity_units": 100000,
+              "cargo_costs": [
+                {
+                  "available": 0,
+                  "good_id": "cargo.engineering_parts",
+                  "quantity": 2,
+                  "reserved": 0
+                }
+              ],
+              "emergency_progress": 0,
+              "emergency_remaining_s": null,
+              "emergency_target": null,
+              "enabled": false,
+              "fire_target": null,
+              "fire_target_label": null,
+              "mode_pending": false,
+              "module_id": "damage_control",
+              "preparation_steps": 300,
+              "quantity_units": 0,
+              "remaining_preparation_steps": 0,
+              "repair_module_id": null,
+              "ship_id": "ship.chaff.enemy",
+              "status": "off",
+              "target_module_id": null
+            },
+            {
+              "capacity_units": 100000,
+              "cargo_costs": [
+                {
+                  "available": 0,
+                  "good_id": "cargo.engineering_parts",
+                  "quantity": 2,
+                  "reserved": 0
+                }
+              ],
+              "emergency_progress": 0,
+              "emergency_remaining_s": null,
+              "emergency_target": null,
+              "enabled": false,
+              "fire_target": null,
+              "fire_target_label": null,
+              "mode_pending": false,
+              "module_id": "damage_control",
+              "preparation_steps": 300,
+              "quantity_units": 0,
+              "remaining_preparation_steps": 0,
+              "repair_module_id": null,
+              "ship_id": "ship.chaff.player",
+              "status": "off",
+              "target_module_id": null
+            }
+          ],
+          "fires": [],
+          "policy": "gaotian.continuous-damage/finite-firefighting/d1b-v1",
+          "recent": []
+        },
+        "damage_enabled": true,
+        "deck_hit_policy": {
+          "aim_bonus": 1,
+          "base_weight": 1,
+          "id": "gaotian.deck-hit-policy/3b-v1",
+          "spanning_module_bonus": "split"
+        },
+        "electronic_warfare": {
+          "command_sequence": 0,
+          "devices": [
+            {
+              "detected": false,
+              "kind": "chaff",
+              "lifetime_s": 90,
+              "module_id": "countermeasure.chaff.large",
+              "name": "大型箔条发射器",
+              "radius_m": 800,
+              "ready": 1,
+              "reload_remaining_s": 0,
+              "requested": false,
+              "ship_id": "ship.chaff.player",
+              "shots": 0,
+              "status": "ready"
+            },
+            {
+              "detected": false,
+              "kind": "chaff",
+              "lifetime_s": 45,
+              "module_id": "countermeasure.chaff.small",
+              "name": "小型箔条发射器",
+              "radius_m": 300,
+              "ready": 1,
+              "reload_remaining_s": 0,
+              "requested": false,
+              "ship_id": "ship.chaff.player",
+              "shots": 0,
+              "status": "ready"
+            },
+            {
+              "detected": false,
+              "kind": "decoy",
+              "lifetime_s": 90,
+              "module_id": "countermeasure.decoy.small",
+              "name": "主动诱饵发射器",
+              "radius_m": 0,
+              "ready": 1,
+              "reload_remaining_s": 0,
+              "requested": false,
+              "ship_id": "ship.chaff.player",
+              "shots": 0,
+              "status": "no_detection"
+            },
+            {
+              "detected": false,
+              "kind": "thermal",
+              "lifetime_s": 90,
+              "module_id": "countermeasure.thermal.large",
+              "name": "大型热能烟雾发射器",
+              "radius_m": 800,
+              "ready": 1,
+              "reload_remaining_s": 0,
+              "requested": false,
+              "ship_id": "ship.chaff.player",
+              "shots": 0,
+              "status": "no_detection"
+            },
+            {
+              "detected": false,
+              "kind": "thermal",
+              "lifetime_s": 45,
+              "module_id": "countermeasure.thermal.small",
+              "name": "小型热能烟雾发射器",
+              "radius_m": 300,
+              "ready": 1,
+              "reload_remaining_s": 0,
+              "requested": false,
+              "ship_id": "ship.chaff.player",
+              "shots": 0,
+              "status": "no_detection"
+            }
+          ],
+          "effects": [],
+          "recent": []
+        },
+        "ending": null,
+        "fireproof": [
+          {
+            "decks": [
+              {
+                "deck_id": "deck.0",
+                "deck_level": 0,
+                "multiplier": 1
+              },
+              {
+                "deck_id": "deck.1",
+                "deck_level": 1,
+                "multiplier": 1
+              }
+            ],
+            "ship_id": "ship.chaff.enemy"
+          },
+          {
+            "decks": [
+              {
+                "deck_id": "deck.0",
+                "deck_level": 0,
+                "multiplier": 1
+              },
+              {
+                "deck_id": "deck.1",
+                "deck_level": 1,
+                "multiplier": 1
+              }
+            ],
+            "ship_id": "ship.chaff.player"
+          }
+        ],
+        "fuel": [
+          {
+            "ship_id": "ship.chaff.enemy",
+            "tanks": [
+              {
+                "capacity_units": 1000,
+                "deck_id": null,
+                "deck_level": 0,
+                "durability_points": 100,
+                "maximum_points": 100,
+                "module_id": "lift_tank",
+                "quantity_units": 1000,
+                "tank_id": "tank.module.lift_tank"
+              }
+            ],
+            "total_units": 1000
+          },
+          {
+            "ship_id": "ship.chaff.player",
+            "tanks": [
+              {
+                "capacity_units": 1000,
+                "deck_id": null,
+                "deck_level": 0,
+                "durability_points": 100,
+                "maximum_points": 100,
+                "module_id": "lift_tank",
+                "quantity_units": 1000,
+                "tank_id": "tank.module.lift_tank"
+              }
+            ],
+            "total_units": 1000
+          }
+        ],
+        "groups": [
+          {
+            "group_id": "weapon_group.157b70062d91908b575cbf77",
+            "name": "50 毫米链炮",
+            "ship_id": "ship.chaff.enemy",
+            "weapon_ids": [
+              "weapon_upper_port"
+            ]
+          },
+          {
+            "group_id": "weapon_group.157b70062d91908b575cbf77",
+            "name": "50 毫米链炮",
+            "ship_id": "ship.chaff.player",
+            "weapon_ids": [
+              "weapon_upper_port"
+            ]
+          }
+        ],
+        "interface": "gaotian.gunnery-view/p2a-v1alpha1",
+        "missiles": {
+          "command_sequence": 0,
+          "flight_available": true,
+          "pending": [],
+          "recent": [],
+          "ships": [],
+          "supported_model_ids": [
+            "gtw.missile.5c.small.rocket.active_radar",
+            "gtw.missile.5c.small.rocket.infrared",
+            "gtw.missile.5c.small.rocket.anti_radiation",
+            "gtw.missile.5c.small.rocket.radar_infrared",
+            "gtw.missile.5c.small.turbojet.active_radar",
+            "gtw.missile.5c.small.turbojet.infrared",
+            "gtw.missile.5c.small.turbojet.anti_radiation",
+            "gtw.missile.5c.small.turbojet.radar_infrared",
+            "gtw.missile.5c.medium.rocket.active_radar",
+            "gtw.missile.5c.medium.rocket.infrared",
+            "gtw.missile.5c.medium.rocket.anti_radiation",
+            "gtw.missile.5c.medium.rocket.radar_infrared",
+            "gtw.missile.5c.medium.turbojet.active_radar",
+            "gtw.missile.5c.medium.turbojet.infrared",
+            "gtw.missile.5c.medium.turbojet.anti_radiation",
+            "gtw.missile.5c.medium.turbojet.radar_infrared",
+            "gtw.missile.5c.small.interceptor"
+          ]
+        },
+        "observation": {
+          "command_sequence": 0,
+          "memory_s": 3,
+          "sample_interval_s": 0.1,
+          "ships": [
+            {
+              "contacts": [],
+              "devices": [
+                {
+                  "blocked_angle_deg": 0,
+                  "capacity": 0,
+                  "channel": "infrared",
+                  "coasting_range_m": 12000,
+                  "durability": 0,
+                  "host_id": null,
+                  "integrated": false,
+                  "kind": "sensor",
+                  "maximum_durability": 100,
+                  "mode": "off",
+                  "module_id": "infrared.backup",
+                  "name": "红外搜索",
+                  "pending_mode": null,
+                  "range_m": 50000,
+                  "reason": "destroyed",
+                  "sensor_enabled": true,
+                  "ship_index": 1,
+                  "tracked": 0,
+                  "used": 0,
+                  "waiting": 0
+                },
+                {
+                  "blocked_angle_deg": 0,
+                  "capacity": 0,
+                  "channel": "radar",
+                  "coasting_range_m": 50000,
+                  "durability": 13.434903047091375,
+                  "host_id": null,
+                  "integrated": false,
+                  "kind": "sensor",
+                  "maximum_durability": 100,
+                  "mode": "active",
+                  "module_id": "sensor_upper_starboard",
+                  "name": "火控雷达",
+                  "pending_mode": null,
+                  "range_m": 50000,
+                  "reason": null,
+                  "sensor_enabled": true,
+                  "ship_index": 1,
+                  "tracked": 0,
+                  "used": 0,
+                  "waiting": 1
+                },
+                {
+                  "durability": 0,
+                  "host_id": null,
+                  "kind": "fire_control",
+                  "maximum_durability": 100,
+                  "mode": "active",
+                  "module_id": "fire_control",
+                  "name": "指挥机",
+                  "pending_mode": null,
+                  "reason": "destroyed"
+                },
+                {
+                  "durability": 100,
+                  "host_id": "fire_control",
+                  "kind": "datalink",
+                  "maximum_durability": 100,
+                  "mode": "active",
+                  "module_id": "datalink.0",
+                  "name": "数据链",
+                  "pending_mode": null,
+                  "reason": "host_unavailable"
+                }
+              ],
+              "lock_status": null,
+              "locked_target_id": null,
+              "ship_id": "ship.chaff.player"
+            }
+          ]
+        },
+        "personnel": {
+          "policy": {
+            "casualty_fraction_per_full_durability": 0.5,
+            "death_fraction": 0.25,
+            "id": "gaotian.personnel/quarters-damage-priority-staffing/3e-v1"
+          },
+          "recent": [],
+          "ships": [
+            {
+              "dead": 0,
+              "fit": 16,
+              "modules": [
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "cic.basic_control"
+                    }
+                  ],
+                  "module_id": "cic",
+                  "requirements": [
+                    {
+                      "assigned": 2,
+                      "crew_type": "officer",
+                      "minimum": 1,
+                      "standard": 2
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 0,
+                      "function_id": "damage_control.firefighting"
+                    }
+                  ],
+                  "module_id": "damage_control",
+                  "requirements": [
+                    {
+                      "assigned": 0,
+                      "crew_type": "veteran_damage_control",
+                      "minimum": 1,
+                      "standard": 2
+                    }
+                  ],
+                  "staffing_fraction": 0
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "generator.regulation"
+                    }
+                  ],
+                  "module_id": "generator",
+                  "requirements": [
+                    {
+                      "assigned": 2,
+                      "crew_type": "technical_officer",
+                      "minimum": 1,
+                      "standard": 2
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "engine.throttle"
+                    }
+                  ],
+                  "module_id": "main_engine_port",
+                  "requirements": [
+                    {
+                      "assigned": 2,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 2
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "engine.throttle"
+                    }
+                  ],
+                  "module_id": "main_engine_starboard",
+                  "requirements": [
+                    {
+                      "assigned": 2,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 2
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "thruster.throttle"
+                    }
+                  ],
+                  "module_id": "thruster_port_aft",
+                  "requirements": [
+                    {
+                      "assigned": 1,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 1
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "thruster.throttle"
+                    }
+                  ],
+                  "module_id": "thruster_port_fore",
+                  "requirements": [
+                    {
+                      "assigned": 1,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 1
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "thruster.throttle"
+                    }
+                  ],
+                  "module_id": "thruster_starboard_aft",
+                  "requirements": [
+                    {
+                      "assigned": 1,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 1
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "thruster.throttle"
+                    }
+                  ],
+                  "module_id": "thruster_starboard_fore",
+                  "requirements": [
+                    {
+                      "assigned": 0,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 1
+                    }
+                  ],
+                  "staffing_fraction": 0
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "weapon.aim"
+                    },
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "weapon.fire"
+                    },
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "weapon.reload"
+                    }
+                  ],
+                  "module_id": "weapon_upper_port",
+                  "requirements": [
+                    {
+                      "assigned": 2,
+                      "crew_type": "ordinary",
+                      "minimum": 0,
+                      "standard": 2
+                    }
+                  ],
+                  "staffing_fraction": 1
+                }
+              ],
+              "ship_id": "ship.chaff.enemy",
+              "types": [
+                {
+                  "crew_type": "officer",
+                  "dead": 0,
+                  "fit": 2,
+                  "wounded": 0
+                },
+                {
+                  "crew_type": "ordinary",
+                  "dead": 0,
+                  "fit": 10,
+                  "wounded": 0
+                },
+                {
+                  "crew_type": "technical_officer",
+                  "dead": 0,
+                  "fit": 2,
+                  "wounded": 0
+                },
+                {
+                  "crew_type": "veteran_damage_control",
+                  "dead": 0,
+                  "fit": 2,
+                  "wounded": 0
+                }
+              ],
+              "unclassified_wounded": 0,
+              "wounded": 0
+            },
+            {
+              "dead": 0,
+              "fit": 18,
+              "modules": [
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "cic.basic_control"
+                    }
+                  ],
+                  "module_id": "cic",
+                  "requirements": [
+                    {
+                      "assigned": 4,
+                      "crew_type": "officer",
+                      "minimum": 2,
+                      "standard": 4
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 0,
+                      "function_id": "damage_control.firefighting"
+                    }
+                  ],
+                  "module_id": "damage_control",
+                  "requirements": [
+                    {
+                      "assigned": 0,
+                      "crew_type": "veteran_damage_control",
+                      "minimum": 1,
+                      "standard": 2
+                    }
+                  ],
+                  "staffing_fraction": 0
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "generator.regulation"
+                    }
+                  ],
+                  "module_id": "generator",
+                  "requirements": [
+                    {
+                      "assigned": 2,
+                      "crew_type": "technical_officer",
+                      "minimum": 1,
+                      "standard": 2
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "engine.throttle"
+                    }
+                  ],
+                  "module_id": "main_engine_port",
+                  "requirements": [
+                    {
+                      "assigned": 2,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 2
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "engine.throttle"
+                    }
+                  ],
+                  "module_id": "main_engine_starboard",
+                  "requirements": [
+                    {
+                      "assigned": 2,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 2
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "thruster.throttle"
+                    }
+                  ],
+                  "module_id": "thruster_port_aft",
+                  "requirements": [
+                    {
+                      "assigned": 1,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 1
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "thruster.throttle"
+                    }
+                  ],
+                  "module_id": "thruster_port_fore",
+                  "requirements": [
+                    {
+                      "assigned": 0,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 1
+                    }
+                  ],
+                  "staffing_fraction": 0
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "thruster.throttle"
+                    }
+                  ],
+                  "module_id": "thruster_starboard_aft",
+                  "requirements": [
+                    {
+                      "assigned": 1,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 1
+                    }
+                  ],
+                  "staffing_fraction": 1
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "thruster.throttle"
+                    }
+                  ],
+                  "module_id": "thruster_starboard_fore",
+                  "requirements": [
+                    {
+                      "assigned": 0,
+                      "crew_type": "ordinary",
+                      "minimum": 1,
+                      "standard": 1
+                    }
+                  ],
+                  "staffing_fraction": 0
+                },
+                {
+                  "functions": [
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "weapon.aim"
+                    },
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "weapon.fire"
+                    },
+                    {
+                      "crew_efficiency": 1,
+                      "function_id": "weapon.reload"
+                    }
+                  ],
+                  "module_id": "weapon_upper_port",
+                  "requirements": [
+                    {
+                      "assigned": 2,
+                      "crew_type": "ordinary",
+                      "minimum": 0,
+                      "standard": 2
+                    }
+                  ],
+                  "staffing_fraction": 1
+                }
+              ],
+              "ship_id": "ship.chaff.player",
+              "types": [
+                {
+                  "crew_type": "officer",
+                  "dead": 0,
+                  "fit": 4,
+                  "wounded": 0
+                },
+                {
+                  "crew_type": "ordinary",
+                  "dead": 0,
+                  "fit": 10,
+                  "wounded": 0
+                },
+                {
+                  "crew_type": "technical_officer",
+                  "dead": 0,
+                  "fit": 2,
+                  "wounded": 0
+                },
+                {
+                  "crew_type": "veteran_damage_control",
+                  "dead": 0,
+                  "fit": 2,
+                  "wounded": 0
+                }
+              ],
+              "unclassified_wounded": 0,
+              "wounded": 0
+            }
+          ]
+        },
+        "point_defense": {
+          "hits": 0,
+          "intercepted": 0,
+          "policy": {
+            "durability_tiers": [
+              [
+                75,
+                3
+              ],
+              [
+                120,
+                6
+              ]
+            ],
+            "high_speed_mps": 1000,
+            "id": "gaotian.point-defense/contact-durability/4-v1",
+            "intrinsic_error_mdeg": 10,
+            "observation_steps": 6,
+            "prediction_seconds": 15,
+            "round_damage": 1
+          },
+          "recent": [],
+          "threats": []
+        },
+        "policy_id": "gtw.technical.p2a.ordinary",
+        "projectiles": [
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 146,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -77.6005068551218,
+              3723.3401592291366
+            ],
+            "previous_m": [
+              -77.47806064182939,
+              3712.8271623958744
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -7.343752794914853,
+              630.5205183669401
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 148,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              31.874486060801228,
+              3596.9138107988606
+            ],
+            "previous_m": [
+              31.81037280521258,
+              3586.295788208281
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              3.8452068039177627,
+              636.8182731415927
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 150,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              104.8721864838455,
+              3468.0152060945948
+            ],
+            "previous_m": [
+              104.67511380367826,
+              3457.29271556767
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              11.81944619455875,
+              643.0820332230101
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 152,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              204.7397870839967,
+              3335.9799558150503
+            ],
+            "previous_m": [
+              204.35140041582838,
+              3325.1546340733603
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              23.293434990680467,
+              649.247126407467
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 154,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -271.8085610592681,
+              3202.923988591185
+            ],
+            "previous_m": [
+              -271.2980850964409,
+              3191.993640771549
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -30.615617110150723,
+              655.543782852043
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 156,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -197.60537335532683,
+              3073.908978578263
+            ],
+            "previous_m": [
+              -197.22430558568553,
+              3062.861271532098
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -22.854325894161423,
+              662.5800378078184
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 158,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -128.69854847499886,
+              2942.5499789844544
+            ],
+            "previous_m": [
+              -128.44524355114862,
+              2931.384465934837
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -15.191766818203714,
+              669.6430060541503
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 160,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -29.93292517119604,
+              2809.236618662645
+            ],
+            "previous_m": [
+              -29.880031105532503,
+              2797.9521003377563
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -3.172269228007529,
+              676.7778159206194
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 162,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              75.89065960519223,
+              2672.5987950594135
+            ],
+            "previous_m": [
+              75.71270021532271,
+              2661.1970816352837
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              10.672899241083373,
+              683.8039770796823
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 164,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              156.54839960282743,
+              2533.144316846254
+            ],
+            "previous_m": [
+              156.1794431179877,
+              2521.6264014459293
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              22.127637097386213,
+              690.7704907462701
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 166,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              204.50434888094685,
+              2392.2961955242067
+            ],
+            "previous_m": [
+              204.0070627739469,
+              2380.659951200619
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              29.82391047788067,
+              697.8644770493627
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 167,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              2.1526023454081242,
+              -2325.8006647284246
+            ],
+            "previous_m": [
+              2.1595630544724838,
+              -2314.04085568255
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -0.41745556311063503,
+              -705.272647072015
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 168,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -215.96085838030012,
+              2251.6500843601766
+            ],
+            "previous_m": [
+              -215.43980819714264,
+              2239.8893308837423
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -31.249002563790008,
+              705.329020921053
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 169,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -5.26112409961959,
+              -2184.473873451686
+            ],
+            "previous_m": [
+              -5.234997490012433,
+              -2172.586300498295
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -1.566888705267774,
+              -712.9322967574525
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 170,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -139.42692831556366,
+              2112.3984395915422
+            ],
+            "previous_m": [
+              -139.08099836980452,
+              2100.5033077044895
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -20.746416313452702,
+              713.3853580980565
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 171,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              3.8775514852506174,
+              -2041.6230714129392
+            ],
+            "previous_m": [
+              3.8805322452284043,
+              -2029.6051678853578
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -0.17876413849857317,
+              -720.745778485023
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 172,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -46.75924266283181,
+              1970.6416047911134
+            ],
+            "previous_m": [
+              -46.64712377280959,
+              1958.611583859635
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -6.7240667972326245,
+              721.4722184578998
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 173,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -8.093824605436557,
+              -1897.1654740447354
+            ],
+            "previous_m": [
+              -8.057505686200848,
+              -1885.0147429613432
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -2.1781339615203863,
+              -728.708909488048
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 174,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              15.290100526025542,
+              1825.6935054546263
+            ],
+            "previous_m": [
+              15.233178595965946,
+              1813.530133362863
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              3.4137453611706987,
+              729.4667452592898
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 175,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -3.501256637465614,
+              -1751.130854701156
+            ],
+            "previous_m": [
+              -3.4765884337461723,
+              -1738.8445631268992
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -1.4794062488336583,
+              -736.8358367991943
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 176,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              90.61883766106051,
+              1677.9442839404496
+            ],
+            "previous_m": [
+              90.33809829604466,
+              1665.6483718821712
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              16.836548712321328,
+              737.4125189744445
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 177,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              6.1727456645765875,
+              -1603.4537883969006
+            ],
+            "previous_m": [
+              6.169179648745403,
+              -1591.0292199470382
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              0.21386091341925326,
+              -745.1255640233761
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 178,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              130.4692822388663,
+              1528.416703098445
+            ],
+            "previous_m": [
+              130.05230071253533,
+              1515.986245558637
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              25.007184639466264,
+              745.4784618066975
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 179,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              9.639081386829671,
+              -1454.0928853383955
+            ],
+            "previous_m": [
+              9.624272057419384,
+              -1441.5272762265465
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              0.8881406488631161,
+              -753.5809300187499
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 180,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              178.3694643990604,
+              1376.3418839427595
+            ],
+            "previous_m": [
+              177.77662822839198,
+              1363.7772835719425
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              35.55337904035649,
+              753.520148695695
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 181,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              4.44644209561107,
+              1944.5500944620874
+            ],
+            "previous_m": [
+              4.463338086907973,
+              1960.6638289161615
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -1.0131840365171054,
+              -966.2752679410397
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 182,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -27.781176946149206,
+              -2032.2323774333342
+            ],
+            "previous_m": [
+              -27.013018171282326,
+              -2048.342229548938
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -46.0633447983306,
+              966.0420435603081
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 183,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              5.521976842005537,
+              2138.6065057066685
+            ],
+            "previous_m": [
+              5.496396612171478,
+              2154.94291772027
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              1.5339323920854275,
+              -979.6218298536221
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 184,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -14.296403955363061,
+              -2226.599496481399
+            ],
+            "previous_m": [
+              -13.760331811149952,
+              -2242.941634400723
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -32.145843770163424,
+              979.9647642504839
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 185,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              4.616606330108851,
+              2335.3664661654843
+            ],
+            "previous_m": [
+              4.663280210952659,
+              2351.931270478131
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -2.798805667859058,
+              -993.310763087357
+            ]
+          },
+          {
+            "durability": null,
+            "height_layer": "upper",
+            "id": 186,
+            "interception_target_id": null,
+            "missile": null,
+            "position_m": [
+              -6.699461565895519,
+              -2423.9260245791
+            ],
+            "previous_m": [
+              -6.372177450767683,
+              -2440.50224227445
+            ],
+            "projectile_type": "projectile.3a.50mm.ordinary",
+            "velocity_mps": [
+              -19.625628393562874,
+              993.9947391967601
+            ]
+          }
+        ],
+        "stores": [
+          {
+            "capacity_cm3": 125000000,
+            "cargo": [
+              {
+                "good_id": "cargo.engineering_parts",
+                "quantity": 0,
+                "reserved": 0
+              },
+              {
+                "good_id": "cargo.turbojet_parts",
+                "quantity": 0,
+                "reserved": 0
+              }
+            ],
+            "magazines": [
+              {
+                "available": true,
+                "capacity": 10000,
+                "module_id": "ammunition_magazine",
+                "quantity": 496,
+                "reserved": 0
+              }
+            ],
+            "over_capacity": false,
+            "ship_id": "ship.chaff.player",
+            "used_volume_cm3": 0
+          }
+        ],
+        "weapons": [
+          {
+            "aim_point_m": [
+              -0.013200377370498728,
+              -2499.9999867052907
+            ],
+            "aimed_deck_levels": [],
+            "ammo_resources": 496,
+            "angle_rad": 0.0010084736198963107,
+            "attack_layer": "upper",
+            "ballistics": {
+              "caliber_mm": 50,
+              "cyclic_rpm": 300,
+              "drag": true,
+              "effective_speed_mps": 1000,
+              "lifetime_s": 8,
+              "reference_range_m": 6000,
+              "speed_mps": 1000,
+              "speed_retention": 1
+            },
+            "batch_cost": 1,
+            "batch_rounds": 30,
+            "cargo": [
+              {
+                "good_id": "cargo.engineering_parts",
+                "quantity": 0,
+                "reserved": 0
+              },
+              {
+                "good_id": "cargo.turbojet_parts",
+                "quantity": 0,
+                "reserved": 0
+              }
+            ],
+            "cooldown_steps": 4,
+            "deck_level": null,
+            "direction": [
+              -0.0010084734489567177,
+              -0.999999491490522
+            ],
+            "effective_layer": "upper",
+            "incendiary_effect": null,
+            "interception_needed_rounds": 0,
+            "interception_priority": null,
+            "interception_target_id": null,
+            "loaded_recipe_id": "recipe.3a.50mm.ordinary",
+            "loading_recipe_id": null,
+            "lock_sources": [
+              "sensor_upper_starboard"
+            ],
+            "mode": "auto",
+            "module_id": "weapon_upper_port",
+            "origin_m": [
+              5.0000000000000036,
+              2471.0756854374226
+            ],
+            "point_defense": false,
+            "point_defense_capable": false,
+            "quality": "normal",
+            "quality_reason": "locked",
+            "ready_rounds": 27,
+            "recipe_options": [
+              {
+                "ammo_cost": 1,
+                "cargo_costs": [
+                  {
+                    "good_id": "cargo.special_alloy",
+                    "quantity": 1
+                  }
+                ],
+                "id": "recipe.3a.50mm.armor_piercing",
+                "rounds": 30
+              },
+              {
+                "ammo_cost": 1,
+                "cargo_costs": [
+                  {
+                    "good_id": "cargo.high_energy_fuel",
+                    "quantity": 1
+                  }
+                ],
+                "id": "recipe.3a.50mm.incendiary",
+                "rounds": 30
+              },
+              {
+                "ammo_cost": 1,
+                "cargo_costs": [],
+                "id": "recipe.3a.50mm.ordinary",
+                "rounds": 30
+              }
+            ],
+            "reload_steps": 0,
+            "selected_recipe_id": "recipe.3a.50mm.ordinary",
+            "ship_id": "ship.chaff.enemy",
+            "shots": 93,
+            "status": "cooldown",
+            "target_module_id": null,
+            "target_policy": "assigned",
+            "target_ship_id": "ship.chaff.player"
+          },
+          {
+            "aim_point_m": [
+              -99.85819944944052,
+              2456.334167671658
+            ],
+            "aimed_deck_levels": [],
+            "ammo_resources": 496,
+            "angle_rad": -0.019097922814373725,
+            "attack_layer": null,
+            "ballistics": {
+              "caliber_mm": 50,
+              "cyclic_rpm": 300,
+              "drag": true,
+              "effective_speed_mps": 1000,
+              "lifetime_s": 8,
+              "reference_range_m": 6000,
+              "speed_mps": 1000,
+              "speed_retention": 1
+            },
+            "batch_cost": 1,
+            "batch_rounds": 30,
+            "cargo": [
+              {
+                "good_id": "cargo.engineering_parts",
+                "quantity": 0,
+                "reserved": 0
+              },
+              {
+                "good_id": "cargo.turbojet_parts",
+                "quantity": 0,
+                "reserved": 0
+              }
+            ],
+            "cooldown_steps": 7,
+            "deck_level": null,
+            "direction": [
+              -0.01909676190255944,
+              0.9998176402148728
+            ],
+            "effective_layer": "upper",
+            "incendiary_effect": null,
+            "interception_needed_rounds": 0,
+            "interception_priority": null,
+            "interception_target_id": null,
+            "loaded_recipe_id": "recipe.3a.50mm.ordinary",
+            "loading_recipe_id": null,
+            "lock_sources": [],
+            "mode": "auto",
+            "module_id": "weapon_upper_port",
+            "origin_m": [
+              -5,
+              -2510
+            ],
+            "point_defense": false,
+            "point_defense_capable": false,
+            "quality": "degraded",
+            "quality_reason": "radar_unavailable",
+            "ready_rounds": 27,
+            "recipe_options": [
+              {
+                "ammo_cost": 1,
+                "cargo_costs": [
+                  {
+                    "good_id": "cargo.special_alloy",
+                    "quantity": 1
+                  }
+                ],
+                "id": "recipe.3a.50mm.armor_piercing",
+                "rounds": 30
+              },
+              {
+                "ammo_cost": 1,
+                "cargo_costs": [
+                  {
+                    "good_id": "cargo.high_energy_fuel",
+                    "quantity": 1
+                  }
+                ],
+                "id": "recipe.3a.50mm.incendiary",
+                "rounds": 30
+              },
+              {
+                "ammo_cost": 1,
+                "cargo_costs": [],
+                "id": "recipe.3a.50mm.ordinary",
+                "rounds": 30
+              }
+            ],
+            "reload_steps": 0,
+            "selected_recipe_id": "recipe.3a.50mm.ordinary",
+            "ship_id": "ship.chaff.player",
+            "shots": 93,
+            "status": "cooldown",
+            "target_module_id": null,
+            "target_policy": "automatic",
+            "target_ship_id": "ship.chaff.enemy"
+          }
+        ]
+      },
+      "height_commands": {
+        "command_sequence": 0
+      },
+      "interface": "gaotian.tactical-render-snapshot/v1alpha1",
+      "navigation": {
+        "command_sequence": 0,
+        "disengagement": {
+          "defending_side_id": "side.player",
+          "departed_ship_ids": [],
+          "distance_m": 4961.075685437423,
+          "effective_layer": "upper",
+          "individual_distances_m": {},
+          "threshold_m": 50000,
+          "waiting_ship_ids": []
+        },
+        "last": null,
+        "ships": [],
+        "withdrawals": []
+      },
+      "paused": false,
+      "presentation": null,
+      "projectile_stream": {
+        "base_sequence": 392,
+        "dropped_projectiles": 0,
+        "ends": [
+          {
+            "born_step": 1443,
+            "end_m": [
+              9.135404670436351,
+              -2447.407483700148
+            ],
+            "end_step": 1798,
+            "expires_step": 1923,
+            "height_layer": "upper",
+            "id": 165,
+            "impact": {
+              "outcome": "penetrated",
+              "ship_id": "ship.chaff.player"
+            },
+            "kind": "shell",
+            "maximum_durability": null,
+            "origin_m": [
+              5.002520459017437,
+              2482.1686262492003
+            ],
+            "position_m": [
+              9.13114020810629,
+              -2442.3209652910514
+            ],
+            "ship_id": "ship.chaff.enemy",
+            "velocity_mps": [
+              0.5860302548627443,
+              -698.9987128352377
+            ]
+          }
+        ],
+        "interface": "gaotian.projectile-stream/d4-v1",
+        "missiles": [],
+        "paths": [],
+        "rebase": false,
+        "reset": false,
+        "sequence": 393,
+        "shells": [
+          [
+            146,
+            [
+              [
+                1799,
+                -77.6005068551218,
+                3723.3401592291366,
+                -7.343752794914853,
+                630.5205183669401,
+                0
+              ]
+            ]
+          ],
+          [
+            148,
+            [
+              [
+                1799,
+                31.874486060801228,
+                3596.9138107988606,
+                3.8452068039177627,
+                636.8182731415927,
+                0
+              ]
+            ]
+          ],
+          [
+            150,
+            [
+              [
+                1799,
+                104.8721864838455,
+                3468.0152060945948,
+                11.81944619455875,
+                643.0820332230101,
+                0
+              ]
+            ]
+          ],
+          [
+            152,
+            [
+              [
+                1799,
+                204.7397870839967,
+                3335.9799558150503,
+                23.293434990680467,
+                649.247126407467,
+                0
+              ]
+            ]
+          ],
+          [
+            154,
+            [
+              [
+                1799,
+                -271.8085610592681,
+                3202.923988591185,
+                -30.615617110150723,
+                655.543782852043,
+                0
+              ]
+            ]
+          ],
+          [
+            156,
+            [
+              [
+                1799,
+                -197.60537335532683,
+                3073.908978578263,
+                -22.854325894161423,
+                662.5800378078184,
+                0
+              ]
+            ]
+          ],
+          [
+            158,
+            [
+              [
+                1799,
+                -128.69854847499886,
+                2942.5499789844544,
+                -15.191766818203714,
+                669.6430060541503,
+                0
+              ]
+            ]
+          ],
+          [
+            160,
+            [
+              [
+                1799,
+                -29.93292517119604,
+                2809.236618662645,
+                -3.172269228007529,
+                676.7778159206194,
+                0
+              ]
+            ]
+          ],
+          [
+            162,
+            [
+              [
+                1799,
+                75.89065960519223,
+                2672.5987950594135,
+                10.672899241083373,
+                683.8039770796823,
+                0
+              ]
+            ]
+          ],
+          [
+            164,
+            [
+              [
+                1799,
+                156.54839960282743,
+                2533.144316846254,
+                22.127637097386213,
+                690.7704907462701,
+                0
+              ]
+            ]
+          ],
+          [
+            166,
+            [
+              [
+                1799,
+                204.50434888094685,
+                2392.2961955242067,
+                29.82391047788067,
+                697.8644770493627,
+                0
+              ]
+            ]
+          ],
+          [
+            167,
+            [
+              [
+                1799,
+                2.1526023454081242,
+                -2325.8006647284246,
+                -0.41745556311063503,
+                -705.272647072015,
+                0
+              ]
+            ]
+          ],
+          [
+            168,
+            [
+              [
+                1799,
+                -215.96085838030012,
+                2251.6500843601766,
+                -31.249002563790008,
+                705.329020921053,
+                0
+              ]
+            ]
+          ],
+          [
+            169,
+            [
+              [
+                1799,
+                -5.26112409961959,
+                -2184.473873451686,
+                -1.566888705267774,
+                -712.9322967574525,
+                0
+              ]
+            ]
+          ],
+          [
+            170,
+            [
+              [
+                1799,
+                -139.42692831556366,
+                2112.3984395915422,
+                -20.746416313452702,
+                713.3853580980565,
+                0
+              ]
+            ]
+          ],
+          [
+            171,
+            [
+              [
+                1799,
+                3.8775514852506174,
+                -2041.6230714129392,
+                -0.17876413849857317,
+                -720.745778485023,
+                0
+              ]
+            ]
+          ],
+          [
+            172,
+            [
+              [
+                1799,
+                -46.75924266283181,
+                1970.6416047911134,
+                -6.7240667972326245,
+                721.4722184578998,
+                0
+              ]
+            ]
+          ],
+          [
+            173,
+            [
+              [
+                1799,
+                -8.093824605436557,
+                -1897.1654740447354,
+                -2.1781339615203863,
+                -728.708909488048,
+                0
+              ]
+            ]
+          ],
+          [
+            174,
+            [
+              [
+                1799,
+                15.290100526025542,
+                1825.6935054546263,
+                3.4137453611706987,
+                729.4667452592898,
+                0
+              ]
+            ]
+          ],
+          [
+            175,
+            [
+              [
+                1799,
+                -3.501256637465614,
+                -1751.130854701156,
+                -1.4794062488336583,
+                -736.8358367991943,
+                0
+              ]
+            ]
+          ],
+          [
+            176,
+            [
+              [
+                1799,
+                90.61883766106051,
+                1677.9442839404496,
+                16.836548712321328,
+                737.4125189744445,
+                0
+              ]
+            ]
+          ],
+          [
+            177,
+            [
+              [
+                1799,
+                6.1727456645765875,
+                -1603.4537883969006,
+                0.21386091341925326,
+                -745.1255640233761,
+                0
+              ]
+            ]
+          ],
+          [
+            178,
+            [
+              [
+                1799,
+                130.4692822388663,
+                1528.416703098445,
+                25.007184639466264,
+                745.4784618066975,
+                0
+              ]
+            ]
+          ],
+          [
+            179,
+            [
+              [
+                1799,
+                9.639081386829671,
+                -1454.0928853383955,
+                0.8881406488631161,
+                -753.5809300187499,
+                0
+              ]
+            ]
+          ],
+          [
+            180,
+            [
+              [
+                1799,
+                178.3694643990604,
+                1376.3418839427595,
+                35.55337904035649,
+                753.520148695695,
+                0
+              ]
+            ]
+          ],
+          [
+            181,
+            [
+              [
+                1799,
+                4.44644209561107,
+                1944.5500944620874,
+                -1.0131840365171054,
+                -966.2752679410397,
+                0
+              ]
+            ]
+          ],
+          [
+            182,
+            [
+              [
+                1799,
+                -27.781176946149206,
+                -2032.2323774333342,
+                -46.0633447983306,
+                966.0420435603081,
+                0
+              ]
+            ]
+          ],
+          [
+            183,
+            [
+              [
+                1799,
+                5.521976842005537,
+                2138.6065057066685,
+                1.5339323920854275,
+                -979.6218298536221,
+                0
+              ]
+            ]
+          ],
+          [
+            184,
+            [
+              [
+                1799,
+                -14.296403955363061,
+                -2226.599496481399,
+                -32.145843770163424,
+                979.9647642504839,
+                0
+              ]
+            ]
+          ],
+          [
+            185,
+            [
+              [
+                1799,
+                4.616606330108851,
+                2335.3664661654843,
+                -2.798805667859058,
+                -993.310763087357,
+                0
+              ]
+            ]
+          ],
+          [
+            186,
+            [
+              [
+                1799,
+                -6.699461565895519,
+                -2423.9260245791,
+                -19.625628393562874,
+                993.9947391967601,
+                0
+              ]
+            ]
+          ],
+          [
+            165,
+            [
+              [
+                1797,
+                9.13114020810629,
+                -2442.3209652910514,
+                0.5860302548627443,
+                -698.9987128352377,
+                0
+              ],
+              [
+                1798,
+                9.135404670436351,
+                -2447.407483700148,
+                0.5860302548627443,
+                -698.9987128352377,
+                1
+              ]
+            ]
+          ]
+        ],
+        "starts": [],
+        "step": 1799
+      },
+      "scene_id": "49fdb6ee956c4a2a92494c409b384603",
+      "ships": [
+        {
+          "command_status": "scene_command",
+          "descent": null,
+          "heading_rad": -3.141592653589793,
+          "height_layer": "upper",
+          "height_navigation": {
+            "base_duration_s": 74.07715835161663,
+            "duration_s": 74.07715835161663,
+            "lift_loss_fraction": 0,
+            "next_layer": null,
+            "progress": 0,
+            "remaining_s": null,
+            "target_layer": null,
+            "total_remaining_s": null,
+            "unavailable_reason": null
+          },
+          "hull_integrity": 0.7922437673130194,
+          "id": "ship.chaff.enemy",
+          "lift_reserve": {
+            "available_force_n": 30000000,
+            "dry_mass_kg": 2230260,
+            "margin_n": 8128620.771000002,
+            "reserve_fraction": 0.3716556091817927
+          },
+          "modules": [
+            {
+              "durability": 100,
+              "id": "ammunition_magazine"
+            },
+            {
+              "durability": 100,
+              "id": "cargo_hold"
+            },
+            {
+              "durability": 100,
+              "id": "cic"
+            },
+            {
+              "durability": 100,
+              "id": "countermeasure.chaff.large"
+            },
+            {
+              "durability": 100,
+              "id": "countermeasure.chaff.small"
+            },
+            {
+              "durability": 82.68698060941827,
+              "id": "countermeasure.decoy.small"
+            },
+            {
+              "durability": 100,
+              "id": "countermeasure.thermal.large"
+            },
+            {
+              "durability": 100,
+              "id": "countermeasure.thermal.small"
+            },
+            {
+              "durability": 100,
+              "id": "crew_quarters_base"
+            },
+            {
+              "durability": 100,
+              "id": "crew_quarters_upper"
+            },
+            {
+              "durability": 100,
+              "id": "damage_control"
+            },
+            {
+              "durability": 100,
+              "id": "datalink.0"
+            },
+            {
+              "durability": 48.06094182825482,
+              "id": "fire_control"
+            },
+            {
+              "durability": 100,
+              "id": "generator"
+            },
+            {
+              "durability": 65.37396121883654,
+              "id": "infrared.backup"
+            },
+            {
+              "durability": 100,
+              "id": "lift_tank"
+            },
+            {
+              "durability": 100,
+              "id": "main_engine_port"
+            },
+            {
+              "durability": 100,
+              "id": "main_engine_starboard"
+            },
+            {
+              "durability": 100,
+              "id": "remote_core"
+            },
+            {
+              "durability": 82.68698060941827,
+              "id": "sensor_upper_starboard"
+            },
+            {
+              "durability": 100,
+              "id": "thruster_port_aft"
+            },
+            {
+              "durability": 50.22506925207756,
+              "id": "thruster_port_fore"
+            },
+            {
+              "durability": 100,
+              "id": "thruster_starboard_aft"
+            },
+            {
+              "durability": 0,
+              "id": "thruster_starboard_fore"
+            },
+            {
+              "durability": 100,
+              "id": "weapon_upper_port"
+            }
+          ],
+          "physical_status": "operational",
+          "position_m": [
+            4.766853723806641e-15,
+            2461.0756854374226
+          ],
+          "speed_mps": 2.6400768130111167,
+          "velocity_mps": [
+            3.233161618557213e-16,
+            -2.6400768130111167
+          ],
+          "wreck": null,
+          "yaw_rate_radps": 0
+        },
+        {
+          "command_status": "scene_command",
+          "descent": null,
+          "heading_rad": 0,
+          "height_layer": "upper",
+          "height_navigation": {
+            "base_duration_s": 74.1384989071823,
+            "duration_s": 74.1384989071823,
+            "lift_loss_fraction": 0,
+            "next_layer": null,
+            "progress": 0,
+            "remaining_s": null,
+            "target_layer": null,
+            "total_remaining_s": null,
+            "unavailable_reason": null
+          },
+          "hull_integrity": 0.506578947368421,
+          "id": "ship.chaff.player",
+          "lift_reserve": {
+            "available_force_n": 30000000,
+            "dry_mass_kg": 2231260,
+            "margin_n": 8118814.121000003,
+            "reserve_fraction": 0.37104086432499356
+          },
+          "modules": [
+            {
+              "durability": 100,
+              "id": "ammunition_magazine"
+            },
+            {
+              "durability": 100,
+              "id": "cargo_hold"
+            },
+            {
+              "durability": 150,
+              "id": "cic"
+            },
+            {
+              "durability": 100,
+              "id": "countermeasure.chaff.large"
+            },
+            {
+              "durability": 100,
+              "id": "countermeasure.chaff.small"
+            },
+            {
+              "durability": 13.434903047091375,
+              "id": "countermeasure.decoy.small"
+            },
+            {
+              "durability": 100,
+              "id": "countermeasure.thermal.large"
+            },
+            {
+              "durability": 100,
+              "id": "countermeasure.thermal.small"
+            },
+            {
+              "durability": 100,
+              "id": "crew_quarters_base"
+            },
+            {
+              "durability": 65.37396121883654,
+              "id": "crew_quarters_upper"
+            },
+            {
+              "durability": 100,
+              "id": "damage_control"
+            },
+            {
+              "durability": 100,
+              "id": "datalink.0"
+            },
+            {
+              "durability": 0,
+              "id": "fire_control"
+            },
+            {
+              "durability": 100,
+              "id": "generator"
+            },
+            {
+              "durability": 0,
+              "id": "infrared.backup"
+            },
+            {
+              "durability": 100,
+              "id": "lift_tank"
+            },
+            {
+              "durability": 100,
+              "id": "main_engine_port"
+            },
+            {
+              "durability": 100,
+              "id": "main_engine_starboard"
+            },
+            {
+              "durability": 100,
+              "id": "remote_core"
+            },
+            {
+              "durability": 13.434903047091375,
+              "id": "sensor_upper_starboard"
+            },
+            {
+              "durability": 56.71745152354571,
+              "id": "thruster_port_aft"
+            },
+            {
+              "durability": 0,
+              "id": "thruster_port_fore"
+            },
+            {
+              "durability": 35.07617728531856,
+              "id": "thruster_starboard_aft"
+            },
+            {
+              "durability": 0,
+              "id": "thruster_starboard_fore"
+            },
+            {
+              "durability": 100,
+              "id": "weapon_upper_port"
+            }
+          ],
+          "physical_status": "operational",
+          "position_m": [
+            0,
+            -2500
+          ],
+          "speed_mps": 0,
+          "velocity_mps": [
+            0,
+            0
+          ],
+          "wreck": null,
+          "yaw_rate_radps": 0
+        }
+      ],
+      "static": null,
+      "static_sha256": "12d9e73557a4eb8819349b4beeb95ba01b6424f396a1e83eae2d65397117fd03",
+      "time_s": 29.983333333333334
+    },
+    "yaw_brake_status": null
+  }
+}

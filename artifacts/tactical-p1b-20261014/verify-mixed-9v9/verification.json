@@ -1,0 +1,78 @@
+{
+  "case": "mixed-9v9",
+  "steps": 900,
+  "sections": [
+    "world",
+    "guns",
+    "fire_control",
+    "projectiles",
+    "observation",
+    "inventory",
+    "missiles",
+    "aviation",
+    "ew",
+    "defense",
+    "damage",
+    "fire",
+    "personnel",
+    "magazines",
+    "navigation",
+    "height_orders",
+    "departures",
+    "ending"
+  ],
+  "fixture_sha256": "4f7770f4510d15746f7714ae487bca5ff7cc13778ef25dd73207aec0f19f2ce9",
+  "expanded_tape_sha256": "673398e694505e5465da3b7a9e8d99e6280ae35e53be3172c47d7a563ad0060a",
+  "final_load": {
+    "ships": 18,
+    "guns": 26,
+    "projectiles": 91,
+    "missiles": 42,
+    "airborne": 5,
+    "aircraft_sensors": 8,
+    "jammers": 1,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 83,
+    "shared_tracks": 558,
+    "shots": 63,
+    "missile_shots": 69,
+    "hits": 11,
+    "interceptions": 5
+  },
+  "counters": {
+    "reference": {
+      "observation_hypot": 2462993,
+      "effect": 1110428,
+      "controllers": 1220301,
+      "sources": 499497,
+      "defense_sources": 149017
+    },
+    "candidate": {
+      "observation_hypot": 2462993,
+      "effect": 88481,
+      "controllers": 1220301,
+      "sources": 499497,
+      "defense_sources": 149017
+    }
+  },
+  "late_601_660": {
+    "reference": {
+      "observation_hypot": 224042,
+      "effect": 79096,
+      "controllers": 86713,
+      "sources": 42690,
+      "defense_sources": 14684
+    },
+    "candidate": {
+      "observation_hypot": 224042,
+      "effect": 5895,
+      "controllers": 86713,
+      "sources": 42690,
+      "defense_sources": 14684
+    }
+  },
+  "scope": "Exact authority comparison and diagnostic counts; no performance timings. Epochs normalized; derived caches and wall clocks excluded."
+}

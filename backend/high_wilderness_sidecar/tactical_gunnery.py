@@ -514,6 +514,9 @@ class GunneryBattle(SensorState):
                     or not self._can_fire(world.ships[gun.ship_index], gun.ship_index)):
                     inv.command(epoch=inv.epoch, sequence=inv.sequence+1, kind='cancel_reload', target=gun.module_id)
         def simulate(world, result, inventories):
+            with self.observation.capability_stage(world,staged['available']):
+                simulate_candidate(world,result,inventories)
+        def simulate_candidate(world, result, inventories):
             step = world.fixed_step
             solutions = targeting.StepSolutions(step)
             staged['fire_control_solutions'] = solutions

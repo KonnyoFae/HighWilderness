@@ -65,7 +65,8 @@ class ElectronicWarfare:
         ps.need(n is not None and b._sides[n]==b._sides[b._direct_index],'$.ship_id','只能指挥己方舰艇')
         key=(n,v['module_id']);ps.need(key in self.states,'$.module_id','没有此干扰发射器')
         ps.need(b._can_fire(b.session.world.ships[n],n),'$.ship_id','舰艇不能接受指令')
-        ps.need(self.detected(n,b.observation.frame),'$.target','需要先由雷达、红外或数据链发现敌方导弹')
+        if self.specs[key]['kind']!='chaff':
+            ps.need(self.detected(n,b.observation.frame),'$.target','需要先由雷达、红外或数据链发现敌方导弹')
         ps.need(not self.states[key].requested,'$.module_id','已有待执行投放指令')
         self.states={**self.states,key:replace(self.states[key],requested=True,bearing=v['bearing_deg'])}
         self.sequence,self.last=v['sequence'],v
@@ -110,9 +111,11 @@ class ElectronicWarfare:
             if not row['ready_rounds']:status=status or 'no_ammunition'
             if inv._cooldown.get(mid,0)>world.fixed_step or world.fixed_step-state.last_step<spec['ai_interval_steps']:status=status or 'cooldown'
             threats=self.detected(n,frame)
-            if not threats:status=status or 'no_detection'
-            if len(effects)>=policy()['max_effects']:status=status or 'effect_limit'
             auto=b._sides[n]!=b._sides[b._direct_index]
+            # Manual chaff also protects against radar gun control. Automatic
+            # deployment and other devices still require a detected missile.
+            if not threats and (auto or spec['kind']!='chaff'):status=status or 'no_detection'
+            if len(effects)>=policy()['max_effects']:status=status or 'effect_limit'
             if not status and (state.requested or auto):
                 from .tactical_gunnery import rotate,add
                 inv.command(epoch=inv.epoch,sequence=inv.sequence+1,kind='discharge',target=mid,quantity=1,cooldown_steps=spec['ai_interval_steps'])

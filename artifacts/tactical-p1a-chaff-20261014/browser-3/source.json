@@ -1,0 +1,12 @@
+{
+  "head": "aa301d3c409fd3a96690ad292ca43b8032805cd7",
+  "files": {
+    "backend/high_wilderness_sidecar/tactical_ew.py": "d0eaf1857c05ae2d209290b62eaee323b4bab14fe0f573682a15cbf7d0fe3bf0",
+    "apps/desktop/src/tactical/CountermeasurePanel.tsx": "5bd382450acbe440e59c7560b07928e4609cc6c362ec315f7ae53e314b471b67",
+    "apps/desktop/src/tactical/CountermeasurePanel.test.tsx": "c0d3a656d8dc1a488d015a9646a62f5f37de5847e4bb21cd1fd55bf7784171c0",
+    "tools/tactical_chaff_fixture.py": "16f3c811d6c9a4cb857de13d9974370a42a326a3a2aa6686a1efa39ed80f6b06",
+    "tools/test_tactical_chaff.py": "af03cf3d768e0d12fcc3629feae3024a2894f5111b84fe94296b1c33ab3ef240",
+    "tools/test_tactical_ew.py": "be50f3cb332364004e4ba489373c07609242ccd26934c9cfd4dfc0037d8a5938",
+    "tools/verify_tactical_chaff_view.mjs": "9bfe7c20740d93b70ceefd8ba57c4983239256f42c8a87585eb597127ec03893"
+  }
+}

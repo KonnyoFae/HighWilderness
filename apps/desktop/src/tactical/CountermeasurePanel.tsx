@@ -11,7 +11,7 @@ export function CountermeasurePanel({view,shipId,disabled,onDeploy}:{view?:Elect
   const devices=view?.devices.filter(d=>d.ship_id===shipId)??[];
   if(!devices.length)return null;
   return <section className="countermeasure-panel" aria-label="电子对抗">
-    <h3>电子对抗</h3><p className="muted">发现敌方导弹后可手动投放。烟云留在本层原地，也会遮挡友方探测；用机动离开区域。</p>
+    <h3>电子对抗</h3><p className="muted">箔条可主动投放，遮挡雷达探测与火控；热烟和主动诱饵需先发现敌方导弹。烟云留在本层原地，也会遮挡友方探测；用机动离开区域。</p>
     {devices.some(d=>d.kind==='decoy')&&<label>主动诱饵方向<select aria-label="主动诱饵方向" value={bearing} onChange={e=>setBearing(Number(e.target.value))}>
       {[[0,'舰艏'],[90,'右舷'],[-90,'左舷'],[180,'舰艉']].map(([v,name])=><option key={v} value={v}>{name}</option>)}
       {![0,90,-90,180].includes(bearing)&&<option value={bearing}>自定义 {bearing}°</option>}
@@ -19,7 +19,7 @@ export function CountermeasurePanel({view,shipId,disabled,onDeploy}:{view?:Elect
     {devices.map(d=><article key={d.module_id} className="observation-card" data-countermeasure={d.module_id}>
       <strong>{d.name}</strong><p>{status[d.status]??d.status} · 待发 {d.ready} · 已投放 {d.shots} 次</p>
       <p>{d.kind==='decoy'?'同时模拟雷达与红外信号':`区域半径 ${d.radius_m} 米`} · 持续 {d.lifetime_s} 秒{d.reload_remaining_s>0&&` · 装填剩余 ${d.reload_remaining_s.toFixed(1)} 秒`}</p>
-      <button disabled={disabled||!d.detected||!d.ready||d.requested||!['ready','no_detection','deployed'].includes(d.status)}
+      <button disabled={disabled||(d.kind!=='chaff'&&!d.detected)||!d.ready||d.requested||!['ready','no_detection','deployed'].includes(d.status)}
         onClick={()=>onDeploy({module_id:d.module_id,bearing_deg:d.kind==='decoy'?bearing:0})}>{d.requested?'等待投放':`投放${d.name.replace('发射器','')}`}</button>
     </article>)}
   </section>;

@@ -1,0 +1,53 @@
+{
+  "steps": 200,
+  "sections": [
+    "world",
+    "guns",
+    "fire_control",
+    "projectiles",
+    "observation",
+    "inventory",
+    "missiles",
+    "aviation",
+    "ew",
+    "defense",
+    "damage",
+    "fire",
+    "personnel",
+    "magazines",
+    "navigation",
+    "height_orders",
+    "departures",
+    "ending"
+  ],
+  "source_sha256": "2a75c2fea4ea6195551b0005981b6029044e78212531e7473106074fb2321395",
+  "inputs_sha256": "47fca01f7943f2de2cfe736d6395ff70d81291e235f1fc77e2893a1f54d19b9d",
+  "tape_sha256": "0f99069963e64b6fd07f1283f4401e0f69b5f95033c7438a9977cad7233430c3",
+  "checkpoints": [
+    {
+      "step": 95,
+      "quality": "normal",
+      "radar_used": 1,
+      "shots": 0
+    },
+    {
+      "step": 96,
+      "quality": "degraded",
+      "radar_used": 0,
+      "shots": 1
+    },
+    {
+      "step": 97,
+      "quality": "degraded",
+      "radar_used": 1,
+      "shots": 1
+    },
+    {
+      "step": 200,
+      "quality": "normal",
+      "radar_used": 1,
+      "shots": 1
+    }
+  ],
+  "scope": "Same P1a manual release in both variants; shortened expiry explicitly injected only to test the boundary."
+}

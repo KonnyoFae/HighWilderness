@@ -6,10 +6,18 @@ const device={ship_id:'blue',module_id:'ew',name:'小型箔条发射器',kind:'c
 const render=(overrides:Partial<typeof device>={},disabled=false)=>renderToStaticMarkup(<CountermeasurePanel
   view={{command_sequence:0,devices:[{...device,...overrides}],effects:[]} as ElectronicWarfareView} shipId="blue" disabled={disabled} onDeploy={()=>{}}/>);
 describe('电子对抗投放权限',()=>{
-  it('需要实际侦测、待发弹和工作状态',()=>{
+  it('无敌弹也可投放箔条，但仍需待发弹和工作状态',()=>{
     expect(render()).toContain('>投放小型箔条</button>');
-    for(const change of [{detected:false},{ready:0},{requested:true},{status:'destroyed'},{status:'cooldown'}])expect(render(change)).toContain('disabled=""');
+    expect(render({detected:false})).not.toContain('disabled=""');
+    for(const change of [{ready:0},{requested:true},...['destroyed','cooldown','mode_disabled','power_unavailable','crew_unavailable','control_unavailable','effect_limit','battle_finished'].map(status=>({status}))])expect(render({...change,detected:false})).toContain('disabled=""');
     expect(render({},true)).toContain('disabled=""');
+  });
+  it('热烟和主动诱饵仍需实际敌弹情报',()=>{
+    for(const kind of ['thermal','decoy']) {
+      expect(render({kind,detected:false,status:'no_detection'})).toContain('disabled=""');
+      expect(render({kind,detected:true})).not.toContain('disabled=""');
+    }
+    expect(render()).toContain('箔条可主动投放');
   });
   it('待确认投放与未装填状态清楚显示',()=>{
     expect(render({requested:true})).toContain('等待投放');

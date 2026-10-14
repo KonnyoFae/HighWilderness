@@ -80,7 +80,7 @@ def run(source,out,label,policy,*,verify,steps=900,wall_limit=180):
             step=stats(step_times),read_and_encode=stats(reads),load=counts(b),error=s.error,
             fixture_sha256=canonical_sha256(frozen),expanded_tape_sha256=canonical_sha256(tape) if verify else None,
             scope='Synthetic-clock equivalence against 7b and 7c.4a; timings are not performance results.' if verify else
-                'Serial wall-paced sidecar service diagnostic, real read/encode cost, no browser or native UI. Stops at 900 steps, protection or 180 wall seconds. At most four steps per pump; last pump is capped at remaining sample steps.')
+                f'Serial wall-paced sidecar service diagnostic, real read/encode cost, no browser or native UI. Stops at {steps} steps, protection or {wall_limit} wall seconds. At most four steps per pump; last pump is capped at remaining sample steps.')
         write(out/f'{label}.json',report)
         if verify:write(out/f'{label}-tape.json',tape)
         q.pause()
