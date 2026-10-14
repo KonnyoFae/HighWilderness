@@ -1,0 +1,17 @@
+{
+  "backend": {
+    "command": "python -X utf8 -m unittest tools.test_tactical_p1c tools.test_tactical_damage tools.test_tactical_ballistics tools.test_tactical_deck_hits tools.test_tactical_interception tools.test_missile_flight tools.test_missile_maneuver tools.test_missile_layer_coordination tools.test_missile_fixed_lifetime tools.test_aviation_combat tools.test_tactical_chaff tools.test_tactical_p1b tools.test_tactical_ew tools.test_sloped_armor_damage",
+    "tests": 185,
+    "new_p1c_tests": 6,
+    "exit_code": 0,
+    "output": "backend-tests.txt",
+    "scope": "Correctness only; ran alongside frozen-state verification, never alongside performance measurements."
+  },
+  "production_changes": ["backend/high_wilderness_sidecar/tactical_damage.py"],
+  "reference": {
+    "head": "ad3870cabef6a4aa0c6d8e6fd8f67601e11ae02c",
+    "frozen": "tools/tactical_p1c_reference.py",
+    "ast_verified": ["DamageKernel.advance"],
+    "scope": "Only the collision advance method is swapped. Both variants retain committed P1a chaff rules and P1b observation capability reuse."
+  }
+}

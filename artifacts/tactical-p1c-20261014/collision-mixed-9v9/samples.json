@@ -1,0 +1,6295 @@
+[
+  {
+    "step": 2,
+    "projectiles": 2,
+    "reference_first": false,
+    "candidate": 0.0005941999843344092,
+    "reference": 0.0007275000098161399
+  },
+  {
+    "step": 3,
+    "projectiles": 2,
+    "reference_first": true,
+    "reference": 0.0008170999935828149,
+    "candidate": 0.0005381000228226185
+  },
+  {
+    "step": 4,
+    "projectiles": 2,
+    "reference_first": false,
+    "candidate": 0.0007037000032141805,
+    "reference": 0.00045200000749900937
+  },
+  {
+    "step": 5,
+    "projectiles": 2,
+    "reference_first": true,
+    "reference": 0.0007290999637916684,
+    "candidate": 0.00041800003964453936
+  },
+  {
+    "step": 6,
+    "projectiles": 2,
+    "reference_first": false,
+    "candidate": 0.0005486999871209264,
+    "reference": 0.001303299970459193
+  },
+  {
+    "step": 7,
+    "projectiles": 2,
+    "reference_first": true,
+    "reference": 0.0010654000216163695,
+    "candidate": 0.0007082999800331891
+  },
+  {
+    "step": 8,
+    "projectiles": 2,
+    "reference_first": false,
+    "candidate": 0.0010445999796502292,
+    "reference": 0.0006185999955050647
+  },
+  {
+    "step": 9,
+    "projectiles": 2,
+    "reference_first": true,
+    "reference": 0.0006545000360347331,
+    "candidate": 0.000844899972435087
+  },
+  {
+    "step": 10,
+    "projectiles": 2,
+    "reference_first": false,
+    "candidate": 0.0008530999766662717,
+    "reference": 0.0009361000265926123
+  },
+  {
+    "step": 11,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0007698000408709049,
+    "candidate": 0.0009811000199988484
+  },
+  {
+    "step": 12,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.000874500023201108,
+    "reference": 0.0006104999920353293
+  },
+  {
+    "step": 13,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0010962000233121216,
+    "candidate": 0.0008932999917306006
+  },
+  {
+    "step": 14,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.0011828000424429774,
+    "reference": 0.0007851000409573317
+  },
+  {
+    "step": 15,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0013202999834902585,
+    "candidate": 0.0006184999947436154
+  },
+  {
+    "step": 16,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.0007377000292763114,
+    "reference": 0.0005993999657221138
+  },
+  {
+    "step": 17,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.001274899987038225,
+    "candidate": 0.0006534000276587903
+  },
+  {
+    "step": 18,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.000777200039010495,
+    "reference": 0.0006804000004194677
+  },
+  {
+    "step": 19,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0011563999578356743,
+    "candidate": 0.0006134000141173601
+  },
+  {
+    "step": 20,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.0011150999926030636,
+    "reference": 0.0006759999669156969
+  },
+  {
+    "step": 21,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0015844000154174864,
+    "candidate": 0.0005935999797657132
+  },
+  {
+    "step": 22,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.0013949000276625156,
+    "reference": 0.0006973999552428722
+  },
+  {
+    "step": 23,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0007689999765716493,
+    "candidate": 0.0005402000388130546
+  },
+  {
+    "step": 24,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.0015406999737024307,
+    "reference": 0.0007177999941632152
+  },
+  {
+    "step": 25,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0007758000283502042,
+    "candidate": 0.000521100009791553
+  },
+  {
+    "step": 26,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.0007214999641291797,
+    "reference": 0.000602099986281246
+  },
+  {
+    "step": 27,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0007676000241190195,
+    "candidate": 0.0009387999889440835
+  },
+  {
+    "step": 28,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.0007868999964557588,
+    "reference": 0.0005826999549753964
+  },
+  {
+    "step": 29,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0010343999601900578,
+    "candidate": 0.0007279000128619373
+  },
+  {
+    "step": 30,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.0010157999931834638,
+    "reference": 0.0010358999716117978
+  },
+  {
+    "step": 31,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0010577000211924314,
+    "candidate": 0.0005727999960072339
+  },
+  {
+    "step": 32,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.0007681000279262662,
+    "reference": 0.0012594999861903489
+  },
+  {
+    "step": 33,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0009873000090010464,
+    "candidate": 0.0007770999800413847
+  },
+  {
+    "step": 34,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.0016822000034153461,
+    "reference": 0.0006640999927185476
+  },
+  {
+    "step": 35,
+    "projectiles": 3,
+    "reference_first": true,
+    "reference": 0.0009384999866597354,
+    "candidate": 0.001082399976439774
+  },
+  {
+    "step": 36,
+    "projectiles": 3,
+    "reference_first": false,
+    "candidate": 0.0006626000395044684,
+    "reference": 0.0009392999927513301
+  },
+  {
+    "step": 37,
+    "projectiles": 4,
+    "reference_first": true,
+    "reference": 0.0009625999955460429,
+    "candidate": 0.0006563999922946095
+  },
+  {
+    "step": 38,
+    "projectiles": 4,
+    "reference_first": false,
+    "candidate": 0.0012873000232502818,
+    "reference": 0.0007466000388376415
+  },
+  {
+    "step": 39,
+    "projectiles": 4,
+    "reference_first": true,
+    "reference": 0.0011263999622315168,
+    "candidate": 0.0008648000075481832
+  },
+  {
+    "step": 40,
+    "projectiles": 5,
+    "reference_first": false,
+    "candidate": 0.0012271999730728567,
+    "reference": 0.002199999988079071
+  },
+  {
+    "step": 41,
+    "projectiles": 5,
+    "reference_first": true,
+    "reference": 0.0013166999560780823,
+    "candidate": 0.0015780000248923898
+  },
+  {
+    "step": 42,
+    "projectiles": 5,
+    "reference_first": false,
+    "candidate": 0.001164899964351207,
+    "reference": 0.0021103000035509467
+  },
+  {
+    "step": 43,
+    "projectiles": 5,
+    "reference_first": true,
+    "reference": 0.0018342999974265695,
+    "candidate": 0.001063200004864484
+  },
+  {
+    "step": 44,
+    "projectiles": 5,
+    "reference_first": false,
+    "candidate": 0.0013282999861985445,
+    "reference": 0.0013706000172533095
+  },
+  {
+    "step": 45,
+    "projectiles": 5,
+    "reference_first": true,
+    "reference": 0.0016907000099308789,
+    "candidate": 0.001027999969664961
+  },
+  {
+    "step": 46,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0020348000107333064,
+    "reference": 0.0019602999673224986
+  },
+  {
+    "step": 47,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0015382000128738582,
+    "candidate": 0.0009503000183030963
+  },
+  {
+    "step": 48,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0011599999852478504,
+    "reference": 0.0021342000109143555
+  },
+  {
+    "step": 49,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0020163999870419502,
+    "candidate": 0.001553500012960285
+  },
+  {
+    "step": 50,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0015101000317372382,
+    "reference": 0.001437300001271069
+  },
+  {
+    "step": 51,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0016479000332765281,
+    "candidate": 0.0017596999532543123
+  },
+  {
+    "step": 52,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0017760000191628933,
+    "reference": 0.0012229999992996454
+  },
+  {
+    "step": 53,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0014833000022917986,
+    "candidate": 0.0016726000467315316
+  },
+  {
+    "step": 54,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0013879999751225114,
+    "reference": 0.0013176999636925757
+  },
+  {
+    "step": 55,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0019170999876223505,
+    "candidate": 0.0017340999911539257
+  },
+  {
+    "step": 56,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0014510999899357557,
+    "reference": 0.0014919000095687807
+  },
+  {
+    "step": 57,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0015610000118613243,
+    "candidate": 0.001069399993866682
+  },
+  {
+    "step": 58,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.001635099994018674,
+    "reference": 0.001335300039499998
+  },
+  {
+    "step": 59,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.001798100012820214,
+    "candidate": 0.0010278999689035118
+  },
+  {
+    "step": 60,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0017787000397220254,
+    "reference": 0.001844500016886741
+  },
+  {
+    "step": 61,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.001878199982456863,
+    "candidate": 0.0015335999778471887
+  },
+  {
+    "step": 62,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0016886999947018921,
+    "reference": 0.0010455999872647226
+  },
+  {
+    "step": 63,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0023305000504478812,
+    "candidate": 0.0011206000344827771
+  },
+  {
+    "step": 64,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.001353600004222244,
+    "reference": 0.0010609999881125987
+  },
+  {
+    "step": 65,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0015270999865606427,
+    "candidate": 0.0013669999898411334
+  },
+  {
+    "step": 66,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.001688100048340857,
+    "reference": 0.002250000019557774
+  },
+  {
+    "step": 67,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0018665000097826123,
+    "candidate": 0.0018304999684914947
+  },
+  {
+    "step": 68,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0015644999803043902,
+    "reference": 0.0015623000217601657
+  },
+  {
+    "step": 69,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.002002699999138713,
+    "candidate": 0.001400900015141815
+  },
+  {
+    "step": 70,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0014109999756328762,
+    "reference": 0.0014007000136189163
+  },
+  {
+    "step": 71,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0022057000314816833,
+    "candidate": 0.0016568999853916466
+  },
+  {
+    "step": 72,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0015073999529704452,
+    "reference": 0.001209600013680756
+  },
+  {
+    "step": 73,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.002132599998731166,
+    "candidate": 0.0011341000208631158
+  },
+  {
+    "step": 74,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0014742999919690192,
+    "reference": 0.0017759999609552324
+  },
+  {
+    "step": 75,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.00207280000904575,
+    "candidate": 0.0015505999908782542
+  },
+  {
+    "step": 76,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0011452999897301197,
+    "reference": 0.0010710000060498714
+  },
+  {
+    "step": 77,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0024479000130668283,
+    "candidate": 0.001399400003720075
+  },
+  {
+    "step": 78,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0020220999722369015,
+    "reference": 0.0012886999757029116
+  },
+  {
+    "step": 79,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0016173000331036747,
+    "candidate": 0.0011177000124007463
+  },
+  {
+    "step": 80,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0011128999758511782,
+    "reference": 0.0010524000390432775
+  },
+  {
+    "step": 81,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.002225700009148568,
+    "candidate": 0.0012808999745175242
+  },
+  {
+    "step": 82,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0015533000114373863,
+    "reference": 0.001616799971088767
+  },
+  {
+    "step": 83,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.002709200023673475,
+    "candidate": 0.001035400026012212
+  },
+  {
+    "step": 84,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0017114999936893582,
+    "reference": 0.001234699971973896
+  },
+  {
+    "step": 85,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0015553999692201614,
+    "candidate": 0.0013464000076055527
+  },
+  {
+    "step": 86,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0015342000406235456,
+    "reference": 0.0017560000414960086
+  },
+  {
+    "step": 87,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0014936999650672078,
+    "candidate": 0.0014567000325769186
+  },
+  {
+    "step": 88,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.00206389999948442,
+    "reference": 0.00162830000044778
+  },
+  {
+    "step": 89,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.001856100047007203,
+    "candidate": 0.0012880000285804272
+  },
+  {
+    "step": 90,
+    "projectiles": 6,
+    "reference_first": false,
+    "candidate": 0.0017291999538429081,
+    "reference": 0.0017535000224597752
+  },
+  {
+    "step": 91,
+    "projectiles": 6,
+    "reference_first": true,
+    "reference": 0.0012187999673187733,
+    "candidate": 0.0009222000371664762
+  },
+  {
+    "step": 92,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.003065900004003197,
+    "reference": 0.002611899981275201
+  },
+  {
+    "step": 93,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.002685299958102405,
+    "candidate": 0.0021892000222578645
+  },
+  {
+    "step": 94,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0025810999795794487,
+    "reference": 0.0026120999827980995
+  },
+  {
+    "step": 95,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.002804199990350753,
+    "candidate": 0.0019400999881327152
+  },
+  {
+    "step": 96,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.003787799971178174,
+    "reference": 0.0027461000136099756
+  },
+  {
+    "step": 97,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.002977200027089566,
+    "candidate": 0.0022791000083088875
+  },
+  {
+    "step": 98,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0029685000190511346,
+    "reference": 0.003193899989128113
+  },
+  {
+    "step": 99,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0032802000059746206,
+    "candidate": 0.002374199975747615
+  },
+  {
+    "step": 100,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0029540000250563025,
+    "reference": 0.003016200033016503
+  },
+  {
+    "step": 101,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.002732899971306324,
+    "candidate": 0.0026063999976031482
+  },
+  {
+    "step": 102,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0027846000157296658,
+    "reference": 0.0035265000187791884
+  },
+  {
+    "step": 103,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0030785000417381525,
+    "candidate": 0.0020081999828107655
+  },
+  {
+    "step": 104,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0027544000186026096,
+    "reference": 0.0023927000002004206
+  },
+  {
+    "step": 105,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0027345999842509627,
+    "candidate": 0.0022640000097453594
+  },
+  {
+    "step": 106,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.002528899989556521,
+    "reference": 0.0018804999999701977
+  },
+  {
+    "step": 107,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.002893800032325089,
+    "candidate": 0.0027550000231713057
+  },
+  {
+    "step": 108,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0032878000056371093,
+    "reference": 0.002228100027423352
+  },
+  {
+    "step": 109,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0031642999965697527,
+    "candidate": 0.002064200001768768
+  },
+  {
+    "step": 110,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.002625899971462786,
+    "reference": 0.002685000014025718
+  },
+  {
+    "step": 111,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0037317000096663833,
+    "candidate": 0.0021413000067695975
+  },
+  {
+    "step": 112,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0018636999884620309,
+    "reference": 0.003437599982134998
+  },
+  {
+    "step": 113,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0021221000351943076,
+    "candidate": 0.002290800039190799
+  },
+  {
+    "step": 114,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.002508200006559491,
+    "reference": 0.0020477999933063984
+  },
+  {
+    "step": 115,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0027403999702073634,
+    "candidate": 0.0023744000354781747
+  },
+  {
+    "step": 116,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0019805999472737312,
+    "reference": 0.00221649999730289
+  },
+  {
+    "step": 117,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0021406999439932406,
+    "candidate": 0.0017414000467397273
+  },
+  {
+    "step": 118,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0025806999765336514,
+    "reference": 0.0022188000148162246
+  },
+  {
+    "step": 119,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0034930999972857535,
+    "candidate": 0.0023141999845393
+  },
+  {
+    "step": 120,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0023782000062055886,
+    "reference": 0.002594200021121651
+  },
+  {
+    "step": 121,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.002883500012103468,
+    "candidate": 0.0023121999693103135
+  },
+  {
+    "step": 122,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0028945999802090228,
+    "reference": 0.0034893000265583396
+  },
+  {
+    "step": 123,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0031946999952197075,
+    "candidate": 0.0018767999717965722
+  },
+  {
+    "step": 124,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0022695999941788614,
+    "reference": 0.002649800037033856
+  },
+  {
+    "step": 125,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0022760999854654074,
+    "candidate": 0.001838899974245578
+  },
+  {
+    "step": 126,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0025920000043697655,
+    "reference": 0.0032662000157870352
+  },
+  {
+    "step": 127,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0027222000062465668,
+    "candidate": 0.002388700027950108
+  },
+  {
+    "step": 128,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0024901999859139323,
+    "reference": 0.002817800035700202
+  },
+  {
+    "step": 129,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.0024549999507144094,
+    "candidate": 0.0016206000000238419
+  },
+  {
+    "step": 130,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.0029375000158324838,
+    "reference": 0.0023725999635644257
+  },
+  {
+    "step": 131,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.002598599996417761,
+    "candidate": 0.0027552000246942043
+  },
+  {
+    "step": 132,
+    "projectiles": 10,
+    "reference_first": false,
+    "candidate": 0.002494200016371906,
+    "reference": 0.0023317000013776124
+  },
+  {
+    "step": 133,
+    "projectiles": 10,
+    "reference_first": true,
+    "reference": 0.002466500038281083,
+    "candidate": 0.0025708999601192772
+  },
+  {
+    "step": 134,
+    "projectiles": 11,
+    "reference_first": false,
+    "candidate": 0.003328000020701438,
+    "reference": 0.0028851000242866576
+  },
+  {
+    "step": 135,
+    "projectiles": 11,
+    "reference_first": true,
+    "reference": 0.003206399967893958,
+    "candidate": 0.002634700038470328
+  },
+  {
+    "step": 136,
+    "projectiles": 11,
+    "reference_first": false,
+    "candidate": 0.002953000017441809,
+    "reference": 0.002159799973014742
+  },
+  {
+    "step": 137,
+    "projectiles": 11,
+    "reference_first": true,
+    "reference": 0.0036167000071145594,
+    "candidate": 0.00273939996259287
+  },
+  {
+    "step": 138,
+    "projectiles": 11,
+    "reference_first": false,
+    "candidate": 0.0019703000434674323,
+    "reference": 0.0025387000059708953
+  },
+  {
+    "step": 139,
+    "projectiles": 11,
+    "reference_first": true,
+    "reference": 0.0035342000192031264,
+    "candidate": 0.0025720999692566693
+  },
+  {
+    "step": 140,
+    "projectiles": 11,
+    "reference_first": false,
+    "candidate": 0.0025978999910876155,
+    "reference": 0.0029697000281885266
+  },
+  {
+    "step": 141,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0032310999813489616,
+    "candidate": 0.0030026999884285033
+  },
+  {
+    "step": 142,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0035198000259697437,
+    "reference": 0.0032204000162892044
+  },
+  {
+    "step": 143,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0037678000517189503,
+    "candidate": 0.002847400028258562
+  },
+  {
+    "step": 144,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0033310000435449183,
+    "reference": 0.0026910000015050173
+  },
+  {
+    "step": 145,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0022004999918863177,
+    "candidate": 0.002092700044158846
+  },
+  {
+    "step": 146,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0028748000040650368,
+    "reference": 0.0032587999594397843
+  },
+  {
+    "step": 147,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0029369000112637877,
+    "candidate": 0.00282990001142025
+  },
+  {
+    "step": 148,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.002738300012424588,
+    "reference": 0.0029334999853745103
+  },
+  {
+    "step": 149,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0031778999837115407,
+    "candidate": 0.001831800036597997
+  },
+  {
+    "step": 150,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0037687000003643334,
+    "reference": 0.0034520000335760415
+  },
+  {
+    "step": 151,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.003243900020606816,
+    "candidate": 0.0026321999612264335
+  },
+  {
+    "step": 152,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.002350800030399114,
+    "reference": 0.0033570000086911023
+  },
+  {
+    "step": 153,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0032118999515660107,
+    "candidate": 0.0032693000393919647
+  },
+  {
+    "step": 154,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0031088999821804464,
+    "reference": 0.002863700035959482
+  },
+  {
+    "step": 155,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0037471000105142593,
+    "candidate": 0.0022775999968871474
+  },
+  {
+    "step": 156,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0032491000019945204,
+    "reference": 0.0038917999481782317
+  },
+  {
+    "step": 157,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.003292199980933219,
+    "candidate": 0.0034232999896630645
+  },
+  {
+    "step": 158,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0027494000387378037,
+    "reference": 0.00374700000975281
+  },
+  {
+    "step": 159,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0030304999672807753,
+    "candidate": 0.002890000003390014
+  },
+  {
+    "step": 160,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.003216200042515993,
+    "reference": 0.0028715000371448696
+  },
+  {
+    "step": 161,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0030728999990969896,
+    "candidate": 0.0021735000191256404
+  },
+  {
+    "step": 162,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.003304900019429624,
+    "reference": 0.004306300019379705
+  },
+  {
+    "step": 163,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.003391799982637167,
+    "candidate": 0.0019197000074200332
+  },
+  {
+    "step": 164,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0031278000096790493,
+    "reference": 0.003160499967634678
+  },
+  {
+    "step": 165,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.003969500015955418,
+    "candidate": 0.0023472000029869378
+  },
+  {
+    "step": 166,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0031522000208497047,
+    "reference": 0.0029075000202283263
+  },
+  {
+    "step": 167,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0030840999679639935,
+    "candidate": 0.002417900017462671
+  },
+  {
+    "step": 168,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.002766599995084107,
+    "reference": 0.003049299994017929
+  },
+  {
+    "step": 169,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0038920000079087913,
+    "candidate": 0.002597699989564717
+  },
+  {
+    "step": 170,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0022279000259004533,
+    "reference": 0.0033444000291638076
+  },
+  {
+    "step": 171,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0036043000291101635,
+    "candidate": 0.0029872000450268388
+  },
+  {
+    "step": 172,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0029024999821558595,
+    "reference": 0.002473599975928664
+  },
+  {
+    "step": 173,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.003709100012201816,
+    "candidate": 0.0031321000424213707
+  },
+  {
+    "step": 174,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.003477599995676428,
+    "reference": 0.0021656000171788037
+  },
+  {
+    "step": 175,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0034825000329874456,
+    "candidate": 0.0033162999898195267
+  },
+  {
+    "step": 176,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0031866999925114214,
+    "reference": 0.003110300051048398
+  },
+  {
+    "step": 177,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.0035251000081188977,
+    "candidate": 0.002898500009905547
+  },
+  {
+    "step": 178,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.0021297999774105847,
+    "reference": 0.00272170000243932
+  },
+  {
+    "step": 179,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.00314099999377504,
+    "candidate": 0.0025840000016614795
+  },
+  {
+    "step": 180,
+    "projectiles": 12,
+    "reference_first": false,
+    "candidate": 0.003014499961864203,
+    "reference": 0.002680000034160912
+  },
+  {
+    "step": 181,
+    "projectiles": 12,
+    "reference_first": true,
+    "reference": 0.003284499980509281,
+    "candidate": 0.0029983000131323934
+  },
+  {
+    "step": 182,
+    "projectiles": 17,
+    "reference_first": false,
+    "candidate": 0.0034131999709643424,
+    "reference": 0.003996599989477545
+  },
+  {
+    "step": 183,
+    "projectiles": 17,
+    "reference_first": true,
+    "reference": 0.005239800026174635,
+    "candidate": 0.0030172000406309962
+  },
+  {
+    "step": 184,
+    "projectiles": 17,
+    "reference_first": false,
+    "candidate": 0.0035032000159844756,
+    "reference": 0.00472619995707646
+  },
+  {
+    "step": 185,
+    "projectiles": 17,
+    "reference_first": true,
+    "reference": 0.004268599965143949,
+    "candidate": 0.003541700018104166
+  },
+  {
+    "step": 186,
+    "projectiles": 17,
+    "reference_first": false,
+    "candidate": 0.004128200002014637,
+    "reference": 0.004425399994943291
+  },
+  {
+    "step": 187,
+    "projectiles": 17,
+    "reference_first": true,
+    "reference": 0.004339900042396039,
+    "candidate": 0.0036496000248007476
+  },
+  {
+    "step": 188,
+    "projectiles": 17,
+    "reference_first": false,
+    "candidate": 0.003918200032785535,
+    "reference": 0.004046599962748587
+  },
+  {
+    "step": 189,
+    "projectiles": 17,
+    "reference_first": true,
+    "reference": 0.004541300004348159,
+    "candidate": 0.0034146999823860824
+  },
+  {
+    "step": 190,
+    "projectiles": 17,
+    "reference_first": false,
+    "candidate": 0.004044500004965812,
+    "reference": 0.004839100001845509
+  },
+  {
+    "step": 191,
+    "projectiles": 17,
+    "reference_first": true,
+    "reference": 0.004662499995902181,
+    "candidate": 0.003931099956389517
+  },
+  {
+    "step": 192,
+    "projectiles": 17,
+    "reference_first": false,
+    "candidate": 0.004987800028175116,
+    "reference": 0.0037426999770104885
+  },
+  {
+    "step": 193,
+    "projectiles": 17,
+    "reference_first": true,
+    "reference": 0.004748300008941442,
+    "candidate": 0.0032141999690793455
+  },
+  {
+    "step": 194,
+    "projectiles": 17,
+    "reference_first": false,
+    "candidate": 0.0037333000218495727,
+    "reference": 0.005461699969600886
+  },
+  {
+    "step": 195,
+    "projectiles": 17,
+    "reference_first": true,
+    "reference": 0.004454299982171506,
+    "candidate": 0.003929700003936887
+  },
+  {
+    "step": 196,
+    "projectiles": 17,
+    "reference_first": false,
+    "candidate": 0.005015000002458692,
+    "reference": 0.004643599968403578
+  },
+  {
+    "step": 197,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.005192900018300861,
+    "candidate": 0.003405399969778955
+  },
+  {
+    "step": 198,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.004558400018140674,
+    "reference": 0.004154099966399372
+  },
+  {
+    "step": 199,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.005175800004508346,
+    "candidate": 0.004185199970379472
+  },
+  {
+    "step": 200,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.00427450001006946,
+    "reference": 0.00408619997324422
+  },
+  {
+    "step": 201,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.0037033999687992036,
+    "candidate": 0.003316099988296628
+  },
+  {
+    "step": 202,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.004735399968922138,
+    "reference": 0.004481400013901293
+  },
+  {
+    "step": 203,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.00428319995990023,
+    "candidate": 0.003915100009180605
+  },
+  {
+    "step": 204,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.0037041999748907983,
+    "reference": 0.004502099996898323
+  },
+  {
+    "step": 205,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.004477100039366633,
+    "candidate": 0.004239199974108487
+  },
+  {
+    "step": 206,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.0041782999760471284,
+    "reference": 0.004673599964007735
+  },
+  {
+    "step": 207,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.004287099989596754,
+    "candidate": 0.0038665999891236424
+  },
+  {
+    "step": 208,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.004094499978236854,
+    "reference": 0.005198500002734363
+  },
+  {
+    "step": 209,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.005497099948115647,
+    "candidate": 0.0034494000137783587
+  },
+  {
+    "step": 210,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.004242599999997765,
+    "reference": 0.003988799988292158
+  },
+  {
+    "step": 211,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.00540790002560243,
+    "candidate": 0.003772100026253611
+  },
+  {
+    "step": 212,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.0047503000241704285,
+    "reference": 0.004648599948268384
+  },
+  {
+    "step": 213,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.00501980003900826,
+    "candidate": 0.005059399991296232
+  },
+  {
+    "step": 214,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.0046922999899834394,
+    "reference": 0.005509299982804805
+  },
+  {
+    "step": 215,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.005238400015514344,
+    "candidate": 0.004151800007093698
+  },
+  {
+    "step": 216,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.0032097999937832355,
+    "reference": 0.0035579000250436366
+  },
+  {
+    "step": 217,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.004134599992539734,
+    "candidate": 0.0025177000206895173
+  },
+  {
+    "step": 218,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.003643500036559999,
+    "reference": 0.0034220999805256724
+  },
+  {
+    "step": 219,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.003334100008942187,
+    "candidate": 0.00245939998421818
+  },
+  {
+    "step": 220,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.0039079999551177025,
+    "reference": 0.003974199993535876
+  },
+  {
+    "step": 221,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.004548800003249198,
+    "candidate": 0.0035325000062584877
+  },
+  {
+    "step": 222,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.004300000029616058,
+    "reference": 0.0037126000388525426
+  },
+  {
+    "step": 223,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.00622570002451539,
+    "candidate": 0.005280899989884347
+  },
+  {
+    "step": 224,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.004249499994330108,
+    "reference": 0.004543300019577146
+  },
+  {
+    "step": 225,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.004511400009505451,
+    "candidate": 0.0032824999652802944
+  },
+  {
+    "step": 226,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.0037382000009529293,
+    "reference": 0.004505900025833398
+  },
+  {
+    "step": 227,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.00411750003695488,
+    "candidate": 0.002684699953533709
+  },
+  {
+    "step": 228,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.0037314000073820353,
+    "reference": 0.004009899974334985
+  },
+  {
+    "step": 229,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.0037072999984957278,
+    "candidate": 0.0035924999974668026
+  },
+  {
+    "step": 230,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.003445099981036037,
+    "reference": 0.003307199978735298
+  },
+  {
+    "step": 231,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.00536489998921752,
+    "candidate": 0.002899699960835278
+  },
+  {
+    "step": 232,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.0038564999704249203,
+    "reference": 0.0037411999655887485
+  },
+  {
+    "step": 233,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.004833800019696355,
+    "candidate": 0.00347880000481382
+  },
+  {
+    "step": 234,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.00343879999127239,
+    "reference": 0.0036934000090695918
+  },
+  {
+    "step": 235,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.004715799994301051,
+    "candidate": 0.0031713999924249947
+  },
+  {
+    "step": 236,
+    "projectiles": 15,
+    "reference_first": false,
+    "candidate": 0.003904300043359399,
+    "reference": 0.003324999997857958
+  },
+  {
+    "step": 237,
+    "projectiles": 15,
+    "reference_first": true,
+    "reference": 0.00464780000038445,
+    "candidate": 0.0030587000073865056
+  },
+  {
+    "step": 238,
+    "projectiles": 15,
+    "reference_first": false,
+    "candidate": 0.003412800026126206,
+    "reference": 0.00362539995694533
+  },
+  {
+    "step": 239,
+    "projectiles": 15,
+    "reference_first": true,
+    "reference": 0.004850300028920174,
+    "candidate": 0.0033502999576739967
+  },
+  {
+    "step": 240,
+    "projectiles": 15,
+    "reference_first": false,
+    "candidate": 0.003620200033765286,
+    "reference": 0.0030465999734587967
+  },
+  {
+    "step": 241,
+    "projectiles": 15,
+    "reference_first": true,
+    "reference": 0.004102999984752387,
+    "candidate": 0.0026934000197798014
+  },
+  {
+    "step": 242,
+    "projectiles": 15,
+    "reference_first": false,
+    "candidate": 0.003093999985139817,
+    "reference": 0.003307300037704408
+  },
+  {
+    "step": 243,
+    "projectiles": 15,
+    "reference_first": true,
+    "reference": 0.00436329998774454,
+    "candidate": 0.003548000007867813
+  },
+  {
+    "step": 244,
+    "projectiles": 15,
+    "reference_first": false,
+    "candidate": 0.0032162999850697815,
+    "reference": 0.0038619000115431845
+  },
+  {
+    "step": 245,
+    "projectiles": 15,
+    "reference_first": true,
+    "reference": 0.004009600030258298,
+    "candidate": 0.002890200004912913
+  },
+  {
+    "step": 246,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.004759299976285547,
+    "reference": 0.004587700008414686
+  },
+  {
+    "step": 247,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.003632500011008233,
+    "candidate": 0.0038784000207670033
+  },
+  {
+    "step": 248,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.0029772999696433544,
+    "reference": 0.004487700003664941
+  },
+  {
+    "step": 249,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.004275600018445402,
+    "candidate": 0.0037326000165194273
+  },
+  {
+    "step": 250,
+    "projectiles": 16,
+    "reference_first": false,
+    "candidate": 0.0037887999787926674,
+    "reference": 0.0030746000120416284
+  },
+  {
+    "step": 251,
+    "projectiles": 16,
+    "reference_first": true,
+    "reference": 0.0037115000304766,
+    "candidate": 0.002405000035651028
+  },
+  {
+    "step": 252,
+    "projectiles": 17,
+    "reference_first": false,
+    "candidate": 0.003126800002064556,
+    "reference": 0.002724899968598038
+  },
+  {
+    "step": 253,
+    "projectiles": 17,
+    "reference_first": true,
+    "reference": 0.004780900024343282,
+    "candidate": 0.004345799970906228
+  },
+  {
+    "step": 254,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.004279299988411367,
+    "reference": 0.00391139998100698
+  },
+  {
+    "step": 255,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.005010899971239269,
+    "candidate": 0.004487700003664941
+  },
+  {
+    "step": 256,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.004805400036275387,
+    "reference": 0.0047981999814510345
+  },
+  {
+    "step": 257,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.004845299990847707,
+    "candidate": 0.0032635999959893525
+  },
+  {
+    "step": 258,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.003819500037934631,
+    "reference": 0.0037732000346295536
+  },
+  {
+    "step": 259,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.005288299988023937,
+    "candidate": 0.005132699967361987
+  },
+  {
+    "step": 260,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.004102699982468039,
+    "reference": 0.004310599993914366
+  },
+  {
+    "step": 261,
+    "projectiles": 19,
+    "reference_first": true,
+    "reference": 0.005236099998001009,
+    "candidate": 0.0038292999961413443
+  },
+  {
+    "step": 262,
+    "projectiles": 19,
+    "reference_first": false,
+    "candidate": 0.004960599995683879,
+    "reference": 0.004210499988403171
+  },
+  {
+    "step": 263,
+    "projectiles": 19,
+    "reference_first": true,
+    "reference": 0.00526259996695444,
+    "candidate": 0.003397500026039779
+  },
+  {
+    "step": 264,
+    "projectiles": 19,
+    "reference_first": false,
+    "candidate": 0.005522100022062659,
+    "reference": 0.005044399993494153
+  },
+  {
+    "step": 265,
+    "projectiles": 19,
+    "reference_first": true,
+    "reference": 0.004774400033056736,
+    "candidate": 0.005021299992222339
+  },
+  {
+    "step": 266,
+    "projectiles": 19,
+    "reference_first": false,
+    "candidate": 0.004723499994724989,
+    "reference": 0.004913499986287206
+  },
+  {
+    "step": 267,
+    "projectiles": 19,
+    "reference_first": true,
+    "reference": 0.005494899989571422,
+    "candidate": 0.004614800040144473
+  },
+  {
+    "step": 268,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.004759999981615692,
+    "reference": 0.005299100012052804
+  },
+  {
+    "step": 269,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.005175600002985448,
+    "candidate": 0.003424700000323355
+  },
+  {
+    "step": 270,
+    "projectiles": 18,
+    "reference_first": false,
+    "candidate": 0.004182699951343238,
+    "reference": 0.005321300006471574
+  },
+  {
+    "step": 271,
+    "projectiles": 18,
+    "reference_first": true,
+    "reference": 0.004763500008266419,
+    "candidate": 0.004246700031217188
+  },
+  {
+    "step": 272,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.004668399982620031,
+    "reference": 0.005558600008953363
+  },
+  {
+    "step": 273,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.004353599972091615,
+    "candidate": 0.004573900019749999
+  },
+  {
+    "step": 274,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.0037031000247225165,
+    "reference": 0.004756900016218424
+  },
+  {
+    "step": 275,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.006001100002322346,
+    "candidate": 0.004399899975396693
+  },
+  {
+    "step": 276,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.005149300035554916,
+    "reference": 0.005361200019251555
+  },
+  {
+    "step": 277,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.004955000011250377,
+    "candidate": 0.004980300029274076
+  },
+  {
+    "step": 278,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.005405400006566197,
+    "reference": 0.005766200018115342
+  },
+  {
+    "step": 279,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.005872400011867285,
+    "candidate": 0.004992000001948327
+  },
+  {
+    "step": 280,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005643300013616681,
+    "reference": 0.006551400001626462
+  },
+  {
+    "step": 281,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.0068577000056393445,
+    "candidate": 0.00584179995348677
+  },
+  {
+    "step": 282,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.004576499981340021,
+    "reference": 0.006188299972563982
+  },
+  {
+    "step": 283,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.005652100022416562,
+    "candidate": 0.005909800005611032
+  },
+  {
+    "step": 284,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.0038235000101849437,
+    "reference": 0.005088799982331693
+  },
+  {
+    "step": 285,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.006343600049149245,
+    "candidate": 0.00535150000359863
+  },
+  {
+    "step": 286,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.00566259998595342,
+    "reference": 0.006294300023000687
+  },
+  {
+    "step": 287,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.006411799986381084,
+    "candidate": 0.004266300005838275
+  },
+  {
+    "step": 288,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005213000054936856,
+    "reference": 0.00571460003266111
+  },
+  {
+    "step": 289,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.006059200037270784,
+    "candidate": 0.004982600046787411
+  },
+  {
+    "step": 290,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005248699977528304,
+    "reference": 0.006423599959816784
+  },
+  {
+    "step": 291,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.0056239000405184925,
+    "candidate": 0.005245800013653934
+  },
+  {
+    "step": 292,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.004852099984418601,
+    "reference": 0.00589669996406883
+  },
+  {
+    "step": 293,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.00520489999325946,
+    "candidate": 0.004646700050216168
+  },
+  {
+    "step": 294,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005421400011982769,
+    "reference": 0.005174899997655302
+  },
+  {
+    "step": 295,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.006440200028009713,
+    "candidate": 0.004858600033912808
+  },
+  {
+    "step": 296,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.006122399994637817,
+    "reference": 0.005005999992135912
+  },
+  {
+    "step": 297,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.006221499992534518,
+    "candidate": 0.004585399990901351
+  },
+  {
+    "step": 298,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.0056377999717369676,
+    "reference": 0.005239900026936084
+  },
+  {
+    "step": 299,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.007025999948382378,
+    "candidate": 0.005515000026207417
+  },
+  {
+    "step": 300,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005749800009652972,
+    "reference": 0.00599599996348843
+  },
+  {
+    "step": 301,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.005789000017102808,
+    "candidate": 0.0047975999768823385
+  },
+  {
+    "step": 302,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.004875500046182424,
+    "reference": 0.005935800028964877
+  },
+  {
+    "step": 303,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.005820900027174503,
+    "candidate": 0.005281499994453043
+  },
+  {
+    "step": 304,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.0053589000017382205,
+    "reference": 0.005438499967567623
+  },
+  {
+    "step": 305,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.005571999994572252,
+    "candidate": 0.004179399984423071
+  },
+  {
+    "step": 306,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.005712199956178665,
+    "reference": 0.005431899975519627
+  },
+  {
+    "step": 307,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.005040199961513281,
+    "candidate": 0.005165899987332523
+  },
+  {
+    "step": 308,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.005111299979034811,
+    "reference": 0.005280599987599999
+  },
+  {
+    "step": 309,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.005927699967287481,
+    "candidate": 0.004465700010769069
+  },
+  {
+    "step": 310,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.00478099996689707,
+    "reference": 0.004891099990345538
+  },
+  {
+    "step": 311,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.005956700013484806,
+    "candidate": 0.004744699981529266
+  },
+  {
+    "step": 312,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.006085400003939867,
+    "reference": 0.005474499950651079
+  },
+  {
+    "step": 313,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.005407700024079531,
+    "candidate": 0.004694600007496774
+  },
+  {
+    "step": 314,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.006196300033479929,
+    "reference": 0.0056031999993138015
+  },
+  {
+    "step": 315,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.007019300013780594,
+    "candidate": 0.004251499951351434
+  },
+  {
+    "step": 316,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.004769699997268617,
+    "reference": 0.004126099986024201
+  },
+  {
+    "step": 317,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.006222900003194809,
+    "candidate": 0.004416499985381961
+  },
+  {
+    "step": 318,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.004857800027821213,
+    "reference": 0.004946399945765734
+  },
+  {
+    "step": 319,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.006405000051017851,
+    "candidate": 0.005111500038765371
+  },
+  {
+    "step": 320,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005077000008895993,
+    "reference": 0.005581100005656481
+  },
+  {
+    "step": 321,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.0054716000449843705,
+    "candidate": 0.004830699996091425
+  },
+  {
+    "step": 322,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005143699992913753,
+    "reference": 0.004962500010151416
+  },
+  {
+    "step": 323,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.006766600010450929,
+    "candidate": 0.004081699997186661
+  },
+  {
+    "step": 324,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005481400003191084,
+    "reference": 0.005648999998811632
+  },
+  {
+    "step": 325,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.00489079998806119,
+    "candidate": 0.003469599992968142
+  },
+  {
+    "step": 326,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005143399990629405,
+    "reference": 0.005402299982961267
+  },
+  {
+    "step": 327,
+    "projectiles": 24,
+    "reference_first": true,
+    "reference": 0.005288799991831183,
+    "candidate": 0.006435599992983043
+  },
+  {
+    "step": 328,
+    "projectiles": 24,
+    "reference_first": false,
+    "candidate": 0.006680999998934567,
+    "reference": 0.005902300006709993
+  },
+  {
+    "step": 329,
+    "projectiles": 24,
+    "reference_first": true,
+    "reference": 0.007449899974744767,
+    "candidate": 0.0046227999846450984
+  },
+  {
+    "step": 330,
+    "projectiles": 24,
+    "reference_first": false,
+    "candidate": 0.00485670001944527,
+    "reference": 0.005393899977207184
+  },
+  {
+    "step": 331,
+    "projectiles": 24,
+    "reference_first": true,
+    "reference": 0.008087199996225536,
+    "candidate": 0.005820000020321459
+  },
+  {
+    "step": 332,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.0046452999813482165,
+    "reference": 0.005690500023774803
+  },
+  {
+    "step": 333,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.005118400033097714,
+    "candidate": 0.005314000009093434
+  },
+  {
+    "step": 334,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.004774499975610524,
+    "reference": 0.005327399994712323
+  },
+  {
+    "step": 335,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.0058661000221036375,
+    "candidate": 0.004649100010283291
+  },
+  {
+    "step": 336,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.005227000045124441,
+    "reference": 0.0057227000361308455
+  },
+  {
+    "step": 337,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.005694999999832362,
+    "candidate": 0.0044575000065378845
+  },
+  {
+    "step": 338,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.005298799951560795,
+    "reference": 0.004871700017247349
+  },
+  {
+    "step": 339,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.005371799983549863,
+    "candidate": 0.0048788999556563795
+  },
+  {
+    "step": 340,
+    "projectiles": 22,
+    "reference_first": false,
+    "candidate": 0.004843800037633628,
+    "reference": 0.004977000004146248
+  },
+  {
+    "step": 341,
+    "projectiles": 22,
+    "reference_first": true,
+    "reference": 0.006039200001396239,
+    "candidate": 0.004074600001331419
+  },
+  {
+    "step": 342,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.0052692999597638845,
+    "reference": 0.006729100015945733
+  },
+  {
+    "step": 343,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.0060124999727122486,
+    "candidate": 0.005030300002545118
+  },
+  {
+    "step": 344,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.004418800002895296,
+    "reference": 0.006329800002276897
+  },
+  {
+    "step": 345,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.006768600025679916,
+    "candidate": 0.004454399982932955
+  },
+  {
+    "step": 346,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005164399975910783,
+    "reference": 0.005589100008364767
+  },
+  {
+    "step": 347,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.005579099990427494,
+    "candidate": 0.004863200010731816
+  },
+  {
+    "step": 348,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.004735899972729385,
+    "reference": 0.00548350001918152
+  },
+  {
+    "step": 349,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.00682419998338446,
+    "candidate": 0.004903400025796145
+  },
+  {
+    "step": 350,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005226299981586635,
+    "reference": 0.0058503999607637525
+  },
+  {
+    "step": 351,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.005277199961710721,
+    "candidate": 0.004715799994301051
+  },
+  {
+    "step": 352,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005758300016168505,
+    "reference": 0.005803000007290393
+  },
+  {
+    "step": 353,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.0063168000197038054,
+    "candidate": 0.004377899982500821
+  },
+  {
+    "step": 354,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005003599973861128,
+    "reference": 0.006485900026746094
+  },
+  {
+    "step": 355,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.005748299998231232,
+    "candidate": 0.00503010000102222
+  },
+  {
+    "step": 356,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.005416799976956099,
+    "reference": 0.006843100010883063
+  },
+  {
+    "step": 357,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.005475800018757582,
+    "candidate": 0.005451799952425063
+  },
+  {
+    "step": 358,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.004772000014781952,
+    "reference": 0.005726900009904057
+  },
+  {
+    "step": 359,
+    "projectiles": 23,
+    "reference_first": true,
+    "reference": 0.007007399981375784,
+    "candidate": 0.003839899960439652
+  },
+  {
+    "step": 360,
+    "projectiles": 23,
+    "reference_first": false,
+    "candidate": 0.00608950003515929,
+    "reference": 0.0055692000314593315
+  },
+  {
+    "step": 361,
+    "projectiles": 24,
+    "reference_first": true,
+    "reference": 0.007486500020604581,
+    "candidate": 0.005449799995403737
+  },
+  {
+    "step": 362,
+    "projectiles": 28,
+    "reference_first": false,
+    "candidate": 0.007271600014064461,
+    "reference": 0.00599309999961406
+  },
+  {
+    "step": 363,
+    "projectiles": 28,
+    "reference_first": true,
+    "reference": 0.005880299955606461,
+    "candidate": 0.006803700001910329
+  },
+  {
+    "step": 364,
+    "projectiles": 28,
+    "reference_first": false,
+    "candidate": 0.006276200001593679,
+    "reference": 0.006674899952486157
+  },
+  {
+    "step": 365,
+    "projectiles": 28,
+    "reference_first": true,
+    "reference": 0.007096000015735626,
+    "candidate": 0.0055114999995566905
+  },
+  {
+    "step": 366,
+    "projectiles": 28,
+    "reference_first": false,
+    "candidate": 0.006728900014422834,
+    "reference": 0.006278400018345565
+  },
+  {
+    "step": 367,
+    "projectiles": 28,
+    "reference_first": true,
+    "reference": 0.00755320000462234,
+    "candidate": 0.005583899968769401
+  },
+  {
+    "step": 368,
+    "projectiles": 28,
+    "reference_first": false,
+    "candidate": 0.006665900000371039,
+    "reference": 0.007304899976588786
+  },
+  {
+    "step": 369,
+    "projectiles": 28,
+    "reference_first": true,
+    "reference": 0.006241000024601817,
+    "candidate": 0.006370499962940812
+  },
+  {
+    "step": 370,
+    "projectiles": 28,
+    "reference_first": false,
+    "candidate": 0.007104900025296956,
+    "reference": 0.006916999991517514
+  },
+  {
+    "step": 371,
+    "projectiles": 28,
+    "reference_first": true,
+    "reference": 0.006862299982458353,
+    "candidate": 0.005782500025816262
+  },
+  {
+    "step": 372,
+    "projectiles": 28,
+    "reference_first": false,
+    "candidate": 0.004808099998626858,
+    "reference": 0.006380600039847195
+  },
+  {
+    "step": 373,
+    "projectiles": 28,
+    "reference_first": true,
+    "reference": 0.007426899974234402,
+    "candidate": 0.0056862999917939305
+  },
+  {
+    "step": 374,
+    "projectiles": 28,
+    "reference_first": false,
+    "candidate": 0.006231900013517588,
+    "reference": 0.006600000022444874
+  },
+  {
+    "step": 375,
+    "projectiles": 28,
+    "reference_first": true,
+    "reference": 0.006229699996765703,
+    "candidate": 0.006223000003956258
+  },
+  {
+    "step": 376,
+    "projectiles": 28,
+    "reference_first": false,
+    "candidate": 0.006055699952412397,
+    "reference": 0.006974500021897256
+  },
+  {
+    "step": 377,
+    "projectiles": 28,
+    "reference_first": true,
+    "reference": 0.006581699999514967,
+    "candidate": 0.005275600007735193
+  },
+  {
+    "step": 378,
+    "projectiles": 28,
+    "reference_first": false,
+    "candidate": 0.006423400016501546,
+    "reference": 0.006042300025001168
+  },
+  {
+    "step": 379,
+    "projectiles": 28,
+    "reference_first": true,
+    "reference": 0.006508000020403415,
+    "candidate": 0.005225600034464151
+  },
+  {
+    "step": 380,
+    "projectiles": 29,
+    "reference_first": false,
+    "candidate": 0.00765539996791631,
+    "reference": 0.007436699990648776
+  },
+  {
+    "step": 381,
+    "projectiles": 29,
+    "reference_first": true,
+    "reference": 0.007314999995287508,
+    "candidate": 0.007091300038155168
+  },
+  {
+    "step": 382,
+    "projectiles": 29,
+    "reference_first": false,
+    "candidate": 0.005152600002475083,
+    "reference": 0.005566900013945997
+  },
+  {
+    "step": 383,
+    "projectiles": 29,
+    "reference_first": true,
+    "reference": 0.007864800048992038,
+    "candidate": 0.005168700008653104
+  },
+  {
+    "step": 384,
+    "projectiles": 29,
+    "reference_first": false,
+    "candidate": 0.007026500010397285,
+    "reference": 0.008468999993056059
+  },
+  {
+    "step": 385,
+    "projectiles": 29,
+    "reference_first": true,
+    "reference": 0.006234100030269474,
+    "candidate": 0.005910800013225526
+  },
+  {
+    "step": 386,
+    "projectiles": 29,
+    "reference_first": false,
+    "candidate": 0.006380499980878085,
+    "reference": 0.0072610999923199415
+  },
+  {
+    "step": 387,
+    "projectiles": 29,
+    "reference_first": true,
+    "reference": 0.007254700001794845,
+    "candidate": 0.0057622999884188175
+  },
+  {
+    "step": 388,
+    "projectiles": 29,
+    "reference_first": false,
+    "candidate": 0.007386900018900633,
+    "reference": 0.007000699988566339
+  },
+  {
+    "step": 389,
+    "projectiles": 29,
+    "reference_first": true,
+    "reference": 0.007381699979305267,
+    "candidate": 0.0089101999765262
+  },
+  {
+    "step": 390,
+    "projectiles": 29,
+    "reference_first": false,
+    "candidate": 0.0066988999606110156,
+    "reference": 0.00898300000699237
+  },
+  {
+    "step": 391,
+    "projectiles": 30,
+    "reference_first": true,
+    "reference": 0.007683500007260591,
+    "candidate": 0.006764899997506291
+  },
+  {
+    "step": 392,
+    "projectiles": 30,
+    "reference_first": false,
+    "candidate": 0.006944699969608337,
+    "reference": 0.008614799997303635
+  },
+  {
+    "step": 393,
+    "projectiles": 30,
+    "reference_first": true,
+    "reference": 0.008289500023238361,
+    "candidate": 0.006664500047918409
+  },
+  {
+    "step": 394,
+    "projectiles": 30,
+    "reference_first": false,
+    "candidate": 0.007064100005663931,
+    "reference": 0.007654400018509477
+  },
+  {
+    "step": 395,
+    "projectiles": 30,
+    "reference_first": true,
+    "reference": 0.009749200020451099,
+    "candidate": 0.00777249998645857
+  },
+  {
+    "step": 396,
+    "projectiles": 30,
+    "reference_first": false,
+    "candidate": 0.007907000021077693,
+    "reference": 0.008252699975855649
+  },
+  {
+    "step": 397,
+    "projectiles": 30,
+    "reference_first": true,
+    "reference": 0.00838750001275912,
+    "candidate": 0.005802400002721697
+  },
+  {
+    "step": 398,
+    "projectiles": 30,
+    "reference_first": false,
+    "candidate": 0.006172899971716106,
+    "reference": 0.006618199986405671
+  },
+  {
+    "step": 399,
+    "projectiles": 30,
+    "reference_first": true,
+    "reference": 0.0050202999846078455,
+    "candidate": 0.004072999989148229
+  },
+  {
+    "step": 400,
+    "projectiles": 30,
+    "reference_first": false,
+    "candidate": 0.004510600003413856,
+    "reference": 0.004582099965773523
+  },
+  {
+    "step": 401,
+    "projectiles": 30,
+    "reference_first": true,
+    "reference": 0.005012799985706806,
+    "candidate": 0.004863300011493266
+  },
+  {
+    "step": 402,
+    "projectiles": 30,
+    "reference_first": false,
+    "candidate": 0.004041800042614341,
+    "reference": 0.0057884999550879
+  },
+  {
+    "step": 403,
+    "projectiles": 30,
+    "reference_first": true,
+    "reference": 0.005235499993432313,
+    "candidate": 0.0038204999873414636
+  },
+  {
+    "step": 404,
+    "projectiles": 30,
+    "reference_first": false,
+    "candidate": 0.005992199992761016,
+    "reference": 0.005432600039057434
+  },
+  {
+    "step": 405,
+    "projectiles": 30,
+    "reference_first": true,
+    "reference": 0.00662119995104149,
+    "candidate": 0.006114999996498227
+  },
+  {
+    "step": 406,
+    "projectiles": 30,
+    "reference_first": false,
+    "candidate": 0.005730100034270436,
+    "reference": 0.007118600013200194
+  },
+  {
+    "step": 407,
+    "projectiles": 30,
+    "reference_first": true,
+    "reference": 0.008707100001629442,
+    "candidate": 0.005768400034867227
+  },
+  {
+    "step": 408,
+    "projectiles": 30,
+    "reference_first": false,
+    "candidate": 0.006221799994818866,
+    "reference": 0.006617899984121323
+  },
+  {
+    "step": 409,
+    "projectiles": 30,
+    "reference_first": true,
+    "reference": 0.0072175999521277845,
+    "candidate": 0.006860200024675578
+  },
+  {
+    "step": 410,
+    "projectiles": 30,
+    "reference_first": false,
+    "candidate": 0.0065947999828495085,
+    "reference": 0.005647499987389892
+  },
+  {
+    "step": 411,
+    "projectiles": 32,
+    "reference_first": true,
+    "reference": 0.007365699973888695,
+    "candidate": 0.005625499994494021
+  },
+  {
+    "step": 412,
+    "projectiles": 32,
+    "reference_first": false,
+    "candidate": 0.006508100021164864,
+    "reference": 0.007379499962553382
+  },
+  {
+    "step": 413,
+    "projectiles": 32,
+    "reference_first": true,
+    "reference": 0.006982400023844093,
+    "candidate": 0.004864700022153556
+  },
+  {
+    "step": 414,
+    "projectiles": 32,
+    "reference_first": false,
+    "candidate": 0.006287399970460683,
+    "reference": 0.007194600009825081
+  },
+  {
+    "step": 415,
+    "projectiles": 32,
+    "reference_first": true,
+    "reference": 0.0072348000248894095,
+    "candidate": 0.005327999999281019
+  },
+  {
+    "step": 416,
+    "projectiles": 32,
+    "reference_first": false,
+    "candidate": 0.006541999988257885,
+    "reference": 0.007041100005153567
+  },
+  {
+    "step": 417,
+    "projectiles": 32,
+    "reference_first": true,
+    "reference": 0.007001799996942282,
+    "candidate": 0.005938199989032
+  },
+  {
+    "step": 418,
+    "projectiles": 32,
+    "reference_first": false,
+    "candidate": 0.00944679998792708,
+    "reference": 0.0073800000245682895
+  },
+  {
+    "step": 419,
+    "projectiles": 32,
+    "reference_first": true,
+    "reference": 0.006886300048790872,
+    "candidate": 0.006049000017810613
+  },
+  {
+    "step": 420,
+    "projectiles": 32,
+    "reference_first": false,
+    "candidate": 0.006610600044950843,
+    "reference": 0.00815930002136156
+  },
+  {
+    "step": 421,
+    "projectiles": 35,
+    "reference_first": true,
+    "reference": 0.008093299984466285,
+    "candidate": 0.005837899981997907
+  },
+  {
+    "step": 422,
+    "projectiles": 35,
+    "reference_first": false,
+    "candidate": 0.005148199968971312,
+    "reference": 0.007471900025848299
+  },
+  {
+    "step": 423,
+    "projectiles": 35,
+    "reference_first": true,
+    "reference": 0.007898699957877398,
+    "candidate": 0.006811400002334267
+  },
+  {
+    "step": 424,
+    "projectiles": 35,
+    "reference_first": false,
+    "candidate": 0.006769100029487163,
+    "reference": 0.007430400000885129
+  },
+  {
+    "step": 425,
+    "projectiles": 35,
+    "reference_first": true,
+    "reference": 0.00912669999524951,
+    "candidate": 0.0065036999876610935
+  },
+  {
+    "step": 426,
+    "projectiles": 35,
+    "reference_first": false,
+    "candidate": 0.006384500011336058,
+    "reference": 0.005116299958899617
+  },
+  {
+    "step": 427,
+    "projectiles": 35,
+    "reference_first": true,
+    "reference": 0.007710999983828515,
+    "candidate": 0.006456600036472082
+  },
+  {
+    "step": 428,
+    "projectiles": 35,
+    "reference_first": false,
+    "candidate": 0.008038099971599877,
+    "reference": 0.00721979996887967
+  },
+  {
+    "step": 429,
+    "projectiles": 35,
+    "reference_first": true,
+    "reference": 0.007549399975687265,
+    "candidate": 0.006889800017233938
+  },
+  {
+    "step": 430,
+    "projectiles": 35,
+    "reference_first": false,
+    "candidate": 0.006327199982479215,
+    "reference": 0.008509800012689084
+  },
+  {
+    "step": 431,
+    "projectiles": 35,
+    "reference_first": true,
+    "reference": 0.008362900000065565,
+    "candidate": 0.005658699956256896
+  },
+  {
+    "step": 432,
+    "projectiles": 35,
+    "reference_first": false,
+    "candidate": 0.00688800000352785,
+    "reference": 0.006614499958232045
+  },
+  {
+    "step": 433,
+    "projectiles": 35,
+    "reference_first": true,
+    "reference": 0.008045500027947128,
+    "candidate": 0.007064100005663931
+  },
+  {
+    "step": 434,
+    "projectiles": 35,
+    "reference_first": false,
+    "candidate": 0.006318299972917885,
+    "reference": 0.005875699978787452
+  },
+  {
+    "step": 435,
+    "projectiles": 35,
+    "reference_first": true,
+    "reference": 0.007178500003647059,
+    "candidate": 0.006405899999663234
+  },
+  {
+    "step": 436,
+    "projectiles": 35,
+    "reference_first": false,
+    "candidate": 0.007621899945661426,
+    "reference": 0.006370700022671372
+  },
+  {
+    "step": 437,
+    "projectiles": 35,
+    "reference_first": true,
+    "reference": 0.008687100023962557,
+    "candidate": 0.006538100016769022
+  },
+  {
+    "step": 438,
+    "projectiles": 36,
+    "reference_first": false,
+    "candidate": 0.00664199999300763,
+    "reference": 0.007940899988170713
+  },
+  {
+    "step": 439,
+    "projectiles": 36,
+    "reference_first": true,
+    "reference": 0.007583999948110431,
+    "candidate": 0.006126800028141588
+  },
+  {
+    "step": 440,
+    "projectiles": 36,
+    "reference_first": false,
+    "candidate": 0.006613700010348111,
+    "reference": 0.006859399960376322
+  },
+  {
+    "step": 441,
+    "projectiles": 36,
+    "reference_first": true,
+    "reference": 0.009402800002135336,
+    "candidate": 0.006765300000552088
+  },
+  {
+    "step": 442,
+    "projectiles": 36,
+    "reference_first": false,
+    "candidate": 0.0075468000140972435,
+    "reference": 0.007569900015369058
+  },
+  {
+    "step": 443,
+    "projectiles": 36,
+    "reference_first": true,
+    "reference": 0.007873099995777011,
+    "candidate": 0.007697199995163828
+  },
+  {
+    "step": 444,
+    "projectiles": 36,
+    "reference_first": false,
+    "candidate": 0.0072354000294581056,
+    "reference": 0.00821260001976043
+  },
+  {
+    "step": 445,
+    "projectiles": 36,
+    "reference_first": true,
+    "reference": 0.008965799992438406,
+    "candidate": 0.0059285000315867364
+  },
+  {
+    "step": 446,
+    "projectiles": 36,
+    "reference_first": false,
+    "candidate": 0.006573599996045232,
+    "reference": 0.009212200006004423
+  },
+  {
+    "step": 447,
+    "projectiles": 36,
+    "reference_first": true,
+    "reference": 0.0065055000013671815,
+    "candidate": 0.006341999978758395
+  },
+  {
+    "step": 448,
+    "projectiles": 36,
+    "reference_first": false,
+    "candidate": 0.008106599969323725,
+    "reference": 0.007453099999111146
+  },
+  {
+    "step": 449,
+    "projectiles": 36,
+    "reference_first": true,
+    "reference": 0.00867940002353862,
+    "candidate": 0.0072193999658338726
+  },
+  {
+    "step": 450,
+    "projectiles": 36,
+    "reference_first": false,
+    "candidate": 0.00633390003349632,
+    "reference": 0.006275499996263534
+  },
+  {
+    "step": 451,
+    "projectiles": 37,
+    "reference_first": true,
+    "reference": 0.007506900001317263,
+    "candidate": 0.006445099948905408
+  },
+  {
+    "step": 452,
+    "projectiles": 43,
+    "reference_first": false,
+    "candidate": 0.008895899984054267,
+    "reference": 0.00838449998991564
+  },
+  {
+    "step": 453,
+    "projectiles": 43,
+    "reference_first": true,
+    "reference": 0.010010199970565736,
+    "candidate": 0.007618699979502708
+  },
+  {
+    "step": 454,
+    "projectiles": 43,
+    "reference_first": false,
+    "candidate": 0.008080300001893193,
+    "reference": 0.00770869996631518
+  },
+  {
+    "step": 455,
+    "projectiles": 43,
+    "reference_first": true,
+    "reference": 0.00997989997267723,
+    "candidate": 0.007359899987932295
+  },
+  {
+    "step": 456,
+    "projectiles": 43,
+    "reference_first": false,
+    "candidate": 0.0100098000257276,
+    "reference": 0.009073799999896437
+  },
+  {
+    "step": 457,
+    "projectiles": 43,
+    "reference_first": true,
+    "reference": 0.008776000002399087,
+    "candidate": 0.007185599999502301
+  },
+  {
+    "step": 458,
+    "projectiles": 44,
+    "reference_first": false,
+    "candidate": 0.008315500046592206,
+    "reference": 0.011308800021652132
+  },
+  {
+    "step": 459,
+    "projectiles": 44,
+    "reference_first": true,
+    "reference": 0.011042000027373433,
+    "candidate": 0.008436100033577532
+  },
+  {
+    "step": 460,
+    "projectiles": 46,
+    "reference_first": false,
+    "candidate": 0.008620299980975688,
+    "reference": 0.009389899962116033
+  },
+  {
+    "step": 461,
+    "projectiles": 46,
+    "reference_first": true,
+    "reference": 0.009784800000488758,
+    "candidate": 0.008409800007939339
+  },
+  {
+    "step": 462,
+    "projectiles": 46,
+    "reference_first": false,
+    "candidate": 0.008617300016339868,
+    "reference": 0.008527199970558286
+  },
+  {
+    "step": 463,
+    "projectiles": 46,
+    "reference_first": true,
+    "reference": 0.009200500033330172,
+    "candidate": 0.007982499955687672
+  },
+  {
+    "step": 464,
+    "projectiles": 47,
+    "reference_first": false,
+    "candidate": 0.009884400002192706,
+    "reference": 0.01037720002932474
+  },
+  {
+    "step": 465,
+    "projectiles": 47,
+    "reference_first": true,
+    "reference": 0.011191900004632771,
+    "candidate": 0.00828049995470792
+  },
+  {
+    "step": 466,
+    "projectiles": 47,
+    "reference_first": false,
+    "candidate": 0.008739400014746934,
+    "reference": 0.009217599988915026
+  },
+  {
+    "step": 467,
+    "projectiles": 47,
+    "reference_first": true,
+    "reference": 0.010933000012300909,
+    "candidate": 0.00791490002302453
+  },
+  {
+    "step": 468,
+    "projectiles": 47,
+    "reference_first": false,
+    "candidate": 0.009404800017364323,
+    "reference": 0.008627899980638176
+  },
+  {
+    "step": 469,
+    "projectiles": 47,
+    "reference_first": true,
+    "reference": 0.008847799967043102,
+    "candidate": 0.009129500016570091
+  },
+  {
+    "step": 470,
+    "projectiles": 48,
+    "reference_first": false,
+    "candidate": 0.009448800003156066,
+    "reference": 0.009475299972109497
+  },
+  {
+    "step": 471,
+    "projectiles": 48,
+    "reference_first": true,
+    "reference": 0.010453100025188178,
+    "candidate": 0.009290599962696433
+  },
+  {
+    "step": 472,
+    "projectiles": 48,
+    "reference_first": false,
+    "candidate": 0.010290900012478232,
+    "reference": 0.00989560002926737
+  },
+  {
+    "step": 473,
+    "projectiles": 48,
+    "reference_first": true,
+    "reference": 0.01130309997824952,
+    "candidate": 0.008173900016117841
+  },
+  {
+    "step": 474,
+    "projectiles": 48,
+    "reference_first": false,
+    "candidate": 0.009065699996426702,
+    "reference": 0.010046000010333955
+  },
+  {
+    "step": 475,
+    "projectiles": 48,
+    "reference_first": true,
+    "reference": 0.010214400012046099,
+    "candidate": 0.007185499998740852
+  },
+  {
+    "step": 476,
+    "projectiles": 49,
+    "reference_first": false,
+    "candidate": 0.009118199988733977,
+    "reference": 0.011905099963769317
+  },
+  {
+    "step": 477,
+    "projectiles": 49,
+    "reference_first": true,
+    "reference": 0.01050759997451678,
+    "candidate": 0.008259599970187992
+  },
+  {
+    "step": 478,
+    "projectiles": 49,
+    "reference_first": false,
+    "candidate": 0.011209500022232533,
+    "reference": 0.009219800005666912
+  },
+  {
+    "step": 479,
+    "projectiles": 49,
+    "reference_first": true,
+    "reference": 0.009855900018010288,
+    "candidate": 0.008830200007651001
+  },
+  {
+    "step": 480,
+    "projectiles": 49,
+    "reference_first": false,
+    "candidate": 0.009698899986688048,
+    "reference": 0.010073899989947677
+  },
+  {
+    "step": 481,
+    "projectiles": 50,
+    "reference_first": true,
+    "reference": 0.010799099982250482,
+    "candidate": 0.008687800029292703
+  },
+  {
+    "step": 482,
+    "projectiles": 53,
+    "reference_first": false,
+    "candidate": 0.009631199995055795,
+    "reference": 0.010174600000027567
+  },
+  {
+    "step": 483,
+    "projectiles": 53,
+    "reference_first": true,
+    "reference": 0.013283900043461472,
+    "candidate": 0.009329500026069582
+  },
+  {
+    "step": 484,
+    "projectiles": 53,
+    "reference_first": false,
+    "candidate": 0.009076200018171221,
+    "reference": 0.011754000035580248
+  },
+  {
+    "step": 485,
+    "projectiles": 53,
+    "reference_first": true,
+    "reference": 0.01043929997831583,
+    "candidate": 0.009434700012207031
+  },
+  {
+    "step": 486,
+    "projectiles": 53,
+    "reference_first": false,
+    "candidate": 0.010627400013618171,
+    "reference": 0.010703500011004508
+  },
+  {
+    "step": 487,
+    "projectiles": 52,
+    "reference_first": true,
+    "reference": 0.011389299994334579,
+    "candidate": 0.009133600047789514
+  },
+  {
+    "step": 488,
+    "projectiles": 52,
+    "reference_first": false,
+    "candidate": 0.009660500043537468,
+    "reference": 0.012352700054179877
+  },
+  {
+    "step": 489,
+    "projectiles": 52,
+    "reference_first": true,
+    "reference": 0.011164800031110644,
+    "candidate": 0.008970500028226525
+  },
+  {
+    "step": 490,
+    "projectiles": 52,
+    "reference_first": false,
+    "candidate": 0.009601500001735985,
+    "reference": 0.011568000016268343
+  },
+  {
+    "step": 491,
+    "projectiles": 52,
+    "reference_first": true,
+    "reference": 0.01059650001116097,
+    "candidate": 0.009875799994915724
+  },
+  {
+    "step": 492,
+    "projectiles": 52,
+    "reference_first": false,
+    "candidate": 0.009967299993149936,
+    "reference": 0.010365699999965727
+  },
+  {
+    "step": 493,
+    "projectiles": 52,
+    "reference_first": true,
+    "reference": 0.010981899977196008,
+    "candidate": 0.01028679998125881
+  },
+  {
+    "step": 494,
+    "projectiles": 52,
+    "reference_first": false,
+    "candidate": 0.00975050003034994,
+    "reference": 0.010741100006271154
+  },
+  {
+    "step": 495,
+    "projectiles": 52,
+    "reference_first": true,
+    "reference": 0.010731600050348788,
+    "candidate": 0.00913280004169792
+  },
+  {
+    "step": 496,
+    "projectiles": 52,
+    "reference_first": false,
+    "candidate": 0.010647699993569404,
+    "reference": 0.00858900003368035
+  },
+  {
+    "step": 497,
+    "projectiles": 52,
+    "reference_first": true,
+    "reference": 0.010858400026336312,
+    "candidate": 0.00968529999954626
+  },
+  {
+    "step": 498,
+    "projectiles": 52,
+    "reference_first": false,
+    "candidate": 0.01105269999243319,
+    "reference": 0.00980669999262318
+  },
+  {
+    "step": 499,
+    "projectiles": 53,
+    "reference_first": true,
+    "reference": 0.011904400016646832,
+    "candidate": 0.009589499968569726
+  },
+  {
+    "step": 500,
+    "projectiles": 53,
+    "reference_first": false,
+    "candidate": 0.010334399994462729,
+    "reference": 0.009510900010354817
+  },
+  {
+    "step": 501,
+    "projectiles": 53,
+    "reference_first": true,
+    "reference": 0.010783600038848817,
+    "candidate": 0.009701899951323867
+  },
+  {
+    "step": 502,
+    "projectiles": 53,
+    "reference_first": false,
+    "candidate": 0.011681200005114079,
+    "reference": 0.01102149998769164
+  },
+  {
+    "step": 503,
+    "projectiles": 53,
+    "reference_first": true,
+    "reference": 0.01199059997452423,
+    "candidate": 0.010358100000303239
+  },
+  {
+    "step": 504,
+    "projectiles": 53,
+    "reference_first": false,
+    "candidate": 0.010302599985152483,
+    "reference": 0.012312999984715134
+  },
+  {
+    "step": 505,
+    "projectiles": 53,
+    "reference_first": true,
+    "reference": 0.012011599959805608,
+    "candidate": 0.009361499978695065
+  },
+  {
+    "step": 506,
+    "projectiles": 52,
+    "reference_first": false,
+    "candidate": 0.009170899982564151,
+    "reference": 0.010532099986448884
+  },
+  {
+    "step": 507,
+    "projectiles": 53,
+    "reference_first": true,
+    "reference": 0.012426399975083768,
+    "candidate": 0.009411900013219565
+  },
+  {
+    "step": 508,
+    "projectiles": 53,
+    "reference_first": false,
+    "candidate": 0.009503800014499575,
+    "reference": 0.010996199969667941
+  },
+  {
+    "step": 509,
+    "projectiles": 53,
+    "reference_first": true,
+    "reference": 0.01023329998133704,
+    "candidate": 0.00777399999788031
+  },
+  {
+    "step": 510,
+    "projectiles": 53,
+    "reference_first": false,
+    "candidate": 0.007804499997291714,
+    "reference": 0.01056540000718087
+  },
+  {
+    "step": 511,
+    "projectiles": 53,
+    "reference_first": true,
+    "reference": 0.010954500001389533,
+    "candidate": 0.00925699999788776
+  },
+  {
+    "step": 512,
+    "projectiles": 55,
+    "reference_first": false,
+    "candidate": 0.008508700004313141,
+    "reference": 0.010868599987588823
+  },
+  {
+    "step": 513,
+    "projectiles": 55,
+    "reference_first": true,
+    "reference": 0.010984299995470792,
+    "candidate": 0.009018199983984232
+  },
+  {
+    "step": 514,
+    "projectiles": 56,
+    "reference_first": false,
+    "candidate": 0.009061900025699288,
+    "reference": 0.011363000026904047
+  },
+  {
+    "step": 515,
+    "projectiles": 56,
+    "reference_first": true,
+    "reference": 0.011174899991601706,
+    "candidate": 0.010013899998739362
+  },
+  {
+    "step": 516,
+    "projectiles": 57,
+    "reference_first": false,
+    "candidate": 0.009372800006531179,
+    "reference": 0.010532299987971783
+  },
+  {
+    "step": 517,
+    "projectiles": 57,
+    "reference_first": true,
+    "reference": 0.011556699988432229,
+    "candidate": 0.008830100006889552
+  },
+  {
+    "step": 518,
+    "projectiles": 57,
+    "reference_first": false,
+    "candidate": 0.011529200011864305,
+    "reference": 0.011523200024385005
+  },
+  {
+    "step": 519,
+    "projectiles": 57,
+    "reference_first": true,
+    "reference": 0.01177139999344945,
+    "candidate": 0.007989999954588711
+  },
+  {
+    "step": 520,
+    "projectiles": 58,
+    "reference_first": false,
+    "candidate": 0.01014149998081848,
+    "reference": 0.009996899985708296
+  },
+  {
+    "step": 521,
+    "projectiles": 58,
+    "reference_first": true,
+    "reference": 0.012029799981974065,
+    "candidate": 0.008371300005819649
+  },
+  {
+    "step": 522,
+    "projectiles": 58,
+    "reference_first": false,
+    "candidate": 0.00809409999055788,
+    "reference": 0.014107299968600273
+  },
+  {
+    "step": 523,
+    "projectiles": 58,
+    "reference_first": true,
+    "reference": 0.011732399987522513,
+    "candidate": 0.012067199975717813
+  },
+  {
+    "step": 524,
+    "projectiles": 58,
+    "reference_first": false,
+    "candidate": 0.011054100003093481,
+    "reference": 0.014202499995008111
+  },
+  {
+    "step": 525,
+    "projectiles": 58,
+    "reference_first": true,
+    "reference": 0.0138499999884516,
+    "candidate": 0.009640600008424371
+  },
+  {
+    "step": 526,
+    "projectiles": 58,
+    "reference_first": false,
+    "candidate": 0.009927000035531819,
+    "reference": 0.01076100004138425
+  },
+  {
+    "step": 527,
+    "projectiles": 58,
+    "reference_first": true,
+    "reference": 0.012641299981623888,
+    "candidate": 0.008695099968463182
+  },
+  {
+    "step": 528,
+    "projectiles": 58,
+    "reference_first": false,
+    "candidate": 0.010880000016186386,
+    "reference": 0.012198799988254905
+  },
+  {
+    "step": 529,
+    "projectiles": 58,
+    "reference_first": true,
+    "reference": 0.012028199969790876,
+    "candidate": 0.008777200011536479
+  },
+  {
+    "step": 530,
+    "projectiles": 57,
+    "reference_first": false,
+    "candidate": 0.01058160001412034,
+    "reference": 0.01189719996182248
+  },
+  {
+    "step": 531,
+    "projectiles": 58,
+    "reference_first": true,
+    "reference": 0.010984100052155554,
+    "candidate": 0.009336600021924824
+  },
+  {
+    "step": 532,
+    "projectiles": 58,
+    "reference_first": false,
+    "candidate": 0.010493300040252507,
+    "reference": 0.011065200029406697
+  },
+  {
+    "step": 533,
+    "projectiles": 58,
+    "reference_first": true,
+    "reference": 0.011665199999697506,
+    "candidate": 0.011542299995198846
+  },
+  {
+    "step": 534,
+    "projectiles": 57,
+    "reference_first": false,
+    "candidate": 0.009120500006247312,
+    "reference": 0.010863999952562153
+  },
+  {
+    "step": 535,
+    "projectiles": 57,
+    "reference_first": true,
+    "reference": 0.01217000000178814,
+    "candidate": 0.009563200001139194
+  },
+  {
+    "step": 536,
+    "projectiles": 57,
+    "reference_first": false,
+    "candidate": 0.0120143000385724,
+    "reference": 0.012193900009151548
+  },
+  {
+    "step": 537,
+    "projectiles": 57,
+    "reference_first": true,
+    "reference": 0.01216689997818321,
+    "candidate": 0.01079939998453483
+  },
+  {
+    "step": 538,
+    "projectiles": 57,
+    "reference_first": false,
+    "candidate": 0.009167600015643984,
+    "reference": 0.012310500023886561
+  },
+  {
+    "step": 539,
+    "projectiles": 57,
+    "reference_first": true,
+    "reference": 0.012556300032883883,
+    "candidate": 0.008926999988034368
+  },
+  {
+    "step": 540,
+    "projectiles": 57,
+    "reference_first": false,
+    "candidate": 0.011203500034753233,
+    "reference": 0.011062500008847564
+  },
+  {
+    "step": 541,
+    "projectiles": 57,
+    "reference_first": true,
+    "reference": 0.011062699952162802,
+    "candidate": 0.009141899994574487
+  },
+  {
+    "step": 542,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.011401699972338974,
+    "reference": 0.01256840000860393
+  },
+  {
+    "step": 543,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.012888899946119636,
+    "candidate": 0.011459400004241616
+  },
+  {
+    "step": 544,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.009420999966096133,
+    "reference": 0.012537000002339482
+  },
+  {
+    "step": 545,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.012978599988855422,
+    "candidate": 0.009491899982094765
+  },
+  {
+    "step": 546,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.009745299990754575,
+    "reference": 0.01220260001718998
+  },
+  {
+    "step": 547,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.013168799981940538,
+    "candidate": 0.01040389999980107
+  },
+  {
+    "step": 548,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.011395599984098226,
+    "reference": 0.011675199959427118
+  },
+  {
+    "step": 549,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.012059399974532425,
+    "candidate": 0.00875909999012947
+  },
+  {
+    "step": 550,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.012085099995601922,
+    "reference": 0.014160200022161007
+  },
+  {
+    "step": 551,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.012449700036086142,
+    "candidate": 0.01064379996387288
+  },
+  {
+    "step": 552,
+    "projectiles": 60,
+    "reference_first": false,
+    "candidate": 0.010273199994117022,
+    "reference": 0.012405299989040941
+  },
+  {
+    "step": 553,
+    "projectiles": 60,
+    "reference_first": true,
+    "reference": 0.012395000027026981,
+    "candidate": 0.009361799980979413
+  },
+  {
+    "step": 554,
+    "projectiles": 60,
+    "reference_first": false,
+    "candidate": 0.011517000035382807,
+    "reference": 0.01084840000839904
+  },
+  {
+    "step": 555,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.012134499964304268,
+    "candidate": 0.015034499985631555
+  },
+  {
+    "step": 556,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.012094900012016296,
+    "reference": 0.012724399974104017
+  },
+  {
+    "step": 557,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.012727099994663149,
+    "candidate": 0.010700899991206825
+  },
+  {
+    "step": 558,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.010618000000249594,
+    "reference": 0.013132100051734596
+  },
+  {
+    "step": 559,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.014432800002396107,
+    "candidate": 0.010788000014144927
+  },
+  {
+    "step": 560,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.010798300034366548,
+    "reference": 0.01216100004967302
+  },
+  {
+    "step": 561,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.010331499972380698,
+    "candidate": 0.011293500021565706
+  },
+  {
+    "step": 562,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.010895500017795712,
+    "reference": 0.011767800024244934
+  },
+  {
+    "step": 563,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.01130180002655834,
+    "candidate": 0.010981299972627312
+  },
+  {
+    "step": 564,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.010800200048834085,
+    "reference": 0.013165900018066168
+  },
+  {
+    "step": 565,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.010966399975586683,
+    "candidate": 0.012386400019749999
+  },
+  {
+    "step": 566,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.011633100046310574,
+    "reference": 0.012265700032003224
+  },
+  {
+    "step": 567,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.013407899998128414,
+    "candidate": 0.010752699978183955
+  },
+  {
+    "step": 568,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.01104659994598478,
+    "reference": 0.013007900037337095
+  },
+  {
+    "step": 569,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.011706600023899227,
+    "candidate": 0.011457899992819875
+  },
+  {
+    "step": 570,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.011531099968124181,
+    "reference": 0.013213999976869673
+  },
+  {
+    "step": 571,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.012913100013975054,
+    "candidate": 0.011015299998689443
+  },
+  {
+    "step": 572,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.011270699964370579,
+    "reference": 0.013043900020420551
+  },
+  {
+    "step": 573,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.01369300001533702,
+    "candidate": 0.010404100001323968
+  },
+  {
+    "step": 574,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.012092499993741512,
+    "reference": 0.01205289998324588
+  },
+  {
+    "step": 575,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.012779399985447526,
+    "candidate": 0.00888520001899451
+  },
+  {
+    "step": 576,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.011496099992655218,
+    "reference": 0.011982299969531596
+  },
+  {
+    "step": 577,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.012680799991358072,
+    "candidate": 0.01051930000539869
+  },
+  {
+    "step": 578,
+    "projectiles": 61,
+    "reference_first": false,
+    "candidate": 0.012019100016914308,
+    "reference": 0.013304100022651255
+  },
+  {
+    "step": 579,
+    "projectiles": 61,
+    "reference_first": true,
+    "reference": 0.011845099972561002,
+    "candidate": 0.010808499995619059
+  },
+  {
+    "step": 580,
+    "projectiles": 62,
+    "reference_first": false,
+    "candidate": 0.00971489999210462,
+    "reference": 0.01308840001001954
+  },
+  {
+    "step": 581,
+    "projectiles": 62,
+    "reference_first": true,
+    "reference": 0.01281150005524978,
+    "candidate": 0.011797600018326193
+  },
+  {
+    "step": 582,
+    "projectiles": 63,
+    "reference_first": false,
+    "candidate": 0.012109000002965331,
+    "reference": 0.01305429998319596
+  },
+  {
+    "step": 583,
+    "projectiles": 63,
+    "reference_first": true,
+    "reference": 0.01210470002843067,
+    "candidate": 0.01139800000237301
+  },
+  {
+    "step": 584,
+    "projectiles": 64,
+    "reference_first": false,
+    "candidate": 0.01223799999570474,
+    "reference": 0.013458699977491051
+  },
+  {
+    "step": 585,
+    "projectiles": 64,
+    "reference_first": true,
+    "reference": 0.014077299972996116,
+    "candidate": 0.01134460000321269
+  },
+  {
+    "step": 586,
+    "projectiles": 64,
+    "reference_first": false,
+    "candidate": 0.0102317999699153,
+    "reference": 0.012483500002417713
+  },
+  {
+    "step": 587,
+    "projectiles": 64,
+    "reference_first": true,
+    "reference": 0.012813700013794005,
+    "candidate": 0.010407199966721237
+  },
+  {
+    "step": 588,
+    "projectiles": 64,
+    "reference_first": false,
+    "candidate": 0.013071199995465577,
+    "reference": 0.014325299998745322
+  },
+  {
+    "step": 589,
+    "projectiles": 64,
+    "reference_first": true,
+    "reference": 0.014129699964541942,
+    "candidate": 0.012094100005924702
+  },
+  {
+    "step": 590,
+    "projectiles": 64,
+    "reference_first": false,
+    "candidate": 0.01396549999481067,
+    "reference": 0.01417139999102801
+  },
+  {
+    "step": 591,
+    "projectiles": 64,
+    "reference_first": true,
+    "reference": 0.013001999992411584,
+    "candidate": 0.011176400003023446
+  },
+  {
+    "step": 592,
+    "projectiles": 64,
+    "reference_first": false,
+    "candidate": 0.011390400002710521,
+    "reference": 0.013110900006722659
+  },
+  {
+    "step": 593,
+    "projectiles": 64,
+    "reference_first": true,
+    "reference": 0.014181400008965284,
+    "candidate": 0.011239599960390478
+  },
+  {
+    "step": 594,
+    "projectiles": 64,
+    "reference_first": false,
+    "candidate": 0.013564999972004443,
+    "reference": 0.013459899986628443
+  },
+  {
+    "step": 595,
+    "projectiles": 64,
+    "reference_first": true,
+    "reference": 0.014032699982635677,
+    "candidate": 0.012542899989057332
+  },
+  {
+    "step": 596,
+    "projectiles": 64,
+    "reference_first": false,
+    "candidate": 0.012467299995478243,
+    "reference": 0.011587100045289844
+  },
+  {
+    "step": 597,
+    "projectiles": 64,
+    "reference_first": true,
+    "reference": 0.014031299971975386,
+    "candidate": 0.011198399995919317
+  },
+  {
+    "step": 598,
+    "projectiles": 64,
+    "reference_first": false,
+    "candidate": 0.009705799981020391,
+    "reference": 0.012212300032842904
+  },
+  {
+    "step": 599,
+    "projectiles": 64,
+    "reference_first": true,
+    "reference": 0.013646800012793392,
+    "candidate": 0.01236400002380833
+  },
+  {
+    "step": 600,
+    "projectiles": 64,
+    "reference_first": false,
+    "candidate": 0.010971000010613352,
+    "reference": 0.013840799976605922
+  },
+  {
+    "step": 601,
+    "projectiles": 65,
+    "reference_first": true,
+    "reference": 0.013394200010225177,
+    "candidate": 0.011139000009279698
+  },
+  {
+    "step": 602,
+    "projectiles": 65,
+    "reference_first": false,
+    "candidate": 0.011800900043454021,
+    "reference": 0.014506200037430972
+  },
+  {
+    "step": 603,
+    "projectiles": 65,
+    "reference_first": true,
+    "reference": 0.015403600002173334,
+    "candidate": 0.012853900028858334
+  },
+  {
+    "step": 604,
+    "projectiles": 67,
+    "reference_first": false,
+    "candidate": 0.014837299997452646,
+    "reference": 0.014163799991365522
+  },
+  {
+    "step": 605,
+    "projectiles": 67,
+    "reference_first": true,
+    "reference": 0.014654700004030019,
+    "candidate": 0.013131699990481138
+  },
+  {
+    "step": 606,
+    "projectiles": 67,
+    "reference_first": false,
+    "candidate": 0.014144999964628369,
+    "reference": 0.01556119997985661
+  },
+  {
+    "step": 607,
+    "projectiles": 67,
+    "reference_first": true,
+    "reference": 0.013773799990303814,
+    "candidate": 0.012797900009900331
+  },
+  {
+    "step": 608,
+    "projectiles": 68,
+    "reference_first": false,
+    "candidate": 0.012468100001569837,
+    "reference": 0.014568200043868273
+  },
+  {
+    "step": 609,
+    "projectiles": 68,
+    "reference_first": true,
+    "reference": 0.015098800009582192,
+    "candidate": 0.010171599977184087
+  },
+  {
+    "step": 610,
+    "projectiles": 69,
+    "reference_first": false,
+    "candidate": 0.0130131000187248,
+    "reference": 0.012778300035279244
+  },
+  {
+    "step": 611,
+    "projectiles": 69,
+    "reference_first": true,
+    "reference": 0.015180699992924929,
+    "candidate": 0.013140900002326816
+  },
+  {
+    "step": 612,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.012419600039720535,
+    "reference": 0.013817100028973073
+  },
+  {
+    "step": 613,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.015492100035771728,
+    "candidate": 0.012870199978351593
+  },
+  {
+    "step": 614,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.014270599989686161,
+    "reference": 0.01394640002399683
+  },
+  {
+    "step": 615,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.016079099965281785,
+    "candidate": 0.012074699974618852
+  },
+  {
+    "step": 616,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.0127210000064224,
+    "reference": 0.015980799973476678
+  },
+  {
+    "step": 617,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.015373300004284829,
+    "candidate": 0.013914899958763272
+  },
+  {
+    "step": 618,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.013042800012044609,
+    "reference": 0.01605169998947531
+  },
+  {
+    "step": 619,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.014501300000119954,
+    "candidate": 0.013026700005866587
+  },
+  {
+    "step": 620,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.011611599999014288,
+    "reference": 0.015117099974304438
+  },
+  {
+    "step": 621,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.01521310000680387,
+    "candidate": 0.013628899992909282
+  },
+  {
+    "step": 622,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.013608300010673702,
+    "reference": 0.016052499995566905
+  },
+  {
+    "step": 623,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.017319299979135394,
+    "candidate": 0.01445149997016415
+  },
+  {
+    "step": 624,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.01298920001136139,
+    "reference": 0.015793500002473593
+  },
+  {
+    "step": 625,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.01566179998917505,
+    "candidate": 0.014191899972502142
+  },
+  {
+    "step": 626,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.012056100007612258,
+    "reference": 0.014527799969073385
+  },
+  {
+    "step": 627,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.013899300014600158,
+    "candidate": 0.013864000036846846
+  },
+  {
+    "step": 628,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.012236299982760102,
+    "reference": 0.014851999992970377
+  },
+  {
+    "step": 629,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.016262600023765117,
+    "candidate": 0.012772299989592284
+  },
+  {
+    "step": 630,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.013678899966180325,
+    "reference": 0.016089499986264855
+  },
+  {
+    "step": 631,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.01650680002057925,
+    "candidate": 0.013280699960887432
+  },
+  {
+    "step": 632,
+    "projectiles": 74,
+    "reference_first": false,
+    "candidate": 0.014713000040501356,
+    "reference": 0.017267500050365925
+  },
+  {
+    "step": 633,
+    "projectiles": 74,
+    "reference_first": true,
+    "reference": 0.015801599947735667,
+    "candidate": 0.014697100035846233
+  },
+  {
+    "step": 634,
+    "projectiles": 74,
+    "reference_first": false,
+    "candidate": 0.014588700025342405,
+    "reference": 0.01669200003379956
+  },
+  {
+    "step": 635,
+    "projectiles": 74,
+    "reference_first": true,
+    "reference": 0.015738599991891533,
+    "candidate": 0.012456399970687926
+  },
+  {
+    "step": 636,
+    "projectiles": 74,
+    "reference_first": false,
+    "candidate": 0.014255199988838285,
+    "reference": 0.015960999997332692
+  },
+  {
+    "step": 637,
+    "projectiles": 74,
+    "reference_first": true,
+    "reference": 0.016862499993294477,
+    "candidate": 0.013505499984603375
+  },
+  {
+    "step": 638,
+    "projectiles": 74,
+    "reference_first": false,
+    "candidate": 0.012664899986702949,
+    "reference": 0.017502499977126718
+  },
+  {
+    "step": 639,
+    "projectiles": 74,
+    "reference_first": true,
+    "reference": 0.017039300000760704,
+    "candidate": 0.014265200006775558
+  },
+  {
+    "step": 640,
+    "projectiles": 74,
+    "reference_first": false,
+    "candidate": 0.014833599969279021,
+    "reference": 0.016194699972402304
+  },
+  {
+    "step": 641,
+    "projectiles": 74,
+    "reference_first": true,
+    "reference": 0.016836600028909743,
+    "candidate": 0.013758499990217388
+  },
+  {
+    "step": 642,
+    "projectiles": 73,
+    "reference_first": false,
+    "candidate": 0.015170599974226207,
+    "reference": 0.015220900007989258
+  },
+  {
+    "step": 643,
+    "projectiles": 73,
+    "reference_first": true,
+    "reference": 0.016781500016804785,
+    "candidate": 0.012679799983743578
+  },
+  {
+    "step": 644,
+    "projectiles": 73,
+    "reference_first": false,
+    "candidate": 0.013935700000729412,
+    "reference": 0.014584299991838634
+  },
+  {
+    "step": 645,
+    "projectiles": 72,
+    "reference_first": true,
+    "reference": 0.017482399998698384,
+    "candidate": 0.01134169998113066
+  },
+  {
+    "step": 646,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.01426329999230802,
+    "reference": 0.015253300021868199
+  },
+  {
+    "step": 647,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.015392300032544881,
+    "candidate": 0.013429999991785735
+  },
+  {
+    "step": 648,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.013085699989460409,
+    "reference": 0.016537100018467754
+  },
+  {
+    "step": 649,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.016357599990442395,
+    "candidate": 0.01323969999793917
+  },
+  {
+    "step": 650,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.01304849999723956,
+    "reference": 0.0163569999858737
+  },
+  {
+    "step": 651,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.016588800004683435,
+    "candidate": 0.01510650001000613
+  },
+  {
+    "step": 652,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.014109799987636507,
+    "reference": 0.01590380002744496
+  },
+  {
+    "step": 653,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.016528000007383525,
+    "candidate": 0.012797399947885424
+  },
+  {
+    "step": 654,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.013756499974988401,
+    "reference": 0.015616399992723018
+  },
+  {
+    "step": 655,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.015991299995221198,
+    "candidate": 0.012302799965254962
+  },
+  {
+    "step": 656,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.013698700000531971,
+    "reference": 0.015500799985602498
+  },
+  {
+    "step": 657,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.01712869998300448,
+    "candidate": 0.012704099994152784
+  },
+  {
+    "step": 658,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.01335670001571998,
+    "reference": 0.016068299999460578
+  },
+  {
+    "step": 659,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.015701299998909235,
+    "candidate": 0.01176979998126626
+  },
+  {
+    "step": 660,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.013099800038617104,
+    "reference": 0.015274499950464815
+  },
+  {
+    "step": 661,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.015883199987001717,
+    "candidate": 0.012201300007291138
+  },
+  {
+    "step": 662,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.012571300030685961,
+    "reference": 0.01606370002264157
+  },
+  {
+    "step": 663,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.017519599990919232,
+    "candidate": 0.0142723000026308
+  },
+  {
+    "step": 664,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.01283069996861741,
+    "reference": 0.014992900018114597
+  },
+  {
+    "step": 665,
+    "projectiles": 72,
+    "reference_first": true,
+    "reference": 0.01573469996219501,
+    "candidate": 0.011912000016309321
+  },
+  {
+    "step": 666,
+    "projectiles": 72,
+    "reference_first": false,
+    "candidate": 0.013057000003755093,
+    "reference": 0.014896899985615164
+  },
+  {
+    "step": 667,
+    "projectiles": 72,
+    "reference_first": true,
+    "reference": 0.01678519998677075,
+    "candidate": 0.014059600012842566
+  },
+  {
+    "step": 668,
+    "projectiles": 72,
+    "reference_first": false,
+    "candidate": 0.012585900025442243,
+    "reference": 0.014307800040114671
+  },
+  {
+    "step": 669,
+    "projectiles": 72,
+    "reference_first": true,
+    "reference": 0.014113500015810132,
+    "candidate": 0.012556400033645332
+  },
+  {
+    "step": 670,
+    "projectiles": 72,
+    "reference_first": false,
+    "candidate": 0.014674099977128208,
+    "reference": 0.014117199985776097
+  },
+  {
+    "step": 671,
+    "projectiles": 72,
+    "reference_first": true,
+    "reference": 0.014475999982096255,
+    "candidate": 0.012710899987723678
+  },
+  {
+    "step": 672,
+    "projectiles": 72,
+    "reference_first": false,
+    "candidate": 0.010293899977114052,
+    "reference": 0.014203200000338256
+  },
+  {
+    "step": 673,
+    "projectiles": 72,
+    "reference_first": true,
+    "reference": 0.014410900010261685,
+    "candidate": 0.013165200012736022
+  },
+  {
+    "step": 674,
+    "projectiles": 72,
+    "reference_first": false,
+    "candidate": 0.012490299995988607,
+    "reference": 0.014818300027400255
+  },
+  {
+    "step": 675,
+    "projectiles": 72,
+    "reference_first": true,
+    "reference": 0.014635899977292866,
+    "candidate": 0.012699600018095225
+  },
+  {
+    "step": 676,
+    "projectiles": 72,
+    "reference_first": false,
+    "candidate": 0.013657200033776462,
+    "reference": 0.014421200030483305
+  },
+  {
+    "step": 677,
+    "projectiles": 72,
+    "reference_first": true,
+    "reference": 0.014227700012270361,
+    "candidate": 0.012768899963703007
+  },
+  {
+    "step": 678,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.012022400042042136,
+    "reference": 0.014248399995267391
+  },
+  {
+    "step": 679,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.013957299990579486,
+    "candidate": 0.011545899964403361
+  },
+  {
+    "step": 680,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.013538500003051013,
+    "reference": 0.01431219995720312
+  },
+  {
+    "step": 681,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.015532099991105497,
+    "candidate": 0.013117499998770654
+  },
+  {
+    "step": 682,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.011096799978986382,
+    "reference": 0.01363820000551641
+  },
+  {
+    "step": 683,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.013757299981079996,
+    "candidate": 0.012384300003759563
+  },
+  {
+    "step": 684,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.011522799963131547,
+    "reference": 0.014029900019522756
+  },
+  {
+    "step": 685,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.015803199959918857,
+    "candidate": 0.013081600016448647
+  },
+  {
+    "step": 686,
+    "projectiles": 69,
+    "reference_first": false,
+    "candidate": 0.01182340004015714,
+    "reference": 0.013854300021193922
+  },
+  {
+    "step": 687,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.014448200003243983,
+    "candidate": 0.013288900023326278
+  },
+  {
+    "step": 688,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.010981899977196008,
+    "reference": 0.01426640001591295
+  },
+  {
+    "step": 689,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.01473739999346435,
+    "candidate": 0.01194170000962913
+  },
+  {
+    "step": 690,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.012385499954689294,
+    "reference": 0.013918899989221245
+  },
+  {
+    "step": 691,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.013433000014629215,
+    "candidate": 0.012768799962941557
+  },
+  {
+    "step": 692,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.011940900003537536,
+    "reference": 0.015329100016970187
+  },
+  {
+    "step": 693,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.014682799985166639,
+    "candidate": 0.011229900002945215
+  },
+  {
+    "step": 694,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.011110099963843822,
+    "reference": 0.014412700023967773
+  },
+  {
+    "step": 695,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.015036600001621991,
+    "candidate": 0.01152690005255863
+  },
+  {
+    "step": 696,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.013649000029545277,
+    "reference": 0.013629900000523776
+  },
+  {
+    "step": 697,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.014208699984010309,
+    "candidate": 0.010962800006382167
+  },
+  {
+    "step": 698,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.012677699967753142,
+    "reference": 0.013382099976297468
+  },
+  {
+    "step": 699,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.015435700013767928,
+    "candidate": 0.011651200009509921
+  },
+  {
+    "step": 700,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.01187510002637282,
+    "reference": 0.013447799952700734
+  },
+  {
+    "step": 701,
+    "projectiles": 70,
+    "reference_first": true,
+    "reference": 0.015312100003939122,
+    "candidate": 0.012661199958529323
+  },
+  {
+    "step": 702,
+    "projectiles": 70,
+    "reference_first": false,
+    "candidate": 0.013337699987459928,
+    "reference": 0.016638999979477376
+  },
+  {
+    "step": 703,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.015118099981918931,
+    "candidate": 0.012647099967580289
+  },
+  {
+    "step": 704,
+    "projectiles": 71,
+    "reference_first": false,
+    "candidate": 0.01433159998850897,
+    "reference": 0.015014000004157424
+  },
+  {
+    "step": 705,
+    "projectiles": 71,
+    "reference_first": true,
+    "reference": 0.014164899999741465,
+    "candidate": 0.011657600000035018
+  },
+  {
+    "step": 706,
+    "projectiles": 72,
+    "reference_first": false,
+    "candidate": 0.01152990001719445,
+    "reference": 0.014812300039920956
+  },
+  {
+    "step": 707,
+    "projectiles": 72,
+    "reference_first": true,
+    "reference": 0.015198000008240342,
+    "candidate": 0.013647699961438775
+  },
+  {
+    "step": 708,
+    "projectiles": 73,
+    "reference_first": false,
+    "candidate": 0.012822300021070987,
+    "reference": 0.015730600047390908
+  },
+  {
+    "step": 709,
+    "projectiles": 73,
+    "reference_first": true,
+    "reference": 0.016835799964610487,
+    "candidate": 0.013578200014308095
+  },
+  {
+    "step": 710,
+    "projectiles": 74,
+    "reference_first": false,
+    "candidate": 0.01578810001956299,
+    "reference": 0.022138800006359816
+  },
+  {
+    "step": 711,
+    "projectiles": 74,
+    "reference_first": true,
+    "reference": 0.01775280002038926,
+    "candidate": 0.015510099998209625
+  },
+  {
+    "step": 712,
+    "projectiles": 75,
+    "reference_first": false,
+    "candidate": 0.013984100020024925,
+    "reference": 0.015157599991653115
+  },
+  {
+    "step": 713,
+    "projectiles": 75,
+    "reference_first": true,
+    "reference": 0.017212799983099103,
+    "candidate": 0.014282999967690557
+  },
+  {
+    "step": 714,
+    "projectiles": 76,
+    "reference_first": false,
+    "candidate": 0.016341599985025823,
+    "reference": 0.015567899972666055
+  },
+  {
+    "step": 715,
+    "projectiles": 73,
+    "reference_first": true,
+    "reference": 0.01678070001071319,
+    "candidate": 0.013956499984487891
+  },
+  {
+    "step": 716,
+    "projectiles": 74,
+    "reference_first": false,
+    "candidate": 0.012772399990353733,
+    "reference": 0.015326699998695403
+  },
+  {
+    "step": 717,
+    "projectiles": 75,
+    "reference_first": true,
+    "reference": 0.01517749996855855,
+    "candidate": 0.012252299988176674
+  },
+  {
+    "step": 718,
+    "projectiles": 76,
+    "reference_first": false,
+    "candidate": 0.012717399979010224,
+    "reference": 0.015204900002572685
+  },
+  {
+    "step": 719,
+    "projectiles": 77,
+    "reference_first": true,
+    "reference": 0.016647599986754358,
+    "candidate": 0.012757599994074553
+  },
+  {
+    "step": 720,
+    "projectiles": 77,
+    "reference_first": false,
+    "candidate": 0.0122422999702394,
+    "reference": 0.017475100001320243
+  },
+  {
+    "step": 721,
+    "projectiles": 78,
+    "reference_first": true,
+    "reference": 0.014854900015052408,
+    "candidate": 0.014317399996798486
+  },
+  {
+    "step": 722,
+    "projectiles": 82,
+    "reference_first": false,
+    "candidate": 0.01402629999211058,
+    "reference": 0.016519199998583645
+  },
+  {
+    "step": 723,
+    "projectiles": 82,
+    "reference_first": true,
+    "reference": 0.018175099976360798,
+    "candidate": 0.012726499990094453
+  },
+  {
+    "step": 724,
+    "projectiles": 82,
+    "reference_first": false,
+    "candidate": 0.014762300008442253,
+    "reference": 0.016607899975497276
+  },
+  {
+    "step": 725,
+    "projectiles": 82,
+    "reference_first": true,
+    "reference": 0.016631499980576336,
+    "candidate": 0.014653899997938424
+  },
+  {
+    "step": 726,
+    "projectiles": 82,
+    "reference_first": false,
+    "candidate": 0.014948699972592294,
+    "reference": 0.016651300014927983
+  },
+  {
+    "step": 727,
+    "projectiles": 83,
+    "reference_first": true,
+    "reference": 0.01711680000880733,
+    "candidate": 0.012722000014036894
+  },
+  {
+    "step": 728,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.014536300033796579,
+    "reference": 0.01771109999390319
+  },
+  {
+    "step": 729,
+    "projectiles": 84,
+    "reference_first": true,
+    "reference": 0.017334100033622235,
+    "candidate": 0.013901499973144382
+  },
+  {
+    "step": 730,
+    "projectiles": 84,
+    "reference_first": false,
+    "candidate": 0.014645499992184341,
+    "reference": 0.01664570003049448
+  },
+  {
+    "step": 731,
+    "projectiles": 85,
+    "reference_first": true,
+    "reference": 0.012581599992699921,
+    "candidate": 0.010765800019726157
+  },
+  {
+    "step": 732,
+    "projectiles": 84,
+    "reference_first": false,
+    "candidate": 0.012241899967193604,
+    "reference": 0.012494600028730929
+  },
+  {
+    "step": 733,
+    "projectiles": 83,
+    "reference_first": true,
+    "reference": 0.009482500026933849,
+    "candidate": 0.007414699997752905
+  },
+  {
+    "step": 734,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.008637499995529652,
+    "reference": 0.014307600038591772
+  },
+  {
+    "step": 735,
+    "projectiles": 83,
+    "reference_first": true,
+    "reference": 0.009324799990281463,
+    "candidate": 0.0071211999747902155
+  },
+  {
+    "step": 736,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.010805999976582825,
+    "reference": 0.013251000025775284
+  },
+  {
+    "step": 737,
+    "projectiles": 83,
+    "reference_first": true,
+    "reference": 0.013724699965678155,
+    "candidate": 0.011799100029747933
+  },
+  {
+    "step": 738,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.013873099989723414,
+    "reference": 0.013407499995082617
+  },
+  {
+    "step": 739,
+    "projectiles": 83,
+    "reference_first": true,
+    "reference": 0.012814200017601252,
+    "candidate": 0.010236800007987767
+  },
+  {
+    "step": 740,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.011995600012596697,
+    "reference": 0.014433200005441904
+  },
+  {
+    "step": 741,
+    "projectiles": 83,
+    "reference_first": true,
+    "reference": 0.012525599973741919,
+    "candidate": 0.0115164999733679
+  },
+  {
+    "step": 742,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.011605000006966293,
+    "reference": 0.012589899997692555
+  },
+  {
+    "step": 743,
+    "projectiles": 83,
+    "reference_first": true,
+    "reference": 0.012792299967259169,
+    "candidate": 0.010381100000813603
+  },
+  {
+    "step": 744,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.011262700019869953,
+    "reference": 0.011312499991618097
+  },
+  {
+    "step": 745,
+    "projectiles": 83,
+    "reference_first": true,
+    "reference": 0.014024300035089254,
+    "candidate": 0.010124499967787415
+  },
+  {
+    "step": 746,
+    "projectiles": 82,
+    "reference_first": false,
+    "candidate": 0.010987300018314272,
+    "reference": 0.013665399979799986
+  },
+  {
+    "step": 747,
+    "projectiles": 83,
+    "reference_first": true,
+    "reference": 0.014234400005079806,
+    "candidate": 0.010891899990383536
+  },
+  {
+    "step": 748,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.010673200013116002,
+    "reference": 0.013489800039678812
+  },
+  {
+    "step": 749,
+    "projectiles": 83,
+    "reference_first": true,
+    "reference": 0.013898000004701316,
+    "candidate": 0.011196199979167432
+  },
+  {
+    "step": 750,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.011127500038128346,
+    "reference": 0.012179500015918165
+  },
+  {
+    "step": 751,
+    "projectiles": 84,
+    "reference_first": true,
+    "reference": 0.013247900002170354,
+    "candidate": 0.010929599986411631
+  },
+  {
+    "step": 752,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.01132679998409003,
+    "reference": 0.012856999994255602
+  },
+  {
+    "step": 753,
+    "projectiles": 84,
+    "reference_first": true,
+    "reference": 0.013436499983072281,
+    "candidate": 0.010823000047821552
+  },
+  {
+    "step": 754,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.011196199979167432,
+    "reference": 0.011412099993322045
+  },
+  {
+    "step": 755,
+    "projectiles": 84,
+    "reference_first": true,
+    "reference": 0.012504899990744889,
+    "candidate": 0.010715599986724555
+  },
+  {
+    "step": 756,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.011901100049726665,
+    "reference": 0.014372300007380545
+  },
+  {
+    "step": 757,
+    "projectiles": 83,
+    "reference_first": true,
+    "reference": 0.013397299975622445,
+    "candidate": 0.011223600013181567
+  },
+  {
+    "step": 758,
+    "projectiles": 83,
+    "reference_first": false,
+    "candidate": 0.011801099986769259,
+    "reference": 0.013257000013254583
+  },
+  {
+    "step": 759,
+    "projectiles": 84,
+    "reference_first": true,
+    "reference": 0.013641199970152229,
+    "candidate": 0.010996000026352704
+  },
+  {
+    "step": 760,
+    "projectiles": 84,
+    "reference_first": false,
+    "candidate": 0.011517099977936596,
+    "reference": 0.014295400003902614
+  },
+  {
+    "step": 761,
+    "projectiles": 85,
+    "reference_first": true,
+    "reference": 0.014696499973069876,
+    "candidate": 0.012026900018099695
+  },
+  {
+    "step": 762,
+    "projectiles": 85,
+    "reference_first": false,
+    "candidate": 0.01136539998697117,
+    "reference": 0.014093999983742833
+  },
+  {
+    "step": 763,
+    "projectiles": 85,
+    "reference_first": true,
+    "reference": 0.014082400011830032,
+    "candidate": 0.011413700005505234
+  },
+  {
+    "step": 764,
+    "projectiles": 85,
+    "reference_first": false,
+    "candidate": 0.011038700002245605,
+    "reference": 0.0143716000020504
+  },
+  {
+    "step": 765,
+    "projectiles": 85,
+    "reference_first": true,
+    "reference": 0.01469300000462681,
+    "candidate": 0.009051600005477667
+  },
+  {
+    "step": 766,
+    "projectiles": 85,
+    "reference_first": false,
+    "candidate": 0.010976599995046854,
+    "reference": 0.01341150002554059
+  },
+  {
+    "step": 767,
+    "projectiles": 85,
+    "reference_first": true,
+    "reference": 0.01565340004162863,
+    "candidate": 0.010677300044335425
+  },
+  {
+    "step": 768,
+    "projectiles": 85,
+    "reference_first": false,
+    "candidate": 0.01102320000063628,
+    "reference": 0.013535199977923185
+  },
+  {
+    "step": 769,
+    "projectiles": 85,
+    "reference_first": true,
+    "reference": 0.01435529999434948,
+    "candidate": 0.012503699981607497
+  },
+  {
+    "step": 770,
+    "projectiles": 85,
+    "reference_first": false,
+    "candidate": 0.011741299997083843,
+    "reference": 0.01310179999563843
+  },
+  {
+    "step": 771,
+    "projectiles": 85,
+    "reference_first": true,
+    "reference": 0.014209299988579005,
+    "candidate": 0.011208000010810792
+  },
+  {
+    "step": 772,
+    "projectiles": 85,
+    "reference_first": false,
+    "candidate": 0.012640900036785752,
+    "reference": 0.012712600000668317
+  },
+  {
+    "step": 773,
+    "projectiles": 85,
+    "reference_first": true,
+    "reference": 0.01344430004246533,
+    "candidate": 0.012878000037744641
+  },
+  {
+    "step": 774,
+    "projectiles": 85,
+    "reference_first": false,
+    "candidate": 0.011570900038350374,
+    "reference": 0.014840200019534677
+  },
+  {
+    "step": 775,
+    "projectiles": 85,
+    "reference_first": true,
+    "reference": 0.012871699989773333,
+    "candidate": 0.009846200002357364
+  },
+  {
+    "step": 776,
+    "projectiles": 86,
+    "reference_first": false,
+    "candidate": 0.01249880000250414,
+    "reference": 0.01667819998692721
+  },
+  {
+    "step": 777,
+    "projectiles": 86,
+    "reference_first": true,
+    "reference": 0.012790100008714944,
+    "candidate": 0.013641599973198026
+  },
+  {
+    "step": 778,
+    "projectiles": 87,
+    "reference_first": false,
+    "candidate": 0.012676099955569953,
+    "reference": 0.01435670000500977
+  },
+  {
+    "step": 779,
+    "projectiles": 87,
+    "reference_first": true,
+    "reference": 0.014282899966929108,
+    "candidate": 0.012092399992980063
+  },
+  {
+    "step": 780,
+    "projectiles": 88,
+    "reference_first": false,
+    "candidate": 0.013210500008426607,
+    "reference": 0.014360200031660497
+  },
+  {
+    "step": 781,
+    "projectiles": 88,
+    "reference_first": true,
+    "reference": 0.015462499985005707,
+    "candidate": 0.011570600036066025
+  },
+  {
+    "step": 782,
+    "projectiles": 88,
+    "reference_first": false,
+    "candidate": 0.011619500000961125,
+    "reference": 0.015351700014434755
+  },
+  {
+    "step": 783,
+    "projectiles": 89,
+    "reference_first": true,
+    "reference": 0.01267789996927604,
+    "candidate": 0.012120800034608692
+  },
+  {
+    "step": 784,
+    "projectiles": 89,
+    "reference_first": false,
+    "candidate": 0.012145599990617484,
+    "reference": 0.015274500008672476
+  },
+  {
+    "step": 785,
+    "projectiles": 89,
+    "reference_first": true,
+    "reference": 0.014904600044246763,
+    "candidate": 0.012819900002796203
+  },
+  {
+    "step": 786,
+    "projectiles": 89,
+    "reference_first": false,
+    "candidate": 0.014448000001721084,
+    "reference": 0.01453009998658672
+  },
+  {
+    "step": 787,
+    "projectiles": 89,
+    "reference_first": true,
+    "reference": 0.015125999983865768,
+    "candidate": 0.011484699964057654
+  },
+  {
+    "step": 788,
+    "projectiles": 89,
+    "reference_first": false,
+    "candidate": 0.012711499992292374,
+    "reference": 0.014312100014649332
+  },
+  {
+    "step": 789,
+    "projectiles": 89,
+    "reference_first": true,
+    "reference": 0.015135099994949996,
+    "candidate": 0.013159399968571961
+  },
+  {
+    "step": 790,
+    "projectiles": 89,
+    "reference_first": false,
+    "candidate": 0.014302600000519305,
+    "reference": 0.013965399994049221
+  },
+  {
+    "step": 791,
+    "projectiles": 89,
+    "reference_first": true,
+    "reference": 0.0158973999787122,
+    "candidate": 0.013235299964435399
+  },
+  {
+    "step": 792,
+    "projectiles": 89,
+    "reference_first": false,
+    "candidate": 0.01129880000371486,
+    "reference": 0.013400199997704476
+  },
+  {
+    "step": 793,
+    "projectiles": 89,
+    "reference_first": true,
+    "reference": 0.01470780000090599,
+    "candidate": 0.013808899966534227
+  },
+  {
+    "step": 794,
+    "projectiles": 90,
+    "reference_first": false,
+    "candidate": 0.010905899980571121,
+    "reference": 0.015122200013138354
+  },
+  {
+    "step": 795,
+    "projectiles": 91,
+    "reference_first": true,
+    "reference": 0.011649599997326732,
+    "candidate": 0.007816300028935075
+  },
+  {
+    "step": 796,
+    "projectiles": 91,
+    "reference_first": false,
+    "candidate": 0.009357400005683303,
+    "reference": 0.014276199974119663
+  },
+  {
+    "step": 797,
+    "projectiles": 92,
+    "reference_first": true,
+    "reference": 0.015469200036022812,
+    "candidate": 0.015176300017628819
+  },
+  {
+    "step": 798,
+    "projectiles": 92,
+    "reference_first": false,
+    "candidate": 0.01429750001989305,
+    "reference": 0.015097700001206249
+  },
+  {
+    "step": 799,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.016848200000822544,
+    "candidate": 0.01250020001316443
+  },
+  {
+    "step": 800,
+    "projectiles": 93,
+    "reference_first": false,
+    "candidate": 0.011066000035498291,
+    "reference": 0.016753599978983402
+  },
+  {
+    "step": 801,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.01565589994424954,
+    "candidate": 0.012758600001689047
+  },
+  {
+    "step": 802,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.015433599997777492,
+    "reference": 0.01620600000023842
+  },
+  {
+    "step": 803,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.01581770001212135,
+    "candidate": 0.014698699989821762
+  },
+  {
+    "step": 804,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.01185890001943335,
+    "reference": 0.01757179998094216
+  },
+  {
+    "step": 805,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.016775900032371283,
+    "candidate": 0.012998800026252866
+  },
+  {
+    "step": 806,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.013309700007084757,
+    "reference": 0.016337400011252612
+  },
+  {
+    "step": 807,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.016659900022204965,
+    "candidate": 0.014043800008948892
+  },
+  {
+    "step": 808,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.011937699979171157,
+    "reference": 0.014963100024033338
+  },
+  {
+    "step": 809,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.016995699959807098,
+    "candidate": 0.012747100030537695
+  },
+  {
+    "step": 810,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.014079099986702204,
+    "reference": 0.016699499974492937
+  },
+  {
+    "step": 811,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.015086100029293448,
+    "candidate": 0.013222799985669553
+  },
+  {
+    "step": 812,
+    "projectiles": 97,
+    "reference_first": false,
+    "candidate": 0.01393740001367405,
+    "reference": 0.014489800028968602
+  },
+  {
+    "step": 813,
+    "projectiles": 97,
+    "reference_first": true,
+    "reference": 0.01628889999119565,
+    "candidate": 0.012799800024367869
+  },
+  {
+    "step": 814,
+    "projectiles": 97,
+    "reference_first": false,
+    "candidate": 0.014952599944081157,
+    "reference": 0.016698200022801757
+  },
+  {
+    "step": 815,
+    "projectiles": 98,
+    "reference_first": true,
+    "reference": 0.016599299968220294,
+    "candidate": 0.013456900021992624
+  },
+  {
+    "step": 816,
+    "projectiles": 98,
+    "reference_first": false,
+    "candidate": 0.01335819996893406,
+    "reference": 0.016349899990018457
+  },
+  {
+    "step": 817,
+    "projectiles": 99,
+    "reference_first": true,
+    "reference": 0.015114800014998764,
+    "candidate": 0.013951400003861636
+  },
+  {
+    "step": 818,
+    "projectiles": 98,
+    "reference_first": false,
+    "candidate": 0.014499900047667325,
+    "reference": 0.016302600037306547
+  },
+  {
+    "step": 819,
+    "projectiles": 98,
+    "reference_first": true,
+    "reference": 0.015412199951242656,
+    "candidate": 0.014218800002709031
+  },
+  {
+    "step": 820,
+    "projectiles": 97,
+    "reference_first": false,
+    "candidate": 0.014901099959388375,
+    "reference": 0.017358799988869578
+  },
+  {
+    "step": 821,
+    "projectiles": 97,
+    "reference_first": true,
+    "reference": 0.015207500022370368,
+    "candidate": 0.014404599962290376
+  },
+  {
+    "step": 822,
+    "projectiles": 95,
+    "reference_first": false,
+    "candidate": 0.01410029997350648,
+    "reference": 0.01670680003007874
+  },
+  {
+    "step": 823,
+    "projectiles": 95,
+    "reference_first": true,
+    "reference": 0.0157360999728553,
+    "candidate": 0.013586500019300729
+  },
+  {
+    "step": 824,
+    "projectiles": 93,
+    "reference_first": false,
+    "candidate": 0.012108199996873736,
+    "reference": 0.015332399983890355
+  },
+  {
+    "step": 825,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.015704100020229816,
+    "candidate": 0.011601299978792667
+  },
+  {
+    "step": 826,
+    "projectiles": 93,
+    "reference_first": false,
+    "candidate": 0.013841399981174618,
+    "reference": 0.01594070001738146
+  },
+  {
+    "step": 827,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.01729609997710213,
+    "candidate": 0.014493299997411668
+  },
+  {
+    "step": 828,
+    "projectiles": 93,
+    "reference_first": false,
+    "candidate": 0.012183899991214275,
+    "reference": 0.01409760001115501
+  },
+  {
+    "step": 829,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.017017400008626282,
+    "candidate": 0.01386050001019612
+  },
+  {
+    "step": 830,
+    "projectiles": 92,
+    "reference_first": false,
+    "candidate": 0.012869399972259998,
+    "reference": 0.016978500003460795
+  },
+  {
+    "step": 831,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.018279499956406653,
+    "candidate": 0.013536799990106374
+  },
+  {
+    "step": 832,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.014408099988941103,
+    "reference": 0.01570950000314042
+  },
+  {
+    "step": 833,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.013181899965275079,
+    "candidate": 0.014344000024721026
+  },
+  {
+    "step": 834,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.013015999982599169,
+    "reference": 0.014611300022806972
+  },
+  {
+    "step": 835,
+    "projectiles": 95,
+    "reference_first": true,
+    "reference": 0.01628139999229461,
+    "candidate": 0.012499300006311387
+  },
+  {
+    "step": 836,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.01313289999961853,
+    "reference": 0.01674629998160526
+  },
+  {
+    "step": 837,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.014862200012430549,
+    "candidate": 0.013926000043284148
+  },
+  {
+    "step": 838,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.013920700002927333,
+    "reference": 0.015296700003091246
+  },
+  {
+    "step": 839,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.017877999984193593,
+    "candidate": 0.012299599999096245
+  },
+  {
+    "step": 840,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.013969000021461397,
+    "reference": 0.016528000007383525
+  },
+  {
+    "step": 841,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.015782499976921827,
+    "candidate": 0.01212099997792393
+  },
+  {
+    "step": 842,
+    "projectiles": 93,
+    "reference_first": false,
+    "candidate": 0.01153709995560348,
+    "reference": 0.015981599979568273
+  },
+  {
+    "step": 843,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.016452200012281537,
+    "candidate": 0.012500800017733127
+  },
+  {
+    "step": 844,
+    "projectiles": 93,
+    "reference_first": false,
+    "candidate": 0.012763099977746606,
+    "reference": 0.014938800013624132
+  },
+  {
+    "step": 845,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.017954999988432974,
+    "candidate": 0.013315799995325506
+  },
+  {
+    "step": 846,
+    "projectiles": 93,
+    "reference_first": false,
+    "candidate": 0.014303000003565103,
+    "reference": 0.016460799961350858
+  },
+  {
+    "step": 847,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.01375819998793304,
+    "candidate": 0.013481500034686178
+  },
+  {
+    "step": 848,
+    "projectiles": 92,
+    "reference_first": false,
+    "candidate": 0.013604999985545874,
+    "reference": 0.016282099997624755
+  },
+  {
+    "step": 849,
+    "projectiles": 92,
+    "reference_first": true,
+    "reference": 0.014631199999712408,
+    "candidate": 0.013757899985648692
+  },
+  {
+    "step": 850,
+    "projectiles": 91,
+    "reference_first": false,
+    "candidate": 0.012238899944350123,
+    "reference": 0.016375700011849403
+  },
+  {
+    "step": 851,
+    "projectiles": 91,
+    "reference_first": true,
+    "reference": 0.01684299996122718,
+    "candidate": 0.012145799992140383
+  },
+  {
+    "step": 852,
+    "projectiles": 90,
+    "reference_first": false,
+    "candidate": 0.012895299994852394,
+    "reference": 0.01630499999737367
+  },
+  {
+    "step": 853,
+    "projectiles": 90,
+    "reference_first": true,
+    "reference": 0.015507699979934841,
+    "candidate": 0.012175999989267439
+  },
+  {
+    "step": 854,
+    "projectiles": 90,
+    "reference_first": false,
+    "candidate": 0.01378039998235181,
+    "reference": 0.015324599982704967
+  },
+  {
+    "step": 855,
+    "projectiles": 91,
+    "reference_first": true,
+    "reference": 0.015698500035796314,
+    "candidate": 0.013148199999704957
+  },
+  {
+    "step": 856,
+    "projectiles": 90,
+    "reference_first": false,
+    "candidate": 0.013172800012398511,
+    "reference": 0.015523699985351413
+  },
+  {
+    "step": 857,
+    "projectiles": 91,
+    "reference_first": true,
+    "reference": 0.015229700016789138,
+    "candidate": 0.013056199997663498
+  },
+  {
+    "step": 858,
+    "projectiles": 91,
+    "reference_first": false,
+    "candidate": 0.013979799987282604,
+    "reference": 0.01573750004172325
+  },
+  {
+    "step": 859,
+    "projectiles": 91,
+    "reference_first": true,
+    "reference": 0.015221000008750707,
+    "candidate": 0.013464300020132214
+  },
+  {
+    "step": 860,
+    "projectiles": 91,
+    "reference_first": false,
+    "candidate": 0.012649299984332174,
+    "reference": 0.01448119996348396
+  },
+  {
+    "step": 861,
+    "projectiles": 92,
+    "reference_first": true,
+    "reference": 0.015060199948493391,
+    "candidate": 0.01308420003624633
+  },
+  {
+    "step": 862,
+    "projectiles": 92,
+    "reference_first": false,
+    "candidate": 0.013726599980145693,
+    "reference": 0.0157185000134632
+  },
+  {
+    "step": 863,
+    "projectiles": 91,
+    "reference_first": true,
+    "reference": 0.016135400044731796,
+    "candidate": 0.011596299998927861
+  },
+  {
+    "step": 864,
+    "projectiles": 91,
+    "reference_first": false,
+    "candidate": 0.01325139997061342,
+    "reference": 0.014001599978655577
+  },
+  {
+    "step": 865,
+    "projectiles": 91,
+    "reference_first": true,
+    "reference": 0.014190400019288063,
+    "candidate": 0.012513099994976074
+  },
+  {
+    "step": 866,
+    "projectiles": 91,
+    "reference_first": false,
+    "candidate": 0.013127499958500266,
+    "reference": 0.01764760003425181
+  },
+  {
+    "step": 867,
+    "projectiles": 91,
+    "reference_first": true,
+    "reference": 0.01441760000307113,
+    "candidate": 0.011425100034102798
+  },
+  {
+    "step": 868,
+    "projectiles": 91,
+    "reference_first": false,
+    "candidate": 0.013619900040794164,
+    "reference": 0.0165436000097543
+  },
+  {
+    "step": 869,
+    "projectiles": 92,
+    "reference_first": true,
+    "reference": 0.015242599998600781,
+    "candidate": 0.013711099978536367
+  },
+  {
+    "step": 870,
+    "projectiles": 92,
+    "reference_first": false,
+    "candidate": 0.013963699981104583,
+    "reference": 0.015391200024168938
+  },
+  {
+    "step": 871,
+    "projectiles": 92,
+    "reference_first": true,
+    "reference": 0.016744099964853376,
+    "candidate": 0.012943600013386458
+  },
+  {
+    "step": 872,
+    "projectiles": 92,
+    "reference_first": false,
+    "candidate": 0.01377879997016862,
+    "reference": 0.016179699974600226
+  },
+  {
+    "step": 873,
+    "projectiles": 92,
+    "reference_first": true,
+    "reference": 0.0164618999697268,
+    "candidate": 0.014213500020559877
+  },
+  {
+    "step": 874,
+    "projectiles": 92,
+    "reference_first": false,
+    "candidate": 0.013819699990563095,
+    "reference": 0.016764599946327507
+  },
+  {
+    "step": 875,
+    "projectiles": 92,
+    "reference_first": true,
+    "reference": 0.016504200000781566,
+    "candidate": 0.014204900013282895
+  },
+  {
+    "step": 876,
+    "projectiles": 92,
+    "reference_first": false,
+    "candidate": 0.013203200011048466,
+    "reference": 0.016071799967903644
+  },
+  {
+    "step": 877,
+    "projectiles": 92,
+    "reference_first": true,
+    "reference": 0.016770799993537366,
+    "candidate": 0.013332600006833673
+  },
+  {
+    "step": 878,
+    "projectiles": 92,
+    "reference_first": false,
+    "candidate": 0.012585700023919344,
+    "reference": 0.01557040004990995
+  },
+  {
+    "step": 879,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.016648099990561604,
+    "candidate": 0.013102800003252923
+  },
+  {
+    "step": 880,
+    "projectiles": 93,
+    "reference_first": false,
+    "candidate": 0.013733400031924248,
+    "reference": 0.015686200000345707
+  },
+  {
+    "step": 881,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.017543199995998293,
+    "candidate": 0.012733499985188246
+  },
+  {
+    "step": 882,
+    "projectiles": 93,
+    "reference_first": false,
+    "candidate": 0.01418040000135079,
+    "reference": 0.015522099973168224
+  },
+  {
+    "step": 883,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.016958999971393496,
+    "candidate": 0.01303510001162067
+  },
+  {
+    "step": 884,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.01312850002432242,
+    "reference": 0.016960199980530888
+  },
+  {
+    "step": 885,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.016139500017743558,
+    "candidate": 0.013476199994329363
+  },
+  {
+    "step": 886,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.014859499991871417,
+    "reference": 0.01608699996722862
+  },
+  {
+    "step": 887,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.018029899976681918,
+    "candidate": 0.01294629997573793
+  },
+  {
+    "step": 888,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.012289399979636073,
+    "reference": 0.015439100039657205
+  },
+  {
+    "step": 889,
+    "projectiles": 94,
+    "reference_first": true,
+    "reference": 0.016164899978321046,
+    "candidate": 0.012967700022272766
+  },
+  {
+    "step": 890,
+    "projectiles": 94,
+    "reference_first": false,
+    "candidate": 0.014841699972748756,
+    "reference": 0.01711110002361238
+  },
+  {
+    "step": 891,
+    "projectiles": 93,
+    "reference_first": true,
+    "reference": 0.015782399976160377,
+    "candidate": 0.013959500007331371
+  },
+  {
+    "step": 892,
+    "projectiles": 93,
+    "reference_first": false,
+    "candidate": 0.014779900026042014,
+    "reference": 0.016426999995019287
+  },
+  {
+    "step": 893,
+    "projectiles": 92,
+    "reference_first": true,
+    "reference": 0.016132600023411214,
+    "candidate": 0.013854000018909574
+  },
+  {
+    "step": 894,
+    "projectiles": 91,
+    "reference_first": false,
+    "candidate": 0.014355699997395277,
+    "reference": 0.015122199954930693
+  },
+  {
+    "step": 895,
+    "projectiles": 91,
+    "reference_first": true,
+    "reference": 0.016151899995747954,
+    "candidate": 0.012150900030974299
+  },
+  {
+    "step": 896,
+    "projectiles": 91,
+    "reference_first": false,
+    "candidate": 0.014609699952416122,
+    "reference": 0.015456499997526407
+  },
+  {
+    "step": 897,
+    "projectiles": 91,
+    "reference_first": true,
+    "reference": 0.014477799995802343,
+    "candidate": 0.014713199983816594
+  },
+  {
+    "step": 898,
+    "projectiles": 91,
+    "reference_first": false,
+    "candidate": 0.013400700001511723,
+    "reference": 0.01370929996483028
+  },
+  {
+    "step": 899,
+    "projectiles": 91,
+    "reference_first": true,
+    "reference": 0.015373900008853525,
+    "candidate": 0.011784899979829788
+  },
+  {
+    "step": 900,
+    "projectiles": 91,
+    "reference_first": false,
+    "candidate": 0.014600299997255206,
+    "reference": 0.015945499995723367
+  }
+]

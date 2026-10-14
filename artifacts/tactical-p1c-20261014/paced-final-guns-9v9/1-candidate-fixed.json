@@ -1,0 +1,81 @@
+{
+  "case": "guns-9v9",
+  "variant": "1-candidate-fixed",
+  "steps": 23,
+  "simulated_s": 0.38333333333333336,
+  "wall_s": 0.6403198,
+  "runner_wall_s": 0.6403250999865122,
+  "status": {
+    "epoch": "2c1a9368feb54d8c80d00b67501d10a6",
+    "fixed_step": 23,
+    "running": false,
+    "generation": 1,
+    "pause_reason": "overload",
+    "debt_quanta": 15293368000,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 1,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 8,
+    "speed": {
+      "mode": "fixed",
+      "effective": 1.0,
+      "slowed": false,
+      "revision": 0,
+      "active_wall_s": 0.6382228,
+      "advanced_simulation_s": 0.38333333333333336,
+      "actual_ratio": 0.6006261972046961,
+      "step_mean_ms": 21.298654288468878,
+      "nonstep_utilization": 0.0,
+      "longest_step_ms": 26.9133
+    }
+  },
+  "peak_debt_steps": 15.293368,
+  "rate_changes": [
+    {
+      "wall_s": 0.0171096,
+      "step": 0,
+      "rate": 1.0
+    }
+  ],
+  "rate_wall_s": {
+    "1.0": 0.6382228
+  },
+  "step": {
+    "mean_ms": 20.916860869518764,
+    "p50_ms": 20.438999985344708,
+    "p95_ms": 22.666200005915016,
+    "p99_ms": 24.79029999813065,
+    "max_ms": 26.800399995408952
+  },
+  "read_and_encode": {
+    "mean_ms": 20.798839977942407,
+    "p50_ms": 20.618499955162406,
+    "p95_ms": 21.592299977783114,
+    "p99_ms": 21.592299977783114,
+    "max_ms": 24.149800010491163
+  },
+  "load": {
+    "ships": 18,
+    "guns": 54,
+    "projectiles": 8,
+    "missiles": 0,
+    "airborne": 0,
+    "aircraft_sensors": 0,
+    "jammers": 0,
+    "jobs": 0,
+    "queued": 0,
+    "aircraft": 0,
+    "pilots": 0,
+    "local_tracks": 162,
+    "shared_tracks": 162,
+    "shots": 8,
+    "missile_shots": 0,
+    "hits": 0,
+    "interceptions": 0
+  },
+  "error": null,
+  "fixture_sha256": "9a2b174acddbbaadec41db5d3f5e81f912f3aac53b18902c2a8c914c7d1229ff",
+  "expanded_tape_sha256": null,
+  "scope": "Serial wall-paced sidecar service diagnostic, real read/encode cost, no browser or native UI. Stops at 900 steps, protection or 300 wall seconds. At most four steps per pump; last pump is capped at remaining sample steps."
+}

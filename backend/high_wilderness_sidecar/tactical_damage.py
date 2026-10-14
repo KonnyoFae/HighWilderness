@@ -273,16 +273,21 @@ class DamageKernel:
                     t=contact_fraction(p,body)
                     if t is not None:hits.append((t,-1,2,decoy.id))
             selections = {choice.ship_id: choice for choice in p.deck_selections}
+            projectile_breaks = None
             for i, (old, ship) in enumerate(zip(before.ships, world.ships)):
-                boundary=ship_layer_boundary(old.motion,ship.motion,flight.seconds)
-                def same_layer(t):
-                    return p.height_layer is None or layer_at(p,flight,t)==ship_layer_at(old.motion,ship.motion,t,flight.seconds)
-                breaks=sorted({0.,1.,boundary,*layer_breaks(flight)})
-                if not any(same_layer((a+b)/2) for a,b in zip(breaks,breaks[1:])) and not same_layer(1.):
-                    continue
                 if ship.ship_id == p.ship_id or ship.command.lifecycle.physical_status == 'exited' or ship.motion.hull_integrity_fraction <= 0:
                     continue
                 if p.ship_id in self.sides and self.sides[p.ship_id] == self.sides[ship.ship_id]:
+                    continue
+                # Flight transitions belong to this projectile, not the target.
+                # Keep target boundaries separate and preserve exact sort/dedup.
+                if projectile_breaks is None:
+                    projectile_breaks = sorted({0.,1.,*layer_breaks(flight)})
+                boundary=ship_layer_boundary(old.motion,ship.motion,flight.seconds)
+                def same_layer(t):
+                    return p.height_layer is None or layer_at(p,flight,t)==ship_layer_at(old.motion,ship.motion,t,flight.seconds)
+                breaks=projectile_breaks if boundary in projectile_breaks else sorted((*projectile_breaks,boundary))
+                if not any(same_layer((a+b)/2) for a,b in zip(breaks,breaks[1:])) and not same_layer(1.):
                     continue
                 radius = self.radius[i]+flight.curvature*flight.seconds**2/8
                 lo = tuple(min(a, b)-radius for a, b in zip(old.motion.position_world_m.to_list(), ship.motion.position_world_m.to_list()))

@@ -1,0 +1,94 @@
+{
+  "case": "guns-9v9",
+  "steps": 900,
+  "sections": [
+    "world",
+    "guns",
+    "fire_control",
+    "projectiles",
+    "observation",
+    "inventory",
+    "missiles",
+    "aviation",
+    "ew",
+    "defense",
+    "damage",
+    "fire",
+    "personnel",
+    "magazines",
+    "navigation",
+    "height_orders",
+    "departures",
+    "ending"
+  ],
+  "fixture_sha256": "9a2b174acddbbaadec41db5d3f5e81f912f3aac53b18902c2a8c914c7d1229ff",
+  "expanded_tape_sha256": "691cbd11ef88429773829ca22c24a311db0eedf9b8f52b3bfdab9612fefb010b",
+  "final_load": {
+    "ships": 18,
+    "guns": 54,
+    "projectiles": 140,
+    "missiles": 0,
+    "airborne": 0,
+    "aircraft_sensors": 0,
+    "jammers": 0,
+    "jobs": 0,
+    "queued": 0,
+    "aircraft": 0,
+    "pilots": 0,
+    "local_tracks": 153,
+    "shared_tracks": 162,
+    "shots": 320,
+    "missile_shots": 0,
+    "hits": 56,
+    "interceptions": 0
+  },
+  "counters": {
+    "reference": {
+      "flight_segment": 105671,
+      "ship_layer_boundary": 3805197,
+      "layer_breaks": 1902078,
+      "layer_at": 1903175,
+      "_segment_aabb_entry_fraction": 959489,
+      "local_path": 965,
+      "contacts_on_path": 1021,
+      "segment": 14888,
+      "choose_deck": 56
+    },
+    "candidate": {
+      "flight_segment": 105671,
+      "layer_breaks": 105671,
+      "ship_layer_boundary": 1903119,
+      "layer_at": 952136,
+      "_segment_aabb_entry_fraction": 959489,
+      "local_path": 965,
+      "contacts_on_path": 1021,
+      "segment": 14888,
+      "choose_deck": 56
+    }
+  },
+  "late_601_660": {
+    "reference": {
+      "flight_segment": 8046,
+      "ship_layer_boundary": 289799,
+      "layer_breaks": 144828,
+      "layer_at": 144983,
+      "_segment_aabb_entry_fraction": 73560,
+      "local_path": 126,
+      "contacts_on_path": 138,
+      "segment": 1979,
+      "choose_deck": 12
+    },
+    "candidate": {
+      "flight_segment": 8046,
+      "layer_breaks": 8046,
+      "ship_layer_boundary": 144971,
+      "layer_at": 72569,
+      "_segment_aabb_entry_fraction": 73560,
+      "local_path": 126,
+      "contacts_on_path": 138,
+      "segment": 1979,
+      "choose_deck": 12
+    }
+  },
+  "scope": "Exact authority comparison and diagnostic counts; no performance timings. Epochs normalized; derived caches and wall clocks excluded."
+}
