@@ -41,6 +41,7 @@ tools/tactical_p1b_reference.py -text !eol whitespace=cr-at-eol,-blank-at-eof
 artifacts/tactical-p1c-20261014/** -text !eol whitespace=cr-at-eol
 artifacts/tactical-p1c-20261014/**/*.txt whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
 tools/tactical_p1c_reference.py -text !eol whitespace=cr-at-eol,-blank-at-eof
+artifacts/tactical-p2-attribution-20261015/** -text !eol whitespace=cr-at-eol
 
 # Frozen comparison source retains the exact bytes recorded in evidence hashes.
 tools/tactical_7c1b_reference.py -text !eol whitespace=cr-at-eol,-blank-at-eof

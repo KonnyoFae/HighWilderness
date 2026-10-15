@@ -1,0 +1,561 @@
+{
+  "head": "7f02db44b88c55f9956c766c8f7e978d62f17397",
+  "production_files": 681,
+  "profiled_cases": 2,
+  "profiled_steps_each": 900,
+  "diagnostic_expanded_steps": 900,
+  "sections": 18,
+  "timing_runs": [
+    {
+      "run": 1,
+      "step": {
+        "mean_ms": 33.58089700011381,
+        "p50_ms": 37.01340000043274,
+        "p95_ms": 46.4248000025691,
+        "p99_ms": 50.959900003363146,
+        "max_ms": 71.34239999868441
+      },
+      "step_cpu_s": 29.75,
+      "service_cpu_s": 34.359375,
+      "service_wall_s": 34.82993100006934,
+      "publish": {
+        "mean_ms": 6.71626799996981,
+        "p50_ms": 6.725599996570963,
+        "p95_ms": 8.716000000276836,
+        "p99_ms": 9.700200000224868,
+        "max_ms": 40.851900001143804
+      },
+      "read_encode": {
+        "mean_ms": 13.759837333216435,
+        "p50_ms": 13.799099997413578,
+        "p95_ms": 16.843299999891315,
+        "p99_ms": 17.872499996883562,
+        "max_ms": 18.388500000583008
+      },
+      "windows": [
+        {
+          "first_step": 1,
+          "last_step": 60,
+          "step": {
+            "mean_ms": 14.9070633334001,
+            "p50_ms": 14.710800001921598,
+            "p95_ms": 16.89540000006673,
+            "p99_ms": 18.130000000383006,
+            "max_ms": 18.315900000743568
+          },
+          "cpu_s": 0.859375
+        },
+        {
+          "first_step": 301,
+          "last_step": 360,
+          "step": {
+            "mean_ms": 29.66949499987095,
+            "p50_ms": 29.390499999863096,
+            "p95_ms": 31.589700000040466,
+            "p99_ms": 31.877299999905517,
+            "max_ms": 52.8431000020646
+          },
+          "cpu_s": 1.78125
+        },
+        {
+          "first_step": 601,
+          "last_step": 660,
+          "step": {
+            "mean_ms": 46.2594433335956,
+            "p50_ms": 45.63839999900665,
+            "p95_ms": 50.959900003363146,
+            "p99_ms": 51.25700000280631,
+            "max_ms": 70.30389999999898
+          },
+          "cpu_s": 2.8125
+        },
+        {
+          "first_step": 841,
+          "last_step": 900,
+          "step": {
+            "mean_ms": 44.64763000002373,
+            "p50_ms": 44.63620000024093,
+            "p95_ms": 47.32030000013765,
+            "p99_ms": 47.894899998937035,
+            "max_ms": 49.61349999939557
+          },
+          "cpu_s": 2.625
+        }
+      ]
+    },
+    {
+      "run": 2,
+      "step": {
+        "mean_ms": 33.60386355559765,
+        "p50_ms": 37.01329999967129,
+        "p95_ms": 46.58000000199536,
+        "p99_ms": 51.27080000238493,
+        "max_ms": 69.43680000040331
+      },
+      "step_cpu_s": 29.703125,
+      "service_cpu_s": 34.578125,
+      "service_wall_s": 34.90975680001793,
+      "publish": {
+        "mean_ms": 6.793988444389671,
+        "p50_ms": 6.741400000464637,
+        "p95_ms": 8.924000001570676,
+        "p99_ms": 9.949700001016026,
+        "max_ms": 35.991099997772835
+      },
+      "read_encode": {
+        "mean_ms": 13.945031999966078,
+        "p50_ms": 13.837700000294717,
+        "p95_ms": 16.867099999217317,
+        "p99_ms": 17.41519999995944,
+        "max_ms": 19.280399999843212
+      },
+      "windows": [
+        {
+          "first_step": 1,
+          "last_step": 60,
+          "step": {
+            "mean_ms": 15.337201666625333,
+            "p50_ms": 14.748300000064773,
+            "p95_ms": 18.555700000433717,
+            "p99_ms": 18.70970000163652,
+            "max_ms": 18.868899998778943
+          },
+          "cpu_s": 0.875
+        },
+        {
+          "first_step": 301,
+          "last_step": 360,
+          "step": {
+            "mean_ms": 29.265100000035694,
+            "p50_ms": 28.823799999372568,
+            "p95_ms": 30.76639999926556,
+            "p99_ms": 31.00849999827915,
+            "max_ms": 51.27080000238493
+          },
+          "cpu_s": 1.765625
+        },
+        {
+          "first_step": 601,
+          "last_step": 660,
+          "step": {
+            "mean_ms": 46.44178000028963,
+            "p50_ms": 46.043800000916235,
+            "p95_ms": 48.8906999999017,
+            "p99_ms": 51.40920000121696,
+            "max_ms": 69.43680000040331
+          },
+          "cpu_s": 2.765625
+        },
+        {
+          "first_step": 841,
+          "last_step": 900,
+          "step": {
+            "mean_ms": 44.25217499998932,
+            "p50_ms": 44.377299996995134,
+            "p95_ms": 46.71539999981178,
+            "p99_ms": 46.83210000075633,
+            "max_ms": 47.42879999685101
+          },
+          "cpu_s": 2.59375
+        }
+      ]
+    }
+  ],
+  "late_profiled_stepper_s": 7.406912,
+  "late_phases": [
+    {
+      "file": "tactical_missile_defense.py",
+      "function": "prepare_all",
+      "calls": 60,
+      "profiled_s": 1.6923957,
+      "profiled_share_percent": 22.848870082431112
+    },
+    {
+      "file": "tactical_observation.py",
+      "function": "plan",
+      "calls": 60,
+      "profiled_s": 1.2254073,
+      "profiled_share_percent": 16.54410501974372
+    },
+    {
+      "file": "aviation_flight.py",
+      "function": "advance",
+      "calls": 60,
+      "profiled_s": 0.8803807,
+      "profiled_share_percent": 11.88593438129142
+    },
+    {
+      "file": "tactical_damage.py",
+      "function": "advance",
+      "calls": 60,
+      "profiled_s": 0.7242672,
+      "profiled_share_percent": 9.778261170107056
+    },
+    {
+      "file": "tactical_point_defense.py",
+      "function": "observe",
+      "calls": 60,
+      "profiled_s": 0.5420016000000001,
+      "profiled_share_percent": 7.317510995135355
+    },
+    {
+      "file": "aviation_combat.py",
+      "function": "plan",
+      "calls": 60,
+      "profiled_s": 0.3481229,
+      "profiled_share_percent": 4.699973484226625
+    },
+    {
+      "file": "tactical_ew.py",
+      "function": "environment",
+      "calls": 60,
+      "profiled_s": 0.2558711,
+      "profiled_share_percent": 3.4544908863504795
+    },
+    {
+      "file": "aviation_ew.py",
+      "function": "refresh",
+      "calls": 60,
+      "profiled_s": 0.21765120000000002,
+      "profiled_share_percent": 2.938487726059119
+    }
+  ],
+  "counters": {
+    "all": {
+      "deepcopy_top_level": {
+        "aviation_flight": 912,
+        "aviation_combat": 911
+      },
+      "environment": {
+        "builds": 900,
+        "track_loop_visits": 6492960,
+        "links_built": 272007,
+        "contacts_built": 44252
+      },
+      "committed_prediction_metrics": {
+        "requests": 91697,
+        "computed": 27875,
+        "shared": 60225,
+        "rolled": 3597,
+        "invalidated_motion": 8033,
+        "broad_rejected": 147061,
+        "hull_paths": 103814,
+        "path_points": 0,
+        "path_reused": 0
+      },
+      "reservations": {
+        "replace_calls": 71202,
+        "changed_or_unassigned": 62784,
+        "cached_targets_invalidated": 1875,
+        "same_target": 8418
+      },
+      "path_anchor": {
+        "no_previous_anchor": 88,
+        "not_drag_path": 27787
+      },
+      "forecast": {
+        "computed": 27875,
+        "shared": 60225,
+        "rolled": 3597
+      },
+      "forecast_caller": {
+        "observe:computed": 10252,
+        "observe:shared": 60223,
+        "threat_check:computed": 17623,
+        "observe:rolled": 3597,
+        "threat_check:shared": 2
+      },
+      "recompute": {
+        "identity_absent_in_previous_step": 88,
+        "exact_key_present": 8520,
+        "changed_key": 19267
+      },
+      "motion_flags": {
+        "position_not_linear": 8033,
+        "velocity": 8033,
+        "module_alive": 26
+      },
+      "exact_key_recompute_flags": {
+        "ship_motion": 8033,
+        "due": 1332,
+        "passed_contact": 4
+      },
+      "changed_key_fields": {
+        "stamp": 19267,
+        "position": 19267,
+        "velocity": 18849
+      },
+      "reception": {
+        "calls": 22257,
+        "accepted": 22257,
+        "distinct_receivers_per_step": 11817
+      }
+    },
+    "1-60": {
+      "deepcopy_top_level": {
+        "aviation_flight": 68,
+        "aviation_combat": 60
+      },
+      "environment": {
+        "builds": 60,
+        "track_loop_visits": 238788,
+        "links_built": 10080,
+        "contacts_built": 1426
+      },
+      "committed_prediction_metrics": {
+        "requests": 737,
+        "computed": 207,
+        "shared": 497,
+        "rolled": 33,
+        "invalidated_motion": 74,
+        "broad_rejected": 921,
+        "hull_paths": 942,
+        "path_points": 0,
+        "path_reused": 0
+      },
+      "reservations": {
+        "replace_calls": 692,
+        "changed_or_unassigned": 523,
+        "cached_targets_invalidated": 2,
+        "same_target": 169
+      },
+      "path_anchor": {
+        "no_previous_anchor": 4,
+        "not_drag_path": 203
+      },
+      "forecast": {
+        "computed": 207,
+        "shared": 497,
+        "rolled": 33
+      },
+      "forecast_caller": {
+        "observe:computed": 86,
+        "observe:shared": 497,
+        "threat_check:computed": 121,
+        "observe:rolled": 33
+      },
+      "recompute": {
+        "identity_absent_in_previous_step": 4,
+        "exact_key_present": 74,
+        "changed_key": 129
+      },
+      "motion_flags": {
+        "position_not_linear": 74,
+        "velocity": 74
+      },
+      "exact_key_recompute_flags": {
+        "ship_motion": 74,
+        "due": 9
+      },
+      "changed_key_fields": {
+        "stamp": 129,
+        "position": 129,
+        "velocity": 129
+      }
+    },
+    "301-360": {
+      "deepcopy_top_level": {
+        "aviation_flight": 60,
+        "aviation_combat": 61
+      },
+      "reception": {
+        "calls": 1620,
+        "accepted": 1620,
+        "distinct_receivers_per_step": 1080
+      },
+      "environment": {
+        "builds": 60,
+        "track_loop_visits": 394146,
+        "links_built": 18576,
+        "contacts_built": 2504
+      },
+      "reservations": {
+        "replace_calls": 2908,
+        "changed_or_unassigned": 2451,
+        "cached_targets_invalidated": 97,
+        "same_target": 457
+      },
+      "path_anchor": {
+        "not_drag_path": 1570,
+        "no_previous_anchor": 5
+      },
+      "forecast": {
+        "computed": 1575,
+        "shared": 3697,
+        "rolled": 276
+      },
+      "forecast_caller": {
+        "threat_check:computed": 1132,
+        "observe:shared": 3697,
+        "observe:computed": 443,
+        "observe:rolled": 276
+      },
+      "recompute": {
+        "changed_key": 1128,
+        "exact_key_present": 442,
+        "identity_absent_in_previous_step": 5
+      },
+      "changed_key_fields": {
+        "stamp": 1128,
+        "position": 1128,
+        "velocity": 1114
+      },
+      "motion_flags": {
+        "position_not_linear": 418,
+        "velocity": 418
+      },
+      "exact_key_recompute_flags": {
+        "ship_motion": 418,
+        "due": 67
+      },
+      "committed_prediction_metrics": {
+        "requests": 5548,
+        "computed": 1575,
+        "shared": 3697,
+        "rolled": 276,
+        "invalidated_motion": 418,
+        "broad_rejected": 7981,
+        "hull_paths": 6194,
+        "path_points": 0,
+        "path_reused": 0
+      }
+    },
+    "601-660": {
+      "deepcopy_top_level": {
+        "aviation_flight": 64,
+        "aviation_combat": 62
+      },
+      "reception": {
+        "calls": 2304,
+        "accepted": 2304,
+        "distinct_receivers_per_step": 1080
+      },
+      "environment": {
+        "builds": 60,
+        "track_loop_visits": 534438,
+        "links_built": 21816,
+        "contacts_built": 3918
+      },
+      "reservations": {
+        "replace_calls": 7247,
+        "changed_or_unassigned": 6155,
+        "cached_targets_invalidated": 265,
+        "same_target": 1092
+      },
+      "path_anchor": {
+        "not_drag_path": 3146,
+        "no_previous_anchor": 6
+      },
+      "forecast": {
+        "computed": 3152,
+        "shared": 6067,
+        "rolled": 367
+      },
+      "forecast_caller": {
+        "threat_check:computed": 2186,
+        "observe:shared": 6067,
+        "observe:computed": 966,
+        "observe:rolled": 367
+      },
+      "recompute": {
+        "changed_key": 2300,
+        "identity_absent_in_previous_step": 6,
+        "exact_key_present": 846
+      },
+      "changed_key_fields": {
+        "stamp": 2300,
+        "position": 2300,
+        "velocity": 2298
+      },
+      "motion_flags": {
+        "position_not_linear": 792,
+        "velocity": 792
+      },
+      "exact_key_recompute_flags": {
+        "ship_motion": 792,
+        "due": 139
+      },
+      "committed_prediction_metrics": {
+        "requests": 9586,
+        "computed": 3152,
+        "shared": 6067,
+        "rolled": 367,
+        "invalidated_motion": 792,
+        "broad_rejected": 16212,
+        "hull_paths": 12156,
+        "path_points": 0,
+        "path_reused": 0
+      }
+    },
+    "841-900": {
+      "deepcopy_top_level": {
+        "aviation_flight": 60,
+        "aviation_combat": 60
+      },
+      "reception": {
+        "calls": 2160,
+        "accepted": 2160,
+        "distinct_receivers_per_step": 1080
+      },
+      "environment": {
+        "builds": 60,
+        "track_loop_visits": 624186,
+        "links_built": 25902,
+        "contacts_built": 3713
+      },
+      "reservations": {
+        "replace_calls": 8383,
+        "changed_or_unassigned": 8187,
+        "cached_targets_invalidated": 32,
+        "same_target": 196
+      },
+      "path_anchor": {
+        "not_drag_path": 2383,
+        "no_previous_anchor": 1
+      },
+      "forecast": {
+        "computed": 2384,
+        "shared": 6696,
+        "rolled": 265
+      },
+      "forecast_caller": {
+        "threat_check:computed": 885,
+        "observe:computed": 1499,
+        "observe:shared": 6696,
+        "observe:rolled": 265
+      },
+      "recompute": {
+        "changed_key": 1381,
+        "exact_key_present": 1002,
+        "identity_absent_in_previous_step": 1
+      },
+      "changed_key_fields": {
+        "stamp": 1381,
+        "position": 1381,
+        "velocity": 1354
+      },
+      "motion_flags": {
+        "position_not_linear": 951,
+        "velocity": 951,
+        "module_alive": 26
+      },
+      "exact_key_recompute_flags": {
+        "ship_motion": 951,
+        "due": 171,
+        "passed_contact": 2
+      },
+      "committed_prediction_metrics": {
+        "requests": 9345,
+        "computed": 2384,
+        "shared": 6696,
+        "rolled": 265,
+        "invalidated_motion": 951,
+        "broad_rejected": 14769,
+        "hull_paths": 6687,
+        "path_points": 0,
+        "path_reused": 0
+      }
+    }
+  },
+  "scope": "P2 attribution only; production unchanged. Profile shares are diagnostic, nested costs must not be added. Two timings are current-version baselines, not optimization gains or paced service acceptance."
+}
