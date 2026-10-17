@@ -1,0 +1,6 @@
+{
+  "checked_steps": 900,
+  "changed_frames": 80,
+  "unchanged_frames": 820,
+  "scope": "Every candidate step checked against actual entities and ordered side/layer queries."
+}

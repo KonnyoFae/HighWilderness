@@ -325,6 +325,11 @@ class GunneryBattle(SensorState):
         self.point_defense = PointDefense(self) if self.damage else None
         if self.point_defense:
             self.states = tuple(replace(s,point_defense=self.point_defense.capable[i]) for i,s in enumerate(self.states))
+        from .tactical_target_roster import TargetRoster
+        roster_names = {s.ship_id: scenario.manifest.get('ship_names', {}).get(s.ship_id,
+            '蓝方测试舰' if self._sides[n] == 'side.blue' else '红方测试舰') for n,s in enumerate(session.world.ships)}
+        self.target_roster = TargetRoster(session.world, self._sides, roster_names)
+        self.target_roster.rebuild(session.world, self.projectiles, self.aviation.flights, self.inventory.inventories)
 
     def _guard(self):
         ps.need(not self.session._executing, '$', 'Gunnery requires idle owner boundary')
@@ -474,6 +479,7 @@ class GunneryBattle(SensorState):
             existing=tuple(flight_commands.get('resource_operations',()))
             flight_commands['resource_operations']=existing+self.observation.mode_operations(existing)
         staged = {}
+        roster_plan = self.target_roster.begin()
         def impacts(before, candidate):
             from . import aviation_combat
             survivors, damage_state, batch = self.damage.advance(before, candidate, self.projectiles, self.damage_state,
@@ -821,6 +827,10 @@ class GunneryBattle(SensorState):
                 staged['fire_controllers'] = tuple(replace(c, enabled=False, status='battle_finished') for c in staged['fire_controllers'])
             from .aviation_salvage import stamp_new
             stamp_new(self,world,inventories)
+            # Build metadata changes before the outer projection can fail.
+            # No candidate entity references are retained by the published roster.
+            roster_plan.synchronize(world, staged['projectiles'], staged['aviation_flights'], inventories,
+                                    ending=bool(staged.get('ending')))
             return world
         result = self.inventory.step(control=control, inventory_before_advance=permissions,
             inventory_fuel=fuel_losses if self.damage and any(i._fuel_tanks for i in self.inventory.inventories) else None,
@@ -856,6 +866,7 @@ class GunneryBattle(SensorState):
         if self.fire.enabled:
             self.fire.fires, self.fire.controllers = staged['fires'], staged['fire_controllers']
             self.fire.recent = (self.fire.recent+staged['fire_events'])[-100:]
+        self.target_roster.commit(roster_plan)
         return result
 
     def _can_fire(self, ship, index):
@@ -885,6 +896,8 @@ class GunneryBattle(SensorState):
         for inv in candidates:inv.prepare_settlement('ending.'+self.session.world.epoch)
         from .aviation_salvage import stamp_new
         stamp_new(self,self.session.world,candidates)
+        roster_plan = self.target_roster.begin()
+        roster_plan.clear()
         self.inventory.inventories=candidates;self.aviation.flights=flights
         if self.fire.enabled:
             self.fire.controllers = tuple(replace(c, enabled=False, status='battle_finished') for c in self.fire.controllers)
@@ -894,6 +907,7 @@ class GunneryBattle(SensorState):
         self.missiles.clear()
         self.ew.clear()
         self.states = tuple(replace(s, target=None, manual_point=None, fire_requested=False, aim_point=None, status='battle_finished') for s in self.states)
+        self.target_roster.commit(roster_plan)
         return True
 
     def view(self):

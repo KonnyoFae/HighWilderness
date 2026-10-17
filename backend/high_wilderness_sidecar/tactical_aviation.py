@@ -56,8 +56,11 @@ class AviationRuntime:
                         ps.need(f['status']!='recovering' and flight.plane(candidates[f['owner']],key)['condition']=='intact','$.aircraft_ids','受损或正在回收的飞机不能重新出击')
                         f.update(task=ps.clone(o['task']),group_id=group,target_id=None,return_requested=False)
         else:logistics.apply(candidates[n],o)
+        roster_plan=b.target_roster.begin()
+        roster_plan.aircraft(flights,candidates)
         b.inventory.inventories=candidates;self.flights=flights
         self.sequence,self.last=v['sequence'],v
+        b.target_roster.commit(roster_plan)
         return True
 
     def view(self, *, inventory_summaries=None):
