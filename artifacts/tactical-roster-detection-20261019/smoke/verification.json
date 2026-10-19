@@ -1,0 +1,69 @@
+{
+  "case": "mixed-9v9",
+  "steps": 180,
+  "sections": [
+    "world",
+    "guns",
+    "fire_control",
+    "projectiles",
+    "observation",
+    "inventory",
+    "missiles",
+    "aviation",
+    "ew",
+    "defense",
+    "damage",
+    "fire",
+    "personnel",
+    "magazines",
+    "navigation",
+    "height_orders",
+    "departures",
+    "ending"
+  ],
+  "fixture_sha256": "4f7770f4510d15746f7714ae487bca5ff7cc13778ef25dd73207aec0f19f2ce9",
+  "expanded_tape_sha256": "c28c4aa3d67d1babdc06f390243a1a52d7cf27702c4055e3561a1885dbfbdc0d",
+  "final_load": {
+    "ships": 18,
+    "guns": 26,
+    "projectiles": 12,
+    "missiles": 12,
+    "airborne": 4,
+    "aircraft_sensors": 8,
+    "jammers": 2,
+    "jobs": 6,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 52,
+    "shared_tracks": 288,
+    "shots": 0,
+    "missile_shots": 12,
+    "hits": 0,
+    "interceptions": 0
+  },
+  "counters": {
+    "reference": {
+      "full_target_builds": 542,
+      "threat_evaluations": 4177,
+      "target_samples": 16097,
+      "ship_visibility_checks": 76598,
+      "metadata_family_checks": 540
+    },
+    "candidate": {
+      "stages": 360,
+      "metadata_family_checks": 1620,
+      "query_input_rows": 204154,
+      "resolved_candidates": 9471,
+      "query_output_rows": 87851,
+      "target_samples": 1332,
+      "ship_visibility_checks": 76598,
+      "threat_evaluations": 1197
+    }
+  },
+  "late_601_660": {
+    "reference": {},
+    "candidate": {}
+  },
+  "scope": "Exact authority comparison and diagnostic counts; no performance timings. Epochs normalized; derived caches and wall clocks excluded."
+}

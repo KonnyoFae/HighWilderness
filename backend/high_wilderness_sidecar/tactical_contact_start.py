@@ -52,6 +52,9 @@ class ContactState(SensorState):
         self._availability_key,self._available=None,None
         self.guns=self.states=()
         self.observation=ObservationRuntime(self,SimpleNamespace(bindings=bindings))
+        from .tactical_target_roster import TargetRoster
+        self.target_roster=TargetRoster(self.session.world,self._sides,{})
+        self.target_roster.rebuild(self.session.world,(),{},())
 
 
 def _rotate(p, angle):

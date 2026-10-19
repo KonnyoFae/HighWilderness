@@ -1,0 +1,54 @@
+{
+  "case": "mixed-4v9",
+  "steps": 900,
+  "sections": [
+    "world",
+    "guns",
+    "fire_control",
+    "projectiles",
+    "observation",
+    "inventory",
+    "missiles",
+    "aviation",
+    "ew",
+    "defense",
+    "damage",
+    "fire",
+    "personnel",
+    "magazines",
+    "navigation",
+    "height_orders",
+    "departures",
+    "ending"
+  ],
+  "fixture_sha256": "bd76a24c0219bf4f104612231d2a85228527f9aeddb65f2607e339d196aae262",
+  "expanded_tape_sha256": "75c4eedfee84a8c12f4defb859da78494004f4e0df275bb8015599a427a26d3b",
+  "final_load": {
+    "ships": 13,
+    "guns": 16,
+    "projectiles": 71,
+    "missiles": 28,
+    "airborne": 5,
+    "aircraft_sensors": 8,
+    "jammers": 1,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 72,
+    "shared_tracks": 285,
+    "shots": 47,
+    "missile_shots": 54,
+    "hits": 12,
+    "interceptions": 4
+  },
+  "counters": {
+    "reference": {},
+    "candidate": {}
+  },
+  "late_601_660": {
+    "reference": {},
+    "candidate": {}
+  },
+  "scope": "Exact authority comparison and diagnostic counts; no performance timings. Epochs normalized; derived caches and wall clocks excluded."
+}

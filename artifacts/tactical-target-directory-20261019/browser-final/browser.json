@@ -1,0 +1,40 @@
+{
+  "checks": [
+    {
+      "size": {
+        "width": 1366,
+        "height": 768
+      },
+      "edgeCases": "passed",
+      "denseActive": 1002,
+      "maxRenderedRows": 14,
+      "layout": {
+        "width": 340,
+        "scrollWidth": 340,
+        "bottom": 389.390625
+      }
+    },
+    {
+      "size": {
+        "width": 1920,
+        "height": 1080
+      },
+      "edgeCases": "passed",
+      "denseActive": 1002,
+      "maxRenderedRows": 14,
+      "layout": {
+        "width": 340,
+        "scrollWidth": 340,
+        "bottom": 473
+      }
+    },
+    {
+      "realSidecar": "passed",
+      "pausedStep": 41,
+      "entries": 13,
+      "revision": 3,
+      "scope": "Real mixed battle and page; deterministic edge cases above use a separate component fixture."
+    }
+  ],
+  "errors": []
+}

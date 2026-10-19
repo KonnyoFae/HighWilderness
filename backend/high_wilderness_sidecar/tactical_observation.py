@@ -240,9 +240,21 @@ class ObservationRuntime:
         result.extend(missiles)
         return tuple(result)
 
-    def plan(self,world,available,projectiles,*,missiles=(),occluded=None,extra_targets=()):
+    def target_stage(self,world,projectiles,flights=None,inventories=None,*,extras=()):
+        from .tactical_detection import TargetStage
+        if inventories is None:
+            # Automatic contact preview has ships but no battle inventories.
+            inventory=getattr(self.battle,'inventory',None)
+            inventories=inventory.inventories if inventory is not None else ()
+        return TargetStage(self,world,projectiles,flights or {},
+                           inventories,extras)
+
+    def plan(self,world,available,projectiles,*,missiles=(),occluded=None,extra_targets=(),target_stage=None):
         from .tactical_gunnery import rotate, add
-        b=self.battle;step=world.fixed_step;targets=self.targets(world,projectiles,missiles)+tuple(extra_targets)
+        from .tactical_detection import freeze
+        b=self.battle;step=world.fixed_step
+        targets=target_stage if target_stage is not None else self.target_stage(world,projectiles,extras=(*missiles,*extra_targets))
+        if targets.world is not world:raise ValueError('Sensor targets belong to another candidate stage')
         assignments={};local={};devices=[];inputs=_Inputs(self,world,available)
         for n,s in enumerate(world.ships):
             assigned=set();distances={};position=inputs.positions[n]
@@ -255,8 +267,8 @@ class ObservationRuntime:
                 capacity=int(spec['tracking_capacity']*self.effect(world,n,mid,'sensor.track')) if not reason else 0
                 effective=dict(spec,range_efficiency=self.effect(world,n,mid,'sensor.search'))
                 origin=add(position,rotate(self.arcs[n,mid]['origin_m'],s.motion.heading_rad)) if not reason else None
-                candidates=[t for t in targets if t.side!=b._sides[n] and (own or t.id not in assigned) and not reason
-                    and self.visible(n,mid,s,t,effective,occluded,origin=origin)]
+                candidates=[] if reason else [t for t in targets.query(b._sides[n],s.motion.height_layer,exclude_ids=() if own else assigned)
+                    if self.visible(n,mid,s,t,effective,occluded,origin=origin)]
                 priorities={}
                 for t in candidates:
                     at=tuple(t.position)
@@ -276,7 +288,7 @@ class ObservationRuntime:
                     source=(n,mid,spec['channel'])
                     if old and old.valid and source in old.sources and step-old.step<self.policy['sample_steps']:
                         track=replace(old,sources=(source,))
-                    else:track=Track(sample,step,(source,))
+                    else:track=Track(freeze(sample),step,(source,))
                     existing=local.get((n,key))
                     if existing:
                         latest=track if track.step>=existing.step else existing

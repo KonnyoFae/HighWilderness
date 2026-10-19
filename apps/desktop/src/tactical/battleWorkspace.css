@@ -75,6 +75,18 @@
 .canvas-workspace .fire-contact[aria-pressed=true] { background: #f0a18c1f; box-shadow: inset 2px 0 #f0a18c; }
 .canvas-workspace .fire-contact small { color: #b3c9bd; font-size: 11px; }
 .canvas-workspace .fire-contact.lost { color: #adb7b1; }
+.canvas-workspace .target-directory { min-height: 110px; }
+.canvas-workspace .target-directory-heading { display:flex; align-items:baseline; justify-content:space-between; gap:6px; padding:5px 0; font-size:12px; }
+.canvas-workspace .target-directory-heading small { color:#b3c9bd; font-size:11px; }
+.canvas-workspace .target-directory-filter { display:flex; gap:5px; margin-bottom:5px; }
+.canvas-workspace .target-directory-filter button { padding:3px 7px; font-size:11px; }
+.canvas-workspace .target-group-heading { display:flex; justify-content:space-between; align-items:center; gap:6px; width:100%; padding:5px 3px; border:0; border-top:1px solid #63857550; border-radius:0; background:transparent; text-align:left; font-size:12px; }
+.canvas-workspace .target-group-heading small { color:#b3c9bd; font-size:10px; }
+.canvas-workspace .target-name { overflow-wrap:anywhere; }
+.canvas-workspace .target-directory .fire-contact:disabled { opacity:1; color:#98a39c; cursor:default; }
+.canvas-workspace .target-empty { margin:3px 5px 7px; font-size:11px; }
+.canvas-workspace .target-pagination { display:flex; align-items:center; justify-content:space-between; gap:6px; margin:3px 0 6px; font-size:11px; }
+.canvas-workspace .target-pagination button { padding:2px 6px; font-size:11px; }
 .canvas-workspace .battle-equipment { border-top: 1px solid #63857580; padding: 8px 0; }
 .canvas-workspace .battle-equipment > summary { cursor: pointer; font-size: 13px; }
 .canvas-workspace .battle-cargo p { overflow-wrap: anywhere; }

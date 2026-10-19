@@ -1,0 +1,3132 @@
+{
+  "cases": 6,
+  "matched_steps": 5400,
+  "public_reads": 1362,
+  "chaff_steps": 200,
+  "production_files": 683,
+  "tests": 178,
+  "diagnostics": {
+    "guns-4v4": {
+      "counters": {
+        "reference": {
+          "full_target_builds": 1800,
+          "threat_evaluations": 0,
+          "target_samples": 14400,
+          "ship_visibility_checks": 28800,
+          "metadata_family_checks": 2700
+        },
+        "candidate": {
+          "stages": 900,
+          "metadata_family_checks": 5400,
+          "query_input_rows": 57600,
+          "resolved_candidates": 7200,
+          "query_output_rows": 28800,
+          "ship_visibility_checks": 28800,
+          "target_samples": 1200
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "full_target_builds": 120,
+          "threat_evaluations": 0,
+          "target_samples": 960,
+          "ship_visibility_checks": 1920,
+          "metadata_family_checks": 180
+        },
+        "candidate": {
+          "stages": 60,
+          "metadata_family_checks": 360,
+          "query_input_rows": 3840,
+          "resolved_candidates": 480,
+          "query_output_rows": 1920,
+          "ship_visibility_checks": 1920,
+          "target_samples": 80
+        }
+      }
+    },
+    "guns-9v9": {
+      "counters": {
+        "reference": {
+          "full_target_builds": 1800,
+          "threat_evaluations": 0,
+          "target_samples": 32400,
+          "ship_visibility_checks": 145800,
+          "metadata_family_checks": 2700
+        },
+        "candidate": {
+          "stages": 900,
+          "metadata_family_checks": 5400,
+          "query_input_rows": 291600,
+          "resolved_candidates": 16200,
+          "query_output_rows": 145800,
+          "ship_visibility_checks": 145800,
+          "target_samples": 2700
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "full_target_builds": 120,
+          "threat_evaluations": 0,
+          "target_samples": 2160,
+          "ship_visibility_checks": 9720,
+          "metadata_family_checks": 180
+        },
+        "candidate": {
+          "stages": 60,
+          "metadata_family_checks": 360,
+          "query_input_rows": 19440,
+          "resolved_candidates": 1080,
+          "query_output_rows": 9720,
+          "ship_visibility_checks": 9720,
+          "target_samples": 180
+        }
+      }
+    },
+    "mixed-4v4": {
+      "counters": {
+        "reference": {
+          "full_target_builds": 2702,
+          "threat_evaluations": 44278,
+          "target_samples": 78486,
+          "ship_visibility_checks": 173090,
+          "metadata_family_checks": 2700
+        },
+        "candidate": {
+          "stages": 1800,
+          "metadata_family_checks": 8100,
+          "query_input_rows": 614474,
+          "resolved_candidates": 47300,
+          "query_output_rows": 244820,
+          "target_samples": 6800,
+          "ship_visibility_checks": 173090,
+          "threat_evaluations": 13696
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "full_target_builds": 180,
+          "threat_evaluations": 4101,
+          "target_samples": 6609,
+          "ship_visibility_checks": 14733,
+          "metadata_family_checks": 180
+        },
+        "candidate": {
+          "stages": 120,
+          "metadata_family_checks": 540,
+          "query_input_rows": 57022,
+          "resolved_candidates": 4110,
+          "query_output_rows": 22875,
+          "threat_evaluations": 1246,
+          "target_samples": 691,
+          "ship_visibility_checks": 14733
+        }
+      }
+    },
+    "mixed-4v9": {
+      "counters": {
+        "reference": {
+          "full_target_builds": 2702,
+          "threat_evaluations": 59911,
+          "target_samples": 107044,
+          "ship_visibility_checks": 347911,
+          "metadata_family_checks": 2700
+        },
+        "candidate": {
+          "stages": 1800,
+          "metadata_family_checks": 8100,
+          "query_input_rows": 1107739,
+          "resolved_candidates": 61429,
+          "query_output_rows": 428439,
+          "target_samples": 9139,
+          "ship_visibility_checks": 347911,
+          "threat_evaluations": 19706
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "full_target_builds": 180,
+          "threat_evaluations": 6030,
+          "target_samples": 9438,
+          "ship_visibility_checks": 30682,
+          "metadata_family_checks": 180
+        },
+        "candidate": {
+          "stages": 120,
+          "metadata_family_checks": 540,
+          "query_input_rows": 106572,
+          "resolved_candidates": 5520,
+          "query_output_rows": 39291,
+          "threat_evaluations": 2112,
+          "target_samples": 797,
+          "ship_visibility_checks": 30682
+        }
+      }
+    },
+    "mixed-4v9-reversed": {
+      "counters": {
+        "reference": {
+          "full_target_builds": 2702,
+          "threat_evaluations": 63961,
+          "target_samples": 111301,
+          "ship_visibility_checks": 336946,
+          "metadata_family_checks": 2700
+        },
+        "candidate": {
+          "stages": 1800,
+          "metadata_family_checks": 8100,
+          "query_input_rows": 1158784,
+          "resolved_candidates": 63939,
+          "query_output_rows": 415222,
+          "target_samples": 8143,
+          "ship_visibility_checks": 336946,
+          "threat_evaluations": 21787
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "full_target_builds": 180,
+          "threat_evaluations": 6513,
+          "target_samples": 9921,
+          "ship_visibility_checks": 29381,
+          "metadata_family_checks": 180
+        },
+        "candidate": {
+          "stages": 120,
+          "metadata_family_checks": 540,
+          "query_input_rows": 112046,
+          "resolved_candidates": 5833,
+          "query_output_rows": 38045,
+          "threat_evaluations": 2267,
+          "target_samples": 745,
+          "ship_visibility_checks": 29381
+        }
+      }
+    },
+    "mixed-9v9": {
+      "counters": {
+        "reference": {
+          "full_target_builds": 2702,
+          "threat_evaluations": 80461,
+          "target_samples": 141395,
+          "ship_visibility_checks": 680313,
+          "metadata_family_checks": 2700
+        },
+        "candidate": {
+          "stages": 1800,
+          "metadata_family_checks": 8100,
+          "query_input_rows": 1854695,
+          "resolved_candidates": 79894,
+          "query_output_rows": 778778,
+          "target_samples": 10603,
+          "ship_visibility_checks": 680313,
+          "threat_evaluations": 26794
+        }
+      },
+      "late_601_660": {
+        "reference": {
+          "full_target_builds": 180,
+          "threat_evaluations": 8334,
+          "target_samples": 12642,
+          "ship_visibility_checks": 61650,
+          "metadata_family_checks": 180
+        },
+        "candidate": {
+          "stages": 120,
+          "metadata_family_checks": 540,
+          "query_input_rows": 176460,
+          "resolved_candidates": 7028,
+          "query_output_rows": 71125,
+          "threat_evaluations": 2881,
+          "target_samples": 842,
+          "ship_visibility_checks": 61650
+        }
+      }
+    }
+  },
+  "performance": {
+    "guns-9v9": {
+      "pairs": [
+        {
+          "pair": 1,
+          "step_mean_reduction_percent": -0.8529411325631786,
+          "step_p95_reduction_percent": -1.057107361957521,
+          "service_wall_reduction_percent": -0.39177269219152766
+        },
+        {
+          "pair": 2,
+          "step_mean_reduction_percent": 0.5509053802124853,
+          "step_p95_reduction_percent": 0.09580203305673551,
+          "service_wall_reduction_percent": 0.4383842668298832
+        },
+        {
+          "pair": 3,
+          "step_mean_reduction_percent": -1.0327045240530408,
+          "step_p95_reduction_percent": -2.5028203312758235,
+          "service_wall_reduction_percent": -0.9825442811233653
+        }
+      ],
+      "averages": {
+        "reference": {
+          "service_cpu_s": 16.703125,
+          "service_wall_s": 17.111687365550704,
+          "step": {
+            "mean_ms": 14.302076517250734,
+            "p95_ms": 16.942033330754686
+          },
+          "publish": {
+            "mean_ms": 7.113888148580574,
+            "p95_ms": 8.471066675459346
+          },
+          "read": {
+            "mean_ms": 11.729749629308504,
+            "p95_ms": 13.077000000824532
+          }
+        },
+        "candidate": {
+          "service_cpu_s": 17.119791666666668,
+          "service_wall_s": 17.165048467402812,
+          "step": {
+            "mean_ms": 14.365459407865139,
+            "p95_ms": 17.137766679904114
+          },
+          "publish": {
+            "mean_ms": 7.282855407403851,
+            "p95_ms": 8.86746666704615
+          },
+          "read": {
+            "mean_ms": 11.544411260703647,
+            "p95_ms": 12.92786665726453
+          }
+        }
+      },
+      "scope": "Arithmetic means of three runs; P95 values are averaged run percentiles, not a pooled percentile."
+    },
+    "mixed-9v9": {
+      "pairs": [
+        {
+          "pair": 1,
+          "step_mean_reduction_percent": 0.7567608051744501,
+          "step_p95_reduction_percent": -0.834715451980883,
+          "service_wall_reduction_percent": 0.5407926377050565
+        },
+        {
+          "pair": 2,
+          "step_mean_reduction_percent": 1.2748932270321256,
+          "step_p95_reduction_percent": 1.86152196486985,
+          "service_wall_reduction_percent": 1.1837675028029904
+        },
+        {
+          "pair": 3,
+          "step_mean_reduction_percent": 1.1756476153960582,
+          "step_p95_reduction_percent": 2.515867905421343,
+          "service_wall_reduction_percent": 1.0269684904325338
+        }
+      ],
+      "averages": {
+        "reference": {
+          "service_cpu_s": 38.078125,
+          "service_wall_s": 38.58450870064553,
+          "step": {
+            "mean_ms": 37.47228485292807,
+            "p95_ms": 52.37416666932404
+          },
+          "publish": {
+            "mean_ms": 7.316235407014136,
+            "p95_ms": 8.980799990240484
+          },
+          "read": {
+            "mean_ms": 14.281330517475942,
+            "p95_ms": 17.41133335356911
+          }
+        },
+        "candidate": {
+          "service_cpu_s": 37.729166666666664,
+          "service_wall_s": 38.22965433316616,
+          "step": {
+            "mean_ms": 37.070942110946845,
+            "p95_ms": 51.74523335881531
+          },
+          "publish": {
+            "mean_ms": 7.5320700742304325,
+            "p95_ms": 9.122866671532393
+          },
+          "read": {
+            "mean_ms": 14.093736296053976,
+            "p95_ms": 17.112033364052575
+          }
+        }
+      },
+      "scope": "Arithmetic means of three runs; P95 values are averaged run percentiles, not a pooled percentile."
+    }
+  },
+  "paced": {
+    "guns-9v9": {
+      "reference-fixed": {
+        "steps": 413,
+        "wall_s": 7.157,
+        "peak_debt_steps": 15.46,
+        "status": {
+          "epoch": "9c92e095cfcb44eca3f81fdf063dd9b6",
+          "fixed_step": 413,
+          "running": false,
+          "generation": 1,
+          "pause_reason": "overload",
+          "debt_quanta": 15460000000,
+          "pending_inputs": 0,
+          "retained_receipts": 0,
+          "reliable_events": 0,
+          "highest_input_sequence": 0,
+          "acknowledged_event_sequence": 42,
+          "speed": {
+            "mode": "fixed",
+            "effective": 1.0,
+            "slowed": false,
+            "revision": 0,
+            "active_wall_s": 7.141,
+            "advanced_simulation_s": 6.883333333333334,
+            "actual_ratio": 0.9639172851608084,
+            "step_mean_ms": 18.065391422448805,
+            "nonstep_utilization": 0.0,
+            "longest_step_ms": 32.0
+          }
+        },
+        "error": null
+      },
+      "reference-adaptive": {
+        "steps": 900,
+        "wall_s": 23.781,
+        "peak_debt_steps": 3.34786,
+        "status": {
+          "epoch": "ce2001f606fd4d0795fdecf69a0b278d",
+          "fixed_step": 900,
+          "running": true,
+          "generation": 0,
+          "pause_reason": null,
+          "debt_quanta": 1467660000,
+          "pending_inputs": 0,
+          "retained_receipts": 0,
+          "reliable_events": 0,
+          "highest_input_sequence": 0,
+          "acknowledged_event_sequence": 95,
+          "speed": {
+            "mode": "adaptive",
+            "effective": 0.677,
+            "slowed": true,
+            "revision": 71,
+            "active_wall_s": 23.781,
+            "advanced_simulation_s": 15.0,
+            "actual_ratio": 0.6307556452630251,
+            "step_mean_ms": 7.118172142514387,
+            "nonstep_utilization": 0.11743218126840492,
+            "longest_step_ms": 63.0
+          }
+        },
+        "error": null
+      },
+      "candidate-fixed": {
+        "steps": 363,
+        "wall_s": 6.313,
+        "peak_debt_steps": 15.78,
+        "status": {
+          "epoch": "66419efdb69f44c0bcba51f0da5db786",
+          "fixed_step": 363,
+          "running": false,
+          "generation": 1,
+          "pause_reason": "overload",
+          "debt_quanta": 15780000000,
+          "pending_inputs": 0,
+          "retained_receipts": 0,
+          "reliable_events": 0,
+          "highest_input_sequence": 0,
+          "acknowledged_event_sequence": 42,
+          "speed": {
+            "mode": "fixed",
+            "effective": 1.0,
+            "slowed": false,
+            "revision": 0,
+            "active_wall_s": 6.313,
+            "advanced_simulation_s": 6.05,
+            "actual_ratio": 0.9583399334706162,
+            "step_mean_ms": 17.0739602073714,
+            "nonstep_utilization": 0.0,
+            "longest_step_ms": 47.0
+          }
+        },
+        "error": null
+      },
+      "candidate-adaptive": {
+        "steps": 900,
+        "wall_s": 21.406,
+        "peak_debt_steps": 3.64,
+        "status": {
+          "epoch": "3ab37a1ce79a404eb8457f4666c9a2c3",
+          "fixed_step": 900,
+          "running": true,
+          "generation": 0,
+          "pause_reason": null,
+          "debt_quanta": 805500000,
+          "pending_inputs": 0,
+          "retained_receipts": 0,
+          "reliable_events": 0,
+          "highest_input_sequence": 0,
+          "acknowledged_event_sequence": 95,
+          "speed": {
+            "mode": "adaptive",
+            "effective": 0.685,
+            "slowed": true,
+            "revision": 46,
+            "active_wall_s": 21.406,
+            "advanced_simulation_s": 15.0,
+            "actual_ratio": 0.7007381108100532,
+            "step_mean_ms": 12.279952062517175,
+            "nonstep_utilization": 0.18093079007248114,
+            "longest_step_ms": 46.0
+          }
+        },
+        "error": null
+      }
+    },
+    "mixed-9v9": {
+      "reference-fixed": {
+        "steps": 64,
+        "wall_s": 1.328,
+        "peak_debt_steps": 15.68,
+        "status": {
+          "epoch": "9a371409192f4aa8ab56b3f1b30f54e4",
+          "fixed_step": 64,
+          "running": false,
+          "generation": 1,
+          "pause_reason": "overload",
+          "debt_quanta": 15680000000,
+          "pending_inputs": 0,
+          "retained_receipts": 0,
+          "reliable_events": 1,
+          "highest_input_sequence": 0,
+          "acknowledged_event_sequence": 22,
+          "speed": {
+            "mode": "fixed",
+            "effective": 1.0,
+            "slowed": false,
+            "revision": 0,
+            "active_wall_s": 1.328,
+            "advanced_simulation_s": 1.0666666666666667,
+            "actual_ratio": 0.8032128514056225,
+            "step_mean_ms": 18.961606468489983,
+            "nonstep_utilization": 0.0,
+            "longest_step_ms": 32.0
+          }
+        },
+        "error": null
+      },
+      "reference-adaptive": {
+        "steps": 900,
+        "wall_s": 53.766,
+        "peak_debt_steps": 3.09416,
+        "status": {
+          "epoch": "e7749c1181b740979319fbcf591d9f86",
+          "fixed_step": 900,
+          "running": true,
+          "generation": 0,
+          "pause_reason": null,
+          "debt_quanta": 1012800000,
+          "pending_inputs": 0,
+          "retained_receipts": 0,
+          "reliable_events": 0,
+          "highest_input_sequence": 0,
+          "acknowledged_event_sequence": 55,
+          "speed": {
+            "mode": "adaptive",
+            "effective": 0.237,
+            "slowed": true,
+            "revision": 70,
+            "active_wall_s": 53.766,
+            "advanced_simulation_s": 15.0,
+            "actual_ratio": 0.27898672023211696,
+            "step_mean_ms": 41.38390503372775,
+            "nonstep_utilization": 0.15073883587873751,
+            "longest_step_ms": 78.0
+          }
+        },
+        "error": null
+      },
+      "candidate-fixed": {
+        "steps": 67,
+        "wall_s": 1.406,
+        "peak_debt_steps": 16.46,
+        "status": {
+          "epoch": "39397fb91fd24af1991bd6077c980e20",
+          "fixed_step": 67,
+          "running": false,
+          "generation": 1,
+          "pause_reason": "overload",
+          "debt_quanta": 16460000000,
+          "pending_inputs": 0,
+          "retained_receipts": 0,
+          "reliable_events": 1,
+          "highest_input_sequence": 0,
+          "acknowledged_event_sequence": 23,
+          "speed": {
+            "mode": "fixed",
+            "effective": 1.0,
+            "slowed": false,
+            "revision": 0,
+            "active_wall_s": 1.391,
+            "advanced_simulation_s": 1.1166666666666667,
+            "actual_ratio": 0.8027797747423916,
+            "step_mean_ms": 22.708719059827434,
+            "nonstep_utilization": 0.0,
+            "longest_step_ms": 47.0
+          }
+        },
+        "error": null
+      },
+      "candidate-adaptive": {
+        "steps": 900,
+        "wall_s": 54.734,
+        "peak_debt_steps": 4.32,
+        "status": {
+          "epoch": "d972b4a2c5c643d6a7f8693a25752044",
+          "fixed_step": 900,
+          "running": true,
+          "generation": 0,
+          "pause_reason": null,
+          "debt_quanta": 619500000,
+          "pending_inputs": 0,
+          "retained_receipts": 0,
+          "reliable_events": 0,
+          "highest_input_sequence": 0,
+          "acknowledged_event_sequence": 55,
+          "speed": {
+            "mode": "adaptive",
+            "effective": 0.188,
+            "slowed": true,
+            "revision": 71,
+            "active_wall_s": 54.734,
+            "advanced_simulation_s": 15.0,
+            "actual_ratio": 0.27405269119742753,
+            "step_mean_ms": 40.04789250765455,
+            "nonstep_utilization": 0.24388647543043815,
+            "longest_step_ms": 78.0
+          }
+        },
+        "error": null
+      }
+    }
+  },
+  "profiles": {
+    "reference": {
+      "case": "mixed-9v9",
+      "variant": "reference",
+      "steps": [
+        601,
+        660
+      ],
+      "verified_steps": 660,
+      "total_profiled_s": 7.597501200000014,
+      "top": [
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\copy.py",
+          "line": 118,
+          "function": "deepcopy",
+          "primitive_calls": 1220,
+          "calls": 991561,
+          "self_s": 0.4909367,
+          "cumulative_s": 1.0588797
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\dataclasses.py",
+          "line": 1540,
+          "function": "replace",
+          "primitive_calls": 107158,
+          "calls": 107158,
+          "self_s": 0.3077785,
+          "cumulative_s": 0.585168
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\missile_guidance.py",
+          "line": 56,
+          "function": "segment_circle",
+          "primitive_calls": 619505,
+          "calls": 619505,
+          "self_s": 0.26229810000000003,
+          "cumulative_s": 0.3820117
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'get' of 'dict' objects>",
+          "primitive_calls": 2492563,
+          "calls": 2492563,
+          "self_s": 0.20598670000000002,
+          "cumulative_s": 0.2212464
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\missile_guidance.py",
+          "line": 65,
+          "function": "blocked_channels",
+          "primitive_calls": 95046,
+          "calls": 95046,
+          "self_s": 0.1995353,
+          "cumulative_s": 0.6068733000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.max>",
+          "primitive_calls": 1695639,
+          "calls": 1695639,
+          "self_s": 0.1791354,
+          "cumulative_s": 0.18074130000000002
+        },
+        {
+          "file": "G:\\高天荒野\\高天荒野舰艇战术弹丸世界.py",
+          "line": 1006,
+          "function": "_segment_aabb_entry_fraction",
+          "primitive_calls": 153597,
+          "calls": 153597,
+          "self_s": 0.1577694,
+          "cumulative_s": 0.2793937
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.min>",
+          "primitive_calls": 1483957,
+          "calls": 1483957,
+          "self_s": 0.15589850000000002,
+          "cumulative_s": 0.1584193
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+          "line": 196,
+          "function": "contacts_on_path",
+          "primitive_calls": 12198,
+          "calls": 12198,
+          "self_s": 0.1552473,
+          "cumulative_s": 0.6238416
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+          "line": 248,
+          "function": "advance",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.1549857,
+          "cumulative_s": 0.7258502
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 214,
+          "function": "targets",
+          "primitive_calls": 180,
+          "calls": 180,
+          "self_s": 0.14986480000000002,
+          "cumulative_s": 0.3111736
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\copy.py",
+          "line": 217,
+          "function": "_deepcopy_dict",
+          "primitive_calls": 1220,
+          "calls": 76850,
+          "self_s": 0.147678,
+          "cumulative_s": 1.0564557
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 181,
+          "function": "visible",
+          "primitive_calls": 61650,
+          "calls": 61650,
+          "self_s": 0.1347846,
+          "cumulative_s": 0.8295918000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\missile_guidance.py",
+          "line": 86,
+          "function": "contact",
+          "primitive_calls": 46429,
+          "calls": 46429,
+          "self_s": 0.12301580000000001,
+          "cumulative_s": 1.1568930000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.getattr>",
+          "primitive_calls": 1525817,
+          "calls": 1525817,
+          "self_s": 0.1225557,
+          "cumulative_s": 0.1225557
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+          "line": 82,
+          "function": "segment",
+          "primitive_calls": 182925,
+          "calls": 182925,
+          "self_s": 0.11347410000000001,
+          "cumulative_s": 0.18177490000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_defense_prediction.py",
+          "line": 106,
+          "function": "calculate",
+          "primitive_calls": 3152,
+          "calls": 3152,
+          "self_s": 0.105795,
+          "cumulative_s": 0.9966138000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_point_defense.py",
+          "line": 35,
+          "function": "predict",
+          "primitive_calls": 48502,
+          "calls": 48502,
+          "self_s": 0.10376200000000001,
+          "cumulative_s": 0.18224200000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_combat.py",
+          "line": 45,
+          "function": "known",
+          "primitive_calls": 356,
+          "calls": 356,
+          "self_s": 0.09979070000000001,
+          "cumulative_s": 0.1549575
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 75,
+          "function": "can_observe",
+          "primitive_calls": 73226,
+          "calls": 73226,
+          "self_s": 0.08948690000000001,
+          "cumulative_s": 0.1701735
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 243,
+          "function": "plan",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.0853333,
+          "cumulative_s": 1.1716642000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.any>",
+          "primitive_calls": 376782,
+          "calls": 383122,
+          "self_s": 0.084813,
+          "cumulative_s": 0.2502323
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\json\\encoder.py",
+          "line": 205,
+          "function": "iterencode",
+          "primitive_calls": 9665,
+          "calls": 9665,
+          "self_s": 0.079139,
+          "cumulative_s": 0.0794608
+        },
+        {
+          "file": "G:\\高天荒野\\高天荒野舰艇人员舱容量.py",
+          "line": 18,
+          "function": "allocate",
+          "primitive_calls": 2546,
+          "calls": 2546,
+          "self_s": 0.0763415,
+          "cumulative_s": 0.20536980000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.id>",
+          "primitive_calls": 1284326,
+          "calls": 1284326,
+          "self_s": 0.0729289,
+          "cumulative_s": 0.0729289
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\missile_guidance.py",
+          "line": 133,
+          "function": "update",
+          "primitive_calls": 2784,
+          "calls": 2784,
+          "self_s": 0.0695299,
+          "cumulative_s": 1.3386018000000002
+        },
+        {
+          "file": "G:\\高天荒野\\高天荒野舰艇数据契约.py",
+          "line": 167,
+          "function": "_thaw_json_value",
+          "primitive_calls": 35070,
+          "calls": 170832,
+          "self_s": 0.06893400000000001,
+          "cumulative_s": 0.0862407
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 346,
+          "function": "<genexpr>",
+          "primitive_calls": 95020,
+          "calls": 95020,
+          "self_s": 0.06352150000000001,
+          "cumulative_s": 0.1178826
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\json\\encoder.py",
+          "line": 334,
+          "function": "_iterencode_dict",
+          "primitive_calls": 169986,
+          "calls": 388188,
+          "self_s": 0.0568084,
+          "cumulative_s": 0.1129232
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+          "line": 86,
+          "function": "<lambda>",
+          "primitive_calls": 548775,
+          "calls": 548775,
+          "self_s": 0.056081500000000006,
+          "cumulative_s": 0.056081500000000006
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\json\\decoder.py",
+          "line": 344,
+          "function": "raw_decode",
+          "primitive_calls": 9415,
+          "calls": 9415,
+          "self_s": 0.05499660000000001,
+          "cumulative_s": 0.1065195
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.abs>",
+          "primitive_calls": 790793,
+          "calls": 790793,
+          "self_s": 0.054266,
+          "cumulative_s": 0.054266
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.sum>",
+          "primitive_calls": 158132,
+          "calls": 158132,
+          "self_s": 0.0539952,
+          "cumulative_s": 0.09522
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method math.hypot>",
+          "primitive_calls": 498084,
+          "calls": 498084,
+          "self_s": 0.047140600000000005,
+          "cumulative_s": 0.047140600000000005
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ew.py",
+          "line": 135,
+          "function": "environment",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.0464808,
+          "cumulative_s": 0.2377592
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 106,
+          "function": "controllers",
+          "primitive_calls": 75361,
+          "calls": 75361,
+          "self_s": 0.046037800000000004,
+          "cumulative_s": 0.0799127
+        },
+        {
+          "file": "<frozen importlib._bootstrap>",
+          "line": 645,
+          "function": "parent",
+          "primitive_calls": 197483,
+          "calls": 197483,
+          "self_s": 0.0444065,
+          "cumulative_s": 0.0724664
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.isinstance>",
+          "primitive_calls": 649517,
+          "calls": 649517,
+          "self_s": 0.044008700000000005,
+          "cumulative_s": 0.044008700000000005
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 234,
+          "function": "share",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.0431483,
+          "cumulative_s": 0.0764539
+        },
+        {
+          "file": "G:\\高天荒野\\高天荒野舰艇战术机动求解器.py",
+          "line": 64,
+          "function": "to_list",
+          "primitive_calls": 444724,
+          "calls": 444724,
+          "self_s": 0.040123000000000006,
+          "cumulative_s": 0.040123000000000006
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\persistent_ship.py",
+          "line": 65,
+          "function": "pairs",
+          "primitive_calls": 41837,
+          "calls": 41837,
+          "self_s": 0.0399857,
+          "cumulative_s": 0.0515229
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+          "line": 43,
+          "function": "coefficient",
+          "primitive_calls": 55922,
+          "calls": 55922,
+          "self_s": 0.0387727,
+          "cumulative_s": 0.0438285
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.hash>",
+          "primitive_calls": 76005,
+          "calls": 139445,
+          "self_s": 0.038309100000000006,
+          "cumulative_s": 0.071324
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\simplified_flight.py",
+          "line": 495,
+          "function": "step",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.038216400000000005,
+          "cumulative_s": 7.8663638
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\copy.py",
+          "line": 200,
+          "function": "_deepcopy_tuple",
+          "primitive_calls": 10139,
+          "calls": 40895,
+          "self_s": 0.0379461,
+          "cumulative_s": 0.502577
+        }
+      ],
+      "focus": [
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 243,
+          "function": "plan",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.0853333,
+          "cumulative_s": 1.1716642000000002
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 144,
+          "function": "advance",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.016594,
+          "cumulative_s": 0.9932137000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 181,
+          "function": "visible",
+          "primitive_calls": 61650,
+          "calls": 61650,
+          "self_s": 0.1347846,
+          "cumulative_s": 0.8295918000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 103,
+          "function": "candidates",
+          "primitive_calls": 2560,
+          "calls": 2560,
+          "self_s": 0.0039349,
+          "cumulative_s": 0.4441915
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 214,
+          "function": "targets",
+          "primitive_calls": 180,
+          "calls": 180,
+          "self_s": 0.14986480000000002,
+          "cumulative_s": 0.3111736
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 342,
+          "function": "sources",
+          "primitive_calls": 36732,
+          "calls": 36732,
+          "self_s": 0.0343252,
+          "cumulative_s": 0.23610250000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 75,
+          "function": "can_observe",
+          "primitive_calls": 73226,
+          "calls": 73226,
+          "self_s": 0.08948690000000001,
+          "cumulative_s": 0.1701735
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 73,
+          "function": "sample",
+          "primitive_calls": 712,
+          "calls": 712,
+          "self_s": 0.0218327,
+          "cumulative_s": 0.1480834
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 346,
+          "function": "<genexpr>",
+          "primitive_calls": 95020,
+          "calls": 95020,
+          "self_s": 0.06352150000000001,
+          "cumulative_s": 0.1178826
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 329,
+          "function": "controllers",
+          "primitive_calls": 75361,
+          "calls": 75361,
+          "self_s": 0.0292653,
+          "cumulative_s": 0.11467730000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 354,
+          "function": "defense_sources",
+          "primitive_calls": 14684,
+          "calls": 14684,
+          "self_s": 0.013598,
+          "cumulative_s": 0.1006988
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 106,
+          "function": "controllers",
+          "primitive_calls": 75361,
+          "calls": 75361,
+          "self_s": 0.046037800000000004,
+          "cumulative_s": 0.0799127
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 234,
+          "function": "share",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.0431483,
+          "cumulative_s": 0.0764539
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 194,
+          "function": "radar_factor",
+          "primitive_calls": 11220,
+          "calls": 11220,
+          "self_s": 0.016504500000000002,
+          "cumulative_s": 0.056800800000000005
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 59,
+          "function": "targets",
+          "primitive_calls": 180,
+          "calls": 180,
+          "self_s": 0.0048014,
+          "cumulative_s": 0.043638800000000005
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 62,
+          "function": "observation_range",
+          "primitive_calls": 70419,
+          "calls": 70419,
+          "self_s": 0.028347200000000003,
+          "cumulative_s": 0.039222
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 80,
+          "function": "allocate",
+          "primitive_calls": 2512,
+          "calls": 2512,
+          "self_s": 0.0123941,
+          "cumulative_s": 0.0379491
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 207,
+          "function": "effect",
+          "primitive_calls": 5760,
+          "calls": 5760,
+          "self_s": 0.011751200000000002,
+          "cumulative_s": 0.027539900000000003
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 77,
+          "function": "<genexpr>",
+          "primitive_calls": 211257,
+          "calls": 211257,
+          "self_s": 0.0180195,
+          "cumulative_s": 0.0180195
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 188,
+          "function": "<genexpr>",
+          "primitive_calls": 178650,
+          "calls": 178650,
+          "self_s": 0.0148938,
+          "cumulative_s": 0.0148938
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 57,
+          "function": "tracking_cost",
+          "primitive_calls": 18163,
+          "calls": 18163,
+          "self_s": 0.0043736,
+          "cumulative_s": 0.014862400000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 229,
+          "function": "<genexpr>",
+          "primitive_calls": 147312,
+          "calls": 147312,
+          "self_s": 0.013670700000000001,
+          "cumulative_s": 0.013670700000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 109,
+          "function": "<genexpr>",
+          "primitive_calls": 4320,
+          "calls": 4320,
+          "self_s": 0.0024215,
+          "cumulative_s": 0.013182900000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 114,
+          "function": "<genexpr>",
+          "primitive_calls": 97668,
+          "calls": 97668,
+          "self_s": 0.0122714,
+          "cumulative_s": 0.0122714
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 230,
+          "function": "<genexpr>",
+          "primitive_calls": 147312,
+          "calls": 147312,
+          "self_s": 0.0115267,
+          "cumulative_s": 0.0115267
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 244,
+          "function": "<genexpr>",
+          "primitive_calls": 72486,
+          "calls": 72486,
+          "self_s": 0.010911200000000001,
+          "cumulative_s": 0.010911200000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 232,
+          "function": "<genexpr>",
+          "primitive_calls": 147312,
+          "calls": 147312,
+          "self_s": 0.0103382,
+          "cumulative_s": 0.0103382
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 231,
+          "function": "<genexpr>",
+          "primitive_calls": 147312,
+          "calls": 147312,
+          "self_s": 0.009784900000000001,
+          "cumulative_s": 0.009784900000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 234,
+          "function": "<genexpr>",
+          "primitive_calls": 110241,
+          "calls": 110241,
+          "self_s": 0.009090200000000001,
+          "cumulative_s": 0.009090200000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 350,
+          "function": "<genexpr>",
+          "primitive_calls": 70770,
+          "calls": 70770,
+          "self_s": 0.007344600000000001,
+          "cumulative_s": 0.007344600000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 35,
+          "function": "active",
+          "primitive_calls": 73244,
+          "calls": 73244,
+          "self_s": 0.0068063,
+          "cumulative_s": 0.0068063
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 31,
+          "function": "plane",
+          "primitive_calls": 3916,
+          "calls": 3916,
+          "self_s": 0.0038039000000000002,
+          "cumulative_s": 0.0066509
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 177,
+          "function": "synchronize",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.00020710000000000002,
+          "cumulative_s": 0.006071600000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 106,
+          "function": "<lambda>",
+          "primitive_calls": 4608,
+          "calls": 4608,
+          "self_s": 0.003876,
+          "cumulative_s": 0.0058094
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 105,
+          "function": "_sync",
+          "primitive_calls": 180,
+          "calls": 180,
+          "self_s": 0.0027421000000000004,
+          "cumulative_s": 0.0055411
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 357,
+          "function": "<genexpr>",
+          "primitive_calls": 11184,
+          "calls": 11184,
+          "self_s": 0.0035176,
+          "cumulative_s": 0.0035896
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 150,
+          "function": "projectiles",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 7.64e-05,
+          "cumulative_s": 0.0034293
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 211,
+          "function": "<genexpr>",
+          "primitive_calls": 11520,
+          "calls": 11520,
+          "self_s": 0.0029589,
+          "cumulative_s": 0.0029589
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 263,
+          "function": "<genexpr>",
+          "primitive_calls": 28182,
+          "calls": 28182,
+          "self_s": 0.0027848,
+          "cumulative_s": 0.0027848
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 113,
+          "function": "set_location",
+          "primitive_calls": 356,
+          "calls": 356,
+          "self_s": 0.0002012,
+          "cumulative_s": 0.002421
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 119,
+          "function": "move",
+          "primitive_calls": 356,
+          "calls": 356,
+          "self_s": 0.0012162000000000002,
+          "cumulative_s": 0.0018867
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 265,
+          "function": "<genexpr>",
+          "primitive_calls": 2040,
+          "calls": 2040,
+          "self_s": 0.0018459000000000001,
+          "cumulative_s": 0.0018459000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 365,
+          "function": "contact",
+          "primitive_calls": 140,
+          "calls": 140,
+          "self_s": 0.0002097,
+          "cumulative_s": 0.0018428000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 140,
+          "function": "ships",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.0001216,
+          "cumulative_s": 0.0017471000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 32,
+          "function": "<genexpr>",
+          "primitive_calls": 7832,
+          "calls": 7832,
+          "self_s": 0.0017325,
+          "cumulative_s": 0.0017325
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 25,
+          "function": "origin",
+          "primitive_calls": 256,
+          "calls": 256,
+          "self_s": 0.0009923,
+          "cumulative_s": 0.0016786000000000001
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 295,
+          "function": "<genexpr>",
+          "primitive_calls": 25920,
+          "calls": 25920,
+          "self_s": 0.0015269,
+          "cumulative_s": 0.0015269
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 88,
+          "function": "<lambda>",
+          "primitive_calls": 7754,
+          "calls": 7754,
+          "self_s": 0.0013236,
+          "cumulative_s": 0.0013236
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 249,
+          "function": "<lambda>",
+          "primitive_calls": 1800,
+          "calls": 1800,
+          "self_s": 0.0008855,
+          "cumulative_s": 0.0012893000000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 101,
+          "function": "__init__",
+          "primitive_calls": 120,
+          "calls": 120,
+          "self_s": 0.0003595,
+          "cumulative_s": 0.0011108000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 106,
+          "function": "<genexpr>",
+          "primitive_calls": 13824,
+          "calls": 13824,
+          "self_s": 0.0010811,
+          "cumulative_s": 0.0010811
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 242,
+          "function": "<genexpr>",
+          "primitive_calls": 9612,
+          "calls": 9612,
+          "self_s": 0.0009378,
+          "cumulative_s": 0.0009378
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 167,
+          "function": "capability_stage",
+          "primitive_calls": 120,
+          "calls": 120,
+          "self_s": 0.0003437,
+          "cumulative_s": 0.0009341000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 241,
+          "function": "<genexpr>",
+          "primitive_calls": 6408,
+          "calls": 6408,
+          "self_s": 0.0008559,
+          "cumulative_s": 0.0008559
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 103,
+          "function": "<genexpr>",
+          "primitive_calls": 2280,
+          "calls": 2280,
+          "self_s": 0.0005548,
+          "cumulative_s": 0.0007513
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 166,
+          "function": "aircraft",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 9.88e-05,
+          "cumulative_s": 0.0006739000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 162,
+          "function": "<genexpr>",
+          "primitive_calls": 2844,
+          "calls": 2844,
+          "self_s": 0.0005713000000000001,
+          "cumulative_s": 0.0005713000000000001
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 206,
+          "function": "<lambda>",
+          "primitive_calls": 276,
+          "calls": 276,
+          "self_s": 0.00032740000000000004,
+          "cumulative_s": 0.00042580000000000005
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 362,
+          "function": "defense_ready",
+          "primitive_calls": 504,
+          "calls": 504,
+          "self_s": 0.00035390000000000004,
+          "cumulative_s": 0.00041910000000000005
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 199,
+          "function": "<genexpr>",
+          "primitive_calls": 1800,
+          "calls": 1800,
+          "self_s": 0.00038570000000000005,
+          "cumulative_s": 0.00038570000000000005
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 105,
+          "function": "<genexpr>",
+          "primitive_calls": 512,
+          "calls": 512,
+          "self_s": 0.0003801,
+          "cumulative_s": 0.0003801
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 112,
+          "function": "<genexpr>",
+          "primitive_calls": 4320,
+          "calls": 4320,
+          "self_s": 0.0003501,
+          "cumulative_s": 0.0003501
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 292,
+          "function": "<genexpr>",
+          "primitive_calls": 2160,
+          "calls": 2160,
+          "self_s": 0.0003465,
+          "cumulative_s": 0.0003465
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 200,
+          "function": "<genexpr>",
+          "primitive_calls": 2700,
+          "calls": 2700,
+          "self_s": 0.0002861,
+          "cumulative_s": 0.0002861
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 145,
+          "function": "<genexpr>",
+          "primitive_calls": 1140,
+          "calls": 1140,
+          "self_s": 0.0002815,
+          "cumulative_s": 0.0002815
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 289,
+          "function": "<genexpr>",
+          "primitive_calls": 1800,
+          "calls": 1800,
+          "self_s": 0.0002748,
+          "cumulative_s": 0.0002748
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 219,
+          "function": "finish",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 6.97e-05,
+          "cumulative_s": 0.0002157
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 37,
+          "function": "build",
+          "primitive_calls": 8,
+          "calls": 8,
+          "self_s": 0.0001273,
+          "cumulative_s": 0.00019730000000000003
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 148,
+          "function": "<genexpr>",
+          "primitive_calls": 1068,
+          "calls": 1068,
+          "self_s": 0.000152,
+          "cumulative_s": 0.000152
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 183,
+          "function": "<genexpr>",
+          "primitive_calls": 768,
+          "calls": 768,
+          "self_s": 0.00013110000000000002,
+          "cumulative_s": 0.00013110000000000002
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 205,
+          "function": "<genexpr>",
+          "primitive_calls": 828,
+          "calls": 828,
+          "self_s": 0.00012350000000000002,
+          "cumulative_s": 0.00012350000000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 209,
+          "function": "begin",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 9.920000000000001e-05,
+          "cumulative_s": 0.0001173
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/tactical_observation.py",
+          "line": 270,
+          "function": "<genexpr>",
+          "primitive_calls": 660,
+          "calls": 660,
+          "self_s": 0.00011040000000000001,
+          "cumulative_s": 0.00011040000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 131,
+          "function": "change_layer",
+          "primitive_calls": 356,
+          "calls": 356,
+          "self_s": 0.00010460000000000001,
+          "cumulative_s": 0.00010460000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 174,
+          "function": "<genexpr>",
+          "primitive_calls": 416,
+          "calls": 416,
+          "self_s": 8.910000000000001e-05,
+          "cumulative_s": 8.910000000000001e-05
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 206,
+          "function": "<genexpr>",
+          "primitive_calls": 828,
+          "calls": 828,
+          "self_s": 7.49e-05,
+          "cumulative_s": 7.49e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 223,
+          "function": "<genexpr>",
+          "primitive_calls": 416,
+          "calls": 416,
+          "self_s": 6.58e-05,
+          "cumulative_s": 6.58e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 369,
+          "function": "<genexpr>",
+          "primitive_calls": 280,
+          "calls": 280,
+          "self_s": 6.57e-05,
+          "cumulative_s": 6.57e-05
+        },
+        {
+          "file": "352f3e5f5f8bca499a6b77cb27332057f2bd3be3:backend/high_wilderness_sidecar/aviation_flight.py",
+          "line": 152,
+          "function": "<lambda>",
+          "primitive_calls": 356,
+          "calls": 356,
+          "self_s": 5.6800000000000005e-05,
+          "cumulative_s": 5.6800000000000005e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 212,
+          "function": "commit",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 3.96e-05,
+          "cumulative_s": 4.5600000000000004e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 101,
+          "function": "_guard",
+          "primitive_calls": 360,
+          "calls": 360,
+          "self_s": 4.3e-05,
+          "cumulative_s": 4.3e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 96,
+          "function": "__init__",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 1.81e-05,
+          "cumulative_s": 1.81e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 151,
+          "function": "describe",
+          "primitive_calls": 6,
+          "calls": 6,
+          "self_s": 1.18e-05,
+          "cumulative_s": 1.6000000000000003e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 167,
+          "function": "describe",
+          "primitive_calls": 2,
+          "calls": 2,
+          "self_s": 4.1000000000000006e-06,
+          "cumulative_s": 8.400000000000001e-06
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 170,
+          "function": "<genexpr>",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_s": 1.3e-06,
+          "cumulative_s": 1.3e-06
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 171,
+          "function": "<genexpr>",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_s": 1.0000000000000002e-06,
+          "cumulative_s": 1.0000000000000002e-06
+        }
+      ],
+      "scope": "Step-only cProfile attribution after 600 warm steps. Cumulative times overlap; not comparable to uninstrumented benchmark distributions."
+    },
+    "candidate": {
+      "case": "mixed-9v9",
+      "variant": "candidate",
+      "steps": [
+        601,
+        660
+      ],
+      "verified_steps": 660,
+      "total_profiled_s": 7.441944100000003,
+      "top": [
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\copy.py",
+          "line": 118,
+          "function": "deepcopy",
+          "primitive_calls": 1220,
+          "calls": 991561,
+          "self_s": 0.48754590000000003,
+          "cumulative_s": 1.0487694
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\dataclasses.py",
+          "line": 1540,
+          "function": "replace",
+          "primitive_calls": 107158,
+          "calls": 107158,
+          "self_s": 0.3066128,
+          "cumulative_s": 0.5823283
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\missile_guidance.py",
+          "line": 56,
+          "function": "segment_circle",
+          "primitive_calls": 619505,
+          "calls": 619505,
+          "self_s": 0.2648938,
+          "cumulative_s": 0.3834389
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'get' of 'dict' objects>",
+          "primitive_calls": 2492042,
+          "calls": 2492042,
+          "self_s": 0.205873,
+          "cumulative_s": 0.22087610000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\missile_guidance.py",
+          "line": 65,
+          "function": "blocked_channels",
+          "primitive_calls": 95046,
+          "calls": 95046,
+          "self_s": 0.20167800000000002,
+          "cumulative_s": 0.6105289
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.max>",
+          "primitive_calls": 1695639,
+          "calls": 1695639,
+          "self_s": 0.1770303,
+          "cumulative_s": 0.1786551
+        },
+        {
+          "file": "G:\\高天荒野\\高天荒野舰艇战术弹丸世界.py",
+          "line": 1006,
+          "function": "_segment_aabb_entry_fraction",
+          "primitive_calls": 153597,
+          "calls": 153597,
+          "self_s": 0.1555159,
+          "cumulative_s": 0.2753233
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+          "line": 196,
+          "function": "contacts_on_path",
+          "primitive_calls": 12198,
+          "calls": 12198,
+          "self_s": 0.1545466,
+          "cumulative_s": 0.6270701000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.min>",
+          "primitive_calls": 1483957,
+          "calls": 1483957,
+          "self_s": 0.1531433,
+          "cumulative_s": 0.155651
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+          "line": 248,
+          "function": "advance",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.15277690000000002,
+          "cumulative_s": 0.7174445
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\copy.py",
+          "line": 217,
+          "function": "_deepcopy_dict",
+          "primitive_calls": 1220,
+          "calls": 76850,
+          "self_s": 0.1444742,
+          "cumulative_s": 1.0463603000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 181,
+          "function": "visible",
+          "primitive_calls": 61650,
+          "calls": 61650,
+          "self_s": 0.1372925,
+          "cumulative_s": 0.8389340000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\missile_guidance.py",
+          "line": 86,
+          "function": "contact",
+          "primitive_calls": 46429,
+          "calls": 46429,
+          "self_s": 0.1219988,
+          "cumulative_s": 1.1480727000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_point_defense.py",
+          "line": 35,
+          "function": "predict",
+          "primitive_calls": 48502,
+          "calls": 48502,
+          "self_s": 0.1208594,
+          "cumulative_s": 0.19827180000000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.getattr>",
+          "primitive_calls": 1505098,
+          "calls": 1505098,
+          "self_s": 0.11957350000000001,
+          "cumulative_s": 0.11957350000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+          "line": 82,
+          "function": "segment",
+          "primitive_calls": 182925,
+          "calls": 182925,
+          "self_s": 0.1147592,
+          "cumulative_s": 0.1677171
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 252,
+          "function": "plan",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.1072815,
+          "cumulative_s": 1.2427658000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_defense_prediction.py",
+          "line": 106,
+          "function": "calculate",
+          "primitive_calls": 3152,
+          "calls": 3152,
+          "self_s": 0.1044128,
+          "cumulative_s": 1.0147229
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_combat.py",
+          "line": 45,
+          "function": "known",
+          "primitive_calls": 356,
+          "calls": 356,
+          "self_s": 0.0975604,
+          "cumulative_s": 0.15159
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 75,
+          "function": "can_observe",
+          "primitive_calls": 73226,
+          "calls": 73226,
+          "self_s": 0.0905905,
+          "cumulative_s": 0.1753373
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.any>",
+          "primitive_calls": 376782,
+          "calls": 383122,
+          "self_s": 0.08433500000000001,
+          "cumulative_s": 0.2709508
+        },
+        {
+          "file": "G:\\高天荒野\\高天荒野舰艇人员舱容量.py",
+          "line": 18,
+          "function": "allocate",
+          "primitive_calls": 2546,
+          "calls": 2546,
+          "self_s": 0.07678650000000001,
+          "cumulative_s": 0.18884060000000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.id>",
+          "primitive_calls": 1284326,
+          "calls": 1284326,
+          "self_s": 0.0724758,
+          "cumulative_s": 0.0724758
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\json\\encoder.py",
+          "line": 205,
+          "function": "iterencode",
+          "primitive_calls": 8597,
+          "calls": 8597,
+          "self_s": 0.06938140000000001,
+          "cumulative_s": 0.06990170000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\missile_guidance.py",
+          "line": 133,
+          "function": "update",
+          "primitive_calls": 2784,
+          "calls": 2784,
+          "self_s": 0.06888000000000001,
+          "cumulative_s": 1.3284175
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 346,
+          "function": "<genexpr>",
+          "primitive_calls": 95020,
+          "calls": 95020,
+          "self_s": 0.06354,
+          "cumulative_s": 0.11710240000000001
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\json\\encoder.py",
+          "line": 334,
+          "function": "_iterencode_dict",
+          "primitive_calls": 169986,
+          "calls": 388188,
+          "self_s": 0.0581254,
+          "cumulative_s": 0.11458750000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.abs>",
+          "primitive_calls": 766997,
+          "calls": 766997,
+          "self_s": 0.0526695,
+          "cumulative_s": 0.0526695
+        },
+        {
+          "file": "G:\\高天荒野\\高天荒野舰艇数据契约.py",
+          "line": 167,
+          "function": "_thaw_json_value",
+          "primitive_calls": 35070,
+          "calls": 170832,
+          "self_s": 0.0519396,
+          "cumulative_s": 0.0693001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.hash>",
+          "primitive_calls": 225283,
+          "calls": 288723,
+          "self_s": 0.0498603,
+          "cumulative_s": 0.0823427
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\json\\decoder.py",
+          "line": 344,
+          "function": "raw_decode",
+          "primitive_calls": 8347,
+          "calls": 8347,
+          "self_s": 0.0477891,
+          "cumulative_s": 0.09343370000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 106,
+          "function": "controllers",
+          "primitive_calls": 75361,
+          "calls": 75361,
+          "self_s": 0.046073100000000006,
+          "cumulative_s": 0.0796116
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ew.py",
+          "line": 135,
+          "function": "environment",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.0455078,
+          "cumulative_s": 0.23438520000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method math.hypot>",
+          "primitive_calls": 474288,
+          "calls": 474288,
+          "self_s": 0.0454036,
+          "cumulative_s": 0.0454036
+        },
+        {
+          "file": "<frozen importlib._bootstrap>",
+          "line": 645,
+          "function": "parent",
+          "primitive_calls": 198195,
+          "calls": 198195,
+          "self_s": 0.0438855,
+          "cumulative_s": 0.0718826
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 234,
+          "function": "share",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.042489700000000005,
+          "cumulative_s": 0.07367620000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.isinstance>",
+          "primitive_calls": 620367,
+          "calls": 620367,
+          "self_s": 0.0418964,
+          "cumulative_s": 0.0418964
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_damage.py",
+          "line": 86,
+          "function": "<lambda>",
+          "primitive_calls": 548775,
+          "calls": 548775,
+          "self_s": 0.0405464,
+          "cumulative_s": 0.0405464
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 121,
+          "function": "threat",
+          "primitive_calls": 2881,
+          "calls": 2881,
+          "self_s": 0.0388198,
+          "cumulative_s": 0.0824526
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_ballistics.py",
+          "line": 43,
+          "function": "coefficient",
+          "primitive_calls": 55922,
+          "calls": 55922,
+          "self_s": 0.0383837,
+          "cumulative_s": 0.0433879
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_resources.py",
+          "line": 66,
+          "function": "quarters_available",
+          "primitive_calls": 2546,
+          "calls": 2546,
+          "self_s": 0.037900500000000004,
+          "cumulative_s": 0.280567
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\copy.py",
+          "line": 172,
+          "function": "_deepcopy_atomic",
+          "primitive_calls": 831880,
+          "calls": 831880,
+          "self_s": 0.0377935,
+          "cumulative_s": 0.0377935
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\simplified_flight.py",
+          "line": 495,
+          "function": "step",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.03769,
+          "cumulative_s": 7.696020900000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 107,
+          "function": "query",
+          "primitive_calls": 73637,
+          "calls": 73637,
+          "self_s": 0.0372556,
+          "cumulative_s": 0.0945454
+        },
+        {
+          "file": "C:\\Users\\Yichen\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\python\\Lib\\copy.py",
+          "line": 200,
+          "function": "_deepcopy_tuple",
+          "primitive_calls": 10139,
+          "calls": 40895,
+          "self_s": 0.037080800000000004,
+          "cumulative_s": 0.4970255
+        }
+      ],
+      "focus": [
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 252,
+          "function": "plan",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.1072815,
+          "cumulative_s": 1.2427658000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 147,
+          "function": "advance",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.0156893,
+          "cumulative_s": 0.9165190000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 181,
+          "function": "visible",
+          "primitive_calls": 61650,
+          "calls": 61650,
+          "self_s": 0.1372925,
+          "cumulative_s": 0.8389340000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 103,
+          "function": "candidates",
+          "primitive_calls": 2560,
+          "calls": 2560,
+          "self_s": 0.0036785000000000003,
+          "cumulative_s": 0.44257070000000004
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 342,
+          "function": "sources",
+          "primitive_calls": 36732,
+          "calls": 36732,
+          "self_s": 0.0345962,
+          "cumulative_s": 0.2333918
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 73,
+          "function": "sample",
+          "primitive_calls": 712,
+          "calls": 712,
+          "self_s": 0.0224507,
+          "cumulative_s": 0.21211400000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 75,
+          "function": "can_observe",
+          "primitive_calls": 73226,
+          "calls": 73226,
+          "self_s": 0.0905905,
+          "cumulative_s": 0.1753373
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 346,
+          "function": "<genexpr>",
+          "primitive_calls": 95020,
+          "calls": 95020,
+          "self_s": 0.06354,
+          "cumulative_s": 0.11710240000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 329,
+          "function": "controllers",
+          "primitive_calls": 75361,
+          "calls": 75361,
+          "self_s": 0.0288722,
+          "cumulative_s": 0.11398230000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 354,
+          "function": "defense_sources",
+          "primitive_calls": 14684,
+          "calls": 14684,
+          "self_s": 0.013652300000000001,
+          "cumulative_s": 0.0997354
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 107,
+          "function": "query",
+          "primitive_calls": 73637,
+          "calls": 73637,
+          "self_s": 0.0372556,
+          "cumulative_s": 0.0945454
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 64,
+          "function": "threat",
+          "primitive_calls": 13897,
+          "calls": 13897,
+          "self_s": 0.002326,
+          "cumulative_s": 0.0872972
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 121,
+          "function": "threat",
+          "primitive_calls": 2881,
+          "calls": 2881,
+          "self_s": 0.0388198,
+          "cumulative_s": 0.0824526
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 106,
+          "function": "controllers",
+          "primitive_calls": 75361,
+          "calls": 75361,
+          "self_s": 0.046073100000000006,
+          "cumulative_s": 0.0796116
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 234,
+          "function": "share",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 0.042489700000000005,
+          "cumulative_s": 0.07367620000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 194,
+          "function": "radar_factor",
+          "primitive_calls": 11220,
+          "calls": 11220,
+          "self_s": 0.0169272,
+          "cumulative_s": 0.057623400000000005
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 80,
+          "function": "allocate",
+          "primitive_calls": 2512,
+          "calls": 2512,
+          "self_s": 0.013070600000000002,
+          "cumulative_s": 0.052911200000000005
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 62,
+          "function": "observation_range",
+          "primitive_calls": 70419,
+          "calls": 70419,
+          "self_s": 0.028275,
+          "cumulative_s": 0.039332700000000005
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 57,
+          "function": "tracking_cost",
+          "primitive_calls": 18163,
+          "calls": 18163,
+          "self_s": 0.0072592,
+          "cumulative_s": 0.0289108
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 207,
+          "function": "effect",
+          "primitive_calls": 5760,
+          "calls": 5760,
+          "self_s": 0.0111009,
+          "cumulative_s": 0.027747
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 77,
+          "function": "<genexpr>",
+          "primitive_calls": 211257,
+          "calls": 211257,
+          "self_s": 0.0212671,
+          "cumulative_s": 0.0212671
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 177,
+          "function": "synchronize",
+          "primitive_calls": 180,
+          "calls": 180,
+          "self_s": 0.0005374,
+          "cumulative_s": 0.0174755
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 105,
+          "function": "_sync",
+          "primitive_calls": 540,
+          "calls": 540,
+          "self_s": 0.0081502,
+          "cumulative_s": 0.016056
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 243,
+          "function": "target_stage",
+          "primitive_calls": 120,
+          "calls": 120,
+          "self_s": 0.00044,
+          "cumulative_s": 0.0153191
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 78,
+          "function": "freeze",
+          "primitive_calls": 1189,
+          "calls": 1189,
+          "self_s": 0.00044510000000000003,
+          "cumulative_s": 0.015196200000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 188,
+          "function": "<genexpr>",
+          "primitive_calls": 178650,
+          "calls": 178650,
+          "self_s": 0.0151178,
+          "cumulative_s": 0.0151178
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 24,
+          "function": "__init__",
+          "primitive_calls": 7028,
+          "calls": 7028,
+          "self_s": 0.007286300000000001,
+          "cumulative_s": 0.0148547
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 83,
+          "function": "__init__",
+          "primitive_calls": 120,
+          "calls": 120,
+          "self_s": 0.0015015,
+          "cumulative_s": 0.014798100000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 70,
+          "function": "freeze",
+          "primitive_calls": 1189,
+          "calls": 1189,
+          "self_s": 0.0009113000000000001,
+          "cumulative_s": 0.0146683
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 54,
+          "function": "payload",
+          "primitive_calls": 37705,
+          "calls": 37705,
+          "self_s": 0.004347800000000001,
+          "cumulative_s": 0.013823100000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 109,
+          "function": "<genexpr>",
+          "primitive_calls": 4320,
+          "calls": 4320,
+          "self_s": 0.0025148,
+          "cumulative_s": 0.0135271
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 114,
+          "function": "<genexpr>",
+          "primitive_calls": 97668,
+          "calls": 97668,
+          "self_s": 0.0117058,
+          "cumulative_s": 0.0117058
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 189,
+          "function": "bind",
+          "primitive_calls": 120,
+          "calls": 120,
+          "self_s": 0.0002704,
+          "cumulative_s": 0.011471400000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 150,
+          "function": "projectiles",
+          "primitive_calls": 180,
+          "calls": 180,
+          "self_s": 0.000229,
+          "cumulative_s": 0.0097978
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 244,
+          "function": "<genexpr>",
+          "primitive_calls": 72486,
+          "calls": 72486,
+          "self_s": 0.009290600000000001,
+          "cumulative_s": 0.009290600000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 80,
+          "function": "resolve",
+          "primitive_calls": 7028,
+          "calls": 7028,
+          "self_s": 0.0029252,
+          "cumulative_s": 0.0071735
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 350,
+          "function": "<genexpr>",
+          "primitive_calls": 70770,
+          "calls": 70770,
+          "self_s": 0.0067752,
+          "cumulative_s": 0.0067752
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 35,
+          "function": "active",
+          "primitive_calls": 73244,
+          "calls": 73244,
+          "self_s": 0.0067488,
+          "cumulative_s": 0.0067488
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 106,
+          "function": "<lambda>",
+          "primitive_calls": 4608,
+          "calls": 4608,
+          "self_s": 0.0040089,
+          "cumulative_s": 0.0061818
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 56,
+          "function": "query",
+          "primitive_calls": 8668,
+          "calls": 8668,
+          "self_s": 0.0022930000000000003,
+          "cumulative_s": 0.005543
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 140,
+          "function": "ships",
+          "primitive_calls": 180,
+          "calls": 180,
+          "self_s": 0.0003348,
+          "cumulative_s": 0.0051968000000000006
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 129,
+          "function": "<genexpr>",
+          "primitive_calls": 38853,
+          "calls": 38853,
+          "self_s": 0.005033500000000001,
+          "cumulative_s": 0.005033500000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 31,
+          "function": "plane",
+          "primitive_calls": 2848,
+          "calls": 2848,
+          "self_s": 0.002689,
+          "cumulative_s": 0.0049617
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 125,
+          "function": "<genexpr>",
+          "primitive_calls": 51537,
+          "calls": 51537,
+          "self_s": 0.0042981,
+          "cumulative_s": 0.0042981
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 53,
+          "function": "get",
+          "primitive_calls": 7028,
+          "calls": 7028,
+          "self_s": 0.0024389000000000004,
+          "cumulative_s": 0.0042483
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 124,
+          "function": "<genexpr>",
+          "primitive_calls": 51537,
+          "calls": 51537,
+          "self_s": 0.0038247000000000003,
+          "cumulative_s": 0.0038247000000000003
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 127,
+          "function": "<genexpr>",
+          "primitive_calls": 51537,
+          "calls": 51537,
+          "self_s": 0.0037482,
+          "cumulative_s": 0.0037482
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 357,
+          "function": "<genexpr>",
+          "primitive_calls": 11184,
+          "calls": 11184,
+          "self_s": 0.0034974000000000003,
+          "cumulative_s": 0.0035681000000000003
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 211,
+          "function": "<genexpr>",
+          "primitive_calls": 11520,
+          "calls": 11520,
+          "self_s": 0.0035016,
+          "cumulative_s": 0.0035016
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 126,
+          "function": "<genexpr>",
+          "primitive_calls": 51537,
+          "calls": 51537,
+          "self_s": 0.0034093,
+          "cumulative_s": 0.0034093
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 113,
+          "function": "set_location",
+          "primitive_calls": 356,
+          "calls": 356,
+          "self_s": 0.00021,
+          "cumulative_s": 0.002341
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 275,
+          "function": "<genexpr>",
+          "primitive_calls": 28182,
+          "calls": 28182,
+          "self_s": 0.002137,
+          "cumulative_s": 0.002137
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 166,
+          "function": "aircraft",
+          "primitive_calls": 180,
+          "calls": 180,
+          "self_s": 0.0002483,
+          "cumulative_s": 0.0019112
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 119,
+          "function": "move",
+          "primitive_calls": 356,
+          "calls": 356,
+          "self_s": 0.0012142000000000001,
+          "cumulative_s": 0.0018402000000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 365,
+          "function": "contact",
+          "primitive_calls": 140,
+          "calls": 140,
+          "self_s": 0.0002035,
+          "cumulative_s": 0.0018132
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 277,
+          "function": "<genexpr>",
+          "primitive_calls": 2040,
+          "calls": 2040,
+          "self_s": 0.00176,
+          "cumulative_s": 0.00176
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 25,
+          "function": "origin",
+          "primitive_calls": 256,
+          "calls": 256,
+          "self_s": 0.0009983000000000001,
+          "cumulative_s": 0.0016841
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_detection.py",
+          "line": 103,
+          "function": "<genexpr>",
+          "primitive_calls": 2280,
+          "calls": 2280,
+          "self_s": 0.0011634,
+          "cumulative_s": 0.0016399000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 162,
+          "function": "<genexpr>",
+          "primitive_calls": 8520,
+          "calls": 8520,
+          "self_s": 0.0016288000000000001,
+          "cumulative_s": 0.0016288000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 307,
+          "function": "<genexpr>",
+          "primitive_calls": 25920,
+          "calls": 25920,
+          "self_s": 0.0016194,
+          "cumulative_s": 0.0016194
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 32,
+          "function": "<genexpr>",
+          "primitive_calls": 5696,
+          "calls": 5696,
+          "self_s": 0.0014645,
+          "cumulative_s": 0.0014645
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 106,
+          "function": "<genexpr>",
+          "primitive_calls": 13824,
+          "calls": 13824,
+          "self_s": 0.0012832000000000002,
+          "cumulative_s": 0.0012832000000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 261,
+          "function": "<lambda>",
+          "primitive_calls": 1800,
+          "calls": 1800,
+          "self_s": 0.0008814000000000001,
+          "cumulative_s": 0.0012623
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 88,
+          "function": "<lambda>",
+          "primitive_calls": 7754,
+          "calls": 7754,
+          "self_s": 0.0012569,
+          "cumulative_s": 0.0012569
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 101,
+          "function": "__init__",
+          "primitive_calls": 120,
+          "calls": 120,
+          "self_s": 0.0003458,
+          "cumulative_s": 0.0011599000000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 242,
+          "function": "<genexpr>",
+          "primitive_calls": 9612,
+          "calls": 9612,
+          "self_s": 0.001042,
+          "cumulative_s": 0.001042
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 145,
+          "function": "<genexpr>",
+          "primitive_calls": 3420,
+          "calls": 3420,
+          "self_s": 0.0010304000000000001,
+          "cumulative_s": 0.0010304000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 167,
+          "function": "capability_stage",
+          "primitive_calls": 120,
+          "calls": 120,
+          "self_s": 0.00032750000000000005,
+          "cumulative_s": 0.0009617
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 241,
+          "function": "<genexpr>",
+          "primitive_calls": 6408,
+          "calls": 6408,
+          "self_s": 0.000827,
+          "cumulative_s": 0.000827
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 103,
+          "function": "<genexpr>",
+          "primitive_calls": 2280,
+          "calls": 2280,
+          "self_s": 0.0006012000000000001,
+          "cumulative_s": 0.0008141
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 37,
+          "function": "build",
+          "primitive_calls": 20,
+          "calls": 20,
+          "self_s": 0.00030040000000000004,
+          "cumulative_s": 0.0004579
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 209,
+          "function": "<lambda>",
+          "primitive_calls": 276,
+          "calls": 276,
+          "self_s": 0.00032470000000000003,
+          "cumulative_s": 0.0004241
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 362,
+          "function": "defense_ready",
+          "primitive_calls": 504,
+          "calls": 504,
+          "self_s": 0.00035870000000000005,
+          "cumulative_s": 0.0004226
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 105,
+          "function": "<genexpr>",
+          "primitive_calls": 512,
+          "calls": 512,
+          "self_s": 0.00037380000000000003,
+          "cumulative_s": 0.00037380000000000003
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 202,
+          "function": "<genexpr>",
+          "primitive_calls": 1800,
+          "calls": 1800,
+          "self_s": 0.000353,
+          "cumulative_s": 0.000353
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 112,
+          "function": "<genexpr>",
+          "primitive_calls": 4320,
+          "calls": 4320,
+          "self_s": 0.00034500000000000004,
+          "cumulative_s": 0.00034500000000000004
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 304,
+          "function": "<genexpr>",
+          "primitive_calls": 2160,
+          "calls": 2160,
+          "self_s": 0.0003392,
+          "cumulative_s": 0.0003392
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 203,
+          "function": "<genexpr>",
+          "primitive_calls": 2700,
+          "calls": 2700,
+          "self_s": 0.00027120000000000003,
+          "cumulative_s": 0.00027120000000000003
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 209,
+          "function": "begin",
+          "primitive_calls": 180,
+          "calls": 180,
+          "self_s": 0.00021630000000000003,
+          "cumulative_s": 0.00026930000000000004
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 174,
+          "function": "<genexpr>",
+          "primitive_calls": 1248,
+          "calls": 1248,
+          "self_s": 0.00023480000000000002,
+          "cumulative_s": 0.00023480000000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 219,
+          "function": "finish",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 6.400000000000001e-05,
+          "cumulative_s": 0.0002234
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 301,
+          "function": "<genexpr>",
+          "primitive_calls": 1800,
+          "calls": 1800,
+          "self_s": 0.00018360000000000002,
+          "cumulative_s": 0.00018360000000000002
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 151,
+          "function": "<genexpr>",
+          "primitive_calls": 1068,
+          "calls": 1068,
+          "self_s": 0.0001477,
+          "cumulative_s": 0.0001477
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 282,
+          "function": "<genexpr>",
+          "primitive_calls": 660,
+          "calls": 660,
+          "self_s": 0.00010970000000000001,
+          "cumulative_s": 0.00012150000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 186,
+          "function": "<genexpr>",
+          "primitive_calls": 768,
+          "calls": 768,
+          "self_s": 0.0001195,
+          "cumulative_s": 0.0001195
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 208,
+          "function": "<genexpr>",
+          "primitive_calls": 828,
+          "calls": 828,
+          "self_s": 0.00011650000000000001,
+          "cumulative_s": 0.00011650000000000001
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 101,
+          "function": "_guard",
+          "primitive_calls": 960,
+          "calls": 960,
+          "self_s": 0.0001056,
+          "cumulative_s": 0.0001056
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 131,
+          "function": "change_layer",
+          "primitive_calls": 356,
+          "calls": 356,
+          "self_s": 0.0001028,
+          "cumulative_s": 0.0001028
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 61,
+          "function": "<lambda>",
+          "primitive_calls": 720,
+          "calls": 720,
+          "self_s": 8.42e-05,
+          "cumulative_s": 8.42e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 209,
+          "function": "<genexpr>",
+          "primitive_calls": 828,
+          "calls": 828,
+          "self_s": 7.47e-05,
+          "cumulative_s": 7.47e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 223,
+          "function": "<genexpr>",
+          "primitive_calls": 416,
+          "calls": 416,
+          "self_s": 6.720000000000001e-05,
+          "cumulative_s": 6.720000000000001e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_observation.py",
+          "line": 369,
+          "function": "<genexpr>",
+          "primitive_calls": 280,
+          "calls": 280,
+          "self_s": 6.500000000000001e-05,
+          "cumulative_s": 6.500000000000001e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\aviation_flight.py",
+          "line": 155,
+          "function": "<lambda>",
+          "primitive_calls": 356,
+          "calls": 356,
+          "self_s": 5.53e-05,
+          "cumulative_s": 5.53e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 96,
+          "function": "__init__",
+          "primitive_calls": 180,
+          "calls": 180,
+          "self_s": 5.3e-05,
+          "cumulative_s": 5.3e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 73,
+          "function": "__init__",
+          "primitive_calls": 120,
+          "calls": 120,
+          "self_s": 4.7600000000000005e-05,
+          "cumulative_s": 4.7600000000000005e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 212,
+          "function": "commit",
+          "primitive_calls": 60,
+          "calls": 60,
+          "self_s": 4.13e-05,
+          "cumulative_s": 4.75e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 167,
+          "function": "describe",
+          "primitive_calls": 6,
+          "calls": 6,
+          "self_s": 1.15e-05,
+          "cumulative_s": 2.32e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 151,
+          "function": "describe",
+          "primitive_calls": 6,
+          "calls": 6,
+          "self_s": 1.15e-05,
+          "cumulative_s": 1.54e-05
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 170,
+          "function": "<genexpr>",
+          "primitive_calls": 12,
+          "calls": 12,
+          "self_s": 3.2000000000000003e-06,
+          "cumulative_s": 3.2000000000000003e-06
+        },
+        {
+          "file": "G:\\高天荒野\\backend\\high_wilderness_sidecar\\tactical_target_roster.py",
+          "line": 171,
+          "function": "<genexpr>",
+          "primitive_calls": 12,
+          "calls": 12,
+          "self_s": 2.9e-06,
+          "cumulative_s": 2.9e-06
+        }
+      ],
+      "scope": "Step-only cProfile attribution after 600 warm steps. Cumulative times overlap; not comparable to uninstrumented benchmark distributions."
+    }
+  }
+}

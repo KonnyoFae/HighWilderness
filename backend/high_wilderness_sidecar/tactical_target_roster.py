@@ -205,6 +205,13 @@ class TargetRoster:
         self.ship_indices = MappingProxyType({s.ship_id: n for n, s in enumerate(world.ships)})
         self.names = MappingProxyType(dict(names))
         self.frame = Frame(world.epoch, 0, tuple(Family.build() for _ in FAMILIES))
+        self._directories = {}
+
+    def view(self, side, observation):
+        from .tactical_target_directory import Directory
+        if side not in self._directories:
+            self._directories[side] = Directory()
+        return self._directories[side].view(self.frame, side, observation, self.names)
 
     def begin(self):
         return Plan(self)

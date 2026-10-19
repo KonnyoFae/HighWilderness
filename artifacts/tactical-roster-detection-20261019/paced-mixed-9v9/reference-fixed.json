@@ -1,0 +1,81 @@
+{
+  "case": "mixed-9v9",
+  "variant": "reference-fixed",
+  "steps": 64,
+  "simulated_s": 1.0666666666666667,
+  "wall_s": 1.328,
+  "runner_wall_s": 1.335668399988208,
+  "status": {
+    "epoch": "9a371409192f4aa8ab56b3f1b30f54e4",
+    "fixed_step": 64,
+    "running": false,
+    "generation": 1,
+    "pause_reason": "overload",
+    "debt_quanta": 15680000000,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 1,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 22,
+    "speed": {
+      "mode": "fixed",
+      "effective": 1.0,
+      "slowed": false,
+      "revision": 0,
+      "active_wall_s": 1.328,
+      "advanced_simulation_s": 1.0666666666666667,
+      "actual_ratio": 0.8032128514056225,
+      "step_mean_ms": 18.961606468489983,
+      "nonstep_utilization": 0.0,
+      "longest_step_ms": 32.0
+    }
+  },
+  "peak_debt_steps": 15.68,
+  "rate_changes": [
+    {
+      "wall_s": 0.0,
+      "step": 0,
+      "rate": 1.0
+    }
+  ],
+  "rate_wall_s": {
+    "1.0": 1.328
+  },
+  "step": {
+    "mean_ms": 17.303664062637836,
+    "p50_ms": 16.627400007564574,
+    "p95_ms": 18.90379999531433,
+    "p99_ms": 33.560400013811886,
+    "max_ms": 37.82359999604523
+  },
+  "read_and_encode": {
+    "mean_ms": 11.445972719229758,
+    "p50_ms": 11.515699967276305,
+    "p95_ms": 12.397699989378452,
+    "p99_ms": 12.397699989378452,
+    "max_ms": 12.480399978812784
+  },
+  "load": {
+    "ships": 18,
+    "guns": 26,
+    "projectiles": 6,
+    "missiles": 6,
+    "airborne": 4,
+    "aircraft_sensors": 8,
+    "jammers": 2,
+    "jobs": 6,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 39,
+    "shared_tracks": 234,
+    "shots": 0,
+    "missile_shots": 8,
+    "hits": 0,
+    "interceptions": 0
+  },
+  "error": null,
+  "fixture_sha256": "4f7770f4510d15746f7714ae487bca5ff7cc13778ef25dd73207aec0f19f2ce9",
+  "expanded_tape_sha256": null,
+  "scope": "Serial wall-paced sidecar service diagnostic, real read/encode cost, no browser or native UI. Stops at 900 steps, protection or 300 wall seconds. At most four steps per pump; last pump is capped at remaining sample steps."
+}

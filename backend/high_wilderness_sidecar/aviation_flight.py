@@ -71,6 +71,7 @@ def targets(flights,inventories,sides):
 
 
 def sample(b,world,f,model,all_targets,effects):
+    from .tactical_detection import TargetStage,freeze
     acquire=world.fixed_step-f['sample_step']>=policy()['sample_steps']
     devices=aviation_ew.working(f,model)
     if f['hp']<=0 or f['status']=='recovering':f['contacts']={};return
@@ -81,7 +82,9 @@ def sample(b,world,f,model,all_targets,effects):
         sensors.append(dict(channel=channel,range_m=r,ship_range_m=r,coasting_range_m=r,
             range_efficiency=1.,weather=policy()['weather_'+channel]))
     seen={};sources={}
-    for t in all_targets:
+    targets=(all_targets.query(b._sides[f['owner']],f['layer'],include_ids=None if acquire else f['contacts'])
+             if isinstance(all_targets,TargetStage) else all_targets)
+    for t in targets:
         if t.side==b._sides[f['owner']]:continue
         if not acquire and t.id not in f['contacts']:continue
         blocked=blocked_channels(effects,f['position'],f['layer'],t.position,t.layer,observer_side=b._sides[f['owner']])
@@ -93,7 +96,7 @@ def sample(b,world,f,model,all_targets,effects):
                 seen[t.id]=t;sources.setdefault(t.id,[]).append(channel)
     priorities={t.id:(0 if t.id==f['target_id'] else 1,hypot(t.position[0]-f['position'][0],t.position[1]-f['position'][1])) for t in seen.values()}
     ids,_=allocate(list(seen.values()),tuple(f['contacts']),policy()['tracking_capacity'],priorities)
-    f['contacts']={key:(seen[key] if acquire else f['contacts'][key][0],tuple(sources[key])) for key in ids}
+    f['contacts']={key:(freeze(seen[key]) if acquire else f['contacts'][key][0],tuple(sources[key])) for key in ids}
     if acquire:f['sample_step']=world.fixed_step
 
 
@@ -147,7 +150,7 @@ def advance(b,world,inventories,flights,projectiles,effects):
     # Integrate all poses together using the velocity of the incoming collision interval.
     for f in flights.values():f['position']=tuple(p+v/60 for p,v in zip(f['position'],f['velocity']))
     effects=(*effects,*aviation_ew.areas(b,world,inventories,flights))
-    all_targets=b.observation.targets(world,projectiles)+targets(flights,inventories,b._sides)
+    all_targets=b.observation.target_stage(world,projectiles,flights,inventories)
     _,available=b._availability(world);busy=set()
     for key,f in sorted(list(flights.items()),key=lambda row:(row[1]['recovery_progress']==0,row[0])):
         f['step']=world.fixed_step

@@ -1,0 +1,84 @@
+{
+  "case": "mixed-4v9-reversed",
+  "steps": 900,
+  "sections": [
+    "world",
+    "guns",
+    "fire_control",
+    "projectiles",
+    "observation",
+    "inventory",
+    "missiles",
+    "aviation",
+    "ew",
+    "defense",
+    "damage",
+    "fire",
+    "personnel",
+    "magazines",
+    "navigation",
+    "height_orders",
+    "departures",
+    "ending"
+  ],
+  "fixture_sha256": "35c4372b74ac69bda8b92d4a0f2fa2dd3527aab4a2d18e6d651b88dd94e3ce59",
+  "expanded_tape_sha256": "551be73606217626c3055d50c2974aad1049e9e982ea3c31c422206e5846193c",
+  "final_load": {
+    "ships": 13,
+    "guns": 16,
+    "projectiles": 70,
+    "missiles": 29,
+    "airborne": 5,
+    "aircraft_sensors": 8,
+    "jammers": 1,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 40,
+    "shared_tracks": 245,
+    "shots": 59,
+    "missile_shots": 54,
+    "hits": 13,
+    "interceptions": 4
+  },
+  "counters": {
+    "reference": {
+      "full_target_builds": 2702,
+      "threat_evaluations": 63961,
+      "target_samples": 111301,
+      "ship_visibility_checks": 336946,
+      "metadata_family_checks": 2700
+    },
+    "candidate": {
+      "stages": 1800,
+      "metadata_family_checks": 8100,
+      "query_input_rows": 1158784,
+      "resolved_candidates": 63939,
+      "query_output_rows": 415222,
+      "target_samples": 8143,
+      "ship_visibility_checks": 336946,
+      "threat_evaluations": 21787
+    }
+  },
+  "late_601_660": {
+    "reference": {
+      "full_target_builds": 180,
+      "threat_evaluations": 6513,
+      "target_samples": 9921,
+      "ship_visibility_checks": 29381,
+      "metadata_family_checks": 180
+    },
+    "candidate": {
+      "stages": 120,
+      "metadata_family_checks": 540,
+      "query_input_rows": 112046,
+      "resolved_candidates": 5833,
+      "query_output_rows": 38045,
+      "threat_evaluations": 2267,
+      "target_samples": 745,
+      "ship_visibility_checks": 29381
+    }
+  },
+  "scope": "Exact authority comparison and diagnostic counts; no performance timings. Epochs normalized; derived caches and wall clocks excluded."
+}

@@ -1,0 +1,84 @@
+{
+  "case": "mixed-9v9",
+  "steps": 900,
+  "sections": [
+    "world",
+    "guns",
+    "fire_control",
+    "projectiles",
+    "observation",
+    "inventory",
+    "missiles",
+    "aviation",
+    "ew",
+    "defense",
+    "damage",
+    "fire",
+    "personnel",
+    "magazines",
+    "navigation",
+    "height_orders",
+    "departures",
+    "ending"
+  ],
+  "fixture_sha256": "4f7770f4510d15746f7714ae487bca5ff7cc13778ef25dd73207aec0f19f2ce9",
+  "expanded_tape_sha256": "673398e694505e5465da3b7a9e8d99e6280ae35e53be3172c47d7a563ad0060a",
+  "final_load": {
+    "ships": 18,
+    "guns": 26,
+    "projectiles": 91,
+    "missiles": 42,
+    "airborne": 5,
+    "aircraft_sensors": 8,
+    "jammers": 1,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 83,
+    "shared_tracks": 558,
+    "shots": 63,
+    "missile_shots": 69,
+    "hits": 11,
+    "interceptions": 5
+  },
+  "counters": {
+    "reference": {
+      "full_target_builds": 2702,
+      "threat_evaluations": 80461,
+      "target_samples": 141395,
+      "ship_visibility_checks": 680313,
+      "metadata_family_checks": 2700
+    },
+    "candidate": {
+      "stages": 1800,
+      "metadata_family_checks": 8100,
+      "query_input_rows": 1854695,
+      "resolved_candidates": 79894,
+      "query_output_rows": 778778,
+      "target_samples": 10603,
+      "ship_visibility_checks": 680313,
+      "threat_evaluations": 26794
+    }
+  },
+  "late_601_660": {
+    "reference": {
+      "full_target_builds": 180,
+      "threat_evaluations": 8334,
+      "target_samples": 12642,
+      "ship_visibility_checks": 61650,
+      "metadata_family_checks": 180
+    },
+    "candidate": {
+      "stages": 120,
+      "metadata_family_checks": 540,
+      "query_input_rows": 176460,
+      "resolved_candidates": 7028,
+      "query_output_rows": 71125,
+      "threat_evaluations": 2881,
+      "target_samples": 842,
+      "ship_visibility_checks": 61650
+    }
+  },
+  "scope": "Exact authority comparison and diagnostic counts; no performance timings. Epochs normalized; derived caches and wall clocks excluded."
+}

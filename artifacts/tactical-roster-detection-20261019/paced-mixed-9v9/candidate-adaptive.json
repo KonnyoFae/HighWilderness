@@ -1,0 +1,490 @@
+{
+  "case": "mixed-9v9",
+  "variant": "candidate-adaptive",
+  "steps": 900,
+  "simulated_s": 15.0,
+  "wall_s": 54.734,
+  "runner_wall_s": 54.73816629999783,
+  "status": {
+    "epoch": "d972b4a2c5c643d6a7f8693a25752044",
+    "fixed_step": 900,
+    "running": true,
+    "generation": 0,
+    "pause_reason": null,
+    "debt_quanta": 619500000,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 0,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 55,
+    "speed": {
+      "mode": "adaptive",
+      "effective": 0.188,
+      "slowed": true,
+      "revision": 71,
+      "active_wall_s": 54.734,
+      "advanced_simulation_s": 15.0,
+      "actual_ratio": 0.27405269119742753,
+      "step_mean_ms": 40.04789250765455,
+      "nonstep_utilization": 0.24388647543043815,
+      "longest_step_ms": 78.0
+    }
+  },
+  "peak_debt_steps": 4.32,
+  "rate_changes": [
+    {
+      "wall_s": 0.0,
+      "step": 0,
+      "rate": 1.0
+    },
+    {
+      "wall_s": 0.172,
+      "step": 6,
+      "rate": 0.57
+    },
+    {
+      "wall_s": 1.859,
+      "step": 67,
+      "rate": 0.583
+    },
+    {
+      "wall_s": 2.062,
+      "step": 74,
+      "rate": 0.495
+    },
+    {
+      "wall_s": 3.969,
+      "step": 131,
+      "rate": 0.508
+    },
+    {
+      "wall_s": 4.172,
+      "step": 137,
+      "rate": 0.52
+    },
+    {
+      "wall_s": 4.375,
+      "step": 143,
+      "rate": 0.478
+    },
+    {
+      "wall_s": 5.609,
+      "step": 179,
+      "rate": 0.414
+    },
+    {
+      "wall_s": 7.234,
+      "step": 219,
+      "rate": 0.426
+    },
+    {
+      "wall_s": 7.453,
+      "step": 225,
+      "rate": 0.439
+    },
+    {
+      "wall_s": 7.656,
+      "step": 230,
+      "rate": 0.451
+    },
+    {
+      "wall_s": 7.89,
+      "step": 236,
+      "rate": 0.464
+    },
+    {
+      "wall_s": 8.094,
+      "step": 242,
+      "rate": 0.367
+    },
+    {
+      "wall_s": 9.328,
+      "step": 269,
+      "rate": 0.335
+    },
+    {
+      "wall_s": 10.562,
+      "step": 294,
+      "rate": 0.292
+    },
+    {
+      "wall_s": 12.265,
+      "step": 324,
+      "rate": 0.305
+    },
+    {
+      "wall_s": 12.484,
+      "step": 328,
+      "rate": 0.318
+    },
+    {
+      "wall_s": 13.109,
+      "step": 340,
+      "rate": 0.319
+    },
+    {
+      "wall_s": 13.953,
+      "step": 356,
+      "rate": 0.292
+    },
+    {
+      "wall_s": 15.484,
+      "step": 383,
+      "rate": 0.301
+    },
+    {
+      "wall_s": 16.375,
+      "step": 399,
+      "rate": 0.314
+    },
+    {
+      "wall_s": 16.812,
+      "step": 407,
+      "rate": 0.283
+    },
+    {
+      "wall_s": 19.047,
+      "step": 445,
+      "rate": 0.295
+    },
+    {
+      "wall_s": 19.25,
+      "step": 449,
+      "rate": 0.296
+    },
+    {
+      "wall_s": 19.453,
+      "step": 452,
+      "rate": 0.252
+    },
+    {
+      "wall_s": 21.625,
+      "step": 485,
+      "rate": 0.212
+    },
+    {
+      "wall_s": 23.234,
+      "step": 506,
+      "rate": 0.226
+    },
+    {
+      "wall_s": 23.484,
+      "step": 509,
+      "rate": 0.24
+    },
+    {
+      "wall_s": 23.703,
+      "step": 512,
+      "rate": 0.252
+    },
+    {
+      "wall_s": 24.5,
+      "step": 524,
+      "rate": 0.224
+    },
+    {
+      "wall_s": 26.047,
+      "step": 545,
+      "rate": 0.233
+    },
+    {
+      "wall_s": 26.484,
+      "step": 551,
+      "rate": 0.208
+    },
+    {
+      "wall_s": 27.969,
+      "step": 570,
+      "rate": 0.22
+    },
+    {
+      "wall_s": 28.172,
+      "step": 572,
+      "rate": 0.232
+    },
+    {
+      "wall_s": 28.578,
+      "step": 578,
+      "rate": 0.242
+    },
+    {
+      "wall_s": 28.797,
+      "step": 581,
+      "rate": 0.254
+    },
+    {
+      "wall_s": 29.0,
+      "step": 584,
+      "rate": 0.217
+    },
+    {
+      "wall_s": 30.594,
+      "step": 605,
+      "rate": 0.229
+    },
+    {
+      "wall_s": 31.062,
+      "step": 611,
+      "rate": 0.207
+    },
+    {
+      "wall_s": 31.703,
+      "step": 619,
+      "rate": 0.186
+    },
+    {
+      "wall_s": 33.281,
+      "step": 637,
+      "rate": 0.195
+    },
+    {
+      "wall_s": 33.515,
+      "step": 640,
+      "rate": 0.198
+    },
+    {
+      "wall_s": 34.5,
+      "step": 651,
+      "rate": 0.174
+    },
+    {
+      "wall_s": 35.984,
+      "step": 667,
+      "rate": 0.184
+    },
+    {
+      "wall_s": 36.203,
+      "step": 669,
+      "rate": 0.194
+    },
+    {
+      "wall_s": 36.422,
+      "step": 672,
+      "rate": 0.197
+    },
+    {
+      "wall_s": 36.672,
+      "step": 675,
+      "rate": 0.201
+    },
+    {
+      "wall_s": 37.062,
+      "step": 680,
+      "rate": 0.213
+    },
+    {
+      "wall_s": 37.265,
+      "step": 682,
+      "rate": 0.219
+    },
+    {
+      "wall_s": 37.687,
+      "step": 688,
+      "rate": 0.227
+    },
+    {
+      "wall_s": 37.922,
+      "step": 691,
+      "rate": 0.24
+    },
+    {
+      "wall_s": 38.812,
+      "step": 703,
+      "rate": 0.219
+    },
+    {
+      "wall_s": 39.406,
+      "step": 711,
+      "rate": 0.188
+    },
+    {
+      "wall_s": 41.109,
+      "step": 731,
+      "rate": 0.202
+    },
+    {
+      "wall_s": 41.297,
+      "step": 733,
+      "rate": 0.214
+    },
+    {
+      "wall_s": 41.515,
+      "step": 736,
+      "rate": 0.226
+    },
+    {
+      "wall_s": 41.734,
+      "step": 739,
+      "rate": 0.24
+    },
+    {
+      "wall_s": 41.953,
+      "step": 742,
+      "rate": 0.252
+    },
+    {
+      "wall_s": 42.375,
+      "step": 748,
+      "rate": 0.212
+    },
+    {
+      "wall_s": 44.062,
+      "step": 770,
+      "rate": 0.226
+    },
+    {
+      "wall_s": 44.312,
+      "step": 773,
+      "rate": 0.236
+    },
+    {
+      "wall_s": 44.734,
+      "step": 779,
+      "rate": 0.238
+    },
+    {
+      "wall_s": 44.906,
+      "step": 781,
+      "rate": 0.208
+    },
+    {
+      "wall_s": 46.469,
+      "step": 801,
+      "rate": 0.217
+    },
+    {
+      "wall_s": 46.906,
+      "step": 807,
+      "rate": 0.197
+    },
+    {
+      "wall_s": 48.453,
+      "step": 825,
+      "rate": 0.207
+    },
+    {
+      "wall_s": 48.656,
+      "step": 828,
+      "rate": 0.214
+    },
+    {
+      "wall_s": 49.422,
+      "step": 837,
+      "rate": 0.195
+    },
+    {
+      "wall_s": 51.094,
+      "step": 857,
+      "rate": 0.2
+    },
+    {
+      "wall_s": 51.765,
+      "step": 865,
+      "rate": 0.202
+    },
+    {
+      "wall_s": 53.0,
+      "step": 880,
+      "rate": 0.21
+    },
+    {
+      "wall_s": 53.172,
+      "step": 882,
+      "rate": 0.188
+    }
+  ],
+  "rate_wall_s": {
+    "0.174": 1.5,
+    "0.184": 0.203,
+    "0.186": 1.562,
+    "0.188": 3.25,
+    "0.194": 0.235,
+    "0.195": 1.938,
+    "0.197": 1.765,
+    "0.198": 0.969,
+    "0.2": 0.672,
+    "0.201": 0.406,
+    "0.202": 1.422,
+    "0.207": 0.891,
+    "0.208": 3.047,
+    "0.21": 0.203,
+    "0.212": 3.328,
+    "0.213": 0.203,
+    "0.214": 0.937,
+    "0.217": 2.031,
+    "0.219": 1.047,
+    "0.22": 0.203,
+    "0.224": 1.531,
+    "0.226": 0.704,
+    "0.227": 0.219,
+    "0.229": 0.453,
+    "0.232": 0.406,
+    "0.233": 0.438,
+    "0.236": 0.406,
+    "0.238": 0.203,
+    "0.24": 1.281,
+    "0.242": 0.203,
+    "0.252": 3.406,
+    "0.254": 0.219,
+    "0.283": 2.219,
+    "0.292": 3.234,
+    "0.295": 0.219,
+    "0.296": 0.203,
+    "0.301": 0.891,
+    "0.305": 0.219,
+    "0.314": 0.437,
+    "0.318": 0.625,
+    "0.319": 0.844,
+    "0.335": 1.25,
+    "0.367": 1.218,
+    "0.414": 1.625,
+    "0.426": 0.219,
+    "0.439": 0.203,
+    "0.451": 0.219,
+    "0.464": 0.219,
+    "0.478": 1.234,
+    "0.495": 1.907,
+    "0.508": 0.203,
+    "0.52": 0.203,
+    "0.57": 1.687,
+    "0.583": 0.203,
+    "1.0": 0.172
+  },
+  "step": {
+    "mean_ms": 37.7818298896697,
+    "p50_ms": 41.647300007753074,
+    "p95_ms": 52.18810000224039,
+    "p99_ms": 73.84229998569936,
+    "max_ms": 82.67480001086369
+  },
+  "read_and_encode": {
+    "mean_ms": 15.609872442477057,
+    "p50_ms": 15.66049997927621,
+    "p95_ms": 18.519399978686124,
+    "p99_ms": 20.81519999774173,
+    "max_ms": 41.87429999001324
+  },
+  "load": {
+    "ships": 18,
+    "guns": 26,
+    "projectiles": 91,
+    "missiles": 42,
+    "airborne": 5,
+    "aircraft_sensors": 8,
+    "jammers": 1,
+    "jobs": 4,
+    "queued": 0,
+    "aircraft": 10,
+    "pilots": 18,
+    "local_tracks": 83,
+    "shared_tracks": 558,
+    "shots": 63,
+    "missile_shots": 69,
+    "hits": 11,
+    "interceptions": 5
+  },
+  "error": null,
+  "fixture_sha256": "4f7770f4510d15746f7714ae487bca5ff7cc13778ef25dd73207aec0f19f2ce9",
+  "expanded_tape_sha256": null,
+  "scope": "Serial wall-paced sidecar service diagnostic, real read/encode cost, no browser or native UI. Stops at 900 steps, protection or 300 wall seconds. At most four steps per pump; last pump is capped at remaining sample steps."
+}

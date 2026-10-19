@@ -101,6 +101,7 @@ export interface GunView {
   cargo?: {good_id: string; quantity: number; reserved: number}[];
 }
 export interface GunneryView {
+  target_directory?: TargetDirectory;
   observed_only?: boolean;
   stores?: import('./ShipStoresPanel').ShipStores[];
   observation?:ObservationView;
@@ -133,6 +134,12 @@ export interface GunneryView {
     armor_profile?: {deck_id:string;region_id:string;edge_index:number;thickness_mm:number;flare_angle_deg:number;tilt_cosine:number;
       impact_angle_deg:number;effective_angle_deg:number;required_penetration_mm:number;available_penetration_mm:number;active:boolean};
     deck_selection?: {policy: string; preferred_levels: number[]; probabilities: {deck_level: number; probability: number}[]; sample: number} }[] } | null;
+}
+export type TargetCategory = 'ship' | 'aircraft' | 'missile' | 'shell' | 'bomb';
+export interface TargetDescriptor { key:string; target_id:string|number; name:string; category:TargetCategory }
+export interface TargetDirectory {
+  interface:'gaotian.target-directory/v1'; epoch:string; revision:number;
+  entries:TargetDescriptor[]; remembered:TargetDescriptor[];
 }
 export interface HeightNavigation {
   base_duration_s: number | null; duration_s: number | null; lift_loss_fraction: number;

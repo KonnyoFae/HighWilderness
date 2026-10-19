@@ -547,15 +547,15 @@ class GunneryBattle(SensorState):
             from . import aviation_flight,aviation_combat,aviation_ew
             staged['aviation_flights']=aviation_flight.advance(self,world,inventories,staged.get('aviation_after_hits',self.aviation.flights),projectiles,effects)
             aircraft_bodies=aviation_combat.bodies(self,world,inventories,staged['aviation_flights'])
-            aircraft_targets=aviation_flight.targets(staged['aviation_flights'],inventories,self._sides)
-            fields=aviation_ew.refresh(self,world,inventories,staged['aviation_flights'],projectiles,effects)
-            sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,fields),extra_targets=aircraft_targets)
+            sensor_targets=self.observation.target_stage(world,projectiles,staged['aviation_flights'],inventories)
+            fields=aviation_ew.refresh(self,world,inventories,staged['aviation_flights'],projectiles,effects,target_stage=sensor_targets)
+            sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,fields),target_stage=sensor_targets)
             sensor_frame=aviation_flight.share(self,world,available,sensor_frame,staged['aviation_flights'])
             ew_plan=self.ew.plan(world,inventories,available,sensor_frame,effects,self._ending_reason(world) if self.damage else None)
             staged['ew_plan']=ew_plan
             if ew_plan[3]:
-                fields=aviation_ew.refresh(self,world,inventories,staged['aviation_flights'],projectiles,ew_plan[1])
-                sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,fields),extra_targets=aircraft_targets)
+                fields=aviation_ew.refresh(self,world,inventories,staged['aviation_flights'],projectiles,ew_plan[1],target_stage=sensor_targets)
+                sensor_frame=self.observation.plan(world,available,projectiles,occluded=self.ew.sensor_blocker(world,fields),target_stage=sensor_targets)
                 sensor_frame=aviation_flight.share(self,world,available,sensor_frame,staged['aviation_flights'])
             environment=self.ew.environment(world,available,sensor_frame,fields,projectiles,prediction=defense_prediction)
             environment=aviation_combat.environment(self,world,environment,staged['aviation_flights'],inventories)
@@ -955,10 +955,12 @@ class GunneryBattle(SensorState):
                     cargo_costs=[dict(c) for c in inv._recipes[key]['cargo_costs']]) for key in inv._weapons[gun.module_id]['recipe_ids']],
                 cargo=[dict(good_id=c['good_id'], quantity=c['quantity'], reserved=inventory_summaries[gun.ship_index]['reserved_cargo'].get(c['good_id'],0))
                     for c in inv._value['cargo']]))
+        observation = self.observation.view(available=available)
         return dict(interface='gaotian.gunnery-view/p2a-v1alpha1', command_sequence=self.sequence,
             stores=stores_view(self, inventory_summaries),
             deck_hit_policy=asdict(self.damage.deck_policy) if self.damage else None,
-            observation=self.observation.view(available=available),
+            observation=observation,
+            target_directory=self.target_roster.view(self._sides[self._direct_index], observation),
             missiles=self.missiles.view(available=available,inventory_summaries=inventory_summaries),
             aviation=self.aviation.view(inventory_summaries=inventory_summaries), electronic_warfare=self.ew.view(), groups=ps.clone(list(self.groups)), weapons=weapons, projectiles=[dict(id=p.id, ship_id=p.ship_id, position_m=p.position,
                 previous_m=p.previous, velocity_mps=p.velocity, projectile_type=p.projectile_key[0], height_layer=p.height_layer,

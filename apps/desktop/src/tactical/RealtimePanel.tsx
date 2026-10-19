@@ -42,6 +42,7 @@ import { MissileStoresPanel } from './MissileStoresPanel';
 import { MissileCombatPanel } from './MissileCombatPanel';
 import type { MissileOrder } from './missiles';
 import { FireControlPanel } from './FireControlPanel';
+import { TargetDirectoryPanel } from './TargetDirectoryPanel';
 import {CountermeasurePanel} from './CountermeasurePanel';
 import type {CountermeasureIntent} from './CountermeasurePanel';
 import {InFlightMissiles} from './InFlightMissiles';
@@ -587,7 +588,9 @@ export function RealtimePanel({ transport, instance, active, onBusy, onClose, pr
       <BattleDock name="火控" symbol="⊕" position="fire" open={fireOpen} onOpenChange={setFireOpen}>
         <div className="dock-heading"><h3>火控</h3><small>操作舰 · {view.geometry.ships.find(s=>s.id===selected)?.name}</small></div>
         {sensorUncertain&&<p role="status">正在确认火控命令…</p>}
-        <FireControlPanel tab="fire_control" compact ship={observation} names={Object.fromEntries(view.geometry.ships.map(s=>[s.id,s.name]))}
+        <TargetDirectoryPanel key={state.status.epoch} directory={view.snapshot.gunnery?.target_directory}
+          memorySeconds={view.snapshot.gunnery?.observation?.memory_s??0}
+          ship={observation} names={Object.fromEntries(view.geometry.ships.map(s=>[s.id,s.name]))}
           disabled={busy||!active||!state.status.running||!state.available||!friendlySelected||sensorUncertain||!!view.snapshot.gunnery?.ending}
           onCommand={v=>void sendFireControl(v)} onFocus={contact=>{focusedShip.current=null;setFocusRequest({sequence:++focusSequence.current,
             point:{x:contact.position_m[0],y:contact.position_m[1]},layer:contact.height_layer});}}/>

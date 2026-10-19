@@ -47,10 +47,10 @@ def areas(b,world,inventories,flights):
     return tuple(result)
 
 
-def refresh(b,world,inventories,flights,projectiles,effects):
+def refresh(b,world,inventories,flights,projectiles,effects,*,target_stage=None):
     """Validate sampled channels at current field locations, without extra acquisitions."""
     from . import aviation_flight as flight
     fields=(*effects,*areas(b,world,inventories,flights))
-    targets=b.observation.targets(world,projectiles)+flight.targets(flights,inventories,b._sides)
+    targets=target_stage if target_stage is not None else b.observation.target_stage(world,projectiles,flights,inventories)
     for key,f in flights.items():flight.sample(b,world,f,model_for(inventories[f['owner']],key),targets,fields)
     return fields

@@ -147,13 +147,13 @@ class FlightTests(unittest.TestCase):
         b,key=self.battle();self.command(b,'launch',[key]);state=b.aviation.flights
         f=state[key];f['task']=dict(kind='air_patrol',layer='upper',point_m=list(f['position']))
         at=f['position'];t=Target('enemy.plane','aircraft',b._sides[1],(at[0],at[1]+500),(0.,0.),'upper',powered=True,large=False,radar_signature=3.,infrared_signature=4.)
-        with patch.object(b.observation,'targets',return_value=(t,)):
+        with patch.object(b.observation,'target_stage',return_value=(t,)):
             state=af.advance(b,replace(b.session.world,fixed_step=6),b.inventory.inventories,state,(),())
         self.assertEqual(state[key]['target_id'],t.id)
-        with patch.object(b.observation,'targets',return_value=(replace(t,layer='cloud'),)):
+        with patch.object(b.observation,'target_stage',return_value=(replace(t,layer='cloud'),)):
             state=af.advance(b,replace(b.session.world,fixed_step=12),b.inventory.inventories,state,(),())
         self.assertIsNone(state[key]['target_id']);self.assertEqual(state[key]['layer'],'upper')
-        with patch.object(b.observation,'targets',return_value=(replace(t,position=(1000000.,1000000.)),)):
+        with patch.object(b.observation,'target_stage',return_value=(replace(t,position=(1000000.,1000000.)),)):
             state=af.advance(b,replace(b.session.world,fixed_step=18),b.inventory.inventories,state,(),())
         self.assertFalse(state[key]['contacts'])
 
