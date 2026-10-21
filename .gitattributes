@@ -43,6 +43,15 @@ artifacts/tactical-p1c-20261014/**/*.txt whitespace=cr-at-eol,-blank-at-eol,-bla
 tools/tactical_p1c_reference.py -text !eol whitespace=cr-at-eol,-blank-at-eof
 artifacts/tactical-p2-attribution-20261015/** -text !eol whitespace=cr-at-eol
 
+# P2a.1d evidence and runner hashes must survive a fresh Windows checkout.
+artifacts/tactical-roster-joint-20261021/** -text !eol whitespace=cr-at-eol
+artifacts/tactical-roster-joint-20261021/**/*.txt whitespace=cr-at-eol,-blank-at-eol,-blank-at-eof
+apps/desktop/src/tactical/testing/target-directory-perf.tsx text eol=lf
+apps/desktop/target-directory-perf.html text eol=lf
+tools/measure_tactical_directory_browser.mjs text eol=lf
+tools/serve_tactical_directory_bench.mjs text eol=lf
+tools/verify_tactical_7c4b_closeout.mjs text eol=lf
+
 # Frozen comparison source retains the exact bytes recorded in evidence hashes.
 tools/tactical_7c1b_reference.py -text !eol whitespace=cr-at-eol,-blank-at-eof
 tools/tactical_7c2_reference_aviation_*.py -text !eol whitespace=cr-at-eol,-blank-at-eof

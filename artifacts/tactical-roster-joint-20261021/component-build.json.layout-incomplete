@@ -1,0 +1,10 @@
+{
+  "scope": "Production build manifest, captured during component replay; generated bundles are ignored build output.",
+  "builder": "tools/serve_tactical_directory_bench.mjs",
+  "builderSha256": "e1b78a4c545162790384220b026fcfadb02477a9fd1b34b45907c70f8001276b",
+  "bundleHashes": {
+    "target-directory-perf.html": "4aad15683e24e40becfeef29fea89bde1c5030d1f1b1f8069f14a2e265a67b6a",
+    "assets/target-directory-perf-CXSomQnu.css": "408f3b7d9ca5604d33aa3ee5c7eaeccece8168bceb9f01bb3e3b913fb10da9ef",
+    "assets/target-directory-perf-qtKciaHa.js": "6ef0e7e305aa1a6e0f13b49490126e157c16874cd75412f5fa59b419249575bd"
+  }
+}

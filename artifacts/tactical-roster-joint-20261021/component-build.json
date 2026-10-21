@@ -1,0 +1,12 @@
+{
+  "scope": "Corrected production style wrapper; generated bundles are ignored build output.",
+  "builder": "tools/serve_tactical_directory_bench.mjs",
+  "builderSha256": "e1b78a4c545162790384220b026fcfadb02477a9fd1b34b45907c70f8001276b",
+  "benchmarkSource": "apps/desktop/src/tactical/testing/target-directory-perf.tsx",
+  "benchmarkSourceSha256": "f7b4119a85a27f385a76ae051807c44718e00967fd4dcc08d120adf6470f19c3",
+  "bundleHashes": {
+    "target-directory-perf.html": "303703dd30145ea753e9db090e41d9775b2d2ad12658899a0a47920fe13f19a0",
+    "assets/target-directory-perf-CXSomQnu.css": "408f3b7d9ca5604d33aa3ee5c7eaeccece8168bceb9f01bb3e3b913fb10da9ef",
+    "assets/target-directory-perf-DlyBCW4o.js": "2dd8b541ff8642c8bcc9b7bad4daa22f8053c7a3a873f3212cf25f492c7d8010"
+  }
+}

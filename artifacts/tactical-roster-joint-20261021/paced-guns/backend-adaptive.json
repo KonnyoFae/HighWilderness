@@ -1,0 +1,343 @@
+{
+  "case": "guns-9v9",
+  "variant": "backend-adaptive",
+  "steps": 900,
+  "simulated_s": 15.0,
+  "wall_s": 22.422,
+  "runner_wall_s": 22.41128830006346,
+  "status": {
+    "epoch": "6c125dad787e4502b01a3cf5fec8329f",
+    "fixed_step": 900,
+    "running": true,
+    "generation": 0,
+    "pause_reason": null,
+    "debt_quanta": 964260000,
+    "pending_inputs": 0,
+    "retained_receipts": 0,
+    "reliable_events": 0,
+    "highest_input_sequence": 0,
+    "acknowledged_event_sequence": 95,
+    "speed": {
+      "mode": "adaptive",
+      "effective": 0.554,
+      "slowed": true,
+      "revision": 44,
+      "active_wall_s": 22.422,
+      "advanced_simulation_s": 15.0,
+      "actual_ratio": 0.668985817500669,
+      "step_mean_ms": 14.60719562519915,
+      "nonstep_utilization": 0.17517924307768348,
+      "longest_step_ms": 47.0
+    }
+  },
+  "peak_debt_steps": 3.5,
+  "rate_changes": [
+    {
+      "wall_s": 0.016,
+      "step": 0,
+      "rate": 1.0
+    },
+    {
+      "wall_s": 2.266,
+      "step": 135,
+      "rate": 0.892
+    },
+    {
+      "wall_s": 3.703,
+      "step": 211,
+      "rate": 0.677
+    },
+    {
+      "wall_s": 5.313,
+      "step": 277,
+      "rate": 0.689
+    },
+    {
+      "wall_s": 5.735,
+      "step": 294,
+      "rate": 0.701
+    },
+    {
+      "wall_s": 5.922,
+      "step": 303,
+      "rate": 0.713
+    },
+    {
+      "wall_s": 6.125,
+      "step": 311,
+      "rate": 0.725
+    },
+    {
+      "wall_s": 6.531,
+      "step": 329,
+      "rate": 0.621
+    },
+    {
+      "wall_s": 8.406,
+      "step": 399,
+      "rate": 0.633
+    },
+    {
+      "wall_s": 8.641,
+      "step": 407,
+      "rate": 0.646
+    },
+    {
+      "wall_s": 8.828,
+      "step": 414,
+      "rate": 0.51
+    },
+    {
+      "wall_s": 10.516,
+      "step": 466,
+      "rate": 0.522
+    },
+    {
+      "wall_s": 10.719,
+      "step": 473,
+      "rate": 0.535
+    },
+    {
+      "wall_s": 11.125,
+      "step": 486,
+      "rate": 0.547
+    },
+    {
+      "wall_s": 11.328,
+      "step": 493,
+      "rate": 0.559
+    },
+    {
+      "wall_s": 11.547,
+      "step": 500,
+      "rate": 0.572
+    },
+    {
+      "wall_s": 11.953,
+      "step": 514,
+      "rate": 0.584
+    },
+    {
+      "wall_s": 12.156,
+      "step": 521,
+      "rate": 0.596
+    },
+    {
+      "wall_s": 12.36,
+      "step": 528,
+      "rate": 0.53
+    },
+    {
+      "wall_s": 14.047,
+      "step": 582,
+      "rate": 0.542
+    },
+    {
+      "wall_s": 14.266,
+      "step": 589,
+      "rate": 0.555
+    },
+    {
+      "wall_s": 14.469,
+      "step": 596,
+      "rate": 0.567
+    },
+    {
+      "wall_s": 14.875,
+      "step": 610,
+      "rate": 0.579
+    },
+    {
+      "wall_s": 15.094,
+      "step": 617,
+      "rate": 0.591
+    },
+    {
+      "wall_s": 15.485,
+      "step": 631,
+      "rate": 0.603
+    },
+    {
+      "wall_s": 15.688,
+      "step": 638,
+      "rate": 0.615
+    },
+    {
+      "wall_s": 15.906,
+      "step": 646,
+      "rate": 0.628
+    },
+    {
+      "wall_s": 16.11,
+      "step": 654,
+      "rate": 0.64
+    },
+    {
+      "wall_s": 16.313,
+      "step": 662,
+      "rate": 0.652
+    },
+    {
+      "wall_s": 16.516,
+      "step": 670,
+      "rate": 0.664
+    },
+    {
+      "wall_s": 16.719,
+      "step": 678,
+      "rate": 0.676
+    },
+    {
+      "wall_s": 16.938,
+      "step": 687,
+      "rate": 0.689
+    },
+    {
+      "wall_s": 17.141,
+      "step": 695,
+      "rate": 0.701
+    },
+    {
+      "wall_s": 17.344,
+      "step": 704,
+      "rate": 0.611
+    },
+    {
+      "wall_s": 19.031,
+      "step": 765,
+      "rate": 0.623
+    },
+    {
+      "wall_s": 19.422,
+      "step": 780,
+      "rate": 0.635
+    },
+    {
+      "wall_s": 19.625,
+      "step": 788,
+      "rate": 0.647
+    },
+    {
+      "wall_s": 19.828,
+      "step": 796,
+      "rate": 0.659
+    },
+    {
+      "wall_s": 20.031,
+      "step": 804,
+      "rate": 0.671
+    },
+    {
+      "wall_s": 20.235,
+      "step": 812,
+      "rate": 0.683
+    },
+    {
+      "wall_s": 20.438,
+      "step": 820,
+      "rate": 0.695
+    },
+    {
+      "wall_s": 20.844,
+      "step": 838,
+      "rate": 0.707
+    },
+    {
+      "wall_s": 21.047,
+      "step": 846,
+      "rate": 0.719
+    },
+    {
+      "wall_s": 21.469,
+      "step": 864,
+      "rate": 0.731
+    },
+    {
+      "wall_s": 21.875,
+      "step": 881,
+      "rate": 0.554
+    }
+  ],
+  "rate_wall_s": {
+    "0.51": 1.672,
+    "0.522": 0.219,
+    "0.53": 1.687,
+    "0.535": 0.406,
+    "0.542": 0.219,
+    "0.547": 0.203,
+    "0.554": 0.562,
+    "0.555": 0.203,
+    "0.559": 0.219,
+    "0.567": 0.406,
+    "0.572": 0.406,
+    "0.579": 0.203,
+    "0.584": 0.203,
+    "0.591": 0.407,
+    "0.596": 0.204,
+    "0.603": 0.203,
+    "0.611": 1.672,
+    "0.615": 0.218,
+    "0.621": 1.875,
+    "0.623": 0.406,
+    "0.628": 0.204,
+    "0.633": 0.219,
+    "0.635": 0.203,
+    "0.64": 0.203,
+    "0.646": 0.203,
+    "0.647": 0.203,
+    "0.652": 0.203,
+    "0.659": 0.203,
+    "0.664": 0.203,
+    "0.671": 0.204,
+    "0.676": 0.219,
+    "0.677": 1.625,
+    "0.683": 0.203,
+    "0.689": 0.609,
+    "0.695": 0.406,
+    "0.701": 0.406,
+    "0.707": 0.203,
+    "0.713": 0.203,
+    "0.719": 0.406,
+    "0.725": 0.406,
+    "0.731": 0.407,
+    "0.892": 1.422,
+    "1.0": 2.266
+  },
+  "step": {
+    "mean_ms": 15.397239111674327,
+    "p50_ms": 15.109300031326711,
+    "p95_ms": 18.104100017808378,
+    "p99_ms": 39.744599955156446,
+    "max_ms": 51.14360002335161
+  },
+  "read_and_encode": {
+    "mean_ms": 13.13687402636677,
+    "p50_ms": 13.051799964159727,
+    "p95_ms": 14.671399956569076,
+    "p99_ms": 15.8471999457106,
+    "max_ms": 39.26240000873804
+  },
+  "load": {
+    "ships": 18,
+    "guns": 54,
+    "projectiles": 140,
+    "missiles": 0,
+    "airborne": 0,
+    "aircraft_sensors": 0,
+    "jammers": 0,
+    "jobs": 0,
+    "queued": 0,
+    "aircraft": 0,
+    "pilots": 0,
+    "local_tracks": 153,
+    "shared_tracks": 162,
+    "shots": 320,
+    "missile_shots": 0,
+    "hits": 56,
+    "interceptions": 0
+  },
+  "error": null,
+  "fixture_sha256": "9a2b174acddbbaadec41db5d3f5e81f912f3aac53b18902c2a8c914c7d1229ff",
+  "expanded_tape_sha256": null,
+  "scope": "Serial wall-paced sidecar service diagnostic, real read/encode cost, no browser or native UI. Stops at 900 steps, protection or 300 wall seconds. At most four steps per pump; last pump is capped at remaining sample steps."
+}

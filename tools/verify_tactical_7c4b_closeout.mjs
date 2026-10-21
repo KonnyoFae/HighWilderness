@@ -10,6 +10,8 @@ const {chromium}=require('playwright');
 const source=path.resolve(process.argv[2]),out=path.resolve(process.argv[3]);
 const seconds=Number(process.argv[process.argv.indexOf('--seconds')+1])||45;
 const commandLimit=Number(process.argv[process.argv.indexOf('--commands')+1])||20;
+const width=Number(process.argv[process.argv.indexOf('--width')+1])||1440;
+const height=Number(process.argv[process.argv.indexOf('--height')+1])||1000;
 const jsonBridge=process.argv.includes('--json-bridge');
 await mkdir(out,{recursive:true});
 const pending=new Map(),errors=[],requests=[],parseMs=[];let serial=0,live,record=false;
@@ -23,7 +25,7 @@ function request(req,meta={}){return new Promise((resolve,reject)=>{
   },reject,timer});backend.stdin.write(JSON.stringify({interface:'gaotian.web-bridge/v1alpha1',kind:'request',backend_instance_id:'backend.e3bbrowser',session_id:null,expected_revision:null,...req,request_id})+'\n');
 });}
 const browser=await chromium.launch({channel:'msedge',headless:true,args:['--enable-precise-memory-info']});
-const page=await browser.newPage({viewport:{width:1440,height:1000}});page.setDefaultTimeout(60000);
+const page=await browser.newPage({viewport:{width,height}});page.setDefaultTimeout(60000);
 const cdp=await page.context().newCDPSession(page);page.on('pageerror',e=>errors.push(e.message));
 const heap=[];async function memory(label){await cdp.send('HeapProfiler.collectGarbage');heap.push({label,...await cdp.send('Runtime.getHeapUsage'),...await cdp.send('Memory.getDOMCounters')});}
 try{
@@ -166,7 +168,7 @@ try{
       reply:stats(commands.filter(c=>Number.isFinite(c.replyMs)).map(c=>c.replyMs)),receipt:stats(commands.filter(c=>Number.isFinite(c.receiptMs)).map(c=>c.receiptMs)),
       dom:stats(commands.filter(c=>Number.isFinite(c.domMs)).map(c=>c.domMs)),canvas:stats(commands.filter(c=>Number.isFinite(c.canvasMs)).map(c=>c.canvasMs)),
       ...Object.fromEntries(['clickToSubmitMs','clickToCanvasMs','receiptToCanvasMs','timelineToCanvasMs','referenceCanvasMs','referenceReceiptToCanvasMs'].map(k=>[k,stats(commands.filter(c=>Number.isFinite(c[k])).map(c=>c[k]))]))},
-    runningText,nodeResponseParse:stats(parseMs),
+    viewport:{width,height},runningText,nodeResponseParse:stats(parseMs),
     selectionClickThroughTwoFramesMs:selectionMs,runningSelection:stats(selectionSamples),selectionSamples,metrics:Object.fromEntries(Object.entries(metrics).map(([k,v])=>[k,stats(v)])),
     requests:Object.fromEntries(Object.entries(groups).map(([k,v])=>[k,stats(v)])),requestTrace:requests,peakResponseBytes:Math.max(...requests.map(r=>r.bytes)),heap,errors};
   await writeFile(path.join(out,'browser.json'),JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify({out,wallMs,commandSummary:report.commandSummary,errors}));

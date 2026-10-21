@@ -1,0 +1,15 @@
+{
+  "scope": "Sandbox-visible one-second process sample only. Elevated benchmark and host processes were not visible; this cannot establish host idleness or explain timing drift.",
+  "samples": [
+  {
+    "Name": "pwsh",
+    "Id": 18048,
+    "CpuSeconds": 0.015625
+  },
+  {
+    "Name": "conhost",
+    "Id": 16708,
+    "CpuSeconds": 0.0
+  }
+  ]
+}
